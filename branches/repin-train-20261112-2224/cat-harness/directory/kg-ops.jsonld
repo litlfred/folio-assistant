@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/cat-harness/directory/kg-ops.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261112-2224",
+    "sha": "3e37e836b465d957673f4090b94c606b5427ca33",
+    "pr": "repin-train/20261112-2224",
+    "run": "43319926452"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/cat-harness/directory/kg-ops",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "kg-ops",
+      "path": "kg-ops/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/cat-harness"
+      ],
+      "description": "The KG operations sub-graph — a NAMED SUB-GRAPH of the harness, OPT-IN like `sdlc`: off in every layer unless that layer lists `cat-harness.kg-ops` in its own `enableSubgraphs` (owner, 2026-11-10, card Q-SG-1 C, wave 2). It holds the `kg-ops` skill package (N-Quads distribution, named SPARQL queries, edge kinds and blast radius, domain fencing), their two processes and `witness-parity`. KG separation, sub-KG life cycle, LSI and rendering stay in `graph-management`, because always-on skills, Tools and visualisers cite them. Declared FROM WITHIN in `kg-ops/graph.json`.",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/cat-harness/directory/kg-ops",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops"
+    }
+  ]
+}

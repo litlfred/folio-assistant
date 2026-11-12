@@ -1,0 +1,2662 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-102762",
+  "instance": "who-iris",
+  "about": "library/10665-102762",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7908,
+    "terms": 73102
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "swaziland ministry",
+        "score": 13.1301,
+        "evidence": []
+      },
+      {
+        "term": "swaziland national",
+        "score": 12.841,
+        "evidence": []
+      },
+      {
+        "term": "foundation swaziland",
+        "score": 12.5748,
+        "evidence": []
+      },
+      {
+        "term": "swaziland country",
+        "score": 12.3881,
+        "evidence": []
+      },
+      {
+        "term": "swaziland demographic",
+        "score": 12.2451,
+        "evidence": []
+      },
+      {
+        "term": "swaziland statistics",
+        "score": 11.5298,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "across swaziland",
+        "score": 11.3968,
+        "evidence": []
+      },
+      {
+        "term": "hiv aids",
+        "score": 10.761,
+        "evidence": []
+      },
+      {
+        "term": "pmtct services",
+        "score": 10.5987,
+        "evidence": []
+      },
+      {
+        "term": "hiv counselling",
+        "score": 10.4652,
+        "evidence": []
+      },
+      {
+        "term": "pregnant women",
+        "score": 10.2733,
+        "evidence": []
+      },
+      {
+        "term": "child hiv",
+        "score": 10.1934,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "swaziland ministry",
+        "score": 563.8876,
+        "evidence": []
+      },
+      {
+        "term": "swaziland national",
+        "score": 545.567,
+        "evidence": []
+      },
+      {
+        "term": "swaziland country",
+        "score": 542.0326,
+        "evidence": []
+      },
+      {
+        "term": "foundation swaziland",
+        "score": 537.9135,
+        "evidence": []
+      },
+      {
+        "term": "swaziland demographic",
+        "score": 536.9398,
+        "evidence": []
+      },
+      {
+        "term": "hiv counselling",
+        "score": 527.079,
+        "evidence": []
+      },
+      {
+        "term": "across swaziland",
+        "score": 523.7973,
+        "evidence": []
+      },
+      {
+        "term": "swaziland statistics",
+        "score": 523.5501,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hiv aids",
+        "score": 464.3068,
+        "evidence": []
+      },
+      {
+        "term": "hiv services",
+        "score": 451.7885,
+        "evidence": []
+      },
+      {
+        "term": "hiv transmission",
+        "score": 426.0785,
+        "evidence": []
+      },
+      {
+        "term": "hiv prevention",
+        "score": 422.2414,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "hiv counselling",
+        "score": 11.7773,
+        "evidence": []
+      },
+      {
+        "term": "hiv aids",
+        "score": 11.7563,
+        "evidence": []
+      },
+      {
+        "term": "child hiv",
+        "score": 10.708,
+        "evidence": []
+      },
+      {
+        "term": "hiv services",
+        "score": 10.6599,
+        "evidence": []
+      },
+      {
+        "term": "hiv transmission",
+        "score": 10.4677,
+        "evidence": []
+      },
+      {
+        "term": "hiv prevention",
+        "score": 9.8593,
+        "evidence": []
+      },
+      {
+        "term": "hiv status",
+        "score": 9.7679,
+        "evidence": []
+      },
+      {
+        "term": "hiv infection",
+        "score": 9.5195,
+        "evidence": []
+      },
+      {
+        "term": "pregnant women",
+        "score": 9.4135,
+        "evidence": []
+      },
+      {
+        "term": "hiv testing",
+        "score": 9.1398,
+        "evidence": []
+      },
+      {
+        "term": "hiv among",
+        "score": 9.0503,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hiv stigma",
+        "score": 8.86,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "hiv counselling",
+        "score": 577.0295,
+        "evidence": []
+      },
+      {
+        "term": "hiv services",
+        "score": 523.7058,
+        "evidence": []
+      },
+      {
+        "term": "hiv aids",
+        "score": 505.8265,
+        "evidence": []
+      },
+      {
+        "term": "child hiv",
+        "score": 490.8821,
+        "evidence": []
+      },
+      {
+        "term": "hiv testing",
+        "score": 473.4622,
+        "evidence": []
+      },
+      {
+        "term": "hiv prevention",
+        "score": 450.0919,
+        "evidence": []
+      },
+      {
+        "term": "hiv status",
+        "score": 449.7903,
+        "evidence": []
+      },
+      {
+        "term": "hiv transmission",
+        "score": 449.4271,
+        "evidence": []
+      },
+      {
+        "term": "hiv stigma",
+        "score": 436.7007,
+        "evidence": []
+      },
+      {
+        "term": "tested hiv",
+        "score": 433.8265,
+        "evidence": []
+      },
+      {
+        "term": "hiv infection",
+        "score": 430.2372,
+        "evidence": []
+      },
+      {
+        "term": "provider-initiated hiv",
+        "score": 418.7738,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "hiv counselling",
+        "score": 11.7773,
+        "evidence": []
+      },
+      {
+        "term": "hiv aids",
+        "score": 11.7563,
+        "evidence": []
+      },
+      {
+        "term": "child hiv",
+        "score": 10.708,
+        "evidence": []
+      },
+      {
+        "term": "hiv services",
+        "score": 10.6599,
+        "evidence": []
+      },
+      {
+        "term": "hiv transmission",
+        "score": 10.4677,
+        "evidence": []
+      },
+      {
+        "term": "hiv prevention",
+        "score": 9.8593,
+        "evidence": []
+      },
+      {
+        "term": "hiv status",
+        "score": 9.7679,
+        "evidence": []
+      },
+      {
+        "term": "hiv infection",
+        "score": 9.5195,
+        "evidence": []
+      },
+      {
+        "term": "pregnant women",
+        "score": 9.4135,
+        "evidence": []
+      },
+      {
+        "term": "hiv testing",
+        "score": 9.1398,
+        "evidence": []
+      },
+      {
+        "term": "hiv among",
+        "score": 9.0503,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hiv stigma",
+        "score": 8.86,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "提供hpv",
+        "score": 264.5747,
+        "evidence": []
+      },
+      {
+        "term": "引进hpv",
+        "score": 220.8515,
+        "evidence": []
+      },
+      {
+        "term": "疫苗接种",
+        "score": 209.6991,
+        "evidence": []
+      },
+      {
+        "term": "捐助者",
+        "score": 208.817,
+        "evidence": []
+      },
+      {
+        "term": "感染和宫颈癌",
+        "score": 204.6518,
+        "evidence": []
+      },
+      {
+        "term": "如果没有",
+        "score": 195.6775,
+        "evidence": []
+      },
+      {
+        "term": "疫苗的",
+        "score": 186.4533,
+        "evidence": []
+      },
+      {
+        "term": "的服务",
+        "score": 163.3629,
+        "evidence": []
+      },
+      {
+        "term": "这一点很重要",
+        "score": 154.6697,
+        "evidence": []
+      },
+      {
+        "term": "宫颈癌",
+        "score": 139.753,
+        "evidence": []
+      },
+      {
+        "term": "个部分",
+        "score": 139.3012,
+        "evidence": []
+      },
+      {
+        "term": "并提供一",
+        "score": 131.2095,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-abbreviations": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hiv aids",
+          "score": 1.3577,
+          "evidence": []
+        },
+        {
+          "term": "united nations",
+          "score": 1.226,
+          "evidence": []
+        },
+        {
+          "term": "mother-to-child transmission",
+          "score": 1.1682,
+          "evidence": []
+        },
+        {
+          "term": "swaziland",
+          "score": 1.0685,
+          "evidence": []
+        },
+        {
+          "term": "flas",
+          "score": 1.0522,
+          "evidence": []
+        },
+        {
+          "term": "people living",
+          "score": 0.8548,
+          "evidence": []
+        },
+        {
+          "term": "health survey",
+          "score": 0.8227,
+          "evidence": []
+        },
+        {
+          "term": "child health",
+          "score": 0.7999,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hiv aids",
+          "score": 33.1473,
+          "evidence": []
+        },
+        {
+          "term": "united nations",
+          "score": 22.8912,
+          "evidence": []
+        },
+        {
+          "term": "mother-to-child transmission",
+          "score": 20.6569,
+          "evidence": []
+        },
+        {
+          "term": "swaziland",
+          "score": 17.6538,
+          "evidence": []
+        },
+        {
+          "term": "flas",
+          "score": 15.754,
+          "evidence": []
+        },
+        {
+          "term": "health survey",
+          "score": 12.0573,
+          "evidence": []
+        },
+        {
+          "term": "people living",
+          "score": 11.8303,
+          "evidence": []
+        },
+        {
+          "term": "child health",
+          "score": 10.9601,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hiv aids",
+          "score": 1.0219,
+          "evidence": []
+        },
+        {
+          "term": "child health",
+          "score": 0.4964,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.4308,
+          "evidence": []
+        },
+        {
+          "term": "united nations",
+          "score": 0.3737,
+          "evidence": []
+        },
+        {
+          "term": "mother-to-child transmission",
+          "score": 0.3645,
+          "evidence": []
+        },
+        {
+          "term": "health survey",
+          "score": 0.3196,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.2869,
+          "evidence": []
+        },
+        {
+          "term": "people living",
+          "score": 0.2852,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hiv aids",
+          "score": 25.2955,
+          "evidence": []
+        },
+        {
+          "term": "child health",
+          "score": 6.9136,
+          "evidence": []
+        },
+        {
+          "term": "united nations",
+          "score": 5.7171,
+          "evidence": []
+        },
+        {
+          "term": "people living",
+          "score": 5.23,
+          "evidence": []
+        },
+        {
+          "term": "counselling",
+          "score": 4.9931,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 4.9557,
+          "evidence": []
+        },
+        {
+          "term": "swaziland",
+          "score": 4.9387,
+          "evidence": []
+        },
+        {
+          "term": "flas",
+          "score": 4.5497,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hiv aids",
+          "score": 1.0219,
+          "evidence": []
+        },
+        {
+          "term": "child health",
+          "score": 0.4964,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.4308,
+          "evidence": []
+        },
+        {
+          "term": "united nations",
+          "score": 0.3737,
+          "evidence": []
+        },
+        {
+          "term": "mother-to-child transmission",
+          "score": 0.3645,
+          "evidence": []
+        },
+        {
+          "term": "health survey",
+          "score": 0.3196,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.2869,
+          "evidence": []
+        },
+        {
+          "term": "people living",
+          "score": 0.2852,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 73.225,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 59.276,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 58.8695,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 55.0416,
+          "evidence": []
+        },
+        {
+          "term": "疫苗的",
+          "score": 48.9471,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 45.1753,
+          "evidence": []
+        },
+        {
+          "term": "宫颈癌",
+          "score": 37.2924,
+          "evidence": []
+        },
+        {
+          "term": "个部分",
+          "score": 36.1466,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-001-prongs-1-and-2-programming-of-elimination-of-mot": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "mdg",
+          "score": 1.2395,
+          "evidence": []
+        },
+        {
+          "term": "srh",
+          "score": 0.9433,
+          "evidence": []
+        },
+        {
+          "term": "programming",
+          "score": 0.7588,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "transmission",
+          "score": 0.7338,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mother-to-child",
+          "score": 0.7052,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "mdg",
+          "score": 23.6311,
+          "evidence": []
+        },
+        {
+          "term": "srh",
+          "score": 16.6249,
+          "evidence": []
+        },
+        {
+          "term": "transmission",
+          "score": 10.4781,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "integration",
+          "score": 10.4354,
+          "evidence": []
+        },
+        {
+          "term": "programming",
+          "score": 9.483,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hiv",
+          "score": 0.1821,
+          "evidence": []
+        },
+        {
+          "term": "transmission",
+          "score": 0.1722,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "services",
+          "score": 0.1115,
+          "evidence": []
+        },
+        {
+          "term": "elimination",
+          "score": 0.1103,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "women",
+          "score": 0.1102,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hiv",
+          "score": 4.9978,
+          "evidence": []
+        },
+        {
+          "term": "services",
+          "score": 1.7993,
+          "evidence": []
+        },
+        {
+          "term": "transmission",
+          "score": 1.5615,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "swaziland",
+          "score": 1.4978,
+          "evidence": []
+        },
+        {
+          "term": "flas",
+          "score": 1.4598,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hiv",
+          "score": 0.1821,
+          "evidence": []
+        },
+        {
+          "term": "transmission",
+          "score": 0.1722,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "services",
+          "score": 0.1115,
+          "evidence": []
+        },
+        {
+          "term": "elimination",
+          "score": 0.1103,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health",
+          "score": 0.1049,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 46.1681,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 38.1901,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 35.2775,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 31.9164,
+          "evidence": []
+        },
+        {
+          "term": "可能会",
+          "score": 26.6533,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-002-the-commitment-towards-elimination-of-new-hiv-in": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "mothers alive",
+          "score": 4.6169,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv infections",
+          "score": 3.5477,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "unintended pregnancies",
+          "score": 2.8264,
+          "evidence": []
+        },
+        {
+          "term": "among children",
+          "score": 2.8165,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "four prongs",
+          "score": 2.4855,
+          "evidence": []
+        },
+        {
+          "term": "preventing unintended",
+          "score": 2.2328,
+          "evidence": []
+        },
+        {
+          "term": "women living",
+          "score": 1.9167,
+          "evidence": []
+        },
+        {
+          "term": "keeping",
+          "score": 1.9074,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hiv infections",
+          "score": 167.5678,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mothers alive",
+          "score": 131.3206,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prong",
+          "score": 103.1267,
+          "evidence": []
+        },
+        {
+          "term": "four prongs",
+          "score": 84.8838,
+          "evidence": []
+        },
+        {
+          "term": "hiv prevention",
+          "score": 83.6971,
+          "evidence": []
+        },
+        {
+          "term": "unintended pregnancies",
+          "score": 83.0796,
+          "evidence": []
+        },
+        {
+          "term": "hiv transmission",
+          "score": 76.7632,
+          "evidence": []
+        },
+        {
+          "term": "infections among",
+          "score": 69.9006,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hiv infections",
+          "score": 3.0745,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "among children",
+          "score": 1.9898,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv transmission",
+          "score": 1.7278,
+          "evidence": []
+        },
+        {
+          "term": "women living",
+          "score": 1.5917,
+          "evidence": []
+        },
+        {
+          "term": "hiv prevention",
+          "score": 1.554,
+          "evidence": []
+        },
+        {
+          "term": "hiv testing",
+          "score": 1.4452,
+          "evidence": []
+        },
+        {
+          "term": "prevent hiv",
+          "score": 1.3765,
+          "evidence": []
+        },
+        {
+          "term": "mother-to-child transmission",
+          "score": 0.867,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hiv infections",
+          "score": 112.2411,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv testing",
+          "score": 61.7497,
+          "evidence": []
+        },
+        {
+          "term": "hiv prevention",
+          "score": 59.4412,
+          "evidence": []
+        },
+        {
+          "term": "hiv transmission",
+          "score": 58.4199,
+          "evidence": []
+        },
+        {
+          "term": "prevent hiv",
+          "score": 53.799,
+          "evidence": []
+        },
+        {
+          "term": "among children",
+          "score": 39.2201,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "women living",
+          "score": 37.2243,
+          "evidence": []
+        },
+        {
+          "term": "violence prevention",
+          "score": 17.2041,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hiv infections",
+          "score": 3.0745,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "among children",
+          "score": 1.9898,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv transmission",
+          "score": 1.7278,
+          "evidence": []
+        },
+        {
+          "term": "women living",
+          "score": 1.5917,
+          "evidence": []
+        },
+        {
+          "term": "hiv prevention",
+          "score": 1.554,
+          "evidence": []
+        },
+        {
+          "term": "hiv testing",
+          "score": 1.4452,
+          "evidence": []
+        },
+        {
+          "term": "prevent hiv",
+          "score": 1.3765,
+          "evidence": []
+        },
+        {
+          "term": "mothers alive",
+          "score": 0.9652,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 39.1756,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 36.5403,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 29.7341,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 22.3062,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 20.301,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 19.0034,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 16.3392,
+          "evidence": []
+        },
+        {
+          "term": "进行研究",
+          "score": 16.3313,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-003-from-theory-to-practice-implementing-services-th": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "swaziland",
+          "score": 1.6935,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "aged years",
+          "score": 1.69,
+          "evidence": []
+        },
+        {
+          "term": "estimated number",
+          "score": 1.5318,
+          "evidence": []
+        },
+        {
+          "term": "people aged",
+          "score": 1.4495,
+          "evidence": []
+        },
+        {
+          "term": "adults aged",
+          "score": 1.4448,
+          "evidence": []
+        },
+        {
+          "term": "hiv-positive pregnant",
+          "score": 1.2091,
+          "evidence": []
+        },
+        {
+          "term": "prongs",
+          "score": 1.1719,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "aged years",
+          "score": 43.3179,
+          "evidence": []
+        },
+        {
+          "term": "estimated number",
+          "score": 39.0725,
+          "evidence": []
+        },
+        {
+          "term": "adults aged",
+          "score": 31.0592,
+          "evidence": []
+        },
+        {
+          "term": "people aged",
+          "score": 30.509,
+          "evidence": []
+        },
+        {
+          "term": "swaziland",
+          "score": 23.5384,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv-positive pregnant",
+          "score": 21.0177,
+          "evidence": []
+        },
+        {
+          "term": "prevalence rate",
+          "score": 18.1473,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pregnant women",
+          "score": 0.4648,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.3083,
+          "evidence": []
+        },
+        {
+          "term": "hiv-positive pregnant",
+          "score": 0.3027,
+          "evidence": []
+        },
+        {
+          "term": "aged years",
+          "score": 0.2872,
+          "evidence": []
+        },
+        {
+          "term": "estimated number",
+          "score": 0.2771,
+          "evidence": []
+        },
+        {
+          "term": "prevalence rate",
+          "score": 0.2381,
+          "evidence": []
+        },
+        {
+          "term": "people aged",
+          "score": 0.2236,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "people aged",
+          "score": 7.055,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 5.9151,
+          "evidence": []
+        },
+        {
+          "term": "young people",
+          "score": 5.8394,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 5.2853,
+          "evidence": []
+        },
+        {
+          "term": "estimated number",
+          "score": 4.9935,
+          "evidence": []
+        },
+        {
+          "term": "aged years",
+          "score": 4.6543,
+          "evidence": []
+        },
+        {
+          "term": "region",
+          "score": 3.8524,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pregnant women",
+          "score": 0.4648,
+          "evidence": []
+        },
+        {
+          "term": "hiv-positive pregnant",
+          "score": 0.3027,
+          "evidence": []
+        },
+        {
+          "term": "aged years",
+          "score": 0.2872,
+          "evidence": []
+        },
+        {
+          "term": "estimated number",
+          "score": 0.2771,
+          "evidence": []
+        },
+        {
+          "term": "prevalence rate",
+          "score": 0.2381,
+          "evidence": []
+        },
+        {
+          "term": "people aged",
+          "score": 0.2236,
+          "evidence": []
+        },
+        {
+          "term": "sex",
+          "score": 0.1973,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "并提供一",
+          "score": 41.5695,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 37.6763,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 31.1983,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 28.0786,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 24.2115,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 21.821,
+          "evidence": []
+        },
+        {
+          "term": "肺炎疫苗试验",
+          "score": 21.4145,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-004-background": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "pmtct programming",
+          "score": 2.2131,
+          "evidence": []
+        },
+        {
+          "term": "pmtct services",
+          "score": 2.1549,
+          "evidence": []
+        },
+        {
+          "term": "swaziland",
+          "score": 1.6935,
+          "evidence": []
+        },
+        {
+          "term": "prime minister",
+          "score": 1.4751,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 1.4081,
+          "evidence": []
+        },
+        {
+          "term": "women living",
+          "score": 1.2325,
+          "evidence": []
+        },
+        {
+          "term": "political commitment",
+          "score": 1.1892,
+          "evidence": []
+        },
+        {
+          "term": "among women",
+          "score": 1.1496,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "pmtct services",
+          "score": 79.2168,
+          "evidence": []
+        },
+        {
+          "term": "pmtct programming",
+          "score": 75.6629,
+          "evidence": []
+        },
+        {
+          "term": "swaziland",
+          "score": 47.0767,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 27.2487,
+          "evidence": []
+        },
+        {
+          "term": "prime minister",
+          "score": 23.6401,
+          "evidence": []
+        },
+        {
+          "term": "women living",
+          "score": 23.4388,
+          "evidence": []
+        },
+        {
+          "term": "among women",
+          "score": 22.2602,
+          "evidence": []
+        },
+        {
+          "term": "political commitment",
+          "score": 20.7142,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pregnant women",
+          "score": 0.9327,
+          "evidence": []
+        },
+        {
+          "term": "women living",
+          "score": 0.8649,
+          "evidence": []
+        },
+        {
+          "term": "among women",
+          "score": 0.762,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.6521,
+          "evidence": []
+        },
+        {
+          "term": "child health",
+          "score": 0.6483,
+          "evidence": []
+        },
+        {
+          "term": "antenatal care",
+          "score": 0.5349,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 0.4673,
+          "evidence": []
+        },
+        {
+          "term": "pmtct services",
+          "score": 0.4312,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hiv",
+          "score": 22.4481,
+          "evidence": []
+        },
+        {
+          "term": "women living",
+          "score": 16.1609,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 15.9315,
+          "evidence": []
+        },
+        {
+          "term": "among women",
+          "score": 12.81,
+          "evidence": []
+        },
+        {
+          "term": "pmtct services",
+          "score": 12.6886,
+          "evidence": []
+        },
+        {
+          "term": "child health",
+          "score": 11.4943,
+          "evidence": []
+        },
+        {
+          "term": "antenatal care",
+          "score": 9.9628,
+          "evidence": []
+        },
+        {
+          "term": "swaziland",
+          "score": 7.8417,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pregnant women",
+          "score": 0.9327,
+          "evidence": []
+        },
+        {
+          "term": "women living",
+          "score": 0.8649,
+          "evidence": []
+        },
+        {
+          "term": "among women",
+          "score": 0.762,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.6521,
+          "evidence": []
+        },
+        {
+          "term": "child health",
+          "score": 0.6483,
+          "evidence": []
+        },
+        {
+          "term": "antenatal care",
+          "score": 0.5349,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 0.4673,
+          "evidence": []
+        },
+        {
+          "term": "pmtct services",
+          "score": 0.4312,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 21.7391,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 19.3747,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 17.34,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 16.2565,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 15.5992,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 15.2114,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 14.9524,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 14.0033,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-005-case-study-sites": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "flas clinic",
+          "score": 4.7504,
+          "evidence": []
+        },
+        {
+          "term": "srh counselling",
+          "score": 3.6349,
+          "evidence": []
+        },
+        {
+          "term": "baylor clinic",
+          "score": 3.6331,
+          "evidence": []
+        },
+        {
+          "term": "gender-based violence",
+          "score": 3.5918,
+          "evidence": []
+        },
+        {
+          "term": "male partner",
+          "score": 3.2056,
+          "evidence": []
+        },
+        {
+          "term": "anc consultation",
+          "score": 3.0962,
+          "evidence": []
+        },
+        {
+          "term": "encouraging male",
+          "score": 3.0957,
+          "evidence": []
+        },
+        {
+          "term": "across swaziland",
+          "score": 3.0458,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "flas clinic",
+          "score": 338.5005,
+          "evidence": []
+        },
+        {
+          "term": "hiv counselling",
+          "score": 271.6182,
+          "evidence": []
+        },
+        {
+          "term": "srh counselling",
+          "score": 233.6229,
+          "evidence": []
+        },
+        {
+          "term": "baylor clinic",
+          "score": 211.9577,
+          "evidence": []
+        },
+        {
+          "term": "male partner",
+          "score": 199.5866,
+          "evidence": []
+        },
+        {
+          "term": "pmtct services",
+          "score": 197.2211,
+          "evidence": []
+        },
+        {
+          "term": "counselling support",
+          "score": 193.033,
+          "evidence": []
+        },
+        {
+          "term": "hiv-positive clients",
+          "score": 192.8484,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hiv counselling",
+          "score": 4.6156,
+          "evidence": []
+        },
+        {
+          "term": "hiv services",
+          "score": 3.7321,
+          "evidence": []
+        },
+        {
+          "term": "hiv aids",
+          "score": 3.6798,
+          "evidence": []
+        },
+        {
+          "term": "counselling support",
+          "score": 3.5596,
+          "evidence": []
+        },
+        {
+          "term": "srh counselling",
+          "score": 3.265,
+          "evidence": []
+        },
+        {
+          "term": "hiv status",
+          "score": 3.223,
+          "evidence": []
+        },
+        {
+          "term": "hiv transmission",
+          "score": 3.1561,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 3.1508,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hiv counselling",
+          "score": 305.1238,
+          "evidence": []
+        },
+        {
+          "term": "hiv services",
+          "score": 267.4187,
+          "evidence": []
+        },
+        {
+          "term": "hiv aids",
+          "score": 226.2152,
+          "evidence": []
+        },
+        {
+          "term": "hiv testing",
+          "score": 225.5227,
+          "evidence": []
+        },
+        {
+          "term": "hiv status",
+          "score": 217.7614,
+          "evidence": []
+        },
+        {
+          "term": "hiv transmission",
+          "score": 211.3175,
+          "evidence": []
+        },
+        {
+          "term": "hiv stigma",
+          "score": 208.9968,
+          "evidence": []
+        },
+        {
+          "term": "tested hiv",
+          "score": 203.7927,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hiv counselling",
+          "score": 4.6156,
+          "evidence": []
+        },
+        {
+          "term": "hiv services",
+          "score": 3.7321,
+          "evidence": []
+        },
+        {
+          "term": "hiv aids",
+          "score": 3.6798,
+          "evidence": []
+        },
+        {
+          "term": "counselling support",
+          "score": 3.5596,
+          "evidence": []
+        },
+        {
+          "term": "srh counselling",
+          "score": 3.265,
+          "evidence": []
+        },
+        {
+          "term": "hiv status",
+          "score": 3.223,
+          "evidence": []
+        },
+        {
+          "term": "hiv transmission",
+          "score": 3.1561,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 3.1508,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 42.8658,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 28.8607,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 26.886,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 25.796,
+          "evidence": []
+        },
+        {
+          "term": "可能会",
+          "score": 22.5988,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 19.2356,
+          "evidence": []
+        },
+        {
+          "term": "违反权利",
+          "score": 18.105,
+          "evidence": []
+        },
+        {
+          "term": "不良反应",
+          "score": 16.0309,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-key-resources": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "unintended pregnancies",
+          "score": 2.3048,
+          "evidence": []
+        },
+        {
+          "term": "preventing hiv",
+          "score": 1.3427,
+          "evidence": []
+        },
+        {
+          "term": "srh",
+          "score": 1.3241,
+          "evidence": []
+        },
+        {
+          "term": "women living",
+          "score": 1.2688,
+          "evidence": []
+        },
+        {
+          "term": "hiv infections",
+          "score": 1.2651,
+          "evidence": []
+        },
+        {
+          "term": "prong",
+          "score": 1.1842,
+          "evidence": []
+        },
+        {
+          "term": "offers guidance",
+          "score": 0.9829,
+          "evidence": []
+        },
+        {
+          "term": "people living",
+          "score": 0.9373,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "unintended pregnancies",
+          "score": 51.9247,
+          "evidence": []
+        },
+        {
+          "term": "preventing hiv",
+          "score": 37.3422,
+          "evidence": []
+        },
+        {
+          "term": "hiv infections",
+          "score": 35.1365,
+          "evidence": []
+        },
+        {
+          "term": "srh",
+          "score": 33.2499,
+          "evidence": []
+        },
+        {
+          "term": "prong",
+          "score": 22.0986,
+          "evidence": []
+        },
+        {
+          "term": "women living",
+          "score": 21.8673,
+          "evidence": []
+        },
+        {
+          "term": "primary prevention",
+          "score": 16.2005,
+          "evidence": []
+        },
+        {
+          "term": "offers guidance",
+          "score": 15.8291,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hiv infections",
+          "score": 0.6065,
+          "evidence": []
+        },
+        {
+          "term": "women living",
+          "score": 0.5665,
+          "evidence": []
+        },
+        {
+          "term": "preventing hiv",
+          "score": 0.5528,
+          "evidence": []
+        },
+        {
+          "term": "people living",
+          "score": 0.3344,
+          "evidence": []
+        },
+        {
+          "term": "key",
+          "score": 0.2509,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "children",
+          "score": 0.2387,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.2335,
+          "evidence": []
+        },
+        {
+          "term": "primary prevention",
+          "score": 0.2286,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hiv infections",
+          "score": 19.9733,
+          "evidence": []
+        },
+        {
+          "term": "preventing hiv",
+          "score": 18.6051,
+          "evidence": []
+        },
+        {
+          "term": "women living",
+          "score": 11.5313,
+          "evidence": []
+        },
+        {
+          "term": "people living",
+          "score": 7.205,
+          "evidence": []
+        },
+        {
+          "term": "aids",
+          "score": 4.8258,
+          "evidence": []
+        },
+        {
+          "term": "services",
+          "score": 4.1963,
+          "evidence": []
+        },
+        {
+          "term": "swaziland",
+          "score": 4.1624,
+          "evidence": []
+        },
+        {
+          "term": "flas",
+          "score": 3.9437,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hiv infections",
+          "score": 0.6065,
+          "evidence": []
+        },
+        {
+          "term": "women living",
+          "score": 0.5665,
+          "evidence": []
+        },
+        {
+          "term": "preventing hiv",
+          "score": 0.5528,
+          "evidence": []
+        },
+        {
+          "term": "people living",
+          "score": 0.3344,
+          "evidence": []
+        },
+        {
+          "term": "key",
+          "score": 0.2509,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "children",
+          "score": 0.2387,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.2335,
+          "evidence": []
+        },
+        {
+          "term": "primary prevention",
+          "score": 0.2286,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "并提供一",
+          "score": 46.7988,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 44.3195,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 41.1156,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 27.3997,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 26.3185,
+          "evidence": []
+        },
+        {
+          "term": "可能会",
+          "score": 21.9403,
+          "evidence": []
+        },
+        {
+          "term": "的情况",
+          "score": 21.645,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 20.0887,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-007-endnotes": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "swaziland ministry",
+          "score": 3.6819,
+          "evidence": []
+        },
+        {
+          "term": "swaziland demographic",
+          "score": 3.5112,
+          "evidence": []
+        },
+        {
+          "term": "swaziland statistics",
+          "score": 3.3436,
+          "evidence": []
+        },
+        {
+          "term": "swaziland country",
+          "score": 3.1405,
+          "evidence": []
+        },
+        {
+          "term": "macro international",
+          "score": 2.3202,
+          "evidence": []
+        },
+        {
+          "term": "unaids report",
+          "score": 2.2927,
+          "evidence": []
+        },
+        {
+          "term": "hiv aids",
+          "score": 2.066,
+          "evidence": []
+        },
+        {
+          "term": "org files",
+          "score": 1.9999,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "swaziland ministry",
+          "score": 252.2176,
+          "evidence": []
+        },
+        {
+          "term": "swaziland demographic",
+          "score": 241.9893,
+          "evidence": []
+        },
+        {
+          "term": "swaziland statistics",
+          "score": 237.2262,
+          "evidence": []
+        },
+        {
+          "term": "swaziland country",
+          "score": 233.5087,
+          "evidence": []
+        },
+        {
+          "term": "hiv aids",
+          "score": 112.578,
+          "evidence": []
+        },
+        {
+          "term": "unaids report",
+          "score": 100.0555,
+          "evidence": []
+        },
+        {
+          "term": "hiv transmission",
+          "score": 75.1979,
+          "evidence": []
+        },
+        {
+          "term": "global aids",
+          "score": 72.9326,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hiv aids",
+          "score": 1.9866,
+          "evidence": []
+        },
+        {
+          "term": "child hiv",
+          "score": 1.5215,
+          "evidence": []
+        },
+        {
+          "term": "hiv transmission",
+          "score": 1.5196,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 1.4732,
+          "evidence": []
+        },
+        {
+          "term": "national hiv",
+          "score": 1.3739,
+          "evidence": []
+        },
+        {
+          "term": "global aids",
+          "score": 1.3381,
+          "evidence": []
+        },
+        {
+          "term": "preventing hiv",
+          "score": 1.2914,
+          "evidence": []
+        },
+        {
+          "term": "voluntary hiv",
+          "score": 1.257,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hiv aids",
+          "score": 93.5855,
+          "evidence": []
+        },
+        {
+          "term": "child hiv",
+          "score": 78.9838,
+          "evidence": []
+        },
+        {
+          "term": "hiv transmission",
+          "score": 76.4462,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 75.8902,
+          "evidence": []
+        },
+        {
+          "term": "national hiv",
+          "score": 72.6632,
+          "evidence": []
+        },
+        {
+          "term": "preventing hiv",
+          "score": 70.4684,
+          "evidence": []
+        },
+        {
+          "term": "hiv linkages",
+          "score": 67.9613,
+          "evidence": []
+        },
+        {
+          "term": "voluntary hiv",
+          "score": 67.9613,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hiv aids",
+          "score": 1.9866,
+          "evidence": []
+        },
+        {
+          "term": "child hiv",
+          "score": 1.5215,
+          "evidence": []
+        },
+        {
+          "term": "hiv transmission",
+          "score": 1.5196,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 1.4732,
+          "evidence": []
+        },
+        {
+          "term": "national hiv",
+          "score": 1.3739,
+          "evidence": []
+        },
+        {
+          "term": "global aids",
+          "score": 1.3381,
+          "evidence": []
+        },
+        {
+          "term": "preventing hiv",
+          "score": 1.2914,
+          "evidence": []
+        },
+        {
+          "term": "voluntary hiv",
+          "score": 1.257,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 78.2961,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 64.6403,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 62.6886,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 61.6321,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 59.3095,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 55.2594,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 51.4163,
+          "evidence": []
+        },
+        {
+          "term": "疫苗的",
+          "score": 50.7368,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "ippf",
+          "score": 2.1587,
+          "evidence": []
+        },
+        {
+          "term": "support prongs",
+          "score": 1.8661,
+          "evidence": []
+        },
+        {
+          "term": "swaziland",
+          "score": 1.6935,
+          "evidence": []
+        },
+        {
+          "term": "mothers alive",
+          "score": 1.4756,
+          "evidence": []
+        },
+        {
+          "term": "publishing organizations",
+          "score": 1.4686,
+          "evidence": []
+        },
+        {
+          "term": "addressing prong",
+          "score": 1.4009,
+          "evidence": []
+        },
+        {
+          "term": "hiv aids",
+          "score": 1.3841,
+          "evidence": []
+        },
+        {
+          "term": "united kingdom",
+          "score": 1.3688,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "ippf",
+          "score": 75.8934,
+          "evidence": []
+        },
+        {
+          "term": "unfpa",
+          "score": 50.393,
+          "evidence": []
+        },
+        {
+          "term": "swaziland",
+          "score": 47.0767,
+          "evidence": []
+        },
+        {
+          "term": "unaids",
+          "score": 43.7626,
+          "evidence": []
+        },
+        {
+          "term": "support prongs",
+          "score": 39.8279,
+          "evidence": []
+        },
+        {
+          "term": "hiv aids",
+          "score": 34.2369,
+          "evidence": []
+        },
+        {
+          "term": "translations",
+          "score": 30.7121,
+          "evidence": []
+        },
+        {
+          "term": "publishing organizations",
+          "score": 30.1132,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hiv aids",
+          "score": 1.1071,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.9652,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.937,
+          "evidence": []
+        },
+        {
+          "term": "hiv infections",
+          "score": 0.8145,
+          "evidence": []
+        },
+        {
+          "term": "aids care",
+          "score": 0.7206,
+          "evidence": []
+        },
+        {
+          "term": "reproductive health",
+          "score": 0.6294,
+          "evidence": []
+        },
+        {
+          "term": "united nations",
+          "score": 0.5636,
+          "evidence": []
+        },
+        {
+          "term": "united kingdom",
+          "score": 0.5252,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hiv aids",
+          "score": 30.7074,
+          "evidence": []
+        },
+        {
+          "term": "hiv infections",
+          "score": 22.7529,
+          "evidence": []
+        },
+        {
+          "term": "aids care",
+          "score": 15.0322,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 12.8011,
+          "evidence": []
+        },
+        {
+          "term": "united kingdom",
+          "score": 12.6919,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 12.5461,
+          "evidence": []
+        },
+        {
+          "term": "united nations",
+          "score": 10.8011,
+          "evidence": []
+        },
+        {
+          "term": "reproductive health",
+          "score": 9.8417,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hiv aids",
+          "score": 1.1071,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.9652,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.937,
+          "evidence": []
+        },
+        {
+          "term": "hiv infections",
+          "score": 0.8145,
+          "evidence": []
+        },
+        {
+          "term": "aids care",
+          "score": 0.7206,
+          "evidence": []
+        },
+        {
+          "term": "reproductive health",
+          "score": 0.6294,
+          "evidence": []
+        },
+        {
+          "term": "united nations",
+          "score": 0.5636,
+          "evidence": []
+        },
+        {
+          "term": "united kingdom",
+          "score": 0.5252,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 97.346,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 90.2687,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 58.4826,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 47.8425,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 46.3971,
+          "evidence": []
+        },
+        {
+          "term": "通过确定",
+          "score": 43.8109,
+          "evidence": []
+        },
+        {
+          "term": "监督机制",
+          "score": 42.9607,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 42.7286,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,6838 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-37905",
+  "instance": "who-iris",
+  "about": "library/10665-37905",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7908,
+    "terms": 73102
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "vaccination des",
+        "score": 31.616,
+        "evidence": []
+      },
+      {
+        "term": "pour les",
+        "score": 30.6245,
+        "evidence": []
+      },
+      {
+        "term": "les enfants",
+        "score": 28.4448,
+        "evidence": []
+      },
+      {
+        "term": "que les",
+        "score": 28.1496,
+        "evidence": []
+      },
+      {
+        "term": "les journées",
+        "score": 28.1228,
+        "evidence": []
+      },
+      {
+        "term": "dans les",
+        "score": 27.6432,
+        "evidence": []
+      },
+      {
+        "term": "les plus",
+        "score": 26.27,
+        "evidence": []
+      },
+      {
+        "term": "par les",
+        "score": 26.0375,
+        "evidence": []
+      },
+      {
+        "term": "sur les",
+        "score": 24.8824,
+        "evidence": []
+      },
+      {
+        "term": "les pays",
+        "score": 24.3595,
+        "evidence": []
+      },
+      {
+        "term": "les services",
+        "score": 24.3495,
+        "evidence": []
+      },
+      {
+        "term": "les vaccins",
+        "score": 23.9842,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "pour les",
+        "score": 707.5423,
+        "evidence": []
+      },
+      {
+        "term": "les enfants",
+        "score": 674.0111,
+        "evidence": []
+      },
+      {
+        "term": "les journées",
+        "score": 657.9692,
+        "evidence": []
+      },
+      {
+        "term": "dans les",
+        "score": 651.3557,
+        "evidence": []
+      },
+      {
+        "term": "que les",
+        "score": 646.6328,
+        "evidence": []
+      },
+      {
+        "term": "les plus",
+        "score": 623.787,
+        "evidence": []
+      },
+      {
+        "term": "par les",
+        "score": 616.555,
+        "evidence": []
+      },
+      {
+        "term": "vaccination des",
+        "score": 606.9942,
+        "evidence": []
+      },
+      {
+        "term": "les pays",
+        "score": 591.0612,
+        "evidence": []
+      },
+      {
+        "term": "sur les",
+        "score": 586.8405,
+        "evidence": []
+      },
+      {
+        "term": "les vaccins",
+        "score": 586.3195,
+        "evidence": []
+      },
+      {
+        "term": "les services",
+        "score": 585.6163,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "pour les",
+        "score": 25.4478,
+        "evidence": []
+      },
+      {
+        "term": "dans les",
+        "score": 24.6005,
+        "evidence": []
+      },
+      {
+        "term": "par les",
+        "score": 22.5795,
+        "evidence": []
+      },
+      {
+        "term": "sur les",
+        "score": 22.2002,
+        "evidence": []
+      },
+      {
+        "term": "que les",
+        "score": 21.8084,
+        "evidence": []
+      },
+      {
+        "term": "que des",
+        "score": 21.5958,
+        "evidence": []
+      },
+      {
+        "term": "vaccination des",
+        "score": 20.4606,
+        "evidence": []
+      },
+      {
+        "term": "les plus",
+        "score": 20.1173,
+        "evidence": []
+      },
+      {
+        "term": "les pays",
+        "score": 19.9667,
+        "evidence": []
+      },
+      {
+        "term": "ont des",
+        "score": 19.7873,
+        "evidence": []
+      },
+      {
+        "term": "avec les",
+        "score": 19.6286,
+        "evidence": []
+      },
+      {
+        "term": "pour une",
+        "score": 19.054,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "pour les",
+        "score": 682.7386,
+        "evidence": []
+      },
+      {
+        "term": "dans les",
+        "score": 654.2006,
+        "evidence": []
+      },
+      {
+        "term": "par les",
+        "score": 620.993,
+        "evidence": []
+      },
+      {
+        "term": "que les",
+        "score": 601.852,
+        "evidence": []
+      },
+      {
+        "term": "sur les",
+        "score": 593.3164,
+        "evidence": []
+      },
+      {
+        "term": "les données",
+        "score": 554.1579,
+        "evidence": []
+      },
+      {
+        "term": "les plus",
+        "score": 553.6716,
+        "evidence": []
+      },
+      {
+        "term": "avec les",
+        "score": 547.9531,
+        "evidence": []
+      },
+      {
+        "term": "les vaccins",
+        "score": 546.416,
+        "evidence": []
+      },
+      {
+        "term": "les pays",
+        "score": 545.2875,
+        "evidence": []
+      },
+      {
+        "term": "les autres",
+        "score": 525.2826,
+        "evidence": []
+      },
+      {
+        "term": "les soins",
+        "score": 522.8756,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "pour les",
+        "score": 25.4478,
+        "evidence": []
+      },
+      {
+        "term": "dans les",
+        "score": 24.6005,
+        "evidence": []
+      },
+      {
+        "term": "par les",
+        "score": 22.5795,
+        "evidence": []
+      },
+      {
+        "term": "sur les",
+        "score": 22.2002,
+        "evidence": []
+      },
+      {
+        "term": "que les",
+        "score": 21.8084,
+        "evidence": []
+      },
+      {
+        "term": "que des",
+        "score": 21.5958,
+        "evidence": []
+      },
+      {
+        "term": "vaccination des",
+        "score": 20.4606,
+        "evidence": []
+      },
+      {
+        "term": "les plus",
+        "score": 20.1173,
+        "evidence": []
+      },
+      {
+        "term": "les pays",
+        "score": 19.9667,
+        "evidence": []
+      },
+      {
+        "term": "ont des",
+        "score": 19.7873,
+        "evidence": []
+      },
+      {
+        "term": "avec les",
+        "score": 19.6286,
+        "evidence": []
+      },
+      {
+        "term": "pour une",
+        "score": 19.054,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "询问学员这项原则如何应用于紧急情况下的研究",
+        "score": 586.2328,
+        "evidence": []
+      },
+      {
+        "term": "同行评议者或杂志编辑",
+        "score": 547.3682,
+        "evidence": []
+      },
+      {
+        "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+        "score": 547.3682,
+        "evidence": []
+      },
+      {
+        "term": "或一些其他单位",
+        "score": 547.3682,
+        "evidence": []
+      },
+      {
+        "term": "由于这个理由",
+        "score": 535.3528,
+        "evidence": []
+      },
+      {
+        "term": "岁的儿童",
+        "score": 501.0705,
+        "evidence": []
+      },
+      {
+        "term": "关注这一事实",
+        "score": 471.5105,
+        "evidence": []
+      },
+      {
+        "term": "必需的",
+        "score": 442.48,
+        "evidence": []
+      },
+      {
+        "term": "在该案例中可以做些什么来防止或减轻潜在的发表偏倚",
+        "score": 438.0853,
+        "evidence": []
+      },
+      {
+        "term": "该案例中可能存在哪种发表偏倚",
+        "score": 438.0853,
+        "evidence": []
+      },
+      {
+        "term": "该案例如何影响突发事件的应对",
+        "score": 438.0853,
+        "evidence": []
+      },
+      {
+        "term": "该案例研究有提示发表偏倚吗",
+        "score": 438.0853,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "page-002": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "l'organisation mondiale",
+          "score": 1.8387,
+          "evidence": []
+        },
+        {
+          "term": "organisation mondiale",
+          "score": 1.4722,
+          "evidence": []
+        },
+        {
+          "term": "produits commerciaux",
+          "score": 1.3203,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.888,
+          "evidence": []
+        },
+        {
+          "term": "firmes",
+          "score": 0.8297,
+          "evidence": []
+        },
+        {
+          "term": "suisse",
+          "score": 0.7604,
+          "evidence": []
+        },
+        {
+          "term": "quant",
+          "score": 0.6542,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "l'organisation mondiale",
+          "score": 39.0977,
+          "evidence": []
+        },
+        {
+          "term": "organisation mondiale",
+          "score": 29.9291,
+          "evidence": []
+        },
+        {
+          "term": "produits commerciaux",
+          "score": 20.4741,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 18.197,
+          "evidence": []
+        },
+        {
+          "term": "firmes",
+          "score": 13.5568,
+          "evidence": []
+        },
+        {
+          "term": "suisse",
+          "score": 12.1705,
+          "evidence": []
+        },
+        {
+          "term": "quant",
+          "score": 10.4759,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "organisation mondiale",
+          "score": 0.5358,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.4706,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.4567,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.376,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.3598,
+          "evidence": []
+        },
+        {
+          "term": "l'organisation mondiale",
+          "score": 0.2976,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.279,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "santé",
+          "score": 11.9127,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 11.3433,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 8.7115,
+          "evidence": []
+        },
+        {
+          "term": "organisation mondiale",
+          "score": 5.2297,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 5.2001,
+          "evidence": []
+        },
+        {
+          "term": "numérique",
+          "score": 4.7736,
+          "evidence": []
+        },
+        {
+          "term": "consulté",
+          "score": 3.8601,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "organisation mondiale",
+          "score": 0.5358,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.4706,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.4567,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.376,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.3598,
+          "evidence": []
+        },
+        {
+          "term": "l'organisation mondiale",
+          "score": 0.3158,
+          "evidence": []
+        },
+        {
+          "term": "produits commerciaux",
+          "score": 0.2558,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "的材料",
+          "score": 107.1844,
+          "evidence": []
+        },
+        {
+          "term": "abeba",
+          "score": 77.8476,
+          "evidence": []
+        },
+        {
+          "term": "ad-dawhah",
+          "score": 77.8476,
+          "evidence": []
+        },
+        {
+          "term": "al-iskandariyah",
+          "score": 77.8476,
+          "evidence": []
+        },
+        {
+          "term": "al-qahirah",
+          "score": 77.8476,
+          "evidence": []
+        },
+        {
+          "term": "alexandria",
+          "score": 77.8476,
+          "evidence": []
+        },
+        {
+          "term": "alma-ata",
+          "score": 77.8476,
+          "evidence": []
+        }
+      ]
+    },
+    "page-003": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "l'accélération",
+          "score": 1.3535,
+          "evidence": []
+        },
+        {
+          "term": "clef",
+          "score": 0.6396,
+          "evidence": []
+        },
+        {
+          "term": "matieres",
+          "score": 0.6396,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "l'accélération",
+          "score": 29.4648,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 10.216,
+          "evidence": []
+        },
+        {
+          "term": "clef",
+          "score": 8.2825,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "les",
+          "score": 0.1341,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.1333,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.0972,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "des",
+          "score": 5.9626,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 3.033,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 2.079,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "des",
+          "score": 0.1333,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.0944,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.0662,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "科研人员",
+          "score": 47.9322,
+          "evidence": []
+        },
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 46.9634,
+          "evidence": []
+        },
+        {
+          "term": "必需的",
+          "score": 38.5308,
+          "evidence": []
+        }
+      ]
+    },
+    "page-005": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "matériels didactiques",
+          "score": 1.9385,
+          "evidence": []
+        },
+        {
+          "term": "les matériels",
+          "score": 1.7551,
+          "evidence": []
+        },
+        {
+          "term": "pev",
+          "score": 0.9546,
+          "evidence": []
+        },
+        {
+          "term": "fise",
+          "score": 0.9076,
+          "evidence": []
+        },
+        {
+          "term": "procurer",
+          "score": 0.7977,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.7344,
+          "evidence": []
+        },
+        {
+          "term": "genève",
+          "score": 0.7192,
+          "evidence": []
+        },
+        {
+          "term": "l'oms",
+          "score": 0.7064,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "les matériels",
+          "score": 35.8995,
+          "evidence": []
+        },
+        {
+          "term": "matériels didactiques",
+          "score": 31.5402,
+          "evidence": []
+        },
+        {
+          "term": "pev",
+          "score": 18.2558,
+          "evidence": []
+        },
+        {
+          "term": "fise",
+          "score": 14.7324,
+          "evidence": []
+        },
+        {
+          "term": "procurer",
+          "score": 12.9814,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 12.77,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 12.1313,
+          "evidence": []
+        },
+        {
+          "term": "peut",
+          "score": 11.2176,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "les",
+          "score": 0.5779,
+          "evidence": []
+        },
+        {
+          "term": "les matériels",
+          "score": 0.5779,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.5774,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.4232,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.3631,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.3625,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.3107,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.298,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les matériels",
+          "score": 18.2768,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 14.9017,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 8.9117,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 7.4622,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 5.5505,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 5.2813,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 4.4896,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 4.2304,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "les matériels",
+          "score": 0.6118,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.5774,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.4232,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.3631,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.3625,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 0.273,
+          "evidence": []
+        },
+        {
+          "term": "qui",
+          "score": 0.2398,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.2015,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 18.6315,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 16.7614,
+          "evidence": []
+        },
+        {
+          "term": "追踪和报告机制",
+          "score": 13.6865,
+          "evidence": []
+        },
+        {
+          "term": "显而易见",
+          "score": 13.0823,
+          "evidence": []
+        },
+        {
+          "term": "如上所述",
+          "score": 12.0651,
+          "evidence": []
+        },
+        {
+          "term": "削弱免疫应答",
+          "score": 11.9671,
+          "evidence": []
+        },
+        {
+          "term": "增加再住院率和疾病相关并发症",
+          "score": 11.9671,
+          "evidence": []
+        },
+        {
+          "term": "如肾脏",
+          "score": 11.9671,
+          "evidence": []
+        }
+      ]
+    },
+    "page-007": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "les enfants",
+          "score": 1.4639,
+          "evidence": []
+        },
+        {
+          "term": "reçoivent une",
+          "score": 1.3023,
+          "evidence": []
+        },
+        {
+          "term": "nations unies",
+          "score": 1.0965,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.7879,
+          "evidence": []
+        },
+        {
+          "term": "mobiliser",
+          "score": 0.7335,
+          "evidence": []
+        },
+        {
+          "term": "mobilisation",
+          "score": 0.6826,
+          "evidence": []
+        },
+        {
+          "term": "pays",
+          "score": 0.6424,
+          "evidence": []
+        },
+        {
+          "term": "leur",
+          "score": 0.6275,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "les enfants",
+          "score": 30.3974,
+          "evidence": []
+        },
+        {
+          "term": "reçoivent une",
+          "score": 22.7942,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 17.8781,
+          "evidence": []
+        },
+        {
+          "term": "nations unies",
+          "score": 16.6439,
+          "evidence": []
+        },
+        {
+          "term": "pays",
+          "score": 12.8418,
+          "evidence": []
+        },
+        {
+          "term": "mobiliser",
+          "score": 11.8622,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 11.3086,
+          "evidence": []
+        },
+        {
+          "term": "leur",
+          "score": 10.8571,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "les enfants",
+          "score": 0.805,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.6534,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.4745,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.4343,
+          "evidence": []
+        },
+        {
+          "term": "reçoivent une",
+          "score": 0.3734,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 0.3371,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.3163,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.3106,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les enfants",
+          "score": 21.5702,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 14.9152,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 7.931,
+          "evidence": []
+        },
+        {
+          "term": "reçoivent une",
+          "score": 7.7178,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 7.1358,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 6.0543,
+          "evidence": []
+        },
+        {
+          "term": "vaccin",
+          "score": 5.9291,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 5.9066,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "les enfants",
+          "score": 0.805,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.6534,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.4745,
+          "evidence": []
+        },
+        {
+          "term": "reçoivent une",
+          "score": 0.3841,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 0.3371,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.3106,
+          "evidence": []
+        },
+        {
+          "term": "est",
+          "score": 0.2994,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.251,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "由于这个理由",
+          "score": 26.6119,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 24.3132,
+          "evidence": []
+        },
+        {
+          "term": "岁的儿童",
+          "score": 24.1285,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 22.8135,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 22.8135,
+          "evidence": []
+        },
+        {
+          "term": "或一些其他单位",
+          "score": 22.8135,
+          "evidence": []
+        },
+        {
+          "term": "在该案例中可以做些什么来防止或减轻潜在的发表偏倚",
+          "score": 19.6225,
+          "evidence": []
+        },
+        {
+          "term": "该案例中可能存在哪种发表偏倚",
+          "score": 19.6225,
+          "evidence": []
+        }
+      ]
+    },
+    "page-008": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "l'échelon",
+          "score": 1.0207,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.8911,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.8325,
+          "evidence": []
+        },
+        {
+          "term": "naissance",
+          "score": 0.6938,
+          "evidence": []
+        },
+        {
+          "term": "doivent",
+          "score": 0.6823,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.6398,
+          "evidence": []
+        },
+        {
+          "term": "rapidement",
+          "score": 0.6246,
+          "evidence": []
+        },
+        {
+          "term": "mois",
+          "score": 0.6152,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "les",
+          "score": 27.6558,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 20.4321,
+          "evidence": []
+        },
+        {
+          "term": "l'échelon",
+          "score": 16.565,
+          "evidence": []
+        },
+        {
+          "term": "doivent",
+          "score": 12.5395,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 10.5694,
+          "evidence": []
+        },
+        {
+          "term": "naissance",
+          "score": 10.294,
+          "evidence": []
+        },
+        {
+          "term": "rapidement",
+          "score": 10.0488,
+          "evidence": []
+        },
+        {
+          "term": "être",
+          "score": 9.9694,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "les",
+          "score": 0.6074,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.5923,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.4342,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.4013,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.3386,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 0.3189,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.293,
+          "evidence": []
+        },
+        {
+          "term": "qui",
+          "score": 0.2762,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les",
+          "score": 23.5413,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 16.9039,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 8.4039,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 7.4594,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 6.925,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 5.7586,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 5.3733,
+          "evidence": []
+        },
+        {
+          "term": "est",
+          "score": 4.7144,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "les",
+          "score": 0.6074,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.5923,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.4342,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.4013,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.3386,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.293,
+          "evidence": []
+        },
+        {
+          "term": "qui",
+          "score": 0.2762,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.2734,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 28.7637,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 27.068,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 27.068,
+          "evidence": []
+        },
+        {
+          "term": "或一些其他单位",
+          "score": 27.068,
+          "evidence": []
+        },
+        {
+          "term": "由于这个理由",
+          "score": 26.9428,
+          "evidence": []
+        },
+        {
+          "term": "岁的儿童",
+          "score": 26.0444,
+          "evidence": []
+        },
+        {
+          "term": "关注这一事实",
+          "score": 23.526,
+          "evidence": []
+        },
+        {
+          "term": "在该案例中可以做些什么来防止或减轻潜在的发表偏倚",
+          "score": 22.6128,
+          "evidence": []
+        }
+      ]
+    },
+    "page-009": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "antipolio myélitique",
+          "score": 1.9921,
+          "evidence": []
+        },
+        {
+          "term": "vaccin antipolio",
+          "score": 1.7163,
+          "evidence": []
+        },
+        {
+          "term": "les enfants",
+          "score": 1.6936,
+          "evidence": []
+        },
+        {
+          "term": "des enfants",
+          "score": 1.5127,
+          "evidence": []
+        },
+        {
+          "term": "pour les",
+          "score": 1.4495,
+          "evidence": []
+        },
+        {
+          "term": "les groupes",
+          "score": 1.4208,
+          "evidence": []
+        },
+        {
+          "term": "les plus",
+          "score": 1.4058,
+          "evidence": []
+        },
+        {
+          "term": "plus âgés",
+          "score": 1.3449,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "les enfants",
+          "score": 42.206,
+          "evidence": []
+        },
+        {
+          "term": "les plus",
+          "score": 36.0211,
+          "evidence": []
+        },
+        {
+          "term": "pour les",
+          "score": 35.8337,
+          "evidence": []
+        },
+        {
+          "term": "les groupes",
+          "score": 33.9642,
+          "evidence": []
+        },
+        {
+          "term": "antipolio myélitique",
+          "score": 32.319,
+          "evidence": []
+        },
+        {
+          "term": "des enfants",
+          "score": 29.8344,
+          "evidence": []
+        },
+        {
+          "term": "vaccin antipolio",
+          "score": 28.4202,
+          "evidence": []
+        },
+        {
+          "term": "plus âgés",
+          "score": 23.4147,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pour les",
+          "score": 0.9804,
+          "evidence": []
+        },
+        {
+          "term": "les plus",
+          "score": 0.8322,
+          "evidence": []
+        },
+        {
+          "term": "les enfants",
+          "score": 0.7479,
+          "evidence": []
+        },
+        {
+          "term": "des enfants",
+          "score": 0.7438,
+          "evidence": []
+        },
+        {
+          "term": "les groupes",
+          "score": 0.6398,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.3995,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.3796,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 0.3382,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "pour les",
+          "score": 28.5131,
+          "evidence": []
+        },
+        {
+          "term": "les plus",
+          "score": 24.1092,
+          "evidence": []
+        },
+        {
+          "term": "les enfants",
+          "score": 22.4522,
+          "evidence": []
+        },
+        {
+          "term": "les groupes",
+          "score": 21.0315,
+          "evidence": []
+        },
+        {
+          "term": "des enfants",
+          "score": 15.329,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 8.483,
+          "evidence": []
+        },
+        {
+          "term": "vaccin",
+          "score": 7.7701,
+          "evidence": []
+        },
+        {
+          "term": "vaccin antipolio",
+          "score": 7.7701,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pour les",
+          "score": 0.9804,
+          "evidence": []
+        },
+        {
+          "term": "les plus",
+          "score": 0.8322,
+          "evidence": []
+        },
+        {
+          "term": "les enfants",
+          "score": 0.7479,
+          "evidence": []
+        },
+        {
+          "term": "des enfants",
+          "score": 0.7438,
+          "evidence": []
+        },
+        {
+          "term": "les groupes",
+          "score": 0.6398,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.3796,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.3181,
+          "evidence": []
+        },
+        {
+          "term": "plus jeunes",
+          "score": 0.3129,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "由于这个理由",
+          "score": 66.4756,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 65.2274,
+          "evidence": []
+        },
+        {
+          "term": "在该案例中可以做些什么来防止或减轻潜在的发表偏倚",
+          "score": 57.5068,
+          "evidence": []
+        },
+        {
+          "term": "该案例中可能存在哪种发表偏倚",
+          "score": 57.5068,
+          "evidence": []
+        },
+        {
+          "term": "该案例如何影响突发事件的应对",
+          "score": 57.5068,
+          "evidence": []
+        },
+        {
+          "term": "该案例研究有提示发表偏倚吗",
+          "score": 57.5068,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 56.8953,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 56.8953,
+          "evidence": []
+        }
+      ]
+    },
+    "page-010": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "une fois",
+          "score": 1.4035,
+          "evidence": []
+        },
+        {
+          "term": "tous les",
+          "score": 1.3381,
+          "evidence": []
+        },
+        {
+          "term": "doivent être",
+          "score": 1.1397,
+          "evidence": []
+        },
+        {
+          "term": "l'accélération",
+          "score": 0.9239,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.7879,
+          "evidence": []
+        },
+        {
+          "term": "parfois",
+          "score": 0.7511,
+          "evidence": []
+        },
+        {
+          "term": "journées",
+          "score": 0.7475,
+          "evidence": []
+        },
+        {
+          "term": "dès",
+          "score": 0.7073,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "tous les",
+          "score": 32.5572,
+          "evidence": []
+        },
+        {
+          "term": "une fois",
+          "score": 27.7055,
+          "evidence": []
+        },
+        {
+          "term": "doivent être",
+          "score": 19.1858,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 17.8781,
+          "evidence": []
+        },
+        {
+          "term": "l'accélération",
+          "score": 14.7324,
+          "evidence": []
+        },
+        {
+          "term": "pas",
+          "score": 13.4065,
+          "evidence": []
+        },
+        {
+          "term": "parfois",
+          "score": 12.1705,
+          "evidence": []
+        },
+        {
+          "term": "journées",
+          "score": 11.9598,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "tous les",
+          "score": 0.7247,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.5917,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.4277,
+          "evidence": []
+        },
+        {
+          "term": "une fois",
+          "score": 0.4202,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.3907,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 0.3102,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.2884,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.2831,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "tous les",
+          "score": 23.7492,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 15.3477,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 8.5645,
+          "evidence": []
+        },
+        {
+          "term": "une fois",
+          "score": 7.9449,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 6.9652,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 5.8166,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 5.4651,
+          "evidence": []
+        },
+        {
+          "term": "est",
+          "score": 4.7738,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "tous les",
+          "score": 0.7247,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.5917,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.4277,
+          "evidence": []
+        },
+        {
+          "term": "une fois",
+          "score": 0.4202,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.2884,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.2831,
+          "evidence": []
+        },
+        {
+          "term": "doivent être",
+          "score": 0.2425,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.2204,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 29.0403,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 29.0403,
+          "evidence": []
+        },
+        {
+          "term": "或一些其他单位",
+          "score": 29.0403,
+          "evidence": []
+        },
+        {
+          "term": "由于这个理由",
+          "score": 24.1682,
+          "evidence": []
+        },
+        {
+          "term": "一个国际医疗救助机构",
+          "score": 23.8956,
+          "evidence": []
+        },
+        {
+          "term": "作为应对",
+          "score": 23.8956,
+          "evidence": []
+        },
+        {
+          "term": "在过去几周内",
+          "score": 23.8956,
+          "evidence": []
+        },
+        {
+          "term": "村民的生物学标本",
+          "score": 23.8956,
+          "evidence": []
+        }
+      ]
+    },
+    "page-011": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "lorsqu'on planifie",
+          "score": 1.9563,
+          "evidence": []
+        },
+        {
+          "term": "les problèmes",
+          "score": 1.3833,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 1.3682,
+          "evidence": []
+        },
+        {
+          "term": "non seulement",
+          "score": 1.3241,
+          "evidence": []
+        },
+        {
+          "term": "journées nationales",
+          "score": 1.3037,
+          "evidence": []
+        },
+        {
+          "term": "ceux qui",
+          "score": 1.2047,
+          "evidence": []
+        },
+        {
+          "term": "les services",
+          "score": 1.1306,
+          "evidence": []
+        },
+        {
+          "term": "d'un",
+          "score": 0.745,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "lorsqu'on planifie",
+          "score": 31.7436,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 31.1836,
+          "evidence": []
+        },
+        {
+          "term": "les problèmes",
+          "score": 29.4296,
+          "evidence": []
+        },
+        {
+          "term": "les services",
+          "score": 25.0022,
+          "evidence": []
+        },
+        {
+          "term": "ceux qui",
+          "score": 21.2365,
+          "evidence": []
+        },
+        {
+          "term": "journées nationales",
+          "score": 20.5468,
+          "evidence": []
+        },
+        {
+          "term": "non seulement",
+          "score": 19.8916,
+          "evidence": []
+        },
+        {
+          "term": "d'un",
+          "score": 13.5989,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "que les",
+          "score": 0.9002,
+          "evidence": []
+        },
+        {
+          "term": "les services",
+          "score": 0.6803,
+          "evidence": []
+        },
+        {
+          "term": "les problèmes",
+          "score": 0.6414,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.5893,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.4154,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.3843,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.3539,
+          "evidence": []
+        },
+        {
+          "term": "ceux qui",
+          "score": 0.3243,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "que les",
+          "score": 25.5851,
+          "evidence": []
+        },
+        {
+          "term": "les services",
+          "score": 19.6145,
+          "evidence": []
+        },
+        {
+          "term": "les problèmes",
+          "score": 19.2962,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 11.4298,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 7.5874,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 6.9229,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 5.7307,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 5.2522,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "que les",
+          "score": 0.9002,
+          "evidence": []
+        },
+        {
+          "term": "les services",
+          "score": 0.6803,
+          "evidence": []
+        },
+        {
+          "term": "les problèmes",
+          "score": 0.6414,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.5893,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.4154,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.3843,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.3539,
+          "evidence": []
+        },
+        {
+          "term": "ceux qui",
+          "score": 0.3243,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 25.2927,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 15.0196,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 15.0196,
+          "evidence": []
+        },
+        {
+          "term": "或一些其他单位",
+          "score": 15.0196,
+          "evidence": []
+        },
+        {
+          "term": "由于这个理由",
+          "score": 14.4853,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 13.6532,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 12.2203,
+          "evidence": []
+        },
+        {
+          "term": "corroborées",
+          "score": 11.8969,
+          "evidence": []
+        }
+      ]
+    },
+    "page-012": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "pour chaque",
+          "score": 1.3758,
+          "evidence": []
+        },
+        {
+          "term": "les messages",
+          "score": 1.3462,
+          "evidence": []
+        },
+        {
+          "term": "les programmes",
+          "score": 1.2286,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.9415,
+          "evidence": []
+        },
+        {
+          "term": "l'avance",
+          "score": 0.8847,
+          "evidence": []
+        },
+        {
+          "term": "vaccins",
+          "score": 0.7763,
+          "evidence": []
+        },
+        {
+          "term": "suppose",
+          "score": 0.725,
+          "evidence": []
+        },
+        {
+          "term": "devront",
+          "score": 0.6546,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "les messages",
+          "score": 32.4763,
+          "evidence": []
+        },
+        {
+          "term": "pour chaque",
+          "score": 32.2428,
+          "evidence": []
+        },
+        {
+          "term": "les programmes",
+          "score": 31.3333,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 28.0941,
+          "evidence": []
+        },
+        {
+          "term": "vaccins",
+          "score": 15.5031,
+          "evidence": []
+        },
+        {
+          "term": "l'avance",
+          "score": 14.3677,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 13.9988,
+          "evidence": []
+        },
+        {
+          "term": "suppose",
+          "score": 11.7692,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "les programmes",
+          "score": 0.7636,
+          "evidence": []
+        },
+        {
+          "term": "les messages",
+          "score": 0.6905,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.6795,
+          "evidence": []
+        },
+        {
+          "term": "pour chaque",
+          "score": 0.5703,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.4392,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.3959,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 0.3479,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.3411,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les programmes",
+          "score": 27.0536,
+          "evidence": []
+        },
+        {
+          "term": "les messages",
+          "score": 26.4688,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 23.0185,
+          "evidence": []
+        },
+        {
+          "term": "pour chaque",
+          "score": 12.6135,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 8.536,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 8.2319,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 7.2218,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 6.1992,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "les programmes",
+          "score": 0.7636,
+          "evidence": []
+        },
+        {
+          "term": "les messages",
+          "score": 0.7091,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.6795,
+          "evidence": []
+        },
+        {
+          "term": "pour chaque",
+          "score": 0.5703,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.4392,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.3959,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 0.3479,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.3193,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 15.0684,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 13.8615,
+          "evidence": []
+        },
+        {
+          "term": "一个国际医疗救助机构",
+          "score": 13.3032,
+          "evidence": []
+        },
+        {
+          "term": "作为应对",
+          "score": 13.3032,
+          "evidence": []
+        },
+        {
+          "term": "在过去几周内",
+          "score": 13.3032,
+          "evidence": []
+        },
+        {
+          "term": "村民的生物学标本",
+          "score": 13.3032,
+          "evidence": []
+        },
+        {
+          "term": "椰香天堂共和国的边远村庄报告了一种新",
+          "score": 13.3032,
+          "evidence": []
+        },
+        {
+          "term": "的高致死性流感病毒所引起的散发病例",
+          "score": 13.3032,
+          "evidence": []
+        }
+      ]
+    },
+    "page-013": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "des programmes",
+          "score": 1.3102,
+          "evidence": []
+        },
+        {
+          "term": "l'on peut",
+          "score": 1.2704,
+          "evidence": []
+        },
+        {
+          "term": "quatre mois",
+          "score": 1.2525,
+          "evidence": []
+        },
+        {
+          "term": "que l'on",
+          "score": 1.2055,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.8257,
+          "evidence": []
+        },
+        {
+          "term": "journée",
+          "score": 0.8054,
+          "evidence": []
+        },
+        {
+          "term": "prévoir",
+          "score": 0.7583,
+          "evidence": []
+        },
+        {
+          "term": "qu'ils",
+          "score": 0.7179,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "des programmes",
+          "score": 34.2857,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 22.6275,
+          "evidence": []
+        },
+        {
+          "term": "l'on peut",
+          "score": 19.6489,
+          "evidence": []
+        },
+        {
+          "term": "quatre mois",
+          "score": 19.2748,
+          "evidence": []
+        },
+        {
+          "term": "que l'on",
+          "score": 18.8127,
+          "evidence": []
+        },
+        {
+          "term": "journée",
+          "score": 12.9814,
+          "evidence": []
+        },
+        {
+          "term": "prévoir",
+          "score": 12.2848,
+          "evidence": []
+        },
+        {
+          "term": "qu'ils",
+          "score": 11.5952,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "des programmes",
+          "score": 0.6704,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.6102,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.4284,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.398,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.369,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 0.325,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.2997,
+          "evidence": []
+        },
+        {
+          "term": "que l'on",
+          "score": 0.2997,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les",
+          "score": 21.7992,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 20.4964,
+          "evidence": []
+        },
+        {
+          "term": "des programmes",
+          "score": 20.4964,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 9.27,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 7.387,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 6.9149,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 5.9589,
+          "evidence": []
+        },
+        {
+          "term": "vaccin",
+          "score": 5.2477,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "des programmes",
+          "score": 0.6704,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.6102,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.4284,
+          "evidence": []
+        },
+        {
+          "term": "que l'on",
+          "score": 0.3244,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.2914,
+          "evidence": []
+        },
+        {
+          "term": "est",
+          "score": 0.2787,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.2459,
+          "evidence": []
+        },
+        {
+          "term": "sont",
+          "score": 0.2254,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 20.1968,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 18.0527,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 17.8818,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 17.8818,
+          "evidence": []
+        },
+        {
+          "term": "或一些其他单位",
+          "score": 17.8818,
+          "evidence": []
+        },
+        {
+          "term": "岁的儿童",
+          "score": 17.1391,
+          "evidence": []
+        },
+        {
+          "term": "由于这个理由",
+          "score": 16.5404,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 15.5749,
+          "evidence": []
+        }
+      ]
+    },
+    "page-014": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "des vaccins",
+          "score": 1.4024,
+          "evidence": []
+        },
+        {
+          "term": "peut être",
+          "score": 1.33,
+          "evidence": []
+        },
+        {
+          "term": "services existants",
+          "score": 1.2953,
+          "evidence": []
+        },
+        {
+          "term": "long terme",
+          "score": 1.2473,
+          "evidence": []
+        },
+        {
+          "term": "les efforts",
+          "score": 1.1638,
+          "evidence": []
+        },
+        {
+          "term": "les programmes",
+          "score": 0.99,
+          "evidence": []
+        },
+        {
+          "term": "c'est",
+          "score": 0.8286,
+          "evidence": []
+        },
+        {
+          "term": "primaires",
+          "score": 0.6613,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "des vaccins",
+          "score": 30.7376,
+          "evidence": []
+        },
+        {
+          "term": "des services",
+          "score": 29.5046,
+          "evidence": []
+        },
+        {
+          "term": "services existants",
+          "score": 25.9775,
+          "evidence": []
+        },
+        {
+          "term": "peut être",
+          "score": 24.9262,
+          "evidence": []
+        },
+        {
+          "term": "les efforts",
+          "score": 23.6182,
+          "evidence": []
+        },
+        {
+          "term": "long terme",
+          "score": 20.3179,
+          "evidence": []
+        },
+        {
+          "term": "les programmes",
+          "score": 19.2127,
+          "evidence": []
+        },
+        {
+          "term": "c'est",
+          "score": 13.3461,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "des vaccins",
+          "score": 0.6973,
+          "evidence": []
+        },
+        {
+          "term": "des services",
+          "score": 0.6576,
+          "evidence": []
+        },
+        {
+          "term": "les programmes",
+          "score": 0.6388,
+          "evidence": []
+        },
+        {
+          "term": "les efforts",
+          "score": 0.5758,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.402,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.3745,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.3352,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 0.295,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "des vaccins",
+          "score": 20.0764,
+          "evidence": []
+        },
+        {
+          "term": "des services",
+          "score": 18.9163,
+          "evidence": []
+        },
+        {
+          "term": "les programmes",
+          "score": 18.309,
+          "evidence": []
+        },
+        {
+          "term": "les efforts",
+          "score": 17.8802,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 7.327,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 6.7739,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 5.9591,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 5.0692,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "des vaccins",
+          "score": 0.6973,
+          "evidence": []
+        },
+        {
+          "term": "des services",
+          "score": 0.6576,
+          "evidence": []
+        },
+        {
+          "term": "les programmes",
+          "score": 0.6388,
+          "evidence": []
+        },
+        {
+          "term": "les efforts",
+          "score": 0.6089,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.402,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.3745,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.3352,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 0.295,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "岁的儿童",
+          "score": 18.2051,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 18.069,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 18.0014,
+          "evidence": []
+        },
+        {
+          "term": "必需的",
+          "score": 16.9762,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 16.3835,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 15.2413,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 15.2413,
+          "evidence": []
+        },
+        {
+          "term": "或一些其他单位",
+          "score": 15.2413,
+          "evidence": []
+        }
+      ]
+    },
+    "page-015": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "les dispensaires",
+          "score": 2.511,
+          "evidence": []
+        },
+        {
+          "term": "recenser les",
+          "score": 1.9714,
+          "evidence": []
+        },
+        {
+          "term": "les enfants",
+          "score": 1.9422,
+          "evidence": []
+        },
+        {
+          "term": "trop souvent",
+          "score": 1.6588,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 1.6024,
+          "evidence": []
+        },
+        {
+          "term": "les services",
+          "score": 1.5063,
+          "evidence": []
+        },
+        {
+          "term": "sont souvent",
+          "score": 1.4877,
+          "evidence": []
+        },
+        {
+          "term": "elles doivent",
+          "score": 1.3707,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "les dispensaires",
+          "score": 83.1547,
+          "evidence": []
+        },
+        {
+          "term": "les enfants",
+          "score": 69.8618,
+          "evidence": []
+        },
+        {
+          "term": "recenser les",
+          "score": 66.5898,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 60.9802,
+          "evidence": []
+        },
+        {
+          "term": "les services",
+          "score": 59.3159,
+          "evidence": []
+        },
+        {
+          "term": "trop souvent",
+          "score": 33.711,
+          "evidence": []
+        },
+        {
+          "term": "sont souvent",
+          "score": 31.0276,
+          "evidence": []
+        },
+        {
+          "term": "elles doivent",
+          "score": 25.8817,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "dans les",
+          "score": 1.0779,
+          "evidence": []
+        },
+        {
+          "term": "les enfants",
+          "score": 0.7848,
+          "evidence": []
+        },
+        {
+          "term": "les services",
+          "score": 0.7846,
+          "evidence": []
+        },
+        {
+          "term": "les dispensaires",
+          "score": 0.6638,
+          "evidence": []
+        },
+        {
+          "term": "recenser les",
+          "score": 0.6638,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.6442,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.4513,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.361,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "dans les",
+          "score": 44.041,
+          "evidence": []
+        },
+        {
+          "term": "les services",
+          "score": 36.2372,
+          "evidence": []
+        },
+        {
+          "term": "les enfants",
+          "score": 36.1287,
+          "evidence": []
+        },
+        {
+          "term": "les dispensaires",
+          "score": 34.8274,
+          "evidence": []
+        },
+        {
+          "term": "recenser les",
+          "score": 34.8274,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 19.0093,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 10.9784,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 9.3451,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "dans les",
+          "score": 1.0779,
+          "evidence": []
+        },
+        {
+          "term": "les enfants",
+          "score": 0.7848,
+          "evidence": []
+        },
+        {
+          "term": "les services",
+          "score": 0.7846,
+          "evidence": []
+        },
+        {
+          "term": "les dispensaires",
+          "score": 0.6702,
+          "evidence": []
+        },
+        {
+          "term": "recenser les",
+          "score": 0.6638,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.6442,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.3316,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.2982,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "显而易见",
+          "score": 19.372,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 18.667,
+          "evidence": []
+        },
+        {
+          "term": "岁的儿童",
+          "score": 18.4505,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 17.917,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 17.917,
+          "evidence": []
+        },
+        {
+          "term": "或一些其他单位",
+          "score": 17.917,
+          "evidence": []
+        },
+        {
+          "term": "非同寻常",
+          "score": 17.3342,
+          "evidence": []
+        },
+        {
+          "term": "一个国际医疗救助机构",
+          "score": 17.12,
+          "evidence": []
+        }
+      ]
+    },
+    "page-016": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "les écoliers",
+          "score": 1.8624,
+          "evidence": []
+        },
+        {
+          "term": "les efforts",
+          "score": 1.2604,
+          "evidence": []
+        },
+        {
+          "term": "couverture vaccinale",
+          "score": 1.1947,
+          "evidence": []
+        },
+        {
+          "term": "des services",
+          "score": 1.0077,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.8176,
+          "evidence": []
+        },
+        {
+          "term": "inde",
+          "score": 0.6758,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.6398,
+          "evidence": []
+        },
+        {
+          "term": "communauté",
+          "score": 0.5956,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "les écoliers",
+          "score": 43.4098,
+          "evidence": []
+        },
+        {
+          "term": "les efforts",
+          "score": 33.3446,
+          "evidence": []
+        },
+        {
+          "term": "couverture vaccinale",
+          "score": 18.1394,
+          "evidence": []
+        },
+        {
+          "term": "des services",
+          "score": 16.7345,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 15.1642,
+          "evidence": []
+        },
+        {
+          "term": "inde",
+          "score": 10.7294,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 10.5694,
+          "evidence": []
+        },
+        {
+          "term": "ont",
+          "score": 9.7172,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "des services",
+          "score": 0.7013,
+          "evidence": []
+        },
+        {
+          "term": "les efforts",
+          "score": 0.6391,
+          "evidence": []
+        },
+        {
+          "term": "les écoliers",
+          "score": 0.603,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.4248,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.3798,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.3163,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.3162,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.2913,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les",
+          "score": 20.7613,
+          "evidence": []
+        },
+        {
+          "term": "les écoliers",
+          "score": 20.7613,
+          "evidence": []
+        },
+        {
+          "term": "les efforts",
+          "score": 20.7613,
+          "evidence": []
+        },
+        {
+          "term": "des services",
+          "score": 16.5803,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 9.1465,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 7.4896,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 6.3298,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 5.54,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "des services",
+          "score": 0.7013,
+          "evidence": []
+        },
+        {
+          "term": "les efforts",
+          "score": 0.6391,
+          "evidence": []
+        },
+        {
+          "term": "les écoliers",
+          "score": 0.6072,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.4248,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.3798,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.3163,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.2913,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 0.2859,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 13.9949,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 13.9949,
+          "evidence": []
+        },
+        {
+          "term": "或一些其他单位",
+          "score": 13.9949,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 12.1394,
+          "evidence": []
+        },
+        {
+          "term": "岁的儿童",
+          "score": 11.8976,
+          "evidence": []
+        },
+        {
+          "term": "由于这个理由",
+          "score": 11.7396,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 11.4312,
+          "evidence": []
+        },
+        {
+          "term": "必需的",
+          "score": 11.3963,
+          "evidence": []
+        }
+      ]
+    },
+    "page-017": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "couverture par",
+          "score": 1.2269,
+          "evidence": []
+        },
+        {
+          "term": "vaccination des",
+          "score": 1.1609,
+          "evidence": []
+        },
+        {
+          "term": "rougeole",
+          "score": 0.9489,
+          "evidence": []
+        },
+        {
+          "term": "dtc",
+          "score": 0.8329,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.7457,
+          "evidence": []
+        },
+        {
+          "term": "présenter",
+          "score": 0.7129,
+          "evidence": []
+        },
+        {
+          "term": "vaccin",
+          "score": 0.6956,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "couverture par",
+          "score": 20.9963,
+          "evidence": []
+        },
+        {
+          "term": "vaccination des",
+          "score": 18.1431,
+          "evidence": []
+        },
+        {
+          "term": "rougeole",
+          "score": 17.7933,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 17.5991,
+          "evidence": []
+        },
+        {
+          "term": "dtc",
+          "score": 12.5352,
+          "evidence": []
+        },
+        {
+          "term": "vaccin",
+          "score": 11.8552,
+          "evidence": []
+        },
+        {
+          "term": "présenter",
+          "score": 11.5952,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "vaccination des",
+          "score": 0.7063,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.469,
+          "evidence": []
+        },
+        {
+          "term": "couverture par",
+          "score": 0.3206,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.32,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.3161,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.2794,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.2232,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "vaccination des",
+          "score": 14.6881,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 14.2367,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 5.8541,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 5.7582,
+          "evidence": []
+        },
+        {
+          "term": "vaccin",
+          "score": 5.3201,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 5.2034,
+          "evidence": []
+        },
+        {
+          "term": "couverture par",
+          "score": 5.0757,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "vaccination des",
+          "score": 0.7063,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.469,
+          "evidence": []
+        },
+        {
+          "term": "couverture par",
+          "score": 0.3206,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.3161,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.2232,
+          "evidence": []
+        },
+        {
+          "term": "est",
+          "score": 0.2172,
+          "evidence": []
+        },
+        {
+          "term": "qui",
+          "score": 0.1958,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "由于这个理由",
+          "score": 41.6456,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 39.2529,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 39.2529,
+          "evidence": []
+        },
+        {
+          "term": "或一些其他单位",
+          "score": 39.2529,
+          "evidence": []
+        },
+        {
+          "term": "在该案例中可以做些什么来防止或减轻潜在的发表偏倚",
+          "score": 38.8916,
+          "evidence": []
+        },
+        {
+          "term": "该案例中可能存在哪种发表偏倚",
+          "score": 38.8916,
+          "evidence": []
+        },
+        {
+          "term": "该案例如何影响突发事件的应对",
+          "score": 38.8916,
+          "evidence": []
+        }
+      ]
+    },
+    "page-018": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "dans les",
+          "score": 1.4866,
+          "evidence": []
+        },
+        {
+          "term": "cette maladie",
+          "score": 1.1982,
+          "evidence": []
+        },
+        {
+          "term": "couverture vaccinale",
+          "score": 1.1947,
+          "evidence": []
+        },
+        {
+          "term": "pour les",
+          "score": 1.1482,
+          "evidence": []
+        },
+        {
+          "term": "urbaines",
+          "score": 0.9076,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.7373,
+          "evidence": []
+        },
+        {
+          "term": "poliomyélite",
+          "score": 0.634,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.6326,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "dans les",
+          "score": 36.6922,
+          "evidence": []
+        },
+        {
+          "term": "pour les",
+          "score": 22.9452,
+          "evidence": []
+        },
+        {
+          "term": "cette maladie",
+          "score": 20.7135,
+          "evidence": []
+        },
+        {
+          "term": "couverture vaccinale",
+          "score": 18.1394,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 15.324,
+          "evidence": []
+        },
+        {
+          "term": "urbaines",
+          "score": 14.7324,
+          "evidence": []
+        },
+        {
+          "term": "être",
+          "score": 9.9694,
+          "evidence": []
+        },
+        {
+          "term": "poliomyélite",
+          "score": 9.5122,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pour les",
+          "score": 1.0606,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 1.0302,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.614,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.355,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 0.3215,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.2867,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.2857,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.2744,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "dans les",
+          "score": 25.476,
+          "evidence": []
+        },
+        {
+          "term": "pour les",
+          "score": 25.2761,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 15.9194,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 6.4193,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 6.2764,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 5.2187,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 5.2113,
+          "evidence": []
+        },
+        {
+          "term": "vaccin",
+          "score": 4.4138,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pour les",
+          "score": 1.0606,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 1.0302,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.614,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 0.3215,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.2857,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.2744,
+          "evidence": []
+        },
+        {
+          "term": "qui",
+          "score": 0.2628,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.2622,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "由于这个理由",
+          "score": 31.3367,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 30.9669,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 28.6542,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 28.6542,
+          "evidence": []
+        },
+        {
+          "term": "或一些其他单位",
+          "score": 28.6542,
+          "evidence": []
+        },
+        {
+          "term": "在该案例中可以做些什么来防止或减轻潜在的发表偏倚",
+          "score": 27.8499,
+          "evidence": []
+        },
+        {
+          "term": "该案例中可能存在哪种发表偏倚",
+          "score": 27.8499,
+          "evidence": []
+        },
+        {
+          "term": "该案例如何影响突发事件的应对",
+          "score": 27.8499,
+          "evidence": []
+        }
+      ]
+    },
+    "page-019": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "dans l'immédiat",
+          "score": 1.6098,
+          "evidence": []
+        },
+        {
+          "term": "par une",
+          "score": 1.2231,
+          "evidence": []
+        },
+        {
+          "term": "des services",
+          "score": 1.1306,
+          "evidence": []
+        },
+        {
+          "term": "réussite",
+          "score": 0.8011,
+          "evidence": []
+        },
+        {
+          "term": "journées",
+          "score": 0.7475,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.6978,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.5511,
+          "evidence": []
+        },
+        {
+          "term": "qui",
+          "score": 0.5375,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "dans l'immédiat",
+          "score": 29.392,
+          "evidence": []
+        },
+        {
+          "term": "par une",
+          "score": 25.2801,
+          "evidence": []
+        },
+        {
+          "term": "des services",
+          "score": 22.7669,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 15.085,
+          "evidence": []
+        },
+        {
+          "term": "réussite",
+          "score": 12.9814,
+          "evidence": []
+        },
+        {
+          "term": "journées",
+          "score": 11.9598,
+          "evidence": []
+        },
+        {
+          "term": "est",
+          "score": 8.96,
+          "evidence": []
+        },
+        {
+          "term": "qui",
+          "score": 8.96,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "des services",
+          "score": 0.7421,
+          "evidence": []
+        },
+        {
+          "term": "par une",
+          "score": 0.6899,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.6563,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.448,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.4184,
+          "evidence": []
+        },
+        {
+          "term": "dans l'immédiat",
+          "score": 0.4184,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.3158,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.2894,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les",
+          "score": 18.3385,
+          "evidence": []
+        },
+        {
+          "term": "des services",
+          "score": 17.5071,
+          "evidence": []
+        },
+        {
+          "term": "par une",
+          "score": 12.742,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 7.2742,
+          "evidence": []
+        },
+        {
+          "term": "dans l'immédiat",
+          "score": 7.2742,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 6.9385,
+          "evidence": []
+        },
+        {
+          "term": "vaccin",
+          "score": 5.4583,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 5.3384,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "des services",
+          "score": 0.7421,
+          "evidence": []
+        },
+        {
+          "term": "par une",
+          "score": 0.6899,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.6563,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.448,
+          "evidence": []
+        },
+        {
+          "term": "dans l'immédiat",
+          "score": 0.4216,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.2894,
+          "evidence": []
+        },
+        {
+          "term": "est",
+          "score": 0.288,
+          "evidence": []
+        },
+        {
+          "term": "qui",
+          "score": 0.2764,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "由于这个理由",
+          "score": 26.1454,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 24.4015,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 24.4015,
+          "evidence": []
+        },
+        {
+          "term": "或一些其他单位",
+          "score": 24.4015,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 23.877,
+          "evidence": []
+        },
+        {
+          "term": "岁的儿童",
+          "score": 23.5471,
+          "evidence": []
+        },
+        {
+          "term": "在该案例中可以做些什么来防止或减轻潜在的发表偏倚",
+          "score": 22.7051,
+          "evidence": []
+        },
+        {
+          "term": "该案例中可能存在哪种发表偏倚",
+          "score": 22.7051,
+          "evidence": []
+        }
+      ]
+    },
+    "page-020": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "des journées",
+          "score": 1.5354,
+          "evidence": []
+        },
+        {
+          "term": "les enfants",
+          "score": 1.3571,
+          "evidence": []
+        },
+        {
+          "term": "journées nationales",
+          "score": 1.3037,
+          "evidence": []
+        },
+        {
+          "term": "peuvent être",
+          "score": 1.2169,
+          "evidence": []
+        },
+        {
+          "term": "les efforts",
+          "score": 1.1572,
+          "evidence": []
+        },
+        {
+          "term": "l'on",
+          "score": 0.9546,
+          "evidence": []
+        },
+        {
+          "term": "participer",
+          "score": 0.7877,
+          "evidence": []
+        },
+        {
+          "term": "sont",
+          "score": 0.7618,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "des journées",
+          "score": 29.8379,
+          "evidence": []
+        },
+        {
+          "term": "les enfants",
+          "score": 28.6455,
+          "evidence": []
+        },
+        {
+          "term": "les efforts",
+          "score": 25.8021,
+          "evidence": []
+        },
+        {
+          "term": "peuvent être",
+          "score": 21.8897,
+          "evidence": []
+        },
+        {
+          "term": "journées nationales",
+          "score": 20.5468,
+          "evidence": []
+        },
+        {
+          "term": "sont",
+          "score": 18.672,
+          "evidence": []
+        },
+        {
+          "term": "l'on",
+          "score": 18.2558,
+          "evidence": []
+        },
+        {
+          "term": "qui",
+          "score": 14.9333,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "les enfants",
+          "score": 0.6967,
+          "evidence": []
+        },
+        {
+          "term": "les efforts",
+          "score": 0.58,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.5663,
+          "evidence": []
+        },
+        {
+          "term": "des journées",
+          "score": 0.5663,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.3945,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.3739,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.3404,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 0.3069,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les enfants",
+          "score": 21.2757,
+          "evidence": []
+        },
+        {
+          "term": "les efforts",
+          "score": 19.8635,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 14.6594,
+          "evidence": []
+        },
+        {
+          "term": "des journées",
+          "score": 14.6594,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 6.8959,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 6.7435,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 6.5125,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 6.2438,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "les enfants",
+          "score": 0.6967,
+          "evidence": []
+        },
+        {
+          "term": "les efforts",
+          "score": 0.6071,
+          "evidence": []
+        },
+        {
+          "term": "des journées",
+          "score": 0.5821,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.292,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.2799,
+          "evidence": []
+        },
+        {
+          "term": "peuvent être",
+          "score": 0.2745,
+          "evidence": []
+        },
+        {
+          "term": "est",
+          "score": 0.2721,
+          "evidence": []
+        },
+        {
+          "term": "qui",
+          "score": 0.2625,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 28.3726,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 28.3726,
+          "evidence": []
+        },
+        {
+          "term": "或一些其他单位",
+          "score": 28.3726,
+          "evidence": []
+        },
+        {
+          "term": "由于这个理由",
+          "score": 26.8489,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 26.6617,
+          "evidence": []
+        },
+        {
+          "term": "在该案例中可以做些什么来防止或减轻潜在的发表偏倚",
+          "score": 25.9028,
+          "evidence": []
+        },
+        {
+          "term": "该案例中可能存在哪种发表偏倚",
+          "score": 25.9028,
+          "evidence": []
+        },
+        {
+          "term": "该案例如何影响突发事件的应对",
+          "score": 25.9028,
+          "evidence": []
+        }
+      ]
+    },
+    "page-021": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "s'il n'est",
+          "score": 1.5054,
+          "evidence": []
+        },
+        {
+          "term": "journées nationales",
+          "score": 1.4995,
+          "evidence": []
+        },
+        {
+          "term": "pour les",
+          "score": 1.3223,
+          "evidence": []
+        },
+        {
+          "term": "vagues",
+          "score": 1.0207,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.7736,
+          "evidence": []
+        },
+        {
+          "term": "faut",
+          "score": 0.767,
+          "evidence": []
+        },
+        {
+          "term": "campagne",
+          "score": 0.7533,
+          "evidence": []
+        },
+        {
+          "term": "maladie",
+          "score": 0.7308,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "pour les",
+          "score": 35.516,
+          "evidence": []
+        },
+        {
+          "term": "journées nationales",
+          "score": 26.5267,
+          "evidence": []
+        },
+        {
+          "term": "s'il n'est",
+          "score": 23.96,
+          "evidence": []
+        },
+        {
+          "term": "vagues",
+          "score": 16.565,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 15.8541,
+          "evidence": []
+        },
+        {
+          "term": "faut",
+          "score": 14.2246,
+          "evidence": []
+        },
+        {
+          "term": "maladie",
+          "score": 13.7067,
+          "evidence": []
+        },
+        {
+          "term": "aussi",
+          "score": 12.3708,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pour les",
+          "score": 0.9849,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.5688,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.3784,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.3393,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 0.3078,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.2837,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.2825,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.2807,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "pour les",
+          "score": 30.0612,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 10.0951,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 6.8541,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 6.0354,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 5.7125,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 5.3521,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 5.3323,
+          "evidence": []
+        },
+        {
+          "term": "est",
+          "score": 4.3679,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pour les",
+          "score": 0.9849,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.2825,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.2807,
+          "evidence": []
+        },
+        {
+          "term": "qui",
+          "score": 0.2684,
+          "evidence": []
+        },
+        {
+          "term": "est",
+          "score": 0.2683,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.2503,
+          "evidence": []
+        },
+        {
+          "term": "aux",
+          "score": 0.2449,
+          "evidence": []
+        },
+        {
+          "term": "peut",
+          "score": 0.1286,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "由于这个理由",
+          "score": 34.2234,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 31.2293,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 31.2293,
+          "evidence": []
+        },
+        {
+          "term": "或一些其他单位",
+          "score": 31.2293,
+          "evidence": []
+        },
+        {
+          "term": "岁的儿童",
+          "score": 30.435,
+          "evidence": []
+        },
+        {
+          "term": "在该案例中可以做些什么来防止或减轻潜在的发表偏倚",
+          "score": 28.0923,
+          "evidence": []
+        },
+        {
+          "term": "该案例中可能存在哪种发表偏倚",
+          "score": 28.0923,
+          "evidence": []
+        },
+        {
+          "term": "该案例如何影响突发事件的应对",
+          "score": 28.0923,
+          "evidence": []
+        }
+      ]
+    },
+    "page-022": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "enfants justiciables",
+          "score": 2.3767,
+          "evidence": []
+        },
+        {
+          "term": "des enfants",
+          "score": 1.9497,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 1.5411,
+          "evidence": []
+        },
+        {
+          "term": "nombre des",
+          "score": 1.5393,
+          "evidence": []
+        },
+        {
+          "term": "aux enfants",
+          "score": 1.5215,
+          "evidence": []
+        },
+        {
+          "term": "pourra être",
+          "score": 1.4203,
+          "evidence": []
+        },
+        {
+          "term": "agents bénévoles",
+          "score": 1.3975,
+          "evidence": []
+        },
+        {
+          "term": "n'ont pas",
+          "score": 1.3944,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "enfants justiciables",
+          "score": 54.7101,
+          "evidence": []
+        },
+        {
+          "term": "des enfants",
+          "score": 52.8488,
+          "evidence": []
+        },
+        {
+          "term": "aux enfants",
+          "score": 35.7768,
+          "evidence": []
+        },
+        {
+          "term": "nombre des",
+          "score": 34.9621,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 34.6134,
+          "evidence": []
+        },
+        {
+          "term": "pourra être",
+          "score": 25.4631,
+          "evidence": []
+        },
+        {
+          "term": "n'ont pas",
+          "score": 23.2103,
+          "evidence": []
+        },
+        {
+          "term": "agents bénévoles",
+          "score": 21.9629,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "que les",
+          "score": 0.8846,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 0.7823,
+          "evidence": []
+        },
+        {
+          "term": "des enfants",
+          "score": 0.7292,
+          "evidence": []
+        },
+        {
+          "term": "nombre des",
+          "score": 0.7069,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.4012,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.3935,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.3846,
+          "evidence": []
+        },
+        {
+          "term": "aux enfants",
+          "score": 0.3721,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "que les",
+          "score": 22.7128,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 20.5706,
+          "evidence": []
+        },
+        {
+          "term": "des enfants",
+          "score": 18.9369,
+          "evidence": []
+        },
+        {
+          "term": "nombre des",
+          "score": 18.3008,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 7.7727,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 7.7578,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 7.2387,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 6.1501,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "que les",
+          "score": 0.8846,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 0.7823,
+          "evidence": []
+        },
+        {
+          "term": "des enfants",
+          "score": 0.7292,
+          "evidence": []
+        },
+        {
+          "term": "nombre des",
+          "score": 0.7069,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.3935,
+          "evidence": []
+        },
+        {
+          "term": "aux enfants",
+          "score": 0.3721,
+          "evidence": []
+        },
+        {
+          "term": "est",
+          "score": 0.3077,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.3038,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "由于这个理由",
+          "score": 53.0309,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 52.5428,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 52.5428,
+          "evidence": []
+        },
+        {
+          "term": "或一些其他单位",
+          "score": 52.5428,
+          "evidence": []
+        },
+        {
+          "term": "在该案例中可以做些什么来防止或减轻潜在的发表偏倚",
+          "score": 49.3438,
+          "evidence": []
+        },
+        {
+          "term": "该案例中可能存在哪种发表偏倚",
+          "score": 49.3438,
+          "evidence": []
+        },
+        {
+          "term": "该案例如何影响突发事件的应对",
+          "score": 49.3438,
+          "evidence": []
+        },
+        {
+          "term": "该案例研究有提示发表偏倚吗",
+          "score": 49.3438,
+          "evidence": []
+        }
+      ]
+    },
+    "page-023": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "tétanos néonatal",
+          "score": 1.5551,
+          "evidence": []
+        },
+        {
+          "term": "dans ces",
+          "score": 1.0062,
+          "evidence": []
+        },
+        {
+          "term": "tétanique",
+          "score": 0.9714,
+          "evidence": []
+        },
+        {
+          "term": "inscriptions",
+          "score": 0.8741,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.8266,
+          "evidence": []
+        },
+        {
+          "term": "logistique",
+          "score": 0.6764,
+          "evidence": []
+        },
+        {
+          "term": "aux",
+          "score": 0.6508,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.6425,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "tétanos néonatal",
+          "score": 25.2663,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 18.4965,
+          "evidence": []
+        },
+        {
+          "term": "dans ces",
+          "score": 17.3001,
+          "evidence": []
+        },
+        {
+          "term": "tétanique",
+          "score": 15.754,
+          "evidence": []
+        },
+        {
+          "term": "inscriptions",
+          "score": 14.0594,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 12.5708,
+          "evidence": []
+        },
+        {
+          "term": "aux",
+          "score": 11.8281,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 11.1991,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "les",
+          "score": 0.6379,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.6347,
+          "evidence": []
+        },
+        {
+          "term": "dans ces",
+          "score": 0.6086,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.4372,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.3886,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 0.3457,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.3178,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.3037,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les",
+          "score": 16.8754,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 10.1643,
+          "evidence": []
+        },
+        {
+          "term": "dans ces",
+          "score": 8.1465,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 6.7813,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 6.3802,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 5.8313,
+          "evidence": []
+        },
+        {
+          "term": "vaccin",
+          "score": 5.1594,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 5.0741,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "les",
+          "score": 0.6379,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.6347,
+          "evidence": []
+        },
+        {
+          "term": "dans ces",
+          "score": 0.6086,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.4372,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.3886,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 0.3457,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.3178,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.3037,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 31.2171,
+          "evidence": []
+        },
+        {
+          "term": "由于这个理由",
+          "score": 29.3602,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 27.6206,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 27.6206,
+          "evidence": []
+        },
+        {
+          "term": "或一些其他单位",
+          "score": 27.6206,
+          "evidence": []
+        },
+        {
+          "term": "岁的儿童",
+          "score": 27.6098,
+          "evidence": []
+        },
+        {
+          "term": "在该案例中可以做些什么来防止或减轻潜在的发表偏倚",
+          "score": 24.2559,
+          "evidence": []
+        },
+        {
+          "term": "该案例中可能存在哪种发表偏倚",
+          "score": 24.2559,
+          "evidence": []
+        }
+      ]
+    },
+    "page-024": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "mobilisation sociale",
+          "score": 1.5286,
+          "evidence": []
+        },
+        {
+          "term": "pour assurer",
+          "score": 1.1584,
+          "evidence": []
+        },
+        {
+          "term": "stratégie long",
+          "score": 1.1124,
+          "evidence": []
+        },
+        {
+          "term": "long terme",
+          "score": 1.0773,
+          "evidence": []
+        },
+        {
+          "term": "mêres",
+          "score": 1.0207,
+          "evidence": []
+        },
+        {
+          "term": "journées",
+          "score": 0.9432,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.8325,
+          "evidence": []
+        },
+        {
+          "term": "qui",
+          "score": 0.7544,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "mobilisation sociale",
+          "score": 26.8524,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 20.4321,
+          "evidence": []
+        },
+        {
+          "term": "pour assurer",
+          "score": 19.4131,
+          "evidence": []
+        },
+        {
+          "term": "stratégie long",
+          "score": 18.979,
+          "evidence": []
+        },
+        {
+          "term": "journées",
+          "score": 17.9397,
+          "evidence": []
+        },
+        {
+          "term": "qui",
+          "score": 17.92,
+          "evidence": []
+        },
+        {
+          "term": "mêres",
+          "score": 16.565,
+          "evidence": []
+        },
+        {
+          "term": "long terme",
+          "score": 15.7242,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "les",
+          "score": 0.6002,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.5841,
+          "evidence": []
+        },
+        {
+          "term": "pour assurer",
+          "score": 0.4984,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.375,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.3553,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.3045,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.2868,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 0.2821,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "des",
+          "score": 17.1852,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 14.9279,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 9.6608,
+          "evidence": []
+        },
+        {
+          "term": "pour assurer",
+          "score": 7.5319,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 5.37,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 5.3133,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 4.6076,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 4.2062,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "les",
+          "score": 0.6002,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.5841,
+          "evidence": []
+        },
+        {
+          "term": "pour assurer",
+          "score": 0.4984,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.3553,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.2819,
+          "evidence": []
+        },
+        {
+          "term": "qui",
+          "score": 0.2715,
+          "evidence": []
+        },
+        {
+          "term": "aux",
+          "score": 0.2625,
+          "evidence": []
+        },
+        {
+          "term": "est",
+          "score": 0.2381,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 18.9315,
+          "evidence": []
+        },
+        {
+          "term": "关注这一事实",
+          "score": 14.5684,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 11.6647,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 11.6647,
+          "evidence": []
+        },
+        {
+          "term": "或一些其他单位",
+          "score": 11.6647,
+          "evidence": []
+        },
+        {
+          "term": "由于这个理由",
+          "score": 11.2459,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 10.7969,
+          "evidence": []
+        },
+        {
+          "term": "这意味着",
+          "score": 10.2537,
+          "evidence": []
+        }
+      ]
+    },
+    "page-025": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "des",
+          "score": 0.8724,
+          "evidence": []
+        },
+        {
+          "term": "menée",
+          "score": 0.7736,
+          "evidence": []
+        },
+        {
+          "term": "l'on",
+          "score": 0.7565,
+          "evidence": []
+        },
+        {
+          "term": "l'évaluation",
+          "score": 0.7518,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.7514,
+          "evidence": []
+        },
+        {
+          "term": "stratégie",
+          "score": 0.6842,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.6398,
+          "evidence": []
+        },
+        {
+          "term": "aux",
+          "score": 0.5606,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "des",
+          "score": 22.9861,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 19.5983,
+          "evidence": []
+        },
+        {
+          "term": "stratégie",
+          "score": 12.4419,
+          "evidence": []
+        },
+        {
+          "term": "l'on",
+          "score": 12.1705,
+          "evidence": []
+        },
+        {
+          "term": "menée",
+          "score": 12.0624,
+          "evidence": []
+        },
+        {
+          "term": "l'évaluation",
+          "score": 11.7692,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 10.5694,
+          "evidence": []
+        },
+        {
+          "term": "aux",
+          "score": 8.8711,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "les",
+          "score": 0.5983,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.5904,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.4138,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.3845,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.3424,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 0.2997,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.2917,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.2895,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "des",
+          "score": 16.4753,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 13.7891,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 6.0699,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 6.0206,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 5.996,
+          "evidence": []
+        },
+        {
+          "term": "vaccin",
+          "score": 4.7292,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 4.5543,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 4.5025,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "les",
+          "score": 0.5983,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.5904,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.4138,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.3845,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.3424,
+          "evidence": []
+        },
+        {
+          "term": "qui",
+          "score": 0.2605,
+          "evidence": []
+        },
+        {
+          "term": "aux",
+          "score": 0.2466,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.2276,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "由于这个理由",
+          "score": 26.0448,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 23.4693,
+          "evidence": []
+        },
+        {
+          "term": "岁的儿童",
+          "score": 23.2273,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 22.4581,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 22.4581,
+          "evidence": []
+        },
+        {
+          "term": "或一些其他单位",
+          "score": 22.4581,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 20.1011,
+          "evidence": []
+        },
+        {
+          "term": "在该案例中可以做些什么来防止或减轻潜在的发表偏倚",
+          "score": 19.7542,
+          "evidence": []
+        }
+      ]
+    },
+    "page-026": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "ont-ils été",
+          "score": 1.5611,
+          "evidence": []
+        },
+        {
+          "term": "les données",
+          "score": 1.5471,
+          "evidence": []
+        },
+        {
+          "term": "comment ont-ils",
+          "score": 1.542,
+          "evidence": []
+        },
+        {
+          "term": "l'on peut",
+          "score": 1.2704,
+          "evidence": []
+        },
+        {
+          "term": "que l'on",
+          "score": 1.1123,
+          "evidence": []
+        },
+        {
+          "term": "fiables",
+          "score": 0.7738,
+          "evidence": []
+        },
+        {
+          "term": "pourra",
+          "score": 0.7502,
+          "evidence": []
+        },
+        {
+          "term": "quels",
+          "score": 0.7471,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "les données",
+          "score": 37.8322,
+          "evidence": []
+        },
+        {
+          "term": "ont-ils été",
+          "score": 26.0689,
+          "evidence": []
+        },
+        {
+          "term": "comment ont-ils",
+          "score": 24.4751,
+          "evidence": []
+        },
+        {
+          "term": "l'on peut",
+          "score": 19.6489,
+          "evidence": []
+        },
+        {
+          "term": "que l'on",
+          "score": 16.5986,
+          "evidence": []
+        },
+        {
+          "term": "fiables",
+          "score": 12.4061,
+          "evidence": []
+        },
+        {
+          "term": "pourra",
+          "score": 12.1705,
+          "evidence": []
+        },
+        {
+          "term": "quels",
+          "score": 11.0833,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "les données",
+          "score": 0.7513,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.5648,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.4052,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.3644,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.3245,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 0.2876,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.2861,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.2733,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les données",
+          "score": 26.8421,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 12.2759,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 7.3997,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 5.7368,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 5.5909,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 4.6876,
+          "evidence": []
+        },
+        {
+          "term": "que l'on",
+          "score": 4.6876,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 4.4,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "les données",
+          "score": 0.7513,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.5648,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.4052,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.3644,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.3245,
+          "evidence": []
+        },
+        {
+          "term": "que l'on",
+          "score": 0.2859,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.273,
+          "evidence": []
+        },
+        {
+          "term": "qui",
+          "score": 0.2543,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 29.8234,
+          "evidence": []
+        },
+        {
+          "term": "关注这一事实",
+          "score": 23.2753,
+          "evidence": []
+        },
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 21.0011,
+          "evidence": []
+        },
+        {
+          "term": "在研究开始后",
+          "score": 20.0419,
+          "evidence": []
+        },
+        {
+          "term": "病毒疗法",
+          "score": 20.0419,
+          "evidence": []
+        },
+        {
+          "term": "该怎么办",
+          "score": 17.0475,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 16.5422,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 16.5422,
+          "evidence": []
+        }
+      ]
+    },
+    "page-027": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "ont-elles été",
+          "score": 1.7992,
+          "evidence": []
+        },
+        {
+          "term": "quel été",
+          "score": 1.7133,
+          "evidence": []
+        },
+        {
+          "term": "comment les",
+          "score": 1.3332,
+          "evidence": []
+        },
+        {
+          "term": "des programmes",
+          "score": 1.0801,
+          "evidence": []
+        },
+        {
+          "term": "coût",
+          "score": 0.678,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.5013,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "quel été",
+          "score": 37.0671,
+          "evidence": []
+        },
+        {
+          "term": "ont-elles été",
+          "score": 36.3838,
+          "evidence": []
+        },
+        {
+          "term": "comment les",
+          "score": 24.9845,
+          "evidence": []
+        },
+        {
+          "term": "des programmes",
+          "score": 22.0058,
+          "evidence": []
+        },
+        {
+          "term": "coût",
+          "score": 10.0107,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 6.0657,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "des programmes",
+          "score": 0.4358,
+          "evidence": []
+        },
+        {
+          "term": "comment les",
+          "score": 0.4233,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.278,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.2442,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.2434,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.2195,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "des programmes",
+          "score": 13.3392,
+          "evidence": []
+        },
+        {
+          "term": "comment les",
+          "score": 10.1078,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 5.3795,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 3.9724,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 3.8849,
+          "evidence": []
+        },
+        {
+          "term": "données",
+          "score": 3.4735,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "des programmes",
+          "score": 0.4358,
+          "evidence": []
+        },
+        {
+          "term": "comment les",
+          "score": 0.4233,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.2434,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.1496,
+          "evidence": []
+        },
+        {
+          "term": "quel été",
+          "score": 0.1338,
+          "evidence": []
+        },
+        {
+          "term": "ont-elles été",
+          "score": 0.1185,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 37.368,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 34.2127,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 34.2127,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 34.2127,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 33.1909,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 31.1246,
+          "evidence": []
+        }
+      ]
+    },
+    "page-028": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "journées nationales",
+          "score": 1.4995,
+          "evidence": []
+        },
+        {
+          "term": "les efforts",
+          "score": 1.2604,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 1.2469,
+          "evidence": []
+        },
+        {
+          "term": "des services",
+          "score": 1.2304,
+          "evidence": []
+        },
+        {
+          "term": "d'accélération",
+          "score": 0.8653,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.8266,
+          "evidence": []
+        },
+        {
+          "term": "fonctionne",
+          "score": 0.8227,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.7129,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "les efforts",
+          "score": 33.3446,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 32.0839,
+          "evidence": []
+        },
+        {
+          "term": "des services",
+          "score": 26.9505,
+          "evidence": []
+        },
+        {
+          "term": "journées nationales",
+          "score": 26.5267,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 18.4965,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 16.0381,
+          "evidence": []
+        },
+        {
+          "term": "d'accélération",
+          "score": 14.0594,
+          "evidence": []
+        },
+        {
+          "term": "fonctionne",
+          "score": 13.3461,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "que les",
+          "score": 0.9479,
+          "evidence": []
+        },
+        {
+          "term": "des services",
+          "score": 0.7406,
+          "evidence": []
+        },
+        {
+          "term": "les efforts",
+          "score": 0.6929,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.4611,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.4193,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.3607,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.3277,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 0.3274,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "que les",
+          "score": 30.0916,
+          "evidence": []
+        },
+        {
+          "term": "les efforts",
+          "score": 25.6959,
+          "evidence": []
+        },
+        {
+          "term": "des services",
+          "score": 19.774,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 9.9541,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 7.8756,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 7.301,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 6.2093,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 6.0829,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "que les",
+          "score": 0.9479,
+          "evidence": []
+        },
+        {
+          "term": "des services",
+          "score": 0.7406,
+          "evidence": []
+        },
+        {
+          "term": "les efforts",
+          "score": 0.6929,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.4611,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.4193,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.3607,
+          "evidence": []
+        },
+        {
+          "term": "qui",
+          "score": 0.2911,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.2892,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 18.0439,
+          "evidence": []
+        },
+        {
+          "term": "关注这一事实",
+          "score": 14.438,
+          "evidence": []
+        },
+        {
+          "term": "由于这个理由",
+          "score": 13.035,
+          "evidence": []
+        },
+        {
+          "term": "一个国际医疗救助机构",
+          "score": 12.9764,
+          "evidence": []
+        },
+        {
+          "term": "作为应对",
+          "score": 12.9764,
+          "evidence": []
+        },
+        {
+          "term": "在过去几周内",
+          "score": 12.9764,
+          "evidence": []
+        },
+        {
+          "term": "村民的生物学标本",
+          "score": 12.9764,
+          "evidence": []
+        },
+        {
+          "term": "椰香天堂共和国的边远村庄报告了一种新",
+          "score": 12.9764,
+          "evidence": []
+        }
+      ]
+    },
+    "page-029": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "les enfants",
+          "score": 1.429,
+          "evidence": []
+        },
+        {
+          "term": "avec les",
+          "score": 1.2921,
+          "evidence": []
+        },
+        {
+          "term": "par les",
+          "score": 1.2719,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 1.2513,
+          "evidence": []
+        },
+        {
+          "term": "les services",
+          "score": 1.2026,
+          "evidence": []
+        },
+        {
+          "term": "d'un système",
+          "score": 1.1684,
+          "evidence": []
+        },
+        {
+          "term": "pouvant être",
+          "score": 1.1557,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "les enfants",
+          "score": 33.6738,
+          "evidence": []
+        },
+        {
+          "term": "avec les",
+          "score": 31.3599,
+          "evidence": []
+        },
+        {
+          "term": "par les",
+          "score": 30.7959,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 30.5968,
+          "evidence": []
+        },
+        {
+          "term": "les services",
+          "score": 30.0305,
+          "evidence": []
+        },
+        {
+          "term": "pouvant être",
+          "score": 17.9331,
+          "evidence": []
+        },
+        {
+          "term": "d'un système",
+          "score": 16.8669,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "dans les",
+          "score": 0.7687,
+          "evidence": []
+        },
+        {
+          "term": "par les",
+          "score": 0.6998,
+          "evidence": []
+        },
+        {
+          "term": "avec les",
+          "score": 0.6199,
+          "evidence": []
+        },
+        {
+          "term": "les services",
+          "score": 0.5587,
+          "evidence": []
+        },
+        {
+          "term": "les enfants",
+          "score": 0.5403,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.4704,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.3337,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "dans les",
+          "score": 22.7668,
+          "evidence": []
+        },
+        {
+          "term": "par les",
+          "score": 21.8123,
+          "evidence": []
+        },
+        {
+          "term": "avec les",
+          "score": 19.7257,
+          "evidence": []
+        },
+        {
+          "term": "les services",
+          "score": 18.7467,
+          "evidence": []
+        },
+        {
+          "term": "les enfants",
+          "score": 18.4618,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 12.2062,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 9.8714,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "dans les",
+          "score": 0.7687,
+          "evidence": []
+        },
+        {
+          "term": "par les",
+          "score": 0.6998,
+          "evidence": []
+        },
+        {
+          "term": "avec les",
+          "score": 0.6199,
+          "evidence": []
+        },
+        {
+          "term": "les services",
+          "score": 0.5587,
+          "evidence": []
+        },
+        {
+          "term": "les enfants",
+          "score": 0.5403,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.4704,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.3337,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 16.8202,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 14.3278,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 14.3278,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 14.3278,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 13.0048,
+          "evidence": []
+        },
+        {
+          "term": "不良反应",
+          "score": 12.7709,
+          "evidence": []
+        },
+        {
+          "term": "可能会",
+          "score": 12.6965,
+          "evidence": []
+        }
+      ]
+    },
+    "page-030": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "encouragées",
+          "score": 0.6396,
+          "evidence": []
+        },
+        {
+          "term": "l'angle",
+          "score": 0.6396,
+          "evidence": []
+        },
+        {
+          "term": "planifiées",
+          "score": 0.6396,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "encouragées",
+          "score": 8.2825,
+          "evidence": []
+        },
+        {
+          "term": "l'angle",
+          "score": 8.2825,
+          "evidence": []
+        },
+        {
+          "term": "planifiées",
+          "score": 8.2825,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "les",
+          "score": 0.1616,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.1592,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.1187,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les",
+          "score": 3.9826,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 2.4988,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 1.4809,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "les",
+          "score": 0.1616,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.1592,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.0748,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "感染者",
+          "score": 22.4935,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 22.3538,
+          "evidence": []
+        },
+        {
+          "term": "最小化",
+          "score": 17.7477,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

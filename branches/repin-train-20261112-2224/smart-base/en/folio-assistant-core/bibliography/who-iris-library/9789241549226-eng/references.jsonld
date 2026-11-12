@@ -1,0 +1,30 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/folio/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "bibo": "http://purl.org/ontology/bibo/",
+    "fabio": "http://purl.org/spar/fabio/",
+    "dcterms:source": {
+      "@type": "@id"
+    },
+    "dcterms:hasVersion": {
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "@id": "references/9789241549226-eng",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "Human Resources for Health Information System Minimum Data Set for Health Workforce Registry",
+      "dcterms:creator": [
+        "System, Information"
+      ],
+      "dcterms:issued": "D:20150505",
+      "dcterms:source": "who-iris/library/9789241549226-eng/manifest.jsonld",
+      "dcterms:hasVersion": "who-iris/library/9789241549226-eng"
+    }
+  ]
+}

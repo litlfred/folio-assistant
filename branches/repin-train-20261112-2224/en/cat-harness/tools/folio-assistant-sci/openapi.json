@@ -1,0 +1,2621 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Tools — folio-assistant-sci",
+    "version": "0.1.0",
+    "description": "The call contracts of the harness's Tools, one operation per Tool, generated from the Tool nodes (`schemas/tools/tool.ts`) so standard API tooling can read them. **No HTTP server serves these paths**: each Tool is reached as its `x-invoke` says — a command line, an MCP tool, or an in-process call. Tags are the skills each Tool satisfies."
+  },
+  "servers": [],
+  "tags": [
+    {
+      "name": "build-docs"
+    },
+    {
+      "name": "build-pdf"
+    },
+    {
+      "name": "content-validate"
+    },
+    {
+      "name": "content-validation"
+    },
+    {
+      "name": "docs-generation"
+    },
+    {
+      "name": "latex-build-cache"
+    },
+    {
+      "name": "latex-compilation"
+    },
+    {
+      "name": "latex-validation"
+    },
+    {
+      "name": "lean-build-fix"
+    },
+    {
+      "name": "lean-cache-restore"
+    },
+    {
+      "name": "lean-completeness-audit"
+    },
+    {
+      "name": "lean-environment-setup"
+    },
+    {
+      "name": "lean-formal-edges"
+    },
+    {
+      "name": "lean-html-docs"
+    },
+    {
+      "name": "lean-proof-vacuity-audit"
+    },
+    {
+      "name": "proof-status-tracking"
+    },
+    {
+      "name": "rendered-verification"
+    },
+    {
+      "name": "rendering-auditor"
+    },
+    {
+      "name": "staging-review"
+    },
+    {
+      "name": "verify-local-substrate"
+    }
+  ],
+  "paths": {
+    "/tools/check-dependencies": {
+      "post": {
+        "operationId": "check-dependencies",
+        "summary": "Dependency probe",
+        "description": "Report which of the harness's optional and required dependencies are present on this machine, and what each unmet one blocks.",
+        "tags": [
+          "verify-local-substrate"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "check-dependencies/"
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "required_only": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Report only the dependencies without which the harness cannot run."
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "report": {
+                      "$ref": "#/components/schemas/Markdown",
+                      "description": "Per-dependency: present, absent, or could not be determined."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/check-dependencies.jsonld",
+        "x-invoke": {
+          "shell": "bun run cat check-deps",
+          "mcp": {
+            "tool": "check_dependencies"
+          },
+          "inProcess": {
+            "module": "adapters/paper/tools/check-deps.ts"
+          }
+        },
+        "x-mcp-tools": [
+          "check_dependencies"
+        ],
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "network": false
+        },
+        "x-satisfies": [
+          "verify-local-substrate"
+        ]
+      }
+    },
+    "/tools/content-manifest-validate": {
+      "post": {
+        "operationId": "content-manifest-validate",
+        "summary": "Content manifest validation",
+        "description": "Validate the block manifests under a path against their schemas.",
+        "tags": [
+          "content-validate",
+          "content-validation"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "content-manifest-validate/"
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "targetPath": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "A paper or chapter directory; absent, every paper the folio declares."
+                  },
+                  "strict": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Treat warnings as errors."
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "issues": {
+                      "$ref": "#/components/schemas/Text",
+                      "description": "One line per issue, with its block and file. Exit 2 means NO FOLIO WAS FOUND — could-not-determine, never valid."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/content-manifest-validate.jsonld",
+        "x-invoke": {
+          "shell": "bun run cat content:validate"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "content-validate",
+          "content-validation"
+        ],
+        "x-skill-contracts": {
+          "content-validate.input": {
+            "$ref": "#/components/schemas/skill.content-validate.input"
+          },
+          "content-validate.output": {
+            "$ref": "#/components/schemas/skill.content-validate.output"
+          }
+        }
+      }
+    },
+    "/tools/headless-render-qc": {
+      "post": {
+        "operationId": "headless-render-qc",
+        "summary": "Headless render QC (Playwright)",
+        "description": "Drive a folio's built viewer in headless Chromium and report the blocks whose diagrams, SVGs, LaTeX math or markdown do not render — with `--screenshot` to save the pictures.",
+        "tags": [
+          "rendered-verification"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "headless-render-qc/"
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "screenshot": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Save the screenshots as well as the verdict."
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "report": {
+                      "$ref": "#/components/schemas/Text",
+                      "description": "Per block: rendered, or the failure. Needs a FOLIO's `build/viewer/paper.json` and its `folio-assistant/ui`, so it exits 2 with `No paper.json found` in the platform (could-not-determine)."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/headless-render-qc.jsonld",
+        "x-invoke": {
+          "shell": "bun run cat render:headless-qc"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun",
+            "chromium"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "rendered-verification"
+        ]
+      }
+    },
+    "/tools/latex-image": {
+      "post": {
+        "operationId": "latex-image",
+        "summary": "Compile LaTeX in a container",
+        "description": "Compile a rendered paper's `main.tex` with latexmk inside a TeX Live (full) image, for a host with Docker but no TeX engine. The image carries TeX Live, latexmk, Pandoc, latexdiff, graphviz and poppler-utils; it does not run the content pipeline, which renders the chapters on the host first.",
+        "tags": [
+          "latex-build-cache"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "latex-image/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "mainTex": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The rendered paper's top-level `.tex`, relative to the checkout."
+                  }
+                },
+                "required": [
+                  "mainTex"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "pdf": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "The compiled PDF beside the input."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/latex-image.jsonld",
+        "x-invoke": {
+          "container": "docker run --rm -v .:/workspace -w /workspace folio-latex latexmk -pdf -interaction=nonstopmode"
+        },
+        "x-install": {
+          "container": "docker build -t folio-latex -f folio-assistant-sci/scripts/docker-latex-build/Dockerfile folio-assistant-sci/scripts/docker-latex-build"
+        },
+        "x-requires": {
+          "runtime": [
+            "docker"
+          ],
+          "network": true
+        },
+        "x-satisfies": [
+          "latex-build-cache"
+        ],
+        "x-selection": {
+          "when": "A step needs a compiled PDF, `pdflatex` is not on PATH, and Docker is available — the container alternative to `tex-install`.",
+          "limits": "Needs Docker. The first build pulls ubuntu:24.04 and texlive-full (several GB); later runs reuse the image.",
+          "cost": "One image build (10-20 minutes, once), then one latexmk compile per run."
+        }
+      }
+    },
+    "/tools/latex-overfull": {
+      "post": {
+        "operationId": "latex-overfull",
+        "summary": "LaTeX overfull-box report",
+        "description": "Turn a pdflatex log's Overfull \\hbox warnings into a located, actionable report, with a threshold so a long tail of trivial overruns does not bury the real ones.",
+        "tags": [
+          "latex-validation"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "latex-overfull/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "log": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The pdflatex log to read."
+                  },
+                  "min": {
+                    "$ref": "#/components/schemas/Dpi",
+                    "description": "Ignore overruns below this size"
+                  },
+                  "max": {
+                    "$ref": "#/components/schemas/Dpi",
+                    "description": "Fail above this count, for use as a gate."
+                  },
+                  "json": {
+                    "$ref": "#/components/schemas/Flag"
+                  }
+                },
+                "required": [
+                  "log"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "report": {
+                      "$ref": "#/components/schemas/Text",
+                      "description": "Located overfull boxes. Requires a build log: with no log there is nothing to read, which is could-not-determine rather than clean."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/latex-overfull.jsonld",
+        "x-invoke": {
+          "shell": "bun run cat latex:overfull"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "latex-validation"
+        ]
+      }
+    },
+    "/tools/latex-preflight": {
+      "post": {
+        "operationId": "latex-preflight",
+        "summary": "LaTeX preflight",
+        "description": "Lint TeX source for the pdflatex-compile failure classes a permissive AST parser accepts — the ones that pass validation and then break the build.",
+        "tags": [
+          "latex-validation"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "latex-preflight/"
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "json": {
+                    "$ref": "#/components/schemas/Flag"
+                  },
+                  "warn": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Report without failing — for a corpus not yet clean."
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "findings": {
+                      "$ref": "#/components/schemas/Text",
+                      "description": "Compile-breaking hazards, located. A clean run here is not a successful compile; it is the absence of these classes."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/latex-preflight.jsonld",
+        "x-invoke": {
+          "shell": "bun run folio-assistant-sci/pipeline/latex-preflight.ts"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "latex-validation"
+        ]
+      }
+    },
+    "/tools/latexmk-compile": {
+      "post": {
+        "operationId": "latexmk-compile",
+        "summary": "LaTeX compilation (latexmk)",
+        "description": "Compile LaTeX source documents into PDF using latexmk with safe shell-escape isolation across CI events.",
+        "tags": [
+          "latex-compilation"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "latexmk-compile/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "tex": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The TeX source file to compile (e.g. main.tex)."
+                  },
+                  "args": {
+                    "$ref": "#/components/schemas/Text",
+                    "description": "Additional arguments to forward to latexmk."
+                  }
+                },
+                "required": [
+                  "tex"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "pdf": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "The compiled PDF document. Exits 2 if the source file is missing (could-not-determine)."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/latexmk-compile.jsonld",
+        "x-invoke": {
+          "shell": "bun run cat latex:compile"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bash",
+            "latexmk",
+            "pdflatex"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "latex-compilation"
+        ]
+      }
+    },
+    "/tools/lean-audit": {
+      "post": {
+        "operationId": "lean-audit",
+        "summary": "Lean vacuity audit",
+        "description": "Inspect Lean declarations chapter by chapter for proofs that type-check, are sorry-free and axiom-clean, and still carry no mathematical content — assuming what they claim, concluding something trivially true, or resting on a false premise.",
+        "tags": [
+          "lean-proof-vacuity-audit"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "lean-audit/"
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "chapter": {
+                    "$ref": "#/components/schemas/Slug",
+                    "description": "One chapter instead of the whole corpus."
+                  },
+                  "strict": {
+                    "$ref": "#/components/schemas/Flag"
+                  },
+                  "checkAxioms": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Axiom-cleanliness is a separate question from vacuity: a proof can be axiom-clean and still assume its conclusion."
+                  },
+                  "json": {
+                    "$ref": "#/components/schemas/Flag"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "findings": {
+                      "$ref": "#/components/schemas/Text",
+                      "description": "Sorry inventory and trivial-truth detections. Sibling of `lean-coverage`, not an alternative to it: that one COUNTS what is proved, this one asks whether a proof says anything."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/lean-audit.jsonld",
+        "x-invoke": {
+          "shell": "bun run folio-assistant-sci/scripts/lean-audit.ts"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "lean-proof-vacuity-audit"
+        ]
+      }
+    },
+    "/tools/lean-build": {
+      "post": {
+        "operationId": "lean-build",
+        "summary": "Lean build",
+        "description": "Build every Lean project in the workspace from the root Lake manifest, so cross-package dependencies resolve against it rather than a possibly-stale per-paper manifest. Writes a committable build-status sidecar every run.",
+        "tags": [
+          "lean-build-fix"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "lean-build/"
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "paper": {
+                    "$ref": "#/components/schemas/Slug",
+                    "description": "Build one paper instead of all of them."
+                  },
+                  "cache": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Fetch the Mathlib cache first. A from-source Mathlib build is 30–60 minutes against ~2 for a restore."
+                  },
+                  "update": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Run `lake update` before building."
+                  },
+                  "logDir": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Where logs and the status sidecar go."
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "`lean-build-status.json` — committable, so a green build is distinguishable from one nobody ran."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/lean-build.jsonld",
+        "x-invoke": {
+          "shell": "bun run cat lean:build-all"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bash",
+            "lean",
+            "lake"
+          ],
+          "network": true
+        },
+        "x-satisfies": [
+          "lean-build-fix"
+        ]
+      }
+    },
+    "/tools/lean-cache": {
+      "post": {
+        "operationId": "lean-cache",
+        "summary": "Lake olean cache",
+        "description": "Restore, verify, seed and diagnose the prebuilt `.lake/` artefacts for a Lean package. Always try `restore` first: a from-source Mathlib build is 30–60 minutes, a restore about two.",
+        "tags": [
+          "lean-cache-restore"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "lean-cache/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "$ref": "#/components/schemas/LakeCacheAction",
+                    "description": "The verb. `doctor` tells a restore that silently missed from one that worked."
+                  },
+                  "lakeRoot": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The package whose `.lake/` is acted on."
+                  },
+                  "package": {
+                    "$ref": "#/components/schemas/PackageName"
+                  }
+                },
+                "required": [
+                  "action"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "$ref": "#/components/schemas/Text",
+                      "description": "A real hit, a miss, or a diagnosis — never a miss that reads as a hit."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/lean-cache.jsonld",
+        "x-invoke": {
+          "shell": "folio-assistant-sci/scripts/lake-cache.sh"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bash",
+            "git",
+            "lake"
+          ],
+          "network": true
+        },
+        "x-satisfies": [
+          "lean-cache-restore"
+        ]
+      }
+    },
+    "/tools/lean-coverage": {
+      "post": {
+        "operationId": "lean-coverage",
+        "summary": "Lean coverage",
+        "description": "Count how many provable blocks — theorem, lemma, proposition, corollary — carry a full Lean proof rather than a sorry, per paper. The completeness half of the Lean audit: what is formalised, and what is still a gap.",
+        "tags": [
+          "lean-completeness-audit"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "lean-coverage/"
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "paper": {
+                    "$ref": "#/components/schemas/Slug",
+                    "description": "One paper instead of all."
+                  },
+                  "contentRoot": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Where content blocks live. not a Lean project root."
+                  },
+                  "json": {
+                    "$ref": "#/components/schemas/Flag"
+                  },
+                  "out": {
+                    "$ref": "#/components/schemas/RepoPath"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "coverage": {
+                      "$ref": "#/components/schemas/Text",
+                      "description": "Provable blocks, and how many are sorry-free. A count, not a verdict: a sorry-free proof can still be vacuous, which is the sibling node's question."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/lean-coverage.jsonld",
+        "x-invoke": {
+          "shell": "bun run folio-assistant-sci/scripts/lean-coverage.ts"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "lean-completeness-audit"
+        ]
+      }
+    },
+    "/tools/lean-formal-edges": {
+      "post": {
+        "operationId": "lean-formal-edges",
+        "summary": "Formal edges from the Lean build",
+        "description": "Extract ELABORATED formal dependencies between a folio's lean.ref declarations (LeanArchitect's rule over the folio's own lean.ref set). Needs a Lean toolchain and a built Lake project. Tagged declarations missing from the build are reported, never recorded as dependency-free; with ingest the result is recorded in the formal cache as source \"elaborated\".",
+        "tags": [
+          "lean-formal-edges"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "lean-formal-edges/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "lake_dir": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The folio's Lake project directory (holds lakefile.* and .lake/)."
+                  },
+                  "root": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Content root to collect lean.ref targets from (default: the folio's declared one)."
+                  },
+                  "ingest": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Record the result in the formal cache as source \"elaborated\"."
+                  }
+                },
+                "required": [
+                  "lake_dir"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "report": {
+                      "$ref": "#/components/schemas/Markdown",
+                      "description": "The extracted edges, or why they could not be determined — never an empty edge set in place of a failure."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/lean-formal-edges.jsonld",
+        "x-invoke": {
+          "mcp": {
+            "tool": "lean_formal_edges"
+          },
+          "inProcess": {
+            "module": "pipeline/formal-edges-mcp.ts"
+          }
+        },
+        "x-mcp-tools": [
+          "lean_formal_edges"
+        ],
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun",
+            "lake"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "lean-formal-edges"
+        ]
+      }
+    },
+    "/tools/lean-html-docs": {
+      "post": {
+        "operationId": "lean-html-docs",
+        "summary": "Build a Lean package's HTML docs (doc-gen4)",
+        "description": "Build the doc-gen4 HTML render of a folio's Lake package — the visualiser of a declared `lean` directory — with `lake -R -Kenv=dev build <Lib>:docs`, cache-aware: refuses while another lake/lean process holds `.lake/`, refuses on a restored tree that carries no traces (a Lake build there EVICTS the cache), checks or restores the warm cache first, and enables a sentinel-commented doc-gen4 `[[require]]` for this build only, restoring the lakefile on exit. Never runs `lake update`. Output: `<lake-root>/.lake/build/doc`.",
+        "tags": [
+          "lean-html-docs"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "lean-html-docs/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "lakeRoot": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The Lake package directory whose lakefile requires (or sentinel-comments) doc-gen4, e.g. `folio/quantum-observable-universe/lean`."
+                  },
+                  "lib": {
+                    "$ref": "#/components/schemas/InstanceId",
+                    "description": "The `lean_lib` to document, e.g. `QOU` (a Lean library name: alphanumerics, dot, underscore, hyphen). Repeat for several."
+                  },
+                  "platform": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The index checkout holding `lake-cache.sh`. Default `$FOLIO_ASSISTANT_ROOT`."
+                  },
+                  "restore": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Restore the warm cache first (about 2 minutes) instead of only checking it."
+                  },
+                  "allowCold": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Build without a warm cache: Mathlib from source, 30-60 minutes before doc-gen4 starts."
+                  },
+                  "dryRun": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Run every guard, print the build command, build nothing."
+                  }
+                },
+                "required": [
+                  "lakeRoot",
+                  "lib"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "render": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "`<lake-root>/.lake/build/doc`, doc-gen4's output, printed as the last line. Feed it to `lean-render-publish`."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/lean-html-docs.jsonld",
+        "x-invoke": {
+          "shell": "bash folio-assistant-sci/adapters/paper/lean/lean-docs-build.sh"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bash",
+            "git",
+            "lake"
+          ],
+          "network": true
+        },
+        "x-satisfies": [
+          "lean-html-docs"
+        ],
+        "x-selection": {
+          "when": "A folio's declared `lean` directory needs its visualiser (the doc-gen4 render) built or refreshed, before `lean-render-publish` wraps it.",
+          "limits": "doc-gen4 renders the WHOLE import closure, Mathlib included. It does not prune; prune at publish. Refuses, rather than risks, a shared or untraced `.lake/`. Never run it while another agent holds the folio's Lean cache.",
+          "cost": "Unmeasured. One doc-gen4 compile, then one doc pass per module of the closure — thousands for a Mathlib package; qou's July render was 4,193 pages, 545 MB. Needs that much free disk beyond the build."
+        }
+      }
+    },
+    "/tools/lean-kg-publish": {
+      "post": {
+        "operationId": "lean-kg-publish",
+        "summary": "Publish the dynamic Lean viewer: doc-gen4 declaration data as knowledge-graph shards",
+        "description": "Ingest doc-gen4's per-module declaration data (`.lake/build/doc-data/declaration-data-<Module>.bmp`) into JSON-LD shards — one per module, with declaration nodes, `imports` edges and `formalizes` edges to the content blocks whose `lean.ref` names each declaration — and publish them under the folio's site with a single viewer page that loads modules, signature chunks and the search list on demand. Signatures are chunked 500 declarations per file so a 12,804-declaration module stays usable. With `--base` it writes a STAGING overlay: only modules whose content hash differs from the published base, plus `overlay.json`; the viewer loads the rest from the base. Rails the viewer page with the same pass as `lean-render-publish`.",
+        "tags": [
+          "lean-html-docs"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "lean-kg-publish/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "docData": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "doc-gen4's `.lake/build/doc-data` from `lean-html-docs`."
+                  },
+                  "site": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The folio's built site."
+                  },
+                  "route": {
+                    "$ref": "#/components/schemas/Slug",
+                    "description": "Where under the site. Default `lean`."
+                  },
+                  "module": {
+                    "$ref": "#/components/schemas/PackageName",
+                    "description": "A module root to keep (`qou` keeps `QOU`). Repeat for several."
+                  },
+                  "contentRoot": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Content tree whose blocks' `lean.ref` become `formalizes` edges."
+                  },
+                  "repo": {
+                    "$ref": "#/components/schemas/RepoFullName",
+                    "description": "`owner/repo` for block links."
+                  },
+                  "ref": {
+                    "$ref": "#/components/schemas/Branch",
+                    "description": "Branch or sha for block links."
+                  },
+                  "contentPrefix": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Path of the content root inside the repo, for block links."
+                  },
+                  "base": {
+                    "$ref": "#/components/schemas/Url",
+                    "description": "Published `data/` of the base graph; enables the STAGING overlay."
+                  },
+                  "externalBase": {
+                    "$ref": "#/components/schemas/Url",
+                    "description": "Where links into pruned modules go. Default the community mathlib4 docs."
+                  },
+                  "homeLabel": {
+                    "$ref": "#/components/schemas/InstanceId",
+                    "description": "The rail's home row."
+                  },
+                  "instance": {
+                    "$ref": "#/components/schemas/InstanceId",
+                    "description": "As rail-standalone-pages.ts --instance."
+                  },
+                  "platform": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The index checkout holding the rail pass."
+                  },
+                  "noRail": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Publish only; the caller rails the site."
+                  }
+                },
+                "required": [
+                  "docData",
+                  "site"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "viewer": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "`<site>/<route>/`: index.html, viewer.js/css, extracted signature styles, config.json and `data/` (index.json, names.json, m/<Module>.jsonld, m/<Module>.<k>.sig.json, overlay.json)."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/lean-kg-publish.jsonld",
+        "x-invoke": {
+          "shell": "bun run folio-assistant-sci/adapters/paper/lean/lean-kg-publish.ts"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "lean-html-docs"
+        ],
+        "x-selection": {
+          "when": "Instead of `lean-render-publish` when the folio publishes its Lean as a dynamic viewer over graph shards, and for STAGING branches with `--base`.",
+          "limits": "doc-gen4 still has to elaborate: the shards come from its doc-data, so `lean-html-docs` (or a restored doc-gen4 cache) runs first. Links into pruned modules go to the community docs, built from their Mathlib. Docstrings are rendered client-side with marked and MathJax from CDNs.",
+          "cost": "Measured on qou 2026-10-11: 3,011 modules, 53,565 declarations, 651 formalizing a block; 6,005 files / 171 MB / 13 s; a no-change overlay writes 0 module files."
+        }
+      }
+    },
+    "/tools/lean-render-publish": {
+      "post": {
+        "operationId": "lean-render-publish",
+        "summary": "Publish a Lean render under a folio site, with the harness rail",
+        "description": "Stage a doc-gen4 render under a folio's built site (`<site>/<route>/`, default `lean/`) and give every page the harness navbar and rail by running `cat-harness/scripts/rail-standalone-pages.ts --foreign-site` over the site — the same rail `stage-folio-local.ts` applies to the folio's own pages. Leaves out Lake's `.hash`/`.trace` bookkeeping, marks doc-gen4's iframe navbar and `find/` redirect `folio-navbar: none` so no rail is drawn inside the sidebar, adds a layout shim so the rail does not cover doc-gen4's fixed sidebar, and with `--modules` prunes to the folio's own modules, repointing links into dropped ones to the community docs. Then asserts every staged page is railed or declined.",
+        "tags": [
+          "lean-html-docs"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "lean-render-publish/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "docs": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The doc-gen4 render, `lean-html-docs`'s output."
+                  },
+                  "site": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The folio's built site (`_site` from build-folio-site.ts)."
+                  },
+                  "route": {
+                    "$ref": "#/components/schemas/Slug",
+                    "description": "Where under the site. Default `lean`."
+                  },
+                  "module": {
+                    "$ref": "#/components/schemas/PackageName",
+                    "description": "A Lake package whose module root to keep (`qou` keeps `QOU/`, matched case-insensitively). Repeat for several. Default: keep everything."
+                  },
+                  "externalBase": {
+                    "$ref": "#/components/schemas/Url",
+                    "description": "Where links into pruned modules go. Default the community mathlib4 docs."
+                  },
+                  "homeLabel": {
+                    "$ref": "#/components/schemas/InstanceId",
+                    "description": "The rail's home row: the folio's instance name, e.g. `qou`."
+                  },
+                  "instance": {
+                    "$ref": "#/components/schemas/InstanceId",
+                    "description": "Rail as this instance's own site (its name, mark and graphs), as rail-standalone-pages.ts --instance."
+                  },
+                  "platform": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The index checkout holding the rail pass. Default `$FOLIO_ASSISTANT_ROOT`, then the nearest ancestor that has it."
+                  },
+                  "noRail": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Stage only; the caller rails the site itself."
+                  }
+                },
+                "required": [
+                  "docs",
+                  "site"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "pages": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "`<site>/<route>/`, railed, plus the rail's shared data under `<site>/assets/navbar/`."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/lean-render-publish.jsonld",
+        "x-invoke": {
+          "shell": "bun run folio-assistant-sci/adapters/paper/lean/lean-render.ts"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "lean-html-docs"
+        ],
+        "x-selection": {
+          "when": "After the folio's site is built and before it is checked and published (`stage-folio-local.ts` step 2 runs the same rail): put the Lean render into it as the `lean` directory's visualiser.",
+          "limits": "Pruned links point at the community docs, built from THEIR Mathlib rather than the folio's pin; doc-gen4's search index still lists pruned declarations, whose hits 404. The rail's assets load from the platform's published site, as on every foreign-site page.",
+          "cost": "Measured on qou's July render: pruned to QOU,UGB,Fred2005 34 pages / 29 MB / about 5 s; unpruned 4,193 pages / 533 MB / 347 s."
+        }
+      }
+    },
+    "/tools/lean-toolchain-setup": {
+      "post": {
+        "operationId": "lean-toolchain-setup",
+        "summary": "Lean toolchain install",
+        "description": "Install the toolchain pinned in `lean-toolchain`, fetching it from the GitHub release rather than through elan's downloader. Idempotent, and it detects partial state rather than re-downloading.",
+        "tags": [
+          "lean-environment-setup"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "lean-toolchain-setup/"
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "toolchain": {
+                      "$ref": "#/components/schemas/Text",
+                      "description": "The linked toolchain name, and the per-repo override that selects it."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/lean-toolchain-setup.jsonld",
+        "x-invoke": {
+          "shell": "folio-assistant-sci/scripts/setup-lean-toolchain.sh"
+        },
+        "x-install": {
+          "cli": "folio-assistant-sci/scripts/setup-lean-toolchain.sh"
+        },
+        "x-requires": {
+          "runtime": [
+            "bash",
+            "curl",
+            "elan"
+          ],
+          "network": true
+        },
+        "x-satisfies": [
+          "lean-environment-setup"
+        ]
+      }
+    },
+    "/tools/paper-feature-build": {
+      "post": {
+        "operationId": "paper-feature-build",
+        "summary": "Paper feature build (changed chapters + latexdiff)",
+        "description": "Quick preview of a paper folio's branch: render the paper with the sci print template (plus the folio's notation fragment when it has one), then compile ONLY the chapters changed against a base ref, and a colored and a plain latexdiff of each. A preview, never a publish build. Run from the folio.",
+        "tags": [
+          "latex-build-cache"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "paper-feature-build/"
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "base": {
+                    "$ref": "#/components/schemas/Branch",
+                    "description": "The ref to diff against. Default `origin/main`."
+                  },
+                  "chapters": {
+                    "$ref": "#/components/schemas/Slug",
+                    "description": "Chapter slugs, comma-separated. Default: the chapters whose sources changed against `base`."
+                  },
+                  "paper": {
+                    "$ref": "#/components/schemas/Slug",
+                    "description": "The paper's slug. Default: the folio's only paper; with several, the tool refuses and names them."
+                  },
+                  "out": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Output directory, which the folio should gitignore. Default `build-feature`."
+                  },
+                  "notation": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The folio's notation fragment, appended after the template. Default `<paper dir>/latex/notation-preamble.tex` when present."
+                  },
+                  "preload": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Bun preload that configures the platform's injected registries (values, Lean packages). Default `scripts/preload-registry.ts` when present. It must import the same platform checkout as this tool."
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "preview": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "`<out>/changed.pdf`, `<out>/<chapter>.diff-color.pdf` and `.diff-plain.pdf`, with the logs and `<out>/build.log` beside them. The render also rewrites the folio's `chapters/` and `main.tex`."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/paper-feature-build.jsonld",
+        "x-invoke": {
+          "shell": "bash folio-assistant-sci/adapters/paper/latex/feature-build.sh"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun",
+            "git",
+            "bash"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "latex-build-cache"
+        ],
+        "x-selection": {
+          "when": "Iterating on a paper's prose or mathematics, before a full build: you want to see the changed chapters typeset, and what changed, in a minute or so instead of compiling the whole paper.",
+          "limits": "A preview: cross-references outside the build show '??', margin notes are off by default (`FAST_PREVIEW=1`, about 2x faster), and a chapter's base latexdiff degrades to 'all added' when the base ref has no committed chapter .tex. Needs pdflatex/latexmk for the PDFs and latexdiff for the diffs; without them only the render runs.",
+          "cost": "One paper render (about 20-40 s on a 2,900-block paper) plus one pdflatex compile per output PDF."
+        }
+      }
+    },
+    "/tools/paper-latex-build": {
+      "post": {
+        "operationId": "paper-latex-build",
+        "summary": "Paper build to LaTeX chapters",
+        "description": "Render a paper's content objects to LaTeX chapters: load the paper manifest, resolve its chapters and blocks, render, validate the LaTeX AST, and write the chapter files. With no manifest it builds the folio's only paper, and refuses — naming them — when there are several or none.",
+        "tags": [
+          "content-validation"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "paper-latex-build/"
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "paperManifest": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The paper's `<paper>.ts` manifest; absent, the folio's single paper."
+                  },
+                  "outDir": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Where to write the chapters; absent, `chapters/` at the content root."
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "chapters": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "One `.tex` per chapter under the output directory."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/paper-latex-build.jsonld",
+        "x-invoke": {
+          "shell": "bun run cat content:build"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "content-validation"
+        ]
+      }
+    },
+    "/tools/paper-preferences": {
+      "post": {
+        "operationId": "paper-preferences",
+        "summary": "Rendering preferences",
+        "description": "Read, write or clear the stored rendering preferences — engine, format, scope, math renderer, print mode.",
+        "tags": [
+          "build-pdf",
+          "build-docs"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "paper-preferences/"
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "$ref": "#/components/schemas/PreferenceAction"
+                  },
+                  "render_format": {
+                    "$ref": "#/components/schemas/RenderFormat"
+                  },
+                  "render_scope": {
+                    "$ref": "#/components/schemas/RenderScope"
+                  },
+                  "latex_engine": {
+                    "$ref": "#/components/schemas/LatexEngine"
+                  },
+                  "math_renderer": {
+                    "$ref": "#/components/schemas/MathRenderer"
+                  },
+                  "auto_preview": {
+                    "$ref": "#/components/schemas/Flag"
+                  },
+                  "formula_dpi": {
+                    "$ref": "#/components/schemas/Dpi"
+                  },
+                  "default_chapter": {
+                    "$ref": "#/components/schemas/RepoPath"
+                  },
+                  "print_mode": {
+                    "$ref": "#/components/schemas/PrintMode"
+                  },
+                  "compact_inline_refs": {
+                    "$ref": "#/components/schemas/Flag"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "preferences": {
+                      "$ref": "#/components/schemas/Markdown",
+                      "description": "The preferences after the call."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/paper-preferences.jsonld",
+        "x-invoke": {
+          "mcp": {
+            "tool": "paper_preferences"
+          },
+          "inProcess": {
+            "module": "adapters/paper/tools/preferences.ts"
+          }
+        },
+        "x-mcp-tools": [
+          "paper_preferences"
+        ],
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "network": false
+        },
+        "x-satisfies": [
+          "build-pdf",
+          "build-docs"
+        ]
+      }
+    },
+    "/tools/paper-preview": {
+      "post": {
+        "operationId": "paper-preview",
+        "summary": "Open a render",
+        "description": "Open a rendered PDF, HTML page or image in the system browser, or list the renders available to open.",
+        "tags": [
+          "rendering-auditor",
+          "staging-review"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "paper-preview/"
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "$ref": "#/components/schemas/RepoPath"
+                  },
+                  "format": {
+                    "$ref": "#/components/schemas/PreviewFormat"
+                  },
+                  "list": {
+                    "$ref": "#/components/schemas/Flag"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "opened": {
+                      "$ref": "#/components/schemas/Markdown",
+                      "description": "What was opened, or the list of candidates."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/paper-preview.jsonld",
+        "x-invoke": {
+          "mcp": {
+            "tool": "paper_preview"
+          },
+          "inProcess": {
+            "module": "adapters/paper/tools/preview.ts"
+          }
+        },
+        "x-mcp-tools": [
+          "paper_preview"
+        ],
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "network": false
+        },
+        "x-satisfies": [
+          "rendering-auditor",
+          "staging-review"
+        ],
+        "x-skill-contracts": {
+          "staging-review.input": {
+            "$ref": "#/components/schemas/skill.staging-review.input"
+          },
+          "staging-review.output": {
+            "$ref": "#/components/schemas/skill.staging-review.output"
+          }
+        }
+      }
+    },
+    "/tools/proof-dependency-graph": {
+      "post": {
+        "operationId": "proof-dependency-graph",
+        "summary": "Proof dependency graph",
+        "description": "Render the dependency graph of a paper's proof objects from `proof-objects.json` as SVG (or DOT), each node linking to its anchor in the published PDF.",
+        "tags": [
+          "docs-generation",
+          "proof-status-tracking"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "proof-dependency-graph/"
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "manifest": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The proof-objects.json to read."
+                  },
+                  "output": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Where to write the SVG."
+                  },
+                  "pdfBaseUrl": {
+                    "$ref": "#/components/schemas/Url",
+                    "description": "The published PDF, for the anchor links."
+                  },
+                  "dotOnly": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Write DOT source instead of rendering."
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "graph": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "The SVG, or DOT with `--dot-only`."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/proof-dependency-graph.jsonld",
+        "x-invoke": {
+          "shell": "python3 .github/scripts/generate_dependency_graph.py"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "python3"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "docs-generation",
+          "proof-status-tracking"
+        ]
+      }
+    },
+    "/tools/proof-objects-extract": {
+      "post": {
+        "operationId": "proof-objects-extract",
+        "summary": "Proof-object extraction",
+        "description": "Extract the theorem, lemma and definition environments of a paper's LaTeX chapters into `proof-objects.json` — the manifest the dependency graph and the proof-status update read.",
+        "tags": [
+          "proof-status-tracking"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "proof-objects-extract/"
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "output": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Where to write proof-objects.json."
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "manifest": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "proof-objects.json. A chapter file that is missing is skipped with a warning, not treated as empty."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/proof-objects-extract.jsonld",
+        "x-invoke": {
+          "shell": "python3 .github/scripts/extract_proof_objects.py"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "python3"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "proof-status-tracking"
+        ]
+      }
+    },
+    "/tools/proof-status-update": {
+      "post": {
+        "operationId": "proof-status-update",
+        "summary": "Proof status from a Lean build",
+        "description": "Update each proof object's status in `proof-objects.json` from a Lean build log — which objects built, which carry `sorry`, which failed. Exits 1 on a manifest with no objects rather than writing an empty status.",
+        "tags": [
+          "proof-status-tracking"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "proof-status-update/"
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "manifest": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The proof-objects.json to update."
+                  },
+                  "buildLog": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The Lean build log; stdin when absent."
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "manifest": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "proof-objects.json with statuses updated in place."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/proof-status-update.jsonld",
+        "x-invoke": {
+          "shell": "python3 .github/scripts/update_proof_status.py"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "python3"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "proof-status-tracking"
+        ]
+      }
+    },
+    "/tools/tex-install": {
+      "post": {
+        "operationId": "tex-install",
+        "summary": "Install TeX Live in a sandbox",
+        "description": "Install TeX Live (full) and latexmk where no TeX engine is present, disabling the firewalled launchpad PPAs that otherwise abort `apt-get update`. Idempotent: does nothing when pdflatex and memoize.sty are already present. Run it in the background. pdflatex unpacks early but is not usable until the post-install format build ends (`kpsewhich memoize.sty` returning a path is the ready signal).",
+        "tags": [
+          "latex-build-cache"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "tex-install/"
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "engine": {
+                      "$ref": "#/components/schemas/Text",
+                      "description": "A `pdflatex --version` line on success. The installed packages are system-wide."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/tex-install.jsonld",
+        "x-invoke": {
+          "shell": "bash cat-harness-tools/scripts/install-tex.sh"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bash",
+            "apt-get",
+            "sudo"
+          ],
+          "network": true
+        },
+        "x-satisfies": [
+          "latex-build-cache"
+        ],
+        "x-selection": {
+          "when": "A step needs to compile TeX (`paper-feature-build`'s PDFs, a full paper build) and `pdflatex` is not on PATH.",
+          "limits": "Debian/Ubuntu with apt and sudo only. Installs system packages; it does not touch the repository.",
+          "cost": "About 5 GB of disk and 10-20 minutes, once per container."
+        }
+      }
+    },
+    "/tools/tex-snippet-validate": {
+      "post": {
+        "operationId": "tex-snippet-validate",
+        "summary": "TeX snippet validation (AST)",
+        "description": "Parse every `tex` snippet in a folio's blocks and report what will not compile — structural, not textual: it reads an AST rather than matching patterns. Complementary to `latex-preflight`, which gates a main.tex before a compile, and to `latex-overfull`, which reads a log after one.",
+        "tags": [
+          "latex-validation"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "tex-snippet-validate/"
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "paper": {
+                    "$ref": "#/components/schemas/Slug",
+                    "description": "One folio by slug. Absent, every folio the content root holds."
+                  },
+                  "file": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "A single `.md` block, for the narrow case."
+                  },
+                  "compile": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Also compile each snippet with pdflatex — needs a TeX distribution, which the base `requires` does NOT claim."
+                  },
+                  "json": {
+                    "$ref": "#/components/schemas/Flag"
+                  },
+                  "warningsLog": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Write a QA-compatible log to this path."
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "report": {
+                      "$ref": "#/components/schemas/Text",
+                      "description": "Per snippet, what will not compile. With no folio to scan it reports `Files scanned: 0` and exits 2 (could-not-determine). Read the scanned count before reading the verdict."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/tex-snippet-validate.jsonld",
+        "x-invoke": {
+          "shell": "bun run cat latex:validate"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "latex-validation"
+        ]
+      }
+    },
+    "/tools/tex-source-audit": {
+      "post": {
+        "operationId": "tex-source-audit",
+        "summary": "TeX-source hazard audit",
+        "description": "Catch the source patterns that crash pdflatex but read as ordinary prose — a bare `_` or `^` in a bibliography field, `|` inside a markdown table cell where it is also the column separator, a `$…$` span across two lines, markdown link syntax inside a fenced tex block, a double subscript.",
+        "tags": [
+          "latex-validation"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "tex-source-audit/"
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "strict": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Exit 1 on any finding, for use as a gate."
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "report": {
+                      "$ref": "#/components/schemas/Text",
+                      "description": "Hazards with file and line, plus a committed sidecar. Run where no folio exists it says `No .md files found … refusing to report success. This audits a FOLIO's content; folio-assistant is the platform.` and exits 2 (could-not-determine)."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/tex-source-audit.jsonld",
+        "x-invoke": {
+          "shell": "bun run cat latex:audit-source"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "latex-validation"
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Branch": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._/-]*$",
+        "description": "A git branch name",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Branch"
+      },
+      "Dpi": {
+        "type": "integer",
+        "minimum": 24,
+        "maximum": 1200,
+        "description": "Dots per inch for rendered formulae.",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Dpi"
+      },
+      "Flag": {
+        "type": "boolean",
+        "description": "A boolean switch — projects to a bare flag, with no value word",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+      },
+      "InstanceId": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+        "description": "A workflow instance id — the stem of a file in the bean graph's workflow-state node",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/InstanceId"
+      },
+      "LakeCacheAction": {
+        "type": "string",
+        "enum": [
+          "status",
+          "restore",
+          "restore-toolchain",
+          "install-toolchain",
+          "verify",
+          "seed",
+          "contribute",
+          "list",
+          "doctor"
+        ],
+        "description": "A lake-cache verb: restore prebuilt oleans, seed them, or diagnose why a restore missed.",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/LakeCacheAction"
+      },
+      "LatexEngine": {
+        "type": "string",
+        "enum": [
+          "pdflatex",
+          "lualatex",
+          "xelatex"
+        ],
+        "description": "The TeX engine.",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/LatexEngine"
+      },
+      "Markdown": {
+        "type": "string",
+        "description": "Markdown text. Not admissible as a command-line argument — see INJECTION_SAFE.",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+      },
+      "MathRenderer": {
+        "type": "string",
+        "enum": [
+          "katex",
+          "mathjax"
+        ],
+        "description": "The browser-side math renderer.",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/MathRenderer"
+      },
+      "PackageName": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^[a-z][a-z0-9-]*$",
+        "description": "A skill package, e.g. folio-core",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/PackageName"
+      },
+      "PreferenceAction": {
+        "type": "string",
+        "enum": [
+          "get",
+          "set",
+          "reset"
+        ],
+        "description": "Read, write or clear the stored preferences.",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/PreferenceAction"
+      },
+      "PreviewFormat": {
+        "type": "string",
+        "enum": [
+          "pdf",
+          "html",
+          "png"
+        ],
+        "description": "A previewable artefact: pdf, html or png.",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/PreviewFormat"
+      },
+      "PrintMode": {
+        "type": "string",
+        "enum": [
+          "formal",
+          "compact"
+        ],
+        "description": "Typesetting density.",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/PrintMode"
+      },
+      "RenderFormat": {
+        "type": "string",
+        "enum": [
+          "pdf",
+          "html"
+        ],
+        "description": "A render target: pdf or html.",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RenderFormat"
+      },
+      "RenderScope": {
+        "type": "string",
+        "enum": [
+          "full",
+          "chapter",
+          "section"
+        ],
+        "description": "How much of the folio to render.",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RenderScope"
+      },
+      "RepoFullName": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$",
+        "description": "A forge repository's full name, owner/name",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoFullName"
+      },
+      "RepoPath": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^[A-Za-z0-9._][A-Za-z0-9._/-]*$",
+        "description": "A path relative to the repository root. No `..` segments.",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+      },
+      "skill.content-validate.input": {
+        "title": "Content Validate Input",
+        "description": "Input schema for content validation.",
+        "type": "object",
+        "required": [
+          "targetPath"
+        ],
+        "properties": {
+          "targetPath": {
+            "type": "string",
+            "description": "Path to content to validate."
+          },
+          "validationRules": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Specific validation rule IDs to run (empty = all applicable)."
+          },
+          "schemaRefs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Schema files to validate against."
+          },
+          "stagingLinks": {
+            "$ref": "#/components/schemas/skill.content-validate.input.stagingLinks",
+            "description": "The staging preview of the work under review, as the request for feedback carried it, so the reviewer opens the changed pages rather than rebuilding links. Rule: cat-harness skills/authoring/content-lifecycle/feedback-deep-links.md."
+          }
+        }
+      },
+      "skill.content-validate.input.stagingLinks": {
+        "title": "Staging links",
+        "description": "The staging preview of the work a request for feedback is about: one deep link per changed page (the page and the anchor where the change sits) with the same page on main as `before`. Mirrors StagingComparison in schemas/sdlc/staging.ts. The rule is skills/authoring/content-lifecycle/feedback-deep-links.md. Copied inline as `definitions.stagingLinks` into every skill contract that carries it; schemas/staging.test.ts fails when a copy drifts.",
+        "type": "object",
+        "required": [
+          "branch",
+          "slug",
+          "branchUrl",
+          "mainBaseUrl",
+          "stagingBaseUrl",
+          "pages"
+        ],
+        "properties": {
+          "branch": {
+            "type": "string",
+            "description": "Feature branch name."
+          },
+          "slug": {
+            "type": "string",
+            "description": "Branch slug used in the staging URL path."
+          },
+          "branchUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "pr": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "mainBaseUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "stagingBaseUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "pages": {
+            "type": "array",
+            "description": "One entry per changed page, deep-linked; from the change's rendered-impact list, never chosen by judgement.",
+            "items": {
+              "type": "object",
+              "required": [
+                "title"
+              ],
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "before": {
+                  "type": "string",
+                  "format": "uri",
+                  "description": "Same page on main; absent for a new page."
+                },
+                "after": {
+                  "type": "string",
+                  "format": "uri",
+                  "description": "The page on the staging preview, with the anchor where the change sits; absent for a deleted page."
+                },
+                "summary": {
+                  "type": "string",
+                  "description": "What to look at on this page."
+                }
+              }
+            }
+          },
+          "missing": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "What could not be linked, said rather than hidden: no preview yet (and when it will exist), no page list computed, or a changed page the publish ref does not hold."
+          }
+        },
+        "$comment": "Copy of cat-harness schemas/staging-comparison.schema.json; cat-harness schemas/staging.test.ts fails when a copy drifts."
+      },
+      "skill.content-validate.output": {
+        "title": "Content Validate Output",
+        "description": "Output schema for content validation results.",
+        "type": "object",
+        "required": [
+          "overallStatus",
+          "results"
+        ],
+        "properties": {
+          "overallStatus": {
+            "type": "string",
+            "enum": [
+              "pass",
+              "warnings",
+              "errors"
+            ]
+          },
+          "results": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "rule",
+                "status"
+              ],
+              "properties": {
+                "rule": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "pass",
+                    "fail",
+                    "warning",
+                    "skipped"
+                  ]
+                },
+                "message": {
+                  "type": "string"
+                },
+                "location": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "stagingLinks": {
+            "$ref": "#/components/schemas/skill.content-validate.output.stagingLinks",
+            "description": "The staging preview of the work this output asks a person to look at: one deep link per changed page, with the same page on main. Required whenever a preview exists; when it does not, say so in `missing`. Rule: cat-harness skills/authoring/content-lifecycle/feedback-deep-links.md."
+          }
+        }
+      },
+      "skill.content-validate.output.stagingLinks": {
+        "title": "Staging links",
+        "description": "The staging preview of the work a request for feedback is about: one deep link per changed page (the page and the anchor where the change sits) with the same page on main as `before`. Mirrors StagingComparison in schemas/sdlc/staging.ts. The rule is skills/authoring/content-lifecycle/feedback-deep-links.md. Copied inline as `definitions.stagingLinks` into every skill contract that carries it; schemas/staging.test.ts fails when a copy drifts.",
+        "type": "object",
+        "required": [
+          "branch",
+          "slug",
+          "branchUrl",
+          "mainBaseUrl",
+          "stagingBaseUrl",
+          "pages"
+        ],
+        "properties": {
+          "branch": {
+            "type": "string",
+            "description": "Feature branch name."
+          },
+          "slug": {
+            "type": "string",
+            "description": "Branch slug used in the staging URL path."
+          },
+          "branchUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "pr": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "mainBaseUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "stagingBaseUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "pages": {
+            "type": "array",
+            "description": "One entry per changed page, deep-linked; from the change's rendered-impact list, never chosen by judgement.",
+            "items": {
+              "type": "object",
+              "required": [
+                "title"
+              ],
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "before": {
+                  "type": "string",
+                  "format": "uri",
+                  "description": "Same page on main; absent for a new page."
+                },
+                "after": {
+                  "type": "string",
+                  "format": "uri",
+                  "description": "The page on the staging preview, with the anchor where the change sits; absent for a deleted page."
+                },
+                "summary": {
+                  "type": "string",
+                  "description": "What to look at on this page."
+                }
+              }
+            }
+          },
+          "missing": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "What could not be linked, said rather than hidden: no preview yet (and when it will exist), no page list computed, or a changed page the publish ref does not hold."
+          }
+        },
+        "$comment": "Copy of cat-harness schemas/staging-comparison.schema.json; cat-harness schemas/staging.test.ts fails when a copy drifts."
+      },
+      "skill.staging-review.input": {
+        "title": "Staging Review Input",
+        "description": "What the reader wants to look at, in their own words (kept verbatim; it narrows, never adds), and the branch or pull request whose preview to list.",
+        "type": "object",
+        "properties": {
+          "ask": {
+            "type": "string",
+            "description": "What the reader wants to look at, verbatim. Absent: the whole preview, every page the branch changed."
+          },
+          "branch": {
+            "type": "string"
+          },
+          "pr": {
+            "type": "integer",
+            "minimum": 1
+          }
+        }
+      },
+      "skill.staging-review.output": {
+        "title": "Staging Review Output",
+        "description": "The reviewable list: a narrative of what changed, where to start, and the staging links, one deep link per changed page with its before. Every other skill that asks for feedback carries this same `stagingLinks` shape.",
+        "type": "object",
+        "required": [
+          "narrative",
+          "stagingLinks"
+        ],
+        "properties": {
+          "narrative": {
+            "type": "string",
+            "description": "What a reader of the site will now see or do differently, and why, before any link."
+          },
+          "startHere": {
+            "type": "string",
+            "format": "uri",
+            "description": "The one page to open first."
+          },
+          "stagingLinks": {
+            "$ref": "#/components/schemas/skill.staging-review.output.stagingLinks"
+          }
+        }
+      },
+      "skill.staging-review.output.stagingLinks": {
+        "title": "Staging links",
+        "description": "The staging preview of the work a request for feedback is about: one deep link per changed page (the page and the anchor where the change sits) with the same page on main as `before`. Mirrors StagingComparison in schemas/sdlc/staging.ts. The rule is skills/authoring/content-lifecycle/feedback-deep-links.md. Copied inline as `definitions.stagingLinks` into every skill contract that carries it; schemas/staging.test.ts fails when a copy drifts.",
+        "type": "object",
+        "required": [
+          "branch",
+          "slug",
+          "branchUrl",
+          "mainBaseUrl",
+          "stagingBaseUrl",
+          "pages"
+        ],
+        "properties": {
+          "branch": {
+            "type": "string",
+            "description": "Feature branch name."
+          },
+          "slug": {
+            "type": "string",
+            "description": "Branch slug used in the staging URL path."
+          },
+          "branchUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "pr": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "mainBaseUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "stagingBaseUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "pages": {
+            "type": "array",
+            "description": "One entry per changed page, deep-linked; from the change's rendered-impact list, never chosen by judgement.",
+            "items": {
+              "type": "object",
+              "required": [
+                "title"
+              ],
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "before": {
+                  "type": "string",
+                  "format": "uri",
+                  "description": "Same page on main; absent for a new page."
+                },
+                "after": {
+                  "type": "string",
+                  "format": "uri",
+                  "description": "The page on the staging preview, with the anchor where the change sits; absent for a deleted page."
+                },
+                "summary": {
+                  "type": "string",
+                  "description": "What to look at on this page."
+                }
+              }
+            }
+          },
+          "missing": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "What could not be linked, said rather than hidden: no preview yet (and when it will exist), no page list computed, or a changed page the publish ref does not hold."
+          }
+        },
+        "$comment": "Copy of cat-harness schemas/staging-comparison.schema.json; cat-harness schemas/staging.test.ts fails when a copy drifts."
+      },
+      "Slug": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^[a-z0-9][a-z0-9-]*$",
+        "description": "A folio slug, e.g. quantum-observable-universe",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug"
+      },
+      "Text": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 400,
+        "description": "A short single-line human string. Not admissible as a command-line argument.",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+      },
+      "Url": {
+        "type": "string",
+        "format": "uri",
+        "description": "An absolute http(s) URL",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Url"
+      }
+    }
+  }
+}

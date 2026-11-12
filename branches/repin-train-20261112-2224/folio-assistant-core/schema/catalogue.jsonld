@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/folio-assistant-core/schema/catalogue.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "repin-train/20261112-2224",
+    "sha": "3e37e836b465d957673f4090b94c606b5427ca33",
+    "pr": "repin-train/20261112-2224",
+    "run": "43319926452"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/folio-assistant-core/schema/catalogue",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "catalogue",
+      "title": "catalogue",
+      "summary": "A remote catalogue, modelled in the graph without holding it.",
+      "module": "schemas/catalogue.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/folio-assistant-core/directory/core-schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/catalogue",
+      "jsonSchema": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/folio-assistant-core/schema/zod/catalogue/BitstreamSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/folio-assistant-core/schema/zod/catalogue/CatalogueNodeSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/folio-assistant-core/schema/zod/catalogue/CatalogueSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/folio-assistant-core/schema/zod/catalogue/HandleSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/folio-assistant-core/schema/zod/catalogue/MaskedRegionSchema.schema.json"
+      ]
+    }
+  ]
+}

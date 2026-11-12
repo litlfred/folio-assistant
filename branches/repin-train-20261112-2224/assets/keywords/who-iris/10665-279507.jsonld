@@ -1,0 +1,1446 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-279507",
+  "instance": "who-iris",
+  "about": "library/10665-279507",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7908,
+    "terms": 73102
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "santé numérique",
+        "score": 7.9876,
+        "evidence": []
+      },
+      {
+        "term": "sur des",
+        "score": 6.5444,
+        "evidence": []
+      },
+      {
+        "term": "des données",
+        "score": 6.5169,
+        "evidence": []
+      },
+      {
+        "term": "sur les",
+        "score": 6.5009,
+        "evidence": []
+      },
+      {
+        "term": "numériques pour",
+        "score": 6.4308,
+        "evidence": []
+      },
+      {
+        "term": "des technologies",
+        "score": 6.3118,
+        "evidence": []
+      },
+      {
+        "term": "dans les",
+        "score": 6.1877,
+        "evidence": []
+      },
+      {
+        "term": "renforcer les",
+        "score": 5.9538,
+        "evidence": []
+      },
+      {
+        "term": "les domaines",
+        "score": 5.9335,
+        "evidence": []
+      },
+      {
+        "term": "les états",
+        "score": 5.921,
+        "evidence": []
+      },
+      {
+        "term": "les organisations",
+        "score": 5.8307,
+        "evidence": []
+      },
+      {
+        "term": "les capacités",
+        "score": 5.8058,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "sur les",
+        "score": 223.031,
+        "evidence": []
+      },
+      {
+        "term": "dans les",
+        "score": 219.6327,
+        "evidence": []
+      },
+      {
+        "term": "les technologies",
+        "score": 217.9458,
+        "evidence": []
+      },
+      {
+        "term": "santé numérique",
+        "score": 215.9536,
+        "evidence": []
+      },
+      {
+        "term": "renforcer les",
+        "score": 206.6549,
+        "evidence": []
+      },
+      {
+        "term": "les états",
+        "score": 205.5456,
+        "evidence": []
+      },
+      {
+        "term": "sur des",
+        "score": 205.3882,
+        "evidence": []
+      },
+      {
+        "term": "les capacités",
+        "score": 205.1799,
+        "evidence": []
+      },
+      {
+        "term": "avec les",
+        "score": 203.9738,
+        "evidence": []
+      },
+      {
+        "term": "les organisations",
+        "score": 200.2338,
+        "evidence": []
+      },
+      {
+        "term": "les domaines",
+        "score": 199.9976,
+        "evidence": []
+      },
+      {
+        "term": "les systèmes",
+        "score": 199.9435,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "dans les",
+        "score": 4.9854,
+        "evidence": []
+      },
+      {
+        "term": "santé numérique",
+        "score": 4.9412,
+        "evidence": []
+      },
+      {
+        "term": "sur des",
+        "score": 4.9074,
+        "evidence": []
+      },
+      {
+        "term": "des données",
+        "score": 4.5045,
+        "evidence": []
+      },
+      {
+        "term": "par les",
+        "score": 4.3612,
+        "evidence": []
+      },
+      {
+        "term": "des systèmes",
+        "score": 4.2912,
+        "evidence": []
+      },
+      {
+        "term": "les pays",
+        "score": 4.2624,
+        "evidence": []
+      },
+      {
+        "term": "utilisation des",
+        "score": 4.0327,
+        "evidence": []
+      },
+      {
+        "term": "avec les",
+        "score": 3.9975,
+        "evidence": []
+      },
+      {
+        "term": "des objectifs",
+        "score": 3.922,
+        "evidence": []
+      },
+      {
+        "term": "des technologies",
+        "score": 3.9203,
+        "evidence": []
+      },
+      {
+        "term": "les états",
+        "score": 3.9152,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "santé numérique",
+        "score": 226.104,
+        "evidence": []
+      },
+      {
+        "term": "sur des",
+        "score": 203.3525,
+        "evidence": []
+      },
+      {
+        "term": "des données",
+        "score": 200.7062,
+        "evidence": []
+      },
+      {
+        "term": "dans les",
+        "score": 198.2993,
+        "evidence": []
+      },
+      {
+        "term": "utilisation des",
+        "score": 187.318,
+        "evidence": []
+      },
+      {
+        "term": "des systèmes",
+        "score": 182.7212,
+        "evidence": []
+      },
+      {
+        "term": "des technologies",
+        "score": 180.7556,
+        "evidence": []
+      },
+      {
+        "term": "par les",
+        "score": 180.3027,
+        "evidence": []
+      },
+      {
+        "term": "des objectifs",
+        "score": 175.767,
+        "evidence": []
+      },
+      {
+        "term": "des services",
+        "score": 175.1572,
+        "evidence": []
+      },
+      {
+        "term": "des ressources",
+        "score": 174.7255,
+        "evidence": []
+      },
+      {
+        "term": "des besoins",
+        "score": 172.7245,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "dans les",
+        "score": 4.9854,
+        "evidence": []
+      },
+      {
+        "term": "santé numérique",
+        "score": 4.9412,
+        "evidence": []
+      },
+      {
+        "term": "sur des",
+        "score": 4.9074,
+        "evidence": []
+      },
+      {
+        "term": "des données",
+        "score": 4.5045,
+        "evidence": []
+      },
+      {
+        "term": "par les",
+        "score": 4.3612,
+        "evidence": []
+      },
+      {
+        "term": "des systèmes",
+        "score": 4.2912,
+        "evidence": []
+      },
+      {
+        "term": "les pays",
+        "score": 4.2624,
+        "evidence": []
+      },
+      {
+        "term": "utilisation des",
+        "score": 4.0327,
+        "evidence": []
+      },
+      {
+        "term": "avec les",
+        "score": 3.9975,
+        "evidence": []
+      },
+      {
+        "term": "des objectifs",
+        "score": 3.922,
+        "evidence": []
+      },
+      {
+        "term": "des technologies",
+        "score": 3.9203,
+        "evidence": []
+      },
+      {
+        "term": "les états",
+        "score": 3.9152,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "知识产权",
+        "score": 129.2321,
+        "evidence": []
+      },
+      {
+        "term": "第6条",
+        "score": 123.5284,
+        "evidence": []
+      },
+      {
+        "term": "解决争端",
+        "score": 123.5284,
+        "evidence": []
+      },
+      {
+        "term": "还包括区域经济一体化组织",
+        "score": 122.8668,
+        "evidence": []
+      },
+      {
+        "term": "适用时",
+        "score": 122.8668,
+        "evidence": []
+      },
+      {
+        "term": "在sars",
+        "score": 114.8686,
+        "evidence": []
+      },
+      {
+        "term": "个学习目标",
+        "score": 112.6857,
+        "evidence": []
+      },
+      {
+        "term": "个核心能力和",
+        "score": 112.6857,
+        "evidence": []
+      },
+      {
+        "term": "如在公共利益与个体自主权之间",
+        "score": 112.6857,
+        "evidence": []
+      },
+      {
+        "term": "严重急性呼吸综合征",
+        "score": 109.1761,
+        "evidence": []
+      },
+      {
+        "term": "在正常情况下",
+        "score": 101.3285,
+        "evidence": []
+      },
+      {
+        "term": "要求总干事",
+        "score": 99.6806,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "page-001": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "santé numérique",
+          "score": 2.1338,
+          "evidence": []
+        },
+        {
+          "term": "onzième assemblée",
+          "score": 1.5578,
+          "evidence": []
+        },
+        {
+          "term": "développement durable",
+          "score": 1.4916,
+          "evidence": []
+        },
+        {
+          "term": "numériques pour",
+          "score": 1.3506,
+          "evidence": []
+        },
+        {
+          "term": "assemblée mondiale",
+          "score": 1.1606,
+          "evidence": []
+        },
+        {
+          "term": "des services",
+          "score": 1.1352,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.9942,
+          "evidence": []
+        },
+        {
+          "term": "reconnaissant",
+          "score": 0.9835,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "santé numérique",
+          "score": 64.8664,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 37.7124,
+          "evidence": []
+        },
+        {
+          "term": "numériques pour",
+          "score": 27.5129,
+          "evidence": []
+        },
+        {
+          "term": "développement durable",
+          "score": 26.8181,
+          "evidence": []
+        },
+        {
+          "term": "onzième assemblée",
+          "score": 24.9,
+          "evidence": []
+        },
+        {
+          "term": "des services",
+          "score": 21.8425,
+          "evidence": []
+        },
+        {
+          "term": "reconnaissant",
+          "score": 18.8027,
+          "evidence": []
+        },
+        {
+          "term": "assemblée mondiale",
+          "score": 17.4826,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "santé numérique",
+          "score": 1.024,
+          "evidence": []
+        },
+        {
+          "term": "des services",
+          "score": 0.7851,
+          "evidence": []
+        },
+        {
+          "term": "numériques pour",
+          "score": 0.7288,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.6671,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.3992,
+          "evidence": []
+        },
+        {
+          "term": "assemblée mondiale",
+          "score": 0.3957,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.3728,
+          "evidence": []
+        },
+        {
+          "term": "aux",
+          "score": 0.3165,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "santé numérique",
+          "score": 61.0285,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 29.191,
+          "evidence": []
+        },
+        {
+          "term": "des services",
+          "score": 27.4951,
+          "evidence": []
+        },
+        {
+          "term": "numériques pour",
+          "score": 19.1525,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 7.8999,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 6.4732,
+          "evidence": []
+        },
+        {
+          "term": "œuvre",
+          "score": 6.2441,
+          "evidence": []
+        },
+        {
+          "term": "aux",
+          "score": 5.7822,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "santé numérique",
+          "score": 1.024,
+          "evidence": []
+        },
+        {
+          "term": "des services",
+          "score": 0.7851,
+          "evidence": []
+        },
+        {
+          "term": "numériques pour",
+          "score": 0.7288,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.6671,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.3992,
+          "evidence": []
+        },
+        {
+          "term": "assemblée mondiale",
+          "score": 0.3957,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.3728,
+          "evidence": []
+        },
+        {
+          "term": "œuvre",
+          "score": 0.3039,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "还包括区域经济一体化组织",
+          "score": 49.6872,
+          "evidence": []
+        },
+        {
+          "term": "适用时",
+          "score": 49.6872,
+          "evidence": []
+        },
+        {
+          "term": "要求总干事",
+          "score": 36.9285,
+          "evidence": []
+        },
+        {
+          "term": "知识产权",
+          "score": 32.9373,
+          "evidence": []
+        },
+        {
+          "term": "敦促会员国",
+          "score": 31.0435,
+          "evidence": []
+        },
+        {
+          "term": "确定优先领域",
+          "score": 31.0435,
+          "evidence": []
+        },
+        {
+          "term": "第6条",
+          "score": 30.2396,
+          "evidence": []
+        },
+        {
+          "term": "解决争端",
+          "score": 30.2396,
+          "evidence": []
+        }
+      ]
+    },
+    "page-002": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "les systèmes",
+          "score": 2.0111,
+          "evidence": []
+        },
+        {
+          "term": "numériques pour",
+          "score": 1.9825,
+          "evidence": []
+        },
+        {
+          "term": "santé numérique",
+          "score": 1.9286,
+          "evidence": []
+        },
+        {
+          "term": "technologies numériques",
+          "score": 1.9284,
+          "evidence": []
+        },
+        {
+          "term": "des technologies",
+          "score": 1.886,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 1.836,
+          "evidence": []
+        },
+        {
+          "term": "les organisations",
+          "score": 1.7704,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 1.7277,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "les technologies",
+          "score": 78.3204,
+          "evidence": []
+        },
+        {
+          "term": "les systèmes",
+          "score": 76.308,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 74.1751,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 71.2502,
+          "evidence": []
+        },
+        {
+          "term": "les organisations",
+          "score": 70.0369,
+          "evidence": []
+        },
+        {
+          "term": "déterminer les",
+          "score": 69.2046,
+          "evidence": []
+        },
+        {
+          "term": "des technologies",
+          "score": 66.5066,
+          "evidence": []
+        },
+        {
+          "term": "les services",
+          "score": 65.2287,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "dans les",
+          "score": 1.4991,
+          "evidence": []
+        },
+        {
+          "term": "santé numérique",
+          "score": 1.4878,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 1.4464,
+          "evidence": []
+        },
+        {
+          "term": "des données",
+          "score": 1.3615,
+          "evidence": []
+        },
+        {
+          "term": "les systèmes",
+          "score": 1.2787,
+          "evidence": []
+        },
+        {
+          "term": "utilisation des",
+          "score": 1.213,
+          "evidence": []
+        },
+        {
+          "term": "des technologies",
+          "score": 1.1932,
+          "evidence": []
+        },
+        {
+          "term": "les services",
+          "score": 1.1042,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "dans les",
+          "score": 63.719,
+          "evidence": []
+        },
+        {
+          "term": "des données",
+          "score": 62.3663,
+          "evidence": []
+        },
+        {
+          "term": "santé numérique",
+          "score": 60.8749,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 60.4096,
+          "evidence": []
+        },
+        {
+          "term": "utilisation des",
+          "score": 57.2992,
+          "evidence": []
+        },
+        {
+          "term": "des technologies",
+          "score": 55.2156,
+          "evidence": []
+        },
+        {
+          "term": "les systèmes",
+          "score": 54.4141,
+          "evidence": []
+        },
+        {
+          "term": "les services",
+          "score": 51.5972,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "dans les",
+          "score": 1.4991,
+          "evidence": []
+        },
+        {
+          "term": "santé numérique",
+          "score": 1.4878,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 1.4464,
+          "evidence": []
+        },
+        {
+          "term": "des données",
+          "score": 1.3615,
+          "evidence": []
+        },
+        {
+          "term": "les systèmes",
+          "score": 1.2787,
+          "evidence": []
+        },
+        {
+          "term": "utilisation des",
+          "score": 1.213,
+          "evidence": []
+        },
+        {
+          "term": "des technologies",
+          "score": 1.1932,
+          "evidence": []
+        },
+        {
+          "term": "les services",
+          "score": 1.1042,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "知识产权",
+          "score": 29.5456,
+          "evidence": []
+        },
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 28.0773,
+          "evidence": []
+        },
+        {
+          "term": "第6条",
+          "score": 28.0436,
+          "evidence": []
+        },
+        {
+          "term": "解决争端",
+          "score": 28.0436,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 27.7874,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 27.7874,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 27.7874,
+          "evidence": []
+        },
+        {
+          "term": "在sars",
+          "score": 27.371,
+          "evidence": []
+        }
+      ]
+    },
+    "page-003": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "des données",
+          "score": 2.1406,
+          "evidence": []
+        },
+        {
+          "term": "santé numérique",
+          "score": 2.1066,
+          "evidence": []
+        },
+        {
+          "term": "les capacités",
+          "score": 2.0984,
+          "evidence": []
+        },
+        {
+          "term": "des citoyens",
+          "score": 2.0359,
+          "evidence": []
+        },
+        {
+          "term": "limite des",
+          "score": 2.0293,
+          "evidence": []
+        },
+        {
+          "term": "des ressources",
+          "score": 1.9892,
+          "evidence": []
+        },
+        {
+          "term": "avec les",
+          "score": 1.9723,
+          "evidence": []
+        },
+        {
+          "term": "les états",
+          "score": 1.9712,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "dans les",
+          "score": 82.1606,
+          "evidence": []
+        },
+        {
+          "term": "avec les",
+          "score": 82.104,
+          "evidence": []
+        },
+        {
+          "term": "des données",
+          "score": 81.649,
+          "evidence": []
+        },
+        {
+          "term": "les capacités",
+          "score": 79.7989,
+          "evidence": []
+        },
+        {
+          "term": "les états",
+          "score": 77.228,
+          "evidence": []
+        },
+        {
+          "term": "des ressources",
+          "score": 76.7992,
+          "evidence": []
+        },
+        {
+          "term": "des citoyens",
+          "score": 74.4517,
+          "evidence": []
+        },
+        {
+          "term": "limite des",
+          "score": 74.2776,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "santé numérique",
+          "score": 1.3972,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 1.3933,
+          "evidence": []
+        },
+        {
+          "term": "des données",
+          "score": 1.2835,
+          "evidence": []
+        },
+        {
+          "term": "avec les",
+          "score": 1.1291,
+          "evidence": []
+        },
+        {
+          "term": "des ressources",
+          "score": 1.1126,
+          "evidence": []
+        },
+        {
+          "term": "les états",
+          "score": 1.1067,
+          "evidence": []
+        },
+        {
+          "term": "des technologies",
+          "score": 1.1002,
+          "evidence": []
+        },
+        {
+          "term": "les capacités",
+          "score": 1.0644,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "des données",
+          "score": 72.9893,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 69.8822,
+          "evidence": []
+        },
+        {
+          "term": "des technologies",
+          "score": 63.7691,
+          "evidence": []
+        },
+        {
+          "term": "des ressources",
+          "score": 62.3684,
+          "evidence": []
+        },
+        {
+          "term": "santé numérique",
+          "score": 62.0286,
+          "evidence": []
+        },
+        {
+          "term": "des citoyens",
+          "score": 59.2992,
+          "evidence": []
+        },
+        {
+          "term": "limite des",
+          "score": 59.2992,
+          "evidence": []
+        },
+        {
+          "term": "avec les",
+          "score": 57.9897,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "santé numérique",
+          "score": 1.3972,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 1.3933,
+          "evidence": []
+        },
+        {
+          "term": "des données",
+          "score": 1.2835,
+          "evidence": []
+        },
+        {
+          "term": "avec les",
+          "score": 1.1291,
+          "evidence": []
+        },
+        {
+          "term": "des ressources",
+          "score": 1.1126,
+          "evidence": []
+        },
+        {
+          "term": "les états",
+          "score": 1.1067,
+          "evidence": []
+        },
+        {
+          "term": "des technologies",
+          "score": 1.1002,
+          "evidence": []
+        },
+        {
+          "term": "les capacités",
+          "score": 1.0644,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "个学习目标",
+          "score": 32.338,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 32.338,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 32.338,
+          "evidence": []
+        },
+        {
+          "term": "知识产权",
+          "score": 32.1345,
+          "evidence": []
+        },
+        {
+          "term": "第6条",
+          "score": 31.5171,
+          "evidence": []
+        },
+        {
+          "term": "解决争端",
+          "score": 31.5171,
+          "evidence": []
+        },
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 31.2581,
+          "evidence": []
+        },
+        {
+          "term": "在sars",
+          "score": 27.8652,
+          "evidence": []
+        }
+      ]
+    },
+    "page-004": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "santé numérique",
+          "score": 1.8186,
+          "evidence": []
+        },
+        {
+          "term": "des meilleures",
+          "score": 1.7034,
+          "evidence": []
+        },
+        {
+          "term": "des données",
+          "score": 1.656,
+          "evidence": []
+        },
+        {
+          "term": "meilleures pratiques",
+          "score": 1.2991,
+          "evidence": []
+        },
+        {
+          "term": "relatives aux",
+          "score": 1.2466,
+          "evidence": []
+        },
+        {
+          "term": "technologies numériques",
+          "score": 1.0127,
+          "evidence": []
+        },
+        {
+          "term": "notamment par",
+          "score": 0.9453,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.7457,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "des meilleures",
+          "score": 44.5617,
+          "evidence": []
+        },
+        {
+          "term": "des données",
+          "score": 43.3785,
+          "evidence": []
+        },
+        {
+          "term": "santé numérique",
+          "score": 42.5842,
+          "evidence": []
+        },
+        {
+          "term": "relatives aux",
+          "score": 20.7577,
+          "evidence": []
+        },
+        {
+          "term": "meilleures pratiques",
+          "score": 20.6494,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 17.5991,
+          "evidence": []
+        },
+        {
+          "term": "technologies numériques",
+          "score": 14.7953,
+          "evidence": []
+        },
+        {
+          "term": "notamment par",
+          "score": 13.7803,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "santé numérique",
+          "score": 1.0322,
+          "evidence": []
+        },
+        {
+          "term": "des données",
+          "score": 0.9404,
+          "evidence": []
+        },
+        {
+          "term": "des meilleures",
+          "score": 0.6529,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.6469,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.4733,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.3798,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.3657,
+          "evidence": []
+        },
+        {
+          "term": "technologies numériques",
+          "score": 0.3656,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "santé numérique",
+          "score": 42.172,
+          "evidence": []
+        },
+        {
+          "term": "des données",
+          "score": 37.4219,
+          "evidence": []
+        },
+        {
+          "term": "des meilleures",
+          "score": 30.5901,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 20.4311,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 9.5399,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 7.1762,
+          "evidence": []
+        },
+        {
+          "term": "technologies numériques",
+          "score": 6.5905,
+          "evidence": []
+        },
+        {
+          "term": "relatives aux",
+          "score": 6.5813,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "santé numérique",
+          "score": 1.0322,
+          "evidence": []
+        },
+        {
+          "term": "des données",
+          "score": 0.9404,
+          "evidence": []
+        },
+        {
+          "term": "des meilleures",
+          "score": 0.7003,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.6469,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.4733,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.3798,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.3657,
+          "evidence": []
+        },
+        {
+          "term": "technologies numériques",
+          "score": 0.3656,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "知识产权",
+          "score": 34.6147,
+          "evidence": []
+        },
+        {
+          "term": "第6条",
+          "score": 33.7282,
+          "evidence": []
+        },
+        {
+          "term": "解决争端",
+          "score": 33.7282,
+          "evidence": []
+        },
+        {
+          "term": "在sars",
+          "score": 33.5533,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 31.1314,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 31.1314,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 31.1314,
+          "evidence": []
+        },
+        {
+          "term": "还包括区域经济一体化组织",
+          "score": 30.35,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

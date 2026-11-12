@@ -1,0 +1,26 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/smart-base/schema/guideline-portfolio.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/schema/guideline-portfolio.jsonld",
+  "staging": {
+    "branch": "repin-train/20261112-2224",
+    "sha": "3e37e836b465d957673f4090b94c606b5427ca33",
+    "pr": "repin-train/20261112-2224",
+    "run": "43319926452"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/schema/guideline-portfolio",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "guideline-portfolio",
+      "title": "guideline-portfolio",
+      "summary": "The WHO SMART Guidelines portfolio: the umbrella knowledge graph that links",
+      "module": "schemas/guideline-portfolio.ts",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-schemas",
+      "jsonSchema": [
+        "http://smart.who.int/base/schema/zod/guideline-portfolio/GuidelinePortfolioSchema.schema.json"
+      ]
+    }
+  ]
+}

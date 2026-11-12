@@ -1,0 +1,5686 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-259268",
+  "instance": "who-iris",
+  "about": "library/10665-259268",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7908,
+    "terms": 73102
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "source women",
+        "score": 32.8263,
+        "evidence": []
+      },
+      {
+        "term": "recommendation strong",
+        "score": 30.5193,
+        "evidence": []
+      },
+      {
+        "term": "recommendation weak",
+        "score": 27.3765,
+        "evidence": []
+      },
+      {
+        "term": "conditional recommendation",
+        "score": 24.9219,
+        "evidence": []
+      },
+      {
+        "term": "source antenatal",
+        "score": 23.947,
+        "evidence": []
+      },
+      {
+        "term": "context-specific recommendation",
+        "score": 23.6994,
+        "evidence": []
+      },
+      {
+        "term": "source oxytocin",
+        "score": 23.2032,
+        "evidence": []
+      },
+      {
+        "term": "source health",
+        "score": 23.0788,
+        "evidence": []
+      },
+      {
+        "term": "recommendation based",
+        "score": 22.4306,
+        "evidence": []
+      },
+      {
+        "term": "source antibiotic",
+        "score": 21.8457,
+        "evidence": []
+      },
+      {
+        "term": "source induction",
+        "score": 21.8102,
+        "evidence": []
+      },
+      {
+        "term": "recommendation research",
+        "score": 21.3993,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "source women",
+        "score": 1016.0101,
+        "evidence": []
+      },
+      {
+        "term": "recommendation strong",
+        "score": 892.3301,
+        "evidence": []
+      },
+      {
+        "term": "recommendation weak",
+        "score": 843.0917,
+        "evidence": []
+      },
+      {
+        "term": "source antenatal",
+        "score": 779.3097,
+        "evidence": []
+      },
+      {
+        "term": "source induction",
+        "score": 770.0787,
+        "evidence": []
+      },
+      {
+        "term": "source oxytocin",
+        "score": 761.2494,
+        "evidence": []
+      },
+      {
+        "term": "source antibiotic",
+        "score": 744.9579,
+        "evidence": []
+      },
+      {
+        "term": "recommendation based",
+        "score": 727.1452,
+        "evidence": []
+      },
+      {
+        "term": "conditional recommendation",
+        "score": 713.8766,
+        "evidence": []
+      },
+      {
+        "term": "source health",
+        "score": 707.9392,
+        "evidence": []
+      },
+      {
+        "term": "context-specific recommendation",
+        "score": 705.1801,
+        "evidence": []
+      },
+      {
+        "term": "source routine",
+        "score": 700.747,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "pregnant women",
+        "score": 14.5685,
+        "evidence": []
+      },
+      {
+        "term": "source women",
+        "score": 11.8383,
+        "evidence": []
+      },
+      {
+        "term": "breastfeeding women",
+        "score": 11.4408,
+        "evidence": []
+      },
+      {
+        "term": "recommendation strong",
+        "score": 11.4036,
+        "evidence": []
+      },
+      {
+        "term": "postpartum women",
+        "score": 11.3226,
+        "evidence": []
+      },
+      {
+        "term": "conditional recommendation",
+        "score": 11.2205,
+        "evidence": []
+      },
+      {
+        "term": "context-specific recommendation",
+        "score": 11.1208,
+        "evidence": []
+      },
+      {
+        "term": "during pregnancy",
+        "score": 10.0633,
+        "evidence": []
+      },
+      {
+        "term": "recommended antenatal",
+        "score": 10.0531,
+        "evidence": []
+      },
+      {
+        "term": "recommendation research",
+        "score": 10.0205,
+        "evidence": []
+      },
+      {
+        "term": "pregnancy experience",
+        "score": 9.7979,
+        "evidence": []
+      },
+      {
+        "term": "recommendation based",
+        "score": 9.5057,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "recommendation strong",
+        "score": 677.7084,
+        "evidence": []
+      },
+      {
+        "term": "conditional recommendation",
+        "score": 637.8856,
+        "evidence": []
+      },
+      {
+        "term": "source women",
+        "score": 553.2558,
+        "evidence": []
+      },
+      {
+        "term": "context-specific recommendation",
+        "score": 535.6382,
+        "evidence": []
+      },
+      {
+        "term": "recommendation research",
+        "score": 523.0575,
+        "evidence": []
+      },
+      {
+        "term": "recommendation based",
+        "score": 503.5988,
+        "evidence": []
+      },
+      {
+        "term": "recommendation weak",
+        "score": 503.5988,
+        "evidence": []
+      },
+      {
+        "term": "pregnant women",
+        "score": 416.7197,
+        "evidence": []
+      },
+      {
+        "term": "quality evidence",
+        "score": 394.1176,
+        "evidence": []
+      },
+      {
+        "term": "low-quality evidence",
+        "score": 347.9842,
+        "evidence": []
+      },
+      {
+        "term": "postpartum women",
+        "score": 344.69,
+        "evidence": []
+      },
+      {
+        "term": "breastfeeding women",
+        "score": 341.4936,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "pregnant women",
+        "score": 14.5685,
+        "evidence": []
+      },
+      {
+        "term": "source women",
+        "score": 11.8383,
+        "evidence": []
+      },
+      {
+        "term": "breastfeeding women",
+        "score": 11.4408,
+        "evidence": []
+      },
+      {
+        "term": "recommendation strong",
+        "score": 11.4036,
+        "evidence": []
+      },
+      {
+        "term": "postpartum women",
+        "score": 11.3226,
+        "evidence": []
+      },
+      {
+        "term": "conditional recommendation",
+        "score": 11.2205,
+        "evidence": []
+      },
+      {
+        "term": "context-specific recommendation",
+        "score": 11.1208,
+        "evidence": []
+      },
+      {
+        "term": "during pregnancy",
+        "score": 10.0633,
+        "evidence": []
+      },
+      {
+        "term": "recommended antenatal",
+        "score": 10.0531,
+        "evidence": []
+      },
+      {
+        "term": "recommendation research",
+        "score": 10.0205,
+        "evidence": []
+      },
+      {
+        "term": "women groups",
+        "score": 9.8406,
+        "evidence": []
+      },
+      {
+        "term": "pregnancy experience",
+        "score": 9.7979,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "如果没有",
+        "score": 793.0459,
+        "evidence": []
+      },
+      {
+        "term": "允许进行个人反馈",
+        "score": 667.9299,
+        "evidence": []
+      },
+      {
+        "term": "个学习目标",
+        "score": 649.2475,
+        "evidence": []
+      },
+      {
+        "term": "个核心能力和",
+        "score": 649.2475,
+        "evidence": []
+      },
+      {
+        "term": "如在公共利益与个体自主权之间",
+        "score": 649.2475,
+        "evidence": []
+      },
+      {
+        "term": "同行评议者或杂志编辑",
+        "score": 618.8757,
+        "evidence": []
+      },
+      {
+        "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+        "score": 618.8757,
+        "evidence": []
+      },
+      {
+        "term": "或一些其他单位",
+        "score": 618.8757,
+        "evidence": []
+      },
+      {
+        "term": "一个国际医疗救助机构",
+        "score": 529.6103,
+        "evidence": []
+      },
+      {
+        "term": "作为应对",
+        "score": 529.6103,
+        "evidence": []
+      },
+      {
+        "term": "在过去几周内",
+        "score": 529.6103,
+        "evidence": []
+      },
+      {
+        "term": "村民的生物学标本",
+        "score": 529.6103,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-abbreviations": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "transcriptase inhibitor",
+          "score": 1.4346,
+          "evidence": []
+        },
+        {
+          "term": "reverse transcriptase",
+          "score": 1.3816,
+          "evidence": []
+        },
+        {
+          "term": "cct",
+          "score": 0.6497,
+          "evidence": []
+        },
+        {
+          "term": "efz",
+          "score": 0.6497,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "transcriptase inhibitor",
+          "score": 22.9796,
+          "evidence": []
+        },
+        {
+          "term": "reverse transcriptase",
+          "score": 22.1274,
+          "evidence": []
+        },
+        {
+          "term": "immunodeficiency",
+          "score": 8.5503,
+          "evidence": []
+        },
+        {
+          "term": "cct",
+          "score": 8.2825,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hiv",
+          "score": 0.1725,
+          "evidence": []
+        },
+        {
+          "term": "art",
+          "score": 0.141,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.1236,
+          "evidence": []
+        },
+        {
+          "term": "infants",
+          "score": 0.0959,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "anc",
+          "score": 2.8581,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 2.7564,
+          "evidence": []
+        },
+        {
+          "term": "art",
+          "score": 2.1617,
+          "evidence": []
+        },
+        {
+          "term": "guideline",
+          "score": 1.2752,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hiv",
+          "score": 0.1725,
+          "evidence": []
+        },
+        {
+          "term": "art",
+          "score": 0.141,
+          "evidence": []
+        },
+        {
+          "term": "guidelines",
+          "score": 0.0946,
+          "evidence": []
+        },
+        {
+          "term": "antiretroviral",
+          "score": 0.0944,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 85.2116,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 74.3735,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 71.3356,
+          "evidence": []
+        },
+        {
+          "term": "关注这一事实",
+          "score": 65.5324,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-001-introduction": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "expert group",
+          "score": 1.2503,
+          "evidence": []
+        },
+        {
+          "term": "guideline development",
+          "score": 1.0462,
+          "evidence": []
+        },
+        {
+          "term": "recommendation",
+          "score": 1.0047,
+          "evidence": []
+        },
+        {
+          "term": "maternal health",
+          "score": 0.9425,
+          "evidence": []
+        },
+        {
+          "term": "further research",
+          "score": 0.8656,
+          "evidence": []
+        },
+        {
+          "term": "practise",
+          "score": 0.7878,
+          "evidence": []
+        },
+        {
+          "term": "conditional",
+          "score": 0.735,
+          "evidence": []
+        },
+        {
+          "term": "effect",
+          "score": 0.693,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "recommendation",
+          "score": 27.731,
+          "evidence": []
+        },
+        {
+          "term": "expert group",
+          "score": 26.3864,
+          "evidence": []
+        },
+        {
+          "term": "guideline development",
+          "score": 21.3433,
+          "evidence": []
+        },
+        {
+          "term": "maternal health",
+          "score": 15.0138,
+          "evidence": []
+        },
+        {
+          "term": "effect",
+          "score": 14.9837,
+          "evidence": []
+        },
+        {
+          "term": "conditional",
+          "score": 12.7714,
+          "evidence": []
+        },
+        {
+          "term": "further research",
+          "score": 12.7106,
+          "evidence": []
+        },
+        {
+          "term": "practise",
+          "score": 12.4061,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "guideline development",
+          "score": 0.6149,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 0.5795,
+          "evidence": []
+        },
+        {
+          "term": "recommendation",
+          "score": 0.5289,
+          "evidence": []
+        },
+        {
+          "term": "maternal health",
+          "score": 0.3798,
+          "evidence": []
+        },
+        {
+          "term": "expert group",
+          "score": 0.3321,
+          "evidence": []
+        },
+        {
+          "term": "gdg",
+          "score": 0.3277,
+          "evidence": []
+        },
+        {
+          "term": "certainty",
+          "score": 0.3125,
+          "evidence": []
+        },
+        {
+          "term": "option",
+          "score": 0.267,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "recommendation",
+          "score": 18.5777,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 12.652,
+          "evidence": []
+        },
+        {
+          "term": "guideline development",
+          "score": 10.7378,
+          "evidence": []
+        },
+        {
+          "term": "certainty",
+          "score": 8.1228,
+          "evidence": []
+        },
+        {
+          "term": "strong",
+          "score": 6.0336,
+          "evidence": []
+        },
+        {
+          "term": "maternal health",
+          "score": 5.6786,
+          "evidence": []
+        },
+        {
+          "term": "source",
+          "score": 5.5255,
+          "evidence": []
+        },
+        {
+          "term": "conditional",
+          "score": 5.151,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "guideline development",
+          "score": 0.6149,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 0.5795,
+          "evidence": []
+        },
+        {
+          "term": "recommendation",
+          "score": 0.5289,
+          "evidence": []
+        },
+        {
+          "term": "maternal health",
+          "score": 0.3798,
+          "evidence": []
+        },
+        {
+          "term": "expert group",
+          "score": 0.3321,
+          "evidence": []
+        },
+        {
+          "term": "moderate",
+          "score": 0.2619,
+          "evidence": []
+        },
+        {
+          "term": "intervention",
+          "score": 0.2442,
+          "evidence": []
+        },
+        {
+          "term": "further research",
+          "score": 0.2409,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "个学习目标",
+          "score": 24.0123,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 24.0123,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 24.0123,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 22.9427,
+          "evidence": []
+        },
+        {
+          "term": "设想了以下产出",
+          "score": 18.8391,
+          "evidence": []
+        },
+        {
+          "term": "提出了以下政策选择和行动",
+          "score": 17.7718,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 17.674,
+          "evidence": []
+        },
+        {
+          "term": "世卫组织会员国",
+          "score": 14.7646,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-004-nutritional-supplements": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "vitamin supplementation",
+          "score": 2.8462,
+          "evidence": []
+        },
+        {
+          "term": "supplements",
+          "score": 2.6816,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "elemental iron",
+          "score": 2.3699,
+          "evidence": []
+        },
+        {
+          "term": "acid supplementation",
+          "score": 2.3018,
+          "evidence": []
+        },
+        {
+          "term": "caffeine intake",
+          "score": 2.2394,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 2.2062,
+          "evidence": []
+        },
+        {
+          "term": "context-specific recommendation",
+          "score": 2.0343,
+          "evidence": []
+        },
+        {
+          "term": "folic acid",
+          "score": 2.0115,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "vitamin supplementation",
+          "score": 97.0055,
+          "evidence": []
+        },
+        {
+          "term": "supplements vitamin",
+          "score": 81.4724,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 79.4019,
+          "evidence": []
+        },
+        {
+          "term": "acid supplementation",
+          "score": 72.5802,
+          "evidence": []
+        },
+        {
+          "term": "elemental iron",
+          "score": 53.1124,
+          "evidence": []
+        },
+        {
+          "term": "recommended",
+          "score": 49.891,
+          "evidence": []
+        },
+        {
+          "term": "folic acid",
+          "score": 47.9361,
+          "evidence": []
+        },
+        {
+          "term": "context-specific recommendation",
+          "score": 47.8789,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pregnant women",
+          "score": 1.0765,
+          "evidence": []
+        },
+        {
+          "term": "during pregnancy",
+          "score": 0.821,
+          "evidence": []
+        },
+        {
+          "term": "context-specific recommendation",
+          "score": 0.6433,
+          "evidence": []
+        },
+        {
+          "term": "vitamin supplementation",
+          "score": 0.6348,
+          "evidence": []
+        },
+        {
+          "term": "supplements",
+          "score": 0.6183,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "improve maternal",
+          "score": 0.5933,
+          "evidence": []
+        },
+        {
+          "term": "acid supplementation",
+          "score": 0.5397,
+          "evidence": []
+        },
+        {
+          "term": "anc",
+          "score": 0.4895,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "pregnant women",
+          "score": 32.3112,
+          "evidence": []
+        },
+        {
+          "term": "during pregnancy",
+          "score": 24.7663,
+          "evidence": []
+        },
+        {
+          "term": "context-specific recommendation",
+          "score": 20.9018,
+          "evidence": []
+        },
+        {
+          "term": "vitamin supplementation",
+          "score": 13.442,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 13.394,
+          "evidence": []
+        },
+        {
+          "term": "improve maternal",
+          "score": 12.7005,
+          "evidence": []
+        },
+        {
+          "term": "supplements",
+          "score": 12.0899,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "caffeine intake",
+          "score": 11.7187,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pregnant women",
+          "score": 1.0765,
+          "evidence": []
+        },
+        {
+          "term": "during pregnancy",
+          "score": 0.821,
+          "evidence": []
+        },
+        {
+          "term": "context-specific recommendation",
+          "score": 0.6433,
+          "evidence": []
+        },
+        {
+          "term": "vitamin supplementation",
+          "score": 0.6348,
+          "evidence": []
+        },
+        {
+          "term": "supplements",
+          "score": 0.6183,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "improve maternal",
+          "score": 0.5933,
+          "evidence": []
+        },
+        {
+          "term": "acid supplementation",
+          "score": 0.5397,
+          "evidence": []
+        },
+        {
+          "term": "oral iron",
+          "score": 0.4708,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 62.9404,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 52.8052,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 52.8052,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 52.8052,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 51.4885,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 51.4885,
+          "evidence": []
+        },
+        {
+          "term": "或一些其他单位",
+          "score": 51.4885,
+          "evidence": []
+        },
+        {
+          "term": "一个国际医疗救助机构",
+          "score": 51.3834,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-005-maternal-and-fetal-assessment": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "fetal",
+          "score": 2.4199,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "doppler ultrasound",
+          "score": 2.2236,
+          "evidence": []
+        },
+        {
+          "term": "ultrasound scan",
+          "score": 2.1943,
+          "evidence": []
+        },
+        {
+          "term": "context-specific recommendation",
+          "score": 2.073,
+          "evidence": []
+        },
+        {
+          "term": "fetal movement",
+          "score": 1.8863,
+          "evidence": []
+        },
+        {
+          "term": "antenatal cardiotocography",
+          "score": 1.8096,
+          "evidence": []
+        },
+        {
+          "term": "recommended method",
+          "score": 1.7982,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 1.7484,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "recommended method",
+          "score": 51.0073,
+          "evidence": []
+        },
+        {
+          "term": "fetal",
+          "score": 50.438,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "context-specific recommendation",
+          "score": 50.0597,
+          "evidence": []
+        },
+        {
+          "term": "doppler ultrasound",
+          "score": 42.4044,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 42.3477,
+          "evidence": []
+        },
+        {
+          "term": "ultrasound scan",
+          "score": 41.1032,
+          "evidence": []
+        },
+        {
+          "term": "antenatal cardiotocography",
+          "score": 39.1052,
+          "evidence": []
+        },
+        {
+          "term": "antenatal care",
+          "score": 38.2283,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "fetal",
+          "score": 1.2593,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pregnant women",
+          "score": 1.157,
+          "evidence": []
+        },
+        {
+          "term": "doppler ultrasound",
+          "score": 1.0557,
+          "evidence": []
+        },
+        {
+          "term": "ultrasound scan",
+          "score": 1.0183,
+          "evidence": []
+        },
+        {
+          "term": "fetal movement",
+          "score": 0.925,
+          "evidence": []
+        },
+        {
+          "term": "maternal",
+          "score": 0.8863,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "anc",
+          "score": 0.7477,
+          "evidence": []
+        },
+        {
+          "term": "antenatal care",
+          "score": 0.7173,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "fetal",
+          "score": 55.526,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "doppler ultrasound",
+          "score": 47.8295,
+          "evidence": []
+        },
+        {
+          "term": "ultrasound scan",
+          "score": 47.2402,
+          "evidence": []
+        },
+        {
+          "term": "fetal movement",
+          "score": 34.5106,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 32.1758,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy",
+          "score": 19.5963,
+          "evidence": []
+        },
+        {
+          "term": "context-specific recommendation",
+          "score": 19.5753,
+          "evidence": []
+        },
+        {
+          "term": "maternal",
+          "score": 18.5051,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "fetal",
+          "score": 1.2593,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pregnant women",
+          "score": 1.157,
+          "evidence": []
+        },
+        {
+          "term": "doppler ultrasound",
+          "score": 1.0557,
+          "evidence": []
+        },
+        {
+          "term": "ultrasound scan",
+          "score": 1.0183,
+          "evidence": []
+        },
+        {
+          "term": "fetal movement",
+          "score": 0.925,
+          "evidence": []
+        },
+        {
+          "term": "maternal",
+          "score": 0.8863,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "antenatal care",
+          "score": 0.7173,
+          "evidence": []
+        },
+        {
+          "term": "antenatal cardiotocography",
+          "score": 0.6897,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 37.9129,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 31.7151,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 31.7151,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 31.7151,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 27.8103,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 27.8103,
+          "evidence": []
+        },
+        {
+          "term": "或一些其他单位",
+          "score": 27.8103,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 26.8702,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-preventive-measures": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "context-specific recommendation",
+          "score": 2.1316,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 1.9408,
+          "evidence": []
+        },
+        {
+          "term": "prevent relapse",
+          "score": 1.8001,
+          "evidence": []
+        },
+        {
+          "term": "antibiotic prophylaxis",
+          "score": 1.7708,
+          "evidence": []
+        },
+        {
+          "term": "ovale malaria",
+          "score": 1.7277,
+          "evidence": []
+        },
+        {
+          "term": "anti-d immunoglobulin",
+          "score": 1.6889,
+          "evidence": []
+        },
+        {
+          "term": "preventive anthelminthic",
+          "score": 1.6388,
+          "evidence": []
+        },
+        {
+          "term": "strong recommendation",
+          "score": 1.6084,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "pregnant women",
+          "score": 55.2083,
+          "evidence": []
+        },
+        {
+          "term": "context-specific recommendation",
+          "score": 54.0413,
+          "evidence": []
+        },
+        {
+          "term": "prevent relapse",
+          "score": 43.3464,
+          "evidence": []
+        },
+        {
+          "term": "antibiotic prophylaxis",
+          "score": 37.7679,
+          "evidence": []
+        },
+        {
+          "term": "strong recommendation",
+          "score": 37.7643,
+          "evidence": []
+        },
+        {
+          "term": "recommendation research",
+          "score": 35.5887,
+          "evidence": []
+        },
+        {
+          "term": "primaquine",
+          "score": 35.1486,
+          "evidence": []
+        },
+        {
+          "term": "source",
+          "score": 33.4583,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pregnant women",
+          "score": 1.0088,
+          "evidence": []
+        },
+        {
+          "term": "strong recommendation",
+          "score": 0.6942,
+          "evidence": []
+        },
+        {
+          "term": "context-specific recommendation",
+          "score": 0.6906,
+          "evidence": []
+        },
+        {
+          "term": "recommendation research",
+          "score": 0.611,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy",
+          "score": 0.4621,
+          "evidence": []
+        },
+        {
+          "term": "infants aged",
+          "score": 0.4273,
+          "evidence": []
+        },
+        {
+          "term": "preventive treatment",
+          "score": 0.4187,
+          "evidence": []
+        },
+        {
+          "term": "pre-exposure prophylaxis",
+          "score": 0.3961,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "strong recommendation",
+          "score": 28.7517,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 24.2419,
+          "evidence": []
+        },
+        {
+          "term": "recommendation research",
+          "score": 23.7943,
+          "evidence": []
+        },
+        {
+          "term": "context-specific recommendation",
+          "score": 23.1438,
+          "evidence": []
+        },
+        {
+          "term": "quality evidence",
+          "score": 15.6387,
+          "evidence": []
+        },
+        {
+          "term": "preventive treatment",
+          "score": 12.1069,
+          "evidence": []
+        },
+        {
+          "term": "source",
+          "score": 10.1392,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy",
+          "score": 9.546,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pregnant women",
+          "score": 1.0088,
+          "evidence": []
+        },
+        {
+          "term": "strong recommendation",
+          "score": 0.6942,
+          "evidence": []
+        },
+        {
+          "term": "context-specific recommendation",
+          "score": 0.6906,
+          "evidence": []
+        },
+        {
+          "term": "recommendation research",
+          "score": 0.611,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy",
+          "score": 0.4621,
+          "evidence": []
+        },
+        {
+          "term": "infants aged",
+          "score": 0.4273,
+          "evidence": []
+        },
+        {
+          "term": "preventive treatment",
+          "score": 0.4187,
+          "evidence": []
+        },
+        {
+          "term": "pre-exposure prophylaxis",
+          "score": 0.3961,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 39.7137,
+          "evidence": []
+        },
+        {
+          "term": "回顾性发言",
+          "score": 24.4214,
+          "evidence": []
+        },
+        {
+          "term": "第七节",
+          "score": 24.4214,
+          "evidence": []
+        },
+        {
+          "term": "第九节",
+          "score": 24.4214,
+          "evidence": []
+        },
+        {
+          "term": "第八节",
+          "score": 24.4214,
+          "evidence": []
+        },
+        {
+          "term": "第六节",
+          "score": 24.4214,
+          "evidence": []
+        },
+        {
+          "term": "第十节",
+          "score": 24.4214,
+          "evidence": []
+        },
+        {
+          "term": "一个国际医疗救助机构",
+          "score": 22.3257,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-007-interventions-for-common-physiological-symptoms": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "woman preferences",
+          "score": 1.9278,
+          "evidence": []
+        },
+        {
+          "term": "leg cramps",
+          "score": 1.8242,
+          "evidence": []
+        },
+        {
+          "term": "varicose veins",
+          "score": 1.6605,
+          "evidence": []
+        },
+        {
+          "term": "available options",
+          "score": 1.4837,
+          "evidence": []
+        },
+        {
+          "term": "pelvic pain",
+          "score": 1.4663,
+          "evidence": []
+        },
+        {
+          "term": "treatment options",
+          "score": 1.3467,
+          "evidence": []
+        },
+        {
+          "term": "non-pharmacological",
+          "score": 0.899,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "woman preferences",
+          "score": 39.1251,
+          "evidence": []
+        },
+        {
+          "term": "available options",
+          "score": 35.1719,
+          "evidence": []
+        },
+        {
+          "term": "leg cramps",
+          "score": 30.1889,
+          "evidence": []
+        },
+        {
+          "term": "treatment options",
+          "score": 29.8133,
+          "evidence": []
+        },
+        {
+          "term": "varicose veins",
+          "score": 25.5166,
+          "evidence": []
+        },
+        {
+          "term": "recommended",
+          "score": 21.3818,
+          "evidence": []
+        },
+        {
+          "term": "pelvic pain",
+          "score": 20.7616,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pelvic pain",
+          "score": 0.3425,
+          "evidence": []
+        },
+        {
+          "term": "leg cramps",
+          "score": 0.3135,
+          "evidence": []
+        },
+        {
+          "term": "varicose veins",
+          "score": 0.3045,
+          "evidence": []
+        },
+        {
+          "term": "treatment options",
+          "score": 0.2676,
+          "evidence": []
+        },
+        {
+          "term": "woman preferences",
+          "score": 0.2551,
+          "evidence": []
+        },
+        {
+          "term": "anc",
+          "score": 0.2373,
+          "evidence": []
+        },
+        {
+          "term": "symptoms",
+          "score": 0.2173,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "women",
+          "score": 9.2393,
+          "evidence": []
+        },
+        {
+          "term": "favours",
+          "score": 6.9967,
+          "evidence": []
+        },
+        {
+          "term": "anc",
+          "score": 6.6343,
+          "evidence": []
+        },
+        {
+          "term": "treatment options",
+          "score": 6.2109,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy",
+          "score": 5.5222,
+          "evidence": []
+        },
+        {
+          "term": "pelvic pain",
+          "score": 5.0157,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 4.2609,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pelvic pain",
+          "score": 0.3425,
+          "evidence": []
+        },
+        {
+          "term": "leg cramps",
+          "score": 0.3135,
+          "evidence": []
+        },
+        {
+          "term": "varicose veins",
+          "score": 0.3045,
+          "evidence": []
+        },
+        {
+          "term": "treatment options",
+          "score": 0.2676,
+          "evidence": []
+        },
+        {
+          "term": "woman preferences",
+          "score": 0.2551,
+          "evidence": []
+        },
+        {
+          "term": "symptoms",
+          "score": 0.2173,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pregnancy",
+          "score": 0.2068,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 85.5498,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 74.7812,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 64.1656,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 64.1656,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 64.1656,
+          "evidence": []
+        },
+        {
+          "term": "一个国际医疗救助机构",
+          "score": 60.2799,
+          "evidence": []
+        },
+        {
+          "term": "作为应对",
+          "score": 60.2799,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-008-health-systems-interventions": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "antenatal care",
+          "score": 1.8064,
+          "evidence": []
+        },
+        {
+          "term": "auxiliary nurses",
+          "score": 1.7395,
+          "evidence": []
+        },
+        {
+          "term": "context-specific recommendation",
+          "score": 1.7145,
+          "evidence": []
+        },
+        {
+          "term": "antenatal home",
+          "score": 1.6955,
+          "evidence": []
+        },
+        {
+          "term": "group antenatal",
+          "score": 1.5962,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 1.5017,
+          "evidence": []
+        },
+        {
+          "term": "facilitated participatory",
+          "score": 1.4597,
+          "evidence": []
+        },
+        {
+          "term": "task shifting",
+          "score": 1.3948,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "antenatal care",
+          "score": 58.9011,
+          "evidence": []
+        },
+        {
+          "term": "group antenatal",
+          "score": 46.6134,
+          "evidence": []
+        },
+        {
+          "term": "antenatal home",
+          "score": 46.529,
+          "evidence": []
+        },
+        {
+          "term": "context-specific recommendation",
+          "score": 33.3731,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 30.2685,
+          "evidence": []
+        },
+        {
+          "term": "recommended",
+          "score": 28.5091,
+          "evidence": []
+        },
+        {
+          "term": "auxiliary nurses",
+          "score": 27.621,
+          "evidence": []
+        },
+        {
+          "term": "facilitated participatory",
+          "score": 25.4832,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pregnant women",
+          "score": 0.782,
+          "evidence": []
+        },
+        {
+          "term": "antenatal care",
+          "score": 0.6862,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.6365,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "newborn health",
+          "score": 0.6116,
+          "evidence": []
+        },
+        {
+          "term": "during pregnancy",
+          "score": 0.6024,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 0.5544,
+          "evidence": []
+        },
+        {
+          "term": "women groups",
+          "score": 0.5453,
+          "evidence": []
+        },
+        {
+          "term": "perinatal health",
+          "score": 0.5225,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "pregnant women",
+          "score": 22.7543,
+          "evidence": []
+        },
+        {
+          "term": "women groups",
+          "score": 18.3672,
+          "evidence": []
+        },
+        {
+          "term": "antenatal care",
+          "score": 15.0243,
+          "evidence": []
+        },
+        {
+          "term": "during pregnancy",
+          "score": 14.1781,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 12.8442,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "context-specific recommendation",
+          "score": 12.0528,
+          "evidence": []
+        },
+        {
+          "term": "auxiliary nurses",
+          "score": 11.7781,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 9.88,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pregnant women",
+          "score": 0.782,
+          "evidence": []
+        },
+        {
+          "term": "antenatal care",
+          "score": 0.6862,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.6365,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "newborn health",
+          "score": 0.6116,
+          "evidence": []
+        },
+        {
+          "term": "during pregnancy",
+          "score": 0.6024,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 0.5544,
+          "evidence": []
+        },
+        {
+          "term": "women groups",
+          "score": 0.5453,
+          "evidence": []
+        },
+        {
+          "term": "perinatal health",
+          "score": 0.5225,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 47.4734,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 38.4761,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 30.0304,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 29.6995,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 29.5705,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 28.9481,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 28.9481,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 28.9481,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-009-2-prevention-of-pre-eclampsia-and-eclampsia": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "pre-eclampsia",
+          "score": 2.246,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "weak recommendation",
+          "score": 1.9288,
+          "evidence": []
+        },
+        {
+          "term": "eclampsia",
+          "score": 1.9032,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "source low-dose",
+          "score": 1.7005,
+          "evidence": []
+        },
+        {
+          "term": "strong recommendation",
+          "score": 1.5624,
+          "evidence": []
+        },
+        {
+          "term": "pre eclampsia",
+          "score": 1.4806,
+          "evidence": []
+        },
+        {
+          "term": "quality evidence",
+          "score": 1.212,
+          "evidence": []
+        },
+        {
+          "term": "during pregnancy",
+          "score": 1.1938,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "pre-eclampsia",
+          "score": 52.6206,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "weak recommendation",
+          "score": 44.523,
+          "evidence": []
+        },
+        {
+          "term": "strong recommendation",
+          "score": 34.6831,
+          "evidence": []
+        },
+        {
+          "term": "source low-dose",
+          "score": 34.3821,
+          "evidence": []
+        },
+        {
+          "term": "eclampsia",
+          "score": 33.8606,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "quality evidence",
+          "score": 26.4446,
+          "evidence": []
+        },
+        {
+          "term": "pre eclampsia",
+          "score": 25.1775,
+          "evidence": []
+        },
+        {
+          "term": "prevention",
+          "score": 22.6511,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "strong recommendation",
+          "score": 0.5012,
+          "evidence": []
+        },
+        {
+          "term": "quality evidence",
+          "score": 0.3906,
+          "evidence": []
+        },
+        {
+          "term": "during pregnancy",
+          "score": 0.3812,
+          "evidence": []
+        },
+        {
+          "term": "weak recommendation",
+          "score": 0.3716,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.3449,
+          "evidence": []
+        },
+        {
+          "term": "moderate quality",
+          "score": 0.2833,
+          "evidence": []
+        },
+        {
+          "term": "option",
+          "score": 0.2189,
+          "evidence": []
+        },
+        {
+          "term": "certainty",
+          "score": 0.2107,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "strong recommendation",
+          "score": 24.6642,
+          "evidence": []
+        },
+        {
+          "term": "weak recommendation",
+          "score": 18.951,
+          "evidence": []
+        },
+        {
+          "term": "quality evidence",
+          "score": 13.2078,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 9.3211,
+          "evidence": []
+        },
+        {
+          "term": "source",
+          "score": 8.4308,
+          "evidence": []
+        },
+        {
+          "term": "source low-dose",
+          "score": 8.4308,
+          "evidence": []
+        },
+        {
+          "term": "certainty",
+          "score": 7.5729,
+          "evidence": []
+        },
+        {
+          "term": "during pregnancy",
+          "score": 7.402,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "strong recommendation",
+          "score": 0.5012,
+          "evidence": []
+        },
+        {
+          "term": "weak recommendation",
+          "score": 0.403,
+          "evidence": []
+        },
+        {
+          "term": "quality evidence",
+          "score": 0.3906,
+          "evidence": []
+        },
+        {
+          "term": "during pregnancy",
+          "score": 0.3812,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.3449,
+          "evidence": []
+        },
+        {
+          "term": "moderate quality",
+          "score": 0.2833,
+          "evidence": []
+        },
+        {
+          "term": "recommended",
+          "score": 0.2044,
+          "evidence": []
+        },
+        {
+          "term": "pre-eclampsia",
+          "score": 0.1862,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "个学习目标",
+          "score": 43.9875,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 43.9875,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 43.9875,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 43.609,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 43.5139,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 43.5139,
+          "evidence": []
+        },
+        {
+          "term": "或一些其他单位",
+          "score": 43.5139,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 41.241,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-010-3-interventions-to-improve-preterm-birth-outcome": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "preterm birth",
+          "score": 6.1097,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "imminent preterm",
+          "score": 4.029,
+          "evidence": []
+        },
+        {
+          "term": "antenatal corticosteroid",
+          "score": 3.2568,
+          "evidence": []
+        },
+        {
+          "term": "preterm prelabour",
+          "score": 3.1846,
+          "evidence": []
+        },
+        {
+          "term": "corticosteroid therapy",
+          "score": 2.9772,
+          "evidence": []
+        },
+        {
+          "term": "preterm newborn",
+          "score": 2.9437,
+          "evidence": []
+        },
+        {
+          "term": "low-quality evidence",
+          "score": 2.7738,
+          "evidence": []
+        },
+        {
+          "term": "moderate-quality evidence",
+          "score": 2.7094,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "preterm birth",
+          "score": 328.5843,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "imminent preterm",
+          "score": 184.0836,
+          "evidence": []
+        },
+        {
+          "term": "preterm newborn",
+          "score": 147.2423,
+          "evidence": []
+        },
+        {
+          "term": "preterm prelabour",
+          "score": 145.4085,
+          "evidence": []
+        },
+        {
+          "term": "preterm labour",
+          "score": 132.3378,
+          "evidence": []
+        },
+        {
+          "term": "antenatal corticosteroid",
+          "score": 115.9656,
+          "evidence": []
+        },
+        {
+          "term": "low-quality evidence",
+          "score": 107.1975,
+          "evidence": []
+        },
+        {
+          "term": "corticosteroid therapy",
+          "score": 101.5896,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "preterm birth",
+          "score": 1.2464,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "strong recommendation",
+          "score": 0.8647,
+          "evidence": []
+        },
+        {
+          "term": "conditional recommendation",
+          "score": 0.8475,
+          "evidence": []
+        },
+        {
+          "term": "recommendation based",
+          "score": 0.7056,
+          "evidence": []
+        },
+        {
+          "term": "quality evidence",
+          "score": 0.6348,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.6287,
+          "evidence": []
+        },
+        {
+          "term": "low-quality evidence",
+          "score": 0.5871,
+          "evidence": []
+        },
+        {
+          "term": "maternal outcomes",
+          "score": 0.5372,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "strong recommendation",
+          "score": 59.4317,
+          "evidence": []
+        },
+        {
+          "term": "conditional recommendation",
+          "score": 55.9186,
+          "evidence": []
+        },
+        {
+          "term": "recommendation based",
+          "score": 44.3619,
+          "evidence": []
+        },
+        {
+          "term": "quality evidence",
+          "score": 37.1806,
+          "evidence": []
+        },
+        {
+          "term": "low-quality evidence",
+          "score": 34.4961,
+          "evidence": []
+        },
+        {
+          "term": "moderate-quality evidence",
+          "score": 30.9455,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 30.6131,
+          "evidence": []
+        },
+        {
+          "term": "source antenatal",
+          "score": 29.4644,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "preterm birth",
+          "score": 1.2464,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "strong recommendation",
+          "score": 0.8647,
+          "evidence": []
+        },
+        {
+          "term": "conditional recommendation",
+          "score": 0.8475,
+          "evidence": []
+        },
+        {
+          "term": "recommendation based",
+          "score": 0.7056,
+          "evidence": []
+        },
+        {
+          "term": "quality evidence",
+          "score": 0.6348,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.6287,
+          "evidence": []
+        },
+        {
+          "term": "low-quality evidence",
+          "score": 0.5871,
+          "evidence": []
+        },
+        {
+          "term": "moderate-quality evidence",
+          "score": 0.5377,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 46.1296,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 41.8998,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 40.6083,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 40.6083,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 40.6083,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 38.6082,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 38.6082,
+          "evidence": []
+        },
+        {
+          "term": "或一些其他单位",
+          "score": 38.6082,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-011-4-prevention-of-maternal-peripartum-infections": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "low-quality evidence",
+          "score": 2.7747,
+          "evidence": []
+        },
+        {
+          "term": "antibiotic prophylaxis",
+          "score": 2.6973,
+          "evidence": []
+        },
+        {
+          "term": "routine antibiotic",
+          "score": 2.6431,
+          "evidence": []
+        },
+        {
+          "term": "conditional recommendation",
+          "score": 2.4933,
+          "evidence": []
+        },
+        {
+          "term": "antibiotic administration",
+          "score": 2.4543,
+          "evidence": []
+        },
+        {
+          "term": "strong recommendation",
+          "score": 2.4453,
+          "evidence": []
+        },
+        {
+          "term": "vaginal cleansing",
+          "score": 2.3982,
+          "evidence": []
+        },
+        {
+          "term": "moderate-quality evidence",
+          "score": 2.335,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "routine antibiotic",
+          "score": 107.6849,
+          "evidence": []
+        },
+        {
+          "term": "low-quality evidence",
+          "score": 105.832,
+          "evidence": []
+        },
+        {
+          "term": "strong recommendation",
+          "score": 101.7576,
+          "evidence": []
+        },
+        {
+          "term": "recommendation based",
+          "score": 100.8053,
+          "evidence": []
+        },
+        {
+          "term": "antibiotic prophylaxis",
+          "score": 99.6694,
+          "evidence": []
+        },
+        {
+          "term": "conditional recommendation",
+          "score": 95.6816,
+          "evidence": []
+        },
+        {
+          "term": "antibiotic administration",
+          "score": 88.1705,
+          "evidence": []
+        },
+        {
+          "term": "source routine",
+          "score": 87.9305,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "conditional recommendation",
+          "score": 0.7902,
+          "evidence": []
+        },
+        {
+          "term": "strong recommendation",
+          "score": 0.7834,
+          "evidence": []
+        },
+        {
+          "term": "recommendation based",
+          "score": 0.6324,
+          "evidence": []
+        },
+        {
+          "term": "low-quality evidence",
+          "score": 0.4928,
+          "evidence": []
+        },
+        {
+          "term": "quality evidence",
+          "score": 0.4821,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.4418,
+          "evidence": []
+        },
+        {
+          "term": "women undergoing",
+          "score": 0.4418,
+          "evidence": []
+        },
+        {
+          "term": "moderate-quality evidence",
+          "score": 0.3949,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "strong recommendation",
+          "score": 63.3306,
+          "evidence": []
+        },
+        {
+          "term": "conditional recommendation",
+          "score": 60.5439,
+          "evidence": []
+        },
+        {
+          "term": "recommendation based",
+          "score": 46.8925,
+          "evidence": []
+        },
+        {
+          "term": "quality evidence",
+          "score": 33.1576,
+          "evidence": []
+        },
+        {
+          "term": "low-quality evidence",
+          "score": 29.6977,
+          "evidence": []
+        },
+        {
+          "term": "moderate-quality evidence",
+          "score": 26.8027,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 22.8586,
+          "evidence": []
+        },
+        {
+          "term": "women undergoing",
+          "score": 22.8586,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "conditional recommendation",
+          "score": 0.7902,
+          "evidence": []
+        },
+        {
+          "term": "strong recommendation",
+          "score": 0.7834,
+          "evidence": []
+        },
+        {
+          "term": "recommendation based",
+          "score": 0.6324,
+          "evidence": []
+        },
+        {
+          "term": "low-quality evidence",
+          "score": 0.4928,
+          "evidence": []
+        },
+        {
+          "term": "quality evidence",
+          "score": 0.4821,
+          "evidence": []
+        },
+        {
+          "term": "women undergoing",
+          "score": 0.4558,
+          "evidence": []
+        },
+        {
+          "term": "moderate-quality evidence",
+          "score": 0.4411,
+          "evidence": []
+        },
+        {
+          "term": "maternal",
+          "score": 0.3816,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 40.9026,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 35.7888,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 35.7888,
+          "evidence": []
+        },
+        {
+          "term": "或一些其他单位",
+          "score": 35.7888,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 34.8572,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 34.8572,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 34.8572,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 30.45,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-013-induction-of-labour": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "induction",
+          "score": 3.8599,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "source induction",
+          "score": 3.0173,
+          "evidence": []
+        },
+        {
+          "term": "labour",
+          "score": 2.8274,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "weak recommendation",
+          "score": 2.5606,
+          "evidence": []
+        },
+        {
+          "term": "strong recommendation",
+          "score": 2.193,
+          "evidence": []
+        },
+        {
+          "term": "vaginal misoprostol",
+          "score": 2.1387,
+          "evidence": []
+        },
+        {
+          "term": "balloon catheter",
+          "score": 2.0283,
+          "evidence": []
+        },
+        {
+          "term": "quality evidence",
+          "score": 1.6513,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "induction",
+          "score": 217.0966,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "labour",
+          "score": 152.398,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "source induction",
+          "score": 149.7277,
+          "evidence": []
+        },
+        {
+          "term": "weak recommendation",
+          "score": 89.046,
+          "evidence": []
+        },
+        {
+          "term": "strong recommendation",
+          "score": 76.055,
+          "evidence": []
+        },
+        {
+          "term": "quality evidence",
+          "score": 60.4448,
+          "evidence": []
+        },
+        {
+          "term": "moderate quality",
+          "score": 51.5887,
+          "evidence": []
+        },
+        {
+          "term": "vaginal misoprostol",
+          "score": 43.7233,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "strong recommendation",
+          "score": 0.7038,
+          "evidence": []
+        },
+        {
+          "term": "quality evidence",
+          "score": 0.508,
+          "evidence": []
+        },
+        {
+          "term": "weak recommendation",
+          "score": 0.5065,
+          "evidence": []
+        },
+        {
+          "term": "moderate quality",
+          "score": 0.3627,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.3369,
+          "evidence": []
+        },
+        {
+          "term": "labour",
+          "score": 0.2876,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "certainty",
+          "score": 0.2876,
+          "evidence": []
+        },
+        {
+          "term": "option",
+          "score": 0.286,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "strong recommendation",
+          "score": 52.0985,
+          "evidence": []
+        },
+        {
+          "term": "weak recommendation",
+          "score": 39.8611,
+          "evidence": []
+        },
+        {
+          "term": "quality evidence",
+          "score": 26.492,
+          "evidence": []
+        },
+        {
+          "term": "source induction",
+          "score": 18.3589,
+          "evidence": []
+        },
+        {
+          "term": "certainty",
+          "score": 15.9531,
+          "evidence": []
+        },
+        {
+          "term": "moderate quality",
+          "score": 13.4176,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 13.1795,
+          "evidence": []
+        },
+        {
+          "term": "conditional",
+          "score": 10.9975,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "strong recommendation",
+          "score": 0.7038,
+          "evidence": []
+        },
+        {
+          "term": "weak recommendation",
+          "score": 0.5477,
+          "evidence": []
+        },
+        {
+          "term": "quality evidence",
+          "score": 0.508,
+          "evidence": []
+        },
+        {
+          "term": "moderate quality",
+          "score": 0.3627,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.3369,
+          "evidence": []
+        },
+        {
+          "term": "labour",
+          "score": 0.2876,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "recommended",
+          "score": 0.2738,
+          "evidence": []
+        },
+        {
+          "term": "source induction",
+          "score": 0.2202,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 46.0265,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 46.0265,
+          "evidence": []
+        },
+        {
+          "term": "或一些其他单位",
+          "score": 46.0265,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 38.0819,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 38.0819,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 38.0819,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 35.3908,
+          "evidence": []
+        },
+        {
+          "term": "必需的",
+          "score": 32.9734,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-014-delay-in-the-first-stage-of-labour": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "labour",
+          "score": 2.9802,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "recommendation weak",
+          "score": 2.9607,
+          "evidence": []
+        },
+        {
+          "term": "labour augmentation",
+          "score": 2.8619,
+          "evidence": []
+        },
+        {
+          "term": "delay",
+          "score": 2.6971,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "recommendation strong",
+          "score": 2.1758,
+          "evidence": []
+        },
+        {
+          "term": "amniotomy alone",
+          "score": 2.1076,
+          "evidence": []
+        },
+        {
+          "term": "during labour",
+          "score": 1.9788,
+          "evidence": []
+        },
+        {
+          "term": "strength",
+          "score": 1.6162,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "labour",
+          "score": 181.4261,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "labour augmentation",
+          "score": 133.85,
+          "evidence": []
+        },
+        {
+          "term": "recommendation weak",
+          "score": 131.1807,
+          "evidence": []
+        },
+        {
+          "term": "delay",
+          "score": 111.1539,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "during labour",
+          "score": 99.1147,
+          "evidence": []
+        },
+        {
+          "term": "strength",
+          "score": 87.6102,
+          "evidence": []
+        },
+        {
+          "term": "recommendation strong",
+          "score": 81.6911,
+          "evidence": []
+        },
+        {
+          "term": "source",
+          "score": 51.4743,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "recommendation strong",
+          "score": 0.6908,
+          "evidence": []
+        },
+        {
+          "term": "recommendation weak",
+          "score": 0.4938,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 0.4122,
+          "evidence": []
+        },
+        {
+          "term": "certainty",
+          "score": 0.3003,
+          "evidence": []
+        },
+        {
+          "term": "option",
+          "score": 0.2936,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.2897,
+          "evidence": []
+        },
+        {
+          "term": "moderate",
+          "score": 0.2656,
+          "evidence": []
+        },
+        {
+          "term": "recommended",
+          "score": 0.264,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "recommendation strong",
+          "score": 68.1022,
+          "evidence": []
+        },
+        {
+          "term": "recommendation weak",
+          "score": 51.8833,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 25.0671,
+          "evidence": []
+        },
+        {
+          "term": "source",
+          "score": 23.4562,
+          "evidence": []
+        },
+        {
+          "term": "certainty",
+          "score": 22.0717,
+          "evidence": []
+        },
+        {
+          "term": "conditional",
+          "score": 14.8651,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 12.0205,
+          "evidence": []
+        },
+        {
+          "term": "moderate",
+          "score": 10.4089,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "recommendation strong",
+          "score": 0.6908,
+          "evidence": []
+        },
+        {
+          "term": "recommendation weak",
+          "score": 0.5378,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 0.4122,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.2897,
+          "evidence": []
+        },
+        {
+          "term": "recommended",
+          "score": 0.264,
+          "evidence": []
+        },
+        {
+          "term": "labour",
+          "score": 0.2433,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "during labour",
+          "score": 0.1905,
+          "evidence": []
+        },
+        {
+          "term": "treatment",
+          "score": 0.1744,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 35.2507,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 35.2507,
+          "evidence": []
+        },
+        {
+          "term": "或一些其他单位",
+          "score": 35.2507,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 34.4911,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 32.406,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 32.406,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 32.406,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 28.1622,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-015-6-prevention-of-postpartum-haemorrhage": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "source oxytocin",
+          "score": 2.3829,
+          "evidence": []
+        },
+        {
+          "term": "strong recommendation",
+          "score": 2.1633,
+          "evidence": []
+        },
+        {
+          "term": "cord clamping",
+          "score": 1.9746,
+          "evidence": []
+        },
+        {
+          "term": "recommended uterotonic",
+          "score": 1.928,
+          "evidence": []
+        },
+        {
+          "term": "weak recommendation",
+          "score": 1.7814,
+          "evidence": []
+        },
+        {
+          "term": "moderate quality",
+          "score": 1.6866,
+          "evidence": []
+        },
+        {
+          "term": "birth attendants",
+          "score": 1.6497,
+          "evidence": []
+        },
+        {
+          "term": "quality evidence",
+          "score": 1.495,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "strong recommendation",
+          "score": 70.4189,
+          "evidence": []
+        },
+        {
+          "term": "source oxytocin",
+          "score": 68.904,
+          "evidence": []
+        },
+        {
+          "term": "moderate quality",
+          "score": 53.9393,
+          "evidence": []
+        },
+        {
+          "term": "weak recommendation",
+          "score": 46.9113,
+          "evidence": []
+        },
+        {
+          "term": "quality evidence",
+          "score": 45.3336,
+          "evidence": []
+        },
+        {
+          "term": "recommended uterotonic",
+          "score": 45.0741,
+          "evidence": []
+        },
+        {
+          "term": "pph",
+          "score": 38.0194,
+          "evidence": []
+        },
+        {
+          "term": "cord clamping",
+          "score": 34.8207,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "strong recommendation",
+          "score": 0.6131,
+          "evidence": []
+        },
+        {
+          "term": "weak recommendation",
+          "score": 0.4946,
+          "evidence": []
+        },
+        {
+          "term": "quality evidence",
+          "score": 0.454,
+          "evidence": []
+        },
+        {
+          "term": "moderate quality",
+          "score": 0.3227,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.3121,
+          "evidence": []
+        },
+        {
+          "term": "option",
+          "score": 0.2912,
+          "evidence": []
+        },
+        {
+          "term": "skilled birth",
+          "score": 0.2812,
+          "evidence": []
+        },
+        {
+          "term": "certainty",
+          "score": 0.2498,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "strong recommendation",
+          "score": 39.9299,
+          "evidence": []
+        },
+        {
+          "term": "weak recommendation",
+          "score": 30.6294,
+          "evidence": []
+        },
+        {
+          "term": "quality evidence",
+          "score": 19.6444,
+          "evidence": []
+        },
+        {
+          "term": "source oxytocin",
+          "score": 14.91,
+          "evidence": []
+        },
+        {
+          "term": "certainty",
+          "score": 12.5025,
+          "evidence": []
+        },
+        {
+          "term": "moderate quality",
+          "score": 10.3571,
+          "evidence": []
+        },
+        {
+          "term": "conditional",
+          "score": 8.4321,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 8.3109,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "strong recommendation",
+          "score": 0.6131,
+          "evidence": []
+        },
+        {
+          "term": "weak recommendation",
+          "score": 0.4946,
+          "evidence": []
+        },
+        {
+          "term": "quality evidence",
+          "score": 0.454,
+          "evidence": []
+        },
+        {
+          "term": "moderate quality",
+          "score": 0.3227,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.3121,
+          "evidence": []
+        },
+        {
+          "term": "skilled birth",
+          "score": 0.2812,
+          "evidence": []
+        },
+        {
+          "term": "birth attendants",
+          "score": 0.2496,
+          "evidence": []
+        },
+        {
+          "term": "source oxytocin",
+          "score": 0.2448,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 49.6849,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 48.268,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 46.3671,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 45.6127,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 45.6127,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 45.6127,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 42.4793,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 42.4793,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-016-7-postnatal-care": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "postnatal care",
+          "score": 4.0183,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "gdg consensus",
+          "score": 2.6627,
+          "evidence": []
+        },
+        {
+          "term": "source women",
+          "score": 2.4756,
+          "evidence": []
+        },
+        {
+          "term": "postpartum women",
+          "score": 2.3505,
+          "evidence": []
+        },
+        {
+          "term": "postpartum depression",
+          "score": 2.3334,
+          "evidence": []
+        },
+        {
+          "term": "postnatal contact",
+          "score": 2.2987,
+          "evidence": []
+        },
+        {
+          "term": "consensus based",
+          "score": 2.1047,
+          "evidence": []
+        },
+        {
+          "term": "birth spacing",
+          "score": 2.0864,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "postnatal care",
+          "score": 150.71,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "gdg consensus",
+          "score": 136.5882,
+          "evidence": []
+        },
+        {
+          "term": "source women",
+          "score": 121.4846,
+          "evidence": []
+        },
+        {
+          "term": "consensus based",
+          "score": 107.47,
+          "evidence": []
+        },
+        {
+          "term": "postpartum women",
+          "score": 88.0068,
+          "evidence": []
+        },
+        {
+          "term": "birth spacing",
+          "score": 81.1351,
+          "evidence": []
+        },
+        {
+          "term": "postnatal contact",
+          "score": 79.9313,
+          "evidence": []
+        },
+        {
+          "term": "postnatal period",
+          "score": 67.5006,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "source women",
+          "score": 0.9314,
+          "evidence": []
+        },
+        {
+          "term": "postpartum women",
+          "score": 0.917,
+          "evidence": []
+        },
+        {
+          "term": "postnatal care",
+          "score": 0.8614,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "strong recommendation",
+          "score": 0.6349,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 0.6207,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy",
+          "score": 0.6025,
+          "evidence": []
+        },
+        {
+          "term": "quality evidence",
+          "score": 0.5874,
+          "evidence": []
+        },
+        {
+          "term": "recommendation based",
+          "score": 0.5519,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "source women",
+          "score": 45.8462,
+          "evidence": []
+        },
+        {
+          "term": "strong recommendation",
+          "score": 39.9384,
+          "evidence": []
+        },
+        {
+          "term": "postpartum women",
+          "score": 32.2519,
+          "evidence": []
+        },
+        {
+          "term": "recommendation based",
+          "score": 31.5817,
+          "evidence": []
+        },
+        {
+          "term": "weak recommendation",
+          "score": 29.8303,
+          "evidence": []
+        },
+        {
+          "term": "quality evidence",
+          "score": 29.1535,
+          "evidence": []
+        },
+        {
+          "term": "insufficient evidence",
+          "score": 23.7416,
+          "evidence": []
+        },
+        {
+          "term": "postnatal care",
+          "score": 21.0075,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "source women",
+          "score": 0.9314,
+          "evidence": []
+        },
+        {
+          "term": "postpartum women",
+          "score": 0.917,
+          "evidence": []
+        },
+        {
+          "term": "postnatal care",
+          "score": 0.8614,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "strong recommendation",
+          "score": 0.6349,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 0.6207,
+          "evidence": []
+        },
+        {
+          "term": "quality evidence",
+          "score": 0.5874,
+          "evidence": []
+        },
+        {
+          "term": "recommendation based",
+          "score": 0.5519,
+          "evidence": []
+        },
+        {
+          "term": "perinatal health",
+          "score": 0.5431,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 29.495,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 25.9627,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 25.8666,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 21.5018,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 21.5018,
+          "evidence": []
+        },
+        {
+          "term": "或一些其他单位",
+          "score": 21.5018,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 19.2998,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 19.2998,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-017-8-health-promotion-for-maternal-and-newborn-heal": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "newborn health",
+          "score": 2.9233,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "low-quality evidence",
+          "score": 2.267,
+          "evidence": []
+        },
+        {
+          "term": "skilled care",
+          "score": 1.9918,
+          "evidence": []
+        },
+        {
+          "term": "women voices",
+          "score": 1.9898,
+          "evidence": []
+        },
+        {
+          "term": "maternity care",
+          "score": 1.9527,
+          "evidence": []
+        },
+        {
+          "term": "strong recommendation",
+          "score": 1.8642,
+          "evidence": []
+        },
+        {
+          "term": "quality skilled",
+          "score": 1.8327,
+          "evidence": []
+        },
+        {
+          "term": "maternity waiting",
+          "score": 1.7903,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "newborn health",
+          "score": 74.1343,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "skilled care",
+          "score": 74.0861,
+          "evidence": []
+        },
+        {
+          "term": "maternity care",
+          "score": 62.1625,
+          "evidence": []
+        },
+        {
+          "term": "low-quality evidence",
+          "score": 61.5833,
+          "evidence": []
+        },
+        {
+          "term": "quality skilled",
+          "score": 57.3787,
+          "evidence": []
+        },
+        {
+          "term": "women voices",
+          "score": 52.1986,
+          "evidence": []
+        },
+        {
+          "term": "care during",
+          "score": 48.9931,
+          "evidence": []
+        },
+        {
+          "term": "strong recommendation",
+          "score": 48.0607,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "newborn health",
+          "score": 1.4908,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health care",
+          "score": 0.8316,
+          "evidence": []
+        },
+        {
+          "term": "maternal",
+          "score": 0.809,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ensure women",
+          "score": 0.7054,
+          "evidence": []
+        },
+        {
+          "term": "women groups",
+          "score": 0.6986,
+          "evidence": []
+        },
+        {
+          "term": "care services",
+          "score": 0.6781,
+          "evidence": []
+        },
+        {
+          "term": "strong recommendation",
+          "score": 0.6216,
+          "evidence": []
+        },
+        {
+          "term": "improve maternal",
+          "score": 0.6098,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "newborn health",
+          "score": 33.2943,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "strong recommendation",
+          "score": 33.2049,
+          "evidence": []
+        },
+        {
+          "term": "conditional recommendation",
+          "score": 31.1165,
+          "evidence": []
+        },
+        {
+          "term": "women groups",
+          "score": 26.9578,
+          "evidence": []
+        },
+        {
+          "term": "ensure women",
+          "score": 26.8043,
+          "evidence": []
+        },
+        {
+          "term": "women voices",
+          "score": 25.0508,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 23.6607,
+          "evidence": []
+        },
+        {
+          "term": "low-quality evidence",
+          "score": 22.1218,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "newborn health",
+          "score": 1.4908,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health care",
+          "score": 0.8316,
+          "evidence": []
+        },
+        {
+          "term": "maternal",
+          "score": 0.809,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ensure women",
+          "score": 0.7054,
+          "evidence": []
+        },
+        {
+          "term": "women groups",
+          "score": 0.6986,
+          "evidence": []
+        },
+        {
+          "term": "care services",
+          "score": 0.6781,
+          "evidence": []
+        },
+        {
+          "term": "strong recommendation",
+          "score": 0.6216,
+          "evidence": []
+        },
+        {
+          "term": "women voices",
+          "score": 0.6098,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "并提供一",
+          "score": 40.8472,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 37.6303,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 32.3691,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 28.6628,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 23.3709,
+          "evidence": []
+        },
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 18.5838,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 18.1856,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 18.1856,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-019-9-postpartum-haemorrhage": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "uterine atony",
+          "score": 3.3811,
+          "evidence": []
+        },
+        {
+          "term": "weak recommendation",
+          "score": 2.8948,
+          "evidence": []
+        },
+        {
+          "term": "magnesium sulfate",
+          "score": 2.775,
+          "evidence": []
+        },
+        {
+          "term": "uterine massage",
+          "score": 2.5893,
+          "evidence": []
+        },
+        {
+          "term": "source magnesium",
+          "score": 2.455,
+          "evidence": []
+        },
+        {
+          "term": "intravenous oxytocin",
+          "score": 2.427,
+          "evidence": []
+        },
+        {
+          "term": "pph due",
+          "score": 2.3209,
+          "evidence": []
+        },
+        {
+          "term": "strong recommendation",
+          "score": 2.3055,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "weak recommendation",
+          "score": 124.3253,
+          "evidence": []
+        },
+        {
+          "term": "uterine atony",
+          "score": 104.7367,
+          "evidence": []
+        },
+        {
+          "term": "strong recommendation",
+          "score": 91.4611,
+          "evidence": []
+        },
+        {
+          "term": "source magnesium",
+          "score": 81.6302,
+          "evidence": []
+        },
+        {
+          "term": "uterine massage",
+          "score": 77.692,
+          "evidence": []
+        },
+        {
+          "term": "pph due",
+          "score": 72.0861,
+          "evidence": []
+        },
+        {
+          "term": "quality evidence",
+          "score": 71.6487,
+          "evidence": []
+        },
+        {
+          "term": "magnesium sulfate",
+          "score": 66.9869,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "strong recommendation",
+          "score": 0.7913,
+          "evidence": []
+        },
+        {
+          "term": "weak recommendation",
+          "score": 0.6549,
+          "evidence": []
+        },
+        {
+          "term": "quality evidence",
+          "score": 0.5982,
+          "evidence": []
+        },
+        {
+          "term": "option",
+          "score": 0.4585,
+          "evidence": []
+        },
+        {
+          "term": "moderate quality",
+          "score": 0.4274,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.3869,
+          "evidence": []
+        },
+        {
+          "term": "source magnesium",
+          "score": 0.3409,
+          "evidence": []
+        },
+        {
+          "term": "intravenous oxytocin",
+          "score": 0.3287,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "strong recommendation",
+          "score": 66.5905,
+          "evidence": []
+        },
+        {
+          "term": "weak recommendation",
+          "score": 50.8892,
+          "evidence": []
+        },
+        {
+          "term": "quality evidence",
+          "score": 32.3119,
+          "evidence": []
+        },
+        {
+          "term": "source magnesium",
+          "score": 25.8202,
+          "evidence": []
+        },
+        {
+          "term": "certainty",
+          "score": 21.0882,
+          "evidence": []
+        },
+        {
+          "term": "moderate quality",
+          "score": 17.4955,
+          "evidence": []
+        },
+        {
+          "term": "conditional",
+          "score": 14.2607,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 14.085,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "strong recommendation",
+          "score": 0.7913,
+          "evidence": []
+        },
+        {
+          "term": "weak recommendation",
+          "score": 0.6549,
+          "evidence": []
+        },
+        {
+          "term": "quality evidence",
+          "score": 0.5982,
+          "evidence": []
+        },
+        {
+          "term": "moderate quality",
+          "score": 0.4274,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.3869,
+          "evidence": []
+        },
+        {
+          "term": "vaginal birth",
+          "score": 0.3411,
+          "evidence": []
+        },
+        {
+          "term": "source magnesium",
+          "score": 0.3409,
+          "evidence": []
+        },
+        {
+          "term": "intravenous oxytocin",
+          "score": 0.3287,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 53.1024,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 52.9035,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 52.0848,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 50.8255,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 50.8255,
+          "evidence": []
+        },
+        {
+          "term": "或一些其他单位",
+          "score": 50.8255,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 39.3042,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 39.3042,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-020-10-pre-eclampsia-and-eclampsia": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "weak recommendation",
+          "score": 2.0847,
+          "evidence": []
+        },
+        {
+          "term": "pre-eclampsia",
+          "score": 2.0175,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "severe pre-eclampsia",
+          "score": 1.7969,
+          "evidence": []
+        },
+        {
+          "term": "maternal hypertension",
+          "score": 1.7604,
+          "evidence": []
+        },
+        {
+          "term": "viable fetus",
+          "score": 1.7237,
+          "evidence": []
+        },
+        {
+          "term": "strong recommendation",
+          "score": 1.7055,
+          "evidence": []
+        },
+        {
+          "term": "antihypertensive drugs",
+          "score": 1.575,
+          "evidence": []
+        },
+        {
+          "term": "uncontrolled maternal",
+          "score": 1.5275,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "weak recommendation",
+          "score": 52.5725,
+          "evidence": []
+        },
+        {
+          "term": "pre-eclampsia",
+          "score": 42.0965,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "strong recommendation",
+          "score": 41.1087,
+          "evidence": []
+        },
+        {
+          "term": "severe pre-eclampsia",
+          "score": 38.4817,
+          "evidence": []
+        },
+        {
+          "term": "maternal hypertension",
+          "score": 37.4324,
+          "evidence": []
+        },
+        {
+          "term": "quality evidence",
+          "score": 34.0002,
+          "evidence": []
+        },
+        {
+          "term": "viable fetus",
+          "score": 33.0129,
+          "evidence": []
+        },
+        {
+          "term": "uncontrolled maternal",
+          "score": 28.0142,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "strong recommendation",
+          "score": 0.5196,
+          "evidence": []
+        },
+        {
+          "term": "quality evidence",
+          "score": 0.3903,
+          "evidence": []
+        },
+        {
+          "term": "weak recommendation",
+          "score": 0.3678,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.2848,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy",
+          "score": 0.2232,
+          "evidence": []
+        },
+        {
+          "term": "certainty",
+          "score": 0.2152,
+          "evidence": []
+        },
+        {
+          "term": "recommended",
+          "score": 0.2005,
+          "evidence": []
+        },
+        {
+          "term": "moderate",
+          "score": 0.1985,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "strong recommendation",
+          "score": 29.2415,
+          "evidence": []
+        },
+        {
+          "term": "weak recommendation",
+          "score": 22.3663,
+          "evidence": []
+        },
+        {
+          "term": "quality evidence",
+          "score": 16.0406,
+          "evidence": []
+        },
+        {
+          "term": "source",
+          "score": 10.0078,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 10.007,
+          "evidence": []
+        },
+        {
+          "term": "certainty",
+          "score": 8.9409,
+          "evidence": []
+        },
+        {
+          "term": "conditional",
+          "score": 6.1364,
+          "evidence": []
+        },
+        {
+          "term": "ultrasound",
+          "score": 5.0349,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "strong recommendation",
+          "score": 0.5196,
+          "evidence": []
+        },
+        {
+          "term": "weak recommendation",
+          "score": 0.401,
+          "evidence": []
+        },
+        {
+          "term": "quality evidence",
+          "score": 0.3903,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.2848,
+          "evidence": []
+        },
+        {
+          "term": "recommended",
+          "score": 0.2005,
+          "evidence": []
+        },
+        {
+          "term": "maternal hypertension",
+          "score": 0.1898,
+          "evidence": []
+        },
+        {
+          "term": "increasing maternal",
+          "score": 0.1826,
+          "evidence": []
+        },
+        {
+          "term": "maternal organ",
+          "score": 0.1769,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 43.9277,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 43.9277,
+          "evidence": []
+        },
+        {
+          "term": "或一些其他单位",
+          "score": 43.9277,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 36.9084,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 36.9084,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 36.9084,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 35.5107,
+          "evidence": []
+        },
+        {
+          "term": "必需的",
+          "score": 31.8116,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-021-11-peripartum-infections": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "conditional recommendation",
+          "score": 1.0618,
+          "evidence": []
+        },
+        {
+          "term": "recommendation based",
+          "score": 0.7564,
+          "evidence": []
+        },
+        {
+          "term": "antibiotics",
+          "score": 0.6712,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "conditional recommendation",
+          "score": 14.6767,
+          "evidence": []
+        },
+        {
+          "term": "antibiotics",
+          "score": 9.9006,
+          "evidence": []
+        },
+        {
+          "term": "recommendation based",
+          "score": 9.894,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "conditional recommendation",
+          "score": 0.2599,
+          "evidence": []
+        },
+        {
+          "term": "recommendation based",
+          "score": 0.1964,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 0.1256,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "conditional recommendation",
+          "score": 6.8184,
+          "evidence": []
+        },
+        {
+          "term": "recommendation based",
+          "score": 5.3297,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 2.4591,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "conditional recommendation",
+          "score": 0.2599,
+          "evidence": []
+        },
+        {
+          "term": "recommendation based",
+          "score": 0.1964,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 0.1256,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 48.4345,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 48.4345,
+          "evidence": []
+        },
+        {
+          "term": "或一些其他单位",
+          "score": 48.4345,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-022-12-hiv-infection": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hiv infection",
+          "score": 2.4143,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "source quoted",
+          "score": 2.2646,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding women",
+          "score": 2.1312,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 2.1136,
+          "evidence": []
+        },
+        {
+          "term": "lifelong art",
+          "score": 2.0223,
+          "evidence": []
+        },
+        {
+          "term": "strong recommendation",
+          "score": 1.9518,
+          "evidence": []
+        },
+        {
+          "term": "quality evidence",
+          "score": 1.8275,
+          "evidence": []
+        },
+        {
+          "term": "epidemics provider-initiated",
+          "score": 1.7016,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hiv infection",
+          "score": 87.2426,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "quality evidence",
+          "score": 83.1116,
+          "evidence": []
+        },
+        {
+          "term": "source quoted",
+          "score": 81.5023,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 71.124,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding women",
+          "score": 70.3847,
+          "evidence": []
+        },
+        {
+          "term": "hiv transmission",
+          "score": 62.7078,
+          "evidence": []
+        },
+        {
+          "term": "strength",
+          "score": 56.9466,
+          "evidence": []
+        },
+        {
+          "term": "moderate quality",
+          "score": 56.5339,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hiv infection",
+          "score": 2.3233,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pregnant women",
+          "score": 1.7997,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding women",
+          "score": 1.6268,
+          "evidence": []
+        },
+        {
+          "term": "hiv transmission",
+          "score": 1.2948,
+          "evidence": []
+        },
+        {
+          "term": "hiv testing",
+          "score": 1.2662,
+          "evidence": []
+        },
+        {
+          "term": "women infected",
+          "score": 1.1938,
+          "evidence": []
+        },
+        {
+          "term": "hiv status",
+          "score": 1.1358,
+          "evidence": []
+        },
+        {
+          "term": "reduce hiv",
+          "score": 1.0309,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hiv infection",
+          "score": 84.1818,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "strong recommendation",
+          "score": 47.7867,
+          "evidence": []
+        },
+        {
+          "term": "hiv testing",
+          "score": 45.1034,
+          "evidence": []
+        },
+        {
+          "term": "conditional recommendation",
+          "score": 44.0061,
+          "evidence": []
+        },
+        {
+          "term": "hiv status",
+          "score": 43.2419,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 42.6829,
+          "evidence": []
+        },
+        {
+          "term": "hiv transmission",
+          "score": 41.3641,
+          "evidence": []
+        },
+        {
+          "term": "reduce hiv",
+          "score": 39.4513,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hiv infection",
+          "score": 2.3233,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pregnant women",
+          "score": 1.7997,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding women",
+          "score": 1.6268,
+          "evidence": []
+        },
+        {
+          "term": "hiv transmission",
+          "score": 1.2948,
+          "evidence": []
+        },
+        {
+          "term": "hiv testing",
+          "score": 1.2662,
+          "evidence": []
+        },
+        {
+          "term": "women infected",
+          "score": 1.1938,
+          "evidence": []
+        },
+        {
+          "term": "hiv status",
+          "score": 1.1358,
+          "evidence": []
+        },
+        {
+          "term": "reduce hiv",
+          "score": 1.0309,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 38.9137,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 28.929,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 26.7449,
+          "evidence": []
+        },
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 21.1376,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 20.1248,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 20.1248,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 20.1248,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 19.8784,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-023-13-malaria": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "falciparum malaria",
+          "score": 1.2647,
+          "evidence": []
+        },
+        {
+          "term": "uncomplicated",
+          "score": 0.745,
+          "evidence": []
+        },
+        {
+          "term": "trimester",
+          "score": 0.7296,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "falciparum malaria",
+          "score": 18.9699,
+          "evidence": []
+        },
+        {
+          "term": "uncomplicated",
+          "score": 11.9598,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding",
+          "score": 11.047,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "women",
+          "score": 0.2207,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy",
+          "score": 0.1369,
+          "evidence": []
+        },
+        {
+          "term": "pregnant",
+          "score": 0.1268,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "women",
+          "score": 4.0471,
+          "evidence": []
+        },
+        {
+          "term": "recommendation",
+          "score": 4.0002,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 2.5848,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "women",
+          "score": 0.2207,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy",
+          "score": 0.1369,
+          "evidence": []
+        },
+        {
+          "term": "pregnant",
+          "score": 0.1268,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "并提供一",
+          "score": 48.6299,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 44.2937,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 41.3493,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-024-14-tuberculosis": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "multiple micronutrient",
+          "score": 1.9969,
+          "evidence": []
+        },
+        {
+          "term": "maternal micronutrient",
+          "score": 1.982,
+          "evidence": []
+        },
+        {
+          "term": "fortified supplementary",
+          "score": 1.9266,
+          "evidence": []
+        },
+        {
+          "term": "micronutrient preparation",
+          "score": 1.9126,
+          "evidence": []
+        },
+        {
+          "term": "supplementary foods",
+          "score": 1.7227,
+          "evidence": []
+        },
+        {
+          "term": "moderate undernutrition",
+          "score": 1.6864,
+          "evidence": []
+        },
+        {
+          "term": "conditional recommendation",
+          "score": 1.584,
+          "evidence": []
+        },
+        {
+          "term": "strong recommendation",
+          "score": 1.4527,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "multiple micronutrient",
+          "score": 53.01,
+          "evidence": []
+        },
+        {
+          "term": "maternal micronutrient",
+          "score": 50.433,
+          "evidence": []
+        },
+        {
+          "term": "micronutrient preparation",
+          "score": 49.1857,
+          "evidence": []
+        },
+        {
+          "term": "fortified supplementary",
+          "score": 35.8794,
+          "evidence": []
+        },
+        {
+          "term": "supplementary foods",
+          "score": 31.8744,
+          "evidence": []
+        },
+        {
+          "term": "conditional recommendation",
+          "score": 31.2588,
+          "evidence": []
+        },
+        {
+          "term": "moderate undernutrition",
+          "score": 29.8983,
+          "evidence": []
+        },
+        {
+          "term": "strong recommendation",
+          "score": 28.5206,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "conditional recommendation",
+          "score": 0.5655,
+          "evidence": []
+        },
+        {
+          "term": "strong recommendation",
+          "score": 0.5472,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 0.5312,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 0.3103,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy",
+          "score": 0.2993,
+          "evidence": []
+        },
+        {
+          "term": "moderate undernutrition",
+          "score": 0.266,
+          "evidence": []
+        },
+        {
+          "term": "certainty",
+          "score": 0.2606,
+          "evidence": []
+        },
+        {
+          "term": "maternal micronutrient",
+          "score": 0.2527,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "strong recommendation",
+          "score": 21.0547,
+          "evidence": []
+        },
+        {
+          "term": "conditional recommendation",
+          "score": 20.1854,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 9.6412,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 9.5572,
+          "evidence": []
+        },
+        {
+          "term": "certainty",
+          "score": 7.0182,
+          "evidence": []
+        },
+        {
+          "term": "source",
+          "score": 6.6647,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis",
+          "score": 5.9444,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pregnancy",
+          "score": 5.0704,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "conditional recommendation",
+          "score": 0.5655,
+          "evidence": []
+        },
+        {
+          "term": "strong recommendation",
+          "score": 0.5472,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 0.5312,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 0.3103,
+          "evidence": []
+        },
+        {
+          "term": "moderate undernutrition",
+          "score": 0.266,
+          "evidence": []
+        },
+        {
+          "term": "maternal micronutrient",
+          "score": 0.2527,
+          "evidence": []
+        },
+        {
+          "term": "weight gain",
+          "score": 0.226,
+          "evidence": []
+        },
+        {
+          "term": "recommended",
+          "score": 0.2235,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 44.9233,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 44.9233,
+          "evidence": []
+        },
+        {
+          "term": "或一些其他单位",
+          "score": 44.9233,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 34.0794,
+          "evidence": []
+        },
+        {
+          "term": "一个国际医疗救助机构",
+          "score": 33.0212,
+          "evidence": []
+        },
+        {
+          "term": "作为应对",
+          "score": 33.0212,
+          "evidence": []
+        },
+        {
+          "term": "在过去几周内",
+          "score": 33.0212,
+          "evidence": []
+        },
+        {
+          "term": "村民的生物学标本",
+          "score": 33.0212,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "postpartum haemorrhage",
+          "score": 1.371,
+          "evidence": []
+        },
+        {
+          "term": "maternal health",
+          "score": 1.327,
+          "evidence": []
+        },
+        {
+          "term": "peripartum infections",
+          "score": 1.2934,
+          "evidence": []
+        },
+        {
+          "term": "creative commons",
+          "score": 1.1644,
+          "evidence": []
+        },
+        {
+          "term": "guidelines approved",
+          "score": 1.1579,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 1.0193,
+          "evidence": []
+        },
+        {
+          "term": "suggested citation",
+          "score": 0.9785,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.9568,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "maternal health",
+          "score": 32.4862,
+          "evidence": []
+        },
+        {
+          "term": "guidelines approved",
+          "score": 23.4095,
+          "evidence": []
+        },
+        {
+          "term": "work",
+          "score": 21.706,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 21.2412,
+          "evidence": []
+        },
+        {
+          "term": "peripartum infections",
+          "score": 20.0522,
+          "evidence": []
+        },
+        {
+          "term": "postpartum haemorrhage",
+          "score": 20.04,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 19.2924,
+          "evidence": []
+        },
+        {
+          "term": "creative commons",
+          "score": 18.9498,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "creative commons",
+          "score": 0.9803,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.9772,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.9345,
+          "evidence": []
+        },
+        {
+          "term": "suggested citation",
+          "score": 0.8402,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 0.794,
+          "evidence": []
+        },
+        {
+          "term": "material",
+          "score": 0.7264,
+          "evidence": []
+        },
+        {
+          "term": "igo",
+          "score": 0.6579,
+          "evidence": []
+        },
+        {
+          "term": "work",
+          "score": 0.6011,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "world health",
+          "score": 17.8427,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 17.1045,
+          "evidence": []
+        },
+        {
+          "term": "maternal health",
+          "score": 11.1204,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 10.6836,
+          "evidence": []
+        },
+        {
+          "term": "igo",
+          "score": 9.1687,
+          "evidence": []
+        },
+        {
+          "term": "wpv",
+          "score": 9.0392,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis",
+          "score": 8.4207,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 8.2372,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "creative commons",
+          "score": 0.9803,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.9772,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.9345,
+          "evidence": []
+        },
+        {
+          "term": "suggested citation",
+          "score": 0.8402,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 0.794,
+          "evidence": []
+        },
+        {
+          "term": "material",
+          "score": 0.7264,
+          "evidence": []
+        },
+        {
+          "term": "igo",
+          "score": 0.6579,
+          "evidence": []
+        },
+        {
+          "term": "work",
+          "score": 0.6011,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 206.0204,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 83.4881,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 77.4597,
+          "evidence": []
+        },
+        {
+          "term": "监督机制",
+          "score": 45.565,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 43.1082,
+          "evidence": []
+        },
+        {
+          "term": "法律上",
+          "score": 42.6095,
+          "evidence": []
+        },
+        {
+          "term": "区域和全球各",
+          "score": 40.4646,
+          "evidence": []
+        },
+        {
+          "term": "可持续发展目标和世卫组织",
+          "score": 40.2048,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

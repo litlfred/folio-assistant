@@ -1,0 +1,3730 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-258516",
+  "instance": "who-iris",
+  "about": "library/10665-258516",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7908,
+    "terms": 73102
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "restarting prep",
+        "score": 16.198,
+        "evidence": []
+      },
+      {
+        "term": "starting prep",
+        "score": 16.1963,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "prep services",
+        "score": 15.6281,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "retesting prep",
+        "score": 15.213,
+        "evidence": []
+      },
+      {
+        "term": "oral prep",
+        "score": 14.9987,
+        "evidence": []
+      },
+      {
+        "term": "prep users",
+        "score": 14.8795,
+        "evidence": []
+      },
+      {
+        "term": "prep initiation",
+        "score": 14.4183,
+        "evidence": []
+      },
+      {
+        "term": "among prep",
+        "score": 14.2997,
+        "evidence": []
+      },
+      {
+        "term": "prep containing",
+        "score": 14.2268,
+        "evidence": []
+      },
+      {
+        "term": "during prep",
+        "score": 14.2095,
+        "evidence": []
+      },
+      {
+        "term": "start prep",
+        "score": 14.1761,
+        "evidence": []
+      },
+      {
+        "term": "prep programmes",
+        "score": 14.1746,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "starting prep",
+        "score": 734.2847,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "restarting prep",
+        "score": 722.7951,
+        "evidence": []
+      },
+      {
+        "term": "prep services",
+        "score": 708.3391,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "retesting prep",
+        "score": 695.7376,
+        "evidence": []
+      },
+      {
+        "term": "oral prep",
+        "score": 693.8147,
+        "evidence": []
+      },
+      {
+        "term": "prep users",
+        "score": 690.1635,
+        "evidence": []
+      },
+      {
+        "term": "prep programmes",
+        "score": 679.3283,
+        "evidence": []
+      },
+      {
+        "term": "prep initiation",
+        "score": 677.9476,
+        "evidence": []
+      },
+      {
+        "term": "start prep",
+        "score": 677.7261,
+        "evidence": []
+      },
+      {
+        "term": "prep containing",
+        "score": 675.2983,
+        "evidence": []
+      },
+      {
+        "term": "among prep",
+        "score": 674.9158,
+        "evidence": []
+      },
+      {
+        "term": "during prep",
+        "score": 673.4653,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "prep services",
+        "score": 9.443,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hiv testing",
+        "score": 9.427,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "oral prep",
+        "score": 9.2029,
+        "evidence": []
+      },
+      {
+        "term": "among prep",
+        "score": 8.9122,
+        "evidence": []
+      },
+      {
+        "term": "hiv infection",
+        "score": 8.7951,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "prep initiation",
+        "score": 8.3956,
+        "evidence": []
+      },
+      {
+        "term": "during prep",
+        "score": 8.3553,
+        "evidence": []
+      },
+      {
+        "term": "hiv prevention",
+        "score": 8.2978,
+        "evidence": []
+      },
+      {
+        "term": "monitoring prep",
+        "score": 8.0038,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "prep users",
+        "score": 7.8948,
+        "evidence": []
+      },
+      {
+        "term": "prep programmes",
+        "score": 7.7957,
+        "evidence": []
+      },
+      {
+        "term": "offering prep",
+        "score": 7.7475,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "prep services",
+        "score": 683.1721,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "oral prep",
+        "score": 677.5743,
+        "evidence": []
+      },
+      {
+        "term": "prep initiation",
+        "score": 656.4571,
+        "evidence": []
+      },
+      {
+        "term": "prep users",
+        "score": 654.6217,
+        "evidence": []
+      },
+      {
+        "term": "among prep",
+        "score": 652.32,
+        "evidence": []
+      },
+      {
+        "term": "during prep",
+        "score": 644.5891,
+        "evidence": []
+      },
+      {
+        "term": "monitoring prep",
+        "score": 641.4311,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "starting prep",
+        "score": 638.5196,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "offering prep",
+        "score": 633.8575,
+        "evidence": []
+      },
+      {
+        "term": "prep programmes",
+        "score": 633.7456,
+        "evidence": []
+      },
+      {
+        "term": "start prep",
+        "score": 632.5123,
+        "evidence": []
+      },
+      {
+        "term": "implementing prep",
+        "score": 621.4077,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "prep services",
+        "score": 9.443,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hiv testing",
+        "score": 9.427,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "oral prep",
+        "score": 9.2029,
+        "evidence": []
+      },
+      {
+        "term": "among prep",
+        "score": 8.9122,
+        "evidence": []
+      },
+      {
+        "term": "hiv infection",
+        "score": 8.7951,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "prep initiation",
+        "score": 8.3956,
+        "evidence": []
+      },
+      {
+        "term": "during prep",
+        "score": 8.3553,
+        "evidence": []
+      },
+      {
+        "term": "hiv prevention",
+        "score": 8.2978,
+        "evidence": []
+      },
+      {
+        "term": "monitoring prep",
+        "score": 8.0038,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "prep users",
+        "score": 7.8948,
+        "evidence": []
+      },
+      {
+        "term": "prep programmes",
+        "score": 7.7957,
+        "evidence": []
+      },
+      {
+        "term": "offering prep",
+        "score": 7.7475,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "捐助者",
+        "score": 404.3717,
+        "evidence": []
+      },
+      {
+        "term": "询问学员这项原则如何应用于紧急情况下的研究",
+        "score": 347.4384,
+        "evidence": []
+      },
+      {
+        "term": "关注这一事实",
+        "score": 270.7115,
+        "evidence": []
+      },
+      {
+        "term": "巴西登革热",
+        "score": 225.0033,
+        "evidence": []
+      },
+      {
+        "term": "实验室和流感监测能力建设",
+        "score": 219.5604,
+        "evidence": []
+      },
+      {
+        "term": "提供确定疫苗效力的参考试剂",
+        "score": 219.5604,
+        "evidence": []
+      },
+      {
+        "term": "提供诊断试剂和检测包",
+        "score": 219.5604,
+        "evidence": []
+      },
+      {
+        "term": "管制能力建设",
+        "score": 219.5604,
+        "evidence": []
+      },
+      {
+        "term": "政治利益",
+        "score": 173.2186,
+        "evidence": []
+      },
+      {
+        "term": "并提供一",
+        "score": 154.9264,
+        "evidence": []
+      },
+      {
+        "term": "到辩护",
+        "score": 152.9897,
+        "evidence": []
+      },
+      {
+        "term": "允许进行个人反馈",
+        "score": 147.1943,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-introduction": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "prep users",
+          "score": 2.5969,
+          "evidence": []
+        },
+        {
+          "term": "prep services",
+          "score": 2.5615,
+          "evidence": []
+        },
+        {
+          "term": "offering prep",
+          "score": 2.5431,
+          "evidence": []
+        },
+        {
+          "term": "monitor prep",
+          "score": 2.3815,
+          "evidence": []
+        },
+        {
+          "term": "implementing prep",
+          "score": 2.3609,
+          "evidence": []
+        },
+        {
+          "term": "young people",
+          "score": 1.5323,
+          "evidence": []
+        },
+        {
+          "term": "module",
+          "score": 1.4897,
+          "evidence": []
+        },
+        {
+          "term": "hiv prevention",
+          "score": 1.4408,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "prep services",
+          "score": 231.628,
+          "evidence": []
+        },
+        {
+          "term": "prep users",
+          "score": 228.8287,
+          "evidence": []
+        },
+        {
+          "term": "offering prep",
+          "score": 225.6433,
+          "evidence": []
+        },
+        {
+          "term": "monitor prep",
+          "score": 222.9549,
+          "evidence": []
+        },
+        {
+          "term": "implementing prep",
+          "score": 222.659,
+          "evidence": []
+        },
+        {
+          "term": "module",
+          "score": 92.4325,
+          "evidence": []
+        },
+        {
+          "term": "hiv prevention",
+          "score": 46.296,
+          "evidence": []
+        },
+        {
+          "term": "young people",
+          "score": 42.5123,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "prep services",
+          "score": 1.787,
+          "evidence": []
+        },
+        {
+          "term": "prep users",
+          "score": 1.4438,
+          "evidence": []
+        },
+        {
+          "term": "offering prep",
+          "score": 1.4156,
+          "evidence": []
+        },
+        {
+          "term": "implementing prep",
+          "score": 1.3608,
+          "evidence": []
+        },
+        {
+          "term": "monitor prep",
+          "score": 1.2367,
+          "evidence": []
+        },
+        {
+          "term": "hiv prevention",
+          "score": 1.2262,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 1.0112,
+          "evidence": []
+        },
+        {
+          "term": "testing services",
+          "score": 0.9506,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "prep services",
+          "score": 215.8876,
+          "evidence": []
+        },
+        {
+          "term": "prep users",
+          "score": 210.4351,
+          "evidence": []
+        },
+        {
+          "term": "offering prep",
+          "score": 203.7341,
+          "evidence": []
+        },
+        {
+          "term": "implementing prep",
+          "score": 200.1015,
+          "evidence": []
+        },
+        {
+          "term": "monitor prep",
+          "score": 200.1015,
+          "evidence": []
+        },
+        {
+          "term": "hiv prevention",
+          "score": 40.274,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 37.6663,
+          "evidence": []
+        },
+        {
+          "term": "hivst",
+          "score": 33.1361,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "prep services",
+          "score": 1.787,
+          "evidence": []
+        },
+        {
+          "term": "prep users",
+          "score": 1.4438,
+          "evidence": []
+        },
+        {
+          "term": "offering prep",
+          "score": 1.4156,
+          "evidence": []
+        },
+        {
+          "term": "implementing prep",
+          "score": 1.3608,
+          "evidence": []
+        },
+        {
+          "term": "monitor prep",
+          "score": 1.3031,
+          "evidence": []
+        },
+        {
+          "term": "hiv prevention",
+          "score": 1.2262,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 1.0112,
+          "evidence": []
+        },
+        {
+          "term": "testing services",
+          "score": 0.9506,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 42.3073,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 32.6931,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 27.7458,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 23.3481,
+          "evidence": []
+        },
+        {
+          "term": "可能会",
+          "score": 18.6936,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 17.0569,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 16.0769,
+          "evidence": []
+        },
+        {
+          "term": "进行研究",
+          "score": 15.6234,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-001-the-testing-providers-module": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "testing",
+          "score": 1.0859,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prep",
+          "score": 1.0118,
+          "evidence": []
+        },
+        {
+          "term": "module",
+          "score": 0.9931,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hepatitis virus",
+          "score": 0.993,
+          "evidence": []
+        },
+        {
+          "term": "testing services",
+          "score": 0.8145,
+          "evidence": []
+        },
+        {
+          "term": "recommendation",
+          "score": 0.4793,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "prep",
+          "score": 25.7412,
+          "evidence": []
+        },
+        {
+          "term": "testing",
+          "score": 23.0025,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "testing services",
+          "score": 14.7605,
+          "evidence": []
+        },
+        {
+          "term": "module",
+          "score": 14.2204,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hepatitis virus",
+          "score": 12.378,
+          "evidence": []
+        },
+        {
+          "term": "recommendation",
+          "score": 6.1625,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "prep",
+          "score": 0.4642,
+          "evidence": []
+        },
+        {
+          "term": "testing",
+          "score": 0.3925,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "testing services",
+          "score": 0.3629,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis virus",
+          "score": 0.3472,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.3024,
+          "evidence": []
+        },
+        {
+          "term": "prevention",
+          "score": 0.2052,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "prep",
+          "score": 24.4485,
+          "evidence": []
+        },
+        {
+          "term": "testing",
+          "score": 6.5917,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv",
+          "score": 5.8347,
+          "evidence": []
+        },
+        {
+          "term": "testing services",
+          "score": 5.7518,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis virus",
+          "score": 5.0787,
+          "evidence": []
+        },
+        {
+          "term": "hivst",
+          "score": 4.1193,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "prep",
+          "score": 0.4642,
+          "evidence": []
+        },
+        {
+          "term": "testing",
+          "score": 0.3925,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "testing services",
+          "score": 0.3629,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis virus",
+          "score": 0.3472,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.3024,
+          "evidence": []
+        },
+        {
+          "term": "prevention",
+          "score": 0.2052,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 32.5546,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 25.4369,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 24.7236,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 21.1884,
+          "evidence": []
+        },
+        {
+          "term": "关注这一事实",
+          "score": 19.7692,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 19.7372,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-002-key-messages-testing-services-in-the-context-of": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "prep",
+          "score": 3.4318,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "restarting prep",
+          "score": 2.7005,
+          "evidence": []
+        },
+        {
+          "term": "starting prep",
+          "score": 2.6875,
+          "evidence": []
+        },
+        {
+          "term": "testing services",
+          "score": 2.4389,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prep initiation",
+          "score": 2.2992,
+          "evidence": []
+        },
+        {
+          "term": "district provincial",
+          "score": 2.2226,
+          "evidence": []
+        },
+        {
+          "term": "during prep",
+          "score": 2.2046,
+          "evidence": []
+        },
+        {
+          "term": "prep users",
+          "score": 2.1286,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "prep",
+          "score": 242.7026,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "starting prep",
+          "score": 150.3415,
+          "evidence": []
+        },
+        {
+          "term": "restarting prep",
+          "score": 139.9604,
+          "evidence": []
+        },
+        {
+          "term": "prep initiation",
+          "score": 131.3738,
+          "evidence": []
+        },
+        {
+          "term": "during prep",
+          "score": 129.7529,
+          "evidence": []
+        },
+        {
+          "term": "prep users",
+          "score": 127.285,
+          "evidence": []
+        },
+        {
+          "term": "testing services",
+          "score": 82.0444,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "district provincial",
+          "score": 58.9086,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "testing services",
+          "score": 1.7555,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prep",
+          "score": 1.7444,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "during prep",
+          "score": 1.0804,
+          "evidence": []
+        },
+        {
+          "term": "prep initiation",
+          "score": 1.0774,
+          "evidence": []
+        },
+        {
+          "term": "starting prep",
+          "score": 0.9931,
+          "evidence": []
+        },
+        {
+          "term": "prep users",
+          "score": 0.9603,
+          "evidence": []
+        },
+        {
+          "term": "restarting prep",
+          "score": 0.8722,
+          "evidence": []
+        },
+        {
+          "term": "chronic hbv",
+          "score": 0.6772,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "prep",
+          "score": 219.0376,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prep initiation",
+          "score": 115.2152,
+          "evidence": []
+        },
+        {
+          "term": "prep users",
+          "score": 114.8675,
+          "evidence": []
+        },
+        {
+          "term": "during prep",
+          "score": 113.5124,
+          "evidence": []
+        },
+        {
+          "term": "starting prep",
+          "score": 112.2978,
+          "evidence": []
+        },
+        {
+          "term": "restarting prep",
+          "score": 109.5188,
+          "evidence": []
+        },
+        {
+          "term": "testing services",
+          "score": 46.868,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "chronic hbv",
+          "score": 23.5893,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "testing services",
+          "score": 1.7555,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prep",
+          "score": 1.7444,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "during prep",
+          "score": 1.0804,
+          "evidence": []
+        },
+        {
+          "term": "prep initiation",
+          "score": 1.0774,
+          "evidence": []
+        },
+        {
+          "term": "starting prep",
+          "score": 0.9931,
+          "evidence": []
+        },
+        {
+          "term": "prep users",
+          "score": 0.9603,
+          "evidence": []
+        },
+        {
+          "term": "restarting prep",
+          "score": 0.9406,
+          "evidence": []
+        },
+        {
+          "term": "chronic hbv",
+          "score": 0.6772,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 37.5851,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 28.0348,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 26.4676,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 24.1628,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 23.7408,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 20.5387,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 20.2689,
+          "evidence": []
+        },
+        {
+          "term": "关注这一事实",
+          "score": 18.846,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-003-hiv-testing-services": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hiv testing",
+          "score": 4.1644,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "reactive serology",
+          "score": 3.4226,
+          "evidence": []
+        },
+        {
+          "term": "testing services",
+          "score": 3.1854,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "restarting prep",
+          "score": 3.0675,
+          "evidence": []
+        },
+        {
+          "term": "third-line assays",
+          "score": 3.0469,
+          "evidence": []
+        },
+        {
+          "term": "generation serology",
+          "score": 2.9539,
+          "evidence": []
+        },
+        {
+          "term": "starting prep",
+          "score": 2.7666,
+          "evidence": []
+        },
+        {
+          "term": "report hiv-inconclusive",
+          "score": 2.7334,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hiv testing",
+          "score": 334.5373,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "restarting prep",
+          "score": 174.4304,
+          "evidence": []
+        },
+        {
+          "term": "starting prep",
+          "score": 172.4054,
+          "evidence": []
+        },
+        {
+          "term": "testing services",
+          "score": 166.7734,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "retesting prep",
+          "score": 158.8562,
+          "evidence": []
+        },
+        {
+          "term": "start prep",
+          "score": 153.3428,
+          "evidence": []
+        },
+        {
+          "term": "prep users",
+          "score": 152.3157,
+          "evidence": []
+        },
+        {
+          "term": "throughout prep",
+          "score": 150.3886,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hiv testing",
+          "score": 4.0306,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "testing services",
+          "score": 2.6941,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv infection",
+          "score": 1.716,
+          "evidence": []
+        },
+        {
+          "term": "prep services",
+          "score": 1.5189,
+          "evidence": []
+        },
+        {
+          "term": "hiv diagnosis",
+          "score": 1.5169,
+          "evidence": []
+        },
+        {
+          "term": "resistance testing",
+          "score": 1.4711,
+          "evidence": []
+        },
+        {
+          "term": "hiv drug",
+          "score": 1.4604,
+          "evidence": []
+        },
+        {
+          "term": "start prep",
+          "score": 1.3536,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hiv testing",
+          "score": 229.3192,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prep services",
+          "score": 155.8582,
+          "evidence": []
+        },
+        {
+          "term": "prep users",
+          "score": 149.1543,
+          "evidence": []
+        },
+        {
+          "term": "starting prep",
+          "score": 145.8919,
+          "evidence": []
+        },
+        {
+          "term": "retesting prep",
+          "score": 144.819,
+          "evidence": []
+        },
+        {
+          "term": "start prep",
+          "score": 144.4311,
+          "evidence": []
+        },
+        {
+          "term": "restarting prep",
+          "score": 141.0932,
+          "evidence": []
+        },
+        {
+          "term": "throughout prep",
+          "score": 141.0932,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hiv testing",
+          "score": 4.0306,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "testing services",
+          "score": 2.6941,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv infection",
+          "score": 1.716,
+          "evidence": []
+        },
+        {
+          "term": "prep services",
+          "score": 1.5189,
+          "evidence": []
+        },
+        {
+          "term": "hiv diagnosis",
+          "score": 1.5169,
+          "evidence": []
+        },
+        {
+          "term": "resistance testing",
+          "score": 1.4711,
+          "evidence": []
+        },
+        {
+          "term": "hiv drug",
+          "score": 1.4604,
+          "evidence": []
+        },
+        {
+          "term": "start prep",
+          "score": 1.3536,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在一些国家",
+          "score": 28.8927,
+          "evidence": []
+        },
+        {
+          "term": "青少年",
+          "score": 28.8927,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 28.4528,
+          "evidence": []
+        },
+        {
+          "term": "岁的女孩",
+          "score": 23.3253,
+          "evidence": []
+        },
+        {
+          "term": "服务的提供",
+          "score": 23.3253,
+          "evidence": []
+        },
+        {
+          "term": "可以考",
+          "score": 21.3048,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 20.75,
+          "evidence": []
+        },
+        {
+          "term": "对照组",
+          "score": 20.5662,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-004-kidney-function-monitoring": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "creatinine clearance",
+          "score": 3.2223,
+          "evidence": []
+        },
+        {
+          "term": "estimated creatinine",
+          "score": 2.6715,
+          "evidence": []
+        },
+        {
+          "term": "creatinine testing",
+          "score": 2.6634,
+          "evidence": []
+        },
+        {
+          "term": "prep",
+          "score": 1.2841,
+          "evidence": []
+        },
+        {
+          "term": "min",
+          "score": 0.9393,
+          "evidence": []
+        },
+        {
+          "term": "kidney",
+          "score": 0.9224,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "function",
+          "score": 0.6621,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "serum",
+          "score": 0.6206,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "creatinine clearance",
+          "score": 112.7569,
+          "evidence": []
+        },
+        {
+          "term": "creatinine testing",
+          "score": 98.9287,
+          "evidence": []
+        },
+        {
+          "term": "estimated creatinine",
+          "score": 95.5546,
+          "evidence": []
+        },
+        {
+          "term": "prep",
+          "score": 47.8051,
+          "evidence": []
+        },
+        {
+          "term": "min",
+          "score": 19.0245,
+          "evidence": []
+        },
+        {
+          "term": "kidney",
+          "score": 11.5135,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "serum",
+          "score": 9.2636,
+          "evidence": []
+        },
+        {
+          "term": "less",
+          "score": 8.7636,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "prep",
+          "score": 0.3994,
+          "evidence": []
+        },
+        {
+          "term": "creatinine testing",
+          "score": 0.1576,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.1442,
+          "evidence": []
+        },
+        {
+          "term": "oral",
+          "score": 0.1393,
+          "evidence": []
+        },
+        {
+          "term": "people",
+          "score": 0.1216,
+          "evidence": []
+        },
+        {
+          "term": "during",
+          "score": 0.1152,
+          "evidence": []
+        },
+        {
+          "term": "min",
+          "score": 0.1088,
+          "evidence": []
+        },
+        {
+          "term": "cab-la",
+          "score": 0.1081,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "prep",
+          "score": 43.1973,
+          "evidence": []
+        },
+        {
+          "term": "hivst",
+          "score": 7.212,
+          "evidence": []
+        },
+        {
+          "term": "creatinine testing",
+          "score": 4.0691,
+          "evidence": []
+        },
+        {
+          "term": "min",
+          "score": 3.8699,
+          "evidence": []
+        },
+        {
+          "term": "oral",
+          "score": 3.5926,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 3.3899,
+          "evidence": []
+        },
+        {
+          "term": "cab-la",
+          "score": 3.3179,
+          "evidence": []
+        },
+        {
+          "term": "module",
+          "score": 2.8698,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "prep",
+          "score": 0.3994,
+          "evidence": []
+        },
+        {
+          "term": "creatinine testing",
+          "score": 0.1815,
+          "evidence": []
+        },
+        {
+          "term": "people",
+          "score": 0.1216,
+          "evidence": []
+        },
+        {
+          "term": "min",
+          "score": 0.1088,
+          "evidence": []
+        },
+        {
+          "term": "months",
+          "score": 0.1048,
+          "evidence": []
+        },
+        {
+          "term": "available",
+          "score": 0.0793,
+          "evidence": []
+        },
+        {
+          "term": "monitoring",
+          "score": 0.0564,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "less",
+          "score": 0.0555,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 41.2116,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 37.0408,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 35.1602,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 30.5738,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 30.0618,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 28.0561,
+          "evidence": []
+        },
+        {
+          "term": "最小化",
+          "score": 23.8576,
+          "evidence": []
+        },
+        {
+          "term": "他们的",
+          "score": 23.7393,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-005-hepatitis-b-testing": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "chronic hbv",
+          "score": 2.4317,
+          "evidence": []
+        },
+        {
+          "term": "hbv infection",
+          "score": 2.1602,
+          "evidence": []
+        },
+        {
+          "term": "hbv treatment",
+          "score": 2.0828,
+          "evidence": []
+        },
+        {
+          "term": "active hbv",
+          "score": 1.8877,
+          "evidence": []
+        },
+        {
+          "term": "prep containing",
+          "score": 1.4856,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis",
+          "score": 1.3094,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "containing tdf",
+          "score": 1.2154,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "chronic hbv",
+          "score": 72.9671,
+          "evidence": []
+        },
+        {
+          "term": "hbv infection",
+          "score": 68.8209,
+          "evidence": []
+        },
+        {
+          "term": "hbv treatment",
+          "score": 65.6563,
+          "evidence": []
+        },
+        {
+          "term": "active hbv",
+          "score": 58.7758,
+          "evidence": []
+        },
+        {
+          "term": "prep containing",
+          "score": 30.3585,
+          "evidence": []
+        },
+        {
+          "term": "hbsag",
+          "score": 29.8098,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis",
+          "score": 19.8552,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hepatitis",
+          "score": 0.6509,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hbv infection",
+          "score": 0.5543,
+          "evidence": []
+        },
+        {
+          "term": "hbv treatment",
+          "score": 0.5155,
+          "evidence": []
+        },
+        {
+          "term": "chronic hbv",
+          "score": 0.4474,
+          "evidence": []
+        },
+        {
+          "term": "testing",
+          "score": 0.4362,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prep",
+          "score": 0.3872,
+          "evidence": []
+        },
+        {
+          "term": "prep containing",
+          "score": 0.3872,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hbv infection",
+          "score": 26.6334,
+          "evidence": []
+        },
+        {
+          "term": "hbv treatment",
+          "score": 24.4885,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis",
+          "score": 24.4738,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "chronic hbv",
+          "score": 21.825,
+          "evidence": []
+        },
+        {
+          "term": "prep",
+          "score": 20.6977,
+          "evidence": []
+        },
+        {
+          "term": "prep containing",
+          "score": 20.6977,
+          "evidence": []
+        },
+        {
+          "term": "hcv",
+          "score": 18.4107,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hepatitis",
+          "score": 0.6509,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hbv infection",
+          "score": 0.5543,
+          "evidence": []
+        },
+        {
+          "term": "hbv treatment",
+          "score": 0.5155,
+          "evidence": []
+        },
+        {
+          "term": "chronic hbv",
+          "score": 0.4474,
+          "evidence": []
+        },
+        {
+          "term": "testing",
+          "score": 0.4362,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prep containing",
+          "score": 0.407,
+          "evidence": []
+        },
+        {
+          "term": "active hbv",
+          "score": 0.347,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 32.1091,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 30.6203,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 29.1787,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 29.1761,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 25.6051,
+          "evidence": []
+        },
+        {
+          "term": "关注这一事实",
+          "score": 23.9721,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 21.0065,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-hepatitis-c-testing": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hcv rna",
+          "score": 2.8645,
+          "evidence": []
+        },
+        {
+          "term": "hcv infection",
+          "score": 2.8146,
+          "evidence": []
+        },
+        {
+          "term": "current hcv",
+          "score": 2.4187,
+          "evidence": []
+        },
+        {
+          "term": "hcv core",
+          "score": 2.3731,
+          "evidence": []
+        },
+        {
+          "term": "active hcv",
+          "score": 2.3347,
+          "evidence": []
+        },
+        {
+          "term": "anti-hcv",
+          "score": 1.7774,
+          "evidence": []
+        },
+        {
+          "term": "hbv infection",
+          "score": 1.6678,
+          "evidence": []
+        },
+        {
+          "term": "serological evidence",
+          "score": 1.6099,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hcv infection",
+          "score": 116.772,
+          "evidence": []
+        },
+        {
+          "term": "hcv rna",
+          "score": 105.3688,
+          "evidence": []
+        },
+        {
+          "term": "current hcv",
+          "score": 95.4229,
+          "evidence": []
+        },
+        {
+          "term": "hcv core",
+          "score": 91.9315,
+          "evidence": []
+        },
+        {
+          "term": "active hcv",
+          "score": 91.0146,
+          "evidence": []
+        },
+        {
+          "term": "anti-hcv",
+          "score": 51.5633,
+          "evidence": []
+        },
+        {
+          "term": "hbv infection",
+          "score": 43.6804,
+          "evidence": []
+        },
+        {
+          "term": "serological evidence",
+          "score": 33.8172,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hepatitis",
+          "score": 0.7558,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hcv infection",
+          "score": 0.6516,
+          "evidence": []
+        },
+        {
+          "term": "hbv infection",
+          "score": 0.6416,
+          "evidence": []
+        },
+        {
+          "term": "testing",
+          "score": 0.6025,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hcv rna",
+          "score": 0.4555,
+          "evidence": []
+        },
+        {
+          "term": "current hcv",
+          "score": 0.4288,
+          "evidence": []
+        },
+        {
+          "term": "hcv core",
+          "score": 0.4218,
+          "evidence": []
+        },
+        {
+          "term": "active hcv",
+          "score": 0.3769,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hcv infection",
+          "score": 47.0838,
+          "evidence": []
+        },
+        {
+          "term": "hbv infection",
+          "score": 41.16,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis",
+          "score": 38.4322,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hcv rna",
+          "score": 33.2448,
+          "evidence": []
+        },
+        {
+          "term": "hcv core",
+          "score": 32.9838,
+          "evidence": []
+        },
+        {
+          "term": "active hcv",
+          "score": 32.1606,
+          "evidence": []
+        },
+        {
+          "term": "current hcv",
+          "score": 32.1606,
+          "evidence": []
+        },
+        {
+          "term": "people",
+          "score": 13.4485,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hepatitis",
+          "score": 0.7558,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hcv infection",
+          "score": 0.6516,
+          "evidence": []
+        },
+        {
+          "term": "hbv infection",
+          "score": 0.6416,
+          "evidence": []
+        },
+        {
+          "term": "testing",
+          "score": 0.6025,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hcv rna",
+          "score": 0.4555,
+          "evidence": []
+        },
+        {
+          "term": "current hcv",
+          "score": 0.4288,
+          "evidence": []
+        },
+        {
+          "term": "hcv core",
+          "score": 0.4218,
+          "evidence": []
+        },
+        {
+          "term": "active hcv",
+          "score": 0.4061,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 38.3516,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 35.7209,
+          "evidence": []
+        },
+        {
+          "term": "经济方面",
+          "score": 30.826,
+          "evidence": []
+        },
+        {
+          "term": "政治利益",
+          "score": 30.0855,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 29.7333,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 29.5752,
+          "evidence": []
+        },
+        {
+          "term": "肺炎疫苗试验",
+          "score": 29.3154,
+          "evidence": []
+        },
+        {
+          "term": "关注这一事实",
+          "score": 28.8018,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-007-pregnancy-testing": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "pregnancy",
+          "score": 1.7205,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "chooses",
+          "score": 0.5429,
+          "evidence": []
+        },
+        {
+          "term": "prep",
+          "score": 0.5346,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "pregnancy",
+          "score": 35.1391,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prep",
+          "score": 7.3546,
+          "evidence": []
+        },
+        {
+          "term": "chooses",
+          "score": 7.0297,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pregnancy",
+          "score": 0.2736,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prep",
+          "score": 0.2055,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.185,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "prep",
+          "score": 6.8957,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy",
+          "score": 5.8812,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "women",
+          "score": 2.8532,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pregnancy",
+          "score": 0.2736,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prep",
+          "score": 0.2055,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.185,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 35.486,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 34.1393,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 29.6127,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-008-testing-for-sexually-transmitted-infections": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "sti screening",
+          "score": 1.026,
+          "evidence": []
+        },
+        {
+          "term": "infections",
+          "score": 0.8175,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "transmitted",
+          "score": 0.6385,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "sti screening",
+          "score": 15.297,
+          "evidence": []
+        },
+        {
+          "term": "infections",
+          "score": 11.3689,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prep",
+          "score": 7.3546,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "prep",
+          "score": 0.1735,
+          "evidence": []
+        },
+        {
+          "term": "sti screening",
+          "score": 0.1564,
+          "evidence": []
+        },
+        {
+          "term": "testing",
+          "score": 0.1552,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "prep",
+          "score": 6.8018,
+          "evidence": []
+        },
+        {
+          "term": "sti screening",
+          "score": 2.3562,
+          "evidence": []
+        },
+        {
+          "term": "testing",
+          "score": 1.8816,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "prep",
+          "score": 0.1735,
+          "evidence": []
+        },
+        {
+          "term": "sti screening",
+          "score": 0.1564,
+          "evidence": []
+        },
+        {
+          "term": "testing",
+          "score": 0.1552,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 23.3319,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 22.8843,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 21.3495,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-009-syphilis-testing": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "syphilis testing",
+          "score": 3.7853,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "treponemal assays",
+          "score": 2.2044,
+          "evidence": []
+        },
+        {
+          "term": "treponemal test",
+          "score": 2.0685,
+          "evidence": []
+        },
+        {
+          "term": "restarting prep",
+          "score": 1.947,
+          "evidence": []
+        },
+        {
+          "term": "syphilis prevalence",
+          "score": 1.6628,
+          "evidence": []
+        },
+        {
+          "term": "recommended syphilis",
+          "score": 1.6387,
+          "evidence": []
+        },
+        {
+          "term": "prep users",
+          "score": 1.5795,
+          "evidence": []
+        },
+        {
+          "term": "prep programmes",
+          "score": 1.5355,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "syphilis testing",
+          "score": 134.1868,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "syphilis test",
+          "score": 60.9436,
+          "evidence": []
+        },
+        {
+          "term": "treponemal assays",
+          "score": 57.5112,
+          "evidence": []
+        },
+        {
+          "term": "syphilis prevalence",
+          "score": 55.5522,
+          "evidence": []
+        },
+        {
+          "term": "recommended syphilis",
+          "score": 54.5931,
+          "evidence": []
+        },
+        {
+          "term": "restarting prep",
+          "score": 49.1792,
+          "evidence": []
+        },
+        {
+          "term": "prep programmes",
+          "score": 42.9648,
+          "evidence": []
+        },
+        {
+          "term": "prep users",
+          "score": 42.7068,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "syphilis testing",
+          "score": 1.3254,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "syphilis test",
+          "score": 0.5916,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 0.576,
+          "evidence": []
+        },
+        {
+          "term": "prep programmes",
+          "score": 0.5642,
+          "evidence": []
+        },
+        {
+          "term": "prep users",
+          "score": 0.5615,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.5178,
+          "evidence": []
+        },
+        {
+          "term": "restarting prep",
+          "score": 0.4937,
+          "evidence": []
+        },
+        {
+          "term": "national testing",
+          "score": 0.4744,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "prep users",
+          "score": 34.5049,
+          "evidence": []
+        },
+        {
+          "term": "prep programmes",
+          "score": 32.9434,
+          "evidence": []
+        },
+        {
+          "term": "restarting prep",
+          "score": 32.9434,
+          "evidence": []
+        },
+        {
+          "term": "syphilis testing",
+          "score": 24.978,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv",
+          "score": 11.5829,
+          "evidence": []
+        },
+        {
+          "term": "syphilis test",
+          "score": 11.5001,
+          "evidence": []
+        },
+        {
+          "term": "national testing",
+          "score": 9.3732,
+          "evidence": []
+        },
+        {
+          "term": "people starting",
+          "score": 9.1423,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "syphilis testing",
+          "score": 1.3254,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "syphilis test",
+          "score": 0.5916,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 0.576,
+          "evidence": []
+        },
+        {
+          "term": "prep programmes",
+          "score": 0.5642,
+          "evidence": []
+        },
+        {
+          "term": "prep users",
+          "score": 0.5615,
+          "evidence": []
+        },
+        {
+          "term": "restarting prep",
+          "score": 0.5237,
+          "evidence": []
+        },
+        {
+          "term": "national testing",
+          "score": 0.4744,
+          "evidence": []
+        },
+        {
+          "term": "testing procedures",
+          "score": 0.4267,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在一些国家",
+          "score": 25.4984,
+          "evidence": []
+        },
+        {
+          "term": "青少年",
+          "score": 25.4984,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 23.8454,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 22.6774,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 21.3601,
+          "evidence": []
+        },
+        {
+          "term": "政治利益",
+          "score": 21.3415,
+          "evidence": []
+        },
+        {
+          "term": "岁的女孩",
+          "score": 21.2729,
+          "evidence": []
+        },
+        {
+          "term": "服务的提供",
+          "score": 21.2729,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-010-who-prequalification-assessment-and-tools-for-te": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "pre-market assessment",
+          "score": 1.3245,
+          "evidence": []
+        },
+        {
+          "term": "ivds",
+          "score": 1.1944,
+          "evidence": []
+        },
+        {
+          "term": "prequalification",
+          "score": 0.9469,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "incorrect",
+          "score": 0.6779,
+          "evidence": []
+        },
+        {
+          "term": "vitro",
+          "score": 0.6254,
+          "evidence": []
+        },
+        {
+          "term": "hbv",
+          "score": 0.6137,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "ivds",
+          "score": 22.768,
+          "evidence": []
+        },
+        {
+          "term": "pre-market assessment",
+          "score": 20.8762,
+          "evidence": []
+        },
+        {
+          "term": "prequalification",
+          "score": 12.0624,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "incorrect",
+          "score": 10.8985,
+          "evidence": []
+        },
+        {
+          "term": "vitro",
+          "score": 10.1272,
+          "evidence": []
+        },
+        {
+          "term": "safety",
+          "score": 9.7857,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "testing",
+          "score": 0.1392,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "public health",
+          "score": 0.1373,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.0927,
+          "evidence": []
+        },
+        {
+          "term": "hbv",
+          "score": 0.0883,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.0798,
+          "evidence": []
+        },
+        {
+          "term": "infection",
+          "score": 0.0744,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "public health",
+          "score": 2.2075,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 1.8701,
+          "evidence": []
+        },
+        {
+          "term": "hcv",
+          "score": 1.8472,
+          "evidence": []
+        },
+        {
+          "term": "hbv",
+          "score": 1.7736,
+          "evidence": []
+        },
+        {
+          "term": "testing",
+          "score": 1.7028,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "infection",
+          "score": 1.3573,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "testing",
+          "score": 0.1392,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "public health",
+          "score": 0.1373,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.0927,
+          "evidence": []
+        },
+        {
+          "term": "hbv",
+          "score": 0.0883,
+          "evidence": []
+        },
+        {
+          "term": "risk",
+          "score": 0.0664,
+          "evidence": []
+        },
+        {
+          "term": "assessment",
+          "score": 0.0619,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 19.3156,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 19.3116,
+          "evidence": []
+        },
+        {
+          "term": "在紧急情",
+          "score": 14.5328,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 13.5633,
+          "evidence": []
+        },
+        {
+          "term": "最小化",
+          "score": 11.7149,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 10.9059,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-011-pre-market-assessment-of-in-vitro-diagnostics": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "prequalification",
+          "score": 0.9469,
+          "evidence": []
+        },
+        {
+          "term": "ivd",
+          "score": 0.9077,
+          "evidence": []
+        },
+        {
+          "term": "vitro",
+          "score": 0.7892,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "prequalification",
+          "score": 18.0936,
+          "evidence": []
+        },
+        {
+          "term": "ivd",
+          "score": 14.7324,
+          "evidence": []
+        },
+        {
+          "term": "assessment",
+          "score": 12.9337,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "assessment",
+          "score": 0.0738,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "data",
+          "score": 0.0705,
+          "evidence": []
+        },
+        {
+          "term": "product",
+          "score": 0.048,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "data",
+          "score": 1.1803,
+          "evidence": []
+        },
+        {
+          "term": "guideline",
+          "score": 0.5815,
+          "evidence": []
+        },
+        {
+          "term": "nfxnreq",
+          "score": 0.5455,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "assessment",
+          "score": 0.0738,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "product",
+          "score": 0.048,
+          "evidence": []
+        },
+        {
+          "term": "review",
+          "score": 0.0463,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 20.7068,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 13.6543,
+          "evidence": []
+        },
+        {
+          "term": "问题的讨论结束",
+          "score": 13.6543,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-012-post-market-surveillance-of-in-vitro-diagnostics": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "post-market surveillance",
+          "score": 4.3119,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vitro",
+          "score": 0.7892,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "problem",
+          "score": 0.6265,
+          "evidence": []
+        },
+        {
+          "term": "ivds",
+          "score": 0.5972,
+          "evidence": []
+        },
+        {
+          "term": "ivd",
+          "score": 0.5727,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "post-market surveillance",
+          "score": 106.8067,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "problem",
+          "score": 11.6641,
+          "evidence": []
+        },
+        {
+          "term": "vitro",
+          "score": 10.1272,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ivds",
+          "score": 7.5893,
+          "evidence": []
+        },
+        {
+          "term": "ivd",
+          "score": 7.3662,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "post-market surveillance",
+          "score": 0.111,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "data",
+          "score": 0.0867,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.0698,
+          "evidence": []
+        },
+        {
+          "term": "system",
+          "score": 0.0682,
+          "evidence": []
+        },
+        {
+          "term": "monitoring",
+          "score": 0.0644,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "data",
+          "score": 1.5759,
+          "evidence": []
+        },
+        {
+          "term": "post-market surveillance",
+          "score": 1.3785,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv",
+          "score": 1.1747,
+          "evidence": []
+        },
+        {
+          "term": "district",
+          "score": 0.8253,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.7481,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "post-market surveillance",
+          "score": 0.1171,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "system",
+          "score": 0.0682,
+          "evidence": []
+        },
+        {
+          "term": "testing",
+          "score": 0.0594,
+          "evidence": []
+        },
+        {
+          "term": "product",
+          "score": 0.0543,
+          "evidence": []
+        },
+        {
+          "term": "test",
+          "score": 0.0463,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 44.1584,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 31.5165,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 30.5781,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 24.1393,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 23.8924,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-013-references": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "preexposure prophylaxis",
+          "score": 2.6326,
+          "evidence": []
+        },
+        {
+          "term": "hiv preexposure",
+          "score": 2.412,
+          "evidence": []
+        },
+        {
+          "term": "pre-exposure prophylaxis",
+          "score": 2.1899,
+          "evidence": []
+        },
+        {
+          "term": "disoproxil fumarate",
+          "score": 1.9954,
+          "evidence": []
+        },
+        {
+          "term": "prophylaxis trial",
+          "score": 1.8482,
+          "evidence": []
+        },
+        {
+          "term": "tenofovir disoproxil",
+          "score": 1.8406,
+          "evidence": []
+        },
+        {
+          "term": "bitstream eng",
+          "score": 1.812,
+          "evidence": []
+        },
+        {
+          "term": "oral pre-exposure",
+          "score": 1.7869,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hiv preexposure",
+          "score": 87.6289,
+          "evidence": []
+        },
+        {
+          "term": "preexposure prophylaxis",
+          "score": 79.7765,
+          "evidence": []
+        },
+        {
+          "term": "hiv pre-exposure",
+          "score": 74.0168,
+          "evidence": []
+        },
+        {
+          "term": "acute hiv",
+          "score": 62.8185,
+          "evidence": []
+        },
+        {
+          "term": "int hiv",
+          "score": 62.1887,
+          "evidence": []
+        },
+        {
+          "term": "hiv drug",
+          "score": 61.8953,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 60.4262,
+          "evidence": []
+        },
+        {
+          "term": "hiv testing",
+          "score": 56.5429,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hiv infection",
+          "score": 1.2846,
+          "evidence": []
+        },
+        {
+          "term": "hiv testing",
+          "score": 1.1717,
+          "evidence": []
+        },
+        {
+          "term": "int hiv",
+          "score": 1.1651,
+          "evidence": []
+        },
+        {
+          "term": "hiv pre-exposure",
+          "score": 1.0535,
+          "evidence": []
+        },
+        {
+          "term": "hiv drug",
+          "score": 1.0265,
+          "evidence": []
+        },
+        {
+          "term": "infect dis",
+          "score": 0.91,
+          "evidence": []
+        },
+        {
+          "term": "hiv preexposure",
+          "score": 0.8876,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.8303,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hiv infection",
+          "score": 45.7456,
+          "evidence": []
+        },
+        {
+          "term": "hiv testing",
+          "score": 44.5936,
+          "evidence": []
+        },
+        {
+          "term": "int hiv",
+          "score": 44.2967,
+          "evidence": []
+        },
+        {
+          "term": "hiv pre-exposure",
+          "score": 40.949,
+          "evidence": []
+        },
+        {
+          "term": "hiv drug",
+          "score": 39.8944,
+          "evidence": []
+        },
+        {
+          "term": "hiv preexposure",
+          "score": 38.0771,
+          "evidence": []
+        },
+        {
+          "term": "acute hiv",
+          "score": 37.589,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 18.736,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hiv infection",
+          "score": 1.2846,
+          "evidence": []
+        },
+        {
+          "term": "hiv testing",
+          "score": 1.1717,
+          "evidence": []
+        },
+        {
+          "term": "int hiv",
+          "score": 1.1651,
+          "evidence": []
+        },
+        {
+          "term": "hiv pre-exposure",
+          "score": 1.0535,
+          "evidence": []
+        },
+        {
+          "term": "hiv drug",
+          "score": 1.0265,
+          "evidence": []
+        },
+        {
+          "term": "infect dis",
+          "score": 0.91,
+          "evidence": []
+        },
+        {
+          "term": "hiv preexposure",
+          "score": 0.8876,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.8303,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 106.3685,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 95.1489,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 80.1001,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 71.4424,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 64.6019,
+          "evidence": []
+        },
+        {
+          "term": "疫苗的",
+          "score": 59.7288,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 56.4719,
+          "evidence": []
+        },
+        {
+          "term": "的信息",
+          "score": 47.2314,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hepatitis testing",
+          "score": 1.2122,
+          "evidence": []
+        },
+        {
+          "term": "testing providers",
+          "score": 1.1771,
+          "evidence": []
+        },
+        {
+          "term": "creative commons",
+          "score": 1.1644,
+          "evidence": []
+        },
+        {
+          "term": "vitro diagnostics",
+          "score": 1.0654,
+          "evidence": []
+        },
+        {
+          "term": "testing services",
+          "score": 1.0361,
+          "evidence": []
+        },
+        {
+          "term": "suggested citation",
+          "score": 0.9785,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 0.9239,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.8313,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "testing providers",
+          "score": 28.9546,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis testing",
+          "score": 27.704,
+          "evidence": []
+        },
+        {
+          "term": "testing services",
+          "score": 25.9745,
+          "evidence": []
+        },
+        {
+          "term": "work",
+          "score": 21.706,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 21.2412,
+          "evidence": []
+        },
+        {
+          "term": "creative commons",
+          "score": 18.9498,
+          "evidence": []
+        },
+        {
+          "term": "vitro diagnostics",
+          "score": 16.8232,
+          "evidence": []
+        },
+        {
+          "term": "suggested citation",
+          "score": 15.5229,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "creative commons",
+          "score": 0.9919,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.9219,
+          "evidence": []
+        },
+        {
+          "term": "suggested citation",
+          "score": 0.8705,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.862,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 0.8149,
+          "evidence": []
+        },
+        {
+          "term": "material",
+          "score": 0.7379,
+          "evidence": []
+        },
+        {
+          "term": "igo",
+          "score": 0.6744,
+          "evidence": []
+        },
+        {
+          "term": "work",
+          "score": 0.6263,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "prep",
+          "score": 14.0647,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis testing",
+          "score": 13.9212,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 13.853,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 13.1439,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 10.8659,
+          "evidence": []
+        },
+        {
+          "term": "igo",
+          "score": 9.3585,
+          "evidence": []
+        },
+        {
+          "term": "wpv",
+          "score": 8.7183,
+          "evidence": []
+        },
+        {
+          "term": "by-nc-sa",
+          "score": 8.1104,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "creative commons",
+          "score": 0.9919,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.9219,
+          "evidence": []
+        },
+        {
+          "term": "suggested citation",
+          "score": 0.8705,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.862,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 0.8149,
+          "evidence": []
+        },
+        {
+          "term": "material",
+          "score": 0.7379,
+          "evidence": []
+        },
+        {
+          "term": "igo",
+          "score": 0.6744,
+          "evidence": []
+        },
+        {
+          "term": "work",
+          "score": 0.6263,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 205.4579,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 91.1444,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 83.4507,
+          "evidence": []
+        },
+        {
+          "term": "监督机制",
+          "score": 52.0725,
+          "evidence": []
+        },
+        {
+          "term": "可持续发展目标和世卫组织",
+          "score": 47.3132,
+          "evidence": []
+        },
+        {
+          "term": "区域和全球各",
+          "score": 45.6964,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 43.7155,
+          "evidence": []
+        },
+        {
+          "term": "法律上",
+          "score": 43.5154,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

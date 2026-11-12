@@ -1,0 +1,360 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_HumanAgentDiscussion",
+ "markers": [
+  {
+   "id": "A_DetermineContext",
+   "name": "Determine the context: what is known, and already decided",
+   "left": 12.31,
+   "top": 28.73,
+   "box": {
+    "left": 10.05,
+    "top": 41.6,
+    "width": 0.75,
+    "height": 3.25
+   }
+  },
+  {
+   "id": "A_DetermineRoles",
+   "name": "Determine the roles: which you act as, and the person's",
+   "left": 17.91,
+   "top": 28.73,
+   "box": {
+    "left": 15.65,
+    "top": 41.6,
+    "width": 0.75,
+    "height": 3.25
+   }
+  },
+  {
+   "id": "A_DetermineProcess",
+   "name": "Determine the process and task, or that you are idle",
+   "left": 23.52,
+   "top": 28.73,
+   "box": {
+    "left": 21.26,
+    "top": 41.6,
+    "width": 0.75,
+    "height": 3.25
+   }
+  },
+  {
+   "id": "A_AskUndeterminedFirst",
+   "name": "Ask first about what could not be determined",
+   "left": 30.69,
+   "top": 51.76,
+   "box": {
+    "left": 28.43,
+    "top": 64.63,
+    "width": 0.75,
+    "height": 3.25
+   }
+  },
+  {
+   "id": "A_GiveContext",
+   "name": "Say what is being decided, and why it matters now",
+   "left": 37.85,
+   "top": 28.73,
+   "box": {
+    "left": 35.59,
+    "top": 41.6,
+    "width": 0.75,
+    "height": 3.25
+   }
+  },
+  {
+   "id": "A_LayOutOptions",
+   "name": "Lay out the options, with what each costs",
+   "left": 43.46,
+   "top": 28.73,
+   "box": {
+    "left": 41.2,
+    "top": 41.6,
+    "width": 0.75,
+    "height": 3.25
+   }
+  },
+  {
+   "id": "A_Recommend",
+   "name": "Recommend one, and say what happens with no answer",
+   "left": 49.07,
+   "top": 28.73,
+   "box": {
+    "left": 46.81,
+    "top": 41.6,
+    "width": 0.75,
+    "height": 3.25
+   }
+  },
+  {
+   "id": "A_PutQuestion",
+   "name": "Ask ONE question",
+   "left": 54.67,
+   "top": 28.73,
+   "box": {
+    "left": 52.41,
+    "top": 41.6,
+    "width": 0.75,
+    "height": 3.25
+   }
+  },
+  {
+   "id": "A_Answer",
+   "name": "Answer, decline, or say nothing",
+   "left": 60.28,
+   "top": 78.05,
+   "box": {
+    "left": 58.02,
+    "top": 90.92,
+    "width": 0.75,
+    "height": 3.25
+   }
+  },
+  {
+   "id": "A_FollowUp",
+   "name": "Follow up, narrower",
+   "left": 67.45,
+   "top": 51.76,
+   "box": {
+    "left": 65.19,
+    "top": 64.63,
+    "width": 0.75,
+    "height": 3.25
+   }
+  },
+  {
+   "id": "A_RecordAnswer",
+   "name": "Record the answer, and who gave it",
+   "left": 83.33,
+   "top": 28.73,
+   "box": {
+    "left": 81.07,
+    "top": 41.6,
+    "width": 0.75,
+    "height": 3.25
+   }
+  },
+  {
+   "id": "A_ApplyDefault",
+   "name": "Apply the stated default, and say so",
+   "left": 83.33,
+   "top": 5.69,
+   "box": {
+    "left": 81.07,
+    "top": 18.56,
+    "width": 0.75,
+    "height": 3.25
+   }
+  },
+  {
+   "id": "A_RecordUnsettled",
+   "name": "Record what is still open",
+   "left": 83.33,
+   "top": 51.76,
+   "box": {
+    "left": 81.07,
+    "top": 64.63,
+    "width": 0.75,
+    "height": 3.25
+   }
+  }
+ ],
+ "processHref": "human-agent-discussion.html",
+ "tasks": {
+  "A_DetermineContext": {
+   "id": "A_DetermineContext",
+   "name": "Determine the context: what is known, and already decided",
+   "type": "bpmn:Task",
+   "stepHref": "human-agent-discussion.html#step-A_DetermineContext",
+   "lane": "Agent",
+   "laneHref": "human-agent-discussion.html#lane-Lane_Agent",
+   "skills": [
+    {
+     "name": "human-agent-discussion",
+     "href": "../../../en/cat-harness/processes/skills/human-agent-discussion.html"
+    }
+   ],
+   "binding": "variable"
+  },
+  "A_DetermineRoles": {
+   "id": "A_DetermineRoles",
+   "name": "Determine the roles: which you act as, and the person's",
+   "type": "bpmn:Task",
+   "stepHref": "human-agent-discussion.html#step-A_DetermineRoles",
+   "lane": "Agent",
+   "laneHref": "human-agent-discussion.html#lane-Lane_Agent",
+   "skills": [
+    {
+     "name": "human-agent-discussion",
+     "href": "../../../en/cat-harness/processes/skills/human-agent-discussion.html"
+    }
+   ],
+   "binding": "variable"
+  },
+  "A_DetermineProcess": {
+   "id": "A_DetermineProcess",
+   "name": "Determine the process and task, or that you are idle",
+   "type": "bpmn:Task",
+   "stepHref": "human-agent-discussion.html#step-A_DetermineProcess",
+   "lane": "Agent",
+   "laneHref": "human-agent-discussion.html#lane-Lane_Agent",
+   "skills": [
+    {
+     "name": "human-agent-discussion",
+     "href": "../../../en/cat-harness/processes/skills/human-agent-discussion.html"
+    }
+   ],
+   "binding": "variable"
+  },
+  "A_AskUndeterminedFirst": {
+   "id": "A_AskUndeterminedFirst",
+   "name": "Ask first about what could not be determined",
+   "type": "bpmn:Task",
+   "stepHref": "human-agent-discussion.html#step-A_AskUndeterminedFirst",
+   "lane": "Agent",
+   "laneHref": "human-agent-discussion.html#lane-Lane_Agent",
+   "skills": [
+    {
+     "name": "human-agent-discussion",
+     "href": "../../../en/cat-harness/processes/skills/human-agent-discussion.html"
+    }
+   ],
+   "binding": "variable"
+  },
+  "A_GiveContext": {
+   "id": "A_GiveContext",
+   "name": "Say what is being decided, and why it matters now",
+   "type": "bpmn:Task",
+   "stepHref": "human-agent-discussion.html#step-A_GiveContext",
+   "lane": "Agent",
+   "laneHref": "human-agent-discussion.html#lane-Lane_Agent",
+   "skills": [
+    {
+     "name": "human-agent-discussion",
+     "href": "../../../en/cat-harness/processes/skills/human-agent-discussion.html"
+    }
+   ],
+   "binding": "variable"
+  },
+  "A_LayOutOptions": {
+   "id": "A_LayOutOptions",
+   "name": "Lay out the options, with what each costs",
+   "type": "bpmn:Task",
+   "stepHref": "human-agent-discussion.html#step-A_LayOutOptions",
+   "lane": "Agent",
+   "laneHref": "human-agent-discussion.html#lane-Lane_Agent",
+   "skills": [
+    {
+     "name": "human-agent-discussion",
+     "href": "../../../en/cat-harness/processes/skills/human-agent-discussion.html"
+    }
+   ],
+   "binding": "variable"
+  },
+  "A_Recommend": {
+   "id": "A_Recommend",
+   "name": "Recommend one, and say what happens with no answer",
+   "type": "bpmn:Task",
+   "stepHref": "human-agent-discussion.html#step-A_Recommend",
+   "lane": "Agent",
+   "laneHref": "human-agent-discussion.html#lane-Lane_Agent",
+   "skills": [
+    {
+     "name": "human-agent-discussion",
+     "href": "../../../en/cat-harness/processes/skills/human-agent-discussion.html"
+    }
+   ],
+   "binding": "variable"
+  },
+  "A_PutQuestion": {
+   "id": "A_PutQuestion",
+   "name": "Ask ONE question",
+   "type": "bpmn:Task",
+   "stepHref": "human-agent-discussion.html#step-A_PutQuestion",
+   "lane": "Agent",
+   "laneHref": "human-agent-discussion.html#lane-Lane_Agent",
+   "skills": [
+    {
+     "name": "human-agent-discussion",
+     "href": "../../../en/cat-harness/processes/skills/human-agent-discussion.html"
+    }
+   ],
+   "binding": "variable"
+  },
+  "A_Answer": {
+   "id": "A_Answer",
+   "name": "Answer, decline, or say nothing",
+   "type": "bpmn:UserTask",
+   "stepHref": "human-agent-discussion.html#step-A_Answer",
+   "lane": "Requestor",
+   "laneHref": "human-agent-discussion.html#lane-Lane_Requestor",
+   "skills": [],
+   "role": {
+    "name": "requestor",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-bootstrap-scenarios-roles-json-requestor",
+    "title": "Requestor",
+    "skills": []
+   }
+  },
+  "A_FollowUp": {
+   "id": "A_FollowUp",
+   "name": "Follow up, narrower",
+   "type": "bpmn:Task",
+   "stepHref": "human-agent-discussion.html#step-A_FollowUp",
+   "lane": "Agent",
+   "laneHref": "human-agent-discussion.html#lane-Lane_Agent",
+   "skills": [
+    {
+     "name": "human-agent-discussion",
+     "href": "../../../en/cat-harness/processes/skills/human-agent-discussion.html"
+    }
+   ],
+   "binding": "variable"
+  },
+  "A_RecordAnswer": {
+   "id": "A_RecordAnswer",
+   "name": "Record the answer, and who gave it",
+   "type": "bpmn:Task",
+   "stepHref": "human-agent-discussion.html#step-A_RecordAnswer",
+   "lane": "Agent",
+   "laneHref": "human-agent-discussion.html#lane-Lane_Agent",
+   "skills": [
+    {
+     "name": "human-agent-discussion",
+     "href": "../../../en/cat-harness/processes/skills/human-agent-discussion.html"
+    }
+   ],
+   "binding": "variable"
+  },
+  "A_ApplyDefault": {
+   "id": "A_ApplyDefault",
+   "name": "Apply the stated default, and say so",
+   "type": "bpmn:Task",
+   "stepHref": "human-agent-discussion.html#step-A_ApplyDefault",
+   "lane": "Agent",
+   "laneHref": "human-agent-discussion.html#lane-Lane_Agent",
+   "skills": [
+    {
+     "name": "human-agent-discussion",
+     "href": "../../../en/cat-harness/processes/skills/human-agent-discussion.html"
+    }
+   ],
+   "binding": "variable"
+  },
+  "A_RecordUnsettled": {
+   "id": "A_RecordUnsettled",
+   "name": "Record what is still open",
+   "type": "bpmn:Task",
+   "stepHref": "human-agent-discussion.html#step-A_RecordUnsettled",
+   "lane": "Agent",
+   "laneHref": "human-agent-discussion.html#lane-Lane_Agent",
+   "skills": [
+    {
+     "name": "human-agent-discussion",
+     "href": "../../../en/cat-harness/processes/skills/human-agent-discussion.html"
+    }
+   ],
+   "binding": "variable"
+  }
+ }
+}

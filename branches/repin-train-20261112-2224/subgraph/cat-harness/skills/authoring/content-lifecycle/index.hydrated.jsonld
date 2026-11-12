@@ -1,0 +1,153 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/authoring/content-lifecycle/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/package/content-lifecycle",
+      "@type": "cat-harness:SkillPackage",
+      "declaresSkill": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-feedback",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-review",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-test",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-validate",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/evidence-appraisal",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/feedback-deep-links"
+      ],
+      "description": "General content lifecycle methods the harness's own processes call: validate, review, test and feedback. Planning, authoring, publication and retirement are operational and belong to the content layer above (content split step 1).",
+      "hasManifest": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+      "name": "content-lifecycle",
+      "path": "skills/authoring/content-lifecycle",
+      "providesCapability": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/capability/git-push",
+        "https://litlfred.github.io/folio-assistant/cat-harness/capability/python3",
+        "https://litlfred.github.io/folio-assistant/cat-harness/capability/node-runtime"
+      ],
+      "version": "0.1.0"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-feedback",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "hasIOContract": true,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/content-lifecycle",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+      "inputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/content-feedback/input.schema.json",
+      "instructionLines": 45,
+      "instructionsPath": "skills/authoring/content-lifecycle/content-feedback.md",
+      "name": "content-feedback",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/content-feedback/output.schema.json",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/76dd538a15cba2be2b0b572c7b67df568fbe28cabc22d8f995f8a819aada7fea",
+        "bytes": 1504,
+        "sha256": "76dd538a15cba2be2b0b572c7b67df568fbe28cabc22d8f995f8a819aada7fea"
+      },
+      "title": "Content Feedback Collection"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-review",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "hasIOContract": true,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/content-lifecycle",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+      "inputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/content-review/input.schema.json",
+      "instructionLines": 54,
+      "instructionsPath": "skills/authoring/content-lifecycle/content-review.md",
+      "name": "content-review",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/content-review/output.schema.json",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ba1cf17f26aeca738333b1ae5a4dd5764588fa240c50eaad77cd76c76614224d",
+        "bytes": 2270,
+        "sha256": "ba1cf17f26aeca738333b1ae5a4dd5764588fa240c50eaad77cd76c76614224d"
+      },
+      "title": "Content Review"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-test",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "hasIOContract": true,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/content-lifecycle",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+      "inputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/content-test/input.schema.json",
+      "instructionLines": 90,
+      "instructionsPath": "skills/authoring/content-lifecycle/content-test.md",
+      "name": "content-test",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/content-test/output.schema.json",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c643c78de13679b7187c9fe0cc38f989510e7ec0f8b5326491b5acc89b534bb7",
+        "bytes": 3690,
+        "sha256": "c643c78de13679b7187c9fe0cc38f989510e7ec0f8b5326491b5acc89b534bb7"
+      },
+      "title": "Content Testing"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-validate",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "hasIOContract": true,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/content-lifecycle",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+      "inputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/content-validate/input.schema.json",
+      "instructionLines": 33,
+      "instructionsPath": "skills/authoring/content-lifecycle/content-validate.md",
+      "name": "content-validate",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/content-validate/output.schema.json",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c142908bd8ffa7687fc0ec2a634241a95a94529b6637fd9cb19cdbb28cb85720",
+        "bytes": 1025,
+        "sha256": "c142908bd8ffa7687fc0ec2a634241a95a94529b6637fd9cb19cdbb28cb85720"
+      },
+      "title": "Content Validation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/evidence-appraisal",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/content-lifecycle",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+      "instructionLines": 82,
+      "instructionsPath": "skills/authoring/content-lifecycle/evidence-appraisal.md",
+      "name": "evidence-appraisal",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e137085e8d376a74ce357aa5ac14db7185c7fe9a6e16715ec75bbc6666178fbc",
+        "bytes": 3616,
+        "sha256": "e137085e8d376a74ce357aa5ac14db7185c7fe9a6e16715ec75bbc6666178fbc"
+      },
+      "title": "Evidence Appraisal"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/feedback-deep-links",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "The deep-link rule for every request for feedback, review, sign-off or acceptance on something rendered: carry the staging preview, one deep link per changed page with the same page on main, pages taken from the change rather than chosen, the third state said rather than hidden, and the request placed where the person will look.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/content-lifecycle",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+      "instructionLines": 56,
+      "instructionsPath": "skills/authoring/content-lifecycle/feedback-deep-links.md",
+      "name": "feedback-deep-links",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/767ad16637eadddc331c0aa799104bf2b21bf200fa8986f110e5db1702a9822a",
+        "bytes": 3423,
+        "sha256": "767ad16637eadddc331c0aa799104bf2b21bf200fa8986f110e5db1702a9822a"
+      },
+      "title": "The deep-link rule — every request for feedback"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills/authoring/content-lifecycle",
+  "path": "skills/authoring/content-lifecycle/"
+}

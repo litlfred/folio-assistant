@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/cat-harness/skill/todo-manager.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261112-2224",
+    "sha": "3e37e836b465d957673f4090b94c606b5427ca33",
+    "pr": "repin-train/20261112-2224",
+    "run": "43319926452"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/cat-harness/skill/todo-manager",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "todo-manager",
+      "title": "Session Task Manager (`beans`)",
+      "description": "Maintain and display work-in-progress task lists using the `beans` CLI issue tracker. Track implementation progress, open tasks, missing artifacts, and blocked items across a session.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/cat-harness/package/work-plan"
+      ],
+      "instructionsPath": "work-plan/skills/work-plan/todo-manager.md",
+      "instructionLines": 700,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/cat-harness/directory/work-plan",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/todo-manager"
+    }
+  ]
+}

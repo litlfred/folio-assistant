@@ -1,0 +1,180 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "PHW.J",
+ "markers": [
+  {
+   "id": "PHW.J.1",
+   "name": "J1. Inform the holder and ask for consent to issue",
+   "left": 19.65,
+   "top": 39.86,
+   "box": {
+    "left": 16.04,
+    "top": 55.91,
+    "width": 1.19,
+    "height": 4.05
+   }
+  },
+  {
+   "id": "PHW.J.2",
+   "name": "J2. Collect the data the certificate profile needs",
+   "left": 42.54,
+   "top": 39.86,
+   "box": {
+    "left": 38.93,
+    "top": 55.91,
+    "width": 1.19,
+    "height": 4.05
+   }
+  },
+  {
+   "id": "PHW.J.3",
+   "name": "J3. Issue and sign the certificate",
+   "left": 60.45,
+   "top": 72.64,
+   "box": {
+    "left": 56.84,
+    "top": 88.68,
+    "width": 1.19,
+    "height": 4.05
+   }
+  },
+  {
+   "id": "PHW.J.4",
+   "name": "J4. Issue a consent-backed VHL (process B)",
+   "left": 69.4,
+   "top": 72.64,
+   "box": {
+    "left": 65.8,
+    "top": 88.68,
+    "width": 1.19,
+    "height": 4.05
+   }
+  },
+  {
+   "id": "PHW.J.5",
+   "name": "J5. Generate the QR code",
+   "left": 78.36,
+   "top": 72.64,
+   "box": {
+    "left": 74.75,
+    "top": 88.68,
+    "width": 1.19,
+    "height": 4.05
+   }
+  },
+  {
+   "id": "PHW.J.6",
+   "name": "J6. Receive the certificate in the wallet",
+   "left": 87.31,
+   "top": 7.09,
+   "box": {
+    "left": 83.71,
+    "top": 23.14,
+    "width": 1.19,
+    "height": 4.05
+   }
+  },
+  {
+   "id": "PHW.J.2a",
+   "name": "J2a. Add the consent directives to the certificate (process M, optional)",
+   "left": 51.49,
+   "top": 72.64,
+   "box": {
+    "left": 47.89,
+    "top": 88.68,
+    "width": 1.19,
+    "height": 4.05
+   }
+  }
+ ],
+ "processHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.J",
+ "tasks": {
+  "PHW.J.1": {
+   "id": "PHW.J.1",
+   "name": "J1. Inform the holder and ask for consent to issue",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.J/node/PHW.J.1",
+   "stepHref": "PHW.J.html#step-PHW.J.1",
+   "lane": "Certificate Issuer (health worker or issuing system)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.J/lane/PHW.Lane.Issuer",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.J.2": {
+   "id": "PHW.J.2",
+   "name": "J2. Collect the data the certificate profile needs",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.J/node/PHW.J.2",
+   "stepHref": "PHW.J.html#step-PHW.J.2",
+   "lane": "Certificate Issuer (health worker or issuing system)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.J/lane/PHW.Lane.Issuer",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.J.3": {
+   "id": "PHW.J.3",
+   "name": "J3. Issue and sign the certificate",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.J/node/PHW.J.3",
+   "stepHref": "PHW.J.html#step-PHW.J.3",
+   "lane": "Certificate Issuance Service",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.J/lane/PHW.Lane.IssuanceService",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.J.4": {
+   "id": "PHW.J.4",
+   "name": "J4. Issue a consent-backed VHL (process B)",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.J/node/PHW.J.4",
+   "stepHref": "PHW.J.html#step-PHW.J.4",
+   "lane": "Certificate Issuance Service",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.J/lane/PHW.Lane.IssuanceService",
+   "skills": [],
+   "calls": {
+    "name": "B. Issue Consent-Backed Verifiable Health Link",
+    "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.B",
+    "diagram": "PHW.B.html"
+   },
+   "binding": "unbound"
+  },
+  "PHW.J.5": {
+   "id": "PHW.J.5",
+   "name": "J5. Generate the QR code",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.J/node/PHW.J.5",
+   "stepHref": "PHW.J.html#step-PHW.J.5",
+   "lane": "Certificate Issuance Service",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.J/lane/PHW.Lane.IssuanceService",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.J.6": {
+   "id": "PHW.J.6",
+   "name": "J6. Receive the certificate in the wallet",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.J/node/PHW.J.6",
+   "stepHref": "PHW.J.html#step-PHW.J.6",
+   "lane": "Certificate Holder (person / Personal Health Wallet)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.J/lane/PHW.Lane.Holder",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.J.2a": {
+   "id": "PHW.J.2a",
+   "name": "J2a. Add the consent directives to the certificate (process M, optional)",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.J/node/PHW.J.2a",
+   "stepHref": "PHW.J.html#step-PHW.J.2a",
+   "lane": "Certificate Issuance Service",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.J/lane/PHW.Lane.IssuanceService",
+   "skills": [],
+   "calls": {
+    "name": "M. Add Consent Directives to a Shared or Issued Document",
+    "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.M",
+    "diagram": "PHW.M.html"
+   },
+   "binding": "unbound"
+  }
+ }
+}

@@ -1,0 +1,938 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-371662",
+  "instance": "who-iris",
+  "about": "library/10665-371662",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7908,
+    "terms": 73102
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "wpv cvdpv",
+        "score": 14.3176,
+        "evidence": []
+      },
+      {
+        "term": "wpv vdpv",
+        "score": 11.6939,
+        "evidence": []
+      },
+      {
+        "term": "until dec",
+        "score": 11.6602,
+        "evidence": []
+      },
+      {
+        "term": "poliovirus cvdpv",
+        "score": 11.3493,
+        "evidence": []
+      },
+      {
+        "term": "mopv nopv",
+        "score": 11.0459,
+        "evidence": []
+      },
+      {
+        "term": "wpv circulation",
+        "score": 10.8351,
+        "evidence": []
+      },
+      {
+        "term": "dec jul",
+        "score": 10.6574,
+        "evidence": []
+      },
+      {
+        "term": "opv nopv",
+        "score": 10.631,
+        "evidence": []
+      },
+      {
+        "term": "dec jan",
+        "score": 10.49,
+        "evidence": []
+      },
+      {
+        "term": "nopv sabin",
+        "score": 10.0226,
+        "evidence": []
+      },
+      {
+        "term": "nopv sias",
+        "score": 9.6876,
+        "evidence": []
+      },
+      {
+        "term": "topv sias",
+        "score": 9.5664,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "until dec",
+        "score": 5774.0214,
+        "evidence": []
+      },
+      {
+        "term": "dec jan",
+        "score": 4620.7561,
+        "evidence": []
+      },
+      {
+        "term": "dec jul",
+        "score": 4536.3122,
+        "evidence": []
+      },
+      {
+        "term": "sep dec",
+        "score": 3730.6967,
+        "evidence": []
+      },
+      {
+        "term": "dec jun",
+        "score": 3678.0299,
+        "evidence": []
+      },
+      {
+        "term": "dec oct",
+        "score": 3665.6383,
+        "evidence": []
+      },
+      {
+        "term": "dec nov",
+        "score": 3647.6708,
+        "evidence": []
+      },
+      {
+        "term": "dec mopv",
+        "score": 3635.6661,
+        "evidence": []
+      },
+      {
+        "term": "aug dec",
+        "score": 3614.6988,
+        "evidence": []
+      },
+      {
+        "term": "dec feb",
+        "score": 3592.1815,
+        "evidence": []
+      },
+      {
+        "term": "dec estimated",
+        "score": 3441.6352,
+        "evidence": []
+      },
+      {
+        "term": "until mar",
+        "score": 2909.561,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "until dec",
+        "score": 12.9958,
+        "evidence": []
+      },
+      {
+        "term": "dec jan",
+        "score": 12.9773,
+        "evidence": []
+      },
+      {
+        "term": "dec jul",
+        "score": 12.8827,
+        "evidence": []
+      },
+      {
+        "term": "sep dec",
+        "score": 11.5056,
+        "evidence": []
+      },
+      {
+        "term": "dec jun",
+        "score": 11.1567,
+        "evidence": []
+      },
+      {
+        "term": "dec nov",
+        "score": 11.146,
+        "evidence": []
+      },
+      {
+        "term": "dec oct",
+        "score": 11.0923,
+        "evidence": []
+      },
+      {
+        "term": "dec mopv",
+        "score": 11.0918,
+        "evidence": []
+      },
+      {
+        "term": "aug dec",
+        "score": 10.9989,
+        "evidence": []
+      },
+      {
+        "term": "dec feb",
+        "score": 10.8665,
+        "evidence": []
+      },
+      {
+        "term": "until mar",
+        "score": 10.0946,
+        "evidence": []
+      },
+      {
+        "term": "until apr",
+        "score": 10.0167,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "until dec",
+        "score": 5790.9884,
+        "evidence": []
+      },
+      {
+        "term": "dec jan",
+        "score": 4633.7881,
+        "evidence": []
+      },
+      {
+        "term": "dec jul",
+        "score": 4549.0071,
+        "evidence": []
+      },
+      {
+        "term": "sep dec",
+        "score": 3740.9493,
+        "evidence": []
+      },
+      {
+        "term": "dec jun",
+        "score": 3688.1178,
+        "evidence": []
+      },
+      {
+        "term": "dec oct",
+        "score": 3675.1725,
+        "evidence": []
+      },
+      {
+        "term": "dec nov",
+        "score": 3657.5011,
+        "evidence": []
+      },
+      {
+        "term": "dec mopv",
+        "score": 3641.3987,
+        "evidence": []
+      },
+      {
+        "term": "aug dec",
+        "score": 3623.6676,
+        "evidence": []
+      },
+      {
+        "term": "dec feb",
+        "score": 3602.0683,
+        "evidence": []
+      },
+      {
+        "term": "dec estimated",
+        "score": 3451.8533,
+        "evidence": []
+      },
+      {
+        "term": "until mar",
+        "score": 2917.3679,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "until dec",
+        "score": 12.9958,
+        "evidence": []
+      },
+      {
+        "term": "dec jan",
+        "score": 12.9773,
+        "evidence": []
+      },
+      {
+        "term": "dec jul",
+        "score": 12.8827,
+        "evidence": []
+      },
+      {
+        "term": "sep dec",
+        "score": 11.5056,
+        "evidence": []
+      },
+      {
+        "term": "dec jun",
+        "score": 11.1567,
+        "evidence": []
+      },
+      {
+        "term": "dec nov",
+        "score": 11.146,
+        "evidence": []
+      },
+      {
+        "term": "dec oct",
+        "score": 11.0923,
+        "evidence": []
+      },
+      {
+        "term": "dec mopv",
+        "score": 11.0918,
+        "evidence": []
+      },
+      {
+        "term": "aug dec",
+        "score": 10.9989,
+        "evidence": []
+      },
+      {
+        "term": "dec feb",
+        "score": 10.8665,
+        "evidence": []
+      },
+      {
+        "term": "until mar",
+        "score": 10.0946,
+        "evidence": []
+      },
+      {
+        "term": "until apr",
+        "score": 10.0167,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "dec mopv",
+        "score": 860.714,
+        "evidence": []
+      },
+      {
+        "term": "jul mopv",
+        "score": 832.7367,
+        "evidence": []
+      },
+      {
+        "term": "科研人员",
+        "score": 826.7986,
+        "evidence": []
+      },
+      {
+        "term": "并提供一",
+        "score": 787.6207,
+        "evidence": []
+      },
+      {
+        "term": "mopv nopv",
+        "score": 778.6865,
+        "evidence": []
+      },
+      {
+        "term": "dec jan",
+        "score": 774.8201,
+        "evidence": []
+      },
+      {
+        "term": "sep mopv",
+        "score": 769.0575,
+        "evidence": []
+      },
+      {
+        "term": "until dec",
+        "score": 751.239,
+        "evidence": []
+      },
+      {
+        "term": "wpv vdpv",
+        "score": 745.1437,
+        "evidence": []
+      },
+      {
+        "term": "mopv sias",
+        "score": 728.7964,
+        "evidence": []
+      },
+      {
+        "term": "topv sias",
+        "score": 707.7078,
+        "evidence": []
+      },
+      {
+        "term": "dec jun",
+        "score": 702.1605,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-table-a21-country--and-area-specific-poliovirus": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "until dec",
+          "score": 10.8275,
+          "evidence": []
+        },
+        {
+          "term": "dec jul",
+          "score": 10.6574,
+          "evidence": []
+        },
+        {
+          "term": "dec jan",
+          "score": 10.49,
+          "evidence": []
+        },
+        {
+          "term": "sep dec",
+          "score": 9.425,
+          "evidence": []
+        },
+        {
+          "term": "dec mopv",
+          "score": 9.3799,
+          "evidence": []
+        },
+        {
+          "term": "dec jun",
+          "score": 9.1366,
+          "evidence": []
+        },
+        {
+          "term": "dec oct",
+          "score": 9.0843,
+          "evidence": []
+        },
+        {
+          "term": "dec nov",
+          "score": 9.0169,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "until dec",
+          "score": 5766.6162,
+          "evidence": []
+        },
+        {
+          "term": "dec jan",
+          "score": 4620.7561,
+          "evidence": []
+        },
+        {
+          "term": "dec jul",
+          "score": 4536.3122,
+          "evidence": []
+        },
+        {
+          "term": "sep dec",
+          "score": 3730.6967,
+          "evidence": []
+        },
+        {
+          "term": "dec jun",
+          "score": 3678.0299,
+          "evidence": []
+        },
+        {
+          "term": "dec oct",
+          "score": 3665.6383,
+          "evidence": []
+        },
+        {
+          "term": "dec nov",
+          "score": 3647.6708,
+          "evidence": []
+        },
+        {
+          "term": "aug dec",
+          "score": 3614.6988,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "dec jan",
+          "score": 10.6273,
+          "evidence": []
+        },
+        {
+          "term": "dec jul",
+          "score": 10.5424,
+          "evidence": []
+        },
+        {
+          "term": "until dec",
+          "score": 10.4219,
+          "evidence": []
+        },
+        {
+          "term": "sep dec",
+          "score": 9.4161,
+          "evidence": []
+        },
+        {
+          "term": "dec jun",
+          "score": 9.1522,
+          "evidence": []
+        },
+        {
+          "term": "dec nov",
+          "score": 9.1375,
+          "evidence": []
+        },
+        {
+          "term": "dec oct",
+          "score": 9.1004,
+          "evidence": []
+        },
+        {
+          "term": "aug dec",
+          "score": 9.0233,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "until dec",
+          "score": 5764.4685,
+          "evidence": []
+        },
+        {
+          "term": "dec jan",
+          "score": 4621.1854,
+          "evidence": []
+        },
+        {
+          "term": "dec jul",
+          "score": 4535.8939,
+          "evidence": []
+        },
+        {
+          "term": "sep dec",
+          "score": 3730.6497,
+          "evidence": []
+        },
+        {
+          "term": "dec jun",
+          "score": 3678.205,
+          "evidence": []
+        },
+        {
+          "term": "dec oct",
+          "score": 3665.5839,
+          "evidence": []
+        },
+        {
+          "term": "dec nov",
+          "score": 3647.8225,
+          "evidence": []
+        },
+        {
+          "term": "aug dec",
+          "score": 3615.2913,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "dec jan",
+          "score": 10.6273,
+          "evidence": []
+        },
+        {
+          "term": "dec jul",
+          "score": 10.5424,
+          "evidence": []
+        },
+        {
+          "term": "until dec",
+          "score": 10.4219,
+          "evidence": []
+        },
+        {
+          "term": "sep dec",
+          "score": 9.4161,
+          "evidence": []
+        },
+        {
+          "term": "dec jun",
+          "score": 9.1522,
+          "evidence": []
+        },
+        {
+          "term": "dec nov",
+          "score": 9.1375,
+          "evidence": []
+        },
+        {
+          "term": "dec oct",
+          "score": 9.1004,
+          "evidence": []
+        },
+        {
+          "term": "aug dec",
+          "score": 9.0233,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "dec mopv",
+          "score": 698.3107,
+          "evidence": []
+        },
+        {
+          "term": "jul mopv",
+          "score": 675.6229,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 669.0634,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 647.1984,
+          "evidence": []
+        },
+        {
+          "term": "dec jan",
+          "score": 628.6742,
+          "evidence": []
+        },
+        {
+          "term": "sep mopv",
+          "score": 623.9395,
+          "evidence": []
+        },
+        {
+          "term": "until dec",
+          "score": 609.4294,
+          "evidence": []
+        },
+        {
+          "term": "wpv vdpv",
+          "score": 604.3119,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "wpv cvdpv",
+          "score": 6.7514,
+          "evidence": []
+        },
+        {
+          "term": "wpv circulation",
+          "score": 5.5683,
+          "evidence": []
+        },
+        {
+          "term": "poliovirus cvdpv",
+          "score": 5.4528,
+          "evidence": []
+        },
+        {
+          "term": "opv nopv",
+          "score": 5.0007,
+          "evidence": []
+        },
+        {
+          "term": "wpv vdpv",
+          "score": 4.9736,
+          "evidence": []
+        },
+        {
+          "term": "nopv sabin",
+          "score": 4.7993,
+          "evidence": []
+        },
+        {
+          "term": "cvdpv column",
+          "score": 4.683,
+          "evidence": []
+        },
+        {
+          "term": "indigenous wpv",
+          "score": 4.6689,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "wpv cvdpv",
+          "score": 642.9631,
+          "evidence": []
+        },
+        {
+          "term": "wpv circulation",
+          "score": 500.8121,
+          "evidence": []
+        },
+        {
+          "term": "wpv vdpv",
+          "score": 447.2541,
+          "evidence": []
+        },
+        {
+          "term": "indigenous wpv",
+          "score": 444.5732,
+          "evidence": []
+        },
+        {
+          "term": "poliovirus cvdpv",
+          "score": 439.9689,
+          "evidence": []
+        },
+        {
+          "term": "poliovirus containment",
+          "score": 329.9759,
+          "evidence": []
+        },
+        {
+          "term": "sabin poliovirus",
+          "score": 316.6105,
+          "evidence": []
+        },
+        {
+          "term": "vaccine-derived poliovirus",
+          "score": 306.0596,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "wpv cvdpv",
+          "score": 2.0832,
+          "evidence": []
+        },
+        {
+          "term": "poliovirus cvdpv",
+          "score": 2.0385,
+          "evidence": []
+        },
+        {
+          "term": "material dates",
+          "score": 1.9878,
+          "evidence": []
+        },
+        {
+          "term": "wpv vdpv",
+          "score": 1.7541,
+          "evidence": []
+        },
+        {
+          "term": "infectious material",
+          "score": 1.6656,
+          "evidence": []
+        },
+        {
+          "term": "opv nopv",
+          "score": 1.6584,
+          "evidence": []
+        },
+        {
+          "term": "wild poliovirus",
+          "score": 1.6545,
+          "evidence": []
+        },
+        {
+          "term": "sabin poliovirus",
+          "score": 1.641,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "wpv cvdpv",
+          "score": 554.0479,
+          "evidence": []
+        },
+        {
+          "term": "wpv circulation",
+          "score": 432.7108,
+          "evidence": []
+        },
+        {
+          "term": "poliovirus cvdpv",
+          "score": 423.4037,
+          "evidence": []
+        },
+        {
+          "term": "wpv vdpv",
+          "score": 385.4668,
+          "evidence": []
+        },
+        {
+          "term": "indigenous wpv",
+          "score": 383.2108,
+          "evidence": []
+        },
+        {
+          "term": "poliovirus containment",
+          "score": 328.8406,
+          "evidence": []
+        },
+        {
+          "term": "sabin poliovirus",
+          "score": 318.9057,
+          "evidence": []
+        },
+        {
+          "term": "vaccine-derived poliovirus",
+          "score": 307.6885,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "wpv cvdpv",
+          "score": 2.0832,
+          "evidence": []
+        },
+        {
+          "term": "poliovirus cvdpv",
+          "score": 2.0385,
+          "evidence": []
+        },
+        {
+          "term": "material dates",
+          "score": 1.9878,
+          "evidence": []
+        },
+        {
+          "term": "wpv vdpv",
+          "score": 1.7541,
+          "evidence": []
+        },
+        {
+          "term": "infectious material",
+          "score": 1.6656,
+          "evidence": []
+        },
+        {
+          "term": "opv nopv",
+          "score": 1.6584,
+          "evidence": []
+        },
+        {
+          "term": "wild poliovirus",
+          "score": 1.6545,
+          "evidence": []
+        },
+        {
+          "term": "sabin poliovirus",
+          "score": 1.641,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "科研人员",
+          "score": 157.7352,
+          "evidence": []
+        },
+        {
+          "term": "wpv vdpv",
+          "score": 140.8318,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 140.4222,
+          "evidence": []
+        },
+        {
+          "term": "wpv cvdpv",
+          "score": 125.4872,
+          "evidence": []
+        },
+        {
+          "term": "显而易见",
+          "score": 110.0197,
+          "evidence": []
+        },
+        {
+          "term": "flaccid paralysis",
+          "score": 105.6034,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 102.1548,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 102.1548,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

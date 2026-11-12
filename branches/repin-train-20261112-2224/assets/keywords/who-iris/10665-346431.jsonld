@@ -1,0 +1,1162 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-346431",
+  "instance": "who-iris",
+  "about": "library/10665-346431",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7908,
+    "terms": 73102
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "rubella elimination",
+        "score": 8.0343,
+        "evidence": []
+      },
+      {
+        "term": "rubella cases",
+        "score": 7.3267,
+        "evidence": []
+      },
+      {
+        "term": "measles cases",
+        "score": 7.027,
+        "evidence": []
+      },
+      {
+        "term": "rubella surveillance",
+        "score": 6.4717,
+        "evidence": []
+      },
+      {
+        "term": "rubella incidence",
+        "score": 6.3628,
+        "evidence": []
+      },
+      {
+        "term": "non rubella",
+        "score": 6.0539,
+        "evidence": []
+      },
+      {
+        "term": "confirmed measles",
+        "score": 5.8536,
+        "evidence": []
+      },
+      {
+        "term": "elimination status",
+        "score": 4.2814,
+        "evidence": []
+      },
+      {
+        "term": "elimination annual",
+        "score": 4.128,
+        "evidence": []
+      },
+      {
+        "term": "discarded cases",
+        "score": 3.6483,
+        "evidence": []
+      },
+      {
+        "term": "elimination country",
+        "score": 3.5254,
+        "evidence": []
+      },
+      {
+        "term": "status update",
+        "score": 2.897,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "rubella elimination",
+        "score": 261.8715,
+        "evidence": []
+      },
+      {
+        "term": "rubella cases",
+        "score": 250.3397,
+        "evidence": []
+      },
+      {
+        "term": "measles cases",
+        "score": 233.6891,
+        "evidence": []
+      },
+      {
+        "term": "rubella incidence",
+        "score": 218.1557,
+        "evidence": []
+      },
+      {
+        "term": "rubella surveillance",
+        "score": 217.6758,
+        "evidence": []
+      },
+      {
+        "term": "non rubella",
+        "score": 208.5079,
+        "evidence": []
+      },
+      {
+        "term": "confirmed measles",
+        "score": 193.0765,
+        "evidence": []
+      },
+      {
+        "term": "discarded cases",
+        "score": 104.1886,
+        "evidence": []
+      },
+      {
+        "term": "elimination status",
+        "score": 91.9095,
+        "evidence": []
+      },
+      {
+        "term": "elimination annual",
+        "score": 89.8719,
+        "evidence": []
+      },
+      {
+        "term": "elimination country",
+        "score": 75.6043,
+        "evidence": []
+      },
+      {
+        "term": "mcv coverage",
+        "score": 69.7733,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "immunization coverage",
+        "score": 1.0072,
+        "evidence": []
+      },
+      {
+        "term": "immunization schedule",
+        "score": 0.8287,
+        "evidence": []
+      },
+      {
+        "term": "measles-containing vaccine",
+        "score": 0.8213,
+        "evidence": []
+      },
+      {
+        "term": "immunization monitoring",
+        "score": 0.7679,
+        "evidence": []
+      },
+      {
+        "term": "measles cases",
+        "score": 0.7179,
+        "evidence": []
+      },
+      {
+        "term": "measles incidence",
+        "score": 0.6891,
+        "evidence": []
+      },
+      {
+        "term": "rubella surveillance",
+        "score": 0.6568,
+        "evidence": []
+      },
+      {
+        "term": "confirmed measles",
+        "score": 0.6453,
+        "evidence": []
+      },
+      {
+        "term": "mcv coverage",
+        "score": 0.6162,
+        "evidence": []
+      },
+      {
+        "term": "vaccination",
+        "score": 0.6024,
+        "evidence": []
+      },
+      {
+        "term": "rubella elimination",
+        "score": 0.5195,
+        "evidence": []
+      },
+      {
+        "term": "mumps",
+        "score": 0.5105,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "mumps",
+        "score": 45.3875,
+        "evidence": []
+      },
+      {
+        "term": "measles-containing vaccine",
+        "score": 27.5527,
+        "evidence": []
+      },
+      {
+        "term": "immz",
+        "score": 23.7506,
+        "evidence": []
+      },
+      {
+        "term": "immunization schedule",
+        "score": 16.7701,
+        "evidence": []
+      },
+      {
+        "term": "immunization coverage",
+        "score": 14.8573,
+        "evidence": []
+      },
+      {
+        "term": "non measles",
+        "score": 14.778,
+        "evidence": []
+      },
+      {
+        "term": "measles cases",
+        "score": 14.3104,
+        "evidence": []
+      },
+      {
+        "term": "journal",
+        "score": 14.2607,
+        "evidence": []
+      },
+      {
+        "term": "measles incidence",
+        "score": 13.5926,
+        "evidence": []
+      },
+      {
+        "term": "confirmed measles",
+        "score": 13.282,
+        "evidence": []
+      },
+      {
+        "term": "vaccination",
+        "score": 12.9789,
+        "evidence": []
+      },
+      {
+        "term": "immunization monitoring",
+        "score": 12.9146,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "immunization coverage",
+        "score": 1.0072,
+        "evidence": []
+      },
+      {
+        "term": "measles-containing vaccine",
+        "score": 0.9114,
+        "evidence": []
+      },
+      {
+        "term": "immunization schedule",
+        "score": 0.8287,
+        "evidence": []
+      },
+      {
+        "term": "immunization monitoring",
+        "score": 0.7679,
+        "evidence": []
+      },
+      {
+        "term": "measles cases",
+        "score": 0.7179,
+        "evidence": []
+      },
+      {
+        "term": "measles incidence",
+        "score": 0.6891,
+        "evidence": []
+      },
+      {
+        "term": "rubella surveillance",
+        "score": 0.6568,
+        "evidence": []
+      },
+      {
+        "term": "confirmed measles",
+        "score": 0.6453,
+        "evidence": []
+      },
+      {
+        "term": "mcv coverage",
+        "score": 0.6162,
+        "evidence": []
+      },
+      {
+        "term": "vaccination",
+        "score": 0.6024,
+        "evidence": []
+      },
+      {
+        "term": "non measles",
+        "score": 0.5272,
+        "evidence": []
+      },
+      {
+        "term": "rubella elimination",
+        "score": 0.5195,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "如果没有",
+        "score": 149.6131,
+        "evidence": []
+      },
+      {
+        "term": "并提供一",
+        "score": 141.9002,
+        "evidence": []
+      },
+      {
+        "term": "这一点很重要",
+        "score": 113.1008,
+        "evidence": []
+      },
+      {
+        "term": "反过来",
+        "score": 112.1756,
+        "evidence": []
+      },
+      {
+        "term": "实验室",
+        "score": 95.3516,
+        "evidence": []
+      },
+      {
+        "term": "可能会",
+        "score": 94.6543,
+        "evidence": []
+      },
+      {
+        "term": "平等主义",
+        "score": 93.4389,
+        "evidence": []
+      },
+      {
+        "term": "巴西登革热",
+        "score": 90.1529,
+        "evidence": []
+      },
+      {
+        "term": "这些情况下",
+        "score": 85.1716,
+        "evidence": []
+      },
+      {
+        "term": "不良反应",
+        "score": 80.7848,
+        "evidence": []
+      },
+      {
+        "term": "违反权利",
+        "score": 79.9205,
+        "evidence": []
+      },
+      {
+        "term": "利益相关者",
+        "score": 79.3198,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "page-001": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "rubella elimination",
+          "score": 2.7029,
+          "evidence": []
+        },
+        {
+          "term": "mcv coverage",
+          "score": 2.409,
+          "evidence": []
+        },
+        {
+          "term": "measles-containing vaccine",
+          "score": 2.2073,
+          "evidence": []
+        },
+        {
+          "term": "dose measles-containing",
+          "score": 2.0197,
+          "evidence": []
+        },
+        {
+          "term": "immunization schedule",
+          "score": 1.8538,
+          "evidence": []
+        },
+        {
+          "term": "measles",
+          "score": 1.682,
+          "evidence": []
+        },
+        {
+          "term": "elimination status",
+          "score": 1.4205,
+          "evidence": []
+        },
+        {
+          "term": "int thrvc",
+          "score": 1.402,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "rubella elimination",
+          "score": 84.8375,
+          "evidence": []
+        },
+        {
+          "term": "mcv coverage",
+          "score": 69.7733,
+          "evidence": []
+        },
+        {
+          "term": "measles",
+          "score": 59.8804,
+          "evidence": []
+        },
+        {
+          "term": "measles-containing vaccine",
+          "score": 48.3383,
+          "evidence": []
+        },
+        {
+          "term": "dose measles-containing",
+          "score": 40.4929,
+          "evidence": []
+        },
+        {
+          "term": "immunization coverage",
+          "score": 35.7944,
+          "evidence": []
+        },
+        {
+          "term": "immunization schedule",
+          "score": 34.9688,
+          "evidence": []
+        },
+        {
+          "term": "elimination status",
+          "score": 30.3266,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "immunization coverage",
+          "score": 0.5458,
+          "evidence": []
+        },
+        {
+          "term": "measles-containing vaccine",
+          "score": 0.5176,
+          "evidence": []
+        },
+        {
+          "term": "immunization schedule",
+          "score": 0.4895,
+          "evidence": []
+        },
+        {
+          "term": "immunization monitoring",
+          "score": 0.4108,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.3459,
+          "evidence": []
+        },
+        {
+          "term": "mcv coverage",
+          "score": 0.3049,
+          "evidence": []
+        },
+        {
+          "term": "dose measles-containing",
+          "score": 0.2613,
+          "evidence": []
+        },
+        {
+          "term": "mumps",
+          "score": 0.2583,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "mumps",
+          "score": 18.7825,
+          "evidence": []
+        },
+        {
+          "term": "measles-containing vaccine",
+          "score": 15.183,
+          "evidence": []
+        },
+        {
+          "term": "immz",
+          "score": 12.2143,
+          "evidence": []
+        },
+        {
+          "term": "immunization schedule",
+          "score": 12.0328,
+          "evidence": []
+        },
+        {
+          "term": "immunization coverage",
+          "score": 10.3982,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 8.8864,
+          "evidence": []
+        },
+        {
+          "term": "immunization monitoring",
+          "score": 8.5469,
+          "evidence": []
+        },
+        {
+          "term": "journal",
+          "score": 5.739,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "immunization coverage",
+          "score": 0.5458,
+          "evidence": []
+        },
+        {
+          "term": "measles-containing vaccine",
+          "score": 0.5176,
+          "evidence": []
+        },
+        {
+          "term": "immunization schedule",
+          "score": 0.4895,
+          "evidence": []
+        },
+        {
+          "term": "immunization monitoring",
+          "score": 0.4108,
+          "evidence": []
+        },
+        {
+          "term": "mcv coverage",
+          "score": 0.3049,
+          "evidence": []
+        },
+        {
+          "term": "dose measles-containing",
+          "score": 0.2613,
+          "evidence": []
+        },
+        {
+          "term": "measles",
+          "score": 0.2409,
+          "evidence": []
+        },
+        {
+          "term": "rubella elimination",
+          "score": 0.2352,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "并提供一",
+          "score": 63.1798,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 60.1778,
+          "evidence": []
+        },
+        {
+          "term": "反过来",
+          "score": 49.1846,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 46.3852,
+          "evidence": []
+        },
+        {
+          "term": "平等主义",
+          "score": 42.7018,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 40.4257,
+          "evidence": []
+        },
+        {
+          "term": "这些情况下",
+          "score": 38.7115,
+          "evidence": []
+        },
+        {
+          "term": "可能会",
+          "score": 37.9241,
+          "evidence": []
+        }
+      ]
+    },
+    "page-002": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "rubella elimination",
+          "score": 2.3407,
+          "evidence": []
+        },
+        {
+          "term": "measles cases",
+          "score": 2.0685,
+          "evidence": []
+        },
+        {
+          "term": "elimination annual",
+          "score": 1.5201,
+          "evidence": []
+        },
+        {
+          "term": "annual status",
+          "score": 1.331,
+          "evidence": []
+        },
+        {
+          "term": "status update",
+          "score": 1.3185,
+          "evidence": []
+        },
+        {
+          "term": "update report",
+          "score": 1.1383,
+          "evidence": []
+        },
+        {
+          "term": "subnational level",
+          "score": 0.8503,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "rubella elimination",
+          "score": 58.5465,
+          "evidence": []
+        },
+        {
+          "term": "measles cases",
+          "score": 54.3242,
+          "evidence": []
+        },
+        {
+          "term": "elimination annual",
+          "score": 33.1694,
+          "evidence": []
+        },
+        {
+          "term": "annual status",
+          "score": 28.2428,
+          "evidence": []
+        },
+        {
+          "term": "status update",
+          "score": 27.0316,
+          "evidence": []
+        },
+        {
+          "term": "update report",
+          "score": 22.1513,
+          "evidence": []
+        },
+        {
+          "term": "source",
+          "score": 12.8686,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "vaccine",
+          "score": 0.1833,
+          "evidence": []
+        },
+        {
+          "term": "world",
+          "score": 0.1638,
+          "evidence": []
+        },
+        {
+          "term": "organization",
+          "score": 0.1594,
+          "evidence": []
+        },
+        {
+          "term": "measles cases",
+          "score": 0.1522,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.1495,
+          "evidence": []
+        },
+        {
+          "term": "annual status",
+          "score": 0.143,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.138,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "mumps",
+          "score": 7.912,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 4.8087,
+          "evidence": []
+        },
+        {
+          "term": "immz",
+          "score": 3.9188,
+          "evidence": []
+        },
+        {
+          "term": "annual status",
+          "score": 3.8742,
+          "evidence": []
+        },
+        {
+          "term": "status update",
+          "score": 3.8742,
+          "evidence": []
+        },
+        {
+          "term": "adh",
+          "score": 3.2128,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 2.5511,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "measles cases",
+          "score": 0.1522,
+          "evidence": []
+        },
+        {
+          "term": "annual status",
+          "score": 0.143,
+          "evidence": []
+        },
+        {
+          "term": "status update",
+          "score": 0.1199,
+          "evidence": []
+        },
+        {
+          "term": "lines",
+          "score": 0.1164,
+          "evidence": []
+        },
+        {
+          "term": "rubella elimination",
+          "score": 0.1075,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 0.1007,
+          "evidence": []
+        },
+        {
+          "term": "age group",
+          "score": 0.0996,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 58.7629,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 41.9285,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 38.8221,
+          "evidence": []
+        },
+        {
+          "term": "法律上",
+          "score": 29.6828,
+          "evidence": []
+        },
+        {
+          "term": "利益相关者",
+          "score": 27.5072,
+          "evidence": []
+        },
+        {
+          "term": "反过来",
+          "score": 25.3073,
+          "evidence": []
+        },
+        {
+          "term": "区域和全球各",
+          "score": 25.1066,
+          "evidence": []
+        }
+      ]
+    },
+    "page-003": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "rubella elimination",
+          "score": 2.9907,
+          "evidence": []
+        },
+        {
+          "term": "rubella cases",
+          "score": 2.885,
+          "evidence": []
+        },
+        {
+          "term": "rubella incidence",
+          "score": 2.8416,
+          "evidence": []
+        },
+        {
+          "term": "non rubella",
+          "score": 2.8142,
+          "evidence": []
+        },
+        {
+          "term": "measles cases",
+          "score": 2.6756,
+          "evidence": []
+        },
+        {
+          "term": "discarded cases",
+          "score": 2.4463,
+          "evidence": []
+        },
+        {
+          "term": "proficient laboratory",
+          "score": 2.2313,
+          "evidence": []
+        },
+        {
+          "term": "proficient labs",
+          "score": 2.1976,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "rubella cases",
+          "score": 123.6525,
+          "evidence": []
+        },
+        {
+          "term": "rubella elimination",
+          "score": 118.4875,
+          "evidence": []
+        },
+        {
+          "term": "rubella incidence",
+          "score": 114.0823,
+          "evidence": []
+        },
+        {
+          "term": "non rubella",
+          "score": 107.5579,
+          "evidence": []
+        },
+        {
+          "term": "measles cases",
+          "score": 106.6159,
+          "evidence": []
+        },
+        {
+          "term": "discarded cases",
+          "score": 78.4515,
+          "evidence": []
+        },
+        {
+          "term": "proficient laboratory",
+          "score": 58.8336,
+          "evidence": []
+        },
+        {
+          "term": "accredited laboratory",
+          "score": 49.8284,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "surveillance performance",
+          "score": 0.2307,
+          "evidence": []
+        },
+        {
+          "term": "measles incidence",
+          "score": 0.2238,
+          "evidence": []
+        },
+        {
+          "term": "performance indicators",
+          "score": 0.2235,
+          "evidence": []
+        },
+        {
+          "term": "measles cases",
+          "score": 0.22,
+          "evidence": []
+        },
+        {
+          "term": "viral detection",
+          "score": 0.1965,
+          "evidence": []
+        },
+        {
+          "term": "rubella incidence",
+          "score": 0.1926,
+          "evidence": []
+        },
+        {
+          "term": "rubella elimination",
+          "score": 0.1769,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 0.1703,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "mumps",
+          "score": 18.693,
+          "evidence": []
+        },
+        {
+          "term": "immz",
+          "score": 7.6176,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 7.561,
+          "evidence": []
+        },
+        {
+          "term": "non measles",
+          "score": 7.514,
+          "evidence": []
+        },
+        {
+          "term": "non rubella",
+          "score": 6.7821,
+          "evidence": []
+        },
+        {
+          "term": "journal",
+          "score": 6.0651,
+          "evidence": []
+        },
+        {
+          "term": "measles incidence",
+          "score": 5.6804,
+          "evidence": []
+        },
+        {
+          "term": "measles cases",
+          "score": 5.6207,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "surveillance performance",
+          "score": 0.2307,
+          "evidence": []
+        },
+        {
+          "term": "measles incidence",
+          "score": 0.2238,
+          "evidence": []
+        },
+        {
+          "term": "performance indicators",
+          "score": 0.2235,
+          "evidence": []
+        },
+        {
+          "term": "measles cases",
+          "score": 0.22,
+          "evidence": []
+        },
+        {
+          "term": "viral detection",
+          "score": 0.1965,
+          "evidence": []
+        },
+        {
+          "term": "rubella incidence",
+          "score": 0.1926,
+          "evidence": []
+        },
+        {
+          "term": "rubella elimination",
+          "score": 0.1769,
+          "evidence": []
+        },
+        {
+          "term": "million population",
+          "score": 0.1672,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "并提供一",
+          "score": 62.3316,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 50.6132,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 46.7151,
+          "evidence": []
+        },
+        {
+          "term": "反过来",
+          "score": 37.6837,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 36.3043,
+          "evidence": []
+        },
+        {
+          "term": "可能会",
+          "score": 35.2898,
+          "evidence": []
+        },
+        {
+          "term": "平等主义",
+          "score": 33.2495,
+          "evidence": []
+        },
+        {
+          "term": "不良反应",
+          "score": 32.8973,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

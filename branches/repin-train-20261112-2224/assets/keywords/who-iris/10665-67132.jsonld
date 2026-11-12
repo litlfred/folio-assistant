@@ -1,0 +1,7134 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-67132",
+  "instance": "who-iris",
+  "about": "library/10665-67132",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7908,
+    "terms": 73102
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "breast milk",
+        "score": 43.5468,
+        "evidence": []
+      },
+      {
+        "term": "breast feeding",
+        "score": 39.57,
+        "evidence": []
+      },
+      {
+        "term": "infant feeding",
+        "score": 36.296,
+        "evidence": []
+      },
+      {
+        "term": "breast during",
+        "score": 29.0547,
+        "evidence": []
+      },
+      {
+        "term": "breast health",
+        "score": 27.3376,
+        "evidence": []
+      },
+      {
+        "term": "module breast",
+        "score": 27.2041,
+        "evidence": []
+      },
+      {
+        "term": "breast pain",
+        "score": 26.5878,
+        "evidence": []
+      },
+      {
+        "term": "breast thrush",
+        "score": 26.5062,
+        "evidence": []
+      },
+      {
+        "term": "breast inflammation",
+        "score": 26.4074,
+        "evidence": []
+      },
+      {
+        "term": "received breast",
+        "score": 25.5516,
+        "evidence": []
+      },
+      {
+        "term": "affected breast",
+        "score": 25.4711,
+        "evidence": []
+      },
+      {
+        "term": "expressed breast",
+        "score": 25.4159,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "breast milk",
+        "score": 1159.407,
+        "evidence": []
+      },
+      {
+        "term": "breast feeding",
+        "score": 995.8456,
+        "evidence": []
+      },
+      {
+        "term": "infant feeding",
+        "score": 853.1279,
+        "evidence": []
+      },
+      {
+        "term": "breast during",
+        "score": 721.1676,
+        "evidence": []
+      },
+      {
+        "term": "module breast",
+        "score": 700.4977,
+        "evidence": []
+      },
+      {
+        "term": "breast pain",
+        "score": 690.1628,
+        "evidence": []
+      },
+      {
+        "term": "affected breast",
+        "score": 687.8381,
+        "evidence": []
+      },
+      {
+        "term": "breast inflammation",
+        "score": 684.069,
+        "evidence": []
+      },
+      {
+        "term": "breast thrush",
+        "score": 680.3997,
+        "evidence": []
+      },
+      {
+        "term": "breast health",
+        "score": 675.6411,
+        "evidence": []
+      },
+      {
+        "term": "expressed breast",
+        "score": 670.5578,
+        "evidence": []
+      },
+      {
+        "term": "received breast",
+        "score": 663.2268,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "infant hiv",
+        "score": 7.5427,
+        "evidence": []
+      },
+      {
+        "term": "hiv transmission",
+        "score": 6.1692,
+        "evidence": []
+      },
+      {
+        "term": "infant health",
+        "score": 5.9047,
+        "evidence": []
+      },
+      {
+        "term": "hiv infection",
+        "score": 5.8777,
+        "evidence": []
+      },
+      {
+        "term": "during pregnancy",
+        "score": 5.5657,
+        "evidence": []
+      },
+      {
+        "term": "child transmission",
+        "score": 5.5343,
+        "evidence": []
+      },
+      {
+        "term": "infant feeding",
+        "score": 5.2167,
+        "evidence": []
+      },
+      {
+        "term": "hiv aids",
+        "score": 5.1566,
+        "evidence": []
+      },
+      {
+        "term": "hiv testing",
+        "score": 4.9341,
+        "evidence": []
+      },
+      {
+        "term": "infant received",
+        "score": 4.8795,
+        "evidence": []
+      },
+      {
+        "term": "date breastfeeding",
+        "score": 4.7523,
+        "evidence": []
+      },
+      {
+        "term": "record infant",
+        "score": 4.6905,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "yes",
+        "score": 188.0435,
+        "evidence": []
+      },
+      {
+        "term": "hiv testing",
+        "score": 119.6169,
+        "evidence": []
+      },
+      {
+        "term": "infant hiv",
+        "score": 117.0625,
+        "evidence": []
+      },
+      {
+        "term": "hiv infection",
+        "score": 114.3134,
+        "evidence": []
+      },
+      {
+        "term": "hiv aids",
+        "score": 111.7537,
+        "evidence": []
+      },
+      {
+        "term": "hiv transmission",
+        "score": 107.0997,
+        "evidence": []
+      },
+      {
+        "term": "hiv acquisition",
+        "score": 90.8735,
+        "evidence": []
+      },
+      {
+        "term": "viral load",
+        "score": 82.6159,
+        "evidence": []
+      },
+      {
+        "term": "time she",
+        "score": 70.8956,
+        "evidence": []
+      },
+      {
+        "term": "bleeding",
+        "score": 56.7069,
+        "evidence": []
+      },
+      {
+        "term": "during pregnancy",
+        "score": 56.104,
+        "evidence": []
+      },
+      {
+        "term": "infant health",
+        "score": 54.6667,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "infant hiv",
+        "score": 7.5427,
+        "evidence": []
+      },
+      {
+        "term": "hiv transmission",
+        "score": 6.1692,
+        "evidence": []
+      },
+      {
+        "term": "infant health",
+        "score": 5.9047,
+        "evidence": []
+      },
+      {
+        "term": "hiv infection",
+        "score": 5.8777,
+        "evidence": []
+      },
+      {
+        "term": "during pregnancy",
+        "score": 5.5657,
+        "evidence": []
+      },
+      {
+        "term": "child transmission",
+        "score": 5.5343,
+        "evidence": []
+      },
+      {
+        "term": "infant feeding",
+        "score": 5.2167,
+        "evidence": []
+      },
+      {
+        "term": "hiv aids",
+        "score": 5.1566,
+        "evidence": []
+      },
+      {
+        "term": "hiv testing",
+        "score": 4.9341,
+        "evidence": []
+      },
+      {
+        "term": "infant received",
+        "score": 4.8795,
+        "evidence": []
+      },
+      {
+        "term": "date breastfeeding",
+        "score": 4.7523,
+        "evidence": []
+      },
+      {
+        "term": "record infant",
+        "score": 4.6905,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "s-t",
+        "score": 7151.7233,
+        "evidence": []
+      },
+      {
+        "term": "et-ot",
+        "score": 7151.7233,
+        "evidence": []
+      },
+      {
+        "term": "ge-9e",
+        "score": 7151.7233,
+        "evidence": []
+      },
+      {
+        "term": "savd",
+        "score": 7151.7233,
+        "evidence": []
+      },
+      {
+        "term": "seo",
+        "score": 7151.7233,
+        "evidence": []
+      },
+      {
+        "term": "stow",
+        "score": 7151.7233,
+        "evidence": []
+      },
+      {
+        "term": "svo",
+        "score": 7151.7233,
+        "evidence": []
+      },
+      {
+        "term": "如果没有",
+        "score": 6751.5119,
+        "evidence": []
+      },
+      {
+        "term": "科研人员",
+        "score": 6694.6151,
+        "evidence": []
+      },
+      {
+        "term": "重点人群",
+        "score": 6255.9024,
+        "evidence": []
+      },
+      {
+        "term": "sed",
+        "score": 6199.5343,
+        "evidence": []
+      },
+      {
+        "term": "巴西登革热",
+        "score": 6119.0939,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "page-001": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "rhr",
+          "score": 0.6479,
+          "evidence": []
+        },
+        {
+          "term": "distr",
+          "score": 0.5792,
+          "evidence": []
+        },
+        {
+          "term": "cah",
+          "score": 0.5235,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "rhr",
+          "score": 10.0876,
+          "evidence": []
+        },
+        {
+          "term": "distr",
+          "score": 7.3662,
+          "evidence": []
+        },
+        {
+          "term": "cah",
+          "score": 6.7784,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health",
+          "score": 0.0856,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.0762,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.0698,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "research",
+          "score": 1.3405,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 1.2676,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 0.7283,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health",
+          "score": 0.0856,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.0762,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.0698,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "的材料",
+          "score": 143.6869,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 81.3886,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 66.1082,
+          "evidence": []
+        }
+      ]
+    },
+    "page-002": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "health organization",
+          "score": 0.6481,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.5532,
+          "evidence": []
+        },
+        {
+          "term": "abstracted",
+          "score": 0.4832,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "health organization",
+          "score": 8.0905,
+          "evidence": []
+        },
+        {
+          "term": "authors",
+          "score": 6.99,
+          "evidence": []
+        },
+        {
+          "term": "abstracted",
+          "score": 6.1424,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "world health",
+          "score": 0.1596,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.1586,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 0.075,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "world health",
+          "score": 2.8815,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 2.7773,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 1.4285,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "world health",
+          "score": 0.1596,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.1586,
+          "evidence": []
+        },
+        {
+          "term": "publication",
+          "score": 0.0415,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 123.7741,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 54.7599,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 35.4963,
+          "evidence": []
+        }
+      ]
+    },
+    "page-003": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "infant feeding",
+          "score": 1.8103,
+          "evidence": []
+        },
+        {
+          "term": "feeding practices",
+          "score": 1.4668,
+          "evidence": []
+        },
+        {
+          "term": "ccc",
+          "score": 1.1638,
+          "evidence": []
+        },
+        {
+          "term": "child transmission",
+          "score": 1.0163,
+          "evidence": []
+        },
+        {
+          "term": "module",
+          "score": 0.8795,
+          "evidence": []
+        },
+        {
+          "term": "breast",
+          "score": 0.8612,
+          "evidence": []
+        },
+        {
+          "term": "visits",
+          "score": 0.8155,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "infant feeding",
+          "score": 43.2535,
+          "evidence": []
+        },
+        {
+          "term": "feeding practices",
+          "score": 32.0119,
+          "evidence": []
+        },
+        {
+          "term": "ccc",
+          "score": 21.5516,
+          "evidence": []
+        },
+        {
+          "term": "module",
+          "score": 21.3306,
+          "evidence": []
+        },
+        {
+          "term": "visits",
+          "score": 17.231,
+          "evidence": []
+        },
+        {
+          "term": "child transmission",
+          "score": 16.4577,
+          "evidence": []
+        },
+        {
+          "term": "breast",
+          "score": 15.1908,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "child transmission",
+          "score": 0.2449,
+          "evidence": []
+        },
+        {
+          "term": "infant feeding",
+          "score": 0.2203,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.1814,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.151,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding",
+          "score": 0.145,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy",
+          "score": 0.1319,
+          "evidence": []
+        },
+        {
+          "term": "pregnant",
+          "score": 0.13,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "child transmission",
+          "score": 2.1221,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 1.8837,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 1.8826,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 1.7024,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 1.6973,
+          "evidence": []
+        },
+        {
+          "term": "home-based",
+          "score": 1.6901,
+          "evidence": []
+        },
+        {
+          "term": "records",
+          "score": 1.5292,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "child transmission",
+          "score": 0.2449,
+          "evidence": []
+        },
+        {
+          "term": "infant feeding",
+          "score": 0.2203,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding",
+          "score": 0.145,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.1063,
+          "evidence": []
+        },
+        {
+          "term": "feeding practices",
+          "score": 0.0927,
+          "evidence": []
+        },
+        {
+          "term": "mother",
+          "score": 0.0794,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.0589,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "s-t",
+          "score": 376.0254,
+          "evidence": []
+        },
+        {
+          "term": "et-ot",
+          "score": 376.0254,
+          "evidence": []
+        },
+        {
+          "term": "ge-9e",
+          "score": 376.0254,
+          "evidence": []
+        },
+        {
+          "term": "savd",
+          "score": 376.0254,
+          "evidence": []
+        },
+        {
+          "term": "seo",
+          "score": 376.0254,
+          "evidence": []
+        },
+        {
+          "term": "stow",
+          "score": 376.0254,
+          "evidence": []
+        },
+        {
+          "term": "svo",
+          "score": 376.0254,
+          "evidence": []
+        }
+      ]
+    },
+    "page-004": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "breastfeeding through",
+          "score": 1.5069,
+          "evidence": []
+        },
+        {
+          "term": "infant feeding",
+          "score": 1.3494,
+          "evidence": []
+        },
+        {
+          "term": "through months",
+          "score": 1.2145,
+          "evidence": []
+        },
+        {
+          "term": "million children",
+          "score": 1.128,
+          "evidence": []
+        },
+        {
+          "term": "mtct",
+          "score": 1.0967,
+          "evidence": []
+        },
+        {
+          "term": "hiv aids",
+          "score": 0.9073,
+          "evidence": []
+        },
+        {
+          "term": "during pregnancy",
+          "score": 0.9066,
+          "evidence": []
+        },
+        {
+          "term": "estimated",
+          "score": 0.683,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "breastfeeding through",
+          "score": 41.1966,
+          "evidence": []
+        },
+        {
+          "term": "mtct",
+          "score": 28.7159,
+          "evidence": []
+        },
+        {
+          "term": "through months",
+          "score": 28.6754,
+          "evidence": []
+        },
+        {
+          "term": "infant feeding",
+          "score": 23.9236,
+          "evidence": []
+        },
+        {
+          "term": "million children",
+          "score": 16.5085,
+          "evidence": []
+        },
+        {
+          "term": "hiv aids",
+          "score": 14.7014,
+          "evidence": []
+        },
+        {
+          "term": "estimated",
+          "score": 13.392,
+          "evidence": []
+        },
+        {
+          "term": "during pregnancy",
+          "score": 12.1577,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hiv aids",
+          "score": 0.4443,
+          "evidence": []
+        },
+        {
+          "term": "infant feeding",
+          "score": 0.2925,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.2826,
+          "evidence": []
+        },
+        {
+          "term": "million children",
+          "score": 0.274,
+          "evidence": []
+        },
+        {
+          "term": "during pregnancy",
+          "score": 0.2693,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding through",
+          "score": 0.2259,
+          "evidence": []
+        },
+        {
+          "term": "art",
+          "score": 0.2032,
+          "evidence": []
+        },
+        {
+          "term": "pregnant",
+          "score": 0.1965,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hiv aids",
+          "score": 10.3263,
+          "evidence": []
+        },
+        {
+          "term": "million children",
+          "score": 4.7839,
+          "evidence": []
+        },
+        {
+          "term": "art",
+          "score": 3.6855,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 2.5545,
+          "evidence": []
+        },
+        {
+          "term": "during pregnancy",
+          "score": 2.4799,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 2.2557,
+          "evidence": []
+        },
+        {
+          "term": "living",
+          "score": 2.2156,
+          "evidence": []
+        },
+        {
+          "term": "months",
+          "score": 2.1667,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hiv aids",
+          "score": 0.4443,
+          "evidence": []
+        },
+        {
+          "term": "infant feeding",
+          "score": 0.2925,
+          "evidence": []
+        },
+        {
+          "term": "million children",
+          "score": 0.274,
+          "evidence": []
+        },
+        {
+          "term": "during pregnancy",
+          "score": 0.2693,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding through",
+          "score": 0.2259,
+          "evidence": []
+        },
+        {
+          "term": "transmission",
+          "score": 0.1834,
+          "evidence": []
+        },
+        {
+          "term": "through months",
+          "score": 0.1772,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.1506,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 33.7462,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 25.7402,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 22.1887,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 19.7421,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 18.0525,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 14.9595,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 14.7939,
+          "evidence": []
+        },
+        {
+          "term": "在紧急情",
+          "score": 14.107,
+          "evidence": []
+        }
+      ]
+    },
+    "page-005": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "breast milk",
+          "score": 3.6673,
+          "evidence": []
+        },
+        {
+          "term": "milk sodium",
+          "score": 3.5113,
+          "evidence": []
+        },
+        {
+          "term": "elevated breast",
+          "score": 2.6268,
+          "evidence": []
+        },
+        {
+          "term": "sub-clinical mastitis",
+          "score": 2.194,
+          "evidence": []
+        },
+        {
+          "term": "through breastfeeding",
+          "score": 1.4233,
+          "evidence": []
+        },
+        {
+          "term": "mtct through",
+          "score": 1.4094,
+          "evidence": []
+        },
+        {
+          "term": "oral thrush",
+          "score": 1.3192,
+          "evidence": []
+        },
+        {
+          "term": "viral load",
+          "score": 1.2903,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "breast milk",
+          "score": 174.7476,
+          "evidence": []
+        },
+        {
+          "term": "milk sodium",
+          "score": 136.1151,
+          "evidence": []
+        },
+        {
+          "term": "elevated breast",
+          "score": 101.0413,
+          "evidence": []
+        },
+        {
+          "term": "sub-clinical mastitis",
+          "score": 38.1166,
+          "evidence": []
+        },
+        {
+          "term": "through breastfeeding",
+          "score": 37.2839,
+          "evidence": []
+        },
+        {
+          "term": "mtct through",
+          "score": 31.7552,
+          "evidence": []
+        },
+        {
+          "term": "risk factor",
+          "score": 27.1479,
+          "evidence": []
+        },
+        {
+          "term": "increased risk",
+          "score": 24.1908,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hiv transmission",
+          "score": 0.57,
+          "evidence": []
+        },
+        {
+          "term": "viral load",
+          "score": 0.5181,
+          "evidence": []
+        },
+        {
+          "term": "maternal viral",
+          "score": 0.4322,
+          "evidence": []
+        },
+        {
+          "term": "infant oral",
+          "score": 0.3914,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.3558,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding",
+          "score": 0.2841,
+          "evidence": []
+        },
+        {
+          "term": "through breastfeeding",
+          "score": 0.2841,
+          "evidence": []
+        },
+        {
+          "term": "art",
+          "score": 0.2792,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "viral load",
+          "score": 19.2818,
+          "evidence": []
+        },
+        {
+          "term": "maternal viral",
+          "score": 10.6096,
+          "evidence": []
+        },
+        {
+          "term": "hiv transmission",
+          "score": 9.3766,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 4.8553,
+          "evidence": []
+        },
+        {
+          "term": "testing",
+          "score": 3.9002,
+          "evidence": []
+        },
+        {
+          "term": "therapy",
+          "score": 3.598,
+          "evidence": []
+        },
+        {
+          "term": "some studies",
+          "score": 3.5507,
+          "evidence": []
+        },
+        {
+          "term": "treatment",
+          "score": 3.4052,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hiv transmission",
+          "score": 0.57,
+          "evidence": []
+        },
+        {
+          "term": "viral load",
+          "score": 0.5181,
+          "evidence": []
+        },
+        {
+          "term": "maternal viral",
+          "score": 0.4322,
+          "evidence": []
+        },
+        {
+          "term": "infant oral",
+          "score": 0.3914,
+          "evidence": []
+        },
+        {
+          "term": "through breastfeeding",
+          "score": 0.3078,
+          "evidence": []
+        },
+        {
+          "term": "studies found",
+          "score": 0.2592,
+          "evidence": []
+        },
+        {
+          "term": "increased risk",
+          "score": 0.2402,
+          "evidence": []
+        },
+        {
+          "term": "months",
+          "score": 0.2306,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 77.1272,
+          "evidence": []
+        },
+        {
+          "term": "在一些国家",
+          "score": 48.1171,
+          "evidence": []
+        },
+        {
+          "term": "青少年",
+          "score": 48.1171,
+          "evidence": []
+        },
+        {
+          "term": "岁的女孩",
+          "score": 41.0986,
+          "evidence": []
+        },
+        {
+          "term": "服务的提供",
+          "score": 41.0986,
+          "evidence": []
+        },
+        {
+          "term": "在正常情况下",
+          "score": 35.6192,
+          "evidence": []
+        },
+        {
+          "term": "最小化",
+          "score": 34.7389,
+          "evidence": []
+        },
+        {
+          "term": "可以考",
+          "score": 33.3962,
+          "evidence": []
+        }
+      ]
+    },
+    "page-006": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "feeding pattern",
+          "score": 1.7702,
+          "evidence": []
+        },
+        {
+          "term": "breastfed infants",
+          "score": 1.7143,
+          "evidence": []
+        },
+        {
+          "term": "breast milk",
+          "score": 1.4083,
+          "evidence": []
+        },
+        {
+          "term": "hiv acquisition",
+          "score": 1.1577,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 1.1065,
+          "evidence": []
+        },
+        {
+          "term": "intestinal",
+          "score": 0.8674,
+          "evidence": []
+        },
+        {
+          "term": "integrity",
+          "score": 0.6464,
+          "evidence": []
+        },
+        {
+          "term": "mtct",
+          "score": 0.6191,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "feeding pattern",
+          "score": 38.0412,
+          "evidence": []
+        },
+        {
+          "term": "infant feeding",
+          "score": 36.4917,
+          "evidence": []
+        },
+        {
+          "term": "breastfed infants",
+          "score": 36.1854,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 21.2941,
+          "evidence": []
+        },
+        {
+          "term": "breast milk",
+          "score": 21.2105,
+          "evidence": []
+        },
+        {
+          "term": "hiv acquisition",
+          "score": 20.4925,
+          "evidence": []
+        },
+        {
+          "term": "intestinal",
+          "score": 14.0594,
+          "evidence": []
+        },
+        {
+          "term": "integrity",
+          "score": 10.1272,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hiv infection",
+          "score": 0.4376,
+          "evidence": []
+        },
+        {
+          "term": "hiv acquisition",
+          "score": 0.2731,
+          "evidence": []
+        },
+        {
+          "term": "infant feeding",
+          "score": 0.2498,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.2395,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.2013,
+          "evidence": []
+        },
+        {
+          "term": "breastfed infants",
+          "score": 0.1754,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding",
+          "score": 0.1567,
+          "evidence": []
+        },
+        {
+          "term": "pregnant",
+          "score": 0.1514,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hiv infection",
+          "score": 8.4796,
+          "evidence": []
+        },
+        {
+          "term": "hiv acquisition",
+          "score": 6.3284,
+          "evidence": []
+        },
+        {
+          "term": "viral",
+          "score": 2.9315,
+          "evidence": []
+        },
+        {
+          "term": "load",
+          "score": 2.9157,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 2.6976,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 2.6181,
+          "evidence": []
+        },
+        {
+          "term": "treatment",
+          "score": 2.601,
+          "evidence": []
+        },
+        {
+          "term": "testing",
+          "score": 2.4263,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hiv infection",
+          "score": 0.4376,
+          "evidence": []
+        },
+        {
+          "term": "hiv acquisition",
+          "score": 0.2924,
+          "evidence": []
+        },
+        {
+          "term": "infant feeding",
+          "score": 0.2498,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.2395,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.2013,
+          "evidence": []
+        },
+        {
+          "term": "breastfed infants",
+          "score": 0.1963,
+          "evidence": []
+        },
+        {
+          "term": "study",
+          "score": 0.1188,
+          "evidence": []
+        },
+        {
+          "term": "risk",
+          "score": 0.0894,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在正常情况下",
+          "score": 48.9852,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 44.5385,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 40.2936,
+          "evidence": []
+        },
+        {
+          "term": "在一些国家",
+          "score": 39.8882,
+          "evidence": []
+        },
+        {
+          "term": "青少年",
+          "score": 39.8882,
+          "evidence": []
+        },
+        {
+          "term": "最小化",
+          "score": 36.1298,
+          "evidence": []
+        },
+        {
+          "term": "岁的女孩",
+          "score": 33.8972,
+          "evidence": []
+        },
+        {
+          "term": "服务的提供",
+          "score": 33.8972,
+          "evidence": []
+        }
+      ]
+    },
+    "page-007": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "formula feeding",
+          "score": 1.6917,
+          "evidence": []
+        },
+        {
+          "term": "through breastfeeding",
+          "score": 1.2965,
+          "evidence": []
+        },
+        {
+          "term": "mtct",
+          "score": 1.0098,
+          "evidence": []
+        },
+        {
+          "term": "hiv transmission",
+          "score": 0.8803,
+          "evidence": []
+        },
+        {
+          "term": "risk factors",
+          "score": 0.7806,
+          "evidence": []
+        },
+        {
+          "term": "breastfed",
+          "score": 0.7216,
+          "evidence": []
+        },
+        {
+          "term": "breast",
+          "score": 0.6825,
+          "evidence": []
+        },
+        {
+          "term": "exclusive",
+          "score": 0.6597,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "formula feeding",
+          "score": 34.3276,
+          "evidence": []
+        },
+        {
+          "term": "through breastfeeding",
+          "score": 33.3713,
+          "evidence": []
+        },
+        {
+          "term": "mtct",
+          "score": 23.9299,
+          "evidence": []
+        },
+        {
+          "term": "tool",
+          "score": 14.8835,
+          "evidence": []
+        },
+        {
+          "term": "hiv transmission",
+          "score": 14.1197,
+          "evidence": []
+        },
+        {
+          "term": "risk factors",
+          "score": 12.6485,
+          "evidence": []
+        },
+        {
+          "term": "breastfed",
+          "score": 11.5952,
+          "evidence": []
+        },
+        {
+          "term": "exclusive",
+          "score": 10.4759,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hiv transmission",
+          "score": 0.2863,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.1639,
+          "evidence": []
+        },
+        {
+          "term": "through breastfeeding",
+          "score": 0.1479,
+          "evidence": []
+        },
+        {
+          "term": "studies",
+          "score": 0.1394,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.1334,
+          "evidence": []
+        },
+        {
+          "term": "infant",
+          "score": 0.1266,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.1257,
+          "evidence": []
+        },
+        {
+          "term": "study",
+          "score": 0.1192,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hiv transmission",
+          "score": 5.1846,
+          "evidence": []
+        },
+        {
+          "term": "studies",
+          "score": 2.1269,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 2.0693,
+          "evidence": []
+        },
+        {
+          "term": "art",
+          "score": 1.9334,
+          "evidence": []
+        },
+        {
+          "term": "home-based",
+          "score": 1.6157,
+          "evidence": []
+        },
+        {
+          "term": "bleeding",
+          "score": 1.5273,
+          "evidence": []
+        },
+        {
+          "term": "hsv",
+          "score": 1.4921,
+          "evidence": []
+        },
+        {
+          "term": "records",
+          "score": 1.4715,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hiv transmission",
+          "score": 0.2863,
+          "evidence": []
+        },
+        {
+          "term": "through breastfeeding",
+          "score": 0.1479,
+          "evidence": []
+        },
+        {
+          "term": "studies",
+          "score": 0.1394,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.1334,
+          "evidence": []
+        },
+        {
+          "term": "risk factors",
+          "score": 0.1103,
+          "evidence": []
+        },
+        {
+          "term": "formula feeding",
+          "score": 0.057,
+          "evidence": []
+        },
+        {
+          "term": "mtct",
+          "score": 0.0447,
+          "evidence": []
+        },
+        {
+          "term": "information",
+          "score": 0.0417,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 31.8199,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 28.2515,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 18.7505,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 17.9654,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 16.8673,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 14.5629,
+          "evidence": []
+        },
+        {
+          "term": "不良反应",
+          "score": 13.4812,
+          "evidence": []
+        },
+        {
+          "term": "最小化",
+          "score": 12.9074,
+          "evidence": []
+        }
+      ]
+    },
+    "page-008": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "breast milk",
+          "score": 3.0721,
+          "evidence": []
+        },
+        {
+          "term": "fruit juice",
+          "score": 1.7139,
+          "evidence": []
+        },
+        {
+          "term": "folk fluids",
+          "score": 1.6496,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding practices",
+          "score": 1.6106,
+          "evidence": []
+        },
+        {
+          "term": "food",
+          "score": 0.9827,
+          "evidence": []
+        },
+        {
+          "term": "liquids",
+          "score": 0.8862,
+          "evidence": []
+        },
+        {
+          "term": "breast-milk",
+          "score": 0.865,
+          "evidence": []
+        },
+        {
+          "term": "infant",
+          "score": 0.8369,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "breast milk",
+          "score": 106.5305,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding practices",
+          "score": 45.8671,
+          "evidence": []
+        },
+        {
+          "term": "fruit juice",
+          "score": 27.7138,
+          "evidence": []
+        },
+        {
+          "term": "folk fluids",
+          "score": 26.3275,
+          "evidence": []
+        },
+        {
+          "term": "food",
+          "score": 25.2807,
+          "evidence": []
+        },
+        {
+          "term": "infant",
+          "score": 20.2855,
+          "evidence": []
+        },
+        {
+          "term": "liquids",
+          "score": 14.3677,
+          "evidence": []
+        },
+        {
+          "term": "feeding",
+          "score": 13.7808,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "breastfeeding practices",
+          "score": 0.1899,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.1757,
+          "evidence": []
+        },
+        {
+          "term": "child",
+          "score": 0.1568,
+          "evidence": []
+        },
+        {
+          "term": "infant",
+          "score": 0.1507,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.1502,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy",
+          "score": 0.1359,
+          "evidence": []
+        },
+        {
+          "term": "pregnant",
+          "score": 0.133,
+          "evidence": []
+        },
+        {
+          "term": "maternal",
+          "score": 0.1244,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "bleeding",
+          "score": 2.7487,
+          "evidence": []
+        },
+        {
+          "term": "she",
+          "score": 2.6104,
+          "evidence": []
+        },
+        {
+          "term": "yes",
+          "score": 2.3427,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 2.2751,
+          "evidence": []
+        },
+        {
+          "term": "art",
+          "score": 2.0176,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy",
+          "score": 1.9188,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 1.9103,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 1.8765,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "breastfeeding practices",
+          "score": 0.1899,
+          "evidence": []
+        },
+        {
+          "term": "child",
+          "score": 0.1568,
+          "evidence": []
+        },
+        {
+          "term": "infant",
+          "score": 0.1507,
+          "evidence": []
+        },
+        {
+          "term": "breast milk",
+          "score": 0.0958,
+          "evidence": []
+        },
+        {
+          "term": "mother",
+          "score": 0.0921,
+          "evidence": []
+        },
+        {
+          "term": "feeding",
+          "score": 0.0657,
+          "evidence": []
+        },
+        {
+          "term": "received",
+          "score": 0.044,
+          "evidence": []
+        },
+        {
+          "term": "water",
+          "score": 0.0429,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 74.114,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 46.5772,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 31.898,
+          "evidence": []
+        },
+        {
+          "term": "文件a",
+          "score": 27.5669,
+          "evidence": []
+        },
+        {
+          "term": "不良反应",
+          "score": 27.5305,
+          "evidence": []
+        },
+        {
+          "term": "可能会",
+          "score": 27.2333,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 23.2579,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 23.2579,
+          "evidence": []
+        }
+      ]
+    },
+    "page-009": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "breast-milk substitute",
+          "score": 1.8223,
+          "evidence": []
+        },
+        {
+          "term": "suitable breast-milk",
+          "score": 1.772,
+          "evidence": []
+        },
+        {
+          "term": "foods",
+          "score": 0.9571,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "suitable breast-milk",
+          "score": 33.0273,
+          "evidence": []
+        },
+        {
+          "term": "breast-milk substitute",
+          "score": 32.1974,
+          "evidence": []
+        },
+        {
+          "term": "foods",
+          "score": 18.0936,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "six months",
+          "score": 0.0784,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.0643,
+          "evidence": []
+        },
+        {
+          "term": "child",
+          "score": 0.0622,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "children",
+          "score": 1.0321,
+          "evidence": []
+        },
+        {
+          "term": "child",
+          "score": 0.8048,
+          "evidence": []
+        },
+        {
+          "term": "six months",
+          "score": 0.7243,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "six months",
+          "score": 0.0784,
+          "evidence": []
+        },
+        {
+          "term": "child",
+          "score": 0.0622,
+          "evidence": []
+        },
+        {
+          "term": "during",
+          "score": 0.0402,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 71.1934,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 44.2234,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 41.0546,
+          "evidence": []
+        }
+      ]
+    },
+    "page-010": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "engorged breasts",
+          "score": 2.6856,
+          "evidence": []
+        },
+        {
+          "term": "breast tissue",
+          "score": 2.562,
+          "evidence": []
+        },
+        {
+          "term": "milk flow",
+          "score": 1.902,
+          "evidence": []
+        },
+        {
+          "term": "mastitis",
+          "score": 1.8596,
+          "evidence": []
+        },
+        {
+          "term": "infection characterised",
+          "score": 1.7833,
+          "evidence": []
+        },
+        {
+          "term": "infant mouth",
+          "score": 1.5454,
+          "evidence": []
+        },
+        {
+          "term": "nipples",
+          "score": 1.2994,
+          "evidence": []
+        },
+        {
+          "term": "fungal infection",
+          "score": 1.2399,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "breast tissue",
+          "score": 89.6312,
+          "evidence": []
+        },
+        {
+          "term": "engorged breasts",
+          "score": 60.7621,
+          "evidence": []
+        },
+        {
+          "term": "mastitis",
+          "score": 57.471,
+          "evidence": []
+        },
+        {
+          "term": "milk flow",
+          "score": 51.3148,
+          "evidence": []
+        },
+        {
+          "term": "infection characterised",
+          "score": 35.4693,
+          "evidence": []
+        },
+        {
+          "term": "infant mouth",
+          "score": 28.2363,
+          "evidence": []
+        },
+        {
+          "term": "nipples",
+          "score": 24.8474,
+          "evidence": []
+        },
+        {
+          "term": "fungal infection",
+          "score": 19.269,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "infant mouth",
+          "score": 0.146,
+          "evidence": []
+        },
+        {
+          "term": "weeks",
+          "score": 0.1375,
+          "evidence": []
+        },
+        {
+          "term": "breast tissue",
+          "score": 0.1338,
+          "evidence": []
+        },
+        {
+          "term": "fungal infection",
+          "score": 0.1292,
+          "evidence": []
+        },
+        {
+          "term": "infection characterised",
+          "score": 0.1292,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.1259,
+          "evidence": []
+        },
+        {
+          "term": "severe",
+          "score": 0.123,
+          "evidence": []
+        },
+        {
+          "term": "bleeding",
+          "score": 0.1199,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "bleeding",
+          "score": 4.7981,
+          "evidence": []
+        },
+        {
+          "term": "she",
+          "score": 4.17,
+          "evidence": []
+        },
+        {
+          "term": "woman",
+          "score": 2.4493,
+          "evidence": []
+        },
+        {
+          "term": "side-effects",
+          "score": 2.2708,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 2.0838,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 2.0147,
+          "evidence": []
+        },
+        {
+          "term": "treatment",
+          "score": 1.6725,
+          "evidence": []
+        },
+        {
+          "term": "hsv",
+          "score": 1.5764,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "fungal infection",
+          "score": 0.1628,
+          "evidence": []
+        },
+        {
+          "term": "infant mouth",
+          "score": 0.146,
+          "evidence": []
+        },
+        {
+          "term": "breast tissue",
+          "score": 0.1338,
+          "evidence": []
+        },
+        {
+          "term": "infection characterised",
+          "score": 0.1335,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding",
+          "score": 0.1097,
+          "evidence": []
+        },
+        {
+          "term": "pain",
+          "score": 0.106,
+          "evidence": []
+        },
+        {
+          "term": "fever",
+          "score": 0.0964,
+          "evidence": []
+        },
+        {
+          "term": "oral",
+          "score": 0.0725,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 182.3053,
+          "evidence": []
+        },
+        {
+          "term": "在一些国家",
+          "score": 112.7343,
+          "evidence": []
+        },
+        {
+          "term": "青少年",
+          "score": 112.7343,
+          "evidence": []
+        },
+        {
+          "term": "在正常情况下",
+          "score": 104.1624,
+          "evidence": []
+        },
+        {
+          "term": "不良反应",
+          "score": 97.1668,
+          "evidence": []
+        },
+        {
+          "term": "岁的女孩",
+          "score": 92.3608,
+          "evidence": []
+        },
+        {
+          "term": "服务的提供",
+          "score": 92.3608,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 89.6012,
+          "evidence": []
+        }
+      ]
+    },
+    "page-011": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "infant feeding",
+          "score": 1.5666,
+          "evidence": []
+        },
+        {
+          "term": "feeding practices",
+          "score": 1.2654,
+          "evidence": []
+        },
+        {
+          "term": "core questions",
+          "score": 1.1801,
+          "evidence": []
+        },
+        {
+          "term": "module",
+          "score": 0.8795,
+          "evidence": []
+        },
+        {
+          "term": "mtct",
+          "score": 0.7813,
+          "evidence": []
+        },
+        {
+          "term": "questionnaire",
+          "score": 0.7461,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "infant feeding",
+          "score": 31.8981,
+          "evidence": []
+        },
+        {
+          "term": "core questions",
+          "score": 28.4696,
+          "evidence": []
+        },
+        {
+          "term": "feeding practices",
+          "score": 24.4037,
+          "evidence": []
+        },
+        {
+          "term": "module",
+          "score": 21.3306,
+          "evidence": []
+        },
+        {
+          "term": "mtct",
+          "score": 14.3579,
+          "evidence": []
+        },
+        {
+          "term": "questionnaire",
+          "score": 14.2246,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "infant feeding",
+          "score": 0.1295,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.1214,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.1084,
+          "evidence": []
+        },
+        {
+          "term": "child",
+          "score": 0.0925,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.0918,
+          "evidence": []
+        },
+        {
+          "term": "study",
+          "score": 0.0876,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health",
+          "score": 2.0876,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 1.5727,
+          "evidence": []
+        },
+        {
+          "term": "prep",
+          "score": 1.3723,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 1.3155,
+          "evidence": []
+        },
+        {
+          "term": "training",
+          "score": 1.1239,
+          "evidence": []
+        },
+        {
+          "term": "care",
+          "score": 1.0883,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "infant feeding",
+          "score": 0.1295,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.1214,
+          "evidence": []
+        },
+        {
+          "term": "study",
+          "score": 0.0876,
+          "evidence": []
+        },
+        {
+          "term": "studies",
+          "score": 0.0741,
+          "evidence": []
+        },
+        {
+          "term": "feeding practices",
+          "score": 0.0666,
+          "evidence": []
+        },
+        {
+          "term": "core questions",
+          "score": 0.0621,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "对非自愿重新安置行动的研究",
+          "score": 35.5702,
+          "evidence": []
+        },
+        {
+          "term": "真相与后果",
+          "score": 34.9533,
+          "evidence": []
+        },
+        {
+          "term": "究竟是谁的创意",
+          "score": 33.6234,
+          "evidence": []
+        },
+        {
+          "term": "确定艾滋病流行的劳动力成本",
+          "score": 33.451,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 32.5709,
+          "evidence": []
+        },
+        {
+          "term": "研究伦理委员会预算审查",
+          "score": 30.2686,
+          "evidence": []
+        }
+      ]
+    },
+    "page-012": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "caesarean section",
+          "score": 1.0319,
+          "evidence": []
+        },
+        {
+          "term": "mother",
+          "score": 0.8067,
+          "evidence": []
+        },
+        {
+          "term": "status",
+          "score": 0.5588,
+          "evidence": []
+        },
+        {
+          "term": "household",
+          "score": 0.5586,
+          "evidence": []
+        },
+        {
+          "term": "delivery",
+          "score": 0.4915,
+          "evidence": []
+        },
+        {
+          "term": "during",
+          "score": 0.4887,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "mother",
+          "score": 18.8857,
+          "evidence": []
+        },
+        {
+          "term": "caesarean section",
+          "score": 15.6565,
+          "evidence": []
+        },
+        {
+          "term": "status",
+          "score": 9.5744,
+          "evidence": []
+        },
+        {
+          "term": "delivery",
+          "score": 9.2602,
+          "evidence": []
+        },
+        {
+          "term": "during",
+          "score": 8.4016,
+          "evidence": []
+        },
+        {
+          "term": "household",
+          "score": 7.9704,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "women",
+          "score": 0.1979,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy",
+          "score": 0.1514,
+          "evidence": []
+        },
+        {
+          "term": "pregnant",
+          "score": 0.1495,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.139,
+          "evidence": []
+        },
+        {
+          "term": "art",
+          "score": 0.1334,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.1296,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "status",
+          "score": 2.9047,
+          "evidence": []
+        },
+        {
+          "term": "load",
+          "score": 2.6963,
+          "evidence": []
+        },
+        {
+          "term": "adh",
+          "score": 2.4537,
+          "evidence": []
+        },
+        {
+          "term": "viral",
+          "score": 2.4142,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 2.142,
+          "evidence": []
+        },
+        {
+          "term": "cpt",
+          "score": 1.9015,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "birth",
+          "score": 0.1193,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.1067,
+          "evidence": []
+        },
+        {
+          "term": "during",
+          "score": 0.1067,
+          "evidence": []
+        },
+        {
+          "term": "number",
+          "score": 0.1022,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.0952,
+          "evidence": []
+        },
+        {
+          "term": "age",
+          "score": 0.094,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 33.9725,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 28.5755,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 24.7567,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 17.6439,
+          "evidence": []
+        },
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 16.6013,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 15.8981,
+          "evidence": []
+        }
+      ]
+    },
+    "page-013": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "infant feeding",
+          "score": 2.4248,
+          "evidence": []
+        },
+        {
+          "term": "feeding patterns",
+          "score": 2.3313,
+          "evidence": []
+        },
+        {
+          "term": "feeding practices",
+          "score": 1.7845,
+          "evidence": []
+        },
+        {
+          "term": "feeding status",
+          "score": 1.775,
+          "evidence": []
+        },
+        {
+          "term": "breast milk",
+          "score": 1.7458,
+          "evidence": []
+        },
+        {
+          "term": "recall period",
+          "score": 1.5891,
+          "evidence": []
+        },
+        {
+          "term": "exclusive breastfeeding",
+          "score": 1.5823,
+          "evidence": []
+        },
+        {
+          "term": "current infant",
+          "score": 1.3708,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "infant feeding",
+          "score": 88.9324,
+          "evidence": []
+        },
+        {
+          "term": "feeding patterns",
+          "score": 77.4471,
+          "evidence": []
+        },
+        {
+          "term": "feeding practices",
+          "score": 61.1525,
+          "evidence": []
+        },
+        {
+          "term": "feeding status",
+          "score": 59.9105,
+          "evidence": []
+        },
+        {
+          "term": "current infant",
+          "score": 38.8469,
+          "evidence": []
+        },
+        {
+          "term": "breast milk",
+          "score": 32.2938,
+          "evidence": []
+        },
+        {
+          "term": "exclusive breastfeeding",
+          "score": 30.4432,
+          "evidence": []
+        },
+        {
+          "term": "recall period",
+          "score": 29.172,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "infant feeding",
+          "score": 0.2413,
+          "evidence": []
+        },
+        {
+          "term": "current infant",
+          "score": 0.2207,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.1835,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding",
+          "score": 0.1629,
+          "evidence": []
+        },
+        {
+          "term": "exclusive breastfeeding",
+          "score": 0.1629,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.1614,
+          "evidence": []
+        },
+        {
+          "term": "feeding status",
+          "score": 0.1552,
+          "evidence": []
+        },
+        {
+          "term": "pregnant",
+          "score": 0.1482,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hiv",
+          "score": 3.9601,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 3.4878,
+          "evidence": []
+        },
+        {
+          "term": "feeding status",
+          "score": 3.1159,
+          "evidence": []
+        },
+        {
+          "term": "adh",
+          "score": 2.4781,
+          "evidence": []
+        },
+        {
+          "term": "records",
+          "score": 2.3369,
+          "evidence": []
+        },
+        {
+          "term": "home-based",
+          "score": 2.1486,
+          "evidence": []
+        },
+        {
+          "term": "art",
+          "score": 1.992,
+          "evidence": []
+        },
+        {
+          "term": "cpt",
+          "score": 1.9711,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "infant feeding",
+          "score": 0.2413,
+          "evidence": []
+        },
+        {
+          "term": "current infant",
+          "score": 0.2207,
+          "evidence": []
+        },
+        {
+          "term": "exclusive breastfeeding",
+          "score": 0.1929,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.1614,
+          "evidence": []
+        },
+        {
+          "term": "feeding status",
+          "score": 0.1552,
+          "evidence": []
+        },
+        {
+          "term": "during",
+          "score": 0.135,
+          "evidence": []
+        },
+        {
+          "term": "transmission",
+          "score": 0.1281,
+          "evidence": []
+        },
+        {
+          "term": "feeding practices",
+          "score": 0.1096,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 53.5085,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 52.2914,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 27.3793,
+          "evidence": []
+        },
+        {
+          "term": "可能会",
+          "score": 26.8852,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 26.696,
+          "evidence": []
+        },
+        {
+          "term": "最小化",
+          "score": 26.644,
+          "evidence": []
+        },
+        {
+          "term": "不良反应",
+          "score": 23.4749,
+          "evidence": []
+        },
+        {
+          "term": "在紧急情",
+          "score": 22.7008,
+          "evidence": []
+        }
+      ]
+    },
+    "page-014": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "infant feeding",
+          "score": 2.1658,
+          "evidence": []
+        },
+        {
+          "term": "infant receive",
+          "score": 1.5864,
+          "evidence": []
+        },
+        {
+          "term": "feeding patterns",
+          "score": 1.5484,
+          "evidence": []
+        },
+        {
+          "term": "don know",
+          "score": 1.079,
+          "evidence": []
+        },
+        {
+          "term": "she",
+          "score": 1.015,
+          "evidence": []
+        },
+        {
+          "term": "colostrum",
+          "score": 0.9714,
+          "evidence": []
+        },
+        {
+          "term": "breast",
+          "score": 0.8612,
+          "evidence": []
+        },
+        {
+          "term": "feeds",
+          "score": 0.8592,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "infant feeding",
+          "score": 73.6818,
+          "evidence": []
+        },
+        {
+          "term": "infant receive",
+          "score": 56.6871,
+          "evidence": []
+        },
+        {
+          "term": "feeding patterns",
+          "score": 31.8976,
+          "evidence": []
+        },
+        {
+          "term": "she",
+          "score": 17.1006,
+          "evidence": []
+        },
+        {
+          "term": "life",
+          "score": 16.7943,
+          "evidence": []
+        },
+        {
+          "term": "don know",
+          "score": 16.6901,
+          "evidence": []
+        },
+        {
+          "term": "yes",
+          "score": 16.6864,
+          "evidence": []
+        },
+        {
+          "term": "week",
+          "score": 16.4017,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "infant feeding",
+          "score": 0.2222,
+          "evidence": []
+        },
+        {
+          "term": "infant receive",
+          "score": 0.2198,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.187,
+          "evidence": []
+        },
+        {
+          "term": "child",
+          "score": 0.1681,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.1548,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding",
+          "score": 0.1488,
+          "evidence": []
+        },
+        {
+          "term": "yes",
+          "score": 0.1444,
+          "evidence": []
+        },
+        {
+          "term": "during",
+          "score": 0.1382,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "yes",
+          "score": 14.0726,
+          "evidence": []
+        },
+        {
+          "term": "she",
+          "score": 4.7937,
+          "evidence": []
+        },
+        {
+          "term": "bleeding",
+          "score": 4.7872,
+          "evidence": []
+        },
+        {
+          "term": "steps",
+          "score": 3.3896,
+          "evidence": []
+        },
+        {
+          "term": "woman",
+          "score": 3.0355,
+          "evidence": []
+        },
+        {
+          "term": "home-based",
+          "score": 2.6596,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 2.5543,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 2.5533,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "infant feeding",
+          "score": 0.2222,
+          "evidence": []
+        },
+        {
+          "term": "infant receive",
+          "score": 0.2198,
+          "evidence": []
+        },
+        {
+          "term": "yes",
+          "score": 0.1444,
+          "evidence": []
+        },
+        {
+          "term": "during",
+          "score": 0.1382,
+          "evidence": []
+        },
+        {
+          "term": "she",
+          "score": 0.1301,
+          "evidence": []
+        },
+        {
+          "term": "period",
+          "score": 0.1086,
+          "evidence": []
+        },
+        {
+          "term": "mother",
+          "score": 0.1019,
+          "evidence": []
+        },
+        {
+          "term": "questions",
+          "score": 0.0954,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 56.2843,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 50.6997,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 22.6599,
+          "evidence": []
+        },
+        {
+          "term": "不良反应",
+          "score": 21.3638,
+          "evidence": []
+        },
+        {
+          "term": "可能会",
+          "score": 20.4319,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 19.2991,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 19.2991,
+          "evidence": []
+        },
+        {
+          "term": "或一些其他单位",
+          "score": 19.2991,
+          "evidence": []
+        }
+      ]
+    },
+    "page-015": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "food specified",
+          "score": 1.6421,
+          "evidence": []
+        },
+        {
+          "term": "mother unwell",
+          "score": 1.5158,
+          "evidence": []
+        },
+        {
+          "term": "milk",
+          "score": 0.9159,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "food specified",
+          "score": 36.6194,
+          "evidence": []
+        },
+        {
+          "term": "mother unwell",
+          "score": 27.0264,
+          "evidence": []
+        },
+        {
+          "term": "milk",
+          "score": 16.6249,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "women",
+          "score": 0.0569,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.0562,
+          "evidence": []
+        },
+        {
+          "term": "infant",
+          "score": 0.0543,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "bleeding",
+          "score": 0.7913,
+          "evidence": []
+        },
+        {
+          "term": "treatment",
+          "score": 0.7437,
+          "evidence": []
+        },
+        {
+          "term": "she",
+          "score": 0.7245,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "infant",
+          "score": 0.0543,
+          "evidence": []
+        },
+        {
+          "term": "mother unwell",
+          "score": 0.0359,
+          "evidence": []
+        },
+        {
+          "term": "during",
+          "score": 0.0347,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 99.8939,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 50.2315,
+          "evidence": []
+        },
+        {
+          "term": "不良反应",
+          "score": 37.7905,
+          "evidence": []
+        }
+      ]
+    },
+    "page-016": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "breast milk",
+          "score": 1.9245,
+          "evidence": []
+        },
+        {
+          "term": "food specified",
+          "score": 1.6421,
+          "evidence": []
+        },
+        {
+          "term": "milk during",
+          "score": 1.3969,
+          "evidence": []
+        },
+        {
+          "term": "feeding pattern",
+          "score": 1.3846,
+          "evidence": []
+        },
+        {
+          "term": "don know",
+          "score": 1.3096,
+          "evidence": []
+        },
+        {
+          "term": "yesterday",
+          "score": 1.2808,
+          "evidence": []
+        },
+        {
+          "term": "pattern typical",
+          "score": 1.2772,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "breast milk",
+          "score": 37.3574,
+          "evidence": []
+        },
+        {
+          "term": "food specified",
+          "score": 36.6194,
+          "evidence": []
+        },
+        {
+          "term": "milk during",
+          "score": 26.3674,
+          "evidence": []
+        },
+        {
+          "term": "yesterday",
+          "score": 24.8474,
+          "evidence": []
+        },
+        {
+          "term": "don know",
+          "score": 24.2666,
+          "evidence": []
+        },
+        {
+          "term": "feeding pattern",
+          "score": 23.8296,
+          "evidence": []
+        },
+        {
+          "term": "pattern typical",
+          "score": 20.2576,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "months",
+          "score": 0.1242,
+          "evidence": []
+        },
+        {
+          "term": "yes",
+          "score": 0.1129,
+          "evidence": []
+        },
+        {
+          "term": "child",
+          "score": 0.1129,
+          "evidence": []
+        },
+        {
+          "term": "polio vaccine",
+          "score": 0.1081,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.1075,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.0999,
+          "evidence": []
+        },
+        {
+          "term": "until",
+          "score": 0.0998,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "yes",
+          "score": 16.844,
+          "evidence": []
+        },
+        {
+          "term": "steps",
+          "score": 4.0648,
+          "evidence": []
+        },
+        {
+          "term": "polio vaccine",
+          "score": 2.8941,
+          "evidence": []
+        },
+        {
+          "term": "few",
+          "score": 2.4999,
+          "evidence": []
+        },
+        {
+          "term": "wpv",
+          "score": 1.9734,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 1.8428,
+          "evidence": []
+        },
+        {
+          "term": "district",
+          "score": 1.6198,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "polio vaccine",
+          "score": 0.1309,
+          "evidence": []
+        },
+        {
+          "term": "milk during",
+          "score": 0.1203,
+          "evidence": []
+        },
+        {
+          "term": "yes",
+          "score": 0.1129,
+          "evidence": []
+        },
+        {
+          "term": "number",
+          "score": 0.0979,
+          "evidence": []
+        },
+        {
+          "term": "date",
+          "score": 0.0869,
+          "evidence": []
+        },
+        {
+          "term": "infant",
+          "score": 0.0863,
+          "evidence": []
+        },
+        {
+          "term": "month",
+          "score": 0.0766,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 83.8141,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 53.6318,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 41.81,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 41.81,
+          "evidence": []
+        },
+        {
+          "term": "或一些其他单位",
+          "score": 41.81,
+          "evidence": []
+        },
+        {
+          "term": "分钟讨论以下问题",
+          "score": 32.5968,
+          "evidence": []
+        },
+        {
+          "term": "教员分发案例研究",
+          "score": 32.5968,
+          "evidence": []
+        }
+      ]
+    },
+    "page-017": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "yes",
+          "score": 0.7429,
+          "evidence": []
+        },
+        {
+          "term": "night",
+          "score": 0.6134,
+          "evidence": []
+        },
+        {
+          "term": "crying",
+          "score": 0.6083,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "yes",
+          "score": 13.3491,
+          "evidence": []
+        },
+        {
+          "term": "infant",
+          "score": 10.1428,
+          "evidence": []
+        },
+        {
+          "term": "night",
+          "score": 9.6335,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "yes",
+          "score": 0.0739,
+          "evidence": []
+        },
+        {
+          "term": "child",
+          "score": 0.043,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.042,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "yes",
+          "score": 11.1643,
+          "evidence": []
+        },
+        {
+          "term": "steps",
+          "score": 2.5578,
+          "evidence": []
+        },
+        {
+          "term": "few",
+          "score": 1.4314,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "yes",
+          "score": 0.0739,
+          "evidence": []
+        },
+        {
+          "term": "child",
+          "score": 0.043,
+          "evidence": []
+        },
+        {
+          "term": "infant",
+          "score": 0.041,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 117.8999,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 73.9453,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 67.654,
+          "evidence": []
+        }
+      ]
+    },
+    "page-018": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "breast milk",
+          "score": 2.6415,
+          "evidence": []
+        },
+        {
+          "term": "milk during",
+          "score": 2.1304,
+          "evidence": []
+        },
+        {
+          "term": "cup",
+          "score": 1.5075,
+          "evidence": []
+        },
+        {
+          "term": "yesterday",
+          "score": 1.487,
+          "evidence": []
+        },
+        {
+          "term": "time she",
+          "score": 1.4422,
+          "evidence": []
+        },
+        {
+          "term": "utensils",
+          "score": 1.0138,
+          "evidence": []
+        },
+        {
+          "term": "food",
+          "score": 0.9827,
+          "evidence": []
+        },
+        {
+          "term": "water",
+          "score": 0.9622,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "breast milk",
+          "score": 81.2125,
+          "evidence": []
+        },
+        {
+          "term": "milk during",
+          "score": 69.3597,
+          "evidence": []
+        },
+        {
+          "term": "cup",
+          "score": 36.831,
+          "evidence": []
+        },
+        {
+          "term": "yesterday",
+          "score": 33.1299,
+          "evidence": []
+        },
+        {
+          "term": "time she",
+          "score": 26.7424,
+          "evidence": []
+        },
+        {
+          "term": "food",
+          "score": 25.2807,
+          "evidence": []
+        },
+        {
+          "term": "water",
+          "score": 22.7839,
+          "evidence": []
+        },
+        {
+          "term": "infant",
+          "score": 16.9046,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "time she",
+          "score": 0.145,
+          "evidence": []
+        },
+        {
+          "term": "some studies",
+          "score": 0.1197,
+          "evidence": []
+        },
+        {
+          "term": "months",
+          "score": 0.1157,
+          "evidence": []
+        },
+        {
+          "term": "until",
+          "score": 0.112,
+          "evidence": []
+        },
+        {
+          "term": "child",
+          "score": 0.1079,
+          "evidence": []
+        },
+        {
+          "term": "infant",
+          "score": 0.1015,
+          "evidence": []
+        },
+        {
+          "term": "weeks",
+          "score": 0.1011,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding",
+          "score": 0.0982,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "time she",
+          "score": 4.6882,
+          "evidence": []
+        },
+        {
+          "term": "bleeding",
+          "score": 3.7061,
+          "evidence": []
+        },
+        {
+          "term": "some studies",
+          "score": 3.2404,
+          "evidence": []
+        },
+        {
+          "term": "woman",
+          "score": 2.0188,
+          "evidence": []
+        },
+        {
+          "term": "district",
+          "score": 1.9777,
+          "evidence": []
+        },
+        {
+          "term": "treatment",
+          "score": 1.7714,
+          "evidence": []
+        },
+        {
+          "term": "side-effects",
+          "score": 1.7687,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy",
+          "score": 1.6089,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "time she",
+          "score": 0.145,
+          "evidence": []
+        },
+        {
+          "term": "milk during",
+          "score": 0.1259,
+          "evidence": []
+        },
+        {
+          "term": "some studies",
+          "score": 0.1197,
+          "evidence": []
+        },
+        {
+          "term": "infant",
+          "score": 0.1015,
+          "evidence": []
+        },
+        {
+          "term": "breast milk",
+          "score": 0.0772,
+          "evidence": []
+        },
+        {
+          "term": "mother",
+          "score": 0.064,
+          "evidence": []
+        },
+        {
+          "term": "day",
+          "score": 0.0616,
+          "evidence": []
+        },
+        {
+          "term": "same",
+          "score": 0.0593,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 101.8621,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 47.6586,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 45.1106,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 45.1106,
+          "evidence": []
+        },
+        {
+          "term": "或一些其他单位",
+          "score": 45.1106,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 43.8369,
+          "evidence": []
+        },
+        {
+          "term": "在一些国家",
+          "score": 39.7577,
+          "evidence": []
+        },
+        {
+          "term": "青少年",
+          "score": 39.7577,
+          "evidence": []
+        }
+      ]
+    },
+    "page-019": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "beside",
+          "score": 0.9359,
+          "evidence": []
+        },
+        {
+          "term": "tick",
+          "score": 0.8237,
+          "evidence": []
+        },
+        {
+          "term": "ask",
+          "score": 0.7902,
+          "evidence": []
+        },
+        {
+          "term": "infant",
+          "score": 0.7706,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "infant",
+          "score": 16.9046,
+          "evidence": []
+        },
+        {
+          "term": "beside",
+          "score": 15.1787,
+          "evidence": []
+        },
+        {
+          "term": "tick",
+          "score": 13.3461,
+          "evidence": []
+        },
+        {
+          "term": "ask",
+          "score": 12.8254,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "women",
+          "score": 0.0809,
+          "evidence": []
+        },
+        {
+          "term": "yes",
+          "score": 0.0747,
+          "evidence": []
+        },
+        {
+          "term": "infant",
+          "score": 0.0729,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding",
+          "score": 0.0696,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "yes",
+          "score": 2.9468,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 1.7996,
+          "evidence": []
+        },
+        {
+          "term": "bleeding",
+          "score": 1.1201,
+          "evidence": []
+        },
+        {
+          "term": "she",
+          "score": 1.1048,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "yes",
+          "score": 0.0747,
+          "evidence": []
+        },
+        {
+          "term": "infant",
+          "score": 0.0729,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.0679,
+          "evidence": []
+        },
+        {
+          "term": "mother",
+          "score": 0.0437,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 76.0647,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 55.3904,
+          "evidence": []
+        },
+        {
+          "term": "不良反应",
+          "score": 32.5626,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 32.032,
+          "evidence": []
+        }
+      ]
+    },
+    "page-020": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "breast milk",
+          "score": 2.4869,
+          "evidence": []
+        },
+        {
+          "term": "cup",
+          "score": 1.1663,
+          "evidence": []
+        },
+        {
+          "term": "utensils",
+          "score": 1.0138,
+          "evidence": []
+        },
+        {
+          "term": "visit",
+          "score": 0.8593,
+          "evidence": []
+        },
+        {
+          "term": "days",
+          "score": 0.8251,
+          "evidence": []
+        },
+        {
+          "term": "relieve",
+          "score": 0.7912,
+          "evidence": []
+        },
+        {
+          "term": "infant",
+          "score": 0.7706,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "breast milk",
+          "score": 64.1095,
+          "evidence": []
+        },
+        {
+          "term": "cup",
+          "score": 22.0986,
+          "evidence": []
+        },
+        {
+          "term": "visit",
+          "score": 20.945,
+          "evidence": []
+        },
+        {
+          "term": "days",
+          "score": 19.9178,
+          "evidence": []
+        },
+        {
+          "term": "infant",
+          "score": 16.9046,
+          "evidence": []
+        },
+        {
+          "term": "utensils",
+          "score": 16.565,
+          "evidence": []
+        },
+        {
+          "term": "expressed",
+          "score": 15.0428,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "some studies",
+          "score": 0.1153,
+          "evidence": []
+        },
+        {
+          "term": "yes",
+          "score": 0.1023,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.0897,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding",
+          "score": 0.0878,
+          "evidence": []
+        },
+        {
+          "term": "months",
+          "score": 0.0867,
+          "evidence": []
+        },
+        {
+          "term": "infant",
+          "score": 0.0858,
+          "evidence": []
+        },
+        {
+          "term": "study",
+          "score": 0.0812,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "yes",
+          "score": 8.6591,
+          "evidence": []
+        },
+        {
+          "term": "bleeding",
+          "score": 2.4397,
+          "evidence": []
+        },
+        {
+          "term": "steps",
+          "score": 2.1883,
+          "evidence": []
+        },
+        {
+          "term": "she",
+          "score": 2.1229,
+          "evidence": []
+        },
+        {
+          "term": "some studies",
+          "score": 2.117,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 1.6258,
+          "evidence": []
+        },
+        {
+          "term": "few",
+          "score": 1.5506,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "some studies",
+          "score": 0.1153,
+          "evidence": []
+        },
+        {
+          "term": "yes",
+          "score": 0.1023,
+          "evidence": []
+        },
+        {
+          "term": "infant",
+          "score": 0.0858,
+          "evidence": []
+        },
+        {
+          "term": "number",
+          "score": 0.0709,
+          "evidence": []
+        },
+        {
+          "term": "breast milk",
+          "score": 0.0642,
+          "evidence": []
+        },
+        {
+          "term": "days",
+          "score": 0.0569,
+          "evidence": []
+        },
+        {
+          "term": "visit",
+          "score": 0.0427,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 116.141,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 57.2716,
+          "evidence": []
+        },
+        {
+          "term": "哪些人群的访问应受到限制",
+          "score": 53.7627,
+          "evidence": []
+        },
+        {
+          "term": "在你看来",
+          "score": 53.7627,
+          "evidence": []
+        },
+        {
+          "term": "在流感大流行准备和应对方面",
+          "score": 53.7627,
+          "evidence": []
+        },
+        {
+          "term": "出版者",
+          "score": 53.7627,
+          "evidence": []
+        },
+        {
+          "term": "科研机构",
+          "score": 53.7627,
+          "evidence": []
+        }
+      ]
+    },
+    "page-021": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "non-human milks",
+          "score": 1.8507,
+          "evidence": []
+        },
+        {
+          "term": "breast milk",
+          "score": 1.777,
+          "evidence": []
+        },
+        {
+          "term": "began giving",
+          "score": 1.6119,
+          "evidence": []
+        },
+        {
+          "term": "solid foods",
+          "score": 1.5513,
+          "evidence": []
+        },
+        {
+          "term": "infant feeding",
+          "score": 1.4453,
+          "evidence": []
+        },
+        {
+          "term": "stopped",
+          "score": 0.9393,
+          "evidence": []
+        },
+        {
+          "term": "liquids",
+          "score": 0.8862,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "breast milk",
+          "score": 31.8158,
+          "evidence": []
+        },
+        {
+          "term": "non-human milks",
+          "score": 30.1218,
+          "evidence": []
+        },
+        {
+          "term": "began giving",
+          "score": 29.2877,
+          "evidence": []
+        },
+        {
+          "term": "solid foods",
+          "score": 27.3314,
+          "evidence": []
+        },
+        {
+          "term": "infant feeding",
+          "score": 27.3045,
+          "evidence": []
+        },
+        {
+          "term": "stopped",
+          "score": 19.8011,
+          "evidence": []
+        },
+        {
+          "term": "liquids",
+          "score": 14.3677,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "infant feeding",
+          "score": 0.1983,
+          "evidence": []
+        },
+        {
+          "term": "maternal health",
+          "score": 0.1627,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.1412,
+          "evidence": []
+        },
+        {
+          "term": "art",
+          "score": 0.1403,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding",
+          "score": 0.1382,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.132,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.1272,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "yes",
+          "score": 11.4101,
+          "evidence": []
+        },
+        {
+          "term": "load",
+          "score": 3.0291,
+          "evidence": []
+        },
+        {
+          "term": "viral",
+          "score": 2.8599,
+          "evidence": []
+        },
+        {
+          "term": "steps",
+          "score": 2.65,
+          "evidence": []
+        },
+        {
+          "term": "maternal health",
+          "score": 1.8728,
+          "evidence": []
+        },
+        {
+          "term": "status",
+          "score": 1.783,
+          "evidence": []
+        },
+        {
+          "term": "bleeding",
+          "score": 1.7791,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "infant feeding",
+          "score": 0.1983,
+          "evidence": []
+        },
+        {
+          "term": "maternal health",
+          "score": 0.1627,
+          "evidence": []
+        },
+        {
+          "term": "yes",
+          "score": 0.1017,
+          "evidence": []
+        },
+        {
+          "term": "breast milk",
+          "score": 0.0811,
+          "evidence": []
+        },
+        {
+          "term": "year",
+          "score": 0.072,
+          "evidence": []
+        },
+        {
+          "term": "time",
+          "score": 0.0601,
+          "evidence": []
+        },
+        {
+          "term": "date",
+          "score": 0.0593,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 72.0407,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 55.7144,
+          "evidence": []
+        },
+        {
+          "term": "不良反应",
+          "score": 24.8416,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 23.434,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 23.434,
+          "evidence": []
+        },
+        {
+          "term": "或一些其他单位",
+          "score": 23.434,
+          "evidence": []
+        },
+        {
+          "term": "分钟讨论以下问题",
+          "score": 23.1587,
+          "evidence": []
+        }
+      ]
+    },
+    "page-022": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "mon yea",
+          "score": 3.5857,
+          "evidence": []
+        },
+        {
+          "term": "breast milk",
+          "score": 2.8637,
+          "evidence": []
+        },
+        {
+          "term": "affected breast",
+          "score": 2.78,
+          "evidence": []
+        },
+        {
+          "term": "breast during",
+          "score": 2.615,
+          "evidence": []
+        },
+        {
+          "term": "day mon",
+          "score": 2.5097,
+          "evidence": []
+        },
+        {
+          "term": "receive breast",
+          "score": 2.3418,
+          "evidence": []
+        },
+        {
+          "term": "breast health",
+          "score": 2.3092,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding stopped",
+          "score": 1.7157,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "affected breast",
+          "score": 135.4125,
+          "evidence": []
+        },
+        {
+          "term": "breast during",
+          "score": 128.2025,
+          "evidence": []
+        },
+        {
+          "term": "breast milk",
+          "score": 128.0243,
+          "evidence": []
+        },
+        {
+          "term": "receive breast",
+          "score": 117.3727,
+          "evidence": []
+        },
+        {
+          "term": "breast health",
+          "score": 116.6267,
+          "evidence": []
+        },
+        {
+          "term": "mon yea",
+          "score": 114.5094,
+          "evidence": []
+        },
+        {
+          "term": "yes",
+          "score": 76.7573,
+          "evidence": []
+        },
+        {
+          "term": "day mon",
+          "score": 75.6932,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "yes",
+          "score": 0.2147,
+          "evidence": []
+        },
+        {
+          "term": "date breastfeeding",
+          "score": 0.2084,
+          "evidence": []
+        },
+        {
+          "term": "breast health",
+          "score": 0.1887,
+          "evidence": []
+        },
+        {
+          "term": "breast during",
+          "score": 0.1729,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding stopped",
+          "score": 0.1669,
+          "evidence": []
+        },
+        {
+          "term": "during feeding",
+          "score": 0.1605,
+          "evidence": []
+        },
+        {
+          "term": "during some",
+          "score": 0.1423,
+          "evidence": []
+        },
+        {
+          "term": "longitudinal study",
+          "score": 0.1354,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "yes",
+          "score": 65.9246,
+          "evidence": []
+        },
+        {
+          "term": "steps",
+          "score": 15.2646,
+          "evidence": []
+        },
+        {
+          "term": "few",
+          "score": 9.0278,
+          "evidence": []
+        },
+        {
+          "term": "bleeding",
+          "score": 6.0535,
+          "evidence": []
+        },
+        {
+          "term": "thorough",
+          "score": 5.9542,
+          "evidence": []
+        },
+        {
+          "term": "attempt",
+          "score": 5.9199,
+          "evidence": []
+        },
+        {
+          "term": "tell",
+          "score": 5.6758,
+          "evidence": []
+        },
+        {
+          "term": "she",
+          "score": 5.2934,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "yes",
+          "score": 0.2147,
+          "evidence": []
+        },
+        {
+          "term": "date breastfeeding",
+          "score": 0.2084,
+          "evidence": []
+        },
+        {
+          "term": "breast health",
+          "score": 0.1887,
+          "evidence": []
+        },
+        {
+          "term": "breast during",
+          "score": 0.1729,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding stopped",
+          "score": 0.1669,
+          "evidence": []
+        },
+        {
+          "term": "during feeding",
+          "score": 0.1605,
+          "evidence": []
+        },
+        {
+          "term": "infant receive",
+          "score": 0.154,
+          "evidence": []
+        },
+        {
+          "term": "during some",
+          "score": 0.1423,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 127.9442,
+          "evidence": []
+        },
+        {
+          "term": "在正常情况下",
+          "score": 84.3516,
+          "evidence": []
+        },
+        {
+          "term": "h5参考实验室和必要的管制实验室",
+          "score": 77.4671,
+          "evidence": []
+        },
+        {
+          "term": "很重要",
+          "score": 75.64,
+          "evidence": []
+        },
+        {
+          "term": "十分重要",
+          "score": 74.6894,
+          "evidence": []
+        },
+        {
+          "term": "追踪和报告机制",
+          "score": 67.0824,
+          "evidence": []
+        },
+        {
+          "term": "疫苗有关的",
+          "score": 67.0023,
+          "evidence": []
+        },
+        {
+          "term": "挑战性",
+          "score": 66.2865,
+          "evidence": []
+        }
+      ]
+    },
+    "page-023": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "specify",
+          "score": 1.1407,
+          "evidence": []
+        },
+        {
+          "term": "milk",
+          "score": 1.0633,
+          "evidence": []
+        },
+        {
+          "term": "breast",
+          "score": 0.9998,
+          "evidence": []
+        },
+        {
+          "term": "infant",
+          "score": 0.9449,
+          "evidence": []
+        },
+        {
+          "term": "ask",
+          "score": 0.9174,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding",
+          "score": 0.9066,
+          "evidence": []
+        },
+        {
+          "term": "health problem",
+          "score": 0.8293,
+          "evidence": []
+        },
+        {
+          "term": "tick",
+          "score": 0.8237,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "specify",
+          "score": 30.5029,
+          "evidence": []
+        },
+        {
+          "term": "infant",
+          "score": 27.0474,
+          "evidence": []
+        },
+        {
+          "term": "milk",
+          "score": 22.1666,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding",
+          "score": 22.094,
+          "evidence": []
+        },
+        {
+          "term": "breast",
+          "score": 20.2544,
+          "evidence": []
+        },
+        {
+          "term": "ask",
+          "score": 17.1006,
+          "evidence": []
+        },
+        {
+          "term": "tick",
+          "score": 13.3461,
+          "evidence": []
+        },
+        {
+          "term": "health problem",
+          "score": 12.1322,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health care",
+          "score": 0.1848,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.155,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.1315,
+          "evidence": []
+        },
+        {
+          "term": "yes",
+          "score": 0.1293,
+          "evidence": []
+        },
+        {
+          "term": "infant",
+          "score": 0.1199,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding",
+          "score": 0.1151,
+          "evidence": []
+        },
+        {
+          "term": "health problem",
+          "score": 0.1142,
+          "evidence": []
+        },
+        {
+          "term": "child",
+          "score": 0.1136,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "yes",
+          "score": 6.0256,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 3.3081,
+          "evidence": []
+        },
+        {
+          "term": "she",
+          "score": 2.8709,
+          "evidence": []
+        },
+        {
+          "term": "bleeding",
+          "score": 2.8459,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 2.4952,
+          "evidence": []
+        },
+        {
+          "term": "health problem",
+          "score": 2.19,
+          "evidence": []
+        },
+        {
+          "term": "woman",
+          "score": 1.8234,
+          "evidence": []
+        },
+        {
+          "term": "status",
+          "score": 1.6836,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health care",
+          "score": 0.1848,
+          "evidence": []
+        },
+        {
+          "term": "health problem",
+          "score": 0.1299,
+          "evidence": []
+        },
+        {
+          "term": "yes",
+          "score": 0.1293,
+          "evidence": []
+        },
+        {
+          "term": "infant",
+          "score": 0.1199,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding",
+          "score": 0.1151,
+          "evidence": []
+        },
+        {
+          "term": "mother",
+          "score": 0.0741,
+          "evidence": []
+        },
+        {
+          "term": "studies",
+          "score": 0.0735,
+          "evidence": []
+        },
+        {
+          "term": "ask",
+          "score": 0.0492,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 69.3812,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 47.0903,
+          "evidence": []
+        },
+        {
+          "term": "不良反应",
+          "score": 31.8226,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 31.5559,
+          "evidence": []
+        },
+        {
+          "term": "可能会",
+          "score": 27.8709,
+          "evidence": []
+        },
+        {
+          "term": "在一些国家",
+          "score": 26.3277,
+          "evidence": []
+        },
+        {
+          "term": "青少年",
+          "score": 26.3277,
+          "evidence": []
+        },
+        {
+          "term": "最小化",
+          "score": 25.7266,
+          "evidence": []
+        }
+      ]
+    },
+    "page-024": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "mon yea",
+          "score": 2.924,
+          "evidence": []
+        },
+        {
+          "term": "day mon",
+          "score": 2.0466,
+          "evidence": []
+        },
+        {
+          "term": "non-human milks",
+          "score": 1.8507,
+          "evidence": []
+        },
+        {
+          "term": "began giving",
+          "score": 1.6119,
+          "evidence": []
+        },
+        {
+          "term": "solid foods",
+          "score": 1.3527,
+          "evidence": []
+        },
+        {
+          "term": "infant health",
+          "score": 1.2024,
+          "evidence": []
+        },
+        {
+          "term": "stopped",
+          "score": 1.0457,
+          "evidence": []
+        },
+        {
+          "term": "occurred",
+          "score": 1.0437,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "mon yea",
+          "score": 71.5684,
+          "evidence": []
+        },
+        {
+          "term": "day mon",
+          "score": 47.3082,
+          "evidence": []
+        },
+        {
+          "term": "times",
+          "score": 35.4628,
+          "evidence": []
+        },
+        {
+          "term": "non-human milks",
+          "score": 30.1218,
+          "evidence": []
+        },
+        {
+          "term": "infant health",
+          "score": 29.661,
+          "evidence": []
+        },
+        {
+          "term": "began giving",
+          "score": 29.2877,
+          "evidence": []
+        },
+        {
+          "term": "occurred",
+          "score": 27.4871,
+          "evidence": []
+        },
+        {
+          "term": "yes",
+          "score": 26.6982,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "infant health",
+          "score": 0.1889,
+          "evidence": []
+        },
+        {
+          "term": "yes",
+          "score": 0.1637,
+          "evidence": []
+        },
+        {
+          "term": "until",
+          "score": 0.1105,
+          "evidence": []
+        },
+        {
+          "term": "weeks",
+          "score": 0.1,
+          "evidence": []
+        },
+        {
+          "term": "months",
+          "score": 0.0967,
+          "evidence": []
+        },
+        {
+          "term": "longitudinal study",
+          "score": 0.0961,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.0941,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding",
+          "score": 0.0935,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "yes",
+          "score": 22.7576,
+          "evidence": []
+        },
+        {
+          "term": "steps",
+          "score": 5.4231,
+          "evidence": []
+        },
+        {
+          "term": "few",
+          "score": 3.3711,
+          "evidence": []
+        },
+        {
+          "term": "status",
+          "score": 2.9239,
+          "evidence": []
+        },
+        {
+          "term": "infant health",
+          "score": 2.8134,
+          "evidence": []
+        },
+        {
+          "term": "bleeding",
+          "score": 2.5458,
+          "evidence": []
+        },
+        {
+          "term": "adh",
+          "score": 2.5257,
+          "evidence": []
+        },
+        {
+          "term": "she",
+          "score": 2.4876,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "infant health",
+          "score": 0.1889,
+          "evidence": []
+        },
+        {
+          "term": "yes",
+          "score": 0.1637,
+          "evidence": []
+        },
+        {
+          "term": "longitudinal study",
+          "score": 0.1009,
+          "evidence": []
+        },
+        {
+          "term": "date",
+          "score": 0.0781,
+          "evidence": []
+        },
+        {
+          "term": "event",
+          "score": 0.0747,
+          "evidence": []
+        },
+        {
+          "term": "day mon",
+          "score": 0.0641,
+          "evidence": []
+        },
+        {
+          "term": "visit",
+          "score": 0.057,
+          "evidence": []
+        },
+        {
+          "term": "ask",
+          "score": 0.0536,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 67.5393,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 48.0411,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 37.1357,
+          "evidence": []
+        },
+        {
+          "term": "在正常情况下",
+          "score": 36.8437,
+          "evidence": []
+        },
+        {
+          "term": "很重要",
+          "score": 36.4012,
+          "evidence": []
+        },
+        {
+          "term": "疫苗有关的",
+          "score": 36.0655,
+          "evidence": []
+        },
+        {
+          "term": "十分重要",
+          "score": 35.7559,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 34.5071,
+          "evidence": []
+        }
+      ]
+    },
+    "page-025": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "breastfeed infant",
+          "score": 2.16,
+          "evidence": []
+        },
+        {
+          "term": "gave infant",
+          "score": 1.8372,
+          "evidence": []
+        },
+        {
+          "term": "stop breastfeeding",
+          "score": 1.8291,
+          "evidence": []
+        },
+        {
+          "term": "every day",
+          "score": 1.425,
+          "evidence": []
+        },
+        {
+          "term": "every night",
+          "score": 1.4178,
+          "evidence": []
+        },
+        {
+          "term": "too sick",
+          "score": 1.1159,
+          "evidence": []
+        },
+        {
+          "term": "ask",
+          "score": 1.0213,
+          "evidence": []
+        },
+        {
+          "term": "tick",
+          "score": 0.8237,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "breastfeed infant",
+          "score": 68.5071,
+          "evidence": []
+        },
+        {
+          "term": "gave infant",
+          "score": 60.9647,
+          "evidence": []
+        },
+        {
+          "term": "stop breastfeeding",
+          "score": 46.0182,
+          "evidence": []
+        },
+        {
+          "term": "every day",
+          "score": 29.8827,
+          "evidence": []
+        },
+        {
+          "term": "every night",
+          "score": 27.1807,
+          "evidence": []
+        },
+        {
+          "term": "ask",
+          "score": 21.3757,
+          "evidence": []
+        },
+        {
+          "term": "too sick",
+          "score": 17.6866,
+          "evidence": []
+        },
+        {
+          "term": "stopped",
+          "score": 14.8508,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "breastfeed infant",
+          "score": 0.2024,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.1961,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding",
+          "score": 0.167,
+          "evidence": []
+        },
+        {
+          "term": "stop breastfeeding",
+          "score": 0.167,
+          "evidence": []
+        },
+        {
+          "term": "gave infant",
+          "score": 0.1637,
+          "evidence": []
+        },
+        {
+          "term": "child",
+          "score": 0.1491,
+          "evidence": []
+        },
+        {
+          "term": "months",
+          "score": 0.1488,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.1432,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "yes",
+          "score": 9.1077,
+          "evidence": []
+        },
+        {
+          "term": "bleeding",
+          "score": 5.1041,
+          "evidence": []
+        },
+        {
+          "term": "she",
+          "score": 4.7275,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 3.3279,
+          "evidence": []
+        },
+        {
+          "term": "status",
+          "score": 2.5576,
+          "evidence": []
+        },
+        {
+          "term": "woman",
+          "score": 2.5525,
+          "evidence": []
+        },
+        {
+          "term": "art",
+          "score": 2.5497,
+          "evidence": []
+        },
+        {
+          "term": "side-effects",
+          "score": 2.4359,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "breastfeed infant",
+          "score": 0.2024,
+          "evidence": []
+        },
+        {
+          "term": "stop breastfeeding",
+          "score": 0.1995,
+          "evidence": []
+        },
+        {
+          "term": "gave infant",
+          "score": 0.1667,
+          "evidence": []
+        },
+        {
+          "term": "child",
+          "score": 0.1491,
+          "evidence": []
+        },
+        {
+          "term": "yes",
+          "score": 0.1405,
+          "evidence": []
+        },
+        {
+          "term": "every day",
+          "score": 0.1344,
+          "evidence": []
+        },
+        {
+          "term": "every night",
+          "score": 0.0953,
+          "evidence": []
+        },
+        {
+          "term": "mother",
+          "score": 0.0912,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 68.9113,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 53.4997,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 26.7643,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 26.7643,
+          "evidence": []
+        },
+        {
+          "term": "或一些其他单位",
+          "score": 26.7643,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 26.4049,
+          "evidence": []
+        },
+        {
+          "term": "在一些国家",
+          "score": 25.5656,
+          "evidence": []
+        },
+        {
+          "term": "青少年",
+          "score": 25.5656,
+          "evidence": []
+        }
+      ]
+    },
+    "page-026": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "became ill",
+          "score": 1.1612,
+          "evidence": []
+        },
+        {
+          "term": "disapproval",
+          "score": 1.0207,
+          "evidence": []
+        },
+        {
+          "term": "infant",
+          "score": 0.6922,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "became ill",
+          "score": 18.4783,
+          "evidence": []
+        },
+        {
+          "term": "disapproval",
+          "score": 16.565,
+          "evidence": []
+        },
+        {
+          "term": "infant",
+          "score": 13.5237,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "women",
+          "score": 0.0629,
+          "evidence": []
+        },
+        {
+          "term": "infant",
+          "score": 0.0582,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding",
+          "score": 0.0578,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "bleeding",
+          "score": 1.1233,
+          "evidence": []
+        },
+        {
+          "term": "she",
+          "score": 1.064,
+          "evidence": []
+        },
+        {
+          "term": "status",
+          "score": 0.7332,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "infant",
+          "score": 0.0582,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding",
+          "score": 0.0578,
+          "evidence": []
+        },
+        {
+          "term": "mother",
+          "score": 0.034,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 108.2441,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 68.7153,
+          "evidence": []
+        },
+        {
+          "term": "在一些国家",
+          "score": 41.6828,
+          "evidence": []
+        }
+      ]
+    },
+    "page-027": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "post-partum transmission",
+          "score": 2.2463,
+          "evidence": []
+        },
+        {
+          "term": "recommended timings",
+          "score": 1.4143,
+          "evidence": []
+        },
+        {
+          "term": "in-utero",
+          "score": 0.9714,
+          "evidence": []
+        },
+        {
+          "term": "months",
+          "score": 0.8653,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "post-partum transmission",
+          "score": 59.0071,
+          "evidence": []
+        },
+        {
+          "term": "months",
+          "score": 25.4061,
+          "evidence": []
+        },
+        {
+          "term": "recommended timings",
+          "score": 21.8597,
+          "evidence": []
+        },
+        {
+          "term": "in-utero",
+          "score": 15.754,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hiv testing",
+          "score": 0.2188,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.1429,
+          "evidence": []
+        },
+        {
+          "term": "art",
+          "score": 0.1342,
+          "evidence": []
+        },
+        {
+          "term": "infants",
+          "score": 0.1167,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hiv testing",
+          "score": 5.1993,
+          "evidence": []
+        },
+        {
+          "term": "art",
+          "score": 2.5354,
+          "evidence": []
+        },
+        {
+          "term": "treatment",
+          "score": 1.6649,
+          "evidence": []
+        },
+        {
+          "term": "months",
+          "score": 1.6632,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hiv testing",
+          "score": 0.2188,
+          "evidence": []
+        },
+        {
+          "term": "infant",
+          "score": 0.1144,
+          "evidence": []
+        },
+        {
+          "term": "months",
+          "score": 0.1101,
+          "evidence": []
+        },
+        {
+          "term": "post-partum transmission",
+          "score": 0.094,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 45.1717,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 28.6817,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 27.9477,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 26.1456,
+          "evidence": []
+        }
+      ]
+    },
+    "page-028": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "breast milk",
+          "score": 2.8166,
+          "evidence": []
+        },
+        {
+          "term": "infant feeding",
+          "score": 2.4377,
+          "evidence": []
+        },
+        {
+          "term": "feeding patterns",
+          "score": 2.2405,
+          "evidence": []
+        },
+        {
+          "term": "exclusive breastfeeding",
+          "score": 1.9825,
+          "evidence": []
+        },
+        {
+          "term": "infant diet",
+          "score": 1.886,
+          "evidence": []
+        },
+        {
+          "term": "partial breastfeeding",
+          "score": 1.6549,
+          "evidence": []
+        },
+        {
+          "term": "intake coming",
+          "score": 1.3364,
+          "evidence": []
+        },
+        {
+          "term": "pharmaceutical medicines",
+          "score": 1.256,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "infant feeding",
+          "score": 89.888,
+          "evidence": []
+        },
+        {
+          "term": "breast milk",
+          "score": 84.842,
+          "evidence": []
+        },
+        {
+          "term": "feeding patterns",
+          "score": 68.2599,
+          "evidence": []
+        },
+        {
+          "term": "infant diet",
+          "score": 54.628,
+          "evidence": []
+        },
+        {
+          "term": "exclusive breastfeeding",
+          "score": 48.2838,
+          "evidence": []
+        },
+        {
+          "term": "partial breastfeeding",
+          "score": 32.77,
+          "evidence": []
+        },
+        {
+          "term": "hiv transmission",
+          "score": 28.7826,
+          "evidence": []
+        },
+        {
+          "term": "intake coming",
+          "score": 20.3428,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hiv transmission",
+          "score": 0.4206,
+          "evidence": []
+        },
+        {
+          "term": "infant feeding",
+          "score": 0.3199,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.2717,
+          "evidence": []
+        },
+        {
+          "term": "infant diet",
+          "score": 0.2334,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding",
+          "score": 0.2127,
+          "evidence": []
+        },
+        {
+          "term": "exclusive breastfeeding",
+          "score": 0.2127,
+          "evidence": []
+        },
+        {
+          "term": "partial breastfeeding",
+          "score": 0.2127,
+          "evidence": []
+        },
+        {
+          "term": "pregnant",
+          "score": 0.2001,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hiv transmission",
+          "score": 9.4951,
+          "evidence": []
+        },
+        {
+          "term": "hsv",
+          "score": 3.1921,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 3.1591,
+          "evidence": []
+        },
+        {
+          "term": "art",
+          "score": 2.7947,
+          "evidence": []
+        },
+        {
+          "term": "infant diet",
+          "score": 2.2797,
+          "evidence": []
+        },
+        {
+          "term": "she",
+          "score": 2.2425,
+          "evidence": []
+        },
+        {
+          "term": "testing",
+          "score": 2.2413,
+          "evidence": []
+        },
+        {
+          "term": "bleeding",
+          "score": 2.1944,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hiv transmission",
+          "score": 0.4206,
+          "evidence": []
+        },
+        {
+          "term": "infant feeding",
+          "score": 0.3199,
+          "evidence": []
+        },
+        {
+          "term": "infant diet",
+          "score": 0.2593,
+          "evidence": []
+        },
+        {
+          "term": "exclusive breastfeeding",
+          "score": 0.2453,
+          "evidence": []
+        },
+        {
+          "term": "partial breastfeeding",
+          "score": 0.2259,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.1786,
+          "evidence": []
+        },
+        {
+          "term": "infection",
+          "score": 0.1389,
+          "evidence": []
+        },
+        {
+          "term": "breast milk",
+          "score": 0.1326,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 52.4533,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 39.5027,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 24.7757,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 23.4688,
+          "evidence": []
+        },
+        {
+          "term": "最小化",
+          "score": 23.3774,
+          "evidence": []
+        },
+        {
+          "term": "在一些国家",
+          "score": 23.2929,
+          "evidence": []
+        },
+        {
+          "term": "青少年",
+          "score": 23.2929,
+          "evidence": []
+        },
+        {
+          "term": "不良反应",
+          "score": 21.7583,
+          "evidence": []
+        }
+      ]
+    },
+    "page-029": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "exclusive breastfeeding",
+          "score": 1.3056,
+          "evidence": []
+        },
+        {
+          "term": "polio vaccine",
+          "score": 1.1977,
+          "evidence": []
+        },
+        {
+          "term": "oral polio",
+          "score": 1.1817,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "exclusive breastfeeding",
+          "score": 21.5229,
+          "evidence": []
+        },
+        {
+          "term": "feeding patterns",
+          "score": 18.1167,
+          "evidence": []
+        },
+        {
+          "term": "oral polio",
+          "score": 17.2245,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "infant feeding",
+          "score": 0.0868,
+          "evidence": []
+        },
+        {
+          "term": "polio vaccine",
+          "score": 0.0797,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.0631,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "polio vaccine",
+          "score": 1.7339,
+          "evidence": []
+        },
+        {
+          "term": "mumps",
+          "score": 1.0839,
+          "evidence": []
+        },
+        {
+          "term": "wpv",
+          "score": 1.0299,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "infant feeding",
+          "score": 0.0868,
+          "evidence": []
+        },
+        {
+          "term": "polio vaccine",
+          "score": 0.0797,
+          "evidence": []
+        },
+        {
+          "term": "exclusive breastfeeding",
+          "score": 0.0619,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 44.3102,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 37.5444,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 26.3401,
+          "evidence": []
+        }
+      ]
+    },
+    "page-030": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "pue",
+          "score": 1.3919,
+          "evidence": []
+        },
+        {
+          "term": "daa",
+          "score": 0.8591,
+          "evidence": []
+        },
+        {
+          "term": "dad",
+          "score": 0.8241,
+          "evidence": []
+        },
+        {
+          "term": "ddd",
+          "score": 0.6396,
+          "evidence": []
+        },
+        {
+          "term": "ued",
+          "score": 0.6396,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "pue",
+          "score": 30.3573,
+          "evidence": []
+        },
+        {
+          "term": "dad",
+          "score": 13.3461,
+          "evidence": []
+        },
+        {
+          "term": "daa",
+          "score": 13.1555,
+          "evidence": []
+        },
+        {
+          "term": "ddd",
+          "score": 8.2825,
+          "evidence": []
+        },
+        {
+          "term": "ued",
+          "score": 8.2825,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hcv",
+          "score": 0.0146,
+          "evidence": []
+        },
+        {
+          "term": "hbv",
+          "score": 0.0118,
+          "evidence": []
+        },
+        {
+          "term": "chronic",
+          "score": 0.0089,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis",
+          "score": 0.0087,
+          "evidence": []
+        },
+        {
+          "term": "million",
+          "score": 0.0076,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hepatitis",
+          "score": 0.2698,
+          "evidence": []
+        },
+        {
+          "term": "hcv",
+          "score": 0.2672,
+          "evidence": []
+        },
+        {
+          "term": "hbv",
+          "score": 0.2235,
+          "evidence": []
+        },
+        {
+          "term": "infection",
+          "score": 0.1367,
+          "evidence": []
+        },
+        {
+          "term": "treatment",
+          "score": 0.1069,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "daa",
+          "score": 0.0057,
+          "evidence": []
+        },
+        {
+          "term": "shi",
+          "score": 0.0017,
+          "evidence": []
+        },
+        {
+          "term": "page",
+          "score": 0.0012,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "sil",
+          "score": 0.0006,
+          "evidence": []
+        },
+        {
+          "term": "pue",
+          "score": 0.0005,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 7068.2835,
+          "evidence": []
+        },
+        {
+          "term": "s-t",
+          "score": 6911.8108,
+          "evidence": []
+        },
+        {
+          "term": "et-ot",
+          "score": 6911.8108,
+          "evidence": []
+        },
+        {
+          "term": "ge-9e",
+          "score": 6911.8108,
+          "evidence": []
+        },
+        {
+          "term": "savd",
+          "score": 6911.8108,
+          "evidence": []
+        }
+      ]
+    },
+    "page-031": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "breasts enlarged",
+          "score": 2.6022,
+          "evidence": []
+        },
+        {
+          "term": "flaky nipple",
+          "score": 2.5656,
+          "evidence": []
+        },
+        {
+          "term": "feeds area",
+          "score": 2.2449,
+          "evidence": []
+        },
+        {
+          "term": "severe localised",
+          "score": 2.1956,
+          "evidence": []
+        },
+        {
+          "term": "nipple during",
+          "score": 2.1763,
+          "evidence": []
+        },
+        {
+          "term": "breast conditions",
+          "score": 1.7695,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "feeds area",
+          "score": 58.7582,
+          "evidence": []
+        },
+        {
+          "term": "severe localised",
+          "score": 57.2605,
+          "evidence": []
+        },
+        {
+          "term": "breasts enlarged",
+          "score": 56.8501,
+          "evidence": []
+        },
+        {
+          "term": "flaky nipple",
+          "score": 54.5116,
+          "evidence": []
+        },
+        {
+          "term": "nipple during",
+          "score": 52.6495,
+          "evidence": []
+        },
+        {
+          "term": "breast conditions",
+          "score": 46.3279,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "yes",
+          "score": 0.0926,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.0618,
+          "evidence": []
+        },
+        {
+          "term": "until",
+          "score": 0.0572,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.0566,
+          "evidence": []
+        },
+        {
+          "term": "severe",
+          "score": 0.0518,
+          "evidence": []
+        },
+        {
+          "term": "severe localised",
+          "score": 0.0518,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "yes",
+          "score": 9.0584,
+          "evidence": []
+        },
+        {
+          "term": "steps",
+          "score": 1.9799,
+          "evidence": []
+        },
+        {
+          "term": "bleeding",
+          "score": 1.5355,
+          "evidence": []
+        },
+        {
+          "term": "she",
+          "score": 1.4074,
+          "evidence": []
+        },
+        {
+          "term": "few",
+          "score": 1.1937,
+          "evidence": []
+        },
+        {
+          "term": "woman",
+          "score": 0.9137,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "yes",
+          "score": 0.0926,
+          "evidence": []
+        },
+        {
+          "term": "breasts during",
+          "score": 0.0545,
+          "evidence": []
+        },
+        {
+          "term": "severe localised",
+          "score": 0.0538,
+          "evidence": []
+        },
+        {
+          "term": "breast conditions",
+          "score": 0.0528,
+          "evidence": []
+        },
+        {
+          "term": "nipple during",
+          "score": 0.0509,
+          "evidence": []
+        },
+        {
+          "term": "breasts enlarged",
+          "score": 0.0356,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 246.9711,
+          "evidence": []
+        },
+        {
+          "term": "在正常情况下",
+          "score": 151.3807,
+          "evidence": []
+        },
+        {
+          "term": "如个人",
+          "score": 150.7752,
+          "evidence": []
+        },
+        {
+          "term": "不良反应",
+          "score": 147.1685,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 145.4519,
+          "evidence": []
+        },
+        {
+          "term": "在一些国家",
+          "score": 142.2447,
+          "evidence": []
+        }
+      ]
+    },
+    "page-032": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "breast milk",
+          "score": 2.0289,
+          "evidence": []
+        },
+        {
+          "term": "mother-to-child transmission",
+          "score": 1.7681,
+          "evidence": []
+        },
+        {
+          "term": "hiv transmission",
+          "score": 1.5912,
+          "evidence": []
+        },
+        {
+          "term": "infant feeding",
+          "score": 1.4459,
+          "evidence": []
+        },
+        {
+          "term": "immunodeficiency virus",
+          "score": 1.3069,
+          "evidence": []
+        },
+        {
+          "term": "late postnatal",
+          "score": 1.3048,
+          "evidence": []
+        },
+        {
+          "term": "nduati",
+          "score": 1.2994,
+          "evidence": []
+        },
+        {
+          "term": "kuhn",
+          "score": 1.1585,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hiv transmission",
+          "score": 56.4788,
+          "evidence": []
+        },
+        {
+          "term": "mother-to-child transmission",
+          "score": 52.7648,
+          "evidence": []
+        },
+        {
+          "term": "breast milk",
+          "score": 41.943,
+          "evidence": []
+        },
+        {
+          "term": "infant feeding",
+          "score": 29.7299,
+          "evidence": []
+        },
+        {
+          "term": "nduati",
+          "score": 24.8474,
+          "evidence": []
+        },
+        {
+          "term": "kuhn",
+          "score": 22.0986,
+          "evidence": []
+        },
+        {
+          "term": "late postnatal",
+          "score": 21.804,
+          "evidence": []
+        },
+        {
+          "term": "immunodeficiency virus",
+          "score": 21.4649,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hiv transmission",
+          "score": 0.6939,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.3776,
+          "evidence": []
+        },
+        {
+          "term": "mother-to-child transmission",
+          "score": 0.3436,
+          "evidence": []
+        },
+        {
+          "term": "infant feeding",
+          "score": 0.3383,
+          "evidence": []
+        },
+        {
+          "term": "aids",
+          "score": 0.3044,
+          "evidence": []
+        },
+        {
+          "term": "south africa",
+          "score": 0.3014,
+          "evidence": []
+        },
+        {
+          "term": "cohort study",
+          "score": 0.2968,
+          "evidence": []
+        },
+        {
+          "term": "immunodeficiency virus",
+          "score": 0.279,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hiv transmission",
+          "score": 19.8397,
+          "evidence": []
+        },
+        {
+          "term": "aids",
+          "score": 7.0356,
+          "evidence": []
+        },
+        {
+          "term": "doi",
+          "score": 5.9141,
+          "evidence": []
+        },
+        {
+          "term": "hsv",
+          "score": 5.6529,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 4.2832,
+          "evidence": []
+        },
+        {
+          "term": "infection",
+          "score": 4.0169,
+          "evidence": []
+        },
+        {
+          "term": "south africa",
+          "score": 3.8555,
+          "evidence": []
+        },
+        {
+          "term": "immunodeficiency virus",
+          "score": 3.6527,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hiv transmission",
+          "score": 0.6939,
+          "evidence": []
+        },
+        {
+          "term": "mother-to-child transmission",
+          "score": 0.3436,
+          "evidence": []
+        },
+        {
+          "term": "infant feeding",
+          "score": 0.3383,
+          "evidence": []
+        },
+        {
+          "term": "aids",
+          "score": 0.3044,
+          "evidence": []
+        },
+        {
+          "term": "south africa",
+          "score": 0.3014,
+          "evidence": []
+        },
+        {
+          "term": "cohort study",
+          "score": 0.2968,
+          "evidence": []
+        },
+        {
+          "term": "immunodeficiency virus",
+          "score": 0.279,
+          "evidence": []
+        },
+        {
+          "term": "virus type",
+          "score": 0.2432,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 83.7988,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 70.5413,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 65.3099,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 57.8785,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 53.6826,
+          "evidence": []
+        },
+        {
+          "term": "疫苗的",
+          "score": 51.358,
+          "evidence": []
+        },
+        {
+          "term": "伦理原则或问题",
+          "score": 44.6153,
+          "evidence": []
+        },
+        {
+          "term": "涉及伦理原则或问题的指南实例",
+          "score": 44.6153,
+          "evidence": []
+        }
+      ]
+    },
+    "page-034": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "céte d'ivoire",
+          "score": 2.2535,
+          "evidence": []
+        },
+        {
+          "term": "ruth bland",
+          "score": 2.1435,
+          "evidence": []
+        },
+        {
+          "term": "tim farley",
+          "score": 1.9625,
+          "evidence": []
+        },
+        {
+          "term": "gaborone",
+          "score": 1.3535,
+          "evidence": []
+        },
+        {
+          "term": "africa centre",
+          "score": 1.2649,
+          "evidence": []
+        },
+        {
+          "term": "south africa",
+          "score": 1.2446,
+          "evidence": []
+        },
+        {
+          "term": "abidjan",
+          "score": 1.0816,
+          "evidence": []
+        },
+        {
+          "term": "edith",
+          "score": 1.0207,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "céte d'ivoire",
+          "score": 43.1032,
+          "evidence": []
+        },
+        {
+          "term": "ruth bland",
+          "score": 36.5841,
+          "evidence": []
+        },
+        {
+          "term": "tim farley",
+          "score": 35.1084,
+          "evidence": []
+        },
+        {
+          "term": "gaborone",
+          "score": 29.4648,
+          "evidence": []
+        },
+        {
+          "term": "africa centre",
+          "score": 28.7686,
+          "evidence": []
+        },
+        {
+          "term": "south africa",
+          "score": 28.3362,
+          "evidence": []
+        },
+        {
+          "term": "botswana",
+          "score": 20.8577,
+          "evidence": []
+        },
+        {
+          "term": "abidjan",
+          "score": 20.6886,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "south africa",
+          "score": 0.3774,
+          "evidence": []
+        },
+        {
+          "term": "africa centre",
+          "score": 0.3073,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 0.2597,
+          "evidence": []
+        },
+        {
+          "term": "reproductive health",
+          "score": 0.2571,
+          "evidence": []
+        },
+        {
+          "term": "united",
+          "score": 0.2424,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.2349,
+          "evidence": []
+        },
+        {
+          "term": "aids",
+          "score": 0.2129,
+          "evidence": []
+        },
+        {
+          "term": "usa",
+          "score": 0.197,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "university",
+          "score": 7.3435,
+          "evidence": []
+        },
+        {
+          "term": "united",
+          "score": 5.4891,
+          "evidence": []
+        },
+        {
+          "term": "south africa",
+          "score": 5.4056,
+          "evidence": []
+        },
+        {
+          "term": "usa",
+          "score": 4.6365,
+          "evidence": []
+        },
+        {
+          "term": "reproductive health",
+          "score": 4.3667,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 3.9469,
+          "evidence": []
+        },
+        {
+          "term": "africa centre",
+          "score": 3.8834,
+          "evidence": []
+        },
+        {
+          "term": "kingdom",
+          "score": 3.2538,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "south africa",
+          "score": 0.3774,
+          "evidence": []
+        },
+        {
+          "term": "africa centre",
+          "score": 0.3073,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 0.2597,
+          "evidence": []
+        },
+        {
+          "term": "reproductive health",
+          "score": 0.2571,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.2349,
+          "evidence": []
+        },
+        {
+          "term": "switzerland",
+          "score": 0.1733,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 0.1322,
+          "evidence": []
+        },
+        {
+          "term": "kenya",
+          "score": 0.1234,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "dedougou",
+          "score": 502.8753,
+          "evidence": []
+        },
+        {
+          "term": "dori",
+          "score": 502.8753,
+          "evidence": []
+        },
+        {
+          "term": "gaoua",
+          "score": 502.8753,
+          "evidence": []
+        },
+        {
+          "term": "kaya",
+          "score": 502.8753,
+          "evidence": []
+        },
+        {
+          "term": "koudougou",
+          "score": 502.8753,
+          "evidence": []
+        },
+        {
+          "term": "ouahigouya",
+          "score": 502.8753,
+          "evidence": []
+        },
+        {
+          "term": "yako",
+          "score": 502.8753,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 436.8757,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

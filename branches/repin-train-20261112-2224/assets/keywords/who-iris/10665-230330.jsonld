@@ -1,0 +1,2208 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-230330",
+  "instance": "who-iris",
+  "about": "library/10665-230330",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7908,
+    "terms": 73102
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "wild virus",
+        "score": 12.5577,
+        "evidence": []
+      },
+      {
+        "term": "wild poliovirus",
+        "score": 12.3416,
+        "evidence": []
+      },
+      {
+        "term": "poliomyelitis eradication",
+        "score": 11.3755,
+        "evidence": []
+      },
+      {
+        "term": "afp surveillance",
+        "score": 11.3691,
+        "evidence": []
+      },
+      {
+        "term": "les cas",
+        "score": 10.8469,
+        "evidence": []
+      },
+      {
+        "term": "afp cases",
+        "score": 10.8416,
+        "evidence": []
+      },
+      {
+        "term": "des virus",
+        "score": 10.7379,
+        "evidence": []
+      },
+      {
+        "term": "virus sauvage",
+        "score": 10.4946,
+        "evidence": []
+      },
+      {
+        "term": "dans les",
+        "score": 9.8948,
+        "evidence": []
+      },
+      {
+        "term": "specimensa poliomyelitis",
+        "score": 9.397,
+        "evidence": []
+      },
+      {
+        "term": "poliomyélite dans",
+        "score": 9.3535,
+        "evidence": []
+      },
+      {
+        "term": "poliomyelitis associated",
+        "score": 9.3313,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "des cas",
+        "score": 311.9341,
+        "evidence": []
+      },
+      {
+        "term": "les cas",
+        "score": 306.83,
+        "evidence": []
+      },
+      {
+        "term": "dans les",
+        "score": 289.103,
+        "evidence": []
+      },
+      {
+        "term": "des virus",
+        "score": 286.9624,
+        "evidence": []
+      },
+      {
+        "term": "afp surveillance",
+        "score": 285.7467,
+        "evidence": []
+      },
+      {
+        "term": "wild virus",
+        "score": 284.4756,
+        "evidence": []
+      },
+      {
+        "term": "wild poliovirus",
+        "score": 268.2434,
+        "evidence": []
+      },
+      {
+        "term": "afp cases",
+        "score": 264.0567,
+        "evidence": []
+      },
+      {
+        "term": "des pays",
+        "score": 239.8506,
+        "evidence": []
+      },
+      {
+        "term": "par des",
+        "score": 236.6896,
+        "evidence": []
+      },
+      {
+        "term": "sauvage dans",
+        "score": 229.6194,
+        "evidence": []
+      },
+      {
+        "term": "poliomyélite dans",
+        "score": 223.3191,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "dans les",
+        "score": 10.0522,
+        "evidence": []
+      },
+      {
+        "term": "les pays",
+        "score": 9.2762,
+        "evidence": []
+      },
+      {
+        "term": "des pays",
+        "score": 9.193,
+        "evidence": []
+      },
+      {
+        "term": "par les",
+        "score": 8.9938,
+        "evidence": []
+      },
+      {
+        "term": "sur les",
+        "score": 8.5641,
+        "evidence": []
+      },
+      {
+        "term": "les activités",
+        "score": 8.0301,
+        "evidence": []
+      },
+      {
+        "term": "les cas",
+        "score": 8.0211,
+        "evidence": []
+      },
+      {
+        "term": "poliomyélite dans",
+        "score": 7.683,
+        "evidence": []
+      },
+      {
+        "term": "tous les",
+        "score": 7.5417,
+        "evidence": []
+      },
+      {
+        "term": "les zones",
+        "score": 7.519,
+        "evidence": []
+      },
+      {
+        "term": "les autres",
+        "score": 7.3661,
+        "evidence": []
+      },
+      {
+        "term": "des virus",
+        "score": 7.2977,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "dans les",
+        "score": 265.341,
+        "evidence": []
+      },
+      {
+        "term": "par les",
+        "score": 250.9234,
+        "evidence": []
+      },
+      {
+        "term": "sur les",
+        "score": 237.1003,
+        "evidence": []
+      },
+      {
+        "term": "les pays",
+        "score": 227.1097,
+        "evidence": []
+      },
+      {
+        "term": "par des",
+        "score": 221.9332,
+        "evidence": []
+      },
+      {
+        "term": "les cas",
+        "score": 219.732,
+        "evidence": []
+      },
+      {
+        "term": "les données",
+        "score": 211.402,
+        "evidence": []
+      },
+      {
+        "term": "les autres",
+        "score": 210.6046,
+        "evidence": []
+      },
+      {
+        "term": "tous les",
+        "score": 206.5723,
+        "evidence": []
+      },
+      {
+        "term": "les activités",
+        "score": 204.5054,
+        "evidence": []
+      },
+      {
+        "term": "après les",
+        "score": 203.0483,
+        "evidence": []
+      },
+      {
+        "term": "les zones",
+        "score": 200.1075,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "dans les",
+        "score": 10.0522,
+        "evidence": []
+      },
+      {
+        "term": "les pays",
+        "score": 9.2762,
+        "evidence": []
+      },
+      {
+        "term": "des pays",
+        "score": 9.193,
+        "evidence": []
+      },
+      {
+        "term": "par les",
+        "score": 8.9938,
+        "evidence": []
+      },
+      {
+        "term": "sur les",
+        "score": 8.5641,
+        "evidence": []
+      },
+      {
+        "term": "les activités",
+        "score": 8.0301,
+        "evidence": []
+      },
+      {
+        "term": "les cas",
+        "score": 8.0211,
+        "evidence": []
+      },
+      {
+        "term": "poliomyélite dans",
+        "score": 7.683,
+        "evidence": []
+      },
+      {
+        "term": "tous les",
+        "score": 7.5417,
+        "evidence": []
+      },
+      {
+        "term": "les zones",
+        "score": 7.519,
+        "evidence": []
+      },
+      {
+        "term": "les autres",
+        "score": 7.3661,
+        "evidence": []
+      },
+      {
+        "term": "des virus",
+        "score": 7.2977,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "重点人群",
+        "score": 672.5489,
+        "evidence": []
+      },
+      {
+        "term": "并提供一",
+        "score": 345.8086,
+        "evidence": []
+      },
+      {
+        "term": "提供hpv",
+        "score": 314.5582,
+        "evidence": []
+      },
+      {
+        "term": "同行评议者或杂志编辑",
+        "score": 276.2397,
+        "evidence": []
+      },
+      {
+        "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+        "score": 276.2397,
+        "evidence": []
+      },
+      {
+        "term": "或一些其他单位",
+        "score": 276.2397,
+        "evidence": []
+      },
+      {
+        "term": "疫苗接种",
+        "score": 262.6918,
+        "evidence": []
+      },
+      {
+        "term": "这一点很重要",
+        "score": 258.923,
+        "evidence": []
+      },
+      {
+        "term": "引进hpv",
+        "score": 254.4481,
+        "evidence": []
+      },
+      {
+        "term": "感染和宫颈癌",
+        "score": 241.0172,
+        "evidence": []
+      },
+      {
+        "term": "在该案例中可以做些什么来防止或减轻潜在的发表偏倚",
+        "score": 240.2503,
+        "evidence": []
+      },
+      {
+        "term": "该案例中可能存在哪种发表偏倚",
+        "score": 240.2503,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "page-001": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "poliomyelitis eradication",
+          "score": 2.3442,
+          "evidence": []
+        },
+        {
+          "term": "pacifique occidental",
+          "score": 2.1634,
+          "evidence": []
+        },
+        {
+          "term": "supplemental immunization",
+          "score": 1.7448,
+          "evidence": []
+        },
+        {
+          "term": "vaccination complémentaire",
+          "score": 1.6478,
+          "evidence": []
+        },
+        {
+          "term": "subnational immunization",
+          "score": 1.5302,
+          "evidence": []
+        },
+        {
+          "term": "immunization days",
+          "score": 1.4734,
+          "evidence": []
+        },
+        {
+          "term": "vaccina tion",
+          "score": 1.357,
+          "evidence": []
+        },
+        {
+          "term": "pacific region",
+          "score": 1.3277,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "pacifique occidental",
+          "score": 55.4644,
+          "evidence": []
+        },
+        {
+          "term": "poliomyelitis eradication",
+          "score": 49.3348,
+          "evidence": []
+        },
+        {
+          "term": "supplemental immunization",
+          "score": 37.0686,
+          "evidence": []
+        },
+        {
+          "term": "subnational immunization",
+          "score": 33.4596,
+          "evidence": []
+        },
+        {
+          "term": "région",
+          "score": 33.3966,
+          "evidence": []
+        },
+        {
+          "term": "immunization days",
+          "score": 32.2728,
+          "evidence": []
+        },
+        {
+          "term": "wpr",
+          "score": 29.8995,
+          "evidence": []
+        },
+        {
+          "term": "poliomyélite",
+          "score": 28.5367,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "les pays",
+          "score": 1.1772,
+          "evidence": []
+        },
+        {
+          "term": "les activités",
+          "score": 1.0216,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.7136,
+          "evidence": []
+        },
+        {
+          "term": "poliovirus",
+          "score": 0.6695,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.6014,
+          "evidence": []
+        },
+        {
+          "term": "vaccination complémentaire",
+          "score": 0.6014,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.5957,
+          "evidence": []
+        },
+        {
+          "term": "poliomyélite",
+          "score": 0.5448,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les pays",
+          "score": 22.731,
+          "evidence": []
+        },
+        {
+          "term": "les activités",
+          "score": 19.8575,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 13.9017,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 10.9618,
+          "evidence": []
+        },
+        {
+          "term": "vaccination complémentaire",
+          "score": 10.9618,
+          "evidence": []
+        },
+        {
+          "term": "poliovirus",
+          "score": 9.1351,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 8.7936,
+          "evidence": []
+        },
+        {
+          "term": "wpv",
+          "score": 8.6723,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "les pays",
+          "score": 1.1772,
+          "evidence": []
+        },
+        {
+          "term": "les activités",
+          "score": 1.0216,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.7136,
+          "evidence": []
+        },
+        {
+          "term": "poliovirus",
+          "score": 0.6695,
+          "evidence": []
+        },
+        {
+          "term": "vaccination complémentaire",
+          "score": 0.6138,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.5957,
+          "evidence": []
+        },
+        {
+          "term": "poliomyélite",
+          "score": 0.5448,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.5159,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 106.6766,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 73.2828,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 52.8329,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 51.6095,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 42.7836,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 42.0632,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 40.7469,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 38.354,
+          "evidence": []
+        }
+      ]
+    },
+    "page-002": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "yunnan province",
+          "score": 2.7084,
+          "evidence": []
+        },
+        {
+          "term": "non-poliomyelitis afp",
+          "score": 2.6087,
+          "evidence": []
+        },
+        {
+          "term": "wild virus",
+          "score": 2.5978,
+          "evidence": []
+        },
+        {
+          "term": "viet nam",
+          "score": 2.5768,
+          "evidence": []
+        },
+        {
+          "term": "wild poliovirus",
+          "score": 2.5206,
+          "evidence": []
+        },
+        {
+          "term": "afp cases",
+          "score": 2.3922,
+          "evidence": []
+        },
+        {
+          "term": "virus sauvage",
+          "score": 2.2795,
+          "evidence": []
+        },
+        {
+          "term": "les cas",
+          "score": 2.1623,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "viet nam",
+          "score": 90.661,
+          "evidence": []
+        },
+        {
+          "term": "les cas",
+          "score": 86.3536,
+          "evidence": []
+        },
+        {
+          "term": "wild virus",
+          "score": 78.3989,
+          "evidence": []
+        },
+        {
+          "term": "des cas",
+          "score": 76.7353,
+          "evidence": []
+        },
+        {
+          "term": "afp cases",
+          "score": 72.4484,
+          "evidence": []
+        },
+        {
+          "term": "wild poliovirus",
+          "score": 66.6677,
+          "evidence": []
+        },
+        {
+          "term": "yunnan province",
+          "score": 64.1437,
+          "evidence": []
+        },
+        {
+          "term": "virus sauvage",
+          "score": 63.7061,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "les cas",
+          "score": 1.5404,
+          "evidence": []
+        },
+        {
+          "term": "des cas",
+          "score": 1.5054,
+          "evidence": []
+        },
+        {
+          "term": "tous les",
+          "score": 1.4407,
+          "evidence": []
+        },
+        {
+          "term": "les autres",
+          "score": 1.3969,
+          "evidence": []
+        },
+        {
+          "term": "après les",
+          "score": 1.3908,
+          "evidence": []
+        },
+        {
+          "term": "des virus",
+          "score": 1.382,
+          "evidence": []
+        },
+        {
+          "term": "les vaccinations",
+          "score": 1.1393,
+          "evidence": []
+        },
+        {
+          "term": "wild poliovirus",
+          "score": 1.0962,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les cas",
+          "score": 47.2191,
+          "evidence": []
+        },
+        {
+          "term": "les autres",
+          "score": 44.8655,
+          "evidence": []
+        },
+        {
+          "term": "tous les",
+          "score": 44.536,
+          "evidence": []
+        },
+        {
+          "term": "après les",
+          "score": 43.8496,
+          "evidence": []
+        },
+        {
+          "term": "les vaccinations",
+          "score": 41.0969,
+          "evidence": []
+        },
+        {
+          "term": "des cas",
+          "score": 37.2891,
+          "evidence": []
+        },
+        {
+          "term": "des virus",
+          "score": 34.8608,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 16.6333,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "les cas",
+          "score": 1.5404,
+          "evidence": []
+        },
+        {
+          "term": "des cas",
+          "score": 1.5054,
+          "evidence": []
+        },
+        {
+          "term": "tous les",
+          "score": 1.4407,
+          "evidence": []
+        },
+        {
+          "term": "les autres",
+          "score": 1.3969,
+          "evidence": []
+        },
+        {
+          "term": "après les",
+          "score": 1.3908,
+          "evidence": []
+        },
+        {
+          "term": "des virus",
+          "score": 1.382,
+          "evidence": []
+        },
+        {
+          "term": "les vaccinations",
+          "score": 1.218,
+          "evidence": []
+        },
+        {
+          "term": "wild poliovirus",
+          "score": 1.0962,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 109.9283,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 56.396,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 54.8917,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 52.0665,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 52.0665,
+          "evidence": []
+        },
+        {
+          "term": "或一些其他单位",
+          "score": 52.0665,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 47.457,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 45.1439,
+          "evidence": []
+        }
+      ]
+    },
+    "page-003": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "cas importés",
+          "score": 1.9008,
+          "evidence": []
+        },
+        {
+          "term": "wild poliovirus",
+          "score": 1.8197,
+          "evidence": []
+        },
+        {
+          "term": "virus sauvage",
+          "score": 1.7717,
+          "evidence": []
+        },
+        {
+          "term": "viet nam",
+          "score": 1.7295,
+          "evidence": []
+        },
+        {
+          "term": "les cas",
+          "score": 1.6357,
+          "evidence": []
+        },
+        {
+          "term": "ces cas",
+          "score": 1.4259,
+          "evidence": []
+        },
+        {
+          "term": "carte",
+          "score": 1.0351,
+          "evidence": []
+        },
+        {
+          "term": "porteurs",
+          "score": 0.9122,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "cas importés",
+          "score": 46.0017,
+          "evidence": []
+        },
+        {
+          "term": "les cas",
+          "score": 43.8402,
+          "evidence": []
+        },
+        {
+          "term": "ces cas",
+          "score": 37.6591,
+          "evidence": []
+        },
+        {
+          "term": "viet nam",
+          "score": 36.2644,
+          "evidence": []
+        },
+        {
+          "term": "virus sauvage",
+          "score": 35.7512,
+          "evidence": []
+        },
+        {
+          "term": "wild poliovirus",
+          "score": 32.4803,
+          "evidence": []
+        },
+        {
+          "term": "carte",
+          "score": 19.7332,
+          "evidence": []
+        },
+        {
+          "term": "porteurs",
+          "score": 14.7324,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "les cas",
+          "score": 0.7145,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.5207,
+          "evidence": []
+        },
+        {
+          "term": "wild poliovirus",
+          "score": 0.4842,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.4177,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.3532,
+          "evidence": []
+        },
+        {
+          "term": "virus sauvage",
+          "score": 0.3489,
+          "evidence": []
+        },
+        {
+          "term": "ces cas",
+          "score": 0.312,
+          "evidence": []
+        },
+        {
+          "term": "mondiale",
+          "score": 0.3033,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les cas",
+          "score": 13.8403,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 7.9998,
+          "evidence": []
+        },
+        {
+          "term": "wild poliovirus",
+          "score": 7.5021,
+          "evidence": []
+        },
+        {
+          "term": "wpv",
+          "score": 6.9836,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 5.5453,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 4.7395,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 4.1542,
+          "evidence": []
+        },
+        {
+          "term": "region",
+          "score": 4.0241,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "les cas",
+          "score": 0.7145,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.5207,
+          "evidence": []
+        },
+        {
+          "term": "wild poliovirus",
+          "score": 0.4842,
+          "evidence": []
+        },
+        {
+          "term": "virus sauvage",
+          "score": 0.3489,
+          "evidence": []
+        },
+        {
+          "term": "ces cas",
+          "score": 0.312,
+          "evidence": []
+        },
+        {
+          "term": "poliomyélite",
+          "score": 0.2856,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.2451,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 0.2445,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 153.8699,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 49.1736,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 40.7138,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 39.7338,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 38.9351,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 38.9351,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 36.502,
+          "evidence": []
+        },
+        {
+          "term": "国家流感中心和必要的管制实验室",
+          "score": 34.0155,
+          "evidence": []
+        }
+      ]
+    },
+    "page-004": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "pfa signalés",
+          "score": 2.5076,
+          "evidence": []
+        },
+        {
+          "term": "pfa non",
+          "score": 2.2938,
+          "evidence": []
+        },
+        {
+          "term": "specimensa poliomyelitis",
+          "score": 2.2914,
+          "evidence": []
+        },
+        {
+          "term": "myélite confirmés",
+          "score": 2.1411,
+          "evidence": []
+        },
+        {
+          "term": "signalés échantillons",
+          "score": 1.9761,
+          "evidence": []
+        },
+        {
+          "term": "pfa avec",
+          "score": 1.877,
+          "evidence": []
+        },
+        {
+          "term": "wild virus",
+          "score": 1.8022,
+          "evidence": []
+        },
+        {
+          "term": "virus sauvage",
+          "score": 1.6998,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "pfa signalés",
+          "score": 65.4826,
+          "evidence": []
+        },
+        {
+          "term": "pfa non",
+          "score": 60.4177,
+          "evidence": []
+        },
+        {
+          "term": "afp",
+          "score": 53.3844,
+          "evidence": []
+        },
+        {
+          "term": "pfa avec",
+          "score": 51.3657,
+          "evidence": []
+        },
+        {
+          "term": "specimensa poliomyelitis",
+          "score": 40.906,
+          "evidence": []
+        },
+        {
+          "term": "myélite confirmés",
+          "score": 38.1166,
+          "evidence": []
+        },
+        {
+          "term": "signalés échantillons",
+          "score": 36.2714,
+          "evidence": []
+        },
+        {
+          "term": "wild virus",
+          "score": 34.7992,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "avec des",
+          "score": 0.6037,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.5108,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.3683,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.3343,
+          "evidence": []
+        },
+        {
+          "term": "poliovirus",
+          "score": 0.3051,
+          "evidence": []
+        },
+        {
+          "term": "virus sauvage",
+          "score": 0.2956,
+          "evidence": []
+        },
+        {
+          "term": "wild virus",
+          "score": 0.2758,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.2592,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les",
+          "score": 9.3305,
+          "evidence": []
+        },
+        {
+          "term": "avec des",
+          "score": 8.3442,
+          "evidence": []
+        },
+        {
+          "term": "oui",
+          "score": 7.0817,
+          "evidence": []
+        },
+        {
+          "term": "pfa non",
+          "score": 5.128,
+          "evidence": []
+        },
+        {
+          "term": "wpv",
+          "score": 4.6227,
+          "evidence": []
+        },
+        {
+          "term": "poliovirus",
+          "score": 4.4793,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 4.3716,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 4.2737,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "avec des",
+          "score": 0.6037,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.5108,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.3683,
+          "evidence": []
+        },
+        {
+          "term": "virus sauvage",
+          "score": 0.2956,
+          "evidence": []
+        },
+        {
+          "term": "wild virus",
+          "score": 0.2758,
+          "evidence": []
+        },
+        {
+          "term": "surveillance",
+          "score": 0.2474,
+          "evidence": []
+        },
+        {
+          "term": "pays",
+          "score": 0.247,
+          "evidence": []
+        },
+        {
+          "term": "pfa non",
+          "score": 0.2362,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 191.3724,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 113.8867,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 86.0357,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 80.9463,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 76.6409,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 76.6409,
+          "evidence": []
+        },
+        {
+          "term": "或一些其他单位",
+          "score": 76.6409,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 73.3816,
+          "evidence": []
+        }
+      ]
+    },
+    "page-005": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "wild poliovirus",
+          "score": 2.7295,
+          "evidence": []
+        },
+        {
+          "term": "poliomyélitiques sauvages",
+          "score": 2.5737,
+          "evidence": []
+        },
+        {
+          "term": "virus poliomyélitiques",
+          "score": 2.4888,
+          "evidence": []
+        },
+        {
+          "term": "poliomyelitis eradication",
+          "score": 2.2153,
+          "evidence": []
+        },
+        {
+          "term": "endémie récente",
+          "score": 1.9672,
+          "evidence": []
+        },
+        {
+          "term": "pays endémie",
+          "score": 1.8616,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 1.8255,
+          "evidence": []
+        },
+        {
+          "term": "provincial laboratories",
+          "score": 1.7762,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "wild poliovirus",
+          "score": 75.7875,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 62.4741,
+          "evidence": []
+        },
+        {
+          "term": "virus poliomyélitiques",
+          "score": 60.3061,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 57.6713,
+          "evidence": []
+        },
+        {
+          "term": "poliomyélitiques sauvages",
+          "score": 55.8491,
+          "evidence": []
+        },
+        {
+          "term": "certification",
+          "score": 48.0751,
+          "evidence": []
+        },
+        {
+          "term": "tous les",
+          "score": 46.3216,
+          "evidence": []
+        },
+        {
+          "term": "pays endémie",
+          "score": 44.9064,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "dans les",
+          "score": 2.0435,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 1.9095,
+          "evidence": []
+        },
+        {
+          "term": "par des",
+          "score": 1.8286,
+          "evidence": []
+        },
+        {
+          "term": "tous les",
+          "score": 1.545,
+          "evidence": []
+        },
+        {
+          "term": "ensemble des",
+          "score": 1.1864,
+          "evidence": []
+        },
+        {
+          "term": "wild poliovirus",
+          "score": 1.1834,
+          "evidence": []
+        },
+        {
+          "term": "pays endémie",
+          "score": 1.0132,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.9593,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "dans les",
+          "score": 58.7379,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 50.643,
+          "evidence": []
+        },
+        {
+          "term": "par des",
+          "score": 49.1818,
+          "evidence": []
+        },
+        {
+          "term": "tous les",
+          "score": 45.8308,
+          "evidence": []
+        },
+        {
+          "term": "ensemble des",
+          "score": 35.7473,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 18.0534,
+          "evidence": []
+        },
+        {
+          "term": "wild poliovirus",
+          "score": 16.8852,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 16.3609,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "dans les",
+          "score": 2.0435,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 1.9095,
+          "evidence": []
+        },
+        {
+          "term": "par des",
+          "score": 1.8286,
+          "evidence": []
+        },
+        {
+          "term": "tous les",
+          "score": 1.545,
+          "evidence": []
+        },
+        {
+          "term": "ensemble des",
+          "score": 1.2183,
+          "evidence": []
+        },
+        {
+          "term": "wild poliovirus",
+          "score": 1.1834,
+          "evidence": []
+        },
+        {
+          "term": "pays endémie",
+          "score": 1.0132,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.9593,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 77.6589,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 37.197,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 36.4873,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 36.4873,
+          "evidence": []
+        },
+        {
+          "term": "或一些其他单位",
+          "score": 36.4873,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 35.8991,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 34.9305,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 34.9305,
+          "evidence": []
+        }
+      ]
+    },
+    "page-006": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "wild poliovirus",
+          "score": 2.2391,
+          "evidence": []
+        },
+        {
+          "term": "des virus",
+          "score": 2.1157,
+          "evidence": []
+        },
+        {
+          "term": "afp cases",
+          "score": 2.087,
+          "evidence": []
+        },
+        {
+          "term": "poliomyelitis eradication",
+          "score": 1.9052,
+          "evidence": []
+        },
+        {
+          "term": "polio myélite",
+          "score": 1.8952,
+          "evidence": []
+        },
+        {
+          "term": "les cas",
+          "score": 1.8553,
+          "evidence": []
+        },
+        {
+          "term": "virus sauvages",
+          "score": 1.8044,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 1.7569,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "des virus",
+          "score": 88.7911,
+          "evidence": []
+        },
+        {
+          "term": "les cas",
+          "score": 61.0728,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 59.3197,
+          "evidence": []
+        },
+        {
+          "term": "afp cases",
+          "score": 52.9068,
+          "evidence": []
+        },
+        {
+          "term": "surveillance active",
+          "score": 51.4295,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 49.8579,
+          "evidence": []
+        },
+        {
+          "term": "wild poliovirus",
+          "score": 49.1473,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 48.5277,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "dans les",
+          "score": 2.0501,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 1.8595,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 1.7537,
+          "evidence": []
+        },
+        {
+          "term": "les cas",
+          "score": 1.6307,
+          "evidence": []
+        },
+        {
+          "term": "des virus",
+          "score": 1.4615,
+          "evidence": []
+        },
+        {
+          "term": "pour assurer",
+          "score": 1.0672,
+          "evidence": []
+        },
+        {
+          "term": "wild poliovirus",
+          "score": 1.0267,
+          "evidence": []
+        },
+        {
+          "term": "poliomyélite",
+          "score": 0.6834,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "dans les",
+          "score": 68.8492,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 63.7682,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 58.1233,
+          "evidence": []
+        },
+        {
+          "term": "des virus",
+          "score": 57.8877,
+          "evidence": []
+        },
+        {
+          "term": "les cas",
+          "score": 56.9512,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 22.6473,
+          "evidence": []
+        },
+        {
+          "term": "pour assurer",
+          "score": 22.6473,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 16.9175,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "dans les",
+          "score": 2.0501,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 1.8595,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 1.7537,
+          "evidence": []
+        },
+        {
+          "term": "les cas",
+          "score": 1.6307,
+          "evidence": []
+        },
+        {
+          "term": "des virus",
+          "score": 1.4615,
+          "evidence": []
+        },
+        {
+          "term": "pour assurer",
+          "score": 1.0672,
+          "evidence": []
+        },
+        {
+          "term": "wild poliovirus",
+          "score": 1.0267,
+          "evidence": []
+        },
+        {
+          "term": "poliomyélite",
+          "score": 0.6834,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 19.9878,
+          "evidence": []
+        },
+        {
+          "term": "显而易见",
+          "score": 19.7801,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 18.7877,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 18.0426,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 18.0426,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 17.8495,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 17.8495,
+          "evidence": []
+        },
+        {
+          "term": "或一些其他单位",
+          "score": 17.8495,
+          "evidence": []
+        }
+      ]
+    },
+    "page-007": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "niveau mondial",
+          "score": 1.3555,
+          "evidence": []
+        },
+        {
+          "term": "nécessaire pour",
+          "score": 1.2884,
+          "evidence": []
+        },
+        {
+          "term": "qui est",
+          "score": 1.2122,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 1.1958,
+          "evidence": []
+        },
+        {
+          "term": "certification",
+          "score": 0.9383,
+          "evidence": []
+        },
+        {
+          "term": "tournées",
+          "score": 0.9077,
+          "evidence": []
+        },
+        {
+          "term": "poliomyelitis",
+          "score": 0.8674,
+          "evidence": []
+        },
+        {
+          "term": "afp",
+          "score": 0.839,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "nécessaire pour",
+          "score": 24.9027,
+          "evidence": []
+        },
+        {
+          "term": "niveau mondial",
+          "score": 24.1986,
+          "evidence": []
+        },
+        {
+          "term": "qui est",
+          "score": 23.8934,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 22.2021,
+          "evidence": []
+        },
+        {
+          "term": "certification",
+          "score": 21.8523,
+          "evidence": []
+        },
+        {
+          "term": "tournées",
+          "score": 14.7324,
+          "evidence": []
+        },
+        {
+          "term": "poliomyélite",
+          "score": 14.2684,
+          "evidence": []
+        },
+        {
+          "term": "surveillance",
+          "score": 13.3651,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "les pays",
+          "score": 1.0049,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.6192,
+          "evidence": []
+        },
+        {
+          "term": "qui est",
+          "score": 0.5233,
+          "evidence": []
+        },
+        {
+          "term": "nécessaire pour",
+          "score": 0.5124,
+          "evidence": []
+        },
+        {
+          "term": "poliovirus",
+          "score": 0.4918,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.446,
+          "evidence": []
+        },
+        {
+          "term": "poliomyélite",
+          "score": 0.4112,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.3603,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les pays",
+          "score": 21.1422,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 11.4997,
+          "evidence": []
+        },
+        {
+          "term": "nécessaire pour",
+          "score": 8.1866,
+          "evidence": []
+        },
+        {
+          "term": "qui est",
+          "score": 6.909,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 6.3436,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 6.2777,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 6.1292,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 5.2251,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "les pays",
+          "score": 1.0049,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.6192,
+          "evidence": []
+        },
+        {
+          "term": "nécessaire pour",
+          "score": 0.5699,
+          "evidence": []
+        },
+        {
+          "term": "qui est",
+          "score": 0.5233,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.446,
+          "evidence": []
+        },
+        {
+          "term": "poliomyélite",
+          "score": 0.4112,
+          "evidence": []
+        },
+        {
+          "term": "niveau mondial",
+          "score": 0.3482,
+          "evidence": []
+        },
+        {
+          "term": "surveillance",
+          "score": 0.2976,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "显而易见",
+          "score": 29.2805,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 23.2456,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 23.2456,
+          "evidence": []
+        },
+        {
+          "term": "或一些其他单位",
+          "score": 23.2456,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 22.9137,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 22.4596,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 20.4482,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 19.8918,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

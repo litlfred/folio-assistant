@@ -1,0 +1,92 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/cat-harness/process/Process_KgSeparationCutover.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261112-2224",
+    "sha": "3e37e836b465d957673f4090b94c606b5427ca33",
+    "pr": "repin-train/20261112-2224",
+    "run": "43319926452"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/cat-harness/process/Process_KgSeparationCutover",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
+      "name": "Cut over to the separated graph",
+      "summary": "Retires the parent's copy and measures the cutover with separation:cutover:check until every condition holds.",
+      "description": "Retires the parent's copy and measures the cutover with separation:cutover:check until every condition holds. A check that cannot decide ends the phase as unknown, never as complete. Called by kg-separation and sub-kg-lifecycle (bpmn-authoring: split by phase).",
+      "enforcement": "strict",
+      "sourcePath": "processes/kg/kg-separation-cutover.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/kg/kg-separation-cutover.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/assets/img/workflows/kg-separation-cutover.svg",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/cat-harness/process/Process_KgSeparationCutover/node/Start_Cutover"
+      ],
+      "nodeCount": 6,
+      "flowCount": 6,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/cat-harness/externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/cat-harness/externalSchema/omg-dd-1.0"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparationCutover"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/cat-harness/process/Process_KgSeparationCutover#flow/F1",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/cat-harness/process/Process_KgSeparationCutover",
+      "from": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/cat-harness/process/Process_KgSeparationCutover/node/Start_Cutover",
+      "to": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/cat-harness/process/Process_KgSeparationCutover/node/Task_Cutover",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparationCutover#flow/F1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/cat-harness/process/Process_KgSeparationCutover#flow/F2",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/cat-harness/process/Process_KgSeparationCutover",
+      "from": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/cat-harness/process/Process_KgSeparationCutover/node/Task_Cutover",
+      "to": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/cat-harness/process/Process_KgSeparationCutover/node/Task_CutoverCheck",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparationCutover#flow/F2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/cat-harness/process/Process_KgSeparationCutover#flow/F3",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/cat-harness/process/Process_KgSeparationCutover",
+      "from": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/cat-harness/process/Process_KgSeparationCutover/node/Task_CutoverCheck",
+      "to": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/cat-harness/process/Process_KgSeparationCutover/node/GW_CutoverComplete",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparationCutover#flow/F3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/cat-harness/process/Process_KgSeparationCutover#flow/F4",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "complete",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/cat-harness/process/Process_KgSeparationCutover",
+      "from": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/cat-harness/process/Process_KgSeparationCutover/node/GW_CutoverComplete",
+      "to": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/cat-harness/process/Process_KgSeparationCutover/node/End_CutOver",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparationCutover#flow/F4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/cat-harness/process/Process_KgSeparationCutover#flow/F5",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "a condition failed",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/cat-harness/process/Process_KgSeparationCutover",
+      "from": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/cat-harness/process/Process_KgSeparationCutover/node/GW_CutoverComplete",
+      "to": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/cat-harness/process/Process_KgSeparationCutover/node/Task_Cutover",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparationCutover#flow/F5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/cat-harness/process/Process_KgSeparationCutover#flow/F6",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "could not determine",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/cat-harness/process/Process_KgSeparationCutover",
+      "from": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/cat-harness/process/Process_KgSeparationCutover/node/GW_CutoverComplete",
+      "to": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/cat-harness/process/Process_KgSeparationCutover/node/End_CutoverUnknown",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparationCutover#flow/F6"
+    }
+  ]
+}

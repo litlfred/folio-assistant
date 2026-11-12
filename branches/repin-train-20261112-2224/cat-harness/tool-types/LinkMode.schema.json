@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2224/cat-harness/tool-types/LinkMode.schema.json",
+  "title": "LinkMode",
+  "type": "string",
+  "enum": [
+    "submodule",
+    "sibling",
+    "remote"
+  ],
+  "description": "How a new folio links the platform: a git submodule, a sibling checkout, or pinned remote mounts in index.config.json.",
+  "staging": {
+    "branch": "repin-train/20261112-2224",
+    "sha": "3e37e836b465d957673f4090b94c606b5427ca33",
+    "pr": "repin-train/20261112-2224",
+    "run": "43319926452"
+  }
+}

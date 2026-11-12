@@ -1,0 +1,264 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-214276",
+  "instance": "who-iris",
+  "about": "library/10665-214276",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7908,
+    "terms": 73102
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "centres",
+        "score": 0.7895,
+        "evidence": []
+      },
+      {
+        "term": "amendement",
+        "score": 0.5861,
+        "evidence": []
+      },
+      {
+        "term": "privés",
+        "score": 0.5792,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "centres",
+        "score": 14.9995,
+        "evidence": []
+      },
+      {
+        "term": "york",
+        "score": 8.7013,
+        "evidence": []
+      },
+      {
+        "term": "amendement",
+        "score": 7.5893,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "vaccination",
+        "score": 0.0636,
+        "evidence": []
+      },
+      {
+        "term": "vaccine",
+        "score": 0.0563,
+        "evidence": []
+      },
+      {
+        "term": "united",
+        "score": 0.0383,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "vaccination",
+        "score": 1.011,
+        "evidence": []
+      },
+      {
+        "term": "influenza",
+        "score": 0.8778,
+        "evidence": []
+      },
+      {
+        "term": "university",
+        "score": 0.8735,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "vaccination",
+        "score": 0.0636,
+        "evidence": []
+      },
+      {
+        "term": "united",
+        "score": 0.0383,
+        "evidence": []
+      },
+      {
+        "term": "international",
+        "score": 0.037,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "如果没有",
+        "score": 115.7286,
+        "evidence": []
+      },
+      {
+        "term": "巴西登革热",
+        "score": 85.5538,
+        "evidence": []
+      },
+      {
+        "term": "感染者",
+        "score": 72.3047,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-fièvre-jaune-yellow-fever": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "centres",
+          "score": 0.7895,
+          "evidence": []
+        },
+        {
+          "term": "amendement",
+          "score": 0.5861,
+          "evidence": []
+        },
+        {
+          "term": "privés",
+          "score": 0.5792,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "centres",
+          "score": 14.9995,
+          "evidence": []
+        },
+        {
+          "term": "york",
+          "score": 8.7013,
+          "evidence": []
+        },
+        {
+          "term": "amendement",
+          "score": 7.5893,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "vaccination",
+          "score": 0.0636,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 0.0563,
+          "evidence": []
+        },
+        {
+          "term": "united",
+          "score": 0.0383,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "vaccination",
+          "score": 1.011,
+          "evidence": []
+        },
+        {
+          "term": "influenza",
+          "score": 0.8778,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 0.8735,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "vaccination",
+          "score": 0.0636,
+          "evidence": []
+        },
+        {
+          "term": "united",
+          "score": 0.0383,
+          "evidence": []
+        },
+        {
+          "term": "international",
+          "score": 0.037,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 115.7286,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 85.5538,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 72.3047,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}
