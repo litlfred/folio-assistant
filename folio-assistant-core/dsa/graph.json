@@ -1,0 +1,24 @@
+{
+  "_comment": "The graphs inside core's `dsa` sub-graph, declared FROM WITHIN (#980) on the pattern of cat-harness's `work-plan/graph.json`. Each entry is `subgraph: true`, a directory of the LAYER listed by `resolveDirectories` with `within: \"dsa\"`. Paths are relative to THIS directory. OPT-IN (`optIn: true` on its entry): off in every layer unless that layer lists `folio-assistant-core.dsa` in its own `enableSubgraphs` (owner, 2026-11-10, card Q-SG-1 C, wave 1). The `dsa` typology, `check:dsa-hash` and its Tool stay outside it, so a layer that holds a DSA can still declare and check one.",
+  "name": "dsa",
+  "directories": [
+    {
+      "id": "dsa-skills",
+      "path": "skills/",
+      "subgraph": true,
+      "description": "The `dsa` skill package: the DCAT 3 catalogue record, its status, the checksum and the ODRL source binding of a Data Sharing Agreement.",
+      "graphTypologies": [
+        "skills"
+      ]
+    },
+    {
+      "id": "dsa-processes",
+      "path": "processes/",
+      "subgraph": true,
+      "description": "The Data Sharing Agreement document life cycle (`dsa-document-lifecycle.bpmn`) and its generated checklist.",
+      "graphTypologies": [
+        "processes"
+      ]
+    }
+  ]
+}
