@@ -24,7 +24,7 @@ Owner 06:42:08Z: "ips-pilgrage can merge. hold content on dth-* and smart-ra" (s
 
 Do NOT start a second DTH review-log watcher: thread …WU5PAN9S9dXroMX9Twpkac is running; only DPI-H watch is stopped (waits on an owner card).
 
-Merged 06:43Z: fa#2985, fa#3031, cat-harness#1131, smart-trust-phw#51, smart-base#320. Report: https://claude.ai/artifact/Qipen2fFHYXcAXsjakKNqr (section "Status 2026-11-08"). Bean drnh carries the log. See [[merge-repin-windows]], [[committee-content-no-merge]], [[content-pause-smart-ra-dth]].
+Merged 06:43Z: fa#2985, fa#3031, cat-harness#1131, smart-trust-phw#51, smart-base#320. Report: https://claude.ai/artifact/Qipen2fFHYXcAXsjakKNqr (section "Status 2026-11-08"). Bean drnh carries the log. See folio-assistant-wmmg, folio-assistant-8nm4, folio-assistant-yqdf.
 
 Sub-threads (06:45Z, report merges to merge master): library chain …PhL8ELHbGN65NRwqfWTLrU; pin wave 4 …PLg8CWt5r1594GvVwsttUB; fhir-harness …4ZspF2j3hY6PQEVUVjBo9M (full cmsg_017WNUkNK8kdDziPK58Pv6G94ZspF2j3hY6PQEVUVjBo9M); tools drafts …GxP1LirYDMwdxzBouVVEk4 (prefix cmsg_017WNUkNK8kdDziPK58Pv6G9). Train dispatched 06:44Z (run 42455947279); check-in 07:00Z.
 
