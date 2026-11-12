@@ -106,6 +106,11 @@ describe("no new failures compared with main", () => {
     );
     expect(v.state).toBe("success");
   });
+
+  test("a job that is neither a hard gate nor a matrix job is not judged when skipped, even when main ran it (fa#3098)", () => {
+    const v = compare([run("cleanup", "skipped"), run("lint (hard)", "success")], [run("cleanup", "success"), run("lint (hard)", "success")]);
+    expect(v).toEqual({ state: "success", pending: [], newFailures: [], knownFailures: [], undetermined: [] });
+  });
 });
 
 // ── Per check, not per job (owner, 2026-11-03) ──────────────────────────────

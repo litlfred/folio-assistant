@@ -67,6 +67,11 @@ Feature: The re-pin train's decisions, and the workflows that call them
     And main skipped "cleanup", ran the job that is not a gate, and does not run "conflict-gate"
     Then compare's state is "success"
 
+  @test:test/workflows/repin-train.test.ts::no_new_failures_compared_with_main::a_job_that_is_neither_a_hard_gate_nor_a_matrix_job_is_not_judged_when_skipped,_even_when_main_ran_it_(fa#3098)
+  Scenario: A job that is neither a hard gate nor a matrix job is not judged when skipped, even when main ran it
+    Given the train skipped "cleanup" and passed "lint (hard)", and main ran both
+    Then compare's verdict is exactly success, with nothing pending, new, known or undetermined
+
   @test:test/workflows/repin-train.test.ts::a_failing_job_is_judged_check_by_check_when_it_left_a_record::a_new_failure_inside_a_job_main_also_fails_is_NEW,_not_masked_by_the_job
   Scenario: A new failure inside a job main also fails is new, not masked by the job
     Given JOB fails on both sides
