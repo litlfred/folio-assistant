@@ -194,11 +194,17 @@ function ranOnMain(name: string, main: ReadonlyMap<string, CheckRun>): string[] 
  * Q-CIB-4 A, 2026-11-08) a dispatch on a non-main branch and a PR without the
  * `release` label run the fast tier only, and #3092 merged at b80b34e with
  * every bun test shard, e2e shard and repository-gate part skipped — "no new
- * failures" against a main whose same jobs had run and failed. A job that says
- * it is not a gate is not judged here.
+ * failures" against a main whose same jobs had run and failed. Only a GATE is
+ * judged here: a hard gate (`(hard)`), or a matrix job (its skipped name keeps
+ * `${{ … }}`, as the bun test and e2e shards do). Any other job a train skips
+ * by design — `cleanup`, which runs only on main's side (fa#3098: it was
+ * reported as "not judged" and would have held a clean train forever) — is
+ * not; a job that says it is not a gate never is.
  */
 const skippedButRunOnMain = (run: CheckRun, main: ReadonlyMap<string, CheckRun>): string[] =>
-  run.conclusion === "skipped" && !/\(not a gate\)/.test(run.name) ? ranOnMain(run.name, main) : [];
+  run.conclusion === "skipped" && !/\(not a gate\)/.test(run.name) && (isRequired(run.name) || /\$\{\{/.test(run.name))
+    ? ranOnMain(run.name, main)
+    : [];
 
 /**
  * Compare a train head's checks with main's. A failure is NEW when main does
