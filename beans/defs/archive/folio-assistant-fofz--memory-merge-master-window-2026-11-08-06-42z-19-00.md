@@ -6,7 +6,7 @@ status: completed
 type: task
 priority: low
 created_at: 2026-11-08T06:43:15Z
-updated_at: 2026-11-12T09:45:00Z
+updated_at: 2026-11-12T09:50:00Z
 parent: folio-assistant-n6ny
 tags:
     - project-memory
@@ -24,7 +24,7 @@ Owner 06:42:08Z: "ips-pilgrage can merge. hold content on dth-* and smart-ra" (s
 
 Do NOT start a second DTH review-log watcher: thread …WU5PAN9S9dXroMX9Twpkac is running; only DPI-H watch is stopped (waits on an owner card).
 
-Merged 06:43Z: fa#2985, fa#3031, cat-harness#1131, smart-trust-phw#51, smart-base#320. Report: https://claude.ai/artifact/Qipen2fFHYXcAXsjakKNqr (section "Status 2026-11-08"). Bean drnh carries the log. See folio-assistant-wmmg, folio-assistant-8nm4, folio-assistant-yqdf.
+Merged 06:43Z: fa#2985, fa#3031, cat-harness#1131, smart-trust-phw#51, smart-base#320. Report: https://claude.ai/artifact/Qipen2fFHYXcAXsjakKNqr (section "Status 2026-11-08"). Bean drnh carries the log. See [[merge-repin-windows]], [[committee-content-no-merge]], [[content-pause-smart-ra-dth]].
 
 Sub-threads (06:45Z, report merges to merge master): library chain …PhL8ELHbGN65NRwqfWTLrU; pin wave 4 …PLg8CWt5r1594GvVwsttUB; fhir-harness …4ZspF2j3hY6PQEVUVjBo9M (full cmsg_017WNUkNK8kdDziPK58Pv6G94ZspF2j3hY6PQEVUVjBo9M); tools drafts …GxP1LirYDMwdxzBouVVEk4 (prefix cmsg_017WNUkNK8kdDziPK58Pv6G9). Train dispatched 06:44Z (run 42455947279); check-in 07:00Z.
 
@@ -509,3 +509,8 @@ Navbar thread = session 01Qmmkt7obLAeCBBaa1PEHeT (reach via coordinator); ping f
 - 09:19Z tools#1941 update-branch (flake fixed by #1938 on main).
 - 09:23Z core#764 (dth-glossary reads both ArchiMate IRI forms, Q-RAL-2 C) queued code-only. Held for owner: dth-hrh#121, dth-phc#41, dth-sfp#10 (on #8).
 - 09:29Z ArchiMate thread merges its own 6 PRs (owner 'ok to merge' 09:28Z there): tools#1950, demo#133, core#764, dth-hrh#121, dth-phc#41, dth-sfp#10 — removed from tapped. Mine: demo re-pin of tools after #1950.
+- 09:35Z fhir-harness#384: 1 new failure compose-docs real-tree (likely timeout flake) -> update-branch/re-run after tools#1941 merges + re-pin, then merge (Q-LOCK-1).
+- 09:37Z core#760 MERGED 294f49d5 (lock-only, Q-LOCK-1+Q-760, comment). fa#3088 closed; repin-train.yml dispatched for a fresh train. Next: update-branch fa#3075 after new train; core#761 still running.
+- 09:41Z Q-DTH-PC-TRUST A: sent owner the dth-pc#14 re-pin command (owner runs; consent records theirs). After push: watch full CI, merge on green (dth-pc#14 base claude/dth-pc-scaffold).
+
+_2026-11-12T09:50:00Z_ — Re-synced with the final memory copy (edits made 09:35–09:41Z, just before project memory was cut).
