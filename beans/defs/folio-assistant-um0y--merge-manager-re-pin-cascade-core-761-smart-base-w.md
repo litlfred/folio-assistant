@@ -38,3 +38,5 @@ _2026-11-12T09:50:00Z_ — Merge manager's own handover (session https://claude.
 - dth-pc#14: the owner runs /mnt/project-files/merge-manager/content-review/dth-pc-14-repin-command.md (Q-DTH-PC-TRUST A; the consent records are the owner's own), then merge on full green.
 - smart-ra drafts #154 #185 #190 #191 #192 #195: Q-RA-VAL-2 A once only corpus-gate is red. They may wait for the smart-ra re-pin (upstream-pins). Close #241 then.
 - No open cards in the merge manager thread.
+
+_2026-11-12T09:44:00Z_ — smart-trust publish 43189576552 FAILED: injection check refuses 14 object SVGs + hcert-demo script (no trustedScripts). Publish-on-push thread card Q-INJ-2 (img now, SVG allowlist later); merge its fix PR under the owner game override, then re-check the game URL.
