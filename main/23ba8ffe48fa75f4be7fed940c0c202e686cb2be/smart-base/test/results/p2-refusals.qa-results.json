@@ -1,0 +1,1626 @@
+{
+  "$schema": "qa-results/v1",
+  "producer": {
+    "script": "fhir-harness/scripts/p2-refusals.ts",
+    "script_hash": "83233b137383"
+  },
+  "subject": {
+    "kind": "fhir-ig",
+    "id": "smart.who.int.base"
+  },
+  "families": {
+    "xml": {
+      "summary": "XML representations smart.who.int.base publishes that this pipeline refuses to render (P2); each stays reachable at the Publisher's URL",
+      "count": 0,
+      "entries": []
+    },
+    "ttl": {
+      "summary": "Turtle representations smart.who.int.base publishes that this pipeline refuses to render (P2); each stays reachable at the Publisher's URL",
+      "count": 0,
+      "entries": []
+    },
+    "not-published": {
+      "summary": "Artefacts for which the IG published no XML or no Turtle — not refused, because there was nothing to refuse",
+      "count": 228,
+      "entries": [
+        {
+          "artifact": "ActivityDefinition/SGDecisionTableGuidance",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ActorDefinition/DAK.Persona.CommunityHealthWorker",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ActorDefinition/DAK.Persona.DataManager",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ActorDefinition/DAK.Persona.HealthSystemManager",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ActorDefinition/DAK.Persona.HealthcareProvider",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ActorDefinition/DAK.Persona.Person",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ActorDefinition/DAK.Persona.System.ClientRegistry",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ActorDefinition/DAK.Persona.System.EMR",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ActorDefinition/DAK.Persona.System.HMIS",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ActorDefinition/DAK.Persona.System.InteropPlatform",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ActorDefinition/DAK.Persona.System.LIS",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ActorDefinition/DAK.Persona.System.LMIS",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ActorDefinition/DAK.Persona.System.SurveillanceSystem",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ActorDefinition/SGAuthoring.Persona.BusinessAnalyst",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ActorDefinition/SGAuthoring.Persona.ClinicalSME",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ActorDefinition/SGAuthoring.Persona.ContentReviewer",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ActorDefinition/SGAuthoring.Persona.FHIRModeller",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ActorDefinition/SGAuthoring.Persona.ProgrammeManager",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ActorDefinition/SGAuthoring.Persona.PublicationManager",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ActorDefinition/SGAuthoring.Persona.QCReviewer",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ActorDefinition/SGAuthoring.Persona.TechnicalOfficer",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ActorDefinition/SGAuthoring.Persona.Terminologist",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ActorDefinition/SGAuthoring.Persona.Translator",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "CodeSystem/CDHIv1",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "CodeSystem/CDHIv2",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "CodeSystem/CDSCv1",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "CodeSystem/CDSCv2",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "CodeSystem/CoreDataElementType",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "CodeSystem/DecisionTableActions",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "CodeSystem/DocumentationSections",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "CodeSystem/ISCO08",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "CodeSystem/KGCertainty",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "CodeSystem/KGChangeStatus",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "CodeSystem/KGCitationKind",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "CodeSystem/KGDerivation",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "CodeSystem/KGElementType",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "CodeSystem/KGEvidenceType",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "CodeSystem/KGGrcStatus",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "CodeSystem/KGIdentifierType",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "CodeSystem/KGInterventionType",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "CodeSystem/KGL1Classes",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "CodeSystem/KGL1LibraryClasses",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "CodeSystem/KGL1LibraryPredicates",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "CodeSystem/KGL1Predicates",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "CodeSystem/KGOutcomeImportance",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "CodeSystem/KGPublicationType",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "CodeSystem/KGRecommendationDirection",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "CodeSystem/KGRecommendationKind",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "CodeSystem/KGRecommendationStatus",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "CodeSystem/KGRecommendationStrength",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "CodeSystem/KGRemarkType",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "CodeSystem/KGResolutionStatus",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "CodeSystem/KGRowType",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "CodeSystem/KGTerminologySystem",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "CodeSystem/SGAuthoringPersonaTypes",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "CodeSystem/SGAuthoringSkills",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "CodeSystem/SGPersonaTypes",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "CodeSystem/SGTasks",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ConceptMap/CDHIv1Hierarchy",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ConceptMap/CDHIv1toCDHIv2",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ConceptMap/CDHIv2Hierarchy",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ConceptMap/CDSCv1toCDSCv2",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ImplementationGuide/smart.who.int.base",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "Questionnaire/DAK.DT.IMMZ.D2.DT.BCGQuestionnaire",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "Requirements/SGAuthoring.Skills.AuthorActorDefinitions",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "Requirements/SGAuthoring.Skills.AuthorBusinessProcesses",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "Requirements/SGAuthoring.Skills.AuthorCQL",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "Requirements/SGAuthoring.Skills.AuthorCodeSystems",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "Requirements/SGAuthoring.Skills.AuthorConceptMaps",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "Requirements/SGAuthoring.Skills.AuthorDataDictionary",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "Requirements/SGAuthoring.Skills.AuthorDecisionLogic",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "Requirements/SGAuthoring.Skills.AuthorExampleScenarios",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "Requirements/SGAuthoring.Skills.AuthorFHIRProfiles",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "Requirements/SGAuthoring.Skills.AuthorFHIRRequirements",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "Requirements/SGAuthoring.Skills.AuthorFunctionalRequirements",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "Requirements/SGAuthoring.Skills.AuthorIndicators",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "Requirements/SGAuthoring.Skills.AuthorLogicalModels",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "Requirements/SGAuthoring.Skills.AuthorMeasures",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "Requirements/SGAuthoring.Skills.AuthorPersonas",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "Requirements/SGAuthoring.Skills.AuthorPlanDefinitions",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "Requirements/SGAuthoring.Skills.AuthorQuestionnaires",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "Requirements/SGAuthoring.Skills.AuthorSchedulingLogic",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "Requirements/SGAuthoring.Skills.AuthorStructureMaps",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "Requirements/SGAuthoring.Skills.AuthorTestCases",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "Requirements/SGAuthoring.Skills.AuthorUserScenarios",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "Requirements/SGAuthoring.Skills.AuthorValueSets",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "Requirements/SGAuthoring.Skills.BuildIG",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "Requirements/SGAuthoring.Skills.ConfigureIG",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "Requirements/SGAuthoring.Skills.InterpretClinicalRecommendations",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "Requirements/SGAuthoring.Skills.ManageGovernance",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "Requirements/SGAuthoring.Skills.ManageReleases",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "Requirements/SGAuthoring.Skills.ManageStakeholders",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "Requirements/SGAuthoring.Skills.MapConcepts",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "Requirements/SGAuthoring.Skills.PlanIterations",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "Requirements/SGAuthoring.Skills.ReviewAndApproveContent",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "Requirements/SGAuthoring.Skills.ReviewChecklist",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "Requirements/SGAuthoring.Skills.ReviewL1Guidelines",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "Requirements/SGAuthoring.Skills.ReviewTerminology",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "Requirements/SGAuthoring.Skills.ReviewTranslations",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "Requirements/SGAuthoring.Skills.RunQAChecks",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "Requirements/SGAuthoring.Skills.ScopeDAK",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "Requirements/SGAuthoring.Skills.TranslateContent",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "Requirements/SGAuthoring.Skills.ValidateArtifactConformance",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "Requirements/SGAuthoring.Skills.ValidateDAKContent",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "Requirements/SGAuthoring.Skills.ValidateL3Functionality",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/BusinessProcessWorkflow",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/BusinessProcessWorkflowSource",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/CoreDataElement",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/CoreDataElementSource",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/DAK",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/DecisionSupportLogic",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/DecisionSupportLogicSource",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/DublinCore",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/FHIRSchemaBase",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/FunctionalRequirement",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/GenericPersona",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/GenericPersonaSource",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/HealthInterventions",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/HealthInterventionsSource",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/KGCitation",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/KGEdge",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/KGEvidence",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/KGEvidenceLocation",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/KGGraphDocument",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/KGHealthIntervention",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/KGImplementationPractice",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/KGIndicator",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/KGKeyQuestion",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/KGLibraryNode",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/KGNode",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/KGOutcome",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/KGProvenanceSource",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/KGPublication",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/KGPublicationElement",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/KGPublicationSection",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/KGRecommendation",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/KGReferenceEntry",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/KGRemark",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/KGTerminologyCode",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/LinkIdExt",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/Markdown",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/NonFunctionalRequirement",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/Persona",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/ProgramIndicator",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/ProgramIndicatorSource",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/Requirements",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/RequirementsSource",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/SGActivityDefinition",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/SGActor",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/SGActorExt",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/SGBusinessProcess",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/SGCodeSystem",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/SGCommunicationRequest",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/SGConceptMap",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/SGDecisionTable",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/SGDocumentation",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/SGGraphDefinition",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/SGGroupDefinition",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/SGImplementationGuide",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/SGLibrary",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/SGLogicalModel",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/SGMarkdown",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/SGMeasure",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/SGPlanDefinition",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/SGQuestionnaire",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/SGRequirementExt",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/SGRequirements",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/SGString",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/SGStructureDefinition",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/SGStructureMap",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/SGTask",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/SGTransaction",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/SGUserStory",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/SGValueSet",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/SGcode",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/Satisfies",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/SushiConfigLogicalModel",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/TestScenario",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/TestScenarioSource",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/UserScenario",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "StructureDefinition/UserScenarioSource",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ValueSet/CDHIv1",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ValueSet/CDHIv1.1",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ValueSet/CDHIv1.2",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ValueSet/CDHIv1.3",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ValueSet/CDHIv1.4",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ValueSet/CDHIv2",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ValueSet/CDHIv2.1",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ValueSet/CDHIv2.2",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ValueSet/CDHIv2.3",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ValueSet/CDHIv2.4",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ValueSet/CDSCv1",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ValueSet/CDSCv2",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ValueSet/CDSCv2.A",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ValueSet/CDSCv2.B",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ValueSet/CDSCv2.C",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ValueSet/CDSCv2.D",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ValueSet/CDSCv2.E",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ValueSet/CoreDataElementTypeVS",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ValueSet/DecisionTableActions",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ValueSet/DocumentationSection",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ValueSet/ISCO08ValueSet",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ValueSet/KGCertaintyVS",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ValueSet/KGChangeStatusVS",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ValueSet/KGCitationKindVS",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ValueSet/KGDerivationVS",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ValueSet/KGElementTypeVS",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ValueSet/KGEvidenceTypeVS",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ValueSet/KGGrcStatusVS",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ValueSet/KGIdentifierTypeVS",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ValueSet/KGInterventionTypeVS",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ValueSet/KGL1ClassesVS",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ValueSet/KGL1LibraryClassesVS",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ValueSet/KGL1LibraryPredicatesVS",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ValueSet/KGL1PredicatesVS",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ValueSet/KGOutcomeImportanceVS",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ValueSet/KGPublicationTypeVS",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ValueSet/KGRecommendationDirectionVS",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ValueSet/KGRecommendationKindVS",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ValueSet/KGRecommendationStatusVS",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ValueSet/KGRecommendationStrengthVS",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ValueSet/KGRemarkTypeVS",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ValueSet/KGResolutionStatusVS",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ValueSet/KGRowTypeVS",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ValueSet/KGTerminologySystemVS",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ValueSet/SGAuthoringPersonaTypesVS",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ValueSet/SGAuthoringSkillsVS",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        },
+        {
+          "artifact": "ValueSet/SGPersonaTypesVS",
+          "missing": [
+            "xml",
+            "ttl"
+          ]
+        }
+      ]
+    }
+  },
+  "total": 0
+}
