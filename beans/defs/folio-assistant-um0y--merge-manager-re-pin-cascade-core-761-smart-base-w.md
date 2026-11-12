@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-12T09:45:00Z
-updated_at: 2026-11-12T13:42:00Z
+updated_at: 2026-11-12T15:35:00Z
 parent: folio-assistant-v8bg
 tags:
     - handover-2026-11-12
@@ -17,11 +17,11 @@ Owner thread: merge manager https://claude.ai/code/project/chan_017WNUkNK8kdDziP
 
 Cascade onto cat-harness 5244c31 and cat-harness-tools 4216ebb: folio-assistant-core#761 → smart-base → who-iris / smart-ra → dth-hrh. Code-only merge window until 2026-11-12 18:05Z (owner extended "+12hrs window" 06:04Z). Per Q-RERUN-1 B, CI is re-run only right before a merge.
 
-- [x] Merged: smart-trust#199, #201, #200 (`10:54:55Z`), #203 (`12:51:24Z`), #195 (`12:59:47Z`); cat-harness-tools#1947, #1938, #1941 (`10:37:00Z`), #1952 (`10:37:08Z`), #1945 (`11:05:43Z`), #1943 (`11:36:41Z`), #1950 (`11:40:41Z`), #1953 (`11:50:03Z`), #1954 (`12:49:22Z`); folio-assistant-core#761 (`09:56:37Z`), #764 (`09:57:11Z`), #766 (`11:13:23Z`), #767 (`12:56:35Z`); fhir-harness#384 (`10:12:46Z`), #394 (`11:04:18Z`); smart-base#347 (`10:51:34Z`), #349 (`10:57:29Z`), #346 (`13:30:27Z`); who-iris#247 (`12:33:59Z`), #252 (`12:51:47Z`); dth-hrh#118, #122 (`12:51:39Z` — re-pinned core to `1874fd5` and `Site publish` succeeded on `main`); dth-phc#41 (`09:44:53Z`); dth-sc#4, #15; folio-assistant#3092 (`11:14:27Z`), #3096 (`13:29:11Z`).
-- [x] In flight (now merged): smart-trust#200 (standing re-pin, merged `10:54:55Z`), cat-harness-tools#1941 (merged `10:37:00Z`).
+- [x] Merged: cat-harness#1272 (`13:46:44Z`, `5409c2bb12`), #1273 (`13:47:34Z`, `7409a36ab6`), #1274 (`13:49:20Z`, `fb696e273d`), #1259 (`13:50:10Z`, `54b98d393c`); smart-trust#199, #201, #200 (`10:54:55Z`, `30fa68a001`), #203 (`12:51:24Z`), #195 (`12:59:47Z`), #204 (`13:56:27Z`, `9c90cf7036`); cat-harness-tools#1947, #1938, #1941 (`10:37:00Z`), #1952 (`10:37:08Z`), #1945 (`11:05:43Z`), #1943 (`11:36:41Z`), #1950 (`11:40:41Z`), #1953 (`11:50:03Z`), #1954 (`12:49:22Z`), #1957 (`13:40:57Z`, `ad8128c02a`), #1958 (`13:41:06Z`, `174be19f75`), #1959 (`13:41:16Z`, `36627fb32a`), #1955 (`13:49:03Z`, `f6c941a29a`), #1956 (`13:49:08Z`, `a448eb46a6`), #1960 (`13:49:13Z`, `1b4e42f054`); folio-assistant-core#761 (`09:56:37Z`), #764 (`09:57:11Z`), #766 (`11:13:23Z`), #767 (`12:56:35Z`), #768 (`15:27:10Z`, `101f43b9fd`); fhir-harness#384 (`10:12:46Z`), #394 (`11:04:18Z`), #395 (`15:17:21Z`, `02a0fc0382`); smart-base#347 (`10:51:34Z`), #349 (`10:57:29Z`), #346 (`13:30:27Z`), #354 (`13:49:23Z`, `9946a84647`), #355 (`13:51:01Z`, `6976e637c0`); who-iris#247 (`12:33:59Z`), #252 (`12:51:47Z`); smart-ra#241 (`13:53:43Z`); dth-hrh#118, #122 (`12:51:39Z` — re-pinned core to `1874fd5` and `Site publish` succeeded on `main`); dth-phc#41 (`09:44:53Z`); dth-sc#4, #15; folio-assistant#3092 (`11:14:27Z`), #3096 (`13:29:11Z`).
+- [x] In flight (now merged): smart-trust#200 (standing re-pin, merged `10:54:55Z`), cat-harness-tools#1941 (merged `10:37:00Z`), smart-base#354 (standing re-pin, merged `13:49:23Z`).
 - [x] dth-phc#31 ready to merge.
 - [ ] dth-pc#14: move its pins up, plus a small `processes/` change.
-- [ ] Waiters on the cascade: smart-ra#241 (re-pins `cat-harness` + `cat-harness-tools` + library JSON-LD; `No new failures` red on 22 lower-layer gates tracked in smart-ra#242 now that `smart-base#346` and `who-iris#247` have merged), dth-hrh#119 / #121 / #116 / #69 (`dth-hrh#122` merged and unblocked `dth-hrh` Site publish; `#119` needs full bottom-up layer pins now that `smart-base#346` and `who-iris#247` are on `main`), smart-trust-phw#61, fhir-harness#388, IG publish-on-push rollout.
+- [ ] Waiters on the cascade: smart-ra#242 (bottom-up re-pin follow-up after smart-ra#241 merged at `13:53:43Z`), dth-hrh#119 / #121 / #116 / #69 (`dth-hrh#122` merged and unblocked `dth-hrh` Site publish; `#119` needs full bottom-up layer pins now that `smart-base#346` and `who-iris#247` are on `main`), smart-trust-phw#61, fhir-harness#388, IG publish-on-push rollout.
 
 _2026-11-12T09:45:00Z_ — Filed by thread "Record handover in beans" (https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G9E8Y9ccXJsk3qvGEie1X5Pr), session https://claude.ai/code/session_01Qmmkt7NmLVnjA5oNtkbv3f.
 
@@ -50,3 +50,6 @@ _2026-11-12T13:42:00Z_ — Cascade progress update:
 - **Remaining in cascade**:
   - `smart-ra#241` (`e25b14cd`): re-pins `cat-harness` + `cat-harness-tools` + library JSON-LD; all 4 test/gate shards passed, `No new failures` red on 22 lower-layer gates (tracked in `smart-ra#242`, ready for full bottom-up re-pin now that `smart-base#346` and `who-iris#247` have merged).
   - `dth-hrh#119` (`6c9fd872`): re-pins only `cat-harness`, `No new failures` red on 11 opt-in/lock-consistency gates; needs full bottom-up pins (`smart-base#346`, `who-iris#247`, `smart-ra`). `dth-hrh#121` (`f4132451`, ArchiMate overlay) and `dth-hrh#116` (`f43eb011`) are `CONFLICTING` (`DIRTY`) after `dth-hrh#122` merged.
+
+_2026-11-12T15:35:00Z_ — Round 21 merges recorded:
+- **Merged in Round 21**: `cat-harness#1272` (`13:46:44Z`, `5409c2bb12`), `#1273` (`13:47:34Z`, `7409a36ab6`), `#1274` (`13:49:20Z`, `fb696e273d`), `#1259` (`13:50:10Z`, `54b98d393c`); `cat-harness-tools#1957` (`13:40:57Z`, `ad8128c02a`), `#1958` (`13:41:06Z`, `174be19f75`), `#1959` (`13:41:16Z`, `36627fb32a`), `#1955` (`13:49:03Z`, `f6c941a29a`), `#1956` (`13:49:08Z`, `a448eb46a6`), `#1960` (`13:49:13Z`, `1b4e42f054`); `folio-assistant-core#768` (`15:27:10Z`, `101f43b9fd`); `fhir-harness#395` (`15:17:21Z`, `02a0fc0382`); `smart-base#354` (`13:49:23Z`, `9946a84647`), `#355` (`13:51:01Z`, `6976e637c0`); `smart-trust#204` (`13:56:27Z`, `9c90cf7036`); `smart-ra#241` (`13:53:43Z`).
