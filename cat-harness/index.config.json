@@ -1,0 +1,74 @@
+{
+  "$schema": "folio-index-config/v1",
+  "layers": [
+    {
+      "name": "cat-harness",
+      "source": {
+        "local": {
+          "at": "."
+        }
+      }
+    },
+    {
+      "name": "bootstrap",
+      "source": {
+        "remote": {
+          "repository": "litlfred/bootstrap",
+          "ref": "531a96d2adddec62c2363e125c19d6648a07fc11",
+          "overrides": {
+            "bootstrap": {
+              "whole": true
+            }
+          },
+          "note": "Replaces the git submodule: the whole repository, at the pin the gitlink held.",
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-12",
+              "ref": "531a96d2adddec62c2363e125c19d6648a07fc11",
+              "evidence": "litlfred, 2026-11-12, merge-manager thread: owner card Q-CONSENT-1 = A (re-pin + merge window to ~21:05Z 11-12, Q-WIN-1 C); bottom-up coherent re-pin T1, follow-up to Q-RA-241 A. Coordinator session session_01EucfRpkvK7d4FJyuqypQzm."
+            }
+          }
+        }
+      },
+      "contentType": "document"
+    },
+    {
+      "name": "bootstrap-tools",
+      "source": {
+        "remote": {
+          "repository": "litlfred/bootstrap-tools",
+          "ref": "b31c5346b0b2803354423511b6d18b599b7bdc41",
+          "overrides": {
+            "bootstrap-tools": {
+              "whole": true
+            },
+            "bootstrap": {
+              "skip": true
+            }
+          },
+          "note": "Replaces the git submodule. Its need bootstrap is the mount above.",
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-12",
+              "ref": "b31c5346b0b2803354423511b6d18b599b7bdc41",
+              "evidence": "litlfred, 2026-11-12, merge-manager thread: owner card Q-CONSENT-1 = A (re-pin + merge window to ~21:05Z 11-12, Q-WIN-1 C); bottom-up coherent re-pin T1, follow-up to Q-RA-241 A. Coordinator session session_01EucfRpkvK7d4FJyuqypQzm."
+            }
+          }
+        }
+      }
+    }
+  ],
+  "harnesses": [
+    {
+      "name": "cat-harness"
+    },
+    {
+      "name": "bootstrap"
+    }
+  ],
+  "site": {
+    "landing": "cat-harness"
+  }
+}

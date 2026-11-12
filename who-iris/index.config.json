@@ -1,0 +1,161 @@
+{
+  "$schema": "folio-index-config/v1",
+  "layers": [
+    {
+      "name": "who-iris",
+      "source": {
+        "local": {
+          "at": "."
+        }
+      },
+      "site": {
+        "build": {
+          "home": "docs/site-home.md",
+          "sourceSteps": [
+            "site:catalogue",
+            "site:home"
+          ],
+          "keep": [
+            "ns"
+          ]
+        }
+      }
+    },
+    {
+      "name": "folio-assistant-core",
+      "source": {
+        "remote": {
+          "repository": "litlfred/folio-assistant-core",
+          "ref": "19208f3f878ce4debc05c33d20f8019844002df4",
+          "overrides": {
+            "folio-assistant-core": {
+              "whole": true
+            },
+            "cat-harness": {
+              "skip": true
+            },
+            "cat-harness-tools": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-12",
+              "ref": "19208f3f878ce4debc05c33d20f8019844002df4",
+              "evidence": "litlfred 2026-11-12: re-pin who-iris#247 to current mains (19208f3f87, includes cat-harness-tools#1943 and #1945). Owner merge window to ~21:05Z 2026-11-12 (Q-WIN-1 C); owner card Q-CONSENT-1 A, answered in coordinator session session_01EucfRpkvK7d4FJyuqypQzm."
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "cat-harness",
+      "source": {
+        "remote": {
+          "repository": "litlfred/cat-harness",
+          "ref": "fbe255e126f4d4e0ce25812e3e5b133cf393a7cc",
+          "overrides": {
+            "cat-harness": {
+              "whole": true
+            },
+            "bootstrap": {
+              "skip": true
+            },
+            "bootstrap-tools": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-12",
+              "ref": "fbe255e126f4d4e0ce25812e3e5b133cf393a7cc",
+              "evidence": "litlfred 2026-11-12: re-pin who-iris#247 to current mains (fbe255e126, includes cat-harness-tools#1943 and #1945). Owner merge window to ~21:05Z 2026-11-12 (Q-WIN-1 C); owner card Q-CONSENT-1 A, answered in coordinator session session_01EucfRpkvK7d4FJyuqypQzm."
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "cat-harness-tools",
+      "source": {
+        "remote": {
+          "repository": "litlfred/cat-harness-tools",
+          "ref": "d30c2f5ff324dc90a1c6862942d56413a76ae925",
+          "overrides": {
+            "cat-harness-tools": {
+              "whole": true
+            },
+            "cat-harness": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-12",
+              "ref": "d30c2f5ff324dc90a1c6862942d56413a76ae925",
+              "evidence": "litlfred 2026-11-12: re-pin who-iris#247 to current mains (d30c2f5ff3, includes cat-harness-tools#1943 and #1945). Owner merge window to ~21:05Z 2026-11-12 (Q-WIN-1 C); owner card Q-CONSENT-1 A, answered in coordinator session session_01EucfRpkvK7d4FJyuqypQzm."
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "bootstrap",
+      "source": {
+        "remote": {
+          "repository": "litlfred/bootstrap",
+          "ref": "531a96d2adddec62c2363e125c19d6648a07fc11",
+          "overrides": {
+            "bootstrap": {
+              "whole": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-12",
+              "ref": "531a96d2adddec62c2363e125c19d6648a07fc11",
+              "evidence": "litlfred 2026-11-12: re-pin who-iris#247 to current mains (531a96d2ad, includes cat-harness-tools#1943 and #1945). Owner merge window to ~21:05Z 2026-11-12 (Q-WIN-1 C); owner card Q-CONSENT-1 A, answered in coordinator session session_01EucfRpkvK7d4FJyuqypQzm."
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "bootstrap-tools",
+      "source": {
+        "remote": {
+          "repository": "litlfred/bootstrap-tools",
+          "ref": "b31c5346b0b2803354423511b6d18b599b7bdc41",
+          "overrides": {
+            "bootstrap-tools": {
+              "whole": true
+            },
+            "bootstrap": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-12",
+              "ref": "b31c5346b0b2803354423511b6d18b599b7bdc41",
+              "evidence": "litlfred 2026-11-12: re-pin who-iris#247 to current mains (b31c5346b0, includes cat-harness-tools#1943 and #1945). Owner merge window to ~21:05Z 2026-11-12 (Q-WIN-1 C); owner card Q-CONSENT-1 A, answered in coordinator session session_01EucfRpkvK7d4FJyuqypQzm."
+            }
+          }
+        }
+      }
+    }
+  ],
+  "harnesses": [
+    {
+      "name": "who-iris"
+    }
+  ],
+  "site": {
+    "landing": "who-iris"
+  }
+}
