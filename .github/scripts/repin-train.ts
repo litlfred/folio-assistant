@@ -171,6 +171,36 @@ function judgeFailingCheck(
 export const isRequired = (name: string): boolean => /\(hard\)/.test(name);
 
 /**
+ * The checks of `main` that a check SKIPPED on the train stands for. A skipped
+ * matrix job keeps its unexpanded name (`… shard ${{ matrix.shard }}/4`) while
+ * main's runs carry `… shard 1/4`, so a placeholder matches any text.
+ */
+function ranOnMain(name: string, main: ReadonlyMap<string, CheckRun>): string[] {
+  const pattern = new RegExp(
+    `^${name
+      .split(/\$\{\{.*?\}\}/)
+      .map((s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"))
+      .join(".+")}$`,
+  );
+  return [...main.values()]
+    .filter((r) => pattern.test(r.name) && r.status === "completed" && r.conclusion !== "skipped")
+    .map((r) => r.name)
+    .sort();
+}
+
+/**
+ * A gate the train SKIPPED while main ran it was never judged on the train,
+ * so the train cannot be said to pass it. Since release-gated CI (owner, card
+ * Q-CIB-4 A, 2026-11-08) a dispatch on a non-main branch and a PR without the
+ * `release` label run the fast tier only, and #3092 merged at b80b34e with
+ * every bun test shard, e2e shard and repository-gate part skipped — "no new
+ * failures" against a main whose same jobs had run and failed. A job that says
+ * it is not a gate is not judged here.
+ */
+const skippedButRunOnMain = (run: CheckRun, main: ReadonlyMap<string, CheckRun>): string[] =>
+  run.conclusion === "skipped" && !/\(not a gate\)/.test(run.name) ? ranOnMain(run.name, main) : [];
+
+/**
  * Compare a train head's checks with main's. A failure is NEW when main does
  * not fail the same check; that includes a check main does not run at all (a
  * PR-only check failing is new). A failing job that left a per-check record
@@ -187,6 +217,11 @@ export function compare(train: readonly CheckRun[], main: readonly CheckRun[], r
   for (const [name, run] of t) {
     if (run.status !== "completed") {
       pending.push(name);
+      continue;
+    }
+    const unjudged = skippedButRunOnMain(run, m);
+    if (unjudged.length > 0) {
+      out.undetermined.push(`${name}: skipped on the train, while main ran ${unjudged.join(", ")}; the train was not judged on it`);
       continue;
     }
     if (PASSING.has(run.conclusion ?? "")) continue;

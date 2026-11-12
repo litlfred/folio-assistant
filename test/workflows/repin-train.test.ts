@@ -76,6 +76,36 @@ describe("no new failures compared with main", () => {
     expect(v.state).toBe("pending");
     expect(v.pending).toEqual(["Repository gates (hard)"]);
   });
+
+  test("a gate the train skipped while main ran it is not judged, and never green", () => {
+    const v = compare(
+      [run("Repository gates — instances, docs, translations (hard)", "skipped"), run("Repository gates (hard)", "success")],
+      [run("Repository gates — instances, docs, translations (hard)", "failure"), run("Repository gates (hard)", "failure")],
+    );
+    expect(v.state).toBe("error");
+    expect(v.undetermined).toEqual([
+      "Repository gates — instances, docs, translations (hard): skipped on the train, while main ran Repository gates — instances, docs, translations (hard); the train was not judged on it",
+    ]);
+  });
+
+  test("a skipped matrix job matches main's expanded shards", () => {
+    const v = compare(
+      [run("TypeScript — bun test, shard ${{ matrix.shard }}/4", "skipped")],
+      [run("TypeScript — bun test, shard 1/4", "failure"), run("TypeScript — bun test, shard 2/4", "success"), run("lint", "success")],
+    );
+    expect(v.state).toBe("error");
+    expect(v.undetermined).toEqual([
+      "TypeScript — bun test, shard ${{ matrix.shard }}/4: skipped on the train, while main ran TypeScript — bun test, shard 1/4, TypeScript — bun test, shard 2/4; the train was not judged on it",
+    ]);
+  });
+
+  test("a skip main also skipped, a check main does not run, or a job that is not a gate stays a pass", () => {
+    const v = compare(
+      [run("cleanup", "skipped"), run("conflict-gate", "skipped"), run("Publish QA results (not a gate)", "skipped"), run("lint", "success")],
+      [run("cleanup", "skipped"), run("Publish QA results (not a gate)", "success"), run("lint", "success")],
+    );
+    expect(v.state).toBe("success");
+  });
 });
 
 // ── Per check, not per job (owner, 2026-11-03) ──────────────────────────────
@@ -348,6 +378,15 @@ describe("the workflows", () => {
     expect(judge).toBeGreaterThan(-1);
     expect(judge).toBeLessThan(train.lastIndexOf("repin-train.ts decide --tree"));
     expect(train).toContain("statuses: write");
+  });
+
+  test("the gates run the full tier on a train, the dispatch and the labelled PR alike", () => {
+    const gates = readFileSync(join(ROOT, ".github/workflows/code-quality-gates.yml"), "utf-8");
+    const full =
+      "(github.event_name == 'workflow_dispatch' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/repin-train/'))) || contains(github.event.pull_request.labels.*.name, 'release') || contains(github.event.pull_request.labels.*.name, 'repin-train')";
+    expect(gates.split(full).length - 1).toBeGreaterThan(0);
+    // No full-tier condition is left without the train in it.
+    expect(gates).not.toContain("(github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main')");
   });
 
   test("without a bot token, the train starts both workflows the verdict reads", () => {
