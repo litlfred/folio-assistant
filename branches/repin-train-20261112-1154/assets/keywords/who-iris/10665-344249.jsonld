@@ -1,0 +1,5408 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-344249",
+  "instance": "who-iris",
+  "about": "library/10665-344249",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7393,
+    "terms": 71095
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "digital health",
+        "score": 29.2896,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "global digital",
+        "score": 27.7973,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "digital technologies",
+        "score": 27.596,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "digital strategy",
+        "score": 25.7732,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "national digital",
+        "score": 24.4691,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "promote digital",
+        "score": 22.172,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "appropriate digital",
+        "score": 22.0917,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "digital solutions",
+        "score": 21.9226,
+        "evidence": []
+      },
+      {
+        "term": "digital systems",
+        "score": 21.876,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "digital public",
+        "score": 21.859,
+        "evidence": []
+      },
+      {
+        "term": "support digital",
+        "score": 21.6735,
+        "evidence": []
+      },
+      {
+        "term": "through digital",
+        "score": 20.6821,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "digital health",
+        "score": 1386.3073,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "digital technologies",
+        "score": 1070.832,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "global digital",
+        "score": 1065.7511,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "digital strategy",
+        "score": 1001.5766,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "national digital",
+        "score": 992.9601,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "promote digital",
+        "score": 979.3322,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "support digital",
+        "score": 966.5187,
+        "evidence": []
+      },
+      {
+        "term": "digital solutions",
+        "score": 929.7349,
+        "evidence": []
+      },
+      {
+        "term": "digital public",
+        "score": 918.5498,
+        "evidence": []
+      },
+      {
+        "term": "digital systems",
+        "score": 913.8484,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "appropriate digital",
+        "score": 901.3584,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "through digital",
+        "score": 883.3508,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "digital health",
+        "score": 20.9008,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "national health",
+        "score": 17.2209,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "health data",
+        "score": 15.7887,
+        "evidence": []
+      },
+      {
+        "term": "health systems",
+        "score": 15.5484,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "health strategy",
+        "score": 15.2323,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "national ehealth",
+        "score": 15.033,
+        "evidence": []
+      },
+      {
+        "term": "health services",
+        "score": 15.0285,
+        "evidence": []
+      },
+      {
+        "term": "global health",
+        "score": 14.9604,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "health information",
+        "score": 14.9553,
+        "evidence": []
+      },
+      {
+        "term": "support digital",
+        "score": 14.8828,
+        "evidence": []
+      },
+      {
+        "term": "health development",
+        "score": 14.7017,
+        "evidence": []
+      },
+      {
+        "term": "health interventions",
+        "score": 14.6136,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "digital health",
+        "score": 1281.6897,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "digital systems",
+        "score": 900.75,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "support digital",
+        "score": 892.4036,
+        "evidence": []
+      },
+      {
+        "term": "national digital",
+        "score": 875.7237,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "digital technologies",
+        "score": 867.8966,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "global digital",
+        "score": 863.4501,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "digital interventions",
+        "score": 854.3976,
+        "evidence": []
+      },
+      {
+        "term": "digital public",
+        "score": 841.4918,
+        "evidence": []
+      },
+      {
+        "term": "promote digital",
+        "score": 838.5451,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "digital strategy",
+        "score": 827.2703,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "digital solutions",
+        "score": 821.7733,
+        "evidence": []
+      },
+      {
+        "term": "ensure digital",
+        "score": 808.3437,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "digital health",
+        "score": 20.9008,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "national health",
+        "score": 17.2209,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "health data",
+        "score": 15.7887,
+        "evidence": []
+      },
+      {
+        "term": "health systems",
+        "score": 15.5484,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "health strategy",
+        "score": 15.2323,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "national ehealth",
+        "score": 15.033,
+        "evidence": []
+      },
+      {
+        "term": "health services",
+        "score": 15.0285,
+        "evidence": []
+      },
+      {
+        "term": "global health",
+        "score": 14.9604,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "health information",
+        "score": 14.9553,
+        "evidence": []
+      },
+      {
+        "term": "support digital",
+        "score": 14.8828,
+        "evidence": []
+      },
+      {
+        "term": "health development",
+        "score": 14.7017,
+        "evidence": []
+      },
+      {
+        "term": "health interventions",
+        "score": 14.6136,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "以及卫生保健界",
+        "score": 887.6298,
+        "evidence": []
+      },
+      {
+        "term": "基金会和开发银行",
+        "score": 887.6298,
+        "evidence": []
+      },
+      {
+        "term": "大学和研究机构",
+        "score": 887.6298,
+        "evidence": []
+      },
+      {
+        "term": "如非政府组织和民间社会组织",
+        "score": 887.6298,
+        "evidence": []
+      },
+      {
+        "term": "宗教组织",
+        "score": 887.6298,
+        "evidence": []
+      },
+      {
+        "term": "患者和公众",
+        "score": 887.6298,
+        "evidence": []
+      },
+      {
+        "term": "技术开发者",
+        "score": 887.6298,
+        "evidence": []
+      },
+      {
+        "term": "捐助者",
+        "score": 858.6714,
+        "evidence": []
+      },
+      {
+        "term": "重要部分",
+        "score": 849.3198,
+        "evidence": []
+      },
+      {
+        "term": "共享流感病毒以及获得",
+        "score": 831.5047,
+        "evidence": []
+      },
+      {
+        "term": "必需的",
+        "score": 759.0882,
+        "evidence": []
+      },
+      {
+        "term": "教员询问其余学员每个报告人的报告有无遗漏什么内容",
+        "score": 732.0995,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-digital-technologies-shaping-the-future-of-globa": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "digital technologies",
+          "score": 3.6739,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "digital health",
+          "score": 3.2707,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "global health",
+          "score": 2.2559,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "communications technologies",
+          "score": 1.6363,
+          "evidence": []
+        },
+        {
+          "term": "resolution wha",
+          "score": 1.4972,
+          "evidence": []
+        },
+        {
+          "term": "digital interventions",
+          "score": 1.4399,
+          "evidence": []
+        },
+        {
+          "term": "world summit",
+          "score": 1.272,
+          "evidence": []
+        },
+        {
+          "term": "billion",
+          "score": 1.245,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "digital technologies",
+          "score": 102.65,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "digital health",
+          "score": 99.3745,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "global health",
+          "score": 54.68,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "communications technologies",
+          "score": 37.89,
+          "evidence": []
+        },
+        {
+          "term": "digital interventions",
+          "score": 36.2291,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 30.3434,
+          "evidence": []
+        },
+        {
+          "term": "resolution wha",
+          "score": 30.3401,
+          "evidence": []
+        },
+        {
+          "term": "sustainable development",
+          "score": 26.7244,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "digital health",
+          "score": 2.3275,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "global health",
+          "score": 1.7737,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "digital technologies",
+          "score": 1.503,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health care",
+          "score": 0.8734,
+          "evidence": []
+        },
+        {
+          "term": "digital interventions",
+          "score": 0.8513,
+          "evidence": []
+        },
+        {
+          "term": "health system",
+          "score": 0.8378,
+          "evidence": []
+        },
+        {
+          "term": "ehealth",
+          "score": 0.4438,
+          "evidence": []
+        },
+        {
+          "term": "development goals",
+          "score": 0.4318,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "digital health",
+          "score": 94.62,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "digital technologies",
+          "score": 62.2851,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "global health",
+          "score": 48.7006,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "digital interventions",
+          "score": 31.9287,
+          "evidence": []
+        },
+        {
+          "term": "health system",
+          "score": 24.5978,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 24.1636,
+          "evidence": []
+        },
+        {
+          "term": "system strengthening",
+          "score": 5.8864,
+          "evidence": []
+        },
+        {
+          "term": "development goals",
+          "score": 5.0195,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "digital health",
+          "score": 2.3275,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "global health",
+          "score": 1.7737,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "digital technologies",
+          "score": 1.503,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health care",
+          "score": 0.8734,
+          "evidence": []
+        },
+        {
+          "term": "digital interventions",
+          "score": 0.8513,
+          "evidence": []
+        },
+        {
+          "term": "health system",
+          "score": 0.8378,
+          "evidence": []
+        },
+        {
+          "term": "development goals",
+          "score": 0.4318,
+          "evidence": []
+        },
+        {
+          "term": "system strengthening",
+          "score": 0.3905,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 42.6482,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 42.2985,
+          "evidence": []
+        },
+        {
+          "term": "重要部分",
+          "score": 36.7531,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 34.9643,
+          "evidence": []
+        },
+        {
+          "term": "岁的儿童",
+          "score": 30.915,
+          "evidence": []
+        },
+        {
+          "term": "教员询问其余学员每个报告人的报告有无遗漏什么内容",
+          "score": 29.5338,
+          "evidence": []
+        },
+        {
+          "term": "必需的",
+          "score": 29.4387,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 28.4784,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-001-vision": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "vision",
+          "score": 1.6827,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "digital health",
+          "score": 1.305,
+          "evidence": []
+        },
+        {
+          "term": "global solutions",
+          "score": 1.0847,
+          "evidence": []
+        },
+        {
+          "term": "health systems",
+          "score": 1.042,
+          "evidence": []
+        },
+        {
+          "term": "affordable",
+          "score": 0.6162,
+          "evidence": []
+        },
+        {
+          "term": "equitable",
+          "score": 0.5368,
+          "evidence": []
+        },
+        {
+          "term": "efficiency",
+          "score": 0.5076,
+          "evidence": []
+        },
+        {
+          "term": "accessible",
+          "score": 0.5007,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "vision",
+          "score": 30.1799,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "digital health",
+          "score": 27.9784,
+          "evidence": []
+        },
+        {
+          "term": "health systems",
+          "score": 22.9774,
+          "evidence": []
+        },
+        {
+          "term": "global solutions",
+          "score": 17.0031,
+          "evidence": []
+        },
+        {
+          "term": "affordable",
+          "score": 9.4678,
+          "evidence": []
+        },
+        {
+          "term": "equitable",
+          "score": 8.4523,
+          "evidence": []
+        },
+        {
+          "term": "sustainability",
+          "score": 7.7557,
+          "evidence": []
+        },
+        {
+          "term": "efficiency",
+          "score": 7.7427,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "digital health",
+          "score": 0.875,
+          "evidence": []
+        },
+        {
+          "term": "health systems",
+          "score": 0.6903,
+          "evidence": []
+        },
+        {
+          "term": "vision",
+          "score": 0.2956,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ehealth",
+          "score": 0.2925,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.2372,
+          "evidence": []
+        },
+        {
+          "term": "services",
+          "score": 0.2268,
+          "evidence": []
+        },
+        {
+          "term": "global solutions",
+          "score": 0.2127,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.2114,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "digital health",
+          "score": 25.5194,
+          "evidence": []
+        },
+        {
+          "term": "health systems",
+          "score": 15.2097,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 3.3336,
+          "evidence": []
+        },
+        {
+          "term": "support",
+          "score": 3.0552,
+          "evidence": []
+        },
+        {
+          "term": "care",
+          "score": 3.0325,
+          "evidence": []
+        },
+        {
+          "term": "global solutions",
+          "score": 3.0109,
+          "evidence": []
+        },
+        {
+          "term": "services",
+          "score": 2.8566,
+          "evidence": []
+        },
+        {
+          "term": "ehealth",
+          "score": 2.5655,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "digital health",
+          "score": 0.875,
+          "evidence": []
+        },
+        {
+          "term": "health systems",
+          "score": 0.6903,
+          "evidence": []
+        },
+        {
+          "term": "vision",
+          "score": 0.2956,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "national",
+          "score": 0.2372,
+          "evidence": []
+        },
+        {
+          "term": "services",
+          "score": 0.2268,
+          "evidence": []
+        },
+        {
+          "term": "global solutions",
+          "score": 0.2127,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.2114,
+          "evidence": []
+        },
+        {
+          "term": "care",
+          "score": 0.1931,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 31.2232,
+          "evidence": []
+        },
+        {
+          "term": "重要部分",
+          "score": 31.1604,
+          "evidence": []
+        },
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 29.4353,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 28.913,
+          "evidence": []
+        },
+        {
+          "term": "教员询问其余学员每个报告人的报告有无遗漏什么内容",
+          "score": 27.2741,
+          "evidence": []
+        },
+        {
+          "term": "风险最小化",
+          "score": 25.5144,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 25.2558,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 25.2558,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-002-purpose": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "artificial intelligence",
+          "score": 1.9785,
+          "evidence": []
+        },
+        {
+          "term": "benchmarking artificial",
+          "score": 1.8565,
+          "evidence": []
+        },
+        {
+          "term": "digital health",
+          "score": 1.8299,
+          "evidence": []
+        },
+        {
+          "term": "interoperable digital",
+          "score": 1.8278,
+          "evidence": []
+        },
+        {
+          "term": "big data",
+          "score": 1.7455,
+          "evidence": []
+        },
+        {
+          "term": "digital technologies",
+          "score": 1.7141,
+          "evidence": []
+        },
+        {
+          "term": "intelligence solutions",
+          "score": 1.6342,
+          "evidence": []
+        },
+        {
+          "term": "health ecosystem",
+          "score": 1.5335,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "digital health",
+          "score": 73.8283,
+          "evidence": []
+        },
+        {
+          "term": "health data",
+          "score": 63.507,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 58.9213,
+          "evidence": []
+        },
+        {
+          "term": "health ecosystem",
+          "score": 51.3719,
+          "evidence": []
+        },
+        {
+          "term": "interoperable digital",
+          "score": 51.0954,
+          "evidence": []
+        },
+        {
+          "term": "digital technologies",
+          "score": 48.7855,
+          "evidence": []
+        },
+        {
+          "term": "big data",
+          "score": 48.0776,
+          "evidence": []
+        },
+        {
+          "term": "artificial intelligence",
+          "score": 41.026,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "digital health",
+          "score": 1.2941,
+          "evidence": []
+        },
+        {
+          "term": "health data",
+          "score": 1.1065,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 1.0097,
+          "evidence": []
+        },
+        {
+          "term": "digital technologies",
+          "score": 0.8733,
+          "evidence": []
+        },
+        {
+          "term": "data systems",
+          "score": 0.8437,
+          "evidence": []
+        },
+        {
+          "term": "health ecosystem",
+          "score": 0.7446,
+          "evidence": []
+        },
+        {
+          "term": "interoperable digital",
+          "score": 0.7311,
+          "evidence": []
+        },
+        {
+          "term": "ehealth",
+          "score": 0.6259,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "digital health",
+          "score": 63.1662,
+          "evidence": []
+        },
+        {
+          "term": "health data",
+          "score": 42.9272,
+          "evidence": []
+        },
+        {
+          "term": "digital technologies",
+          "score": 40.615,
+          "evidence": []
+        },
+        {
+          "term": "interoperable digital",
+          "score": 36.8087,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 35.0689,
+          "evidence": []
+        },
+        {
+          "term": "health ecosystem",
+          "score": 29.1257,
+          "evidence": []
+        },
+        {
+          "term": "data systems",
+          "score": 24.7478,
+          "evidence": []
+        },
+        {
+          "term": "big data",
+          "score": 15.3462,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "digital health",
+          "score": 1.2941,
+          "evidence": []
+        },
+        {
+          "term": "health data",
+          "score": 1.1065,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 1.0097,
+          "evidence": []
+        },
+        {
+          "term": "digital technologies",
+          "score": 0.8733,
+          "evidence": []
+        },
+        {
+          "term": "data systems",
+          "score": 0.8437,
+          "evidence": []
+        },
+        {
+          "term": "health ecosystem",
+          "score": 0.7446,
+          "evidence": []
+        },
+        {
+          "term": "interoperable digital",
+          "score": 0.7311,
+          "evidence": []
+        },
+        {
+          "term": "ehealth",
+          "score": 0.6259,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "会议摘要记录",
+          "score": 70.2098,
+          "evidence": []
+        },
+        {
+          "term": "健的文件eb",
+          "score": 70.2098,
+          "evidence": []
+        },
+        {
+          "term": "如物联网",
+          "score": 70.2098,
+          "evidence": []
+        },
+        {
+          "term": "将数字消费者包括在内",
+          "score": 70.2098,
+          "evidence": []
+        },
+        {
+          "term": "数字公共产品",
+          "score": 70.2098,
+          "evidence": []
+        },
+        {
+          "term": "第十三次",
+          "score": 70.2098,
+          "evidence": []
+        },
+        {
+          "term": "见文件",
+          "score": 70.2098,
+          "evidence": []
+        },
+        {
+          "term": "诸如在",
+          "score": 70.2098,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-003-1-acknowledge-that-institutionalization-of-digit": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "digital health",
+          "score": 1.5387,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "national health",
+          "score": 1.4862,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "commitment",
+          "score": 0.7213,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "national health",
+          "score": 18.499,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "digital health",
+          "score": 17.4752,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "commitment",
+          "score": 8.773,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "digital health",
+          "score": 0.7334,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "national health",
+          "score": 0.5996,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ehealth",
+          "score": 0.1347,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "digital health",
+          "score": 14.4098,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "national health",
+          "score": 8.1685,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ehealth",
+          "score": 1.899,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "digital health",
+          "score": 0.7334,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "national health",
+          "score": 0.5996,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "system",
+          "score": 0.1263,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 37.58,
+          "evidence": []
+        },
+        {
+          "term": "重要部分",
+          "score": 37.1982,
+          "evidence": []
+        },
+        {
+          "term": "教员询问其余学员每个报告人的报告有无遗漏什么内容",
+          "score": 34.2458,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-004-2-recognize-that-successful-digital-health-initi": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "health initiatives",
+          "score": 2.1214,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "digital health",
+          "score": 2.0318,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "strategy",
+          "score": 0.8391,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "enables",
+          "score": 0.5469,
+          "evidence": []
+        },
+        {
+          "term": "underpinned",
+          "score": 0.5417,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "health initiatives",
+          "score": 36.1587,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "digital health",
+          "score": 29.6538,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "strategy",
+          "score": 13.3571,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "enables",
+          "score": 8.5471,
+          "evidence": []
+        },
+        {
+          "term": "underpinned",
+          "score": 6.9624,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "digital health",
+          "score": 1.0342,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health initiatives",
+          "score": 0.5093,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "strategy",
+          "score": 0.1808,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ehealth",
+          "score": 0.1389,
+          "evidence": []
+        },
+        {
+          "term": "system",
+          "score": 0.1134,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "digital health",
+          "score": 25.2666,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health initiatives",
+          "score": 10.1119,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ehealth",
+          "score": 1.7465,
+          "evidence": []
+        },
+        {
+          "term": "strategy",
+          "score": 1.4441,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "systems",
+          "score": 1.3447,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "digital health",
+          "score": 1.0342,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health initiatives",
+          "score": 0.5093,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "strategy",
+          "score": 0.1808,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "systems",
+          "score": 0.1033,
+          "evidence": []
+        },
+        {
+          "term": "services",
+          "score": 0.1008,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重要部分",
+          "score": 36.0802,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 32.5265,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 31.3809,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 31.3809,
+          "evidence": []
+        },
+        {
+          "term": "或一些其他单位",
+          "score": 31.3809,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-3-promote-the-appropriate-use-of-digital-technol": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "digital health",
+          "score": 2.5553,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "strategy promotes",
+          "score": 1.2672,
+          "evidence": []
+        },
+        {
+          "term": "global strategy",
+          "score": 0.9087,
+          "evidence": []
+        },
+        {
+          "term": "technologies",
+          "score": 0.888,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "appropriate",
+          "score": 0.6666,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "interoperability",
+          "score": 0.4461,
+          "evidence": []
+        },
+        {
+          "term": "information",
+          "score": 0.3734,
+          "evidence": []
+        },
+        {
+          "term": "patient",
+          "score": 0.3366,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "digital health",
+          "score": 50.4799,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "strategy promotes",
+          "score": 22.7374,
+          "evidence": []
+        },
+        {
+          "term": "global strategy",
+          "score": 14.5975,
+          "evidence": []
+        },
+        {
+          "term": "technologies",
+          "score": 12.0336,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "appropriate",
+          "score": 8.8997,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "interoperability",
+          "score": 6.409,
+          "evidence": []
+        },
+        {
+          "term": "information",
+          "score": 5.6421,
+          "evidence": []
+        },
+        {
+          "term": "patient",
+          "score": 4.4225,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "digital health",
+          "score": 1.4076,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "global strategy",
+          "score": 0.2196,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.202,
+          "evidence": []
+        },
+        {
+          "term": "technologies",
+          "score": 0.1749,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "systems",
+          "score": 0.1721,
+          "evidence": []
+        },
+        {
+          "term": "services",
+          "score": 0.1616,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.1615,
+          "evidence": []
+        },
+        {
+          "term": "ehealth",
+          "score": 0.1579,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "digital health",
+          "score": 44.9036,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "technologies",
+          "score": 3.5906,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "data",
+          "score": 3.2566,
+          "evidence": []
+        },
+        {
+          "term": "systems",
+          "score": 2.8075,
+          "evidence": []
+        },
+        {
+          "term": "global strategy",
+          "score": 2.72,
+          "evidence": []
+        },
+        {
+          "term": "promote",
+          "score": 2.5205,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "support",
+          "score": 2.2334,
+          "evidence": []
+        },
+        {
+          "term": "standards",
+          "score": 1.8412,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "digital health",
+          "score": 1.4076,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "global strategy",
+          "score": 0.2196,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.202,
+          "evidence": []
+        },
+        {
+          "term": "technologies",
+          "score": 0.1749,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "information",
+          "score": 0.1516,
+          "evidence": []
+        },
+        {
+          "term": "interoperability",
+          "score": 0.1235,
+          "evidence": []
+        },
+        {
+          "term": "access",
+          "score": 0.122,
+          "evidence": []
+        },
+        {
+          "term": "strategy promotes",
+          "score": 0.1118,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 42.5648,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 34.5347,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 34.5347,
+          "evidence": []
+        },
+        {
+          "term": "或一些其他单位",
+          "score": 34.5347,
+          "evidence": []
+        },
+        {
+          "term": "必需的",
+          "score": 33.5703,
+          "evidence": []
+        },
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 33.0673,
+          "evidence": []
+        },
+        {
+          "term": "重要部分",
+          "score": 32.425,
+          "evidence": []
+        },
+        {
+          "term": "风险最小化",
+          "score": 31.1243,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-007-4-recognize-the-urgent-need-to-address-the-major": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "digital health",
+          "score": 1.4679,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health technologies",
+          "score": 1.3357,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "least-developed",
+          "score": 1.2245,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "digital health",
+          "score": 16.5024,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "least-developed",
+          "score": 15.6194,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health technologies",
+          "score": 15.5647,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "digital health",
+          "score": 0.7512,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health technologies",
+          "score": 0.4418,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ehealth",
+          "score": 0.1048,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "digital health",
+          "score": 16.5973,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health technologies",
+          "score": 7.7567,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "systems",
+          "score": 0.9288,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "digital health",
+          "score": 0.7512,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health technologies",
+          "score": 0.4418,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "countries",
+          "score": 0.0978,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "以及卫生保健界",
+          "score": 206.3561,
+          "evidence": []
+        },
+        {
+          "term": "基金会和开发银行",
+          "score": 206.3561,
+          "evidence": []
+        },
+        {
+          "term": "大学和研究机构",
+          "score": 206.3561,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-008-1-promote-global-collaboration-and-advance-the-t": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "digital health",
+          "score": 2.4222,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health technologies",
+          "score": 1.2759,
+          "evidence": []
+        },
+        {
+          "term": "strategic objective",
+          "score": 1.1,
+          "evidence": []
+        },
+        {
+          "term": "universal health",
+          "score": 1.0243,
+          "evidence": []
+        },
+        {
+          "term": "health coverage",
+          "score": 0.9544,
+          "evidence": []
+        },
+        {
+          "term": "improve health",
+          "score": 0.9056,
+          "evidence": []
+        },
+        {
+          "term": "knowledge",
+          "score": 0.8636,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health care",
+          "score": 0.8478,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "digital health",
+          "score": 46.3364,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health technologies",
+          "score": 27.4008,
+          "evidence": []
+        },
+        {
+          "term": "universal health",
+          "score": 19.1893,
+          "evidence": []
+        },
+        {
+          "term": "health coverage",
+          "score": 17.6296,
+          "evidence": []
+        },
+        {
+          "term": "improve health",
+          "score": 17.2871,
+          "evidence": []
+        },
+        {
+          "term": "strategic objective",
+          "score": 16.7675,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 15.4795,
+          "evidence": []
+        },
+        {
+          "term": "knowledge",
+          "score": 11.883,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "digital health",
+          "score": 1.3054,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health care",
+          "score": 0.4148,
+          "evidence": []
+        },
+        {
+          "term": "health technologies",
+          "score": 0.4126,
+          "evidence": []
+        },
+        {
+          "term": "health coverage",
+          "score": 0.3823,
+          "evidence": []
+        },
+        {
+          "term": "improve health",
+          "score": 0.3785,
+          "evidence": []
+        },
+        {
+          "term": "universal health",
+          "score": 0.362,
+          "evidence": []
+        },
+        {
+          "term": "ehealth",
+          "score": 0.2404,
+          "evidence": []
+        },
+        {
+          "term": "global",
+          "score": 0.2034,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "digital health",
+          "score": 41.4522,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health technologies",
+          "score": 10.7137,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 10.5568,
+          "evidence": []
+        },
+        {
+          "term": "health coverage",
+          "score": 9.7789,
+          "evidence": []
+        },
+        {
+          "term": "universal health",
+          "score": 9.4889,
+          "evidence": []
+        },
+        {
+          "term": "improve health",
+          "score": 9.3722,
+          "evidence": []
+        },
+        {
+          "term": "global",
+          "score": 3.1081,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "promote",
+          "score": 2.6242,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "digital health",
+          "score": 1.3054,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health care",
+          "score": 0.4148,
+          "evidence": []
+        },
+        {
+          "term": "health technologies",
+          "score": 0.4126,
+          "evidence": []
+        },
+        {
+          "term": "health coverage",
+          "score": 0.3823,
+          "evidence": []
+        },
+        {
+          "term": "improve health",
+          "score": 0.3785,
+          "evidence": []
+        },
+        {
+          "term": "universal health",
+          "score": 0.362,
+          "evidence": []
+        },
+        {
+          "term": "global",
+          "score": 0.2034,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "strategic objective",
+          "score": 0.1521,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 34.7012,
+          "evidence": []
+        },
+        {
+          "term": "重要部分",
+          "score": 33.4868,
+          "evidence": []
+        },
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 31.5464,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 30.8453,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 30.8453,
+          "evidence": []
+        },
+        {
+          "term": "或一些其他单位",
+          "score": 30.8453,
+          "evidence": []
+        },
+        {
+          "term": "必需的",
+          "score": 30.518,
+          "evidence": []
+        },
+        {
+          "term": "教员询问其余学员每个报告人的报告有无遗漏什么内容",
+          "score": 29.2122,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-009-strategic-objectives": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "digital health",
+          "score": 1.3462,
+          "evidence": []
+        },
+        {
+          "term": "digital technologies",
+          "score": 1.2525,
+          "evidence": []
+        },
+        {
+          "term": "improve health",
+          "score": 0.8915,
+          "evidence": []
+        },
+        {
+          "term": "policy options",
+          "score": 0.8639,
+          "evidence": []
+        },
+        {
+          "term": "development goals",
+          "score": 0.8513,
+          "evidence": []
+        },
+        {
+          "term": "sustainable development",
+          "score": 0.7437,
+          "evidence": []
+        },
+        {
+          "term": "mitigate",
+          "score": 0.633,
+          "evidence": []
+        },
+        {
+          "term": "outputs",
+          "score": 0.5839,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "digital health",
+          "score": 28.7711,
+          "evidence": []
+        },
+        {
+          "term": "digital technologies",
+          "score": 23.3118,
+          "evidence": []
+        },
+        {
+          "term": "improve health",
+          "score": 16.4044,
+          "evidence": []
+        },
+        {
+          "term": "development goals",
+          "score": 13.3938,
+          "evidence": []
+        },
+        {
+          "term": "policy options",
+          "score": 11.3958,
+          "evidence": []
+        },
+        {
+          "term": "sustainable development",
+          "score": 10.6898,
+          "evidence": []
+        },
+        {
+          "term": "global",
+          "score": 9.8988,
+          "evidence": []
+        },
+        {
+          "term": "mitigate",
+          "score": 9.5303,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "digital health",
+          "score": 0.7781,
+          "evidence": []
+        },
+        {
+          "term": "improve health",
+          "score": 0.4938,
+          "evidence": []
+        },
+        {
+          "term": "digital technologies",
+          "score": 0.481,
+          "evidence": []
+        },
+        {
+          "term": "ehealth",
+          "score": 0.315,
+          "evidence": []
+        },
+        {
+          "term": "strategic",
+          "score": 0.3012,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "development goals",
+          "score": 0.2875,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.2768,
+          "evidence": []
+        },
+        {
+          "term": "sustainable development",
+          "score": 0.2227,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "digital health",
+          "score": 27.2997,
+          "evidence": []
+        },
+        {
+          "term": "digital technologies",
+          "score": 18.5815,
+          "evidence": []
+        },
+        {
+          "term": "improve health",
+          "score": 11.7219,
+          "evidence": []
+        },
+        {
+          "term": "ehealth",
+          "score": 3.4573,
+          "evidence": []
+        },
+        {
+          "term": "support",
+          "score": 2.9652,
+          "evidence": []
+        },
+        {
+          "term": "development goals",
+          "score": 2.9167,
+          "evidence": []
+        },
+        {
+          "term": "systems",
+          "score": 2.8474,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 2.7855,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "digital health",
+          "score": 0.7781,
+          "evidence": []
+        },
+        {
+          "term": "improve health",
+          "score": 0.4938,
+          "evidence": []
+        },
+        {
+          "term": "digital technologies",
+          "score": 0.481,
+          "evidence": []
+        },
+        {
+          "term": "strategic",
+          "score": 0.3012,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "development goals",
+          "score": 0.2875,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.2768,
+          "evidence": []
+        },
+        {
+          "term": "sustainable development",
+          "score": 0.2227,
+          "evidence": []
+        },
+        {
+          "term": "implementation",
+          "score": 0.1975,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 39.4136,
+          "evidence": []
+        },
+        {
+          "term": "重要部分",
+          "score": 37.8811,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 35.1477,
+          "evidence": []
+        },
+        {
+          "term": "教员询问其余学员每个报告人的报告有无遗漏什么内容",
+          "score": 34.977,
+          "evidence": []
+        },
+        {
+          "term": "风险最小化",
+          "score": 30.8388,
+          "evidence": []
+        },
+        {
+          "term": "必需的",
+          "score": 29.0971,
+          "evidence": []
+        },
+        {
+          "term": "岁的儿童",
+          "score": 28.8398,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 28.4166,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-010-2-advance-the-implementation-of-national-digital": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "digital health",
+          "score": 3.3968,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "national digital",
+          "score": 3.3928,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "strategic objective",
+          "score": 1.7088,
+          "evidence": []
+        },
+        {
+          "term": "digital technologies",
+          "score": 1.6028,
+          "evidence": []
+        },
+        {
+          "term": "every country",
+          "score": 1.2897,
+          "evidence": []
+        },
+        {
+          "term": "health workforce",
+          "score": 1.2155,
+          "evidence": []
+        },
+        {
+          "term": "innovative integration",
+          "score": 1.1506,
+          "evidence": []
+        },
+        {
+          "term": "health systems",
+          "score": 1.1089,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "digital health",
+          "score": 111.5531,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "national digital",
+          "score": 101.4176,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "digital technologies",
+          "score": 43.6152,
+          "evidence": []
+        },
+        {
+          "term": "strategic objective",
+          "score": 40.1546,
+          "evidence": []
+        },
+        {
+          "term": "health workforce",
+          "score": 30.1467,
+          "evidence": []
+        },
+        {
+          "term": "health systems",
+          "score": 29.1568,
+          "evidence": []
+        },
+        {
+          "term": "health data",
+          "score": 27.4795,
+          "evidence": []
+        },
+        {
+          "term": "every country",
+          "score": 25.9662,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "digital health",
+          "score": 2.436,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "national digital",
+          "score": 2.0447,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health data",
+          "score": 0.9643,
+          "evidence": []
+        },
+        {
+          "term": "health systems",
+          "score": 0.9061,
+          "evidence": []
+        },
+        {
+          "term": "health workforce",
+          "score": 0.8717,
+          "evidence": []
+        },
+        {
+          "term": "digital technologies",
+          "score": 0.7541,
+          "evidence": []
+        },
+        {
+          "term": "implementation",
+          "score": 0.5893,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "national level",
+          "score": 0.5797,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "digital health",
+          "score": 101.9294,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "national digital",
+          "score": 71.0636,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "digital technologies",
+          "score": 34.4357,
+          "evidence": []
+        },
+        {
+          "term": "health data",
+          "score": 27.0033,
+          "evidence": []
+        },
+        {
+          "term": "health systems",
+          "score": 26.3319,
+          "evidence": []
+        },
+        {
+          "term": "health workforce",
+          "score": 24.5102,
+          "evidence": []
+        },
+        {
+          "term": "implementation",
+          "score": 7.115,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "national level",
+          "score": 6.9659,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "digital health",
+          "score": 2.436,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "national digital",
+          "score": 2.0447,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health data",
+          "score": 0.9643,
+          "evidence": []
+        },
+        {
+          "term": "health systems",
+          "score": 0.9061,
+          "evidence": []
+        },
+        {
+          "term": "health workforce",
+          "score": 0.8717,
+          "evidence": []
+        },
+        {
+          "term": "digital technologies",
+          "score": 0.7541,
+          "evidence": []
+        },
+        {
+          "term": "implementation",
+          "score": 0.5893,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "national level",
+          "score": 0.5797,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 38.1341,
+          "evidence": []
+        },
+        {
+          "term": "重要部分",
+          "score": 37.5999,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 34.9925,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 33.7677,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 33.7677,
+          "evidence": []
+        },
+        {
+          "term": "或一些其他单位",
+          "score": 33.7677,
+          "evidence": []
+        },
+        {
+          "term": "必需的",
+          "score": 33.1919,
+          "evidence": []
+        },
+        {
+          "term": "风险最小化",
+          "score": 33.18,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-011-3-strengthen-governance-for-digital-health-at-gl": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "digital health",
+          "score": 3.8512,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "strengthen governance",
+          "score": 3.2575,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "national levels",
+          "score": 2.6344,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "artificial intelligence",
+          "score": 1.7042,
+          "evidence": []
+        },
+        {
+          "term": "governance structures",
+          "score": 1.6877,
+          "evidence": []
+        },
+        {
+          "term": "robust governance",
+          "score": 1.5562,
+          "evidence": []
+        },
+        {
+          "term": "health technologies",
+          "score": 1.3916,
+          "evidence": []
+        },
+        {
+          "term": "data analytics",
+          "score": 1.3725,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "digital health",
+          "score": 169.0952,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "strengthen governance",
+          "score": 80.4817,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "national levels",
+          "score": 67.3732,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health data",
+          "score": 47.7657,
+          "evidence": []
+        },
+        {
+          "term": "health technologies",
+          "score": 44.6961,
+          "evidence": []
+        },
+        {
+          "term": "health sector",
+          "score": 41.5828,
+          "evidence": []
+        },
+        {
+          "term": "governance structures",
+          "score": 41.3087,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 40.5194,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "digital health",
+          "score": 3.0287,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health data",
+          "score": 1.1831,
+          "evidence": []
+        },
+        {
+          "term": "national levels",
+          "score": 1.1512,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health strategy",
+          "score": 1.0518,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 0.9857,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 0.9854,
+          "evidence": []
+        },
+        {
+          "term": "health technologies",
+          "score": 0.9384,
+          "evidence": []
+        },
+        {
+          "term": "health sector",
+          "score": 0.9063,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "digital health",
+          "score": 151.904,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health data",
+          "score": 40.3049,
+          "evidence": []
+        },
+        {
+          "term": "health technologies",
+          "score": 35.9408,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 34.5102,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 34.4454,
+          "evidence": []
+        },
+        {
+          "term": "health strategy",
+          "score": 33.3565,
+          "evidence": []
+        },
+        {
+          "term": "health sector",
+          "score": 29.7701,
+          "evidence": []
+        },
+        {
+          "term": "national levels",
+          "score": 18.2052,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "digital health",
+          "score": 3.0287,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health data",
+          "score": 1.1831,
+          "evidence": []
+        },
+        {
+          "term": "national levels",
+          "score": 1.1512,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health strategy",
+          "score": 1.0518,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 0.9857,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 0.9854,
+          "evidence": []
+        },
+        {
+          "term": "health technologies",
+          "score": 0.9384,
+          "evidence": []
+        },
+        {
+          "term": "health sector",
+          "score": 0.9063,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重要部分",
+          "score": 38.4158,
+          "evidence": []
+        },
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 37.4043,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 37.0948,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 33.9936,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 33.9936,
+          "evidence": []
+        },
+        {
+          "term": "或一些其他单位",
+          "score": 33.9936,
+          "evidence": []
+        },
+        {
+          "term": "教员询问其余学员每个报告人的报告有无遗漏什么内容",
+          "score": 33.677,
+          "evidence": []
+        },
+        {
+          "term": "必需的",
+          "score": 33.6621,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-012-4-advocate-people-centred-health-systems-that-ar": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "digital health",
+          "score": 4.1018,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health systems",
+          "score": 2.5599,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "digital technologies",
+          "score": 2.2445,
+          "evidence": []
+        },
+        {
+          "term": "health literacy",
+          "score": 1.7307,
+          "evidence": []
+        },
+        {
+          "term": "improve digital",
+          "score": 1.6291,
+          "evidence": []
+        },
+        {
+          "term": "health workers",
+          "score": 1.2895,
+          "evidence": []
+        },
+        {
+          "term": "health equity",
+          "score": 1.2179,
+          "evidence": []
+        },
+        {
+          "term": "strategic objective",
+          "score": 1.2178,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "digital health",
+          "score": 211.7203,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health systems",
+          "score": 97.6096,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "digital technologies",
+          "score": 97.1021,
+          "evidence": []
+        },
+        {
+          "term": "improve digital",
+          "score": 71.9465,
+          "evidence": []
+        },
+        {
+          "term": "health literacy",
+          "score": 61.5999,
+          "evidence": []
+        },
+        {
+          "term": "health workers",
+          "score": 47.8534,
+          "evidence": []
+        },
+        {
+          "term": "health through",
+          "score": 46.722,
+          "evidence": []
+        },
+        {
+          "term": "health equity",
+          "score": 45.3396,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "digital health",
+          "score": 2.6864,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health systems",
+          "score": 2.0436,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health data",
+          "score": 1.02,
+          "evidence": []
+        },
+        {
+          "term": "health workers",
+          "score": 1.0022,
+          "evidence": []
+        },
+        {
+          "term": "health through",
+          "score": 0.9051,
+          "evidence": []
+        },
+        {
+          "term": "health technologies",
+          "score": 0.9044,
+          "evidence": []
+        },
+        {
+          "term": "health equity",
+          "score": 0.816,
+          "evidence": []
+        },
+        {
+          "term": "improve digital",
+          "score": 0.7762,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "digital health",
+          "score": 171.4062,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health systems",
+          "score": 86.6199,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "digital technologies",
+          "score": 58.3299,
+          "evidence": []
+        },
+        {
+          "term": "improve digital",
+          "score": 52.8851,
+          "evidence": []
+        },
+        {
+          "term": "health workers",
+          "score": 41.0921,
+          "evidence": []
+        },
+        {
+          "term": "health data",
+          "score": 38.883,
+          "evidence": []
+        },
+        {
+          "term": "health through",
+          "score": 36.8429,
+          "evidence": []
+        },
+        {
+          "term": "health literacy",
+          "score": 36.3037,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "digital health",
+          "score": 2.6864,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health systems",
+          "score": 2.0436,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health data",
+          "score": 1.02,
+          "evidence": []
+        },
+        {
+          "term": "health workers",
+          "score": 1.0022,
+          "evidence": []
+        },
+        {
+          "term": "health through",
+          "score": 0.9051,
+          "evidence": []
+        },
+        {
+          "term": "health technologies",
+          "score": 0.9044,
+          "evidence": []
+        },
+        {
+          "term": "health equity",
+          "score": 0.816,
+          "evidence": []
+        },
+        {
+          "term": "health literacy",
+          "score": 0.7945,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提出了以下政策选择和行动",
+          "score": 179.4793,
+          "evidence": []
+        },
+        {
+          "term": "设想了以下产出",
+          "score": 174.2319,
+          "evidence": []
+        },
+        {
+          "term": "政策选择和行动",
+          "score": 133.3581,
+          "evidence": []
+        },
+        {
+          "term": "监测和研究",
+          "score": 89.8629,
+          "evidence": []
+        },
+        {
+          "term": "一致元数据和定义",
+          "score": 71.844,
+          "evidence": []
+        },
+        {
+          "term": "数据安全",
+          "score": 70.4676,
+          "evidence": []
+        },
+        {
+          "term": "倡导以人为本并经数字卫生保健技术赋能的卫生系统",
+          "score": 59.9454,
+          "evidence": []
+        },
+        {
+          "term": "的流程",
+          "score": 58.3165,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-013-1-commit": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "commit",
+          "score": 0.9593,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "global strategy",
+          "score": 0.6664,
+          "evidence": []
+        },
+        {
+          "term": "respecting",
+          "score": 0.4655,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "commit",
+          "score": 11.7275,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "global strategy",
+          "score": 8.4119,
+          "evidence": []
+        },
+        {
+          "term": "respecting",
+          "score": 5.9126,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "global strategy",
+          "score": 0.1089,
+          "evidence": []
+        },
+        {
+          "term": "digital",
+          "score": 0.0982,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.096,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "digital",
+          "score": 2.0857,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 1.2276,
+          "evidence": []
+        },
+        {
+          "term": "global strategy",
+          "score": 0.8058,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "global strategy",
+          "score": 0.1089,
+          "evidence": []
+        },
+        {
+          "term": "digital",
+          "score": 0.0982,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.096,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 49.998,
+          "evidence": []
+        },
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 45.0467,
+          "evidence": []
+        },
+        {
+          "term": "重要部分",
+          "score": 40.8696,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-014-2-catalyse": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "conducive",
+          "score": 0.8184,
+          "evidence": []
+        },
+        {
+          "term": "global strategy",
+          "score": 0.6664,
+          "evidence": []
+        },
+        {
+          "term": "envisages",
+          "score": 0.6392,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "conducive",
+          "score": 13.2114,
+          "evidence": []
+        },
+        {
+          "term": "global strategy",
+          "score": 8.4119,
+          "evidence": []
+        },
+        {
+          "term": "envisages",
+          "score": 8.2151,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "digital",
+          "score": 0.1425,
+          "evidence": []
+        },
+        {
+          "term": "global strategy",
+          "score": 0.1095,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.1052,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "digital",
+          "score": 2.8372,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 1.5666,
+          "evidence": []
+        },
+        {
+          "term": "global strategy",
+          "score": 0.8633,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "digital",
+          "score": 0.1425,
+          "evidence": []
+        },
+        {
+          "term": "global strategy",
+          "score": 0.1095,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.1052,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 44.5028,
+          "evidence": []
+        },
+        {
+          "term": "重要部分",
+          "score": 43.4666,
+          "evidence": []
+        },
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 41.9852,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-015-framework-for-action": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "action",
+          "score": 1.867,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "framework",
+          "score": 1.1136,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "iterate",
+          "score": 0.5537,
+          "evidence": []
+        },
+        {
+          "term": "catalyse",
+          "score": 0.4955,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "action",
+          "score": 27.4708,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "framework",
+          "score": 21.3754,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "iterate",
+          "score": 7.1165,
+          "evidence": []
+        },
+        {
+          "term": "catalyse",
+          "score": 6.3433,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "action",
+          "score": 0.1715,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "digital",
+          "score": 0.1382,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.1361,
+          "evidence": []
+        },
+        {
+          "term": "ehealth",
+          "score": 0.1268,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "action",
+          "score": 4.7659,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ehealth",
+          "score": 4.6212,
+          "evidence": []
+        },
+        {
+          "term": "digital",
+          "score": 2.4128,
+          "evidence": []
+        },
+        {
+          "term": "plan",
+          "score": 1.7879,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "action",
+          "score": 0.1715,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "digital",
+          "score": 0.1382,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.1361,
+          "evidence": []
+        },
+        {
+          "term": "framework",
+          "score": 0.126,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 37.2483,
+          "evidence": []
+        },
+        {
+          "term": "重要部分",
+          "score": 36.6305,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 36.0054,
+          "evidence": []
+        },
+        {
+          "term": "教员询问其余学员每个报告人的报告有无遗漏什么内容",
+          "score": 33.845,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-016-3-measure": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "global strategy",
+          "score": 0.8408,
+          "evidence": []
+        },
+        {
+          "term": "measure",
+          "score": 0.5584,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "effectiveness",
+          "score": 0.407,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "global strategy",
+          "score": 12.6178,
+          "evidence": []
+        },
+        {
+          "term": "measure",
+          "score": 6.605,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "effectiveness",
+          "score": 5.5936,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "digital",
+          "score": 0.1035,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.0934,
+          "evidence": []
+        },
+        {
+          "term": "global strategy",
+          "score": 0.0875,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "digital",
+          "score": 2.0094,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 1.2604,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 1.1954,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "digital",
+          "score": 0.1035,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.0934,
+          "evidence": []
+        },
+        {
+          "term": "global strategy",
+          "score": 0.0875,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重要部分",
+          "score": 22.4628,
+          "evidence": []
+        },
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 19.2472,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 19.1469,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-017-4-enhance-and-iterate": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "public goods",
+          "score": 0.9937,
+          "evidence": []
+        },
+        {
+          "term": "global strategy",
+          "score": 0.8216,
+          "evidence": []
+        },
+        {
+          "term": "digital health",
+          "score": 0.734,
+          "evidence": []
+        },
+        {
+          "term": "cycle",
+          "score": 0.614,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "public goods",
+          "score": 14.1766,
+          "evidence": []
+        },
+        {
+          "term": "global strategy",
+          "score": 12.3714,
+          "evidence": []
+        },
+        {
+          "term": "collaboration",
+          "score": 9.6946,
+          "evidence": []
+        },
+        {
+          "term": "cycle",
+          "score": 9.129,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "digital health",
+          "score": 0.3429,
+          "evidence": []
+        },
+        {
+          "term": "global strategy",
+          "score": 0.1479,
+          "evidence": []
+        },
+        {
+          "term": "ehealth",
+          "score": 0.111,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.0921,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "digital health",
+          "score": 8.2192,
+          "evidence": []
+        },
+        {
+          "term": "ehealth",
+          "score": 2.0209,
+          "evidence": []
+        },
+        {
+          "term": "global strategy",
+          "score": 1.4556,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 1.0049,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "digital health",
+          "score": 0.3429,
+          "evidence": []
+        },
+        {
+          "term": "global strategy",
+          "score": 0.1479,
+          "evidence": []
+        },
+        {
+          "term": "plan",
+          "score": 0.0865,
+          "evidence": []
+        },
+        {
+          "term": "action",
+          "score": 0.064,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 29.8046,
+          "evidence": []
+        },
+        {
+          "term": "重要部分",
+          "score": 28.0064,
+          "evidence": []
+        },
+        {
+          "term": "教员询问其余学员每个报告人的报告有无遗漏什么内容",
+          "score": 25.6809,
+          "evidence": []
+        },
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 25.5467,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-018-implementation-of-the-strategy-and-action-plan": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "action plan",
+          "score": 2.6686,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "thirteenth",
+          "score": 0.5081,
+          "evidence": []
+        },
+        {
+          "term": "responds",
+          "score": 0.4744,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "action plan",
+          "score": 31.1728,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "thirteenth",
+          "score": 6.2692,
+          "evidence": []
+        },
+        {
+          "term": "responds",
+          "score": 6.0179,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "action plan",
+          "score": 0.3027,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "digital",
+          "score": 0.1858,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.1587,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "action plan",
+          "score": 5.3364,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "digital",
+          "score": 3.6716,
+          "evidence": []
+        },
+        {
+          "term": "ehealth",
+          "score": 3.2064,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "action plan",
+          "score": 0.3027,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "digital",
+          "score": 0.1858,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.1587,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重要部分",
+          "score": 32.8362,
+          "evidence": []
+        },
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 30.2062,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 28.781,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-019-general-implementation-principles": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "proposed actions",
+          "score": 1.7232,
+          "evidence": []
+        },
+        {
+          "term": "member states",
+          "score": 1.709,
+          "evidence": []
+        },
+        {
+          "term": "digital health",
+          "score": 1.6077,
+          "evidence": []
+        },
+        {
+          "term": "global strategy",
+          "score": 1.3647,
+          "evidence": []
+        },
+        {
+          "term": "national priorities",
+          "score": 1.2591,
+          "evidence": []
+        },
+        {
+          "term": "policy options",
+          "score": 1.2158,
+          "evidence": []
+        },
+        {
+          "term": "action plan",
+          "score": 1.2073,
+          "evidence": []
+        },
+        {
+          "term": "health development",
+          "score": 1.1692,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "member states",
+          "score": 50.1423,
+          "evidence": []
+        },
+        {
+          "term": "digital health",
+          "score": 48.0118,
+          "evidence": []
+        },
+        {
+          "term": "proposed actions",
+          "score": 40.4484,
+          "evidence": []
+        },
+        {
+          "term": "global strategy",
+          "score": 35.6272,
+          "evidence": []
+        },
+        {
+          "term": "health development",
+          "score": 33.1049,
+          "evidence": []
+        },
+        {
+          "term": "secretariat",
+          "score": 28.7299,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 28.3107,
+          "evidence": []
+        },
+        {
+          "term": "national priorities",
+          "score": 23.8781,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "digital health",
+          "score": 1.071,
+          "evidence": []
+        },
+        {
+          "term": "health development",
+          "score": 0.8446,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 0.7254,
+          "evidence": []
+        },
+        {
+          "term": "implementation",
+          "score": 0.648,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "national priorities",
+          "score": 0.5696,
+          "evidence": []
+        },
+        {
+          "term": "global strategy",
+          "score": 0.5385,
+          "evidence": []
+        },
+        {
+          "term": "action plan",
+          "score": 0.5068,
+          "evidence": []
+        },
+        {
+          "term": "ehealth",
+          "score": 0.4139,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "digital health",
+          "score": 46.4952,
+          "evidence": []
+        },
+        {
+          "term": "health development",
+          "score": 23.607,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 22.9459,
+          "evidence": []
+        },
+        {
+          "term": "ehealth",
+          "score": 9.0408,
+          "evidence": []
+        },
+        {
+          "term": "implementation",
+          "score": 7.7809,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "global strategy",
+          "score": 7.6725,
+          "evidence": []
+        },
+        {
+          "term": "national priorities",
+          "score": 7.1991,
+          "evidence": []
+        },
+        {
+          "term": "action plan",
+          "score": 6.9008,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "digital health",
+          "score": 1.071,
+          "evidence": []
+        },
+        {
+          "term": "health development",
+          "score": 0.8446,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 0.7254,
+          "evidence": []
+        },
+        {
+          "term": "implementation",
+          "score": 0.648,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "national priorities",
+          "score": 0.5696,
+          "evidence": []
+        },
+        {
+          "term": "global strategy",
+          "score": 0.5385,
+          "evidence": []
+        },
+        {
+          "term": "action plan",
+          "score": 0.5068,
+          "evidence": []
+        },
+        {
+          "term": "member states",
+          "score": 0.3282,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 37.428,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 35.9583,
+          "evidence": []
+        },
+        {
+          "term": "重要部分",
+          "score": 34.7797,
+          "evidence": []
+        },
+        {
+          "term": "教员询问其余学员每个报告人的报告有无遗漏什么内容",
+          "score": 33.427,
+          "evidence": []
+        },
+        {
+          "term": "风险最小化",
+          "score": 29.2988,
+          "evidence": []
+        },
+        {
+          "term": "必需的",
+          "score": 28.5227,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 26.8739,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 26.8739,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-020-specific-implementation-principles": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "interoperable digital",
+          "score": 1.5466,
+          "evidence": []
+        },
+        {
+          "term": "health ecosystem",
+          "score": 1.3671,
+          "evidence": []
+        },
+        {
+          "term": "health data",
+          "score": 1.2434,
+          "evidence": []
+        },
+        {
+          "term": "data protection",
+          "score": 1.0846,
+          "evidence": []
+        },
+        {
+          "term": "technology health",
+          "score": 0.9762,
+          "evidence": []
+        },
+        {
+          "term": "guarantees",
+          "score": 0.9343,
+          "evidence": []
+        },
+        {
+          "term": "regulatory framework",
+          "score": 0.8922,
+          "evidence": []
+        },
+        {
+          "term": "member states",
+          "score": 0.8334,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "health data",
+          "score": 33.5103,
+          "evidence": []
+        },
+        {
+          "term": "health ecosystem",
+          "score": 30.1854,
+          "evidence": []
+        },
+        {
+          "term": "interoperable digital",
+          "score": 29.934,
+          "evidence": []
+        },
+        {
+          "term": "data protection",
+          "score": 23.7849,
+          "evidence": []
+        },
+        {
+          "term": "technology health",
+          "score": 21.3177,
+          "evidence": []
+        },
+        {
+          "term": "legal",
+          "score": 16.4576,
+          "evidence": []
+        },
+        {
+          "term": "guarantees",
+          "score": 15.044,
+          "evidence": []
+        },
+        {
+          "term": "regulatory framework",
+          "score": 12.7634,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "digital health",
+          "score": 0.7041,
+          "evidence": []
+        },
+        {
+          "term": "health data",
+          "score": 0.6586,
+          "evidence": []
+        },
+        {
+          "term": "data protection",
+          "score": 0.4364,
+          "evidence": []
+        },
+        {
+          "term": "interoperable digital",
+          "score": 0.4364,
+          "evidence": []
+        },
+        {
+          "term": "technology health",
+          "score": 0.4089,
+          "evidence": []
+        },
+        {
+          "term": "health ecosystem",
+          "score": 0.3265,
+          "evidence": []
+        },
+        {
+          "term": "information technology",
+          "score": 0.2765,
+          "evidence": []
+        },
+        {
+          "term": "implementation",
+          "score": 0.2578,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "digital health",
+          "score": 21.2482,
+          "evidence": []
+        },
+        {
+          "term": "health data",
+          "score": 20.3691,
+          "evidence": []
+        },
+        {
+          "term": "interoperable digital",
+          "score": 12.2471,
+          "evidence": []
+        },
+        {
+          "term": "data protection",
+          "score": 11.7623,
+          "evidence": []
+        },
+        {
+          "term": "technology health",
+          "score": 10.5673,
+          "evidence": []
+        },
+        {
+          "term": "health ecosystem",
+          "score": 10.0564,
+          "evidence": []
+        },
+        {
+          "term": "systems",
+          "score": 4.1668,
+          "evidence": []
+        },
+        {
+          "term": "information technology",
+          "score": 3.7432,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "digital health",
+          "score": 0.7041,
+          "evidence": []
+        },
+        {
+          "term": "health data",
+          "score": 0.6586,
+          "evidence": []
+        },
+        {
+          "term": "data protection",
+          "score": 0.4364,
+          "evidence": []
+        },
+        {
+          "term": "interoperable digital",
+          "score": 0.4364,
+          "evidence": []
+        },
+        {
+          "term": "technology health",
+          "score": 0.4089,
+          "evidence": []
+        },
+        {
+          "term": "health ecosystem",
+          "score": 0.369,
+          "evidence": []
+        },
+        {
+          "term": "information technology",
+          "score": 0.2765,
+          "evidence": []
+        },
+        {
+          "term": "implementation",
+          "score": 0.2578,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "以及卫生保健界",
+          "score": 174.9292,
+          "evidence": []
+        },
+        {
+          "term": "基金会和开发银行",
+          "score": 174.9292,
+          "evidence": []
+        },
+        {
+          "term": "大学和研究机构",
+          "score": 174.9292,
+          "evidence": []
+        },
+        {
+          "term": "如非政府组织和民间社会组织",
+          "score": 174.9292,
+          "evidence": []
+        },
+        {
+          "term": "宗教组织",
+          "score": 174.9292,
+          "evidence": []
+        },
+        {
+          "term": "患者和公众",
+          "score": 174.9292,
+          "evidence": []
+        },
+        {
+          "term": "技术开发者",
+          "score": 174.9292,
+          "evidence": []
+        },
+        {
+          "term": "这意味着",
+          "score": 140.7458,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-021-monitoring-and-evaluation": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "digital health",
+          "score": 1.6091,
+          "evidence": []
+        },
+        {
+          "term": "action plan",
+          "score": 1.5491,
+          "evidence": []
+        },
+        {
+          "term": "monitoring",
+          "score": 1.3369,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "bytes",
+          "score": 1.2784,
+          "evidence": []
+        },
+        {
+          "term": "member states",
+          "score": 1.2209,
+          "evidence": []
+        },
+        {
+          "term": "evaluation",
+          "score": 1.1592,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "global strategy",
+          "score": 1.0316,
+          "evidence": []
+        },
+        {
+          "term": "communications technology",
+          "score": 1.018,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "digital health",
+          "score": 47.4353,
+          "evidence": []
+        },
+        {
+          "term": "monitoring",
+          "score": 32.9476,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "bytes",
+          "score": 24.6454,
+          "evidence": []
+        },
+        {
+          "term": "member states",
+          "score": 23.498,
+          "evidence": []
+        },
+        {
+          "term": "evaluation",
+          "score": 22.5156,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "action plan",
+          "score": 20.7819,
+          "evidence": []
+        },
+        {
+          "term": "health interventions",
+          "score": 18.9824,
+          "evidence": []
+        },
+        {
+          "term": "global strategy",
+          "score": 18.8035,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "digital health",
+          "score": 1.011,
+          "evidence": []
+        },
+        {
+          "term": "health interventions",
+          "score": 0.6793,
+          "evidence": []
+        },
+        {
+          "term": "monitoring",
+          "score": 0.4066,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "global strategy",
+          "score": 0.384,
+          "evidence": []
+        },
+        {
+          "term": "action plan",
+          "score": 0.3625,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.3454,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.3207,
+          "evidence": []
+        },
+        {
+          "term": "evaluation framework",
+          "score": 0.2898,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "digital health",
+          "score": 40.071,
+          "evidence": []
+        },
+        {
+          "term": "health interventions",
+          "score": 18.0777,
+          "evidence": []
+        },
+        {
+          "term": "ehealth",
+          "score": 7.1819,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 5.5165,
+          "evidence": []
+        },
+        {
+          "term": "global strategy",
+          "score": 5.2099,
+          "evidence": []
+        },
+        {
+          "term": "action plan",
+          "score": 5.1761,
+          "evidence": []
+        },
+        {
+          "term": "systems",
+          "score": 4.766,
+          "evidence": []
+        },
+        {
+          "term": "monitoring",
+          "score": 4.3771,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "digital health",
+          "score": 1.011,
+          "evidence": []
+        },
+        {
+          "term": "health interventions",
+          "score": 0.6793,
+          "evidence": []
+        },
+        {
+          "term": "monitoring",
+          "score": 0.4066,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "global strategy",
+          "score": 0.384,
+          "evidence": []
+        },
+        {
+          "term": "action plan",
+          "score": 0.3625,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.3454,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.3207,
+          "evidence": []
+        },
+        {
+          "term": "evaluation framework",
+          "score": 0.2898,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "必需的",
+          "score": 34.7484,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 34.7352,
+          "evidence": []
+        },
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 33.9396,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 33.6968,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 33.6968,
+          "evidence": []
+        },
+        {
+          "term": "或一些其他单位",
+          "score": 33.6968,
+          "evidence": []
+        },
+        {
+          "term": "以及卫生保健界",
+          "score": 32.4596,
+          "evidence": []
+        },
+        {
+          "term": "基金会和开发银行",
+          "score": 32.4596,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-022-glossary": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "promote digital",
+          "score": 3.3798,
+          "evidence": []
+        },
+        {
+          "term": "digital technologies",
+          "score": 3.2896,
+          "evidence": []
+        },
+        {
+          "term": "proposed actions",
+          "score": 3.1188,
+          "evidence": []
+        },
+        {
+          "term": "digital health",
+          "score": 3.0673,
+          "evidence": []
+        },
+        {
+          "term": "global digital",
+          "score": 3.0435,
+          "evidence": []
+        },
+        {
+          "term": "support digital",
+          "score": 2.9986,
+          "evidence": []
+        },
+        {
+          "term": "digital therapeutics",
+          "score": 2.9942,
+          "evidence": []
+        },
+        {
+          "term": "national digital",
+          "score": 2.9405,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "digital health",
+          "score": 642.8899,
+          "evidence": []
+        },
+        {
+          "term": "support digital",
+          "score": 488.9615,
+          "evidence": []
+        },
+        {
+          "term": "promote digital",
+          "score": 487.1957,
+          "evidence": []
+        },
+        {
+          "term": "digital technologies",
+          "score": 478.543,
+          "evidence": []
+        },
+        {
+          "term": "global digital",
+          "score": 470.4897,
+          "evidence": []
+        },
+        {
+          "term": "national digital",
+          "score": 458.9985,
+          "evidence": []
+        },
+        {
+          "term": "appropriate digital",
+          "score": 417.9988,
+          "evidence": []
+        },
+        {
+          "term": "implement digital",
+          "score": 416.8035,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "digital health",
+          "score": 3.9811,
+          "evidence": []
+        },
+        {
+          "term": "national health",
+          "score": 3.6446,
+          "evidence": []
+        },
+        {
+          "term": "health systems",
+          "score": 3.3398,
+          "evidence": []
+        },
+        {
+          "term": "health data",
+          "score": 3.314,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 3.3089,
+          "evidence": []
+        },
+        {
+          "term": "health information",
+          "score": 3.2047,
+          "evidence": []
+        },
+        {
+          "term": "health strategy",
+          "score": 3.1688,
+          "evidence": []
+        },
+        {
+          "term": "health development",
+          "score": 3.1196,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "digital health",
+          "score": 612.2192,
+          "evidence": []
+        },
+        {
+          "term": "support digital",
+          "score": 429.871,
+          "evidence": []
+        },
+        {
+          "term": "digital technologies",
+          "score": 420.3285,
+          "evidence": []
+        },
+        {
+          "term": "national digital",
+          "score": 414.2788,
+          "evidence": []
+        },
+        {
+          "term": "global digital",
+          "score": 412.5615,
+          "evidence": []
+        },
+        {
+          "term": "promote digital",
+          "score": 406.1262,
+          "evidence": []
+        },
+        {
+          "term": "ensure digital",
+          "score": 389.7595,
+          "evidence": []
+        },
+        {
+          "term": "appropriate digital",
+          "score": 387.1015,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "digital health",
+          "score": 3.9811,
+          "evidence": []
+        },
+        {
+          "term": "national health",
+          "score": 3.6446,
+          "evidence": []
+        },
+        {
+          "term": "health systems",
+          "score": 3.3398,
+          "evidence": []
+        },
+        {
+          "term": "health data",
+          "score": 3.314,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 3.3089,
+          "evidence": []
+        },
+        {
+          "term": "health information",
+          "score": 3.2047,
+          "evidence": []
+        },
+        {
+          "term": "health strategy",
+          "score": 3.1688,
+          "evidence": []
+        },
+        {
+          "term": "health development",
+          "score": 3.1196,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重要部分",
+          "score": 37.6698,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 37.5848,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 34.5475,
+          "evidence": []
+        },
+        {
+          "term": "教员询问其余学员每个报告人的报告有无遗漏什么内容",
+          "score": 32.8859,
+          "evidence": []
+        },
+        {
+          "term": "以及卫生保健界",
+          "score": 32.056,
+          "evidence": []
+        },
+        {
+          "term": "基金会和开发银行",
+          "score": 32.056,
+          "evidence": []
+        },
+        {
+          "term": "大学和研究机构",
+          "score": 32.056,
+          "evidence": []
+        },
+        {
+          "term": "如非政府组织和民间社会组织",
+          "score": 32.056,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "ehealth strategy",
+          "score": 2.5504,
+          "evidence": []
+        },
+        {
+          "term": "national ehealth",
+          "score": 2.1595,
+          "evidence": []
+        },
+        {
+          "term": "ehealth architecture",
+          "score": 2.096,
+          "evidence": []
+        },
+        {
+          "term": "resolution wha",
+          "score": 2.0463,
+          "evidence": []
+        },
+        {
+          "term": "digital health",
+          "score": 1.9411,
+          "evidence": []
+        },
+        {
+          "term": "urged member",
+          "score": 1.8788,
+          "evidence": []
+        },
+        {
+          "term": "digital technologies",
+          "score": 1.8349,
+          "evidence": []
+        },
+        {
+          "term": "member states",
+          "score": 1.8191,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "ehealth strategy",
+          "score": 89.8644,
+          "evidence": []
+        },
+        {
+          "term": "digital health",
+          "score": 87.1959,
+          "evidence": []
+        },
+        {
+          "term": "global strategy",
+          "score": 72.2401,
+          "evidence": []
+        },
+        {
+          "term": "digital technologies",
+          "score": 63.9186,
+          "evidence": []
+        },
+        {
+          "term": "strategy document",
+          "score": 61.2252,
+          "evidence": []
+        },
+        {
+          "term": "member states",
+          "score": 58.7451,
+          "evidence": []
+        },
+        {
+          "term": "resolution wha",
+          "score": 58.4105,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 55.9244,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "world health",
+          "score": 1.9178,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 1.8577,
+          "evidence": []
+        },
+        {
+          "term": "national ehealth",
+          "score": 1.8128,
+          "evidence": []
+        },
+        {
+          "term": "ehealth strategy",
+          "score": 1.8087,
+          "evidence": []
+        },
+        {
+          "term": "digital health",
+          "score": 1.7307,
+          "evidence": []
+        },
+        {
+          "term": "ehealth architecture",
+          "score": 1.4951,
+          "evidence": []
+        },
+        {
+          "term": "creative commons",
+          "score": 1.2136,
+          "evidence": []
+        },
+        {
+          "term": "digital technologies",
+          "score": 1.1797,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "digital health",
+          "score": 85.1039,
+          "evidence": []
+        },
+        {
+          "term": "digital technologies",
+          "score": 54.7652,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 54.363,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 53.2179,
+          "evidence": []
+        },
+        {
+          "term": "national ehealth",
+          "score": 46.1004,
+          "evidence": []
+        },
+        {
+          "term": "ehealth strategy",
+          "score": 39.8356,
+          "evidence": []
+        },
+        {
+          "term": "ehealth architecture",
+          "score": 37.0505,
+          "evidence": []
+        },
+        {
+          "term": "health informatics",
+          "score": 36.5628,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "world health",
+          "score": 1.9178,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 1.8577,
+          "evidence": []
+        },
+        {
+          "term": "national ehealth",
+          "score": 1.8128,
+          "evidence": []
+        },
+        {
+          "term": "ehealth strategy",
+          "score": 1.8087,
+          "evidence": []
+        },
+        {
+          "term": "digital health",
+          "score": 1.7307,
+          "evidence": []
+        },
+        {
+          "term": "ehealth architecture",
+          "score": 1.4951,
+          "evidence": []
+        },
+        {
+          "term": "creative commons",
+          "score": 1.2136,
+          "evidence": []
+        },
+        {
+          "term": "digital technologies",
+          "score": 1.1797,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "增强和迭代",
+          "score": 280.8117,
+          "evidence": []
+        },
+        {
+          "term": "行动框架",
+          "score": 280.8117,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 211.0621,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 206.382,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 195.6323,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 143.8141,
+          "evidence": []
+        },
+        {
+          "term": "经济方面",
+          "score": 137.8425,
+          "evidence": []
+        },
+        {
+          "term": "以及卫生保健界",
+          "score": 136.2187,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

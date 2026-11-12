@@ -1,0 +1,106 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/process/process-core/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/package/process-core",
+      "@type": "cat-harness:SkillPackage",
+      "name": "process-core"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/compiled-artefact-cache",
+      "@type": "bootstrap:Skill",
+      "name": "compiled-artefact-cache",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3dc4d1be8d98db83e6ef5d8336dddb57ac84698376e48f8a2eb1e7b5732d7a75",
+        "bytes": 6282,
+        "sha256": "3dc4d1be8d98db83e6ef5d8336dddb57ac84698376e48f8a2eb1e7b5732d7a75"
+      },
+      "title": "Compiled Artefact Cache"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/decision-methodology-selector",
+      "@type": "bootstrap:Skill",
+      "name": "decision-methodology-selector",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b2d5d135907493726735a202edce6e759e9921c32ff7baced40f489d575da851",
+        "bytes": 11720,
+        "sha256": "b2d5d135907493726735a202edce6e759e9921c32ff7baced40f489d575da851"
+      },
+      "title": "Decision methodology selector"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/git-friendly-churn",
+      "@type": "bootstrap:Skill",
+      "name": "git-friendly-churn",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a45f0ff6189e06765905827a8c0938a70b1b4a0be458602b4c2f4915864008cb",
+        "bytes": 6580,
+        "sha256": "a45f0ff6189e06765905827a8c0938a70b1b4a0be458602b4c2f4915864008cb"
+      },
+      "title": "Files git keeps many versions of"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/methodology-adoption",
+      "@type": "bootstrap:Skill",
+      "name": "methodology-adoption",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7fad86c0d8ae5fdb39dafb6b5a2f954b5d8fb36ca8fe3936346201db865a9263",
+        "bytes": 11693,
+        "sha256": "7fad86c0d8ae5fdb39dafb6b5a2f954b5d8fb36ca8fe3936346201db865a9263"
+      },
+      "title": "Adopting a methodology, and choosing between them"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/role-model",
+      "@type": "bootstrap:Skill",
+      "name": "role-model",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fb1a74ce884f999fcfbde667fce705605b01fb90e17513a0ae9f4ea7519dccfa",
+        "bytes": 32618,
+        "sha256": "fb1a74ce884f999fcfbde667fce705605b01fb90e17513a0ae9f4ea7519dccfa"
+      },
+      "title": "Roles are swimlanes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/swimlane-glossary",
+      "@type": "bootstrap:Skill",
+      "name": "swimlane-glossary",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/bf7528803b60ee6de5490a1ee24ded4aa419d0d27002ed859e9a3df7cfcfdab8",
+        "bytes": 6769,
+        "sha256": "bf7528803b60ee6de5490a1ee24ded4aa419d0d27002ed859e9a3df7cfcfdab8"
+      },
+      "title": "Swimlane Glossary Skill"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/swot-analysis",
+      "@type": "bootstrap:Skill",
+      "name": "swot-analysis",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2a562c978b1f4e37094f0df2331f697a36b157280e8411bebd76a1879795503a",
+        "bytes": 4033,
+        "sha256": "2a562c978b1f4e37094f0df2331f697a36b157280e8411bebd76a1879795503a"
+      },
+      "title": "Running a SWOT scan"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/task-authorization",
+      "@type": "bootstrap:Skill",
+      "name": "task-authorization",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/850bc15d43b5a348c4d8094f2576baaf98fa9a4874d01b0a5793d81294264cf5",
+        "bytes": 16884,
+        "sha256": "850bc15d43b5a348c4d8094f2576baaf98fa9a4874d01b0a5793d81294264cf5"
+      },
+      "title": "Task authorization — four questions before every task"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills/process/process-core",
+  "path": "skills/process/process-core/"
+}

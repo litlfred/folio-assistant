@@ -1,0 +1,5140 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-344251",
+  "instance": "who-iris",
+  "about": "library/10665-344251",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7393,
+    "terms": 71095
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "salud los",
+        "score": 55.5024,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "salud las",
+        "score": 52.6909,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "para los",
+        "score": 46.0911,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "los que",
+        "score": 43.6732,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "tecnologías los",
+        "score": 43.3273,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "con los",
+        "score": 43.2109,
+        "evidence": []
+      },
+      {
+        "term": "digital los",
+        "score": 42.6792,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "salud mundial",
+        "score": 42.2075,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "los datos",
+        "score": 41.9431,
+        "evidence": []
+      },
+      {
+        "term": "salud del",
+        "score": 39.4821,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "los objetivos",
+        "score": 38.3217,
+        "evidence": []
+      },
+      {
+        "term": "los países",
+        "score": 37.9975,
+        "evidence": [
+          "heading"
+        ]
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "salud los",
+        "score": 3467.5853,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "salud las",
+        "score": 3241.6801,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "salud para",
+        "score": 2453.8814,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "salud digital",
+        "score": 2427.9648,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "salud que",
+        "score": 2240.2239,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "salud mundial",
+        "score": 2217.1147,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "salud con",
+        "score": 2167.3408,
+        "evidence": []
+      },
+      {
+        "term": "tecnologías los",
+        "score": 2146.6294,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "los datos",
+        "score": 2109.7383,
+        "evidence": []
+      },
+      {
+        "term": "salud del",
+        "score": 2067.9255,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "sobre salud",
+        "score": 2064.4843,
+        "evidence": []
+      },
+      {
+        "term": "por los",
+        "score": 2000.1702,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "salud los",
+        "score": 48.0501,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "salud las",
+        "score": 45.8138,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "para los",
+        "score": 42.7386,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "los que",
+        "score": 39.9548,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "con los",
+        "score": 39.4916,
+        "evidence": []
+      },
+      {
+        "term": "salud del",
+        "score": 38.6423,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "digital los",
+        "score": 37.2702,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "los datos",
+        "score": 36.3517,
+        "evidence": []
+      },
+      {
+        "term": "por los",
+        "score": 35.594,
+        "evidence": []
+      },
+      {
+        "term": "tecnologías los",
+        "score": 35.1558,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "los servicios",
+        "score": 34.6877,
+        "evidence": []
+      },
+      {
+        "term": "sobre los",
+        "score": 34.2933,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "salud los",
+        "score": 3351.6717,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "salud las",
+        "score": 3268.9297,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "salud para",
+        "score": 2460.513,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "salud digital",
+        "score": 2441.0013,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "salud que",
+        "score": 2226.6858,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "salud con",
+        "score": 2164.4143,
+        "evidence": []
+      },
+      {
+        "term": "salud del",
+        "score": 2140.4212,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "salud mundial",
+        "score": 2063.6379,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "sobre salud",
+        "score": 2048.3775,
+        "evidence": []
+      },
+      {
+        "term": "salud nivel",
+        "score": 2000.199,
+        "evidence": []
+      },
+      {
+        "term": "por los",
+        "score": 1950.2748,
+        "evidence": []
+      },
+      {
+        "term": "tecnologías los",
+        "score": 1939.5297,
+        "evidence": [
+          "heading"
+        ]
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "salud los",
+        "score": 48.0501,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "salud las",
+        "score": 45.8138,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "para los",
+        "score": 42.7386,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "los que",
+        "score": 39.9548,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "con los",
+        "score": 39.4916,
+        "evidence": []
+      },
+      {
+        "term": "salud del",
+        "score": 38.6423,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "digital los",
+        "score": 37.2702,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "los datos",
+        "score": 36.3517,
+        "evidence": []
+      },
+      {
+        "term": "por los",
+        "score": 35.594,
+        "evidence": []
+      },
+      {
+        "term": "tecnologías los",
+        "score": 35.1558,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "los servicios",
+        "score": 34.6877,
+        "evidence": []
+      },
+      {
+        "term": "sobre los",
+        "score": 34.2933,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "感染者",
+        "score": 752.1917,
+        "evidence": []
+      },
+      {
+        "term": "这两种hpv",
+        "score": 460.5539,
+        "evidence": []
+      },
+      {
+        "term": "个学习目标",
+        "score": 386.2583,
+        "evidence": []
+      },
+      {
+        "term": "个核心能力和",
+        "score": 386.2583,
+        "evidence": []
+      },
+      {
+        "term": "如在公共利益与个体自主权之间",
+        "score": 386.2583,
+        "evidence": []
+      },
+      {
+        "term": "以及卫生保健界",
+        "score": 362.0053,
+        "evidence": []
+      },
+      {
+        "term": "基金会和开发银行",
+        "score": 362.0053,
+        "evidence": []
+      },
+      {
+        "term": "大学和研究机构",
+        "score": 362.0053,
+        "evidence": []
+      },
+      {
+        "term": "如非政府组织和民间社会组织",
+        "score": 362.0053,
+        "evidence": []
+      },
+      {
+        "term": "宗教组织",
+        "score": 362.0053,
+        "evidence": []
+      },
+      {
+        "term": "患者和公众",
+        "score": 362.0053,
+        "evidence": []
+      },
+      {
+        "term": "技术开发者",
+        "score": 362.0053,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-visión": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "visión",
+          "score": 2.8121,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los servicios",
+          "score": 2.6499,
+          "evidence": []
+        },
+        {
+          "term": "los sistemas",
+          "score": 2.5651,
+          "evidence": []
+        },
+        {
+          "term": "los datos",
+          "score": 2.365,
+          "evidence": []
+        },
+        {
+          "term": "los países",
+          "score": 2.1847,
+          "evidence": []
+        },
+        {
+          "term": "salud digital",
+          "score": 2.183,
+          "evidence": []
+        },
+        {
+          "term": "las estrategias",
+          "score": 2.145,
+          "evidence": []
+        },
+        {
+          "term": "servicios sanitarios",
+          "score": 2.1098,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "los servicios",
+          "score": 76.1849,
+          "evidence": []
+        },
+        {
+          "term": "los sistemas",
+          "score": 72.8748,
+          "evidence": []
+        },
+        {
+          "term": "los países",
+          "score": 64.449,
+          "evidence": []
+        },
+        {
+          "term": "los datos",
+          "score": 64.3767,
+          "evidence": []
+        },
+        {
+          "term": "visión",
+          "score": 59.6385,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "salud digital",
+          "score": 56.441,
+          "evidence": []
+        },
+        {
+          "term": "las estrategias",
+          "score": 42.5674,
+          "evidence": []
+        },
+        {
+          "term": "servicios sanitarios",
+          "score": 39.7931,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "los servicios",
+          "score": 1.8925,
+          "evidence": []
+        },
+        {
+          "term": "los datos",
+          "score": 1.8844,
+          "evidence": []
+        },
+        {
+          "term": "los sistemas",
+          "score": 1.7215,
+          "evidence": []
+        },
+        {
+          "term": "salud digital",
+          "score": 1.6367,
+          "evidence": []
+        },
+        {
+          "term": "los países",
+          "score": 1.5902,
+          "evidence": []
+        },
+        {
+          "term": "las estrategias",
+          "score": 1.379,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 0.8726,
+          "evidence": []
+        },
+        {
+          "term": "servicios sanitarios",
+          "score": 0.8688,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "los servicios",
+          "score": 56.8631,
+          "evidence": []
+        },
+        {
+          "term": "los datos",
+          "score": 56.6282,
+          "evidence": []
+        },
+        {
+          "term": "los sistemas",
+          "score": 52.9514,
+          "evidence": []
+        },
+        {
+          "term": "salud digital",
+          "score": 52.7489,
+          "evidence": []
+        },
+        {
+          "term": "los países",
+          "score": 49.9284,
+          "evidence": []
+        },
+        {
+          "term": "las estrategias",
+          "score": 35.4574,
+          "evidence": []
+        },
+        {
+          "term": "servicios sanitarios",
+          "score": 19.3128,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 16.4466,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "los servicios",
+          "score": 1.8925,
+          "evidence": []
+        },
+        {
+          "term": "los datos",
+          "score": 1.8844,
+          "evidence": []
+        },
+        {
+          "term": "los sistemas",
+          "score": 1.7215,
+          "evidence": []
+        },
+        {
+          "term": "salud digital",
+          "score": 1.6367,
+          "evidence": []
+        },
+        {
+          "term": "los países",
+          "score": 1.5902,
+          "evidence": []
+        },
+        {
+          "term": "las estrategias",
+          "score": 1.379,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 0.8726,
+          "evidence": []
+        },
+        {
+          "term": "servicios sanitarios",
+          "score": 0.8688,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "个学习目标",
+          "score": 24.0038,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 24.0038,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 24.0038,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 22.2951,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 21.5254,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 18.9552,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 18.9552,
+          "evidence": []
+        },
+        {
+          "term": "codifi",
+          "score": 18.3753,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-001-finalidad": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "los datos",
+          "score": 4.0696,
+          "evidence": []
+        },
+        {
+          "term": "datos sanitarios",
+          "score": 3.5869,
+          "evidence": []
+        },
+        {
+          "term": "los servicios",
+          "score": 3.5217,
+          "evidence": []
+        },
+        {
+          "term": "los proveedores",
+          "score": 3.1672,
+          "evidence": []
+        },
+        {
+          "term": "todos los",
+          "score": 2.9916,
+          "evidence": []
+        },
+        {
+          "term": "los consumidores",
+          "score": 2.947,
+          "evidence": []
+        },
+        {
+          "term": "salud digital",
+          "score": 2.9449,
+          "evidence": []
+        },
+        {
+          "term": "los estados",
+          "score": 2.9008,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "los datos",
+          "score": 207.4342,
+          "evidence": []
+        },
+        {
+          "term": "los servicios",
+          "score": 179.5625,
+          "evidence": []
+        },
+        {
+          "term": "los proveedores",
+          "score": 159.5336,
+          "evidence": []
+        },
+        {
+          "term": "todos los",
+          "score": 153.2182,
+          "evidence": []
+        },
+        {
+          "term": "los estados",
+          "score": 150.0995,
+          "evidence": []
+        },
+        {
+          "term": "los consumidores",
+          "score": 148.5631,
+          "evidence": []
+        },
+        {
+          "term": "los pacientes",
+          "score": 145.2152,
+          "evidence": []
+        },
+        {
+          "term": "los países",
+          "score": 144.1539,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "los datos",
+          "score": 3.0227,
+          "evidence": []
+        },
+        {
+          "term": "los servicios",
+          "score": 2.9216,
+          "evidence": []
+        },
+        {
+          "term": "salud digital",
+          "score": 2.8164,
+          "evidence": []
+        },
+        {
+          "term": "del que",
+          "score": 2.553,
+          "evidence": []
+        },
+        {
+          "term": "los países",
+          "score": 2.5411,
+          "evidence": []
+        },
+        {
+          "term": "las tecnologías",
+          "score": 2.5265,
+          "evidence": []
+        },
+        {
+          "term": "los estados",
+          "score": 2.5196,
+          "evidence": []
+        },
+        {
+          "term": "los pacientes",
+          "score": 2.4949,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "los datos",
+          "score": 138.2207,
+          "evidence": []
+        },
+        {
+          "term": "los servicios",
+          "score": 134.6525,
+          "evidence": []
+        },
+        {
+          "term": "salud digital",
+          "score": 134.3703,
+          "evidence": []
+        },
+        {
+          "term": "los pacientes",
+          "score": 128.7639,
+          "evidence": []
+        },
+        {
+          "term": "los países",
+          "score": 119.7592,
+          "evidence": []
+        },
+        {
+          "term": "los estados",
+          "score": 118.9798,
+          "evidence": []
+        },
+        {
+          "term": "entre los",
+          "score": 118.8032,
+          "evidence": []
+        },
+        {
+          "term": "los proveedores",
+          "score": 118.7298,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "los datos",
+          "score": 3.0227,
+          "evidence": []
+        },
+        {
+          "term": "los servicios",
+          "score": 2.9216,
+          "evidence": []
+        },
+        {
+          "term": "salud digital",
+          "score": 2.8164,
+          "evidence": []
+        },
+        {
+          "term": "del que",
+          "score": 2.553,
+          "evidence": []
+        },
+        {
+          "term": "los países",
+          "score": 2.5411,
+          "evidence": []
+        },
+        {
+          "term": "las tecnologías",
+          "score": 2.5265,
+          "evidence": []
+        },
+        {
+          "term": "los estados",
+          "score": 2.5196,
+          "evidence": []
+        },
+        {
+          "term": "los pacientes",
+          "score": 2.4949,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "会议摘要记录",
+          "score": 61.8759,
+          "evidence": []
+        },
+        {
+          "term": "健的文件eb",
+          "score": 61.8759,
+          "evidence": []
+        },
+        {
+          "term": "如物联网",
+          "score": 61.8759,
+          "evidence": []
+        },
+        {
+          "term": "将数字消费者包括在内",
+          "score": 61.8759,
+          "evidence": []
+        },
+        {
+          "term": "数字公共产品",
+          "score": 61.8759,
+          "evidence": []
+        },
+        {
+          "term": "第十三次",
+          "score": 61.8759,
+          "evidence": []
+        },
+        {
+          "term": "见文件",
+          "score": 61.8759,
+          "evidence": []
+        },
+        {
+          "term": "诸如在",
+          "score": 61.8759,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-002-de-salud-nacionales-requiere-que-los-países-adop": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "los países",
+          "score": 2.6669,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "salud",
+          "score": 2.069,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "salud digital",
+          "score": 1.4388,
+          "evidence": []
+        },
+        {
+          "term": "comprometan",
+          "score": 1.2153,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "los países",
+          "score": 35.9088,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "salud",
+          "score": 35.1013,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "salud digital",
+          "score": 21.8744,
+          "evidence": []
+        },
+        {
+          "term": "sus",
+          "score": 16.9794,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "los países",
+          "score": 1.0906,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "salud",
+          "score": 0.7461,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "que",
+          "score": 0.5969,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "salud digital",
+          "score": 0.5869,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "salud",
+          "score": 22.9104,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los países",
+          "score": 17.7847,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "salud digital",
+          "score": 15.9098,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 7.1311,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "los países",
+          "score": 1.0906,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "salud",
+          "score": 0.7461,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "que",
+          "score": 0.5969,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "salud digital",
+          "score": 0.5869,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "感染者",
+          "score": 37.1316,
+          "evidence": []
+        },
+        {
+          "term": "这两种hpv",
+          "score": 23.0253,
+          "evidence": []
+        },
+        {
+          "term": "还不清楚",
+          "score": 18.5058,
+          "evidence": []
+        },
+        {
+          "term": "在一些国家",
+          "score": 17.029,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-003-2-reconocer-que-las-iniciativas-de-salud-digital": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "las iniciativas",
+          "score": 3.8334,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "una estrategia",
+          "score": 3.5304,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "salud digital",
+          "score": 2.8787,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las tecnologías",
+          "score": 1.696,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 1.5217,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "para",
+          "score": 1.381,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "las iniciativas",
+          "score": 66.5923,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "una estrategia",
+          "score": 52.7388,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "salud digital",
+          "score": 41.0523,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las tecnologías",
+          "score": 26.5208,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 23.2212,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "para",
+          "score": 18.4584,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "salud digital",
+          "score": 1.5067,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las",
+          "score": 1.0817,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las iniciativas",
+          "score": 1.0817,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "una estrategia",
+          "score": 0.8126,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "para",
+          "score": 0.7981,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "que",
+          "score": 0.7678,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "salud digital",
+          "score": 36.6769,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las",
+          "score": 26.0273,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las iniciativas",
+          "score": 26.0273,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las tecnologías",
+          "score": 15.6805,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 14.3661,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "que",
+          "score": 14.2489,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "salud digital",
+          "score": 1.5067,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las iniciativas",
+          "score": 1.1511,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "una estrategia",
+          "score": 0.8126,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "para",
+          "score": 0.7981,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "que",
+          "score": 0.7678,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las tecnologías",
+          "score": 0.6885,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "感染者",
+          "score": 32.4614,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 32.2511,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 32.2511,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 32.2511,
+          "evidence": []
+        },
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 28.7428,
+          "evidence": []
+        },
+        {
+          "term": "突发事件和",
+          "score": 21.7917,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-004-principios-rectores": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "rectores",
+          "score": 1.2924,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "principios",
+          "score": 1.1265,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "salud",
+          "score": 0.6343,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "rectores",
+          "score": 13.6577,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "principios",
+          "score": 11.8251,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "salud",
+          "score": 7.0203,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "los",
+          "score": 0.2024,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.1805,
+          "evidence": []
+        },
+        {
+          "term": "salud",
+          "score": 0.1722,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "salud",
+          "score": 5.233,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 3.5287,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 2.6969,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "las",
+          "score": 0.1805,
+          "evidence": []
+        },
+        {
+          "term": "salud",
+          "score": 0.1722,
+          "evidence": []
+        },
+        {
+          "term": "digital",
+          "score": 0.1204,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "感染者",
+          "score": 57.2606,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 54.6419,
+          "evidence": []
+        },
+        {
+          "term": "怀疑可能暴露到开始调查的管理延误期",
+          "score": 37.9611,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-005-3-promover-el-uso-adecuado-de-las-tecnologías-di": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "uso adecuado",
+          "score": 3.6213,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las",
+          "score": 2.7259,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los datos",
+          "score": 2.365,
+          "evidence": []
+        },
+        {
+          "term": "acceso los",
+          "score": 2.3618,
+          "evidence": []
+        },
+        {
+          "term": "digitales",
+          "score": 2.1189,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "salud",
+          "score": 2.069,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mundial promueve",
+          "score": 1.804,
+          "evidence": []
+        },
+        {
+          "term": "estrategia mundial",
+          "score": 1.7154,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "las",
+          "score": 72.8987,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "acceso los",
+          "score": 65.6393,
+          "evidence": []
+        },
+        {
+          "term": "los datos",
+          "score": 64.3767,
+          "evidence": []
+        },
+        {
+          "term": "uso adecuado",
+          "score": 56.7952,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "digitales",
+          "score": 44.5394,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "salud",
+          "score": 35.1013,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mundial promueve",
+          "score": 32.5207,
+          "evidence": []
+        },
+        {
+          "term": "estrategia mundial",
+          "score": 27.9716,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "las",
+          "score": 2.1488,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "salud",
+          "score": 2.0238,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los datos",
+          "score": 1.6886,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 1.6451,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "salud digital",
+          "score": 1.4275,
+          "evidence": []
+        },
+        {
+          "term": "acceso los",
+          "score": 1.4179,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 0.7702,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.7134,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "las",
+          "score": 64.7761,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "salud",
+          "score": 51.6336,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los datos",
+          "score": 48.6258,
+          "evidence": []
+        },
+        {
+          "term": "acceso los",
+          "score": 46.1462,
+          "evidence": []
+        },
+        {
+          "term": "salud digital",
+          "score": 32.6998,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 30.5606,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "uso",
+          "score": 13.3843,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "uso adecuado",
+          "score": 13.3843,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "las",
+          "score": 2.1488,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "salud",
+          "score": 2.0238,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los datos",
+          "score": 1.6886,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 1.6451,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "salud digital",
+          "score": 1.4275,
+          "evidence": []
+        },
+        {
+          "term": "acceso los",
+          "score": 1.4179,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 0.7702,
+          "evidence": []
+        },
+        {
+          "term": "uso adecuado",
+          "score": 0.7505,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 31.0282,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 30.3423,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 30.3423,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 30.3423,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 25.1794,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 25.1794,
+          "evidence": []
+        },
+        {
+          "term": "突发事件和",
+          "score": 19.8396,
+          "evidence": []
+        },
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 19.0576,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-que-enfrentan-los-países-menos-adelantados-para": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "salud",
+          "score": 1.8585,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los",
+          "score": 1.8218,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las",
+          "score": 1.7655,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "salud digital",
+          "score": 1.5215,
+          "evidence": []
+        },
+        {
+          "term": "tecnologías",
+          "score": 1.4264,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "para",
+          "score": 1.381,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "salud",
+          "score": 28.081,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los",
+          "score": 26.5683,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las",
+          "score": 26.5086,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "salud digital",
+          "score": 22.688,
+          "evidence": []
+        },
+        {
+          "term": "tecnologías",
+          "score": 19.9059,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "para",
+          "score": 18.4584,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "los",
+          "score": 1.2024,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las",
+          "score": 1.0807,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "salud",
+          "score": 0.9668,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "para",
+          "score": 0.8698,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "salud digital",
+          "score": 0.8001,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.7775,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "los",
+          "score": 25.1093,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las",
+          "score": 24.5942,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "salud",
+          "score": 23.0609,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "salud digital",
+          "score": 18.5822,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 13.1922,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "que",
+          "score": 11.4157,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "los",
+          "score": 1.2024,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las",
+          "score": 1.0807,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "salud",
+          "score": 0.9668,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "para",
+          "score": 0.8698,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "salud digital",
+          "score": 0.8001,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.7775,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "以及卫生保健界",
+          "score": 118.527,
+          "evidence": []
+        },
+        {
+          "term": "基金会和开发银行",
+          "score": 118.527,
+          "evidence": []
+        },
+        {
+          "term": "大学和研究机构",
+          "score": 118.527,
+          "evidence": []
+        },
+        {
+          "term": "如非政府组织和民间社会组织",
+          "score": 118.527,
+          "evidence": []
+        },
+        {
+          "term": "宗教组织",
+          "score": 118.527,
+          "evidence": []
+        },
+        {
+          "term": "患者和公众",
+          "score": 118.527,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-007-1-promover-la-colaboración-en-el-plano-mundial-y": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "salud digital",
+          "score": 3.4215,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las tecnologías",
+          "score": 2.4078,
+          "evidence": []
+        },
+        {
+          "term": "tecnologías sanitarias",
+          "score": 2.0329,
+          "evidence": []
+        },
+        {
+          "term": "los países",
+          "score": 1.9361,
+          "evidence": []
+        },
+        {
+          "term": "partes interesadas",
+          "score": 1.9134,
+          "evidence": []
+        },
+        {
+          "term": "colaboraciones alianzas",
+          "score": 1.7999,
+          "evidence": []
+        },
+        {
+          "term": "este objetivo",
+          "score": 1.6551,
+          "evidence": []
+        },
+        {
+          "term": "objetivo estratégico",
+          "score": 1.5647,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "salud digital",
+          "score": 62.113,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las tecnologías",
+          "score": 56.3552,
+          "evidence": []
+        },
+        {
+          "term": "los países",
+          "score": 38.5552,
+          "evidence": []
+        },
+        {
+          "term": "tecnologías sanitarias",
+          "score": 37.7974,
+          "evidence": []
+        },
+        {
+          "term": "partes interesadas",
+          "score": 29.2053,
+          "evidence": []
+        },
+        {
+          "term": "colaboraciones alianzas",
+          "score": 28.2554,
+          "evidence": []
+        },
+        {
+          "term": "este objetivo",
+          "score": 26.8306,
+          "evidence": []
+        },
+        {
+          "term": "objetivo estratégico",
+          "score": 24.9337,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "salud digital",
+          "score": 2.3435,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los países",
+          "score": 1.2133,
+          "evidence": []
+        },
+        {
+          "term": "las tecnologías",
+          "score": 1.1571,
+          "evidence": []
+        },
+        {
+          "term": "para mejorar",
+          "score": 0.8374,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.6156,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 0.5881,
+          "evidence": []
+        },
+        {
+          "term": "mundial",
+          "score": 0.5801,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "con",
+          "score": 0.5069,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "salud digital",
+          "score": 69.1244,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las tecnologías",
+          "score": 32.1782,
+          "evidence": []
+        },
+        {
+          "term": "los países",
+          "score": 29.9609,
+          "evidence": []
+        },
+        {
+          "term": "para mejorar",
+          "score": 13.2039,
+          "evidence": []
+        },
+        {
+          "term": "mundial",
+          "score": 11.2545,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "promover",
+          "score": 9.2123,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "que",
+          "score": 7.9845,
+          "evidence": []
+        },
+        {
+          "term": "plazo",
+          "score": 7.3292,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "salud digital",
+          "score": 2.3435,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los países",
+          "score": 1.2133,
+          "evidence": []
+        },
+        {
+          "term": "las tecnologías",
+          "score": 1.1571,
+          "evidence": []
+        },
+        {
+          "term": "para mejorar",
+          "score": 0.8374,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.6156,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 0.5881,
+          "evidence": []
+        },
+        {
+          "term": "mundial",
+          "score": 0.5801,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "con",
+          "score": 0.5069,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "感染者",
+          "score": 39.6775,
+          "evidence": []
+        },
+        {
+          "term": "这两种hpv",
+          "score": 24.6667,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 22.6776,
+          "evidence": []
+        },
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 20.5822,
+          "evidence": []
+        },
+        {
+          "term": "还不清楚",
+          "score": 19.2241,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 18.5257,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 18.5257,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 18.5257,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-008-objetivos-estratégicos": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "las tecnologías",
+          "score": 2.3853,
+          "evidence": []
+        },
+        {
+          "term": "los riesgos",
+          "score": 2.1982,
+          "evidence": []
+        },
+        {
+          "term": "las partes",
+          "score": 2.1314,
+          "evidence": []
+        },
+        {
+          "term": "los países",
+          "score": 2.099,
+          "evidence": []
+        },
+        {
+          "term": "nivel mundial",
+          "score": 2.0507,
+          "evidence": []
+        },
+        {
+          "term": "salud digital",
+          "score": 2.0438,
+          "evidence": []
+        },
+        {
+          "term": "objetivos",
+          "score": 1.769,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "tecnologías digitales",
+          "score": 1.5496,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "las tecnologías",
+          "score": 61.3195,
+          "evidence": []
+        },
+        {
+          "term": "las partes",
+          "score": 55.0367,
+          "evidence": []
+        },
+        {
+          "term": "los países",
+          "score": 48.5183,
+          "evidence": []
+        },
+        {
+          "term": "los riesgos",
+          "score": 47.6134,
+          "evidence": []
+        },
+        {
+          "term": "salud digital",
+          "score": 45.9106,
+          "evidence": []
+        },
+        {
+          "term": "nivel mundial",
+          "score": 36.8353,
+          "evidence": []
+        },
+        {
+          "term": "objetivos",
+          "score": 27.8737,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "para",
+          "score": 24.6113,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "salud digital",
+          "score": 1.5102,
+          "evidence": []
+        },
+        {
+          "term": "los países",
+          "score": 1.4616,
+          "evidence": []
+        },
+        {
+          "term": "las tecnologías",
+          "score": 1.398,
+          "evidence": []
+        },
+        {
+          "term": "las partes",
+          "score": 1.2722,
+          "evidence": []
+        },
+        {
+          "term": "los riesgos",
+          "score": 1.1692,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 0.8023,
+          "evidence": []
+        },
+        {
+          "term": "tecnologías digitales",
+          "score": 0.7317,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 0.6873,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "salud digital",
+          "score": 50.5558,
+          "evidence": []
+        },
+        {
+          "term": "las tecnologías",
+          "score": 43.4442,
+          "evidence": []
+        },
+        {
+          "term": "los países",
+          "score": 42.1566,
+          "evidence": []
+        },
+        {
+          "term": "las partes",
+          "score": 39.4671,
+          "evidence": []
+        },
+        {
+          "term": "los riesgos",
+          "score": 37.6536,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 17.88,
+          "evidence": []
+        },
+        {
+          "term": "nivel mundial",
+          "score": 14.1187,
+          "evidence": []
+        },
+        {
+          "term": "tecnologías digitales",
+          "score": 12.9336,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "salud digital",
+          "score": 1.5102,
+          "evidence": []
+        },
+        {
+          "term": "los países",
+          "score": 1.4616,
+          "evidence": []
+        },
+        {
+          "term": "las tecnologías",
+          "score": 1.398,
+          "evidence": []
+        },
+        {
+          "term": "las partes",
+          "score": 1.2722,
+          "evidence": []
+        },
+        {
+          "term": "los riesgos",
+          "score": 1.2352,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 0.8023,
+          "evidence": []
+        },
+        {
+          "term": "tecnologías digitales",
+          "score": 0.7317,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.6744,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "感染者",
+          "score": 27.7689,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 22.6312,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 22.6312,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 22.6312,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 19.0594,
+          "evidence": []
+        },
+        {
+          "term": "这两种hpv",
+          "score": 17.9431,
+          "evidence": []
+        },
+        {
+          "term": "codifi",
+          "score": 17.5665,
+          "evidence": []
+        },
+        {
+          "term": "abilidad",
+          "score": 17.5665,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-009-2-impulsar-la-ejecución-de-estrategias-nacionale": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "salud digital",
+          "score": 5.7058,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los datos",
+          "score": 3.185,
+          "evidence": []
+        },
+        {
+          "term": "los siguientes",
+          "score": 3.0303,
+          "evidence": []
+        },
+        {
+          "term": "los sistemas",
+          "score": 3.0303,
+          "evidence": []
+        },
+        {
+          "term": "con los",
+          "score": 3.0028,
+          "evidence": []
+        },
+        {
+          "term": "prevén los",
+          "score": 2.9301,
+          "evidence": []
+        },
+        {
+          "term": "los países",
+          "score": 2.891,
+          "evidence": []
+        },
+        {
+          "term": "todos los",
+          "score": 2.872,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "salud digital",
+          "score": 223.6256,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los sistemas",
+          "score": 130.1157,
+          "evidence": []
+        },
+        {
+          "term": "los siguientes",
+          "score": 129.9129,
+          "evidence": []
+        },
+        {
+          "term": "los países",
+          "score": 129.5725,
+          "evidence": []
+        },
+        {
+          "term": "los datos",
+          "score": 129.392,
+          "evidence": []
+        },
+        {
+          "term": "todos los",
+          "score": 126.6499,
+          "evidence": []
+        },
+        {
+          "term": "con los",
+          "score": 126.3904,
+          "evidence": []
+        },
+        {
+          "term": "prevén los",
+          "score": 124.6383,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "salud digital",
+          "score": 4.8558,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "con los",
+          "score": 2.691,
+          "evidence": []
+        },
+        {
+          "term": "los datos",
+          "score": 2.554,
+          "evidence": []
+        },
+        {
+          "term": "los sistemas",
+          "score": 2.3657,
+          "evidence": []
+        },
+        {
+          "term": "las tecnologías",
+          "score": 2.2281,
+          "evidence": []
+        },
+        {
+          "term": "los países",
+          "score": 2.221,
+          "evidence": []
+        },
+        {
+          "term": "para que",
+          "score": 2.1893,
+          "evidence": []
+        },
+        {
+          "term": "los recursos",
+          "score": 2.0509,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "salud digital",
+          "score": 232.8905,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "con los",
+          "score": 112.5497,
+          "evidence": []
+        },
+        {
+          "term": "los datos",
+          "score": 108.5614,
+          "evidence": []
+        },
+        {
+          "term": "los sistemas",
+          "score": 99.2681,
+          "evidence": []
+        },
+        {
+          "term": "los países",
+          "score": 97.4175,
+          "evidence": []
+        },
+        {
+          "term": "los recursos",
+          "score": 93.6182,
+          "evidence": []
+        },
+        {
+          "term": "los planos",
+          "score": 92.5413,
+          "evidence": []
+        },
+        {
+          "term": "todos los",
+          "score": 92.4133,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "salud digital",
+          "score": 4.8558,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "con los",
+          "score": 2.691,
+          "evidence": []
+        },
+        {
+          "term": "los datos",
+          "score": 2.554,
+          "evidence": []
+        },
+        {
+          "term": "los sistemas",
+          "score": 2.3657,
+          "evidence": []
+        },
+        {
+          "term": "las tecnologías",
+          "score": 2.2281,
+          "evidence": []
+        },
+        {
+          "term": "los países",
+          "score": 2.221,
+          "evidence": []
+        },
+        {
+          "term": "para que",
+          "score": 2.1893,
+          "evidence": []
+        },
+        {
+          "term": "los recursos",
+          "score": 2.0509,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "感染者",
+          "score": 25.6559,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 25.0771,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 25.0771,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 25.0771,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 20.023,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 19.1902,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 17.9642,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 17.9642,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-010-3-fortalecer-la-gobernanza-en-pro-de-la-salud-di": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "los planos",
+          "score": 6.03,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "salud digital",
+          "score": 5.6545,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "planos nacional",
+          "score": 4.78,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "planos mundial",
+          "score": 3.9694,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los datos",
+          "score": 2.9638,
+          "evidence": []
+        },
+        {
+          "term": "gobernanza",
+          "score": 2.744,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las inversiones",
+          "score": 2.5215,
+          "evidence": []
+        },
+        {
+          "term": "todos los",
+          "score": 2.3727,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "salud digital",
+          "score": 216.6054,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los planos",
+          "score": 203.0199,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "planos nacional",
+          "score": 114.5853,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los datos",
+          "score": 92.8605,
+          "evidence": []
+        },
+        {
+          "term": "mundial nacional",
+          "score": 82.4662,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "todos los",
+          "score": 81.5907,
+          "evidence": []
+        },
+        {
+          "term": "gobernanza",
+          "score": 69.807,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las inversiones",
+          "score": 58.3636,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "salud digital",
+          "score": 3.8851,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los planos",
+          "score": 3.1671,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los datos",
+          "score": 1.9822,
+          "evidence": []
+        },
+        {
+          "term": "mundial nacional",
+          "score": 1.7379,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "todos los",
+          "score": 1.6041,
+          "evidence": []
+        },
+        {
+          "term": "las inversiones",
+          "score": 1.4596,
+          "evidence": []
+        },
+        {
+          "term": "las prioridades",
+          "score": 1.427,
+          "evidence": []
+        },
+        {
+          "term": "datos sanitarios",
+          "score": 0.9941,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "salud digital",
+          "score": 196.267,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los planos",
+          "score": 127.4053,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los datos",
+          "score": 73.3982,
+          "evidence": []
+        },
+        {
+          "term": "todos los",
+          "score": 62.4949,
+          "evidence": []
+        },
+        {
+          "term": "las inversiones",
+          "score": 55.0632,
+          "evidence": []
+        },
+        {
+          "term": "las prioridades",
+          "score": 54.358,
+          "evidence": []
+        },
+        {
+          "term": "mundial nacional",
+          "score": 43.308,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "para",
+          "score": 26.1775,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "salud digital",
+          "score": 3.8851,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los planos",
+          "score": 3.1671,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los datos",
+          "score": 1.9822,
+          "evidence": []
+        },
+        {
+          "term": "mundial nacional",
+          "score": 1.7379,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "todos los",
+          "score": 1.6041,
+          "evidence": []
+        },
+        {
+          "term": "las inversiones",
+          "score": 1.4596,
+          "evidence": []
+        },
+        {
+          "term": "las prioridades",
+          "score": 1.427,
+          "evidence": []
+        },
+        {
+          "term": "datos sanitarios",
+          "score": 0.9941,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "感染者",
+          "score": 26.9604,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 23.9578,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 23.9578,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 23.9578,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 18.7409,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 17.2855,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 17.2321,
+          "evidence": []
+        },
+        {
+          "term": "这两种hpv",
+          "score": 17.1762,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-011-4-propugnar-sistemas-de-salud-centrados-en-las-p": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "salud digital",
+          "score": 6.7628,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las personas",
+          "score": 5.8146,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los datos",
+          "score": 3.751,
+          "evidence": []
+        },
+        {
+          "term": "los procesos",
+          "score": 3.5904,
+          "evidence": []
+        },
+        {
+          "term": "las tecnologías",
+          "score": 3.5181,
+          "evidence": []
+        },
+        {
+          "term": "para los",
+          "score": 3.4506,
+          "evidence": []
+        },
+        {
+          "term": "datos sanitarios",
+          "score": 3.217,
+          "evidence": []
+        },
+        {
+          "term": "las herramientas",
+          "score": 3.2065,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "salud digital",
+          "score": 399.1787,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las personas",
+          "score": 288.0495,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los datos",
+          "score": 176.3964,
+          "evidence": []
+        },
+        {
+          "term": "para los",
+          "score": 175.9113,
+          "evidence": []
+        },
+        {
+          "term": "las tecnologías",
+          "score": 174.0177,
+          "evidence": []
+        },
+        {
+          "term": "los procesos",
+          "score": 160.3771,
+          "evidence": []
+        },
+        {
+          "term": "los sistemas",
+          "score": 153.3629,
+          "evidence": []
+        },
+        {
+          "term": "los pacientes",
+          "score": 150.9467,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "salud digital",
+          "score": 5.7196,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las personas",
+          "score": 5.0919,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "para los",
+          "score": 3.3743,
+          "evidence": []
+        },
+        {
+          "term": "los datos",
+          "score": 3.0872,
+          "evidence": []
+        },
+        {
+          "term": "los servicios",
+          "score": 3.0267,
+          "evidence": []
+        },
+        {
+          "term": "los sistemas",
+          "score": 2.8419,
+          "evidence": []
+        },
+        {
+          "term": "los pacientes",
+          "score": 2.5815,
+          "evidence": []
+        },
+        {
+          "term": "las tecnologías",
+          "score": 2.5063,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "salud digital",
+          "score": 363.9073,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las personas",
+          "score": 238.5111,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "para los",
+          "score": 179.3796,
+          "evidence": []
+        },
+        {
+          "term": "los datos",
+          "score": 153.5968,
+          "evidence": []
+        },
+        {
+          "term": "los servicios",
+          "score": 151.6554,
+          "evidence": []
+        },
+        {
+          "term": "los pacientes",
+          "score": 147.8272,
+          "evidence": []
+        },
+        {
+          "term": "los sistemas",
+          "score": 146.7507,
+          "evidence": []
+        },
+        {
+          "term": "los trabajadores",
+          "score": 146.1674,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "salud digital",
+          "score": 5.7196,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las personas",
+          "score": 5.0919,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "para los",
+          "score": 3.3743,
+          "evidence": []
+        },
+        {
+          "term": "los datos",
+          "score": 3.0872,
+          "evidence": []
+        },
+        {
+          "term": "los servicios",
+          "score": 3.0267,
+          "evidence": []
+        },
+        {
+          "term": "los sistemas",
+          "score": 2.8419,
+          "evidence": []
+        },
+        {
+          "term": "los pacientes",
+          "score": 2.5815,
+          "evidence": []
+        },
+        {
+          "term": "las tecnologías",
+          "score": 2.5063,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提出了以下政策选择和行动",
+          "score": 97.5839,
+          "evidence": []
+        },
+        {
+          "term": "设想了以下产出",
+          "score": 94.9649,
+          "evidence": []
+        },
+        {
+          "term": "政策选择和行动",
+          "score": 76.2566,
+          "evidence": []
+        },
+        {
+          "term": "监测和研究",
+          "score": 46.258,
+          "evidence": []
+        },
+        {
+          "term": "一致元数据和定义",
+          "score": 45.1766,
+          "evidence": []
+        },
+        {
+          "term": "数据安全",
+          "score": 37.9712,
+          "evidence": []
+        },
+        {
+          "term": "倡导以人为本并经数字卫生保健技术赋能的卫生系统",
+          "score": 30.9213,
+          "evidence": []
+        },
+        {
+          "term": "的流程",
+          "score": 30.8594,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-012-1-comprometerse": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "las partes",
+          "score": 1.5288,
+          "evidence": []
+        },
+        {
+          "term": "partes interesadas",
+          "score": 1.5163,
+          "evidence": []
+        },
+        {
+          "term": "estrategia mundial",
+          "score": 1.3594,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "las partes",
+          "score": 21.901,
+          "evidence": []
+        },
+        {
+          "term": "partes interesadas",
+          "score": 19.4702,
+          "evidence": []
+        },
+        {
+          "term": "estrategia mundial",
+          "score": 18.6478,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "las partes",
+          "score": 0.4927,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 0.4449,
+          "evidence": []
+        },
+        {
+          "term": "salud",
+          "score": 0.3291,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "las partes",
+          "score": 11.2578,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 9.2925,
+          "evidence": []
+        },
+        {
+          "term": "salud",
+          "score": 5.5353,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "las partes",
+          "score": 0.4927,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 0.4449,
+          "evidence": []
+        },
+        {
+          "term": "salud",
+          "score": 0.3291,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "感染者",
+          "score": 61.4345,
+          "evidence": []
+        },
+        {
+          "term": "这两种hpv",
+          "score": 36.5817,
+          "evidence": []
+        },
+        {
+          "term": "他们的",
+          "score": 27.6827,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-013-2-catalizar": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "procesos que",
+          "score": 1.5014,
+          "evidence": []
+        },
+        {
+          "term": "que faciliten",
+          "score": 1.3725,
+          "evidence": []
+        },
+        {
+          "term": "estrategia mundial",
+          "score": 1.3594,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "que faciliten",
+          "score": 19.5048,
+          "evidence": []
+        },
+        {
+          "term": "estrategia mundial",
+          "score": 18.6478,
+          "evidence": []
+        },
+        {
+          "term": "procesos que",
+          "score": 17.9805,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "los",
+          "score": 0.2898,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.2689,
+          "evidence": []
+        },
+        {
+          "term": "procesos que",
+          "score": 0.2639,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "las",
+          "score": 5.3853,
+          "evidence": []
+        },
+        {
+          "term": "procesos que",
+          "score": 4.5605,
+          "evidence": []
+        },
+        {
+          "term": "salud",
+          "score": 4.1162,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "las",
+          "score": 0.2689,
+          "evidence": []
+        },
+        {
+          "term": "procesos que",
+          "score": 0.2639,
+          "evidence": []
+        },
+        {
+          "term": "salud",
+          "score": 0.237,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "感染者",
+          "score": 45.9793,
+          "evidence": []
+        },
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 29.3093,
+          "evidence": []
+        },
+        {
+          "term": "这两种hpv",
+          "score": 28.3218,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-014-marco-de-acción": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "acción",
+          "score": 2.5195,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "marco",
+          "score": 1.8252,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "herramientas",
+          "score": 0.8077,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 0.7846,
+          "evidence": []
+        },
+        {
+          "term": "aplicación",
+          "score": 0.711,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "acción",
+          "score": 59.6385,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "marco",
+          "score": 35.9156,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "herramientas",
+          "score": 10.8236,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 9.9631,
+          "evidence": []
+        },
+        {
+          "term": "aplicación",
+          "score": 9.4373,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "los",
+          "score": 0.4849,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.433,
+          "evidence": []
+        },
+        {
+          "term": "salud",
+          "score": 0.363,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 0.3298,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.2987,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "las",
+          "score": 8.945,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 8.6197,
+          "evidence": []
+        },
+        {
+          "term": "salud",
+          "score": 5.6899,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 3.7024,
+          "evidence": []
+        },
+        {
+          "term": "digital",
+          "score": 3.015,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "los",
+          "score": 0.4849,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.433,
+          "evidence": []
+        },
+        {
+          "term": "salud",
+          "score": 0.363,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 0.3298,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.2987,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "感染者",
+          "score": 47.6011,
+          "evidence": []
+        },
+        {
+          "term": "这两种hpv",
+          "score": 28.853,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 25.2192,
+          "evidence": []
+        },
+        {
+          "term": "还不清楚",
+          "score": 21.2786,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 19.9473,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-015-3-medir": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "estrategia mundial",
+          "score": 1.8352,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 0.7846,
+          "evidence": []
+        },
+        {
+          "term": "eficacia",
+          "score": 0.6805,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "estrategia mundial",
+          "score": 32.1008,
+          "evidence": []
+        },
+        {
+          "term": "eficacia",
+          "score": 10.0742,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 9.9631,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "los",
+          "score": 0.3926,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.3503,
+          "evidence": []
+        },
+        {
+          "term": "salud",
+          "score": 0.3151,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "los",
+          "score": 6.8339,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 6.5347,
+          "evidence": []
+        },
+        {
+          "term": "salud",
+          "score": 5.3549,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "los",
+          "score": 0.3926,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.3503,
+          "evidence": []
+        },
+        {
+          "term": "salud",
+          "score": 0.3151,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 30.7593,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 26.1109,
+          "evidence": []
+        },
+        {
+          "term": "codifi",
+          "score": 17.0617,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-016-4-mejorar-e-iterar": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "estrategia mundial",
+          "score": 1.7154,
+          "evidence": []
+        },
+        {
+          "term": "bienes mundiales",
+          "score": 1.6889,
+          "evidence": []
+        },
+        {
+          "term": "nuevo ciclo",
+          "score": 1.6662,
+          "evidence": []
+        },
+        {
+          "term": "puedan compartir",
+          "score": 1.6471,
+          "evidence": []
+        },
+        {
+          "term": "compartir utilizar",
+          "score": 1.5622,
+          "evidence": []
+        },
+        {
+          "term": "mundiales públicos",
+          "score": 1.4719,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "estrategia mundial",
+          "score": 27.9716,
+          "evidence": []
+        },
+        {
+          "term": "bienes mundiales",
+          "score": 26.3252,
+          "evidence": []
+        },
+        {
+          "term": "nuevo ciclo",
+          "score": 25.2472,
+          "evidence": []
+        },
+        {
+          "term": "puedan compartir",
+          "score": 24.186,
+          "evidence": []
+        },
+        {
+          "term": "compartir utilizar",
+          "score": 23.6703,
+          "evidence": []
+        },
+        {
+          "term": "mundiales públicos",
+          "score": 23.1064,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "salud digital",
+          "score": 0.6537,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 0.5244,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.4782,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 0.3817,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.3542,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 0.3343,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "salud digital",
+          "score": 14.2862,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 10.1687,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 7.718,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 4.7527,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 4.6207,
+          "evidence": []
+        },
+        {
+          "term": "estrategia mundial",
+          "score": 4.1246,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "salud digital",
+          "score": 0.6537,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 0.5244,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.4782,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.3542,
+          "evidence": []
+        },
+        {
+          "term": "estrategia mundial",
+          "score": 0.3299,
+          "evidence": []
+        },
+        {
+          "term": "sobre",
+          "score": 0.178,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "感染者",
+          "score": 34.5249,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 31.8066,
+          "evidence": []
+        },
+        {
+          "term": "这两种hpv",
+          "score": 20.9116,
+          "evidence": []
+        },
+        {
+          "term": "levanta",
+          "score": 17.1331,
+          "evidence": []
+        },
+        {
+          "term": "sesi6n",
+          "score": 17.0181,
+          "evidence": []
+        },
+        {
+          "term": "codifi",
+          "score": 16.9518,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-017-aplicación-de-la-estrategia-y-plan-de-acción": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "secretaría las",
+          "score": 3.4409,
+          "evidence": []
+        },
+        {
+          "term": "las medidas",
+          "score": 3.4385,
+          "evidence": []
+        },
+        {
+          "term": "los estados",
+          "score": 3.4063,
+          "evidence": []
+        },
+        {
+          "term": "los objetivos",
+          "score": 3.3433,
+          "evidence": []
+        },
+        {
+          "term": "con los",
+          "score": 3.2704,
+          "evidence": []
+        },
+        {
+          "term": "las organizaciones",
+          "score": 3.1075,
+          "evidence": []
+        },
+        {
+          "term": "estrategia",
+          "score": 3.0783,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las prioridades",
+          "score": 3.0773,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "los estados",
+          "score": 174.6521,
+          "evidence": []
+        },
+        {
+          "term": "los objetivos",
+          "score": 160.7153,
+          "evidence": []
+        },
+        {
+          "term": "con los",
+          "score": 156.3561,
+          "evidence": []
+        },
+        {
+          "term": "las medidas",
+          "score": 152.1009,
+          "evidence": []
+        },
+        {
+          "term": "los progresos",
+          "score": 145.8624,
+          "evidence": []
+        },
+        {
+          "term": "secretaría las",
+          "score": 144.1088,
+          "evidence": []
+        },
+        {
+          "term": "las organizaciones",
+          "score": 130.0924,
+          "evidence": []
+        },
+        {
+          "term": "las prioridades",
+          "score": 128.6945,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "con los",
+          "score": 2.8414,
+          "evidence": []
+        },
+        {
+          "term": "los estados",
+          "score": 2.3164,
+          "evidence": []
+        },
+        {
+          "term": "los objetivos",
+          "score": 2.3028,
+          "evidence": []
+        },
+        {
+          "term": "salud digital",
+          "score": 2.1715,
+          "evidence": []
+        },
+        {
+          "term": "las partes",
+          "score": 2.1304,
+          "evidence": []
+        },
+        {
+          "term": "las medidas",
+          "score": 2.1174,
+          "evidence": []
+        },
+        {
+          "term": "sobre salud",
+          "score": 2.1046,
+          "evidence": []
+        },
+        {
+          "term": "secretaría las",
+          "score": 2.0216,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "con los",
+          "score": 130.3198,
+          "evidence": []
+        },
+        {
+          "term": "los estados",
+          "score": 110.6996,
+          "evidence": []
+        },
+        {
+          "term": "los objetivos",
+          "score": 110.2379,
+          "evidence": []
+        },
+        {
+          "term": "las medidas",
+          "score": 105.0544,
+          "evidence": []
+        },
+        {
+          "term": "salud digital",
+          "score": 104.5658,
+          "evidence": []
+        },
+        {
+          "term": "secretaría las",
+          "score": 103.8312,
+          "evidence": []
+        },
+        {
+          "term": "las partes",
+          "score": 102.3515,
+          "evidence": []
+        },
+        {
+          "term": "los progresos",
+          "score": 101.2886,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "con los",
+          "score": 2.8414,
+          "evidence": []
+        },
+        {
+          "term": "los estados",
+          "score": 2.3164,
+          "evidence": []
+        },
+        {
+          "term": "los objetivos",
+          "score": 2.3028,
+          "evidence": []
+        },
+        {
+          "term": "salud digital",
+          "score": 2.1715,
+          "evidence": []
+        },
+        {
+          "term": "las partes",
+          "score": 2.1304,
+          "evidence": []
+        },
+        {
+          "term": "las medidas",
+          "score": 2.1174,
+          "evidence": []
+        },
+        {
+          "term": "sobre salud",
+          "score": 2.1046,
+          "evidence": []
+        },
+        {
+          "term": "secretaría las",
+          "score": 2.0216,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "感染者",
+          "score": 33.7731,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 27.1676,
+          "evidence": []
+        },
+        {
+          "term": "这两种hpv",
+          "score": 20.3693,
+          "evidence": []
+        },
+        {
+          "term": "levanta",
+          "score": 16.6589,
+          "evidence": []
+        },
+        {
+          "term": "sesi6n",
+          "score": 16.5807,
+          "evidence": []
+        },
+        {
+          "term": "codifi",
+          "score": 16.2624,
+          "evidence": []
+        },
+        {
+          "term": "abilidad",
+          "score": 16.2624,
+          "evidence": []
+        },
+        {
+          "term": "cartográfi",
+          "score": 16.2624,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-018-principios-específicos-de-aplicación": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "los datos",
+          "score": 3.3059,
+          "evidence": []
+        },
+        {
+          "term": "datos sanitarios",
+          "score": 3.1984,
+          "evidence": []
+        },
+        {
+          "term": "sanitarios personales",
+          "score": 2.5047,
+          "evidence": []
+        },
+        {
+          "term": "los particulares",
+          "score": 2.3889,
+          "evidence": []
+        },
+        {
+          "term": "acceso los",
+          "score": 2.3294,
+          "evidence": []
+        },
+        {
+          "term": "los estados",
+          "score": 2.2259,
+          "evidence": []
+        },
+        {
+          "term": "salud digital",
+          "score": 1.8599,
+          "evidence": []
+        },
+        {
+          "term": "digital interoperable",
+          "score": 1.4236,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "los datos",
+          "score": 100.651,
+          "evidence": []
+        },
+        {
+          "term": "datos sanitarios",
+          "score": 87.6461,
+          "evidence": []
+        },
+        {
+          "term": "los particulares",
+          "score": 65.8233,
+          "evidence": []
+        },
+        {
+          "term": "los estados",
+          "score": 62.4279,
+          "evidence": []
+        },
+        {
+          "term": "acceso los",
+          "score": 62.3182,
+          "evidence": []
+        },
+        {
+          "term": "sanitarios personales",
+          "score": 58.0233,
+          "evidence": []
+        },
+        {
+          "term": "salud digital",
+          "score": 35.3803,
+          "evidence": []
+        },
+        {
+          "term": "digital interoperable",
+          "score": 25.1528,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "los datos",
+          "score": 1.7101,
+          "evidence": []
+        },
+        {
+          "term": "acceso los",
+          "score": 1.4482,
+          "evidence": []
+        },
+        {
+          "term": "los estados",
+          "score": 1.4213,
+          "evidence": []
+        },
+        {
+          "term": "salud digital",
+          "score": 1.4165,
+          "evidence": []
+        },
+        {
+          "term": "los particulares",
+          "score": 1.2158,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 1.0566,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 0.806,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 0.7839,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "los datos",
+          "score": 51.2989,
+          "evidence": []
+        },
+        {
+          "term": "acceso los",
+          "score": 45.9381,
+          "evidence": []
+        },
+        {
+          "term": "los estados",
+          "score": 43.5292,
+          "evidence": []
+        },
+        {
+          "term": "los particulares",
+          "score": 42.2768,
+          "evidence": []
+        },
+        {
+          "term": "salud digital",
+          "score": 37.766,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 25.9046,
+          "evidence": []
+        },
+        {
+          "term": "datos sanitarios",
+          "score": 19.059,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 15.0909,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "los datos",
+          "score": 1.7101,
+          "evidence": []
+        },
+        {
+          "term": "acceso los",
+          "score": 1.4482,
+          "evidence": []
+        },
+        {
+          "term": "los estados",
+          "score": 1.4213,
+          "evidence": []
+        },
+        {
+          "term": "salud digital",
+          "score": 1.4165,
+          "evidence": []
+        },
+        {
+          "term": "los particulares",
+          "score": 1.2633,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 1.0566,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 0.806,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 0.7839,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "以及卫生保健界",
+          "score": 139.7509,
+          "evidence": []
+        },
+        {
+          "term": "基金会和开发银行",
+          "score": 139.7509,
+          "evidence": []
+        },
+        {
+          "term": "大学和研究机构",
+          "score": 139.7509,
+          "evidence": []
+        },
+        {
+          "term": "如非政府组织和民间社会组织",
+          "score": 139.7509,
+          "evidence": []
+        },
+        {
+          "term": "宗教组织",
+          "score": 139.7509,
+          "evidence": []
+        },
+        {
+          "term": "患者和公众",
+          "score": 139.7509,
+          "evidence": []
+        },
+        {
+          "term": "技术开发者",
+          "score": 139.7509,
+          "evidence": []
+        },
+        {
+          "term": "这意味着",
+          "score": 117.0179,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-019-supervisión-y-evaluación": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "supervisión evaluación",
+          "score": 6.2296,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "salud los",
+          "score": 6.1924,
+          "evidence": []
+        },
+        {
+          "term": "salud nivel",
+          "score": 5.7269,
+          "evidence": []
+        },
+        {
+          "term": "corto plazo",
+          "score": 5.5215,
+          "evidence": []
+        },
+        {
+          "term": "salud con",
+          "score": 5.4237,
+          "evidence": []
+        },
+        {
+          "term": "ayudar los",
+          "score": 5.403,
+          "evidence": []
+        },
+        {
+          "term": "promover las",
+          "score": 5.377,
+          "evidence": []
+        },
+        {
+          "term": "los datos",
+          "score": 5.3415,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "salud los",
+          "score": 1536.9059,
+          "evidence": []
+        },
+        {
+          "term": "salud digital",
+          "score": 1219.1315,
+          "evidence": []
+        },
+        {
+          "term": "digital las",
+          "score": 1055.5915,
+          "evidence": []
+        },
+        {
+          "term": "salud con",
+          "score": 1030.848,
+          "evidence": []
+        },
+        {
+          "term": "salud nivel",
+          "score": 1006.9196,
+          "evidence": []
+        },
+        {
+          "term": "para los",
+          "score": 1001.2488,
+          "evidence": []
+        },
+        {
+          "term": "sobre salud",
+          "score": 999.3599,
+          "evidence": []
+        },
+        {
+          "term": "salud pública",
+          "score": 908.1305,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "salud los",
+          "score": 7.4835,
+          "evidence": []
+        },
+        {
+          "term": "salud nivel",
+          "score": 6.819,
+          "evidence": []
+        },
+        {
+          "term": "tecnologías los",
+          "score": 6.5701,
+          "evidence": []
+        },
+        {
+          "term": "salud con",
+          "score": 6.5348,
+          "evidence": []
+        },
+        {
+          "term": "las tecnologías",
+          "score": 6.3562,
+          "evidence": []
+        },
+        {
+          "term": "salud digital",
+          "score": 6.3428,
+          "evidence": []
+        },
+        {
+          "term": "los datos",
+          "score": 6.1947,
+          "evidence": []
+        },
+        {
+          "term": "supervisión evaluación",
+          "score": 5.9077,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "salud los",
+          "score": 1552.1352,
+          "evidence": []
+        },
+        {
+          "term": "salud digital",
+          "score": 1242.9169,
+          "evidence": []
+        },
+        {
+          "term": "digital las",
+          "score": 1087.1885,
+          "evidence": []
+        },
+        {
+          "term": "salud con",
+          "score": 1047.3965,
+          "evidence": []
+        },
+        {
+          "term": "sobre salud",
+          "score": 1012.0897,
+          "evidence": []
+        },
+        {
+          "term": "salud nivel",
+          "score": 1008.9137,
+          "evidence": []
+        },
+        {
+          "term": "para los",
+          "score": 1002.0829,
+          "evidence": []
+        },
+        {
+          "term": "salud pública",
+          "score": 921.3956,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "salud los",
+          "score": 7.4835,
+          "evidence": []
+        },
+        {
+          "term": "salud nivel",
+          "score": 6.819,
+          "evidence": []
+        },
+        {
+          "term": "tecnologías los",
+          "score": 6.5701,
+          "evidence": []
+        },
+        {
+          "term": "salud con",
+          "score": 6.5348,
+          "evidence": []
+        },
+        {
+          "term": "las tecnologías",
+          "score": 6.3562,
+          "evidence": []
+        },
+        {
+          "term": "salud digital",
+          "score": 6.3428,
+          "evidence": []
+        },
+        {
+          "term": "los datos",
+          "score": 6.1947,
+          "evidence": []
+        },
+        {
+          "term": "supervisión evaluación",
+          "score": 5.9077,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "感染者",
+          "score": 26.0362,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 21.1855,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 21.1855,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 21.1855,
+          "evidence": []
+        },
+        {
+          "term": "会议摘要记录",
+          "score": 20.7953,
+          "evidence": []
+        },
+        {
+          "term": "健的文件eb",
+          "score": 20.7953,
+          "evidence": []
+        },
+        {
+          "term": "如物联网",
+          "score": 20.7953,
+          "evidence": []
+        },
+        {
+          "term": "将数字消费者包括在内",
+          "score": 20.7953,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "salud mundial",
+          "score": 4.195,
+          "evidence": []
+        },
+        {
+          "term": "con las",
+          "score": 4.0352,
+          "evidence": []
+        },
+        {
+          "term": "las tecnologías",
+          "score": 3.9631,
+          "evidence": []
+        },
+        {
+          "term": "con los",
+          "score": 3.9513,
+          "evidence": []
+        },
+        {
+          "term": "que las",
+          "score": 3.9505,
+          "evidence": []
+        },
+        {
+          "term": "estrategia mundial",
+          "score": 3.9232,
+          "evidence": []
+        },
+        {
+          "term": "sobre salud",
+          "score": 3.8397,
+          "evidence": []
+        },
+        {
+          "term": "las naciones",
+          "score": 3.7544,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "que las",
+          "score": 326.8442,
+          "evidence": []
+        },
+        {
+          "term": "salud mundial",
+          "score": 324.5712,
+          "evidence": []
+        },
+        {
+          "term": "con las",
+          "score": 285.926,
+          "evidence": []
+        },
+        {
+          "term": "sobre salud",
+          "score": 281.7428,
+          "evidence": []
+        },
+        {
+          "term": "las tecnologías",
+          "score": 275.1001,
+          "evidence": []
+        },
+        {
+          "term": "salud digital",
+          "score": 263.5852,
+          "evidence": []
+        },
+        {
+          "term": "las naciones",
+          "score": 260.5841,
+          "evidence": []
+        },
+        {
+          "term": "información las",
+          "score": 255.2656,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "salud mundial",
+          "score": 5.0186,
+          "evidence": []
+        },
+        {
+          "term": "salud digital",
+          "score": 4.7979,
+          "evidence": []
+        },
+        {
+          "term": "oms para",
+          "score": 4.7124,
+          "evidence": []
+        },
+        {
+          "term": "que las",
+          "score": 4.6171,
+          "evidence": []
+        },
+        {
+          "term": "con las",
+          "score": 4.4692,
+          "evidence": []
+        },
+        {
+          "term": "con los",
+          "score": 4.4681,
+          "evidence": []
+        },
+        {
+          "term": "sobre salud",
+          "score": 4.34,
+          "evidence": []
+        },
+        {
+          "term": "las tecnologías",
+          "score": 3.9711,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "que las",
+          "score": 314.3179,
+          "evidence": []
+        },
+        {
+          "term": "con las",
+          "score": 256.1361,
+          "evidence": []
+        },
+        {
+          "term": "salud digital",
+          "score": 248.7646,
+          "evidence": []
+        },
+        {
+          "term": "salud mundial",
+          "score": 234.6196,
+          "evidence": []
+        },
+        {
+          "term": "sobre salud",
+          "score": 233.2427,
+          "evidence": []
+        },
+        {
+          "term": "con los",
+          "score": 232.4289,
+          "evidence": []
+        },
+        {
+          "term": "las tecnologías",
+          "score": 230.8664,
+          "evidence": []
+        },
+        {
+          "term": "información las",
+          "score": 218.9118,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "salud mundial",
+          "score": 5.0186,
+          "evidence": []
+        },
+        {
+          "term": "salud digital",
+          "score": 4.7979,
+          "evidence": []
+        },
+        {
+          "term": "oms para",
+          "score": 4.7124,
+          "evidence": []
+        },
+        {
+          "term": "que las",
+          "score": 4.6171,
+          "evidence": []
+        },
+        {
+          "term": "con las",
+          "score": 4.4692,
+          "evidence": []
+        },
+        {
+          "term": "con los",
+          "score": 4.4681,
+          "evidence": []
+        },
+        {
+          "term": "sobre salud",
+          "score": 4.34,
+          "evidence": []
+        },
+        {
+          "term": "las tecnologías",
+          "score": 3.9711,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "增强和迭代",
+          "score": 160.5597,
+          "evidence": []
+        },
+        {
+          "term": "行动框架",
+          "score": 160.5597,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 116.7968,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 115.5668,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 113.7877,
+          "evidence": []
+        },
+        {
+          "term": "经济方面",
+          "score": 87.9964,
+          "evidence": []
+        },
+        {
+          "term": "以及卫生保健界",
+          "score": 76.4853,
+          "evidence": []
+        },
+        {
+          "term": "基金会和开发银行",
+          "score": 76.4853,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

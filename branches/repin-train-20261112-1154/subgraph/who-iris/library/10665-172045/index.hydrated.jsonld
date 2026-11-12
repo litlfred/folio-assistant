@@ -1,0 +1,79 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/who-iris/library/10665-172045/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/who-iris/source/10665-172045",
+      "@type": "cat-harness:SourceDocument",
+      "path": "library/10665-172045/manifest.jsonld",
+      "title": "Joint and cosponsored United Nations programme on HIV/AIDS (draft resolution proposed by Professor Munevver Bertan, Professor J. M. S. Caldeira da Silva, Professor I. Chernozemsky, Dr V. Devo, Mrs P. Herzog, Dr J. Larivière, Dr J. G. S. Makumbi, Professor J. Mbede, Dr E. Nakamura, Dr Ngo Van Hop, Dr B. L. Shrestha and Mr J. F. Varder)"
+    }
+  ],
+  "hasSubgraph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/who-iris/library/10665-172045/blocks/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio/library/10665-172045/blocks/prose-sec-000",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/10665-172045/blocks/prose-sec-000.jsonld",
+          "title": "EB93/Conf.Paper"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/10665-172045/blocks/prose-sec-001",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/10665-172045/blocks/prose-sec-001.jsonld",
+          "title": "No. 10"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/10665-172045/blocks/prose-sec-front-matter",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/10665-172045/blocks/prose-sec-front-matter.jsonld",
+          "title": "Front matter"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "name": "library/10665-172045/blocks",
+      "path": "library/10665-172045/blocks/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/who-iris/library/10665-172045/sections/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio/library/10665-172045/sections/sec-000",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/10665-172045/sections/sec-000.jsonld",
+          "title": "EB93/Conf.Paper"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/10665-172045/sections/sec-001",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/10665-172045/sections/sec-001.jsonld",
+          "title": "No. 10"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/10665-172045/sections/sec-front-matter",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/10665-172045/sections/sec-front-matter.jsonld",
+          "title": "Front matter"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "name": "library/10665-172045/sections",
+      "path": "library/10665-172045/sections/"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/library"
+  ],
+  "name": "library/10665-172045",
+  "path": "library/10665-172045/"
+}

@@ -1,0 +1,1446 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-66977-rus",
+  "instance": "who-iris",
+  "about": "library/10665-66977-rus",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7393,
+    "terms": 71095
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "против гепатита",
+        "score": 9.8365,
+        "evidence": []
+      },
+      {
+        "term": "вакцины против",
+        "score": 9.6001,
+        "evidence": []
+      },
+      {
+        "term": "вакцинации против",
+        "score": 8.8815,
+        "evidence": []
+      },
+      {
+        "term": "против вгв",
+        "score": 8.6411,
+        "evidence": []
+      },
+      {
+        "term": "введение вакцины",
+        "score": 7.4204,
+        "evidence": []
+      },
+      {
+        "term": "вакцина против",
+        "score": 7.1623,
+        "evidence": []
+      },
+      {
+        "term": "для вакцинации",
+        "score": 6.9146,
+        "evidence": []
+      },
+      {
+        "term": "вакцину против",
+        "score": 6.8952,
+        "evidence": []
+      },
+      {
+        "term": "гепатита национальные",
+        "score": 6.8361,
+        "evidence": []
+      },
+      {
+        "term": "хранения вакцины",
+        "score": 6.7948,
+        "evidence": []
+      },
+      {
+        "term": "вакцины можно",
+        "score": 6.7642,
+        "evidence": []
+      },
+      {
+        "term": "гепатита является",
+        "score": 6.4925,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "вакцины против",
+        "score": 349.3755,
+        "evidence": []
+      },
+      {
+        "term": "против вгв",
+        "score": 285.234,
+        "evidence": []
+      },
+      {
+        "term": "против гепатита",
+        "score": 281.3192,
+        "evidence": []
+      },
+      {
+        "term": "вакцинации против",
+        "score": 256.3638,
+        "evidence": []
+      },
+      {
+        "term": "хранения вакцины",
+        "score": 234.1075,
+        "evidence": []
+      },
+      {
+        "term": "дозы вакцины",
+        "score": 231.8095,
+        "evidence": []
+      },
+      {
+        "term": "введение вакцины",
+        "score": 231.0866,
+        "evidence": []
+      },
+      {
+        "term": "вакцины можно",
+        "score": 222.4252,
+        "evidence": []
+      },
+      {
+        "term": "комбинированные вакцины",
+        "score": 220.3351,
+        "evidence": []
+      },
+      {
+        "term": "вакцина против",
+        "score": 202.9816,
+        "evidence": []
+      },
+      {
+        "term": "вакцину против",
+        "score": 187.1063,
+        "evidence": []
+      },
+      {
+        "term": "вакцинацию против",
+        "score": 176.3249,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "для вакцинации",
+        "score": 3.1787,
+        "evidence": []
+      },
+      {
+        "term": "вакцины против",
+        "score": 3.0663,
+        "evidence": []
+      },
+      {
+        "term": "для введения",
+        "score": 2.6236,
+        "evidence": []
+      },
+      {
+        "term": "для оценки",
+        "score": 2.5397,
+        "evidence": []
+      },
+      {
+        "term": "использовать для",
+        "score": 2.3561,
+        "evidence": []
+      },
+      {
+        "term": "дозы вакцины",
+        "score": 2.2722,
+        "evidence": []
+      },
+      {
+        "term": "введение вакцины",
+        "score": 2.1609,
+        "evidence": []
+      },
+      {
+        "term": "для инъекций",
+        "score": 2.0524,
+        "evidence": []
+      },
+      {
+        "term": "для хранения",
+        "score": 2.0524,
+        "evidence": []
+      },
+      {
+        "term": "инструменты для",
+        "score": 2.0524,
+        "evidence": []
+      },
+      {
+        "term": "объемы для",
+        "score": 2.0524,
+        "evidence": []
+      },
+      {
+        "term": "вакцину против",
+        "score": 2.0502,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "для оценки",
+        "score": 50.7979,
+        "evidence": []
+      },
+      {
+        "term": "для вакцинации",
+        "score": 49.3091,
+        "evidence": []
+      },
+      {
+        "term": "для введения",
+        "score": 49.3036,
+        "evidence": []
+      },
+      {
+        "term": "для инъекций",
+        "score": 43.735,
+        "evidence": []
+      },
+      {
+        "term": "для хранения",
+        "score": 43.735,
+        "evidence": []
+      },
+      {
+        "term": "инструменты для",
+        "score": 43.735,
+        "evidence": []
+      },
+      {
+        "term": "использовать для",
+        "score": 43.735,
+        "evidence": []
+      },
+      {
+        "term": "объемы для",
+        "score": 43.735,
+        "evidence": []
+      },
+      {
+        "term": "или",
+        "score": 38.527,
+        "evidence": []
+      },
+      {
+        "term": "что",
+        "score": 32.4263,
+        "evidence": []
+      },
+      {
+        "term": "исследования",
+        "score": 28.9724,
+        "evidence": []
+      },
+      {
+        "term": "так как",
+        "score": 28.236,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "для вакцинации",
+        "score": 3.1787,
+        "evidence": []
+      },
+      {
+        "term": "вакцины против",
+        "score": 3.0663,
+        "evidence": []
+      },
+      {
+        "term": "для введения",
+        "score": 2.6236,
+        "evidence": []
+      },
+      {
+        "term": "для оценки",
+        "score": 2.5397,
+        "evidence": []
+      },
+      {
+        "term": "использовать для",
+        "score": 2.3561,
+        "evidence": []
+      },
+      {
+        "term": "дозы вакцины",
+        "score": 2.2722,
+        "evidence": []
+      },
+      {
+        "term": "для инъекций",
+        "score": 2.1964,
+        "evidence": []
+      },
+      {
+        "term": "введение вакцины",
+        "score": 2.1609,
+        "evidence": []
+      },
+      {
+        "term": "для хранения",
+        "score": 2.1316,
+        "evidence": []
+      },
+      {
+        "term": "объемы для",
+        "score": 2.0893,
+        "evidence": []
+      },
+      {
+        "term": "инструменты для",
+        "score": 2.0844,
+        "evidence": []
+      },
+      {
+        "term": "вакцину против",
+        "score": 2.0502,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "如果没有",
+        "score": 578.1232,
+        "evidence": []
+      },
+      {
+        "term": "重点人群",
+        "score": 432.5086,
+        "evidence": []
+      },
+      {
+        "term": "到辩护",
+        "score": 361.4933,
+        "evidence": []
+      },
+      {
+        "term": "捐助者",
+        "score": 340.6327,
+        "evidence": []
+      },
+      {
+        "term": "肺炎疫苗试验",
+        "score": 320.8436,
+        "evidence": []
+      },
+      {
+        "term": "研究人员相信",
+        "score": 315.4366,
+        "evidence": []
+      },
+      {
+        "term": "在研究开始后",
+        "score": 301.6071,
+        "evidence": []
+      },
+      {
+        "term": "病毒疗法",
+        "score": 301.6071,
+        "evidence": []
+      },
+      {
+        "term": "要在活动挂图上做好记录",
+        "score": 294.9526,
+        "evidence": []
+      },
+      {
+        "term": "问题的讨论结束",
+        "score": 294.9526,
+        "evidence": []
+      },
+      {
+        "term": "项研究",
+        "score": 287.9612,
+        "evidence": []
+      },
+      {
+        "term": "还包括区域经济一体化组织",
+        "score": 272.431,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "page-001": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "вирусного гепатита",
+          "score": 2.4736,
+          "evidence": []
+        },
+        {
+          "term": "против гепатита",
+          "score": 2.4051,
+          "evidence": []
+        },
+        {
+          "term": "вгв",
+          "score": 2.1679,
+          "evidence": []
+        },
+        {
+          "term": "гепатита является",
+          "score": 2.0831,
+          "evidence": []
+        },
+        {
+          "term": "первоочередной задачей",
+          "score": 1.779,
+          "evidence": []
+        },
+        {
+          "term": "вакцинации против",
+          "score": 1.7657,
+          "evidence": []
+        },
+        {
+          "term": "распространения хронической",
+          "score": 1.6187,
+          "evidence": []
+        },
+        {
+          "term": "вакцина против",
+          "score": 1.6076,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "вгв",
+          "score": 78.0968,
+          "evidence": []
+        },
+        {
+          "term": "против гепатита",
+          "score": 63.5539,
+          "evidence": []
+        },
+        {
+          "term": "вирусного гепатита",
+          "score": 58.5693,
+          "evidence": []
+        },
+        {
+          "term": "гепатита является",
+          "score": 53.0628,
+          "evidence": []
+        },
+        {
+          "term": "вакцинации против",
+          "score": 36.1881,
+          "evidence": []
+        },
+        {
+          "term": "вакцина против",
+          "score": 31.8289,
+          "evidence": []
+        },
+        {
+          "term": "всех странах",
+          "score": 30.9708,
+          "evidence": []
+        },
+        {
+          "term": "первоочередной задачей",
+          "score": 28.6401,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "вакцинации против",
+          "score": 0.6532,
+          "evidence": []
+        },
+        {
+          "term": "вакцина против",
+          "score": 0.4979,
+          "evidence": []
+        },
+        {
+          "term": "для",
+          "score": 0.4621,
+          "evidence": []
+        },
+        {
+          "term": "против гепатита",
+          "score": 0.4614,
+          "evidence": []
+        },
+        {
+          "term": "вакцины",
+          "score": 0.361,
+          "evidence": []
+        },
+        {
+          "term": "что",
+          "score": 0.314,
+          "evidence": []
+        },
+        {
+          "term": "всех странах",
+          "score": 0.2959,
+          "evidence": []
+        },
+        {
+          "term": "воз",
+          "score": 0.2949,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "для",
+          "score": 8.1857,
+          "evidence": []
+        },
+        {
+          "term": "или",
+          "score": 7.4105,
+          "evidence": []
+        },
+        {
+          "term": "что",
+          "score": 5.5943,
+          "evidence": []
+        },
+        {
+          "term": "исследования",
+          "score": 4.6538,
+          "evidence": []
+        },
+        {
+          "term": "как",
+          "score": 4.06,
+          "evidence": []
+        },
+        {
+          "term": "лечения",
+          "score": 3.8828,
+          "evidence": []
+        },
+        {
+          "term": "здравоохранения",
+          "score": 3.6211,
+          "evidence": []
+        },
+        {
+          "term": "воз",
+          "score": 3.4913,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "вакцинации против",
+          "score": 0.6532,
+          "evidence": []
+        },
+        {
+          "term": "вакцина против",
+          "score": 0.4979,
+          "evidence": []
+        },
+        {
+          "term": "для",
+          "score": 0.4621,
+          "evidence": []
+        },
+        {
+          "term": "против гепатита",
+          "score": 0.4614,
+          "evidence": []
+        },
+        {
+          "term": "вакцины",
+          "score": 0.361,
+          "evidence": []
+        },
+        {
+          "term": "всех странах",
+          "score": 0.2959,
+          "evidence": []
+        },
+        {
+          "term": "при рождении",
+          "score": 0.2755,
+          "evidence": []
+        },
+        {
+          "term": "инфекции",
+          "score": 0.2411,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 165.585,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 102.4993,
+          "evidence": []
+        },
+        {
+          "term": "研究人员相信",
+          "score": 99.6206,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 95.0929,
+          "evidence": []
+        },
+        {
+          "term": "项研究",
+          "score": 92.8492,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 92.4528,
+          "evidence": []
+        },
+        {
+          "term": "在研究开始后",
+          "score": 87.3646,
+          "evidence": []
+        },
+        {
+          "term": "病毒疗法",
+          "score": 87.3646,
+          "evidence": []
+        }
+      ]
+    },
+    "page-002": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "при рождении",
+          "score": 2.9677,
+          "evidence": []
+        },
+        {
+          "term": "дозы вакцины",
+          "score": 2.8913,
+          "evidence": []
+        },
+        {
+          "term": "вакцины против",
+          "score": 2.7549,
+          "evidence": []
+        },
+        {
+          "term": "комбинированные вакцины",
+          "score": 2.7451,
+          "evidence": []
+        },
+        {
+          "term": "вакцинации против",
+          "score": 2.6861,
+          "evidence": []
+        },
+        {
+          "term": "моновалентная вакцина",
+          "score": 2.4528,
+          "evidence": []
+        },
+        {
+          "term": "против гепатита",
+          "score": 2.4131,
+          "evidence": []
+        },
+        {
+          "term": "вводится при",
+          "score": 2.2899,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "вакцины против",
+          "score": 110.9641,
+          "evidence": []
+        },
+        {
+          "term": "при рождении",
+          "score": 102.0042,
+          "evidence": []
+        },
+        {
+          "term": "дозы вакцины",
+          "score": 100.5388,
+          "evidence": []
+        },
+        {
+          "term": "вакцинации против",
+          "score": 92.0812,
+          "evidence": []
+        },
+        {
+          "term": "комбинированные вакцины",
+          "score": 89.0644,
+          "evidence": []
+        },
+        {
+          "term": "вакцина против",
+          "score": 73.391,
+          "evidence": []
+        },
+        {
+          "term": "вакцины можно",
+          "score": 72.9265,
+          "evidence": []
+        },
+        {
+          "term": "против гепатита",
+          "score": 69.8716,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "вакцины против",
+          "score": 0.9268,
+          "evidence": []
+        },
+        {
+          "term": "для вакцинации",
+          "score": 0.8591,
+          "evidence": []
+        },
+        {
+          "term": "дозы вакцины",
+          "score": 0.7175,
+          "evidence": []
+        },
+        {
+          "term": "вакцина против",
+          "score": 0.6259,
+          "evidence": []
+        },
+        {
+          "term": "вакцины можно",
+          "score": 0.5922,
+          "evidence": []
+        },
+        {
+          "term": "использовать для",
+          "score": 0.591,
+          "evidence": []
+        },
+        {
+          "term": "против гепатита",
+          "score": 0.5706,
+          "evidence": []
+        },
+        {
+          "term": "так как",
+          "score": 0.4728,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "для вакцинации",
+          "score": 14.7722,
+          "evidence": []
+        },
+        {
+          "term": "использовать для",
+          "score": 13.0521,
+          "evidence": []
+        },
+        {
+          "term": "или",
+          "score": 11.5862,
+          "evidence": []
+        },
+        {
+          "term": "что",
+          "score": 9.9601,
+          "evidence": []
+        },
+        {
+          "term": "исследования",
+          "score": 8.8322,
+          "evidence": []
+        },
+        {
+          "term": "так как",
+          "score": 8.3123,
+          "evidence": []
+        },
+        {
+          "term": "вакцины против",
+          "score": 6.5479,
+          "evidence": []
+        },
+        {
+          "term": "лечения",
+          "score": 6.3196,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "вакцины против",
+          "score": 0.9268,
+          "evidence": []
+        },
+        {
+          "term": "для вакцинации",
+          "score": 0.8591,
+          "evidence": []
+        },
+        {
+          "term": "дозы вакцины",
+          "score": 0.7175,
+          "evidence": []
+        },
+        {
+          "term": "вакцина против",
+          "score": 0.6259,
+          "evidence": []
+        },
+        {
+          "term": "вакцины можно",
+          "score": 0.5922,
+          "evidence": []
+        },
+        {
+          "term": "использовать для",
+          "score": 0.591,
+          "evidence": []
+        },
+        {
+          "term": "против гепатита",
+          "score": 0.5706,
+          "evidence": []
+        },
+        {
+          "term": "комбинированные вакцины",
+          "score": 0.483,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 185.32,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 138.2026,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 128.289,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 126.2746,
+          "evidence": []
+        },
+        {
+          "term": "在研究开始后",
+          "score": 123.2361,
+          "evidence": []
+        },
+        {
+          "term": "病毒疗法",
+          "score": 123.2361,
+          "evidence": []
+        },
+        {
+          "term": "研究人员相信",
+          "score": 116.9194,
+          "evidence": []
+        },
+        {
+          "term": "肺炎疫苗试验",
+          "score": 116.3326,
+          "evidence": []
+        }
+      ]
+    },
+    "page-003": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "хранения вакцины",
+          "score": 2.8892,
+          "evidence": []
+        },
+        {
+          "term": "вакцины против",
+          "score": 2.8885,
+          "evidence": []
+        },
+        {
+          "term": "против гепатита",
+          "score": 2.4533,
+          "evidence": []
+        },
+        {
+          "term": "холодовой цепи",
+          "score": 2.0725,
+          "evidence": []
+        },
+        {
+          "term": "для хранения",
+          "score": 2.0359,
+          "evidence": []
+        },
+        {
+          "term": "акдс",
+          "score": 1.8482,
+          "evidence": []
+        },
+        {
+          "term": "объемы для",
+          "score": 1.8261,
+          "evidence": []
+        },
+        {
+          "term": "для инъекций",
+          "score": 1.7973,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "вакцины против",
+          "score": 128.212,
+          "evidence": []
+        },
+        {
+          "term": "хранения вакцины",
+          "score": 109.7636,
+          "evidence": []
+        },
+        {
+          "term": "против гепатита",
+          "score": 73.9924,
+          "evidence": []
+        },
+        {
+          "term": "акдс",
+          "score": 54.6677,
+          "evidence": []
+        },
+        {
+          "term": "для хранения",
+          "score": 50.7911,
+          "evidence": []
+        },
+        {
+          "term": "объемы для",
+          "score": 40.2765,
+          "evidence": []
+        },
+        {
+          "term": "для инъекций",
+          "score": 39.6071,
+          "evidence": []
+        },
+        {
+          "term": "холодовой цепи",
+          "score": 36.799,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "вакцины против",
+          "score": 0.731,
+          "evidence": []
+        },
+        {
+          "term": "для",
+          "score": 0.4978,
+          "evidence": []
+        },
+        {
+          "term": "для инъекций",
+          "score": 0.4978,
+          "evidence": []
+        },
+        {
+          "term": "для хранения",
+          "score": 0.4978,
+          "evidence": []
+        },
+        {
+          "term": "инструменты для",
+          "score": 0.4978,
+          "evidence": []
+        },
+        {
+          "term": "объемы для",
+          "score": 0.4978,
+          "evidence": []
+        },
+        {
+          "term": "против гепатита",
+          "score": 0.444,
+          "evidence": []
+        },
+        {
+          "term": "воз",
+          "score": 0.3842,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "для",
+          "score": 10.2769,
+          "evidence": []
+        },
+        {
+          "term": "для инъекций",
+          "score": 10.2769,
+          "evidence": []
+        },
+        {
+          "term": "для хранения",
+          "score": 10.2769,
+          "evidence": []
+        },
+        {
+          "term": "инструменты для",
+          "score": 10.2769,
+          "evidence": []
+        },
+        {
+          "term": "объемы для",
+          "score": 10.2769,
+          "evidence": []
+        },
+        {
+          "term": "или",
+          "score": 9.2753,
+          "evidence": []
+        },
+        {
+          "term": "что",
+          "score": 8.423,
+          "evidence": []
+        },
+        {
+          "term": "исследования",
+          "score": 7.9018,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "вакцины против",
+          "score": 0.731,
+          "evidence": []
+        },
+        {
+          "term": "для инъекций",
+          "score": 0.5313,
+          "evidence": []
+        },
+        {
+          "term": "для хранения",
+          "score": 0.5178,
+          "evidence": []
+        },
+        {
+          "term": "инструменты для",
+          "score": 0.5076,
+          "evidence": []
+        },
+        {
+          "term": "объемы для",
+          "score": 0.507,
+          "evidence": []
+        },
+        {
+          "term": "против гепатита",
+          "score": 0.444,
+          "evidence": []
+        },
+        {
+          "term": "или",
+          "score": 0.3029,
+          "evidence": []
+        },
+        {
+          "term": "вакцинации",
+          "score": 0.2595,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 131.4846,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 125.8002,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 106.5688,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 94.6137,
+          "evidence": []
+        },
+        {
+          "term": "肺炎疫苗试验",
+          "score": 86.1839,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 78.0348,
+          "evidence": []
+        },
+        {
+          "term": "研究人员相信",
+          "score": 72.1343,
+          "evidence": []
+        },
+        {
+          "term": "经济方面",
+          "score": 70.8759,
+          "evidence": []
+        }
+      ]
+    },
+    "page-004": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "против гепатита",
+          "score": 2.565,
+          "evidence": []
+        },
+        {
+          "term": "вакцины против",
+          "score": 2.4597,
+          "evidence": []
+        },
+        {
+          "term": "вакцинации против",
+          "score": 2.2755,
+          "evidence": []
+        },
+        {
+          "term": "введение вакцинации",
+          "score": 1.9832,
+          "evidence": []
+        },
+        {
+          "term": "программы иммунизации",
+          "score": 1.9657,
+          "evidence": []
+        },
+        {
+          "term": "вакцинацию против",
+          "score": 1.9038,
+          "evidence": []
+        },
+        {
+          "term": "текущие расходы",
+          "score": 1.8773,
+          "evidence": []
+        },
+        {
+          "term": "холодовой цепи",
+          "score": 1.826,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "вакцины против",
+          "score": 80.8441,
+          "evidence": []
+        },
+        {
+          "term": "против гепатита",
+          "score": 73.9014,
+          "evidence": []
+        },
+        {
+          "term": "вакцинации против",
+          "score": 63.0608,
+          "evidence": []
+        },
+        {
+          "term": "программы иммунизации",
+          "score": 51.6234,
+          "evidence": []
+        },
+        {
+          "term": "вакцинацию против",
+          "score": 49.0149,
+          "evidence": []
+        },
+        {
+          "term": "для оценки",
+          "score": 43.7922,
+          "evidence": []
+        },
+        {
+          "term": "введение вакцинации",
+          "score": 40.6224,
+          "evidence": []
+        },
+        {
+          "term": "внедрения вакцинации",
+          "score": 33.8645,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "для оценки",
+          "score": 0.723,
+          "evidence": []
+        },
+        {
+          "term": "вакцины против",
+          "score": 0.6704,
+          "evidence": []
+        },
+        {
+          "term": "вакцинации против",
+          "score": 0.5788,
+          "evidence": []
+        },
+        {
+          "term": "вакцинацию против",
+          "score": 0.4251,
+          "evidence": []
+        },
+        {
+          "term": "против гепатита",
+          "score": 0.4127,
+          "evidence": []
+        },
+        {
+          "term": "или",
+          "score": 0.3971,
+          "evidence": []
+        },
+        {
+          "term": "введение вакцинации",
+          "score": 0.3856,
+          "evidence": []
+        },
+        {
+          "term": "программы иммунизации",
+          "score": 0.3801,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "для оценки",
+          "score": 14.3459,
+          "evidence": []
+        },
+        {
+          "term": "или",
+          "score": 10.2551,
+          "evidence": []
+        },
+        {
+          "term": "что",
+          "score": 8.4489,
+          "evidence": []
+        },
+        {
+          "term": "здравоохранения",
+          "score": 8.0366,
+          "evidence": []
+        },
+        {
+          "term": "исследования",
+          "score": 7.5846,
+          "evidence": []
+        },
+        {
+          "term": "как",
+          "score": 5.6234,
+          "evidence": []
+        },
+        {
+          "term": "вакцины против",
+          "score": 5.6105,
+          "evidence": []
+        },
+        {
+          "term": "воз",
+          "score": 5.271,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "для оценки",
+          "score": 0.723,
+          "evidence": []
+        },
+        {
+          "term": "вакцины против",
+          "score": 0.6704,
+          "evidence": []
+        },
+        {
+          "term": "вакцинации против",
+          "score": 0.5788,
+          "evidence": []
+        },
+        {
+          "term": "вакцинацию против",
+          "score": 0.4251,
+          "evidence": []
+        },
+        {
+          "term": "против гепатита",
+          "score": 0.4127,
+          "evidence": []
+        },
+        {
+          "term": "или",
+          "score": 0.3971,
+          "evidence": []
+        },
+        {
+          "term": "введение вакцинации",
+          "score": 0.3856,
+          "evidence": []
+        },
+        {
+          "term": "программы иммунизации",
+          "score": 0.3801,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 101.418,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 60.3221,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 48.6597,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 43.9207,
+          "evidence": []
+        },
+        {
+          "term": "问题的讨论结束",
+          "score": 43.9207,
+          "evidence": []
+        },
+        {
+          "term": "肺炎疫苗试验",
+          "score": 42.4795,
+          "evidence": []
+        },
+        {
+          "term": "世界医学协会",
+          "score": 39.5046,
+          "evidence": []
+        },
+        {
+          "term": "可能性",
+          "score": 30.4706,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

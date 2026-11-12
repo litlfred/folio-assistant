@@ -1,0 +1,35 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/content/requirements-planning/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/plan-request-gate",
+      "@type": "bootstrap:Skill",
+      "name": "plan-request-gate",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/aab7cbac8fd7fb6b21b72a946d5ea6402fa3e1167e9dc23f2a1ea5ba0d4029cc",
+        "bytes": 6441,
+        "sha256": "aab7cbac8fd7fb6b21b72a946d5ea6402fa3e1167e9dc23f2a1ea5ba0d4029cc"
+      },
+      "title": "A plan request stops at a signed-off plan"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/requirement-definition",
+      "@type": "bootstrap:Skill",
+      "name": "requirement-definition",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4eae26f3fc967f56551724588dad1721861d4f748766f55279e4a7b29fddba93",
+        "bytes": 6181,
+        "sha256": "4eae26f3fc967f56551724588dad1721861d4f748766f55279e4a7b29fddba93"
+      },
+      "title": "One definition of a requirement"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills/content/requirements-planning",
+  "path": "skills/content/requirements-planning/"
+}

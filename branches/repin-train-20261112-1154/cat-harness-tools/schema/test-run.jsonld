@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1154/cat-harness-tools/cat-harness-tools.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1154/cat-harness-tools/schema/test-run.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1154/cat-harness-tools/cat-harness-tools.jsonld",
+  "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/test-run.jsonld",
+  "staging": {
+    "branch": "repin-train/20261112-1154",
+    "sha": "682eb5bed6a695ef552ed2872bdf49018e60c915",
+    "pr": "repin-train/20261112-1154",
+    "run": "43213290906"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/test-run",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "test-run",
+      "title": "test-run",
+      "summary": "A TEST RUN — what was measured, with what, and whether it can be redone:",
+      "module": "schemas/sdlc/test-run.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-schemas",
+      "jsonSchema": [
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-run/HashBasisSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-run/SutRefSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-run/TestCaseSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-run/TestPlanRefSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-run/TestRunSchema.schema.json"
+      ]
+    }
+  ]
+}

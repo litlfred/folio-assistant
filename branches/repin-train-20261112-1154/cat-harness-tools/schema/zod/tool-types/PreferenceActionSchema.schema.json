@@ -1,0 +1,23 @@
+{
+  "$ref": "#/definitions/PreferenceAction",
+  "definitions": {
+    "PreferenceAction": {
+      "type": "string",
+      "enum": [
+        "get",
+        "set",
+        "reset"
+      ],
+      "description": "Read, write or clear the stored preferences."
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/PreferenceActionSchema.schema.json",
+  "title": "PreferenceActionSchema",
+  "description": "Generated from `PreferenceActionSchema` in schemas/tools/tool-types.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261112-1154",
+    "sha": "682eb5bed6a695ef552ed2872bdf49018e60c915",
+    "pr": "repin-train/20261112-1154",
+    "run": "43213290906"
+  }
+}

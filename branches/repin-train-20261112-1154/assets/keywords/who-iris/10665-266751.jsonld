@@ -1,0 +1,3098 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-266751",
+  "instance": "who-iris",
+  "about": "library/10665-266751",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7393,
+    "terms": 71095
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "des vaccins",
+        "score": 18.5266,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "des que",
+        "score": 17.6043,
+        "evidence": []
+      },
+      {
+        "term": "par des",
+        "score": 17.5131,
+        "evidence": []
+      },
+      {
+        "term": "les vaccins",
+        "score": 17.2868,
+        "evidence": []
+      },
+      {
+        "term": "des epreuves",
+        "score": 17.1742,
+        "evidence": []
+      },
+      {
+        "term": "dans des",
+        "score": 17.1275,
+        "evidence": []
+      },
+      {
+        "term": "des vibrions",
+        "score": 17.0185,
+        "evidence": []
+      },
+      {
+        "term": "pour des",
+        "score": 16.5441,
+        "evidence": []
+      },
+      {
+        "term": "sont des",
+        "score": 15.4803,
+        "evidence": []
+      },
+      {
+        "term": "des suspensions",
+        "score": 15.1212,
+        "evidence": []
+      },
+      {
+        "term": "efficacite des",
+        "score": 14.8798,
+        "evidence": []
+      },
+      {
+        "term": "avec des",
+        "score": 14.7124,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "des vaccins",
+        "score": 606.8684,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "les vaccins",
+        "score": 537.8707,
+        "evidence": []
+      },
+      {
+        "term": "par des",
+        "score": 522.4121,
+        "evidence": []
+      },
+      {
+        "term": "des vibrions",
+        "score": 497.5621,
+        "evidence": []
+      },
+      {
+        "term": "des que",
+        "score": 485.2701,
+        "evidence": []
+      },
+      {
+        "term": "des epreuves",
+        "score": 480.5543,
+        "evidence": []
+      },
+      {
+        "term": "dans des",
+        "score": 463.7069,
+        "evidence": []
+      },
+      {
+        "term": "pour des",
+        "score": 450.5043,
+        "evidence": []
+      },
+      {
+        "term": "sont des",
+        "score": 441.6634,
+        "evidence": []
+      },
+      {
+        "term": "des suspensions",
+        "score": 430.3489,
+        "evidence": []
+      },
+      {
+        "term": "efficacite des",
+        "score": 428.1324,
+        "evidence": []
+      },
+      {
+        "term": "avec des",
+        "score": 422.1791,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "dans les",
+        "score": 14.1822,
+        "evidence": []
+      },
+      {
+        "term": "dans des",
+        "score": 14.1337,
+        "evidence": []
+      },
+      {
+        "term": "pour les",
+        "score": 14.0551,
+        "evidence": []
+      },
+      {
+        "term": "que les",
+        "score": 13.7859,
+        "evidence": []
+      },
+      {
+        "term": "par les",
+        "score": 13.5717,
+        "evidence": []
+      },
+      {
+        "term": "avec les",
+        "score": 12.2221,
+        "evidence": []
+      },
+      {
+        "term": "sont des",
+        "score": 12.1941,
+        "evidence": []
+      },
+      {
+        "term": "les vaccins",
+        "score": 12.171,
+        "evidence": []
+      },
+      {
+        "term": "les plus",
+        "score": 12.1193,
+        "evidence": []
+      },
+      {
+        "term": "pour une",
+        "score": 10.7346,
+        "evidence": []
+      },
+      {
+        "term": "pendant des",
+        "score": 10.6322,
+        "evidence": []
+      },
+      {
+        "term": "entre les",
+        "score": 10.5259,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "dans des",
+        "score": 418.0877,
+        "evidence": []
+      },
+      {
+        "term": "dans les",
+        "score": 410.8116,
+        "evidence": []
+      },
+      {
+        "term": "pour des",
+        "score": 394.8221,
+        "evidence": []
+      },
+      {
+        "term": "par des",
+        "score": 392.3668,
+        "evidence": []
+      },
+      {
+        "term": "des que",
+        "score": 390.3763,
+        "evidence": []
+      },
+      {
+        "term": "des vaccins",
+        "score": 363.4885,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "sont des",
+        "score": 337.6488,
+        "evidence": []
+      },
+      {
+        "term": "avec des",
+        "score": 335.6249,
+        "evidence": []
+      },
+      {
+        "term": "les plus",
+        "score": 331.8812,
+        "evidence": []
+      },
+      {
+        "term": "pendant des",
+        "score": 307.2908,
+        "evidence": []
+      },
+      {
+        "term": "des autres",
+        "score": 307.0234,
+        "evidence": []
+      },
+      {
+        "term": "des animaux",
+        "score": 299.5866,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "dans les",
+        "score": 14.1822,
+        "evidence": []
+      },
+      {
+        "term": "dans des",
+        "score": 14.1337,
+        "evidence": []
+      },
+      {
+        "term": "pour les",
+        "score": 14.0551,
+        "evidence": []
+      },
+      {
+        "term": "que les",
+        "score": 13.7859,
+        "evidence": []
+      },
+      {
+        "term": "par les",
+        "score": 13.5717,
+        "evidence": []
+      },
+      {
+        "term": "avec les",
+        "score": 12.2221,
+        "evidence": []
+      },
+      {
+        "term": "sont des",
+        "score": 12.1941,
+        "evidence": []
+      },
+      {
+        "term": "les vaccins",
+        "score": 12.171,
+        "evidence": []
+      },
+      {
+        "term": "les plus",
+        "score": 12.1193,
+        "evidence": []
+      },
+      {
+        "term": "pour une",
+        "score": 10.7346,
+        "evidence": []
+      },
+      {
+        "term": "pendant des",
+        "score": 10.6322,
+        "evidence": []
+      },
+      {
+        "term": "entre les",
+        "score": 10.5259,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "并提供一",
+        "score": 2387.1218,
+        "evidence": []
+      },
+      {
+        "term": "如果没有",
+        "score": 2382.6072,
+        "evidence": []
+      },
+      {
+        "term": "这一点很重要",
+        "score": 2289.6023,
+        "evidence": []
+      },
+      {
+        "term": "可能会",
+        "score": 1997.8663,
+        "evidence": []
+      },
+      {
+        "term": "引导基于案例的讨论",
+        "score": 1542.2987,
+        "evidence": []
+      },
+      {
+        "term": "重点人群",
+        "score": 1449.3941,
+        "evidence": []
+      },
+      {
+        "term": "相一致",
+        "score": 1372.379,
+        "evidence": []
+      },
+      {
+        "term": "更大利益",
+        "score": 1337.6176,
+        "evidence": []
+      },
+      {
+        "term": "实验室",
+        "score": 1330.2439,
+        "evidence": []
+      },
+      {
+        "term": "对使用传统药物治疗腹泻的评价",
+        "score": 1316.9236,
+        "evidence": []
+      },
+      {
+        "term": "很重要",
+        "score": 1254.8353,
+        "evidence": []
+      },
+      {
+        "term": "不良反应",
+        "score": 1253.2409,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-un": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "les epreuves",
+          "score": 1.4995,
+          "evidence": []
+        },
+        {
+          "term": "peut etre",
+          "score": 1.4121,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 1.2127,
+          "evidence": []
+        },
+        {
+          "term": "correlation entre",
+          "score": 1.1537,
+          "evidence": []
+        },
+        {
+          "term": "certains",
+          "score": 0.7954,
+          "evidence": []
+        },
+        {
+          "term": "ete",
+          "score": 0.6846,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "les epreuves",
+          "score": 21.5917,
+          "evidence": []
+        },
+        {
+          "term": "peut etre",
+          "score": 19.6745,
+          "evidence": []
+        },
+        {
+          "term": "correlation entre",
+          "score": 16.6793,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 14.6333,
+          "evidence": []
+        },
+        {
+          "term": "certains",
+          "score": 13.8535,
+          "evidence": []
+        },
+        {
+          "term": "vaccins",
+          "score": 11.614,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "que les",
+          "score": 0.8192,
+          "evidence": []
+        },
+        {
+          "term": "les epreuves",
+          "score": 0.548,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.4986,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.3233,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.3166,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.2968,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "que les",
+          "score": 13.4899,
+          "evidence": []
+        },
+        {
+          "term": "les epreuves",
+          "score": 8.9885,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 7.9495,
+          "evidence": []
+        },
+        {
+          "term": "vaccin",
+          "score": 5.2902,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 4.4881,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 4.4018,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "que les",
+          "score": 0.8192,
+          "evidence": []
+        },
+        {
+          "term": "les epreuves",
+          "score": 0.548,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.4986,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.3166,
+          "evidence": []
+        },
+        {
+          "term": "est",
+          "score": 0.2459,
+          "evidence": []
+        },
+        {
+          "term": "peut etre",
+          "score": 0.2219,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "并提供一",
+          "score": 224.0433,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 195.4229,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 185.2095,
+          "evidence": []
+        },
+        {
+          "term": "可能会",
+          "score": 152.1767,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 136.7009,
+          "evidence": []
+        },
+        {
+          "term": "引导基于案例的讨论",
+          "score": 130.6476,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-002-quant": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "les souris",
+          "score": 3.3916,
+          "evidence": []
+        },
+        {
+          "term": "souris par",
+          "score": 3.1934,
+          "evidence": []
+        },
+        {
+          "term": "des temoins",
+          "score": 3.1302,
+          "evidence": []
+        },
+        {
+          "term": "des epreuves",
+          "score": 2.857,
+          "evidence": []
+        },
+        {
+          "term": "sokhey habbu",
+          "score": 2.8116,
+          "evidence": []
+        },
+        {
+          "term": "souris sont",
+          "score": 2.7678,
+          "evidence": []
+        },
+        {
+          "term": "que des",
+          "score": 2.4843,
+          "evidence": []
+        },
+        {
+          "term": "des cobayes",
+          "score": 2.3976,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "les souris",
+          "score": 119.3585,
+          "evidence": []
+        },
+        {
+          "term": "souris par",
+          "score": 108.926,
+          "evidence": []
+        },
+        {
+          "term": "des temoins",
+          "score": 95.5273,
+          "evidence": []
+        },
+        {
+          "term": "des epreuves",
+          "score": 89.2634,
+          "evidence": []
+        },
+        {
+          "term": "que des",
+          "score": 79.9948,
+          "evidence": []
+        },
+        {
+          "term": "souris sont",
+          "score": 78.4944,
+          "evidence": []
+        },
+        {
+          "term": "des cobayes",
+          "score": 70.0709,
+          "evidence": []
+        },
+        {
+          "term": "preparer des",
+          "score": 68.3763,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pour les",
+          "score": 1.9055,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 1.8833,
+          "evidence": []
+        },
+        {
+          "term": "que des",
+          "score": 1.8801,
+          "evidence": []
+        },
+        {
+          "term": "entre les",
+          "score": 1.4353,
+          "evidence": []
+        },
+        {
+          "term": "preparer des",
+          "score": 1.3106,
+          "evidence": []
+        },
+        {
+          "term": "les epreuves",
+          "score": 1.2946,
+          "evidence": []
+        },
+        {
+          "term": "les souris",
+          "score": 1.2938,
+          "evidence": []
+        },
+        {
+          "term": "des lots",
+          "score": 1.2803,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "que les",
+          "score": 63.7848,
+          "evidence": []
+        },
+        {
+          "term": "pour les",
+          "score": 63.1775,
+          "evidence": []
+        },
+        {
+          "term": "que des",
+          "score": 62.5995,
+          "evidence": []
+        },
+        {
+          "term": "entre les",
+          "score": 48.4504,
+          "evidence": []
+        },
+        {
+          "term": "les epreuves",
+          "score": 45.664,
+          "evidence": []
+        },
+        {
+          "term": "les souris",
+          "score": 45.664,
+          "evidence": []
+        },
+        {
+          "term": "les temoins",
+          "score": 45.664,
+          "evidence": []
+        },
+        {
+          "term": "des cobayes",
+          "score": 44.4787,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pour les",
+          "score": 1.9055,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 1.8833,
+          "evidence": []
+        },
+        {
+          "term": "que des",
+          "score": 1.8801,
+          "evidence": []
+        },
+        {
+          "term": "entre les",
+          "score": 1.4353,
+          "evidence": []
+        },
+        {
+          "term": "preparer des",
+          "score": 1.3106,
+          "evidence": []
+        },
+        {
+          "term": "les epreuves",
+          "score": 1.2946,
+          "evidence": []
+        },
+        {
+          "term": "les souris",
+          "score": 1.2938,
+          "evidence": []
+        },
+        {
+          "term": "des lots",
+          "score": 1.2803,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "并提供一",
+          "score": 276.3103,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 263.6534,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 248.0584,
+          "evidence": []
+        },
+        {
+          "term": "可能会",
+          "score": 223.3925,
+          "evidence": []
+        },
+        {
+          "term": "引导基于案例的讨论",
+          "score": 172.0638,
+          "evidence": []
+        },
+        {
+          "term": "对使用传统药物治疗腹泻的评价",
+          "score": 171.2049,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 166.397,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 161.0375,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-003-nos": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "les epreuves",
+          "score": 2.3238,
+          "evidence": []
+        },
+        {
+          "term": "des animaux",
+          "score": 2.3216,
+          "evidence": []
+        },
+        {
+          "term": "les vibrions",
+          "score": 2.1577,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 1.9361,
+          "evidence": []
+        },
+        {
+          "term": "multiplient dans",
+          "score": 1.7644,
+          "evidence": []
+        },
+        {
+          "term": "instituts",
+          "score": 1.0764,
+          "evidence": []
+        },
+        {
+          "term": "l'interet",
+          "score": 1.0201,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.933,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "les epreuves",
+          "score": 56.6664,
+          "evidence": []
+        },
+        {
+          "term": "des animaux",
+          "score": 55.8322,
+          "evidence": []
+        },
+        {
+          "term": "les vibrions",
+          "score": 50.0123,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 47.915,
+          "evidence": []
+        },
+        {
+          "term": "multiplient dans",
+          "score": 30.3374,
+          "evidence": []
+        },
+        {
+          "term": "instituts",
+          "score": 20.4865,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 18.5769,
+          "evidence": []
+        },
+        {
+          "term": "l'interet",
+          "score": 16.4303,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "des vaccins",
+          "score": 1.15,
+          "evidence": []
+        },
+        {
+          "term": "des animaux",
+          "score": 0.9758,
+          "evidence": []
+        },
+        {
+          "term": "les epreuves",
+          "score": 0.9561,
+          "evidence": []
+        },
+        {
+          "term": "les vibrions",
+          "score": 0.9027,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.5751,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.5583,
+          "evidence": []
+        },
+        {
+          "term": "multiplient dans",
+          "score": 0.5583,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.5267,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "des vaccins",
+          "score": 33.4031,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 30.1329,
+          "evidence": []
+        },
+        {
+          "term": "les epreuves",
+          "score": 30.1329,
+          "evidence": []
+        },
+        {
+          "term": "les vibrions",
+          "score": 30.1329,
+          "evidence": []
+        },
+        {
+          "term": "des animaux",
+          "score": 28.9019,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 12.007,
+          "evidence": []
+        },
+        {
+          "term": "multiplient dans",
+          "score": 12.007,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 11.5816,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "des vaccins",
+          "score": 1.15,
+          "evidence": []
+        },
+        {
+          "term": "des animaux",
+          "score": 0.9758,
+          "evidence": []
+        },
+        {
+          "term": "les epreuves",
+          "score": 0.9561,
+          "evidence": []
+        },
+        {
+          "term": "les vibrions",
+          "score": 0.9499,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.5751,
+          "evidence": []
+        },
+        {
+          "term": "multiplient dans",
+          "score": 0.5628,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.5267,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.4943,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "并提供一",
+          "score": 207.3682,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 184.8724,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 161.2769,
+          "evidence": []
+        },
+        {
+          "term": "可能会",
+          "score": 146.5859,
+          "evidence": []
+        },
+        {
+          "term": "对使用传统药物治疗腹泻的评价",
+          "score": 122.265,
+          "evidence": []
+        },
+        {
+          "term": "引导基于案例的讨论",
+          "score": 122.0847,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 120.8202,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 102.3163,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-004-constitution-et-mode-daction-des-vaccins-tuts": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "des vaccins",
+          "score": 5.8448,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des antigenes",
+          "score": 3.5131,
+          "evidence": []
+        },
+        {
+          "term": "les antigenes",
+          "score": 3.3563,
+          "evidence": []
+        },
+        {
+          "term": "antigenes protecteurs",
+          "score": 3.2573,
+          "evidence": []
+        },
+        {
+          "term": "des bacteries",
+          "score": 3.1388,
+          "evidence": []
+        },
+        {
+          "term": "des suspensions",
+          "score": 2.918,
+          "evidence": []
+        },
+        {
+          "term": "par des",
+          "score": 2.7607,
+          "evidence": []
+        },
+        {
+          "term": "les autolysats",
+          "score": 2.6909,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "des vaccins",
+          "score": 274.4172,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des antigenes",
+          "score": 140.0434,
+          "evidence": []
+        },
+        {
+          "term": "des bacteries",
+          "score": 126.3352,
+          "evidence": []
+        },
+        {
+          "term": "par des",
+          "score": 125.3417,
+          "evidence": []
+        },
+        {
+          "term": "les antigenes",
+          "score": 118.2937,
+          "evidence": []
+        },
+        {
+          "term": "des suspensions",
+          "score": 118.068,
+          "evidence": []
+        },
+        {
+          "term": "sont des",
+          "score": 113.1608,
+          "evidence": []
+        },
+        {
+          "term": "pendant des",
+          "score": 108.0459,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "des vaccins",
+          "score": 4.3009,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pour les",
+          "score": 2.4084,
+          "evidence": []
+        },
+        {
+          "term": "par des",
+          "score": 2.3717,
+          "evidence": []
+        },
+        {
+          "term": "sont des",
+          "score": 2.1635,
+          "evidence": []
+        },
+        {
+          "term": "pendant des",
+          "score": 1.882,
+          "evidence": []
+        },
+        {
+          "term": "les autres",
+          "score": 1.7481,
+          "evidence": []
+        },
+        {
+          "term": "des bacteries",
+          "score": 1.6941,
+          "evidence": []
+        },
+        {
+          "term": "les vaccinations",
+          "score": 1.6728,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "des vaccins",
+          "score": 167.3988,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pour les",
+          "score": 91.9528,
+          "evidence": []
+        },
+        {
+          "term": "par des",
+          "score": 91.3178,
+          "evidence": []
+        },
+        {
+          "term": "sont des",
+          "score": 79.6211,
+          "evidence": []
+        },
+        {
+          "term": "pendant des",
+          "score": 72.2293,
+          "evidence": []
+        },
+        {
+          "term": "les autres",
+          "score": 72.1209,
+          "evidence": []
+        },
+        {
+          "term": "des actions",
+          "score": 67.0911,
+          "evidence": []
+        },
+        {
+          "term": "des antigenes",
+          "score": 67.0911,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "des vaccins",
+          "score": 4.3009,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pour les",
+          "score": 2.4084,
+          "evidence": []
+        },
+        {
+          "term": "par des",
+          "score": 2.3717,
+          "evidence": []
+        },
+        {
+          "term": "sont des",
+          "score": 2.1635,
+          "evidence": []
+        },
+        {
+          "term": "pendant des",
+          "score": 1.882,
+          "evidence": []
+        },
+        {
+          "term": "les autres",
+          "score": 1.7481,
+          "evidence": []
+        },
+        {
+          "term": "des bacteries",
+          "score": 1.6941,
+          "evidence": []
+        },
+        {
+          "term": "les vaccinations",
+          "score": 1.6728,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "并提供一",
+          "score": 225.0037,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 208.9464,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 185.8713,
+          "evidence": []
+        },
+        {
+          "term": "可能会",
+          "score": 156.524,
+          "evidence": []
+        },
+        {
+          "term": "对使用传统药物治疗腹泻的评价",
+          "score": 136.8386,
+          "evidence": []
+        },
+        {
+          "term": "引导基于案例的讨论",
+          "score": 133.9556,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 133.5806,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 120.4444,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-005-dans": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "vibrions lyses",
+          "score": 3.625,
+          "evidence": []
+        },
+        {
+          "term": "les vibrions",
+          "score": 3.4396,
+          "evidence": []
+        },
+        {
+          "term": "vibrions sont",
+          "score": 3.1834,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 2.76,
+          "evidence": []
+        },
+        {
+          "term": "vaccins qui",
+          "score": 2.7016,
+          "evidence": []
+        },
+        {
+          "term": "corps microbiens",
+          "score": 2.7007,
+          "evidence": []
+        },
+        {
+          "term": "peut etre",
+          "score": 2.5012,
+          "evidence": []
+        },
+        {
+          "term": "microbiens tues",
+          "score": 2.4435,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "les vibrions",
+          "score": 123.7332,
+          "evidence": []
+        },
+        {
+          "term": "vibrions lyses",
+          "score": 116.6371,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 112.4494,
+          "evidence": []
+        },
+        {
+          "term": "vibrions sont",
+          "score": 107.8066,
+          "evidence": []
+        },
+        {
+          "term": "vaccins qui",
+          "score": 107.4931,
+          "evidence": []
+        },
+        {
+          "term": "des corps",
+          "score": 64.9355,
+          "evidence": []
+        },
+        {
+          "term": "vaccin est",
+          "score": 62.8029,
+          "evidence": []
+        },
+        {
+          "term": "peut etre",
+          "score": 59.0234,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "que des",
+          "score": 2.2637,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 2.0502,
+          "evidence": []
+        },
+        {
+          "term": "les vaccins",
+          "score": 2.0146,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 1.8241,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccin est",
+          "score": 1.7623,
+          "evidence": []
+        },
+        {
+          "term": "lorsque des",
+          "score": 1.57,
+          "evidence": []
+        },
+        {
+          "term": "les auteurs",
+          "score": 1.5445,
+          "evidence": []
+        },
+        {
+          "term": "les vibrions",
+          "score": 1.4777,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "vaccin est",
+          "score": 66.0543,
+          "evidence": []
+        },
+        {
+          "term": "que des",
+          "score": 61.2916,
+          "evidence": []
+        },
+        {
+          "term": "les vaccins",
+          "score": 58.5613,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 49.5122,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lorsque des",
+          "score": 43.8004,
+          "evidence": []
+        },
+        {
+          "term": "les auteurs",
+          "score": 42.027,
+          "evidence": []
+        },
+        {
+          "term": "des corps",
+          "score": 41.5575,
+          "evidence": []
+        },
+        {
+          "term": "les vibrions",
+          "score": 40.0437,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "que des",
+          "score": 2.2637,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 2.0502,
+          "evidence": []
+        },
+        {
+          "term": "les vaccins",
+          "score": 2.0146,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 1.8241,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccin est",
+          "score": 1.7623,
+          "evidence": []
+        },
+        {
+          "term": "lorsque des",
+          "score": 1.57,
+          "evidence": []
+        },
+        {
+          "term": "les auteurs",
+          "score": 1.5445,
+          "evidence": []
+        },
+        {
+          "term": "des corps",
+          "score": 1.4891,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "并提供一",
+          "score": 261.9615,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 241.8076,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 217.1819,
+          "evidence": []
+        },
+        {
+          "term": "可能会",
+          "score": 185.594,
+          "evidence": []
+        },
+        {
+          "term": "对使用传统药物治疗腹泻的评价",
+          "score": 171.611,
+          "evidence": []
+        },
+        {
+          "term": "引导基于案例的讨论",
+          "score": 150.8659,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 149.0823,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 146.5224,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-humain": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "des autolysats",
+          "score": 2.2068,
+          "evidence": []
+        },
+        {
+          "term": "corps microbiens",
+          "score": 1.8435,
+          "evidence": []
+        },
+        {
+          "term": "pouvoir immunisant",
+          "score": 1.7245,
+          "evidence": []
+        },
+        {
+          "term": "cholerae",
+          "score": 1.0893,
+          "evidence": []
+        },
+        {
+          "term": "ahuja",
+          "score": 0.9075,
+          "evidence": []
+        },
+        {
+          "term": "constate",
+          "score": 0.8895,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.8066,
+          "evidence": []
+        },
+        {
+          "term": "ete",
+          "score": 0.6846,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "des autolysats",
+          "score": 43.3094,
+          "evidence": []
+        },
+        {
+          "term": "pouvoir immunisant",
+          "score": 29.632,
+          "evidence": []
+        },
+        {
+          "term": "corps microbiens",
+          "score": 29.4511,
+          "evidence": []
+        },
+        {
+          "term": "cholerae",
+          "score": 20.4865,
+          "evidence": []
+        },
+        {
+          "term": "ahuja",
+          "score": 14.5977,
+          "evidence": []
+        },
+        {
+          "term": "constate",
+          "score": 14.2331,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 12.7783,
+          "evidence": []
+        },
+        {
+          "term": "ete",
+          "score": 10.3412,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "les",
+          "score": 0.6021,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.5865,
+          "evidence": []
+        },
+        {
+          "term": "des autolysats",
+          "score": 0.5865,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.3832,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.3633,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.3315,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.326,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.3105,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "des",
+          "score": 14.067,
+          "evidence": []
+        },
+        {
+          "term": "des autolysats",
+          "score": 14.067,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 12.6564,
+          "evidence": []
+        },
+        {
+          "term": "vaccin",
+          "score": 5.9511,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 5.7454,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 5.7279,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 5.4922,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 5.1606,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "des autolysats",
+          "score": 0.6054,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.6021,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.3315,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.326,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 0.292,
+          "evidence": []
+        },
+        {
+          "term": "est",
+          "score": 0.2717,
+          "evidence": []
+        },
+        {
+          "term": "qui",
+          "score": 0.2496,
+          "evidence": []
+        },
+        {
+          "term": "plus",
+          "score": 0.2097,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 361.563,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 320.1885,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 313.4306,
+          "evidence": []
+        },
+        {
+          "term": "可能会",
+          "score": 283.8,
+          "evidence": []
+        },
+        {
+          "term": "引导基于案例的讨论",
+          "score": 213.7389,
+          "evidence": []
+        },
+        {
+          "term": "很重要",
+          "score": 205.867,
+          "evidence": []
+        },
+        {
+          "term": "十分重要",
+          "score": 197.2094,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 191.6283,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-007-conclusions-et-suggestions": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "les vaccins",
+          "score": 2.6847,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 2.6725,
+          "evidence": []
+        },
+        {
+          "term": "les epreuves",
+          "score": 2.6311,
+          "evidence": []
+        },
+        {
+          "term": "peut etre",
+          "score": 2.3532,
+          "evidence": []
+        },
+        {
+          "term": "vaccins anticholeriques",
+          "score": 2.2534,
+          "evidence": []
+        },
+        {
+          "term": "les souches",
+          "score": 2.2519,
+          "evidence": []
+        },
+        {
+          "term": "preparation des",
+          "score": 2.0628,
+          "evidence": []
+        },
+        {
+          "term": "des techniques",
+          "score": 2.0163,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "les vaccins",
+          "score": 102.7562,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 98.2785,
+          "evidence": []
+        },
+        {
+          "term": "les epreuves",
+          "score": 76.407,
+          "evidence": []
+        },
+        {
+          "term": "vaccins anticholeriques",
+          "score": 68.7964,
+          "evidence": []
+        },
+        {
+          "term": "les souches",
+          "score": 65.6258,
+          "evidence": []
+        },
+        {
+          "term": "preparation des",
+          "score": 59.3626,
+          "evidence": []
+        },
+        {
+          "term": "peut etre",
+          "score": 59.0745,
+          "evidence": []
+        },
+        {
+          "term": "des techniques",
+          "score": 56.0667,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "les vaccins",
+          "score": 1.5494,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 1.5477,
+          "evidence": []
+        },
+        {
+          "term": "preparation des",
+          "score": 1.2357,
+          "evidence": []
+        },
+        {
+          "term": "les epreuves",
+          "score": 1.2004,
+          "evidence": []
+        },
+        {
+          "term": "les souches",
+          "score": 1.0983,
+          "evidence": []
+        },
+        {
+          "term": "des techniques",
+          "score": 1.0965,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.7047,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.6917,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les vaccins",
+          "score": 50.2559,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 47.1482,
+          "evidence": []
+        },
+        {
+          "term": "les epreuves",
+          "score": 40.1533,
+          "evidence": []
+        },
+        {
+          "term": "les souches",
+          "score": 40.1533,
+          "evidence": []
+        },
+        {
+          "term": "preparation des",
+          "score": 38.3152,
+          "evidence": []
+        },
+        {
+          "term": "des techniques",
+          "score": 37.0455,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 18.0716,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 17.5448,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "les vaccins",
+          "score": 1.5494,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 1.5477,
+          "evidence": []
+        },
+        {
+          "term": "preparation des",
+          "score": 1.2357,
+          "evidence": []
+        },
+        {
+          "term": "les epreuves",
+          "score": 1.2004,
+          "evidence": []
+        },
+        {
+          "term": "des techniques",
+          "score": 1.1513,
+          "evidence": []
+        },
+        {
+          "term": "les souches",
+          "score": 1.1464,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.7047,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.6917,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "并提供一",
+          "score": 233.8843,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 218.1029,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 184.8662,
+          "evidence": []
+        },
+        {
+          "term": "可能会",
+          "score": 167.1737,
+          "evidence": []
+        },
+        {
+          "term": "对使用传统药物治疗腹泻的评价",
+          "score": 146.9737,
+          "evidence": []
+        },
+        {
+          "term": "引导基于案例的讨论",
+          "score": 138.6522,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 131.182,
+          "evidence": []
+        },
+        {
+          "term": "很重要",
+          "score": 118.9083,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-008-maximum": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "etablir une",
+          "score": 1.562,
+          "evidence": []
+        },
+        {
+          "term": "une technique",
+          "score": 1.1682,
+          "evidence": []
+        },
+        {
+          "term": "technique standard",
+          "score": 0.9127,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.8946,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.8284,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "etablir une",
+          "score": 24.195,
+          "evidence": []
+        },
+        {
+          "term": "une technique",
+          "score": 16.7842,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 16.3325,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 12.9647,
+          "evidence": []
+        },
+        {
+          "term": "technique standard",
+          "score": 12.4517,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "les",
+          "score": 0.534,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.52,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.3635,
+          "evidence": []
+        },
+        {
+          "term": "une technique",
+          "score": 0.3293,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.3197,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les",
+          "score": 10.9128,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 10.6761,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 5.1368,
+          "evidence": []
+        },
+        {
+          "term": "une technique",
+          "score": 4.8096,
+          "evidence": []
+        },
+        {
+          "term": "etablir une",
+          "score": 4.465,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "les",
+          "score": 0.534,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.52,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.3635,
+          "evidence": []
+        },
+        {
+          "term": "une technique",
+          "score": 0.3293,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.3197,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "并提供一",
+          "score": 157.3372,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 143.5102,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 128.6849,
+          "evidence": []
+        },
+        {
+          "term": "可能会",
+          "score": 98.9987,
+          "evidence": []
+        },
+        {
+          "term": "引导基于案例的讨论",
+          "score": 95.0948,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-009-summary": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "cholera vaccine",
+          "score": 2.4904,
+          "evidence": []
+        },
+        {
+          "term": "slow down",
+          "score": 1.4289,
+          "evidence": []
+        },
+        {
+          "term": "bacterial",
+          "score": 0.9257,
+          "evidence": []
+        },
+        {
+          "term": "suspensions",
+          "score": 0.8609,
+          "evidence": []
+        },
+        {
+          "term": "antigenic",
+          "score": 0.7994,
+          "evidence": []
+        },
+        {
+          "term": "man",
+          "score": 0.7371,
+          "evidence": []
+        },
+        {
+          "term": "animals",
+          "score": 0.7143,
+          "evidence": []
+        },
+        {
+          "term": "quantity",
+          "score": 0.6932,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "cholera vaccine",
+          "score": 63.7665,
+          "evidence": []
+        },
+        {
+          "term": "slow down",
+          "score": 24.8796,
+          "evidence": []
+        },
+        {
+          "term": "bacterial",
+          "score": 19.461,
+          "evidence": []
+        },
+        {
+          "term": "suspensions",
+          "score": 13.6577,
+          "evidence": []
+        },
+        {
+          "term": "antigenic",
+          "score": 12.8468,
+          "evidence": []
+        },
+        {
+          "term": "animals",
+          "score": 11.1522,
+          "evidence": []
+        },
+        {
+          "term": "man",
+          "score": 10.8236,
+          "evidence": []
+        },
+        {
+          "term": "quantity",
+          "score": 10.6495,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "cholera vaccine",
+          "score": 0.3369,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.2157,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.1678,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 0.1474,
+          "evidence": []
+        },
+        {
+          "term": "mumps",
+          "score": 0.1347,
+          "evidence": []
+        },
+        {
+          "term": "virus",
+          "score": 0.1343,
+          "evidence": []
+        },
+        {
+          "term": "infection",
+          "score": 0.1231,
+          "evidence": []
+        },
+        {
+          "term": "influenza",
+          "score": 0.1055,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "cholera vaccine",
+          "score": 6.3468,
+          "evidence": []
+        },
+        {
+          "term": "mumps",
+          "score": 4.819,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 4.3575,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 3.4965,
+          "evidence": []
+        },
+        {
+          "term": "immz",
+          "score": 2.8461,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 2.4692,
+          "evidence": []
+        },
+        {
+          "term": "hsv",
+          "score": 2.4437,
+          "evidence": []
+        },
+        {
+          "term": "catch-up",
+          "score": 2.0775,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "cholera vaccine",
+          "score": 0.3604,
+          "evidence": []
+        },
+        {
+          "term": "protection",
+          "score": 0.0571,
+          "evidence": []
+        },
+        {
+          "term": "efficacy",
+          "score": 0.0545,
+          "evidence": []
+        },
+        {
+          "term": "tests",
+          "score": 0.0448,
+          "evidence": []
+        },
+        {
+          "term": "natural",
+          "score": 0.0442,
+          "evidence": []
+        },
+        {
+          "term": "value",
+          "score": 0.04,
+          "evidence": []
+        },
+        {
+          "term": "con",
+          "score": 0.0394,
+          "evidence": []
+        },
+        {
+          "term": "summary",
+          "score": 0.0323,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 46.0819,
+          "evidence": []
+        },
+        {
+          "term": "更大利益",
+          "score": 39.7104,
+          "evidence": []
+        },
+        {
+          "term": "显而易见",
+          "score": 39.3796,
+          "evidence": []
+        },
+        {
+          "term": "对使用传统药物治疗腹泻的评价",
+          "score": 32.6653,
+          "evidence": []
+        },
+        {
+          "term": "的研究中",
+          "score": 28.8366,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 26.4961,
+          "evidence": []
+        },
+        {
+          "term": "ajorno",
+          "score": 23.983,
+          "evidence": []
+        },
+        {
+          "term": "新生儿保健观察研究",
+          "score": 22.7103,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-010-refirences-bibliographiques": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hlth rep",
+          "score": 2.2755,
+          "evidence": []
+        },
+        {
+          "term": "delpy",
+          "score": 1.4991,
+          "evidence": []
+        },
+        {
+          "term": "canad",
+          "score": 1.2988,
+          "evidence": []
+        },
+        {
+          "term": "burrows",
+          "score": 1.2525,
+          "evidence": []
+        },
+        {
+          "term": "publ",
+          "score": 1.2505,
+          "evidence": []
+        },
+        {
+          "term": "ranta",
+          "score": 1.1929,
+          "evidence": []
+        },
+        {
+          "term": "indian",
+          "score": 1.1922,
+          "evidence": []
+        },
+        {
+          "term": "acad",
+          "score": 1.1868,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hlth rep",
+          "score": 48.3738,
+          "evidence": []
+        },
+        {
+          "term": "delpy",
+          "score": 35.5826,
+          "evidence": []
+        },
+        {
+          "term": "indian",
+          "score": 31.6242,
+          "evidence": []
+        },
+        {
+          "term": "publ",
+          "score": 26.8443,
+          "evidence": []
+        },
+        {
+          "term": "bull",
+          "score": 25.9736,
+          "evidence": []
+        },
+        {
+          "term": "acad",
+          "score": 25.6935,
+          "evidence": []
+        },
+        {
+          "term": "canad",
+          "score": 24.6454,
+          "evidence": []
+        },
+        {
+          "term": "burrows",
+          "score": 23.429,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "dis",
+          "score": 0.184,
+          "evidence": []
+        },
+        {
+          "term": "med",
+          "score": 0.1827,
+          "evidence": []
+        },
+        {
+          "term": "infect",
+          "score": 0.1681,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.164,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 0.158,
+          "evidence": []
+        },
+        {
+          "term": "accessed",
+          "score": 0.1469,
+          "evidence": []
+        },
+        {
+          "term": "doi",
+          "score": 0.131,
+          "evidence": []
+        },
+        {
+          "term": "world",
+          "score": 0.1304,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "tuberculosis",
+          "score": 6.6547,
+          "evidence": []
+        },
+        {
+          "term": "dis",
+          "score": 4.8753,
+          "evidence": []
+        },
+        {
+          "term": "infect",
+          "score": 3.8358,
+          "evidence": []
+        },
+        {
+          "term": "organisation mondiale",
+          "score": 3.3129,
+          "evidence": []
+        },
+        {
+          "term": "med",
+          "score": 2.7238,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 2.7209,
+          "evidence": []
+        },
+        {
+          "term": "consulté",
+          "score": 2.5269,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 2.3043,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "dis",
+          "score": 0.184,
+          "evidence": []
+        },
+        {
+          "term": "med",
+          "score": 0.1827,
+          "evidence": []
+        },
+        {
+          "term": "infect",
+          "score": 0.1681,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.164,
+          "evidence": []
+        },
+        {
+          "term": "organisation mondiale",
+          "score": 0.0903,
+          "evidence": []
+        },
+        {
+          "term": "org",
+          "score": 0.0779,
+          "evidence": []
+        },
+        {
+          "term": "london",
+          "score": 0.0729,
+          "evidence": []
+        },
+        {
+          "term": "res",
+          "score": 0.0624,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 459.7993,
+          "evidence": []
+        },
+        {
+          "term": "可能会",
+          "score": 389.902,
+          "evidence": []
+        },
+        {
+          "term": "在正常情况下",
+          "score": 385.667,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 338.9726,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 279.6167,
+          "evidence": []
+        },
+        {
+          "term": "更大利益",
+          "score": 273.785,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 271.9328,
+          "evidence": []
+        },
+        {
+          "term": "对非自愿重新安置行动的研究",
+          "score": 268.9648,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "des vaccins",
+          "score": 2.6112,
+          "evidence": []
+        },
+        {
+          "term": "vaccins anticholeriques",
+          "score": 2.5698,
+          "evidence": []
+        },
+        {
+          "term": "que des",
+          "score": 2.4033,
+          "evidence": []
+        },
+        {
+          "term": "par des",
+          "score": 2.28,
+          "evidence": []
+        },
+        {
+          "term": "peut etre",
+          "score": 1.9115,
+          "evidence": []
+        },
+        {
+          "term": "methodes d'evaluation",
+          "score": 1.8249,
+          "evidence": []
+        },
+        {
+          "term": "pouvoir pro",
+          "score": 1.6357,
+          "evidence": []
+        },
+        {
+          "term": "resistance specifique",
+          "score": 1.6301,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "des vaccins",
+          "score": 91.8504,
+          "evidence": []
+        },
+        {
+          "term": "que des",
+          "score": 72.4869,
+          "evidence": []
+        },
+        {
+          "term": "vaccins anticholeriques",
+          "score": 71.7801,
+          "evidence": []
+        },
+        {
+          "term": "par des",
+          "score": 69.4426,
+          "evidence": []
+        },
+        {
+          "term": "peut etre",
+          "score": 33.4364,
+          "evidence": []
+        },
+        {
+          "term": "pouvoir pro",
+          "score": 30.3666,
+          "evidence": []
+        },
+        {
+          "term": "methodes d'evaluation",
+          "score": 29.277,
+          "evidence": []
+        },
+        {
+          "term": "resistance specifique",
+          "score": 28.8405,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "que des",
+          "score": 1.4426,
+          "evidence": []
+        },
+        {
+          "term": "par des",
+          "score": 1.399,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 1.2649,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.8806,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.5681,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.5643,
+          "evidence": []
+        },
+        {
+          "term": "peut etre",
+          "score": 0.5613,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.5301,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "que des",
+          "score": 44.051,
+          "evidence": []
+        },
+        {
+          "term": "par des",
+          "score": 41.3705,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 39.6203,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 20.6102,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 13.4434,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 13.0255,
+          "evidence": []
+        },
+        {
+          "term": "est",
+          "score": 12.0355,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 9.2466,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "que des",
+          "score": 1.4426,
+          "evidence": []
+        },
+        {
+          "term": "par des",
+          "score": 1.399,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 1.2649,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.8806,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.5681,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.5643,
+          "evidence": []
+        },
+        {
+          "term": "peut etre",
+          "score": 0.5613,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.4987,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "并提供一",
+          "score": 239.3014,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 211.651,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 204.0138,
+          "evidence": []
+        },
+        {
+          "term": "可能会",
+          "score": 171.2928,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 148.4963,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 140.994,
+          "evidence": []
+        },
+        {
+          "term": "引导基于案例的讨论",
+          "score": 139.3219,
+          "evidence": []
+        },
+        {
+          "term": "对使用传统药物治疗腹泻的评价",
+          "score": 138.5127,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

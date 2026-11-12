@@ -1,0 +1,5094 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "9789241549912-eng",
+  "instance": "who-iris",
+  "about": "library/9789241549912-eng",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7393,
+    "terms": 71095
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "maternal anc",
+        "score": 44.6039,
+        "evidence": []
+      },
+      {
+        "term": "anc guideline",
+        "score": 43.7611,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "anc recommendations",
+        "score": 42.8656,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "anc interventions",
+        "score": 40.0668,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "pregnancy women",
+        "score": 38.3919,
+        "evidence": []
+      },
+      {
+        "term": "group anc",
+        "score": 38.2005,
+        "evidence": []
+      },
+      {
+        "term": "during anc",
+        "score": 36.1895,
+        "evidence": []
+      },
+      {
+        "term": "improve anc",
+        "score": 35.9489,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "anc settings",
+        "score": 35.8404,
+        "evidence": []
+      },
+      {
+        "term": "anc providers",
+        "score": 35.6676,
+        "evidence": []
+      },
+      {
+        "term": "anc utilization",
+        "score": 35.4973,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "anc model",
+        "score": 35.3495,
+        "evidence": [
+          "heading"
+        ]
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "pregnancy women",
+        "score": 3346.8661,
+        "evidence": []
+      },
+      {
+        "term": "pregnant women",
+        "score": 2723.4741,
+        "evidence": []
+      },
+      {
+        "term": "maternal anc",
+        "score": 2664.2023,
+        "evidence": []
+      },
+      {
+        "term": "anc guideline",
+        "score": 2617.0747,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "anc recommendations",
+        "score": 2507.581,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "anc interventions",
+        "score": 2498.9478,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "women health",
+        "score": 2466.0713,
+        "evidence": []
+      },
+      {
+        "term": "anc suggests",
+        "score": 2414.1146,
+        "evidence": []
+      },
+      {
+        "term": "women group",
+        "score": 2413.7646,
+        "evidence": []
+      },
+      {
+        "term": "women experience",
+        "score": 2350.5833,
+        "evidence": []
+      },
+      {
+        "term": "anc settings",
+        "score": 2287.6998,
+        "evidence": []
+      },
+      {
+        "term": "women during",
+        "score": 2283.3177,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "maternal anc",
+        "score": 35.8503,
+        "evidence": []
+      },
+      {
+        "term": "anc guideline",
+        "score": 34.4501,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "pregnancy women",
+        "score": 34.2165,
+        "evidence": []
+      },
+      {
+        "term": "anc recommendations",
+        "score": 34.174,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "anc interventions",
+        "score": 32.0585,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "group anc",
+        "score": 31.1801,
+        "evidence": []
+      },
+      {
+        "term": "pregnant women",
+        "score": 29.8638,
+        "evidence": []
+      },
+      {
+        "term": "during anc",
+        "score": 28.9407,
+        "evidence": []
+      },
+      {
+        "term": "improve anc",
+        "score": 28.4869,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "quality anc",
+        "score": 28.345,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "anc settings",
+        "score": 28.2092,
+        "evidence": []
+      },
+      {
+        "term": "pregnancy health",
+        "score": 27.8398,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "pregnancy women",
+        "score": 3313.6145,
+        "evidence": []
+      },
+      {
+        "term": "pregnant women",
+        "score": 2752.0921,
+        "evidence": []
+      },
+      {
+        "term": "women health",
+        "score": 2485.1365,
+        "evidence": []
+      },
+      {
+        "term": "women group",
+        "score": 2466.1644,
+        "evidence": []
+      },
+      {
+        "term": "maternal anc",
+        "score": 2465.051,
+        "evidence": []
+      },
+      {
+        "term": "anc interventions",
+        "score": 2354.9604,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "women during",
+        "score": 2352.5803,
+        "evidence": []
+      },
+      {
+        "term": "anc suggests",
+        "score": 2344.446,
+        "evidence": []
+      },
+      {
+        "term": "anc guideline",
+        "score": 2338.1325,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "women experience",
+        "score": 2330.79,
+        "evidence": []
+      },
+      {
+        "term": "women values",
+        "score": 2303.9829,
+        "evidence": []
+      },
+      {
+        "term": "anc recommendations",
+        "score": 2286.3705,
+        "evidence": [
+          "heading"
+        ]
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "maternal anc",
+        "score": 35.8503,
+        "evidence": []
+      },
+      {
+        "term": "anc guideline",
+        "score": 34.4501,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "pregnancy women",
+        "score": 34.2165,
+        "evidence": []
+      },
+      {
+        "term": "anc recommendations",
+        "score": 34.174,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "anc interventions",
+        "score": 32.0585,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "group anc",
+        "score": 31.1801,
+        "evidence": []
+      },
+      {
+        "term": "pregnant women",
+        "score": 29.8638,
+        "evidence": []
+      },
+      {
+        "term": "during anc",
+        "score": 28.9407,
+        "evidence": []
+      },
+      {
+        "term": "improve anc",
+        "score": 28.4869,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "quality anc",
+        "score": 28.345,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "anc settings",
+        "score": 28.2092,
+        "evidence": []
+      },
+      {
+        "term": "pregnancy health",
+        "score": 27.8398,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "在sars",
+        "score": 460.7109,
+        "evidence": []
+      },
+      {
+        "term": "重点人群",
+        "score": 458.5316,
+        "evidence": []
+      },
+      {
+        "term": "的材料",
+        "score": 420.0207,
+        "evidence": []
+      },
+      {
+        "term": "这些情况下",
+        "score": 412.3387,
+        "evidence": []
+      },
+      {
+        "term": "监督机制",
+        "score": 380.4621,
+        "evidence": []
+      },
+      {
+        "term": "其它技术术语",
+        "score": 377.9737,
+        "evidence": []
+      },
+      {
+        "term": "大流行性流感防范生物材料或pip生物材料",
+        "score": 377.9737,
+        "evidence": []
+      },
+      {
+        "term": "在大流行间期提供疫苗供发展中国家使用",
+        "score": 374.2502,
+        "evidence": []
+      },
+      {
+        "term": "提供大流行性流感疫苗",
+        "score": 374.2502,
+        "evidence": []
+      },
+      {
+        "term": "见下面第",
+        "score": 363.8933,
+        "evidence": []
+      },
+      {
+        "term": "利益相关者",
+        "score": 361.5287,
+        "evidence": []
+      },
+      {
+        "term": "必要的",
+        "score": 350.008,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-acknowledgements": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "james neilson",
+          "score": 1.6664,
+          "evidence": []
+        },
+        {
+          "term": "theresa lawrie",
+          "score": 1.6537,
+          "evidence": []
+        },
+        {
+          "term": "guideline development",
+          "score": 1.4381,
+          "evidence": []
+        },
+        {
+          "term": "scientific evidence",
+          "score": 1.3615,
+          "evidence": []
+        },
+        {
+          "term": "evidence summaries",
+          "score": 1.3437,
+          "evidence": []
+        },
+        {
+          "term": "anc delivery",
+          "score": 1.3309,
+          "evidence": []
+        },
+        {
+          "term": "bill melinda",
+          "score": 1.3217,
+          "evidence": []
+        },
+        {
+          "term": "melinda gates",
+          "score": 1.3125,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "guideline development",
+          "score": 43.2606,
+          "evidence": []
+        },
+        {
+          "term": "guideline document",
+          "score": 34.1137,
+          "evidence": []
+        },
+        {
+          "term": "james neilson",
+          "score": 29.03,
+          "evidence": []
+        },
+        {
+          "term": "theresa lawrie",
+          "score": 26.6335,
+          "evidence": []
+        },
+        {
+          "term": "evidence summaries",
+          "score": 25.8795,
+          "evidence": []
+        },
+        {
+          "term": "development process",
+          "score": 25.2547,
+          "evidence": []
+        },
+        {
+          "term": "scientific evidence",
+          "score": 23.8531,
+          "evidence": []
+        },
+        {
+          "term": "thank",
+          "score": 21.5277,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "guideline development",
+          "score": 0.9184,
+          "evidence": []
+        },
+        {
+          "term": "steering group",
+          "score": 0.7299,
+          "evidence": []
+        },
+        {
+          "term": "guideline document",
+          "score": 0.6694,
+          "evidence": []
+        },
+        {
+          "term": "development process",
+          "score": 0.6417,
+          "evidence": []
+        },
+        {
+          "term": "systematic reviews",
+          "score": 0.5309,
+          "evidence": []
+        },
+        {
+          "term": "cochrane systematic",
+          "score": 0.5286,
+          "evidence": []
+        },
+        {
+          "term": "united nations",
+          "score": 0.4651,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.4651,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "guideline development",
+          "score": 17.5554,
+          "evidence": []
+        },
+        {
+          "term": "guideline document",
+          "score": 14.5525,
+          "evidence": []
+        },
+        {
+          "term": "steering group",
+          "score": 13.1676,
+          "evidence": []
+        },
+        {
+          "term": "anc",
+          "score": 13.0253,
+          "evidence": []
+        },
+        {
+          "term": "anc delivery",
+          "score": 13.0253,
+          "evidence": []
+        },
+        {
+          "term": "systematic reviews",
+          "score": 9.6549,
+          "evidence": []
+        },
+        {
+          "term": "cochrane systematic",
+          "score": 9.3414,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 8.497,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "guideline development",
+          "score": 0.9184,
+          "evidence": []
+        },
+        {
+          "term": "steering group",
+          "score": 0.7299,
+          "evidence": []
+        },
+        {
+          "term": "guideline document",
+          "score": 0.6694,
+          "evidence": []
+        },
+        {
+          "term": "development process",
+          "score": 0.6417,
+          "evidence": []
+        },
+        {
+          "term": "systematic reviews",
+          "score": 0.5309,
+          "evidence": []
+        },
+        {
+          "term": "cochrane systematic",
+          "score": 0.5286,
+          "evidence": []
+        },
+        {
+          "term": "united nations",
+          "score": 0.4651,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.4651,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 172.4676,
+          "evidence": []
+        },
+        {
+          "term": "在sars",
+          "score": 171.3564,
+          "evidence": []
+        },
+        {
+          "term": "必要的",
+          "score": 140.6114,
+          "evidence": []
+        },
+        {
+          "term": "这些情况下",
+          "score": 131.9383,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 97.5244,
+          "evidence": []
+        },
+        {
+          "term": "尤其在发展中国家",
+          "score": 96.1912,
+          "evidence": []
+        },
+        {
+          "term": "在研究开始后",
+          "score": 94.9622,
+          "evidence": []
+        },
+        {
+          "term": "病毒疗法",
+          "score": 94.9622,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-001-acronyms-and-abbreviations": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "united nations",
+          "score": 1.4897,
+          "evidence": []
+        },
+        {
+          "term": "urinary tract",
+          "score": 1.3861,
+          "evidence": []
+        },
+        {
+          "term": "intermittent preventive",
+          "score": 1.1829,
+          "evidence": []
+        },
+        {
+          "term": "multiple micronutrient",
+          "score": 1.169,
+          "evidence": []
+        },
+        {
+          "term": "united states",
+          "score": 1.1646,
+          "evidence": []
+        },
+        {
+          "term": "antenatal care",
+          "score": 1.0585,
+          "evidence": []
+        },
+        {
+          "term": "tetanus",
+          "score": 0.8808,
+          "evidence": []
+        },
+        {
+          "term": "sulfadoxine-pyrimethamine",
+          "score": 0.8659,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "united nations",
+          "score": 33.7204,
+          "evidence": []
+        },
+        {
+          "term": "united states",
+          "score": 23.8387,
+          "evidence": []
+        },
+        {
+          "term": "urinary tract",
+          "score": 21.4934,
+          "evidence": []
+        },
+        {
+          "term": "multiple micronutrient",
+          "score": 17.6495,
+          "evidence": []
+        },
+        {
+          "term": "intermittent preventive",
+          "score": 17.2235,
+          "evidence": []
+        },
+        {
+          "term": "antenatal care",
+          "score": 15.825,
+          "evidence": []
+        },
+        {
+          "term": "tetanus",
+          "score": 14.814,
+          "evidence": []
+        },
+        {
+          "term": "sulfadoxine-pyrimethamine",
+          "score": 13.9248,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health organization",
+          "score": 0.5983,
+          "evidence": []
+        },
+        {
+          "term": "antenatal care",
+          "score": 0.5186,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.4422,
+          "evidence": []
+        },
+        {
+          "term": "united nations",
+          "score": 0.4335,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.4159,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy",
+          "score": 0.3942,
+          "evidence": []
+        },
+        {
+          "term": "united states",
+          "score": 0.3861,
+          "evidence": []
+        },
+        {
+          "term": "maternal",
+          "score": 0.3823,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health organization",
+          "score": 7.7479,
+          "evidence": []
+        },
+        {
+          "term": "united states",
+          "score": 7.6622,
+          "evidence": []
+        },
+        {
+          "term": "antenatal care",
+          "score": 7.6025,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 7.4742,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy",
+          "score": 7.1912,
+          "evidence": []
+        },
+        {
+          "term": "united nations",
+          "score": 6.931,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 6.3518,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 5.7474,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health organization",
+          "score": 0.5983,
+          "evidence": []
+        },
+        {
+          "term": "antenatal care",
+          "score": 0.5186,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.4422,
+          "evidence": []
+        },
+        {
+          "term": "united nations",
+          "score": 0.4335,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy",
+          "score": 0.3942,
+          "evidence": []
+        },
+        {
+          "term": "united states",
+          "score": 0.3861,
+          "evidence": []
+        },
+        {
+          "term": "maternal",
+          "score": 0.3823,
+          "evidence": []
+        },
+        {
+          "term": "recommendations",
+          "score": 0.3269,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "的材料",
+          "score": 47.0474,
+          "evidence": []
+        },
+        {
+          "term": "监督机制",
+          "score": 37.8842,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 32.7769,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 30.6383,
+          "evidence": []
+        },
+        {
+          "term": "这些情况下",
+          "score": 29.3382,
+          "evidence": []
+        },
+        {
+          "term": "其它技术术语",
+          "score": 25.1415,
+          "evidence": []
+        },
+        {
+          "term": "大流行性流感防范生物材料或pip生物材料",
+          "score": 25.1415,
+          "evidence": []
+        },
+        {
+          "term": "美国cdc",
+          "score": 24.9868,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-002-executive-summary": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "context-specific recommendation",
+          "score": 3.5237,
+          "evidence": []
+        },
+        {
+          "term": "pregnant woman",
+          "score": 3.2276,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 3.0241,
+          "evidence": []
+        },
+        {
+          "term": "anc recommendations",
+          "score": 2.9796,
+          "evidence": []
+        },
+        {
+          "term": "elemental iron",
+          "score": 2.909,
+          "evidence": []
+        },
+        {
+          "term": "recommendation supersedes",
+          "score": 2.836,
+          "evidence": []
+        },
+        {
+          "term": "ferrous gluconate",
+          "score": 2.8076,
+          "evidence": []
+        },
+        {
+          "term": "calcium supplementation",
+          "score": 2.797,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "context-specific recommendation",
+          "score": 201.4835,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 196.9206,
+          "evidence": []
+        },
+        {
+          "term": "pregnant woman",
+          "score": 148.4836,
+          "evidence": []
+        },
+        {
+          "term": "anc recommendations",
+          "score": 138.1761,
+          "evidence": []
+        },
+        {
+          "term": "recommendation supersedes",
+          "score": 133.5284,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy experience",
+          "score": 132.2538,
+          "evidence": []
+        },
+        {
+          "term": "previous recommendation",
+          "score": 130.7773,
+          "evidence": []
+        },
+        {
+          "term": "recommended",
+          "score": 121.696,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "anc recommendations",
+          "score": 3.1781,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 2.7788,
+          "evidence": []
+        },
+        {
+          "term": "during anc",
+          "score": 2.6744,
+          "evidence": []
+        },
+        {
+          "term": "routine anc",
+          "score": 2.3829,
+          "evidence": []
+        },
+        {
+          "term": "pregnant woman",
+          "score": 2.2945,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy experience",
+          "score": 2.2833,
+          "evidence": []
+        },
+        {
+          "term": "context-specific recommendation",
+          "score": 2.2655,
+          "evidence": []
+        },
+        {
+          "term": "antenatal care",
+          "score": 2.1522,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "pregnant women",
+          "score": 147.5493,
+          "evidence": []
+        },
+        {
+          "term": "anc recommendations",
+          "score": 122.6455,
+          "evidence": []
+        },
+        {
+          "term": "during anc",
+          "score": 114.0721,
+          "evidence": []
+        },
+        {
+          "term": "women groups",
+          "score": 106.9846,
+          "evidence": []
+        },
+        {
+          "term": "routine anc",
+          "score": 101.2392,
+          "evidence": []
+        },
+        {
+          "term": "context-specific recommendation",
+          "score": 95.914,
+          "evidence": []
+        },
+        {
+          "term": "during pregnancy",
+          "score": 89.3486,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy experience",
+          "score": 80.4437,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "anc recommendations",
+          "score": 3.1781,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 2.7788,
+          "evidence": []
+        },
+        {
+          "term": "during anc",
+          "score": 2.6744,
+          "evidence": []
+        },
+        {
+          "term": "routine anc",
+          "score": 2.3829,
+          "evidence": []
+        },
+        {
+          "term": "pregnant woman",
+          "score": 2.2945,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy experience",
+          "score": 2.2833,
+          "evidence": []
+        },
+        {
+          "term": "context-specific recommendation",
+          "score": 2.2655,
+          "evidence": []
+        },
+        {
+          "term": "antenatal care",
+          "score": 2.1522,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "科研人员",
+          "score": 38.928,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 34.6682,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 30.6729,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 25.4372,
+          "evidence": []
+        },
+        {
+          "term": "招募了",
+          "score": 23.951,
+          "evidence": []
+        },
+        {
+          "term": "进行协商",
+          "score": 23.5716,
+          "evidence": []
+        },
+        {
+          "term": "如检疫",
+          "score": 23.0557,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 22.5854,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-003-1-introduction": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "anc guideline",
+          "score": 2.9103,
+          "evidence": []
+        },
+        {
+          "term": "anc utilization",
+          "score": 2.6665,
+          "evidence": []
+        },
+        {
+          "term": "routine anc",
+          "score": 2.5498,
+          "evidence": []
+        },
+        {
+          "term": "anc model",
+          "score": 2.5213,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy-related complications",
+          "score": 2.2376,
+          "evidence": []
+        },
+        {
+          "term": "adolescent girls",
+          "score": 2.1313,
+          "evidence": []
+        },
+        {
+          "term": "fetal neonatal",
+          "score": 2.1014,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 1.8765,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "anc guideline",
+          "score": 128.2117,
+          "evidence": []
+        },
+        {
+          "term": "anc utilization",
+          "score": 106.7439,
+          "evidence": []
+        },
+        {
+          "term": "routine anc",
+          "score": 105.2576,
+          "evidence": []
+        },
+        {
+          "term": "anc model",
+          "score": 103.6957,
+          "evidence": []
+        },
+        {
+          "term": "adolescent girls",
+          "score": 63.9371,
+          "evidence": []
+        },
+        {
+          "term": "maternal deaths",
+          "score": 52.2852,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy-related complications",
+          "score": 51.1594,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 49.339,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pregnant women",
+          "score": 1.5084,
+          "evidence": []
+        },
+        {
+          "term": "anc guideline",
+          "score": 1.3936,
+          "evidence": []
+        },
+        {
+          "term": "antenatal care",
+          "score": 1.2139,
+          "evidence": []
+        },
+        {
+          "term": "anc utilization",
+          "score": 1.1088,
+          "evidence": []
+        },
+        {
+          "term": "routine anc",
+          "score": 1.0923,
+          "evidence": []
+        },
+        {
+          "term": "anc model",
+          "score": 1.0686,
+          "evidence": []
+        },
+        {
+          "term": "during pregnancy",
+          "score": 1.0554,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy experience",
+          "score": 0.9924,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "anc guideline",
+          "score": 85.3458,
+          "evidence": []
+        },
+        {
+          "term": "routine anc",
+          "score": 74.7624,
+          "evidence": []
+        },
+        {
+          "term": "anc model",
+          "score": 74.3906,
+          "evidence": []
+        },
+        {
+          "term": "anc utilization",
+          "score": 70.8313,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 46.5388,
+          "evidence": []
+        },
+        {
+          "term": "during pregnancy",
+          "score": 31.8491,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy experience",
+          "score": 28.1882,
+          "evidence": []
+        },
+        {
+          "term": "antenatal care",
+          "score": 25.4932,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pregnant women",
+          "score": 1.5084,
+          "evidence": []
+        },
+        {
+          "term": "anc guideline",
+          "score": 1.3936,
+          "evidence": []
+        },
+        {
+          "term": "antenatal care",
+          "score": 1.2139,
+          "evidence": []
+        },
+        {
+          "term": "anc utilization",
+          "score": 1.1088,
+          "evidence": []
+        },
+        {
+          "term": "routine anc",
+          "score": 1.0923,
+          "evidence": []
+        },
+        {
+          "term": "anc model",
+          "score": 1.0686,
+          "evidence": []
+        },
+        {
+          "term": "during pregnancy",
+          "score": 1.0554,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy experience",
+          "score": 0.9924,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "科研人员",
+          "score": 17.3327,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 16.1083,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 16.1045,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 13.7794,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 13.0294,
+          "evidence": []
+        },
+        {
+          "term": "如检疫",
+          "score": 12.4634,
+          "evidence": []
+        },
+        {
+          "term": "在其他情况下",
+          "score": 11.593,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 11.5017,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-004-2-methods": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "anc guideline",
+          "score": 3.9533,
+          "evidence": []
+        },
+        {
+          "term": "anc interventions",
+          "score": 3.5705,
+          "evidence": []
+        },
+        {
+          "term": "guideline methodologists",
+          "score": 3.5174,
+          "evidence": []
+        },
+        {
+          "term": "anc period",
+          "score": 3.3842,
+          "evidence": []
+        },
+        {
+          "term": "routine anc",
+          "score": 3.2747,
+          "evidence": []
+        },
+        {
+          "term": "cochrane pcg",
+          "score": 3.1633,
+          "evidence": []
+        },
+        {
+          "term": "anc visits",
+          "score": 3.0215,
+          "evidence": []
+        },
+        {
+          "term": "steering group",
+          "score": 2.9367,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "anc guideline",
+          "score": 391.9201,
+          "evidence": []
+        },
+        {
+          "term": "anc interventions",
+          "score": 279.4561,
+          "evidence": []
+        },
+        {
+          "term": "guideline methodologists",
+          "score": 254.4108,
+          "evidence": []
+        },
+        {
+          "term": "routine anc",
+          "score": 248.4782,
+          "evidence": []
+        },
+        {
+          "term": "anc period",
+          "score": 246.5248,
+          "evidence": []
+        },
+        {
+          "term": "anc visits",
+          "score": 234.667,
+          "evidence": []
+        },
+        {
+          "term": "anc services",
+          "score": 232.7025,
+          "evidence": []
+        },
+        {
+          "term": "steering group",
+          "score": 216.9583,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "review evidence",
+          "score": 4.3633,
+          "evidence": []
+        },
+        {
+          "term": "guideline development",
+          "score": 3.7863,
+          "evidence": []
+        },
+        {
+          "term": "review group",
+          "score": 3.7803,
+          "evidence": []
+        },
+        {
+          "term": "anc guideline",
+          "score": 3.6655,
+          "evidence": []
+        },
+        {
+          "term": "qualitative evidence",
+          "score": 3.504,
+          "evidence": []
+        },
+        {
+          "term": "systematic review",
+          "score": 3.3737,
+          "evidence": []
+        },
+        {
+          "term": "final guideline",
+          "score": 3.2922,
+          "evidence": []
+        },
+        {
+          "term": "guideline document",
+          "score": 3.1655,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "anc guideline",
+          "score": 323.9494,
+          "evidence": []
+        },
+        {
+          "term": "anc interventions",
+          "score": 226.0209,
+          "evidence": []
+        },
+        {
+          "term": "guideline development",
+          "score": 188.755,
+          "evidence": []
+        },
+        {
+          "term": "routine anc",
+          "score": 187.0654,
+          "evidence": []
+        },
+        {
+          "term": "anc period",
+          "score": 178.0998,
+          "evidence": []
+        },
+        {
+          "term": "anc services",
+          "score": 178.0998,
+          "evidence": []
+        },
+        {
+          "term": "anc visits",
+          "score": 178.0998,
+          "evidence": []
+        },
+        {
+          "term": "review evidence",
+          "score": 177.5324,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "review evidence",
+          "score": 4.3633,
+          "evidence": []
+        },
+        {
+          "term": "guideline development",
+          "score": 3.7863,
+          "evidence": []
+        },
+        {
+          "term": "review group",
+          "score": 3.7803,
+          "evidence": []
+        },
+        {
+          "term": "anc guideline",
+          "score": 3.6655,
+          "evidence": []
+        },
+        {
+          "term": "qualitative evidence",
+          "score": 3.504,
+          "evidence": []
+        },
+        {
+          "term": "systematic review",
+          "score": 3.3737,
+          "evidence": []
+        },
+        {
+          "term": "final guideline",
+          "score": 3.2922,
+          "evidence": []
+        },
+        {
+          "term": "guideline document",
+          "score": 3.1655,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "其它技术术语",
+          "score": 12.6709,
+          "evidence": []
+        },
+        {
+          "term": "大流行性流感防范生物材料或pip生物材料",
+          "score": 12.6709,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 10.0573,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 10.0573,
+          "evidence": []
+        },
+        {
+          "term": "术语的定义和使用",
+          "score": 10.0298,
+          "evidence": []
+        },
+        {
+          "term": "在世卫组织全球流感监测",
+          "score": 8.7928,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 7.6237,
+          "evidence": []
+        },
+        {
+          "term": "被称为研究伦理委员会",
+          "score": 7.2219,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-005-3-evidence-and-recommendations": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "recommendations",
+          "score": 1.1458,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "systematic reviews",
+          "score": 1.1197,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 1.0184,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "anc",
+          "score": 0.8486,
+          "evidence": []
+        },
+        {
+          "term": "non-cochrane",
+          "score": 0.6077,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "systematic reviews",
+          "score": 21.613,
+          "evidence": []
+        },
+        {
+          "term": "recommendations",
+          "score": 20.1565,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "evidence",
+          "score": 14.3547,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "anc",
+          "score": 11.3889,
+          "evidence": []
+        },
+        {
+          "term": "non-cochrane",
+          "score": 7.8097,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "evidence",
+          "score": 0.5625,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "recommendations",
+          "score": 0.4961,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "systematic reviews",
+          "score": 0.351,
+          "evidence": []
+        },
+        {
+          "term": "guideline",
+          "score": 0.2793,
+          "evidence": []
+        },
+        {
+          "term": "gdg",
+          "score": 0.2021,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "evidence",
+          "score": 10.6517,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "anc",
+          "score": 8.9959,
+          "evidence": []
+        },
+        {
+          "term": "recommendations",
+          "score": 6.6951,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "guideline",
+          "score": 5.9786,
+          "evidence": []
+        },
+        {
+          "term": "systematic reviews",
+          "score": 4.7024,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "evidence",
+          "score": 0.5625,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "recommendations",
+          "score": 0.4961,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "systematic reviews",
+          "score": 0.351,
+          "evidence": []
+        },
+        {
+          "term": "guideline",
+          "score": 0.2793,
+          "evidence": []
+        },
+        {
+          "term": "gdg",
+          "score": 0.2021,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "感染者",
+          "score": 23.374,
+          "evidence": []
+        },
+        {
+          "term": "其它技术术语",
+          "score": 17.3923,
+          "evidence": []
+        },
+        {
+          "term": "大流行性流感防范生物材料或pip生物材料",
+          "score": 17.3923,
+          "evidence": []
+        },
+        {
+          "term": "在世卫组织全球流感监测",
+          "score": 17.3207,
+          "evidence": []
+        },
+        {
+          "term": "这两种hpv",
+          "score": 17.1988,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-a-nutritional-interventions": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "caffeine intake",
+          "score": 4.8682,
+          "evidence": []
+        },
+        {
+          "term": "energy supplements",
+          "score": 4.489,
+          "evidence": []
+        },
+        {
+          "term": "high-protein supplements",
+          "score": 4.1967,
+          "evidence": []
+        },
+        {
+          "term": "protein energy",
+          "score": 4.1705,
+          "evidence": []
+        },
+        {
+          "term": "caffeinated coffee",
+          "score": 4.0428,
+          "evidence": []
+        },
+        {
+          "term": "high-protein supplementation",
+          "score": 4.0079,
+          "evidence": []
+        },
+        {
+          "term": "maternal caffeine",
+          "score": 3.9925,
+          "evidence": []
+        },
+        {
+          "term": "balanced energy",
+          "score": 3.8773,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "caffeine intake",
+          "score": 333.6255,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 308.5135,
+          "evidence": []
+        },
+        {
+          "term": "energy supplements",
+          "score": 290.277,
+          "evidence": []
+        },
+        {
+          "term": "disadvantaged women",
+          "score": 281.3012,
+          "evidence": []
+        },
+        {
+          "term": "underweight women",
+          "score": 278.719,
+          "evidence": []
+        },
+        {
+          "term": "among women",
+          "score": 278.3684,
+          "evidence": []
+        },
+        {
+          "term": "women values",
+          "score": 277.8544,
+          "evidence": []
+        },
+        {
+          "term": "obese women",
+          "score": 265.6976,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pregnant women",
+          "score": 2.7956,
+          "evidence": []
+        },
+        {
+          "term": "anc suggests",
+          "score": 2.7585,
+          "evidence": []
+        },
+        {
+          "term": "anc guideline",
+          "score": 2.7547,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy outcomes",
+          "score": 2.7395,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy experience",
+          "score": 2.7262,
+          "evidence": []
+        },
+        {
+          "term": "context-specific recommendation",
+          "score": 2.4718,
+          "evidence": []
+        },
+        {
+          "term": "women values",
+          "score": 2.4355,
+          "evidence": []
+        },
+        {
+          "term": "evidence suggests",
+          "score": 2.3704,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "pregnant women",
+          "score": 289.5971,
+          "evidence": []
+        },
+        {
+          "term": "women values",
+          "score": 256.1356,
+          "evidence": []
+        },
+        {
+          "term": "among women",
+          "score": 251.9172,
+          "evidence": []
+        },
+        {
+          "term": "disadvantaged women",
+          "score": 244.4264,
+          "evidence": []
+        },
+        {
+          "term": "involving women",
+          "score": 239.3685,
+          "evidence": []
+        },
+        {
+          "term": "underweight women",
+          "score": 235.9388,
+          "evidence": []
+        },
+        {
+          "term": "evidence suggests",
+          "score": 233.6895,
+          "evidence": []
+        },
+        {
+          "term": "obese women",
+          "score": 222.1395,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pregnant women",
+          "score": 2.7956,
+          "evidence": []
+        },
+        {
+          "term": "anc suggests",
+          "score": 2.7585,
+          "evidence": []
+        },
+        {
+          "term": "anc guideline",
+          "score": 2.7547,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy outcomes",
+          "score": 2.7395,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy experience",
+          "score": 2.7262,
+          "evidence": []
+        },
+        {
+          "term": "context-specific recommendation",
+          "score": 2.4718,
+          "evidence": []
+        },
+        {
+          "term": "women values",
+          "score": 2.4355,
+          "evidence": []
+        },
+        {
+          "term": "evidence suggests",
+          "score": 2.3704,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "感染者",
+          "score": 58.3526,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 51.808,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 46.8799,
+          "evidence": []
+        },
+        {
+          "term": "这两种hpv",
+          "score": 39.0788,
+          "evidence": []
+        },
+        {
+          "term": "监督机制",
+          "score": 33.9764,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 33.7542,
+          "evidence": []
+        },
+        {
+          "term": "问题的讨论结束",
+          "score": 33.7542,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 32.0872,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-007-b-maternal-and-fetal-assessment": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "fetal assessment",
+          "score": 7.9348,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "fetal ultrasound",
+          "score": 6.4945,
+          "evidence": []
+        },
+        {
+          "term": "ultrasound scans",
+          "score": 6.0138,
+          "evidence": []
+        },
+        {
+          "term": "doppler ultrasound",
+          "score": 5.9191,
+          "evidence": []
+        },
+        {
+          "term": "antenatal ultrasound",
+          "score": 5.209,
+          "evidence": []
+        },
+        {
+          "term": "ultrasound examination",
+          "score": 5.116,
+          "evidence": []
+        },
+        {
+          "term": "fetal movements",
+          "score": 5.0744,
+          "evidence": []
+        },
+        {
+          "term": "maternal assessment",
+          "score": 4.9685,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "fetal ultrasound",
+          "score": 968.1651,
+          "evidence": []
+        },
+        {
+          "term": "fetal assessment",
+          "score": 951.8728,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ultrasound scan",
+          "score": 702.7755,
+          "evidence": []
+        },
+        {
+          "term": "doppler ultrasound",
+          "score": 699.7701,
+          "evidence": []
+        },
+        {
+          "term": "antenatal ultrasound",
+          "score": 695.8216,
+          "evidence": []
+        },
+        {
+          "term": "ultrasound screening",
+          "score": 662.5362,
+          "evidence": []
+        },
+        {
+          "term": "ultrasound examination",
+          "score": 635.616,
+          "evidence": []
+        },
+        {
+          "term": "ultrasound equipment",
+          "score": 621.4136,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "fetal assessment",
+          "score": 8.459,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "fetal ultrasound",
+          "score": 6.3112,
+          "evidence": []
+        },
+        {
+          "term": "maternal assessment",
+          "score": 5.4292,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "doppler ultrasound",
+          "score": 5.3355,
+          "evidence": []
+        },
+        {
+          "term": "ultrasound scan",
+          "score": 5.2218,
+          "evidence": []
+        },
+        {
+          "term": "antenatal ultrasound",
+          "score": 4.9363,
+          "evidence": []
+        },
+        {
+          "term": "ultrasound screening",
+          "score": 4.885,
+          "evidence": []
+        },
+        {
+          "term": "fetal movement",
+          "score": 4.8136,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "fetal ultrasound",
+          "score": 966.8595,
+          "evidence": []
+        },
+        {
+          "term": "fetal assessment",
+          "score": 955.8021,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "doppler ultrasound",
+          "score": 696.4154,
+          "evidence": []
+        },
+        {
+          "term": "ultrasound scan",
+          "score": 696.3273,
+          "evidence": []
+        },
+        {
+          "term": "antenatal ultrasound",
+          "score": 692.8657,
+          "evidence": []
+        },
+        {
+          "term": "ultrasound screening",
+          "score": 667.1947,
+          "evidence": []
+        },
+        {
+          "term": "ultrasound examination",
+          "score": 630.8211,
+          "evidence": []
+        },
+        {
+          "term": "ultrasound equipment",
+          "score": 618.8119,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "fetal assessment",
+          "score": 8.459,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "fetal ultrasound",
+          "score": 6.3112,
+          "evidence": []
+        },
+        {
+          "term": "maternal assessment",
+          "score": 5.4292,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "doppler ultrasound",
+          "score": 5.3355,
+          "evidence": []
+        },
+        {
+          "term": "ultrasound scan",
+          "score": 5.2218,
+          "evidence": []
+        },
+        {
+          "term": "antenatal ultrasound",
+          "score": 4.9363,
+          "evidence": []
+        },
+        {
+          "term": "ultrasound screening",
+          "score": 4.885,
+          "evidence": []
+        },
+        {
+          "term": "fetal movement",
+          "score": 4.8136,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "感染者",
+          "score": 39.3953,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 31.8596,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 28.4854,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 27.2662,
+          "evidence": []
+        },
+        {
+          "term": "这两种hpv",
+          "score": 27.2204,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 26.7196,
+          "evidence": []
+        },
+        {
+          "term": "问题的讨论结束",
+          "score": 26.7196,
+          "evidence": []
+        },
+        {
+          "term": "还不清楚",
+          "score": 22.349,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-008-c-preventive-measures": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "placebo acupuncture",
+          "score": 5.2587,
+          "evidence": []
+        },
+        {
+          "term": "anc visits",
+          "score": 5.1431,
+          "evidence": []
+        },
+        {
+          "term": "maternal anc",
+          "score": 4.8577,
+          "evidence": []
+        },
+        {
+          "term": "anc models",
+          "score": 4.7209,
+          "evidence": []
+        },
+        {
+          "term": "acupuncture versus",
+          "score": 4.706,
+          "evidence": []
+        },
+        {
+          "term": "lmics suggests",
+          "score": 4.6655,
+          "evidence": []
+        },
+        {
+          "term": "pelvic pain",
+          "score": 4.6382,
+          "evidence": []
+        },
+        {
+          "term": "mlcc models",
+          "score": 4.6167,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "pregnant women",
+          "score": 1190.0119,
+          "evidence": []
+        },
+        {
+          "term": "women compared",
+          "score": 1087.2732,
+          "evidence": []
+        },
+        {
+          "term": "women values",
+          "score": 1046.7997,
+          "evidence": []
+        },
+        {
+          "term": "women experience",
+          "score": 1038.8332,
+          "evidence": []
+        },
+        {
+          "term": "involving women",
+          "score": 1025.717,
+          "evidence": []
+        },
+        {
+          "term": "improve women",
+          "score": 1023.3221,
+          "evidence": []
+        },
+        {
+          "term": "women satisfaction",
+          "score": 1013.8267,
+          "evidence": []
+        },
+        {
+          "term": "disadvantaged women",
+          "score": 1003.9896,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "anc visits",
+          "score": 5.5238,
+          "evidence": []
+        },
+        {
+          "term": "placebo acupuncture",
+          "score": 5.337,
+          "evidence": []
+        },
+        {
+          "term": "anc model",
+          "score": 5.3046,
+          "evidence": []
+        },
+        {
+          "term": "maternal anc",
+          "score": 5.1723,
+          "evidence": []
+        },
+        {
+          "term": "anc contacts",
+          "score": 5.147,
+          "evidence": []
+        },
+        {
+          "term": "anc compared",
+          "score": 5.0219,
+          "evidence": []
+        },
+        {
+          "term": "anc providers",
+          "score": 5.0147,
+          "evidence": []
+        },
+        {
+          "term": "eight anc",
+          "score": 4.9754,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "pregnant women",
+          "score": 1203.6903,
+          "evidence": []
+        },
+        {
+          "term": "women compared",
+          "score": 1092.3604,
+          "evidence": []
+        },
+        {
+          "term": "women values",
+          "score": 1052.0107,
+          "evidence": []
+        },
+        {
+          "term": "women experience",
+          "score": 1047.2055,
+          "evidence": []
+        },
+        {
+          "term": "improve women",
+          "score": 1032.0513,
+          "evidence": []
+        },
+        {
+          "term": "involving women",
+          "score": 1028.5978,
+          "evidence": []
+        },
+        {
+          "term": "women satisfaction",
+          "score": 1018.4766,
+          "evidence": []
+        },
+        {
+          "term": "disadvantaged women",
+          "score": 1010.5406,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "anc visits",
+          "score": 5.5238,
+          "evidence": []
+        },
+        {
+          "term": "placebo acupuncture",
+          "score": 5.337,
+          "evidence": []
+        },
+        {
+          "term": "anc model",
+          "score": 5.3046,
+          "evidence": []
+        },
+        {
+          "term": "maternal anc",
+          "score": 5.1723,
+          "evidence": []
+        },
+        {
+          "term": "anc contacts",
+          "score": 5.147,
+          "evidence": []
+        },
+        {
+          "term": "anc compared",
+          "score": 5.0219,
+          "evidence": []
+        },
+        {
+          "term": "anc providers",
+          "score": 5.0147,
+          "evidence": []
+        },
+        {
+          "term": "eight anc",
+          "score": 4.9754,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "感染者",
+          "score": 41.7988,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 33.0088,
+          "evidence": []
+        },
+        {
+          "term": "这两种hpv",
+          "score": 28.3018,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 26.4206,
+          "evidence": []
+        },
+        {
+          "term": "问题的讨论结束",
+          "score": 26.4206,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 26.016,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 25.5393,
+          "evidence": []
+        },
+        {
+          "term": "还不清楚",
+          "score": 23.4544,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-009-4-implementation-of-the-anc-guideline-and-recomm": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "anc model",
+          "score": 7.037,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "anc guideline",
+          "score": 6.3681,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "anc contacts",
+          "score": 3.7268,
+          "evidence": []
+        },
+        {
+          "term": "scheduled anc",
+          "score": 3.3106,
+          "evidence": []
+        },
+        {
+          "term": "anc utilization",
+          "score": 3.2124,
+          "evidence": []
+        },
+        {
+          "term": "anc services",
+          "score": 2.9612,
+          "evidence": []
+        },
+        {
+          "term": "calcium supplementation",
+          "score": 2.9502,
+          "evidence": []
+        },
+        {
+          "term": "context-specific recommendation",
+          "score": 2.9456,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "anc model",
+          "score": 464.702,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "anc guideline",
+          "score": 394.0022,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "anc contacts",
+          "score": 222.8482,
+          "evidence": []
+        },
+        {
+          "term": "scheduled anc",
+          "score": 191.4219,
+          "evidence": []
+        },
+        {
+          "term": "anc utilization",
+          "score": 190.5608,
+          "evidence": []
+        },
+        {
+          "term": "anc services",
+          "score": 185.6067,
+          "evidence": []
+        },
+        {
+          "term": "weeks",
+          "score": 147.7488,
+          "evidence": []
+        },
+        {
+          "term": "context-specific recommendation",
+          "score": 114.8935,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "anc guideline",
+          "score": 5.2583,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "anc model",
+          "score": 4.6062,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "anc services",
+          "score": 2.5961,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 2.4546,
+          "evidence": []
+        },
+        {
+          "term": "anc contacts",
+          "score": 2.2974,
+          "evidence": []
+        },
+        {
+          "term": "anc utilization",
+          "score": 2.2688,
+          "evidence": []
+        },
+        {
+          "term": "antenatal care",
+          "score": 2.2655,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy experience",
+          "score": 2.1726,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "anc guideline",
+          "score": 324.6787,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "anc model",
+          "score": 306.8598,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "anc contacts",
+          "score": 158.6673,
+          "evidence": []
+        },
+        {
+          "term": "anc services",
+          "score": 157.1445,
+          "evidence": []
+        },
+        {
+          "term": "anc utilization",
+          "score": 140.6407,
+          "evidence": []
+        },
+        {
+          "term": "scheduled anc",
+          "score": 140.6407,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 125.8356,
+          "evidence": []
+        },
+        {
+          "term": "women groups",
+          "score": 90.4538,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "anc guideline",
+          "score": 5.2583,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "anc model",
+          "score": 4.6062,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "anc services",
+          "score": 2.5961,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 2.4546,
+          "evidence": []
+        },
+        {
+          "term": "anc contacts",
+          "score": 2.2974,
+          "evidence": []
+        },
+        {
+          "term": "anc utilization",
+          "score": 2.2688,
+          "evidence": []
+        },
+        {
+          "term": "antenatal care",
+          "score": 2.2655,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy experience",
+          "score": 2.1726,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "感染者",
+          "score": 35.0923,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 33.2281,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 30.7152,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 28.0493,
+          "evidence": []
+        },
+        {
+          "term": "如检疫",
+          "score": 25.0471,
+          "evidence": []
+        },
+        {
+          "term": "招募了",
+          "score": 23.3558,
+          "evidence": []
+        },
+        {
+          "term": "还不清楚",
+          "score": 22.6542,
+          "evidence": []
+        },
+        {
+          "term": "关注这一事实",
+          "score": 22.3683,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-010-5-research-implications": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "group anc",
+          "score": 2.4814,
+          "evidence": []
+        },
+        {
+          "term": "anc contacts",
+          "score": 2.4773,
+          "evidence": []
+        },
+        {
+          "term": "anc model",
+          "score": 2.381,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 2.0438,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "midwife-led continuity",
+          "score": 1.7123,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 1.6108,
+          "evidence": []
+        },
+        {
+          "term": "mlcc",
+          "score": 1.5426,
+          "evidence": []
+        },
+        {
+          "term": "print versions",
+          "score": 1.5115,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "group anc",
+          "score": 84.5325,
+          "evidence": []
+        },
+        {
+          "term": "anc model",
+          "score": 76.2547,
+          "evidence": []
+        },
+        {
+          "term": "anc contacts",
+          "score": 75.6831,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 35.9377,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pregnancy experience",
+          "score": 34.8027,
+          "evidence": []
+        },
+        {
+          "term": "lmics",
+          "score": 34.4351,
+          "evidence": []
+        },
+        {
+          "term": "mlcc",
+          "score": 34.1442,
+          "evidence": []
+        },
+        {
+          "term": "midwife-led continuity",
+          "score": 32.9291,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "group anc",
+          "score": 1.3462,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 1.2136,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 1.1246,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "anc contacts",
+          "score": 1.0906,
+          "evidence": []
+        },
+        {
+          "term": "anc model",
+          "score": 1.085,
+          "evidence": []
+        },
+        {
+          "term": "antenatal care",
+          "score": 1.0648,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy experience",
+          "score": 1.0097,
+          "evidence": []
+        },
+        {
+          "term": "health outcomes",
+          "score": 0.9412,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "group anc",
+          "score": 60.6127,
+          "evidence": []
+        },
+        {
+          "term": "anc model",
+          "score": 55.2486,
+          "evidence": []
+        },
+        {
+          "term": "anc contacts",
+          "score": 54.618,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 40.1482,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy experience",
+          "score": 24.0411,
+          "evidence": []
+        },
+        {
+          "term": "antenatal care",
+          "score": 21.2486,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 20.8355,
+          "evidence": []
+        },
+        {
+          "term": "evidence briefs",
+          "score": 20.8355,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "group anc",
+          "score": 1.3462,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 1.2136,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 1.1246,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "anc contacts",
+          "score": 1.0906,
+          "evidence": []
+        },
+        {
+          "term": "anc model",
+          "score": 1.085,
+          "evidence": []
+        },
+        {
+          "term": "antenatal care",
+          "score": 1.0648,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy experience",
+          "score": 1.0097,
+          "evidence": []
+        },
+        {
+          "term": "health outcomes",
+          "score": 0.9412,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "科研人员",
+          "score": 16.4224,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 15.3403,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 13.1608,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 13.0298,
+          "evidence": []
+        },
+        {
+          "term": "在其他情况下",
+          "score": 12.7009,
+          "evidence": []
+        },
+        {
+          "term": "如检疫",
+          "score": 11.7545,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 11.6989,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 10.8845,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-011-chapter-6-dissemination-applicability-and-updati": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "guideline recommendations",
+          "score": 3.71,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "guideline implementation",
+          "score": 1.6371,
+          "evidence": []
+        },
+        {
+          "term": "guideline development",
+          "score": 1.4784,
+          "evidence": []
+        },
+        {
+          "term": "scoping exercise",
+          "score": 1.2133,
+          "evidence": []
+        },
+        {
+          "term": "review team",
+          "score": 1.1729,
+          "evidence": []
+        },
+        {
+          "term": "anc",
+          "score": 1.0968,
+          "evidence": []
+        },
+        {
+          "term": "dissemination",
+          "score": 1.0656,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "updating",
+          "score": 1.0647,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "guideline recommendations",
+          "score": 149.0145,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "guideline implementation",
+          "score": 68.4039,
+          "evidence": []
+        },
+        {
+          "term": "guideline development",
+          "score": 59.6922,
+          "evidence": []
+        },
+        {
+          "term": "lack",
+          "score": 27.7406,
+          "evidence": []
+        },
+        {
+          "term": "review team",
+          "score": 23.1486,
+          "evidence": []
+        },
+        {
+          "term": "systematic review",
+          "score": 20.3369,
+          "evidence": []
+        },
+        {
+          "term": "rhr",
+          "score": 20.1484,
+          "evidence": []
+        },
+        {
+          "term": "anc",
+          "score": 18.9815,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "guideline recommendations",
+          "score": 2.4431,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "guideline development",
+          "score": 1.0514,
+          "evidence": []
+        },
+        {
+          "term": "guideline implementation",
+          "score": 0.9637,
+          "evidence": []
+        },
+        {
+          "term": "systematic review",
+          "score": 0.8144,
+          "evidence": []
+        },
+        {
+          "term": "steering group",
+          "score": 0.802,
+          "evidence": []
+        },
+        {
+          "term": "review team",
+          "score": 0.6803,
+          "evidence": []
+        },
+        {
+          "term": "perinatal health",
+          "score": 0.6327,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 0.5782,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "guideline recommendations",
+          "score": 61.4211,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "guideline development",
+          "score": 26.3218,
+          "evidence": []
+        },
+        {
+          "term": "guideline implementation",
+          "score": 24.8715,
+          "evidence": []
+        },
+        {
+          "term": "steering group",
+          "score": 18.2932,
+          "evidence": []
+        },
+        {
+          "term": "anc",
+          "score": 17.8829,
+          "evidence": []
+        },
+        {
+          "term": "systematic review",
+          "score": 15.7393,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 14.5276,
+          "evidence": []
+        },
+        {
+          "term": "gdg",
+          "score": 12.4441,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "guideline recommendations",
+          "score": 2.4431,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "guideline development",
+          "score": 1.0514,
+          "evidence": []
+        },
+        {
+          "term": "guideline implementation",
+          "score": 0.9637,
+          "evidence": []
+        },
+        {
+          "term": "systematic review",
+          "score": 0.8144,
+          "evidence": []
+        },
+        {
+          "term": "steering group",
+          "score": 0.802,
+          "evidence": []
+        },
+        {
+          "term": "review team",
+          "score": 0.6803,
+          "evidence": []
+        },
+        {
+          "term": "perinatal health",
+          "score": 0.6327,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 0.5782,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 15.7083,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 14.5864,
+          "evidence": []
+        },
+        {
+          "term": "教员询问其余学员每个报告人的报告有无遗漏什么内容",
+          "score": 14.3518,
+          "evidence": []
+        },
+        {
+          "term": "重要部分",
+          "score": 13.7287,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 12.0956,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 11.5032,
+          "evidence": []
+        },
+        {
+          "term": "风险最小化",
+          "score": 10.9965,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 10.6158,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-012-references": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "syst rev",
+          "score": 4.3105,
+          "evidence": []
+        },
+        {
+          "term": "accessed september",
+          "score": 4.2688,
+          "evidence": []
+        },
+        {
+          "term": "database syst",
+          "score": 4.0785,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy childbirth",
+          "score": 3.9072,
+          "evidence": []
+        },
+        {
+          "term": "accessed october",
+          "score": 3.7502,
+          "evidence": []
+        },
+        {
+          "term": "vitamin supplementation",
+          "score": 3.5835,
+          "evidence": []
+        },
+        {
+          "term": "cochrane database",
+          "score": 3.5514,
+          "evidence": []
+        },
+        {
+          "term": "bitstream eng",
+          "score": 3.5105,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "accessed september",
+          "score": 456.8683,
+          "evidence": []
+        },
+        {
+          "term": "syst rev",
+          "score": 398.1079,
+          "evidence": []
+        },
+        {
+          "term": "database syst",
+          "score": 369.9185,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy childbirth",
+          "score": 359.4022,
+          "evidence": []
+        },
+        {
+          "term": "accessed october",
+          "score": 350.809,
+          "evidence": []
+        },
+        {
+          "term": "cochrane database",
+          "score": 332.1752,
+          "evidence": []
+        },
+        {
+          "term": "publications pregnancy",
+          "score": 330.7858,
+          "evidence": []
+        },
+        {
+          "term": "during pregnancy",
+          "score": 316.7907,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "accessed september",
+          "score": 4.3037,
+          "evidence": []
+        },
+        {
+          "term": "accessed october",
+          "score": 3.8561,
+          "evidence": []
+        },
+        {
+          "term": "maternal perinatal",
+          "score": 3.8432,
+          "evidence": []
+        },
+        {
+          "term": "syst rev",
+          "score": 3.6805,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy childbirth",
+          "score": 3.6777,
+          "evidence": []
+        },
+        {
+          "term": "cochrane database",
+          "score": 3.6153,
+          "evidence": []
+        },
+        {
+          "term": "maternal caffeine",
+          "score": 3.4494,
+          "evidence": []
+        },
+        {
+          "term": "antenatal care",
+          "score": 3.4149,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "accessed september",
+          "score": 450.7369,
+          "evidence": []
+        },
+        {
+          "term": "accessed october",
+          "score": 351.3736,
+          "evidence": []
+        },
+        {
+          "term": "syst rev",
+          "score": 322.3853,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy childbirth",
+          "score": 320.43,
+          "evidence": []
+        },
+        {
+          "term": "publications pregnancy",
+          "score": 301.6418,
+          "evidence": []
+        },
+        {
+          "term": "database syst",
+          "score": 300.9883,
+          "evidence": []
+        },
+        {
+          "term": "during pregnancy",
+          "score": 293.3785,
+          "evidence": []
+        },
+        {
+          "term": "accessed june",
+          "score": 290.0712,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "accessed september",
+          "score": 4.3037,
+          "evidence": []
+        },
+        {
+          "term": "accessed october",
+          "score": 3.8561,
+          "evidence": []
+        },
+        {
+          "term": "maternal perinatal",
+          "score": 3.8432,
+          "evidence": []
+        },
+        {
+          "term": "syst rev",
+          "score": 3.6805,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy childbirth",
+          "score": 3.6777,
+          "evidence": []
+        },
+        {
+          "term": "cochrane database",
+          "score": 3.6153,
+          "evidence": []
+        },
+        {
+          "term": "maternal caffeine",
+          "score": 3.4494,
+          "evidence": []
+        },
+        {
+          "term": "antenatal care",
+          "score": 3.4149,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 66.6291,
+          "evidence": []
+        },
+        {
+          "term": "这些情况下",
+          "score": 40.674,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 40.0576,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 38.5939,
+          "evidence": []
+        },
+        {
+          "term": "监督机制",
+          "score": 36.1182,
+          "evidence": []
+        },
+        {
+          "term": "在sars",
+          "score": 30.0793,
+          "evidence": []
+        },
+        {
+          "term": "与世卫组织合作",
+          "score": 29.1371,
+          "evidence": []
+        },
+        {
+          "term": "见下面第",
+          "score": 29.0255,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-013-annex-1-external-experts-and-who-staff-involved": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "unsafe abortion",
+          "score": 2.7565,
+          "evidence": []
+        },
+        {
+          "term": "associate professor",
+          "score": 2.5852,
+          "evidence": []
+        },
+        {
+          "term": "senior maternal",
+          "score": 2.5667,
+          "evidence": []
+        },
+        {
+          "term": "department nutrition",
+          "score": 2.452,
+          "evidence": []
+        },
+        {
+          "term": "senior researcher",
+          "score": 2.4275,
+          "evidence": []
+        },
+        {
+          "term": "abortion team",
+          "score": 2.3366,
+          "evidence": []
+        },
+        {
+          "term": "preventing unsafe",
+          "score": 2.2488,
+          "evidence": []
+        },
+        {
+          "term": "united kingdom",
+          "score": 2.1331,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "maternal health",
+          "score": 110.4444,
+          "evidence": []
+        },
+        {
+          "term": "senior maternal",
+          "score": 102.3709,
+          "evidence": []
+        },
+        {
+          "term": "reproductive health",
+          "score": 99.8289,
+          "evidence": []
+        },
+        {
+          "term": "department nutrition",
+          "score": 92.6543,
+          "evidence": []
+        },
+        {
+          "term": "health institute",
+          "score": 86.1166,
+          "evidence": []
+        },
+        {
+          "term": "perinatal health",
+          "score": 84.7085,
+          "evidence": []
+        },
+        {
+          "term": "health advisor",
+          "score": 83.9387,
+          "evidence": []
+        },
+        {
+          "term": "child health",
+          "score": 82.3408,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health institute",
+          "score": 1.6612,
+          "evidence": []
+        },
+        {
+          "term": "united kingdom",
+          "score": 1.6078,
+          "evidence": []
+        },
+        {
+          "term": "maternal health",
+          "score": 1.3846,
+          "evidence": []
+        },
+        {
+          "term": "child health",
+          "score": 1.3285,
+          "evidence": []
+        },
+        {
+          "term": "global health",
+          "score": 1.3044,
+          "evidence": []
+        },
+        {
+          "term": "women health",
+          "score": 1.2742,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 1.2558,
+          "evidence": []
+        },
+        {
+          "term": "united nations",
+          "score": 1.2057,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "united kingdom",
+          "score": 56.9933,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 46.4866,
+          "evidence": []
+        },
+        {
+          "term": "health institute",
+          "score": 45.3958,
+          "evidence": []
+        },
+        {
+          "term": "global health",
+          "score": 41.6175,
+          "evidence": []
+        },
+        {
+          "term": "maternal health",
+          "score": 40.9866,
+          "evidence": []
+        },
+        {
+          "term": "united nations",
+          "score": 40.3453,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 40.2365,
+          "evidence": []
+        },
+        {
+          "term": "child health",
+          "score": 39.1262,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health institute",
+          "score": 1.6612,
+          "evidence": []
+        },
+        {
+          "term": "united kingdom",
+          "score": 1.6078,
+          "evidence": []
+        },
+        {
+          "term": "maternal health",
+          "score": 1.3846,
+          "evidence": []
+        },
+        {
+          "term": "child health",
+          "score": 1.3285,
+          "evidence": []
+        },
+        {
+          "term": "global health",
+          "score": 1.3044,
+          "evidence": []
+        },
+        {
+          "term": "women health",
+          "score": 1.2742,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 1.2558,
+          "evidence": []
+        },
+        {
+          "term": "united nations",
+          "score": 1.2057,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在sars",
+          "score": 141.3316,
+          "evidence": []
+        },
+        {
+          "term": "必要的",
+          "score": 115.4695,
+          "evidence": []
+        },
+        {
+          "term": "这些情况下",
+          "score": 94.9933,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 90.9814,
+          "evidence": []
+        },
+        {
+          "term": "在研究开始后",
+          "score": 89.3171,
+          "evidence": []
+        },
+        {
+          "term": "病毒疗法",
+          "score": 89.3171,
+          "evidence": []
+        },
+        {
+          "term": "在正常情况下",
+          "score": 80.8352,
+          "evidence": []
+        },
+        {
+          "term": "尤其在发展中国家",
+          "score": 77.9778,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-014-annex-2-other-who-guidelines-with-recommendation": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "anc",
+          "score": 3.8908,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "anc guideline",
+          "score": 3.0842,
+          "evidence": []
+        },
+        {
+          "term": "guideline supersedes",
+          "score": 2.6762,
+          "evidence": []
+        },
+        {
+          "term": "recommendation relevant",
+          "score": 2.0261,
+          "evidence": []
+        },
+        {
+          "term": "vitamin supplementation",
+          "score": 1.7641,
+          "evidence": []
+        },
+        {
+          "term": "guideline title",
+          "score": 1.7394,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 1.6009,
+          "evidence": []
+        },
+        {
+          "term": "acid supplementation",
+          "score": 1.5958,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "anc",
+          "score": 174.6299,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "anc guideline",
+          "score": 153.9233,
+          "evidence": []
+        },
+        {
+          "term": "guideline supersedes",
+          "score": 104.2183,
+          "evidence": []
+        },
+        {
+          "term": "guideline title",
+          "score": 75.9859,
+          "evidence": []
+        },
+        {
+          "term": "recommendation relevant",
+          "score": 75.9796,
+          "evidence": []
+        },
+        {
+          "term": "rhr",
+          "score": 50.3709,
+          "evidence": []
+        },
+        {
+          "term": "mca",
+          "score": 42.5982,
+          "evidence": []
+        },
+        {
+          "term": "department responsible",
+          "score": 42.0477,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "anc",
+          "score": 1.2358,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "anc guideline",
+          "score": 1.0582,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 0.9937,
+          "evidence": []
+        },
+        {
+          "term": "recommendations",
+          "score": 0.9192,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "newborn health",
+          "score": 0.6886,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy",
+          "score": 0.5093,
+          "evidence": []
+        },
+        {
+          "term": "vitamin supplementation",
+          "score": 0.469,
+          "evidence": []
+        },
+        {
+          "term": "maternal",
+          "score": 0.4674,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "anc",
+          "score": 124.7636,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "anc guideline",
+          "score": 82.4824,
+          "evidence": []
+        },
+        {
+          "term": "recommendation relevant",
+          "score": 28.3319,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 25.4671,
+          "evidence": []
+        },
+        {
+          "term": "guideline supersedes",
+          "score": 20.1006,
+          "evidence": []
+        },
+        {
+          "term": "guideline title",
+          "score": 20.1006,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 16.7854,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy",
+          "score": 14.5792,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "anc",
+          "score": 1.2358,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "anc guideline",
+          "score": 1.0582,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 0.9937,
+          "evidence": []
+        },
+        {
+          "term": "recommendations",
+          "score": 0.9192,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "newborn health",
+          "score": 0.6886,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy",
+          "score": 0.5093,
+          "evidence": []
+        },
+        {
+          "term": "guideline supersedes",
+          "score": 0.5035,
+          "evidence": []
+        },
+        {
+          "term": "vitamin supplementation",
+          "score": 0.469,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 46.5227,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 30.0199,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 24.083,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 23.17,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 22.9674,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 22.8462,
+          "evidence": []
+        },
+        {
+          "term": "在sars",
+          "score": 20.3933,
+          "evidence": []
+        },
+        {
+          "term": "这些情况下",
+          "score": 20.1366,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-015-annex-3-summary-of-declarations-of-interest-from": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "none declared",
+          "score": 3.2186,
+          "evidence": []
+        },
+        {
+          "term": "guideline development",
+          "score": 2.2226,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "gdg membership",
+          "score": 1.7593,
+          "evidence": []
+        },
+        {
+          "term": "serious enough",
+          "score": 1.6265,
+          "evidence": []
+        },
+        {
+          "term": "affect gdg",
+          "score": 1.4726,
+          "evidence": []
+        },
+        {
+          "term": "prof",
+          "score": 1.4639,
+          "evidence": []
+        },
+        {
+          "term": "systematic reviews",
+          "score": 1.4472,
+          "evidence": []
+        },
+        {
+          "term": "interest",
+          "score": 1.4424,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "none declared",
+          "score": 130.8079,
+          "evidence": []
+        },
+        {
+          "term": "applicable",
+          "score": 50.5054,
+          "evidence": []
+        },
+        {
+          "term": "guideline development",
+          "score": 45.8599,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nutrition",
+          "score": 38.7281,
+          "evidence": []
+        },
+        {
+          "term": "gdg membership",
+          "score": 38.0735,
+          "evidence": []
+        },
+        {
+          "term": "systematic reviews",
+          "score": 36.7835,
+          "evidence": []
+        },
+        {
+          "term": "prof",
+          "score": 33.5553,
+          "evidence": []
+        },
+        {
+          "term": "serious enough",
+          "score": 30.9754,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "guideline development",
+          "score": 1.434,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "group",
+          "score": 0.712,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "gdg",
+          "score": 0.5473,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "evidence synthesis",
+          "score": 0.5379,
+          "evidence": []
+        },
+        {
+          "term": "antenatal care",
+          "score": 0.5054,
+          "evidence": []
+        },
+        {
+          "term": "implementation research",
+          "score": 0.5031,
+          "evidence": []
+        },
+        {
+          "term": "systematic reviews",
+          "score": 0.4603,
+          "evidence": []
+        },
+        {
+          "term": "perinatal health",
+          "score": 0.4502,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "guideline development",
+          "score": 36.6481,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "gdg",
+          "score": 17.1565,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "group",
+          "score": 17.0041,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "considered serious",
+          "score": 15.1623,
+          "evidence": []
+        },
+        {
+          "term": "serious enough",
+          "score": 15.1623,
+          "evidence": []
+        },
+        {
+          "term": "interest",
+          "score": 14.5951,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "systematic reviews",
+          "score": 10.8836,
+          "evidence": []
+        },
+        {
+          "term": "affect gdg",
+          "score": 8.5783,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "guideline development",
+          "score": 1.434,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "group",
+          "score": 0.712,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "gdg",
+          "score": 0.5473,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "evidence synthesis",
+          "score": 0.5379,
+          "evidence": []
+        },
+        {
+          "term": "antenatal care",
+          "score": 0.5054,
+          "evidence": []
+        },
+        {
+          "term": "implementation research",
+          "score": 0.5031,
+          "evidence": []
+        },
+        {
+          "term": "systematic reviews",
+          "score": 0.4603,
+          "evidence": []
+        },
+        {
+          "term": "perinatal health",
+          "score": 0.4502,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "的材料",
+          "score": 90.1347,
+          "evidence": []
+        },
+        {
+          "term": "监督机制",
+          "score": 75.7337,
+          "evidence": []
+        },
+        {
+          "term": "在sars",
+          "score": 70.5479,
+          "evidence": []
+        },
+        {
+          "term": "其它技术术语",
+          "score": 67.1792,
+          "evidence": []
+        },
+        {
+          "term": "大流行性流感防范生物材料或pip生物材料",
+          "score": 67.1792,
+          "evidence": []
+        },
+        {
+          "term": "利益相关者",
+          "score": 64.5937,
+          "evidence": []
+        },
+        {
+          "term": "见下面第",
+          "score": 63.2863,
+          "evidence": []
+        },
+        {
+          "term": "这些情况下",
+          "score": 60.2644,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-016-annex-4-implementation-considerations-for-anc-gu": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "anc guideline",
+          "score": 5.9901,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "guideline recommendations",
+          "score": 3.838,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "group-based counselling",
+          "score": 3.4542,
+          "evidence": []
+        },
+        {
+          "term": "counsel counselling",
+          "score": 3.3917,
+          "evidence": []
+        },
+        {
+          "term": "shifting group-based",
+          "score": 3.3108,
+          "evidence": []
+        },
+        {
+          "term": "counselling skills",
+          "score": 3.134,
+          "evidence": []
+        },
+        {
+          "term": "implementation considerations",
+          "score": 3.0742,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "counselling task",
+          "score": 3.0474,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "anc guideline",
+          "score": 278.2892,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "counsel counselling",
+          "score": 221.2198,
+          "evidence": []
+        },
+        {
+          "term": "counselling task",
+          "score": 217.7331,
+          "evidence": []
+        },
+        {
+          "term": "counselling skills",
+          "score": 214.0379,
+          "evidence": []
+        },
+        {
+          "term": "group-based counselling",
+          "score": 201.4104,
+          "evidence": []
+        },
+        {
+          "term": "counselling time",
+          "score": 190.3045,
+          "evidence": []
+        },
+        {
+          "term": "counselling dispensing",
+          "score": 187.9622,
+          "evidence": []
+        },
+        {
+          "term": "counselling gender",
+          "score": 169.9229,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "anc guideline",
+          "score": 3.7797,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "guideline recommendations",
+          "score": 2.254,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "anc providers",
+          "score": 1.9186,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 1.8117,
+          "evidence": []
+        },
+        {
+          "term": "antenatal care",
+          "score": 1.7614,
+          "evidence": []
+        },
+        {
+          "term": "anc contacts",
+          "score": 1.7162,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy experience",
+          "score": 1.6699,
+          "evidence": []
+        },
+        {
+          "term": "during pregnancy",
+          "score": 1.6593,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "anc guideline",
+          "score": 205.6802,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "anc providers",
+          "score": 100.6945,
+          "evidence": []
+        },
+        {
+          "term": "anc contacts",
+          "score": 95.6972,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 70.7994,
+          "evidence": []
+        },
+        {
+          "term": "doppler ultrasound",
+          "score": 65.4137,
+          "evidence": []
+        },
+        {
+          "term": "guideline recommendations",
+          "score": 61.9156,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "women task",
+          "score": 54.5345,
+          "evidence": []
+        },
+        {
+          "term": "during pregnancy",
+          "score": 52.9389,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "anc guideline",
+          "score": 3.7797,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "guideline recommendations",
+          "score": 2.254,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "anc providers",
+          "score": 1.9186,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 1.8117,
+          "evidence": []
+        },
+        {
+          "term": "antenatal care",
+          "score": 1.7614,
+          "evidence": []
+        },
+        {
+          "term": "anc contacts",
+          "score": 1.7162,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy experience",
+          "score": 1.6699,
+          "evidence": []
+        },
+        {
+          "term": "during pregnancy",
+          "score": 1.6593,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "到辩护",
+          "score": 22.0391,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 21.1477,
+          "evidence": []
+        },
+        {
+          "term": "如检疫",
+          "score": 17.4436,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 15.9922,
+          "evidence": []
+        },
+        {
+          "term": "招募了",
+          "score": 15.9892,
+          "evidence": []
+        },
+        {
+          "term": "关注这一事实",
+          "score": 15.82,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 15.4158,
+          "evidence": []
+        },
+        {
+          "term": "肺炎疫苗试验",
+          "score": 15.1841,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "anc guideline",
+          "score": 1.9343,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy experience",
+          "score": 1.4483,
+          "evidence": []
+        },
+        {
+          "term": "web annex",
+          "score": 1.4476,
+          "evidence": []
+        },
+        {
+          "term": "antenatal care",
+          "score": 1.4374,
+          "evidence": []
+        },
+        {
+          "term": "web supplement",
+          "score": 1.3168,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 1.2319,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 1.2272,
+          "evidence": []
+        },
+        {
+          "term": "guideline development",
+          "score": 1.0284,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "anc guideline",
+          "score": 41.8088,
+          "evidence": []
+        },
+        {
+          "term": "web annex",
+          "score": 33.6323,
+          "evidence": []
+        },
+        {
+          "term": "antenatal care",
+          "score": 30.0898,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy experience",
+          "score": 28.1126,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 26.6291,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 26.2013,
+          "evidence": []
+        },
+        {
+          "term": "web supplement",
+          "score": 24.4074,
+          "evidence": []
+        },
+        {
+          "term": "guideline development",
+          "score": 22.7095,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health organization",
+          "score": 0.9633,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.9493,
+          "evidence": []
+        },
+        {
+          "term": "anc guideline",
+          "score": 0.7489,
+          "evidence": []
+        },
+        {
+          "term": "guideline development",
+          "score": 0.6097,
+          "evidence": []
+        },
+        {
+          "term": "web annex",
+          "score": 0.5648,
+          "evidence": []
+        },
+        {
+          "term": "antenatal care",
+          "score": 0.5144,
+          "evidence": []
+        },
+        {
+          "term": "development group",
+          "score": 0.4994,
+          "evidence": []
+        },
+        {
+          "term": "recommendations",
+          "score": 0.4573,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "anc guideline",
+          "score": 28.1748,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 14.6102,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 14.5399,
+          "evidence": []
+        },
+        {
+          "term": "guideline development",
+          "score": 13.1677,
+          "evidence": []
+        },
+        {
+          "term": "development group",
+          "score": 9.1128,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy experience",
+          "score": 8.8344,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 7.5837,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 7.3414,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health organization",
+          "score": 0.9633,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.9493,
+          "evidence": []
+        },
+        {
+          "term": "anc guideline",
+          "score": 0.7489,
+          "evidence": []
+        },
+        {
+          "term": "guideline development",
+          "score": 0.6097,
+          "evidence": []
+        },
+        {
+          "term": "web annex",
+          "score": 0.5648,
+          "evidence": []
+        },
+        {
+          "term": "antenatal care",
+          "score": 0.5144,
+          "evidence": []
+        },
+        {
+          "term": "development group",
+          "score": 0.4994,
+          "evidence": []
+        },
+        {
+          "term": "recommendations",
+          "score": 0.4573,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在sars",
+          "score": 29.0075,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 27.2534,
+          "evidence": []
+        },
+        {
+          "term": "可能会",
+          "score": 22.1238,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 21.572,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 21.572,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 21.1732,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 21.1332,
+          "evidence": []
+        },
+        {
+          "term": "必要的",
+          "score": 20.608,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

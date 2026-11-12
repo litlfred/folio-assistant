@@ -1,0 +1,952 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/integrations/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/directory/integrations",
+      "@type": "bootstrap:Subgraph",
+      "contentSource": {
+        "declaredIn": "default",
+        "kind": "directory"
+      },
+      "description": "The integrations sub-graph — a NAMED SUB-GRAPH of the harness, OPT-IN like `sdlc`: off in every layer unless that layer lists `cat-harness.integrations` in its own `enableSubgraphs` (owner, 2026-11-10, card Q-SG-1 C, wave 1). It holds the Tool definitions that bind the harness to an outside service: the git hosts' change-proposal tools (`github-pr-*`, `github-branches`, `gitlab-mr-*`, `gitlab-branches`, whose operations `skills-and-tools` names), the MCP capture and server-image tools, and `upload-step-docs`. The graph inside it, `integrations-tools`, is declared FROM WITHIN, in `integrations/graph.json`. Their implementations stay in the tools layer (https://github.com/litlfred/cat-harness-tools).",
+      "fileCount": 0,
+      "holdsGraph": [
+        "cat-harness:graphTypology/cat-harness"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/integrations",
+      "name": "integrations",
+      "path": "integrations/"
+    }
+  ],
+  "hasSubgraph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/integrations/tools/",
+      "@type": "bootstrap:Subgraph",
+      "hasSubgraph": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/integrations/tools/github-branches/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/github-branches.jsonld",
+              "@type": "cat-harness:Tool",
+              "description": "List the branch names of the current checkout's GitHub project, as the forge reports them.",
+              "install": {
+                "cli": "gh"
+              },
+              "invoke": {
+                "shell": "gh api --paginate --jq .[].name repos/{owner}/{repo}/branches"
+              },
+              "io": {
+                "inputs": [],
+                "outputs": [
+                  {
+                    "description": "One branch name per line.",
+                    "name": "branches",
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+                  }
+                ]
+              },
+              "name": "github-branches",
+              "requirements": {
+                "network": true
+              },
+              "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/coordinate",
+              "title": "List branches (GitHub)"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/tools"
+          ],
+          "name": "integrations/tools/github-branches",
+          "path": "integrations/tools/github-branches/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/integrations/tools/github-pr-checks/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/github-pr-checks.jsonld",
+              "@type": "cat-harness:Tool",
+              "description": "Read the check runs of one pull request and their state.",
+              "install": {
+                "cli": "gh"
+              },
+              "invoke": {
+                "shell": "gh pr checks"
+              },
+              "io": {
+                "inputs": [
+                  {
+                    "arg": {
+                      "positional": 0
+                    },
+                    "description": "Absent: the change proposal of the current branch.",
+                    "name": "number",
+                    "required": false,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ChangeProposalNumber"
+                  }
+                ],
+                "outputs": [
+                  {
+                    "description": "One line per check run: name, state, elapsed time, link.",
+                    "name": "checks",
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+                  }
+                ]
+              },
+              "name": "github-pr-checks",
+              "requirements": {
+                "network": true
+              },
+              "satisfies": [
+                "https://litlfred.github.io/folio-assistant/cat-harness/skill/prepare-merge-auto",
+                "https://litlfred.github.io/folio-assistant/cat-harness/skill/watch"
+              ],
+              "title": "Read a pull request's checks (GitHub)"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/tools"
+          ],
+          "name": "integrations/tools/github-pr-checks",
+          "path": "integrations/tools/github-pr-checks/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/integrations/tools/github-pr-comment/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/github-pr-comment.jsonld",
+              "@type": "cat-harness:Tool",
+              "description": "Add a comment to one pull request. The comment is read from stdin, never from the command line.",
+              "install": {
+                "cli": "gh"
+              },
+              "invoke": {
+                "shell": "gh pr comment --body-file -"
+              },
+              "io": {
+                "inputs": [
+                  {
+                    "arg": {
+                      "positional": 0
+                    },
+                    "description": "Absent: the change proposal of the current branch.",
+                    "name": "number",
+                    "required": false,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ChangeProposalNumber"
+                  },
+                  {
+                    "arg": {
+                      "stdin": true
+                    },
+                    "description": "The comment.",
+                    "name": "body",
+                    "required": true,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+                  }
+                ],
+                "outputs": [
+                  {
+                    "description": "The comment created, as the forge CLI prints it.",
+                    "name": "url",
+                    "render": {
+                      "as": "url",
+                      "reason": "a reader follows it to the comment; the scheme is checked before it reaches an href"
+                    },
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Url"
+                  }
+                ]
+              },
+              "name": "github-pr-comment",
+              "requirements": {
+                "network": true
+              },
+              "satisfies": [
+                "https://litlfred.github.io/folio-assistant/cat-harness/skill/prepare-merge-auto",
+                "https://litlfred.github.io/folio-assistant/cat-harness/skill/coordinate"
+              ],
+              "title": "Comment on a pull request (GitHub)"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/tools"
+          ],
+          "name": "integrations/tools/github-pr-comment",
+          "path": "integrations/tools/github-pr-comment/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/integrations/tools/github-pr-files/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/github-pr-files.jsonld",
+              "@type": "cat-harness:Tool",
+              "description": "List the paths one pull request changes.",
+              "install": {
+                "cli": "gh"
+              },
+              "invoke": {
+                "shell": "gh pr diff --name-only"
+              },
+              "io": {
+                "inputs": [
+                  {
+                    "arg": {
+                      "positional": 0
+                    },
+                    "description": "Absent: the change proposal of the current branch.",
+                    "name": "number",
+                    "required": false,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ChangeProposalNumber"
+                  }
+                ],
+                "outputs": [
+                  {
+                    "description": "One repository path per line.",
+                    "name": "files",
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+                  }
+                ]
+              },
+              "name": "github-pr-files",
+              "requirements": {
+                "network": true
+              },
+              "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/coordinate",
+              "title": "List a pull request's changed files (GitHub)"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/tools"
+          ],
+          "name": "integrations/tools/github-pr-files",
+          "path": "integrations/tools/github-pr-files/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/integrations/tools/github-pr-list/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/github-pr-list.jsonld",
+              "@type": "cat-harness:Tool",
+              "description": "List the open pull requests of the current checkout's GitHub project, optionally only those from one branch.",
+              "install": {
+                "cli": "gh"
+              },
+              "invoke": {
+                "shell": "gh pr list"
+              },
+              "io": {
+                "inputs": [
+                  {
+                    "arg": {
+                      "flag": "--head"
+                    },
+                    "description": "Only proposals whose source branch is this.",
+                    "name": "branch",
+                    "required": false,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Branch"
+                  }
+                ],
+                "outputs": [
+                  {
+                    "description": "One line per open change proposal: number, title, source branch.",
+                    "name": "proposals",
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+                  }
+                ]
+              },
+              "name": "github-pr-list",
+              "requirements": {
+                "network": true
+              },
+              "satisfies": [
+                "https://litlfred.github.io/folio-assistant/cat-harness/skill/prepare-merge-auto",
+                "https://litlfred.github.io/folio-assistant/cat-harness/skill/pickup",
+                "https://litlfred.github.io/folio-assistant/cat-harness/skill/coordinate"
+              ],
+              "title": "List pull requests (GitHub)"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/tools"
+          ],
+          "name": "integrations/tools/github-pr-list",
+          "path": "integrations/tools/github-pr-list/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/integrations/tools/github-pr-request-review/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/github-pr-request-review.jsonld",
+              "@type": "cat-harness:Tool",
+              "description": "Ask one or more accounts to review a pull request. Adds to the reviewers already requested.",
+              "install": {
+                "cli": "gh"
+              },
+              "invoke": {
+                "shell": "gh pr edit"
+              },
+              "io": {
+                "inputs": [
+                  {
+                    "arg": {
+                      "positional": 0
+                    },
+                    "description": "Absent: the change proposal of the current branch.",
+                    "name": "number",
+                    "required": false,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ChangeProposalNumber"
+                  },
+                  {
+                    "arg": {
+                      "flag": "--add-reviewer"
+                    },
+                    "name": "reviewers",
+                    "repeated": true,
+                    "required": true,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Login"
+                  }
+                ],
+                "outputs": [
+                  {
+                    "description": "The pull request.",
+                    "name": "url",
+                    "render": {
+                      "as": "url",
+                      "reason": "a reader follows it to the proposal; the scheme is checked before it reaches an href"
+                    },
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Url"
+                  }
+                ]
+              },
+              "name": "github-pr-request-review",
+              "requirements": {
+                "network": true
+              },
+              "satisfies": [
+                "https://litlfred.github.io/folio-assistant/cat-harness/skill/pickup",
+                "https://litlfred.github.io/folio-assistant/cat-harness/skill/prepare-merge-auto"
+              ],
+              "title": "Request review on a pull request (GitHub)"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/tools"
+          ],
+          "name": "integrations/tools/github-pr-request-review",
+          "path": "integrations/tools/github-pr-request-review/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/integrations/tools/github-pr-resolve-thread/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/github-pr-resolve-thread.jsonld",
+              "@type": "cat-harness:Tool",
+              "description": "Mark one review thread on a pull request as resolved. A GitHub thread id names its pull request, so no number is needed.",
+              "install": {
+                "cli": "gh"
+              },
+              "invoke": {
+                "shell": "bun run cat github:resolve-thread"
+              },
+              "io": {
+                "inputs": [
+                  {
+                    "arg": {
+                      "positional": 0
+                    },
+                    "description": "The review thread's node id, e.g. PRRT_kwDO…",
+                    "name": "thread",
+                    "required": true,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ReviewThreadId"
+                  }
+                ],
+                "outputs": []
+              },
+              "name": "github-pr-resolve-thread",
+              "requirements": {
+                "network": true
+              },
+              "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/coordinate",
+              "title": "Resolve a review thread on a pull request (GitHub)"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/tools"
+          ],
+          "name": "integrations/tools/github-pr-resolve-thread",
+          "path": "integrations/tools/github-pr-resolve-thread/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/integrations/tools/github-pr-view/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/github-pr-view.jsonld",
+              "@type": "cat-harness:Tool",
+              "description": "Read one pull request: title, state, body, and its comments and reviews.",
+              "install": {
+                "cli": "gh"
+              },
+              "invoke": {
+                "shell": "gh pr view --comments"
+              },
+              "io": {
+                "inputs": [
+                  {
+                    "arg": {
+                      "positional": 0
+                    },
+                    "description": "Absent: the change proposal of the current branch.",
+                    "name": "number",
+                    "required": false,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ChangeProposalNumber"
+                  }
+                ],
+                "outputs": [
+                  {
+                    "description": "The proposal as the forge prints it, comments included.",
+                    "name": "proposal",
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+                  }
+                ]
+              },
+              "name": "github-pr-view",
+              "requirements": {
+                "network": true
+              },
+              "satisfies": [
+                "https://litlfred.github.io/folio-assistant/cat-harness/skill/prepare-merge-auto",
+                "https://litlfred.github.io/folio-assistant/cat-harness/skill/pickup",
+                "https://litlfred.github.io/folio-assistant/cat-harness/skill/watch",
+                "https://litlfred.github.io/folio-assistant/cat-harness/skill/coordinate"
+              ],
+              "title": "Read a pull request (GitHub)"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/tools"
+          ],
+          "name": "integrations/tools/github-pr-view",
+          "path": "integrations/tools/github-pr-view/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/integrations/tools/gitlab-branches/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/gitlab-branches.jsonld",
+              "@type": "cat-harness:Tool",
+              "description": "List the branch names of the current checkout's GitLab project, as the forge reports them.",
+              "install": {
+                "cli": "glab"
+              },
+              "invoke": {
+                "shell": "glab api --paginate projects/:id/repository/branches"
+              },
+              "io": {
+                "inputs": [],
+                "outputs": [
+                  {
+                    "description": "The branches as the API returns them, one JSON object each.",
+                    "name": "branches",
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+                  }
+                ]
+              },
+              "name": "gitlab-branches",
+              "requirements": {
+                "network": true
+              },
+              "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/coordinate",
+              "title": "List branches (GitLab)"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/tools"
+          ],
+          "name": "integrations/tools/gitlab-branches",
+          "path": "integrations/tools/gitlab-branches/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/integrations/tools/gitlab-mr-comment/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/gitlab-mr-comment.jsonld",
+              "@type": "cat-harness:Tool",
+              "description": "Add a comment to one merge request. The comment is read from stdin, never from the command line.",
+              "install": {
+                "cli": "glab"
+              },
+              "invoke": {
+                "shell": "glab mr note create"
+              },
+              "io": {
+                "inputs": [
+                  {
+                    "arg": {
+                      "positional": 0
+                    },
+                    "description": "Absent: the change proposal of the current branch.",
+                    "name": "number",
+                    "required": false,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ChangeProposalNumber"
+                  },
+                  {
+                    "arg": {
+                      "stdin": true
+                    },
+                    "description": "The comment.",
+                    "name": "body",
+                    "required": true,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+                  }
+                ],
+                "outputs": [
+                  {
+                    "description": "The comment created, as the forge CLI prints it.",
+                    "name": "url",
+                    "render": {
+                      "as": "url",
+                      "reason": "a reader follows it to the comment; the scheme is checked before it reaches an href"
+                    },
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Url"
+                  }
+                ]
+              },
+              "name": "gitlab-mr-comment",
+              "requirements": {
+                "network": true
+              },
+              "satisfies": [
+                "https://litlfred.github.io/folio-assistant/cat-harness/skill/prepare-merge-auto",
+                "https://litlfred.github.io/folio-assistant/cat-harness/skill/coordinate"
+              ],
+              "title": "Comment on a merge request (GitLab)"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/tools"
+          ],
+          "name": "integrations/tools/gitlab-mr-comment",
+          "path": "integrations/tools/gitlab-mr-comment/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/integrations/tools/gitlab-mr-files/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/gitlab-mr-files.jsonld",
+              "@type": "cat-harness:Tool",
+              "description": "List the paths one merge request changes.",
+              "install": {
+                "cli": "glab"
+              },
+              "invoke": {
+                "shell": "bun run cat gitlab:mr-files"
+              },
+              "io": {
+                "inputs": [
+                  {
+                    "arg": {
+                      "positional": 0
+                    },
+                    "description": "Absent: the change proposal of the current branch.",
+                    "name": "number",
+                    "required": false,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ChangeProposalNumber"
+                  }
+                ],
+                "outputs": [
+                  {
+                    "description": "One repository path per line.",
+                    "name": "files",
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+                  }
+                ]
+              },
+              "name": "gitlab-mr-files",
+              "requirements": {
+                "network": true
+              },
+              "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/coordinate",
+              "title": "List a merge request's changed files (GitLab)"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/tools"
+          ],
+          "name": "integrations/tools/gitlab-mr-files",
+          "path": "integrations/tools/gitlab-mr-files/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/integrations/tools/gitlab-mr-list/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/gitlab-mr-list.jsonld",
+              "@type": "cat-harness:Tool",
+              "description": "List the open merge requests of the current checkout's GitLab project, optionally only those from one branch.",
+              "install": {
+                "cli": "glab"
+              },
+              "invoke": {
+                "shell": "glab mr list"
+              },
+              "io": {
+                "inputs": [
+                  {
+                    "arg": {
+                      "flag": "--source-branch"
+                    },
+                    "description": "Only proposals whose source branch is this.",
+                    "name": "branch",
+                    "required": false,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Branch"
+                  }
+                ],
+                "outputs": [
+                  {
+                    "description": "One line per open change proposal: number, title, source branch.",
+                    "name": "proposals",
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+                  }
+                ]
+              },
+              "name": "gitlab-mr-list",
+              "requirements": {
+                "network": true
+              },
+              "satisfies": [
+                "https://litlfred.github.io/folio-assistant/cat-harness/skill/prepare-merge-auto",
+                "https://litlfred.github.io/folio-assistant/cat-harness/skill/pickup",
+                "https://litlfred.github.io/folio-assistant/cat-harness/skill/coordinate"
+              ],
+              "title": "List merge requests (GitLab)"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/tools"
+          ],
+          "name": "integrations/tools/gitlab-mr-list",
+          "path": "integrations/tools/gitlab-mr-list/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/integrations/tools/gitlab-mr-request-review/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/gitlab-mr-request-review.jsonld",
+              "@type": "cat-harness:Tool",
+              "description": "Ask one or more users to review a merge request. Adds to the reviewers already requested.",
+              "install": {
+                "cli": "glab"
+              },
+              "invoke": {
+                "shell": "bun run cat gitlab:request-review"
+              },
+              "io": {
+                "inputs": [
+                  {
+                    "arg": {
+                      "positional": 0
+                    },
+                    "description": "Absent: the merge request of the current branch.",
+                    "name": "number",
+                    "required": false,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ChangeProposalNumber"
+                  },
+                  {
+                    "arg": {
+                      "positional": 1
+                    },
+                    "description": "GitLab usernames, without the @.",
+                    "name": "reviewers",
+                    "repeated": true,
+                    "required": true,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/GitLabUsername"
+                  }
+                ],
+                "outputs": []
+              },
+              "name": "gitlab-mr-request-review",
+              "requirements": {
+                "network": true
+              },
+              "satisfies": [
+                "https://litlfred.github.io/folio-assistant/cat-harness/skill/pickup",
+                "https://litlfred.github.io/folio-assistant/cat-harness/skill/prepare-merge-auto"
+              ],
+              "title": "Request review on a merge request (GitLab)"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/tools"
+          ],
+          "name": "integrations/tools/gitlab-mr-request-review",
+          "path": "integrations/tools/gitlab-mr-request-review/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/integrations/tools/gitlab-mr-resolve-thread/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/gitlab-mr-resolve-thread.jsonld",
+              "@type": "cat-harness:Tool",
+              "description": "Mark one discussion on a merge request as resolved.",
+              "install": {
+                "cli": "glab"
+              },
+              "invoke": {
+                "shell": "glab mr note resolve"
+              },
+              "io": {
+                "inputs": [
+                  {
+                    "arg": {
+                      "positional": 0
+                    },
+                    "description": "Absent: the merge request of the current branch.",
+                    "name": "number",
+                    "required": false,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ChangeProposalNumber"
+                  },
+                  {
+                    "arg": {
+                      "positional": 1
+                    },
+                    "description": "The discussion id, or a prefix of 8 or more of it.",
+                    "name": "thread",
+                    "required": true,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ReviewThreadId"
+                  }
+                ],
+                "outputs": []
+              },
+              "name": "gitlab-mr-resolve-thread",
+              "requirements": {
+                "network": true
+              },
+              "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/coordinate",
+              "title": "Resolve a review thread on a merge request (GitLab)"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/tools"
+          ],
+          "name": "integrations/tools/gitlab-mr-resolve-thread",
+          "path": "integrations/tools/gitlab-mr-resolve-thread/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/integrations/tools/gitlab-mr-view/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/gitlab-mr-view.jsonld",
+              "@type": "cat-harness:Tool",
+              "description": "Read one merge request: title, state, body, and its comments and reviews.",
+              "install": {
+                "cli": "glab"
+              },
+              "invoke": {
+                "shell": "glab mr view --comments"
+              },
+              "io": {
+                "inputs": [
+                  {
+                    "arg": {
+                      "positional": 0
+                    },
+                    "description": "Absent: the change proposal of the current branch.",
+                    "name": "number",
+                    "required": false,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ChangeProposalNumber"
+                  }
+                ],
+                "outputs": [
+                  {
+                    "description": "The proposal as the forge prints it, comments included.",
+                    "name": "proposal",
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+                  }
+                ]
+              },
+              "name": "gitlab-mr-view",
+              "requirements": {
+                "network": true
+              },
+              "satisfies": [
+                "https://litlfred.github.io/folio-assistant/cat-harness/skill/prepare-merge-auto",
+                "https://litlfred.github.io/folio-assistant/cat-harness/skill/pickup",
+                "https://litlfred.github.io/folio-assistant/cat-harness/skill/watch",
+                "https://litlfred.github.io/folio-assistant/cat-harness/skill/coordinate"
+              ],
+              "title": "Read a merge request (GitLab)"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/tools"
+          ],
+          "name": "integrations/tools/gitlab-mr-view",
+          "path": "integrations/tools/gitlab-mr-view/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/integrations/tools/mcp-capture/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/mcp-capture.jsonld",
+              "@type": "cat-harness:Tool",
+              "description": "Read the real tool surface from the registrars by mounting each against a capture object — the same objects the server asks, so the Zod shapes and their optionality are the served ones rather than a reading of the source.",
+              "install": {
+                "none": true
+              },
+              "invoke": {
+                "shell": "bun run cat mcp:capture"
+              },
+              "io": {
+                "inputs": [
+                  {
+                    "arg": {
+                      "flag": "--json"
+                    },
+                    "description": "Emit `{tools, problems}` as JSON for a consumer, instead of the table for a reader.",
+                    "name": "json",
+                    "required": false,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+                  }
+                ],
+                "outputs": [
+                  {
+                    "description": "One row per served tool with its module and its required/optional keys. Three exit codes: 0 the surface was captured whole, 2 one or more modules COULD NOT BE READ so the capture is incomplete, and no equivalence verdict may be drawn from it. There is no exit 1 — this tool reports what is served and never judges it.",
+                    "name": "surface",
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+                  }
+                ]
+              },
+              "name": "mcp-capture",
+              "requirements": {
+                "network": false,
+                "runtime": [
+                  "bun"
+                ]
+              },
+              "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/mcp-contract",
+              "title": "What this layer's MCP server serves"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/tools"
+          ],
+          "name": "integrations/tools/mcp-capture",
+          "path": "integrations/tools/mcp-capture/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/integrations/tools/mcp-server-image/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/mcp-server-image.jsonld",
+              "@type": "cat-harness:Tool",
+              "description": "Build and run the folio MCP server as one image carrying Bun, TeX Live, Lean, lean-lsp-mcp and the generated Python set — the image `deploy/` serves behind the auth gateway. Run it with `docker run -i --rm paper-assistant --stdio`, or `--http` on port 8080.",
+              "install": {
+                "container": "bun run cat mcp:image"
+              },
+              "invoke": {
+                "manual": true
+              },
+              "io": {
+                "inputs": [],
+                "outputs": []
+              },
+              "name": "mcp-server-image",
+              "requirements": {
+                "network": true,
+                "runtime": [
+                  "docker"
+                ]
+              },
+              "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/deployment-auth",
+              "title": "folio MCP server, as a container"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/tools"
+          ],
+          "name": "integrations/tools/mcp-server-image",
+          "path": "integrations/tools/mcp-server-image/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/integrations/tools/upload-step-docs/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/upload-step-docs.jsonld",
+              "@type": "cat-harness:Tool",
+              "description": "Render document ingestion's FIRST step as a reference page, generated from the Tool nodes that implement it: the step, its lane and role, its skill and every Tool whose `satisfies` names that skill, with each Tool's description, installation, invocation, typed ports and selection triple. Everything but the process file's own path is derived — the start event, the activity its single outgoing flow reaches, and that activity's skill — so a step inserted, renamed or re-pointed moves the page rather than staling a literal. Refuses rather than emitting a partial page when the start event flows nowhere or to more than one place, when the first step is not an activity, when it names no skill or several, or when NO Tool satisfies that skill — the last because an empty page reads as a documented absence of mechanism, which is a finding rather than a document.",
+              "install": {
+                "none": true
+              },
+              "invoke": {
+                "shell": "bun run cat upload-step:docs"
+              },
+              "io": {
+                "inputs": [
+                  {
+                    "arg": {
+                      "flag": "--check"
+                    },
+                    "description": "Compare against the committed page and fail if stale, instead of writing.",
+                    "name": "check",
+                    "required": false,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+                  }
+                ],
+                "outputs": [
+                  {
+                    "description": "`docs/reference/upload-step/index.md`, under the layer's declared site directory. Never hand-edited.",
+                    "name": "page",
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+                  }
+                ]
+              },
+              "name": "upload-step-docs",
+              "requirements": {
+                "network": false,
+                "runtime": [
+                  "bun"
+                ]
+              },
+              "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/docs-generation",
+              "title": "The upload step, from its Tools"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/tools"
+          ],
+          "name": "integrations/tools/upload-step-docs",
+          "path": "integrations/tools/upload-step-docs/"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "integrations/tools",
+      "path": "integrations/tools/"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/cat-harness"
+  ],
+  "name": "integrations",
+  "path": "integrations/"
+}

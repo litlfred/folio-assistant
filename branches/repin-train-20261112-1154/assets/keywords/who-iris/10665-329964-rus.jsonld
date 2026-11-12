@@ -1,0 +1,1084 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-329964-rus",
+  "instance": "who-iris",
+  "about": "library/10665-329964-rus",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7393,
+    "terms": 71095
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "социальных сетей",
+        "score": 9.9389,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "партнеров социальных",
+        "score": 9.0212,
+        "evidence": []
+      },
+      {
+        "term": "партнеров вич-инфицированных",
+        "score": 8.0653,
+        "evidence": []
+      },
+      {
+        "term": "сетей для",
+        "score": 7.6326,
+        "evidence": []
+      },
+      {
+        "term": "использованием социальных",
+        "score": 7.4157,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "партнеров вич",
+        "score": 7.3163,
+        "evidence": []
+      },
+      {
+        "term": "социальных контактов",
+        "score": 7.1856,
+        "evidence": []
+      },
+      {
+        "term": "использовании социальных",
+        "score": 7.0581,
+        "evidence": []
+      },
+      {
+        "term": "вич-инфицированных лиц",
+        "score": 6.7763,
+        "evidence": []
+      },
+      {
+        "term": "сетей среди",
+        "score": 6.7744,
+        "evidence": []
+      },
+      {
+        "term": "сетей могут",
+        "score": 6.7484,
+        "evidence": []
+      },
+      {
+        "term": "лиц подходы",
+        "score": 6.7423,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "социальных сетей",
+        "score": 407.4111,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "партнеров социальных",
+        "score": 367.1333,
+        "evidence": []
+      },
+      {
+        "term": "сетей для",
+        "score": 316.8877,
+        "evidence": []
+      },
+      {
+        "term": "партнеров вич",
+        "score": 302.4151,
+        "evidence": []
+      },
+      {
+        "term": "использованием социальных",
+        "score": 292.6581,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "партнеров вич-инфицированных",
+        "score": 278.2078,
+        "evidence": []
+      },
+      {
+        "term": "социальных контактов",
+        "score": 254.0437,
+        "evidence": []
+      },
+      {
+        "term": "сетей могут",
+        "score": 246.6988,
+        "evidence": []
+      },
+      {
+        "term": "использовании социальных",
+        "score": 241.747,
+        "evidence": []
+      },
+      {
+        "term": "сетей среди",
+        "score": 240.2469,
+        "evidence": []
+      },
+      {
+        "term": "услуг для",
+        "score": 232.9509,
+        "evidence": []
+      },
+      {
+        "term": "для ключевых",
+        "score": 231.9623,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "услуг для",
+        "score": 2.6229,
+        "evidence": []
+      },
+      {
+        "term": "особенно для",
+        "score": 1.892,
+        "evidence": []
+      },
+      {
+        "term": "для ключевых",
+        "score": 1.8855,
+        "evidence": []
+      },
+      {
+        "term": "для партнеров",
+        "score": 1.8752,
+        "evidence": []
+      },
+      {
+        "term": "значение для",
+        "score": 1.636,
+        "evidence": []
+      },
+      {
+        "term": "сетей для",
+        "score": 1.636,
+        "evidence": []
+      },
+      {
+        "term": "населения воз",
+        "score": 1.5862,
+        "evidence": []
+      },
+      {
+        "term": "организация здравоохранения",
+        "score": 1.4851,
+        "evidence": []
+      },
+      {
+        "term": "предоставления услуг",
+        "score": 1.4041,
+        "evidence": []
+      },
+      {
+        "term": "вич использованием",
+        "score": 1.3068,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "группы населения",
+        "score": 1.2965,
+        "evidence": []
+      },
+      {
+        "term": "таких как",
+        "score": 1.2869,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "услуг для",
+        "score": 60.0545,
+        "evidence": []
+      },
+      {
+        "term": "особенно для",
+        "score": 54.7951,
+        "evidence": []
+      },
+      {
+        "term": "для ключевых",
+        "score": 50.3515,
+        "evidence": []
+      },
+      {
+        "term": "для партнеров",
+        "score": 50.3515,
+        "evidence": []
+      },
+      {
+        "term": "значение для",
+        "score": 50.3515,
+        "evidence": []
+      },
+      {
+        "term": "сетей для",
+        "score": 50.3515,
+        "evidence": []
+      },
+      {
+        "term": "или",
+        "score": 43.6564,
+        "evidence": []
+      },
+      {
+        "term": "здравоохранения",
+        "score": 34.4037,
+        "evidence": []
+      },
+      {
+        "term": "организация здравоохранения",
+        "score": 34.4037,
+        "evidence": []
+      },
+      {
+        "term": "могут быть",
+        "score": 31.3315,
+        "evidence": []
+      },
+      {
+        "term": "таких как",
+        "score": 30.3714,
+        "evidence": []
+      },
+      {
+        "term": "что",
+        "score": 29.3984,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "услуг для",
+        "score": 2.6229,
+        "evidence": []
+      },
+      {
+        "term": "особенно для",
+        "score": 1.892,
+        "evidence": []
+      },
+      {
+        "term": "для ключевых",
+        "score": 1.8855,
+        "evidence": []
+      },
+      {
+        "term": "для партнеров",
+        "score": 1.8752,
+        "evidence": []
+      },
+      {
+        "term": "сетей для",
+        "score": 1.8102,
+        "evidence": []
+      },
+      {
+        "term": "значение для",
+        "score": 1.763,
+        "evidence": []
+      },
+      {
+        "term": "населения воз",
+        "score": 1.5862,
+        "evidence": []
+      },
+      {
+        "term": "организация здравоохранения",
+        "score": 1.4851,
+        "evidence": []
+      },
+      {
+        "term": "предоставления услуг",
+        "score": 1.4041,
+        "evidence": []
+      },
+      {
+        "term": "вич использованием",
+        "score": 1.3068,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "группы населения",
+        "score": 1.2965,
+        "evidence": []
+      },
+      {
+        "term": "таких как",
+        "score": 1.2869,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "重点人群",
+        "score": 198.2628,
+        "evidence": []
+      },
+      {
+        "term": "公共卫生伦",
+        "score": 132.7662,
+        "evidence": []
+      },
+      {
+        "term": "并探讨引导这些框架区别和共同点的价值",
+        "score": 132.7662,
+        "evidence": []
+      },
+      {
+        "term": "开场白",
+        "score": 132.7662,
+        "evidence": []
+      },
+      {
+        "term": "理和研究伦理",
+        "score": 132.7662,
+        "evidence": []
+      },
+      {
+        "term": "第一节",
+        "score": 132.7662,
+        "evidence": []
+      },
+      {
+        "term": "第三节",
+        "score": 132.7662,
+        "evidence": []
+      },
+      {
+        "term": "第二节",
+        "score": 132.7662,
+        "evidence": []
+      },
+      {
+        "term": "第四节",
+        "score": 132.7662,
+        "evidence": []
+      },
+      {
+        "term": "观和原则的方法",
+        "score": 132.7662,
+        "evidence": []
+      },
+      {
+        "term": "要求总干事",
+        "score": 130.1465,
+        "evidence": []
+      },
+      {
+        "term": "免使用费许可证",
+        "score": 127.3456,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-краткий-обзор-политики": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "социальных сетей",
+          "score": 3.8975,
+          "evidence": []
+        },
+        {
+          "term": "партнеров вич-инфицированных",
+          "score": 3.5806,
+          "evidence": []
+        },
+        {
+          "term": "половых партнеров",
+          "score": 3.1069,
+          "evidence": []
+        },
+        {
+          "term": "использованием социальных",
+          "score": 3.0261,
+          "evidence": []
+        },
+        {
+          "term": "подходы тестированию",
+          "score": 2.997,
+          "evidence": []
+        },
+        {
+          "term": "ключевых групп",
+          "score": 2.9375,
+          "evidence": []
+        },
+        {
+          "term": "подходов тестированию",
+          "score": 2.9354,
+          "evidence": []
+        },
+        {
+          "term": "сетей среди",
+          "score": 2.9271,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "партнеров вич-инфицированных",
+          "score": 136.398,
+          "evidence": []
+        },
+        {
+          "term": "социальных сетей",
+          "score": 131.6121,
+          "evidence": []
+        },
+        {
+          "term": "для партнеров",
+          "score": 130.6516,
+          "evidence": []
+        },
+        {
+          "term": "для ключевых",
+          "score": 108.3572,
+          "evidence": []
+        },
+        {
+          "term": "половых партнеров",
+          "score": 107.5995,
+          "evidence": []
+        },
+        {
+          "term": "вич использованием",
+          "score": 106.8372,
+          "evidence": []
+        },
+        {
+          "term": "ключевых групп",
+          "score": 100.6914,
+          "evidence": []
+        },
+        {
+          "term": "своих партнеров",
+          "score": 95.7724,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "услуг для",
+          "score": 1.0297,
+          "evidence": []
+        },
+        {
+          "term": "особенно для",
+          "score": 0.7612,
+          "evidence": []
+        },
+        {
+          "term": "для ключевых",
+          "score": 0.7505,
+          "evidence": []
+        },
+        {
+          "term": "для партнеров",
+          "score": 0.7496,
+          "evidence": []
+        },
+        {
+          "term": "населения воз",
+          "score": 0.6801,
+          "evidence": []
+        },
+        {
+          "term": "вич использованием",
+          "score": 0.5573,
+          "evidence": []
+        },
+        {
+          "term": "группы населения",
+          "score": 0.5523,
+          "evidence": []
+        },
+        {
+          "term": "групп населения",
+          "score": 0.5435,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "услуг для",
+          "score": 24.0466,
+          "evidence": []
+        },
+        {
+          "term": "особенно для",
+          "score": 22.2622,
+          "evidence": []
+        },
+        {
+          "term": "для ключевых",
+          "score": 20.446,
+          "evidence": []
+        },
+        {
+          "term": "для партнеров",
+          "score": 20.446,
+          "evidence": []
+        },
+        {
+          "term": "или",
+          "score": 17.8802,
+          "evidence": []
+        },
+        {
+          "term": "что",
+          "score": 11.9444,
+          "evidence": []
+        },
+        {
+          "term": "здравоохранения",
+          "score": 11.8491,
+          "evidence": []
+        },
+        {
+          "term": "лечения",
+          "score": 10.4417,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "услуг для",
+          "score": 1.0297,
+          "evidence": []
+        },
+        {
+          "term": "особенно для",
+          "score": 0.7612,
+          "evidence": []
+        },
+        {
+          "term": "для ключевых",
+          "score": 0.7505,
+          "evidence": []
+        },
+        {
+          "term": "для партнеров",
+          "score": 0.7496,
+          "evidence": []
+        },
+        {
+          "term": "населения воз",
+          "score": 0.6801,
+          "evidence": []
+        },
+        {
+          "term": "вич использованием",
+          "score": 0.5573,
+          "evidence": []
+        },
+        {
+          "term": "группы населения",
+          "score": 0.5523,
+          "evidence": []
+        },
+        {
+          "term": "групп населения",
+          "score": 0.5435,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 53.3706,
+          "evidence": []
+        },
+        {
+          "term": "要求总干事",
+          "score": 43.865,
+          "evidence": []
+        },
+        {
+          "term": "在研究开始后",
+          "score": 41.2964,
+          "evidence": []
+        },
+        {
+          "term": "病毒疗法",
+          "score": 41.2964,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 41.0413,
+          "evidence": []
+        },
+        {
+          "term": "公共卫生伦",
+          "score": 40.7367,
+          "evidence": []
+        },
+        {
+          "term": "并探讨引导这些框架区别和共同点的价值",
+          "score": 40.7367,
+          "evidence": []
+        },
+        {
+          "term": "开场白",
+          "score": 40.7367,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-001-операционные-рекомендации-по-предоставлению-услу": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "социальных сетей",
+          "score": 9.8676,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "использованием социальных",
+          "score": 7.7295,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "услуг партнерам",
+          "score": 6.1087,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "вич инфицированных",
+          "score": 5.5014,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "инфицированных лиц",
+          "score": 5.3304,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "партнеров социальных",
+          "score": 4.2589,
+          "evidence": []
+        },
+        {
+          "term": "социальных контактов",
+          "score": 3.9478,
+          "evidence": []
+        },
+        {
+          "term": "сетей для",
+          "score": 3.6255,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "социальных сетей",
+          "score": 526.4483,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "использованием социальных",
+          "score": 382.3924,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "услуг партнерам",
+          "score": 241.5019,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "партнеров социальных",
+          "score": 210.1796,
+          "evidence": []
+        },
+        {
+          "term": "сетей для",
+          "score": 188.6436,
+          "evidence": []
+        },
+        {
+          "term": "вич инфицированных",
+          "score": 178.5694,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "социальных контактов",
+          "score": 171.5284,
+          "evidence": []
+        },
+        {
+          "term": "инфицированных лиц",
+          "score": 165.2566,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "услуг для",
+          "score": 1.4783,
+          "evidence": []
+        },
+        {
+          "term": "услуг партнерам",
+          "score": 1.1318,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "для ключевых",
+          "score": 1.0535,
+          "evidence": []
+        },
+        {
+          "term": "для партнеров",
+          "score": 1.0435,
+          "evidence": []
+        },
+        {
+          "term": "вич",
+          "score": 0.9373,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "вич инфицированных",
+          "score": 0.9373,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "значение для",
+          "score": 0.9124,
+          "evidence": []
+        },
+        {
+          "term": "сетей для",
+          "score": 0.9124,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "услуг для",
+          "score": 34.785,
+          "evidence": []
+        },
+        {
+          "term": "для ключевых",
+          "score": 28.8905,
+          "evidence": []
+        },
+        {
+          "term": "для партнеров",
+          "score": 28.8905,
+          "evidence": []
+        },
+        {
+          "term": "значение для",
+          "score": 28.8905,
+          "evidence": []
+        },
+        {
+          "term": "сетей для",
+          "score": 28.8905,
+          "evidence": []
+        },
+        {
+          "term": "или",
+          "score": 24.9469,
+          "evidence": []
+        },
+        {
+          "term": "здравоохранения",
+          "score": 21.7142,
+          "evidence": []
+        },
+        {
+          "term": "могут быть",
+          "score": 18.1286,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "услуг для",
+          "score": 1.4783,
+          "evidence": []
+        },
+        {
+          "term": "услуг партнерам",
+          "score": 1.2369,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "вич инфицированных",
+          "score": 1.1028,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "для ключевых",
+          "score": 1.0535,
+          "evidence": []
+        },
+        {
+          "term": "для партнеров",
+          "score": 1.0435,
+          "evidence": []
+        },
+        {
+          "term": "сетей для",
+          "score": 1.008,
+          "evidence": []
+        },
+        {
+          "term": "значение для",
+          "score": 0.9888,
+          "evidence": []
+        },
+        {
+          "term": "предоставления услуг",
+          "score": 0.8065,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 69.543,
+          "evidence": []
+        },
+        {
+          "term": "如个人",
+          "score": 39.2194,
+          "evidence": []
+        },
+        {
+          "term": "要求总干事",
+          "score": 36.2291,
+          "evidence": []
+        },
+        {
+          "term": "公共卫生伦",
+          "score": 33.9935,
+          "evidence": []
+        },
+        {
+          "term": "并探讨引导这些框架区别和共同点的价值",
+          "score": 33.9935,
+          "evidence": []
+        },
+        {
+          "term": "开场白",
+          "score": 33.9935,
+          "evidence": []
+        },
+        {
+          "term": "理和研究伦理",
+          "score": 33.9935,
+          "evidence": []
+        },
+        {
+          "term": "第一节",
+          "score": 33.9935,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "пакетов",
+          "score": 0.6122,
+          "evidence": []
+        },
+        {
+          "term": "сетей",
+          "score": 0.5828,
+          "evidence": []
+        },
+        {
+          "term": "социальных",
+          "score": 0.5248,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "пакетов",
+          "score": 7.8097,
+          "evidence": []
+        },
+        {
+          "term": "сетей",
+          "score": 6.7111,
+          "evidence": []
+        },
+        {
+          "term": "основанные",
+          "score": 6.2002,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "для",
+          "score": 0.0724,
+          "evidence": []
+        },
+        {
+          "term": "воз",
+          "score": 0.0593,
+          "evidence": []
+        },
+        {
+          "term": "здравоохранения",
+          "score": 0.0505,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "для",
+          "score": 1.0151,
+          "evidence": []
+        },
+        {
+          "term": "здравоохранения",
+          "score": 0.8404,
+          "evidence": []
+        },
+        {
+          "term": "или",
+          "score": 0.8293,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "для",
+          "score": 0.0724,
+          "evidence": []
+        },
+        {
+          "term": "воз",
+          "score": 0.0593,
+          "evidence": []
+        },
+        {
+          "term": "услуг",
+          "score": 0.0425,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 75.3493,
+          "evidence": []
+        },
+        {
+          "term": "免使用费许可证",
+          "score": 72.9725,
+          "evidence": []
+        },
+        {
+          "term": "公共卫生伦",
+          "score": 58.0361,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,684 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-259268",
+  "instance": "who-iris",
+  "about": "library/10665-259268",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7393,
+    "terms": 71095
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "recommendation weak",
+        "score": 4.9102,
+        "evidence": []
+      },
+      {
+        "term": "source oxytocin",
+        "score": 4.5151,
+        "evidence": []
+      },
+      {
+        "term": "source induction",
+        "score": 4.2553,
+        "evidence": []
+      },
+      {
+        "term": "recommendation strong",
+        "score": 4.1652,
+        "evidence": []
+      },
+      {
+        "term": "source women",
+        "score": 4.1501,
+        "evidence": []
+      },
+      {
+        "term": "context-specific recommendation",
+        "score": 4.0605,
+        "evidence": []
+      },
+      {
+        "term": "intravenous oxytocin",
+        "score": 3.7877,
+        "evidence": []
+      },
+      {
+        "term": "conditional recommendation",
+        "score": 3.6799,
+        "evidence": []
+      },
+      {
+        "term": "postpartum women",
+        "score": 3.6366,
+        "evidence": []
+      },
+      {
+        "term": "pregnant women",
+        "score": 3.5969,
+        "evidence": []
+      },
+      {
+        "term": "source magnesium",
+        "score": 3.5405,
+        "evidence": []
+      },
+      {
+        "term": "labour augmentation",
+        "score": 3.4931,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "source women",
+        "score": 756.4255,
+        "evidence": []
+      },
+      {
+        "term": "recommendation weak",
+        "score": 666.3088,
+        "evidence": []
+      },
+      {
+        "term": "recommendation strong",
+        "score": 640.4716,
+        "evidence": []
+      },
+      {
+        "term": "source oxytocin",
+        "score": 605.8567,
+        "evidence": []
+      },
+      {
+        "term": "source induction",
+        "score": 601.0834,
+        "evidence": []
+      },
+      {
+        "term": "source health",
+        "score": 539.5394,
+        "evidence": []
+      },
+      {
+        "term": "context-specific recommendation",
+        "score": 514.4743,
+        "evidence": []
+      },
+      {
+        "term": "source magnesium",
+        "score": 512.5346,
+        "evidence": []
+      },
+      {
+        "term": "source quoted",
+        "score": 501.6904,
+        "evidence": []
+      },
+      {
+        "term": "source continuous",
+        "score": 497.4667,
+        "evidence": []
+      },
+      {
+        "term": "conditional recommendation",
+        "score": 490.4139,
+        "evidence": []
+      },
+      {
+        "term": "quality evidence",
+        "score": 488.6762,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "pregnant women",
+        "score": 4.8766,
+        "evidence": []
+      },
+      {
+        "term": "during pregnancy",
+        "score": 3.9508,
+        "evidence": []
+      },
+      {
+        "term": "breastfeeding women",
+        "score": 3.8881,
+        "evidence": []
+      },
+      {
+        "term": "postpartum women",
+        "score": 3.7406,
+        "evidence": []
+      },
+      {
+        "term": "source women",
+        "score": 3.7339,
+        "evidence": []
+      },
+      {
+        "term": "pregnancy experience",
+        "score": 3.4422,
+        "evidence": []
+      },
+      {
+        "term": "context-specific recommendation",
+        "score": 3.4216,
+        "evidence": []
+      },
+      {
+        "term": "recommended antenatal",
+        "score": 3.4031,
+        "evidence": []
+      },
+      {
+        "term": "recommendation strong",
+        "score": 3.0864,
+        "evidence": []
+      },
+      {
+        "term": "birth weight",
+        "score": 3.0665,
+        "evidence": []
+      },
+      {
+        "term": "recommendation weak",
+        "score": 3.049,
+        "evidence": []
+      },
+      {
+        "term": "recommendation research",
+        "score": 3.0309,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "source women",
+        "score": 761.8907,
+        "evidence": []
+      },
+      {
+        "term": "recommendation weak",
+        "score": 660.7125,
+        "evidence": []
+      },
+      {
+        "term": "recommendation strong",
+        "score": 656.703,
+        "evidence": []
+      },
+      {
+        "term": "source oxytocin",
+        "score": 599.0952,
+        "evidence": []
+      },
+      {
+        "term": "source induction",
+        "score": 595.6045,
+        "evidence": []
+      },
+      {
+        "term": "source health",
+        "score": 546.3655,
+        "evidence": []
+      },
+      {
+        "term": "context-specific recommendation",
+        "score": 535.4132,
+        "evidence": []
+      },
+      {
+        "term": "source magnesium",
+        "score": 524.5036,
+        "evidence": []
+      },
+      {
+        "term": "conditional recommendation",
+        "score": 519.6401,
+        "evidence": []
+      },
+      {
+        "term": "source quoted",
+        "score": 504.0125,
+        "evidence": []
+      },
+      {
+        "term": "source continuous",
+        "score": 501.4519,
+        "evidence": []
+      },
+      {
+        "term": "recommendation based",
+        "score": 497.0206,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "pregnant women",
+        "score": 4.8766,
+        "evidence": []
+      },
+      {
+        "term": "during pregnancy",
+        "score": 3.9508,
+        "evidence": []
+      },
+      {
+        "term": "breastfeeding women",
+        "score": 3.8881,
+        "evidence": []
+      },
+      {
+        "term": "postpartum women",
+        "score": 3.7406,
+        "evidence": []
+      },
+      {
+        "term": "source women",
+        "score": 3.7339,
+        "evidence": []
+      },
+      {
+        "term": "pregnancy experience",
+        "score": 3.4422,
+        "evidence": []
+      },
+      {
+        "term": "context-specific recommendation",
+        "score": 3.4216,
+        "evidence": []
+      },
+      {
+        "term": "recommended antenatal",
+        "score": 3.4031,
+        "evidence": []
+      },
+      {
+        "term": "recommendation strong",
+        "score": 3.0864,
+        "evidence": []
+      },
+      {
+        "term": "birth weight",
+        "score": 3.0665,
+        "evidence": []
+      },
+      {
+        "term": "recommendation weak",
+        "score": 3.049,
+        "evidence": []
+      },
+      {
+        "term": "recommendation research",
+        "score": 3.0309,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "科研人员",
+        "score": 37.8824,
+        "evidence": []
+      },
+      {
+        "term": "到辩护",
+        "score": 34.4795,
+        "evidence": []
+      },
+      {
+        "term": "感染者",
+        "score": 26.861,
+        "evidence": []
+      },
+      {
+        "term": "招募了",
+        "score": 24.0197,
+        "evidence": []
+      },
+      {
+        "term": "要在活动挂图上做好记录",
+        "score": 21.8346,
+        "evidence": []
+      },
+      {
+        "term": "问题的讨论结束",
+        "score": 21.8346,
+        "evidence": []
+      },
+      {
+        "term": "进行协商",
+        "score": 21.7006,
+        "evidence": []
+      },
+      {
+        "term": "提出了以下政策选择和行动",
+        "score": 21.4904,
+        "evidence": []
+      },
+      {
+        "term": "国家流感中心和必要的管制实验室",
+        "score": 20.1616,
+        "evidence": []
+      },
+      {
+        "term": "在其他情况下",
+        "score": 20.0502,
+        "evidence": []
+      },
+      {
+        "term": "法律上",
+        "score": 19.8198,
+        "evidence": []
+      },
+      {
+        "term": "世界医学协会",
+        "score": 19.7893,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-document": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "recommendation weak",
+          "score": 4.9102,
+          "evidence": []
+        },
+        {
+          "term": "source oxytocin",
+          "score": 4.5151,
+          "evidence": []
+        },
+        {
+          "term": "source induction",
+          "score": 4.2553,
+          "evidence": []
+        },
+        {
+          "term": "recommendation strong",
+          "score": 4.1652,
+          "evidence": []
+        },
+        {
+          "term": "source women",
+          "score": 4.1501,
+          "evidence": []
+        },
+        {
+          "term": "context-specific recommendation",
+          "score": 4.0605,
+          "evidence": []
+        },
+        {
+          "term": "intravenous oxytocin",
+          "score": 3.7877,
+          "evidence": []
+        },
+        {
+          "term": "conditional recommendation",
+          "score": 3.6799,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "source women",
+          "score": 756.4255,
+          "evidence": []
+        },
+        {
+          "term": "recommendation weak",
+          "score": 666.3088,
+          "evidence": []
+        },
+        {
+          "term": "recommendation strong",
+          "score": 640.4716,
+          "evidence": []
+        },
+        {
+          "term": "source oxytocin",
+          "score": 605.8567,
+          "evidence": []
+        },
+        {
+          "term": "source induction",
+          "score": 601.0834,
+          "evidence": []
+        },
+        {
+          "term": "source health",
+          "score": 539.5394,
+          "evidence": []
+        },
+        {
+          "term": "context-specific recommendation",
+          "score": 514.4743,
+          "evidence": []
+        },
+        {
+          "term": "source magnesium",
+          "score": 512.5346,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pregnant women",
+          "score": 4.8766,
+          "evidence": []
+        },
+        {
+          "term": "during pregnancy",
+          "score": 3.9508,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding women",
+          "score": 3.8881,
+          "evidence": []
+        },
+        {
+          "term": "postpartum women",
+          "score": 3.7406,
+          "evidence": []
+        },
+        {
+          "term": "source women",
+          "score": 3.7339,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy experience",
+          "score": 3.4422,
+          "evidence": []
+        },
+        {
+          "term": "context-specific recommendation",
+          "score": 3.4216,
+          "evidence": []
+        },
+        {
+          "term": "recommended antenatal",
+          "score": 3.4031,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "source women",
+          "score": 761.8907,
+          "evidence": []
+        },
+        {
+          "term": "recommendation weak",
+          "score": 660.7125,
+          "evidence": []
+        },
+        {
+          "term": "recommendation strong",
+          "score": 656.703,
+          "evidence": []
+        },
+        {
+          "term": "source oxytocin",
+          "score": 599.0952,
+          "evidence": []
+        },
+        {
+          "term": "source induction",
+          "score": 595.6045,
+          "evidence": []
+        },
+        {
+          "term": "source health",
+          "score": 546.3655,
+          "evidence": []
+        },
+        {
+          "term": "context-specific recommendation",
+          "score": 535.4132,
+          "evidence": []
+        },
+        {
+          "term": "source magnesium",
+          "score": 524.5036,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pregnant women",
+          "score": 4.8766,
+          "evidence": []
+        },
+        {
+          "term": "during pregnancy",
+          "score": 3.9508,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding women",
+          "score": 3.8881,
+          "evidence": []
+        },
+        {
+          "term": "postpartum women",
+          "score": 3.7406,
+          "evidence": []
+        },
+        {
+          "term": "source women",
+          "score": 3.7339,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy experience",
+          "score": 3.4422,
+          "evidence": []
+        },
+        {
+          "term": "context-specific recommendation",
+          "score": 3.4216,
+          "evidence": []
+        },
+        {
+          "term": "recommended antenatal",
+          "score": 3.4031,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "科研人员",
+          "score": 37.8824,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 34.4795,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 26.861,
+          "evidence": []
+        },
+        {
+          "term": "招募了",
+          "score": 24.0197,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 21.8346,
+          "evidence": []
+        },
+        {
+          "term": "问题的讨论结束",
+          "score": 21.8346,
+          "evidence": []
+        },
+        {
+          "term": "进行协商",
+          "score": 21.7006,
+          "evidence": []
+        },
+        {
+          "term": "提出了以下政策选择和行动",
+          "score": 21.4904,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

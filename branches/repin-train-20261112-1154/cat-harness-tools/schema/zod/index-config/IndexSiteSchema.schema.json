@@ -1,0 +1,59 @@
+{
+  "$ref": "#/definitions/IndexSite",
+  "definitions": {
+    "IndexSite": {
+      "type": "object",
+      "properties": {
+        "landing": {
+          "type": "string",
+          "minLength": 1
+        },
+        "agentRun": {
+          "type": "boolean"
+        },
+        "publisher": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$"
+        },
+        "publishAfter": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[\\w.-]+\\.ya?ml$"
+          }
+        },
+        "taskSkills": {
+          "type": "boolean"
+        },
+        "sharedAssets": {
+          "type": "string",
+          "pattern": "^https:\\/\\/[^/]+\\/(?:[^\\s]*\\/)?$"
+        },
+        "workflows": {
+          "type": "object",
+          "properties": {
+            "publish": {
+              "type": "string",
+              "pattern": "^[\\w.-]+\\.ya?ml$"
+            },
+            "stage": {
+              "type": "string",
+              "pattern": "^[\\w.-]+\\.ya?ml$"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/index-config/IndexSiteSchema.schema.json",
+  "title": "IndexSiteSchema",
+  "description": "Generated from `IndexSiteSchema` in schemas/kg/index-config.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261112-1154",
+    "sha": "682eb5bed6a695ef552ed2872bdf49018e60c915",
+    "pr": "repin-train/20261112-1154",
+    "run": "43213290906"
+  }
+}

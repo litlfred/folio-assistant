@@ -1,0 +1,7436 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "arxiv-2505.06046v4",
+  "instance": "cat-harness",
+  "about": "library/arxiv-2505.06046v4",
+  "corpus": {
+    "library": "cat-harness/library/corpus",
+    "sections": 2232,
+    "terms": 15352
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "health guidance",
+        "score": 32.1818,
+        "evidence": []
+      },
+      {
+        "term": "mcqa questions",
+        "score": 30.6582,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "mcqa answer",
+        "score": 29.6485,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "public health",
+        "score": 28.2889,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "mcqa benchmark",
+        "score": 26.8015,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "government guidance",
+        "score": 21.7977,
+        "evidence": []
+      },
+      {
+        "term": "invalid mcqa",
+        "score": 21.7758,
+        "evidence": []
+      },
+      {
+        "term": "guidance text",
+        "score": 21.5766,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "ukhsa guidance",
+        "score": 21.3737,
+        "evidence": []
+      },
+      {
+        "term": "mcqa samples",
+        "score": 21.3331,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "llm benchmark",
+        "score": 20.973,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "guidance source",
+        "score": 20.9658,
+        "evidence": [
+          "heading"
+        ]
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "mcqa answer",
+        "score": 576.9913,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "health guidance",
+        "score": 570.1517,
+        "evidence": []
+      },
+      {
+        "term": "mcqa questions",
+        "score": 518.4645,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "public health",
+        "score": 444.9682,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "answer options",
+        "score": 426.8671,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "mcqa benchmark",
+        "score": 420.6461,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "incorrect answer",
+        "score": 417.3934,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "correct answer",
+        "score": 411.2256,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "guidance text",
+        "score": 393.5401,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "ukhsa guidance",
+        "score": 386.7691,
+        "evidence": []
+      },
+      {
+        "term": "government guidance",
+        "score": 384.8686,
+        "evidence": []
+      },
+      {
+        "term": "guidance source",
+        "score": 376.6858,
+        "evidence": [
+          "heading"
+        ]
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "health guidance",
+        "score": 25.2765,
+        "evidence": []
+      },
+      {
+        "term": "public health",
+        "score": 24.0822,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "mcqa questions",
+        "score": 18.2691,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "mcqa answer",
+        "score": 18.0436,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "health information",
+        "score": 17.1339,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "guidance text",
+        "score": 16.2443,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "health expert",
+        "score": 16.2026,
+        "evidence": []
+      },
+      {
+        "term": "ukhsa guidance",
+        "score": 15.9635,
+        "evidence": []
+      },
+      {
+        "term": "mcqa benchmark",
+        "score": 15.9635,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "llm benchmark",
+        "score": 15.6766,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "health protection",
+        "score": 15.3586,
+        "evidence": []
+      },
+      {
+        "term": "health settings",
+        "score": 15.0978,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "health guidance",
+        "score": 365.2329,
+        "evidence": []
+      },
+      {
+        "term": "incorrect answer",
+        "score": 361.2519,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "public health",
+        "score": 358.0749,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "correct answer",
+        "score": 345.6613,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "mcqa answer",
+        "score": 341.6505,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "insert question",
+        "score": 336.8063,
+        "evidence": []
+      },
+      {
+        "term": "answer options",
+        "score": 333.7419,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "generate question",
+        "score": 292.4452,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "valid answer",
+        "score": 288.2455,
+        "evidence": []
+      },
+      {
+        "term": "final answer",
+        "score": 266.0693,
+        "evidence": []
+      },
+      {
+        "term": "guidance text",
+        "score": 263.2357,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "truth answer",
+        "score": 262.1883,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "health guidance",
+        "score": 25.2765,
+        "evidence": []
+      },
+      {
+        "term": "public health",
+        "score": 24.0822,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "mcqa questions",
+        "score": 18.2691,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "mcqa answer",
+        "score": 18.0436,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "health information",
+        "score": 17.1339,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "guidance text",
+        "score": 16.2443,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "health expert",
+        "score": 16.2026,
+        "evidence": []
+      },
+      {
+        "term": "ukhsa guidance",
+        "score": 15.9635,
+        "evidence": []
+      },
+      {
+        "term": "mcqa benchmark",
+        "score": 15.9635,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "llm benchmark",
+        "score": 15.6766,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "health protection",
+        "score": 15.3586,
+        "evidence": []
+      },
+      {
+        "term": "health settings",
+        "score": 15.0978,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "accu racy",
+        "score": 2829.0734,
+        "evidence": []
+      },
+      {
+        "term": "antimicrobial",
+        "score": 2537.6785,
+        "evidence": []
+      },
+      {
+        "term": "fungal",
+        "score": 2537.6785,
+        "evidence": []
+      },
+      {
+        "term": "gastro",
+        "score": 2537.6785,
+        "evidence": []
+      },
+      {
+        "term": "hcai",
+        "score": 2537.6785,
+        "evidence": []
+      },
+      {
+        "term": "immunisation",
+        "score": 2537.6785,
+        "evidence": []
+      },
+      {
+        "term": "refusals",
+        "score": 2537.6785,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "sepsis",
+        "score": 2537.6785,
+        "evidence": []
+      },
+      {
+        "term": "stis",
+        "score": 2537.6785,
+        "evidence": []
+      },
+      {
+        "term": "vpds",
+        "score": 2537.6785,
+        "evidence": []
+      },
+      {
+        "term": "zoonotic",
+        "score": 2537.6785,
+        "evidence": []
+      },
+      {
+        "term": "claude-haiku",
+        "score": 2371.116,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-introduction": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "health guidance",
+          "score": 2.2596,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 2.1593,
+          "evidence": []
+        },
+        {
+          "term": "reviewed subset",
+          "score": 1.3119,
+          "evidence": []
+        },
+        {
+          "term": "response benchmark",
+          "score": 1.2586,
+          "evidence": []
+        },
+        {
+          "term": "human baseline",
+          "score": 1.2122,
+          "evidence": []
+        },
+        {
+          "term": "mcqa",
+          "score": 1.1852,
+          "evidence": []
+        },
+        {
+          "term": "broad range",
+          "score": 1.1259,
+          "evidence": []
+        },
+        {
+          "term": "across broad",
+          "score": 1.086,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "health guidance",
+          "score": 63.7879,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 61.0061,
+          "evidence": []
+        },
+        {
+          "term": "response benchmark",
+          "score": 27.8481,
+          "evidence": []
+        },
+        {
+          "term": "mcqa",
+          "score": 26.9507,
+          "evidence": []
+        },
+        {
+          "term": "llms",
+          "score": 21.7618,
+          "evidence": []
+        },
+        {
+          "term": "reviewed subset",
+          "score": 20.1832,
+          "evidence": []
+        },
+        {
+          "term": "human baseline",
+          "score": 19.626,
+          "evidence": []
+        },
+        {
+          "term": "broad range",
+          "score": 17.5321,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "public health",
+          "score": 1.7474,
+          "evidence": []
+        },
+        {
+          "term": "health guidance",
+          "score": 1.6865,
+          "evidence": []
+        },
+        {
+          "term": "llm",
+          "score": 0.6334,
+          "evidence": []
+        },
+        {
+          "term": "free form",
+          "score": 0.5591,
+          "evidence": []
+        },
+        {
+          "term": "response benchmark",
+          "score": 0.551,
+          "evidence": []
+        },
+        {
+          "term": "question",
+          "score": 0.5309,
+          "evidence": []
+        },
+        {
+          "term": "llms",
+          "score": 0.5244,
+          "evidence": []
+        },
+        {
+          "term": "mcqa",
+          "score": 0.5178,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "public health",
+          "score": 36.8827,
+          "evidence": []
+        },
+        {
+          "term": "health guidance",
+          "score": 32.358,
+          "evidence": []
+        },
+        {
+          "term": "llm",
+          "score": 11.6014,
+          "evidence": []
+        },
+        {
+          "term": "classification",
+          "score": 10.3453,
+          "evidence": []
+        },
+        {
+          "term": "llms",
+          "score": 9.3738,
+          "evidence": []
+        },
+        {
+          "term": "answer",
+          "score": 9.2877,
+          "evidence": []
+        },
+        {
+          "term": "question",
+          "score": 8.9462,
+          "evidence": []
+        },
+        {
+          "term": "text",
+          "score": 8.2113,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "public health",
+          "score": 1.7474,
+          "evidence": []
+        },
+        {
+          "term": "health guidance",
+          "score": 1.6865,
+          "evidence": []
+        },
+        {
+          "term": "llm",
+          "score": 0.6334,
+          "evidence": []
+        },
+        {
+          "term": "free form",
+          "score": 0.5591,
+          "evidence": []
+        },
+        {
+          "term": "response benchmark",
+          "score": 0.551,
+          "evidence": []
+        },
+        {
+          "term": "question",
+          "score": 0.5309,
+          "evidence": []
+        },
+        {
+          "term": "llms",
+          "score": 0.5244,
+          "evidence": []
+        },
+        {
+          "term": "mcqa",
+          "score": 0.5178,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "h1n",
+          "score": 53.9382,
+          "evidence": []
+        },
+        {
+          "term": "preparedness",
+          "score": 44.0945,
+          "evidence": []
+        },
+        {
+          "term": "health guidance",
+          "score": 32.8239,
+          "evidence": []
+        },
+        {
+          "term": "phii",
+          "score": 30.6735,
+          "evidence": []
+        },
+        {
+          "term": "antimicrobial",
+          "score": 29.9424,
+          "evidence": []
+        },
+        {
+          "term": "fungal",
+          "score": 29.9424,
+          "evidence": []
+        },
+        {
+          "term": "gastro",
+          "score": 29.9424,
+          "evidence": []
+        },
+        {
+          "term": "hcai",
+          "score": 29.9424,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-002-mcqa-llm-evaluations": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "mcqa",
+          "score": 1.9606,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "evaluations",
+          "score": 1.5963,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "llm",
+          "score": 1.0009,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "llm knowledge",
+          "score": 0.9702,
+          "evidence": []
+        },
+        {
+          "term": "mmlu",
+          "score": 0.769,
+          "evidence": []
+        },
+        {
+          "term": "medical",
+          "score": 0.6599,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "mcqa",
+          "score": 35.9342,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "evaluations",
+          "score": 28.6682,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "llm knowledge",
+          "score": 14.1815,
+          "evidence": []
+        },
+        {
+          "term": "mmlu",
+          "score": 10.4515,
+          "evidence": []
+        },
+        {
+          "term": "medical",
+          "score": 8.4898,
+          "evidence": []
+        },
+        {
+          "term": "english",
+          "score": 7.3004,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "llm",
+          "score": 0.4841,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "llm knowledge",
+          "score": 0.3545,
+          "evidence": []
+        },
+        {
+          "term": "mcqa",
+          "score": 0.3368,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health",
+          "score": 0.3322,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 0.2524,
+          "evidence": []
+        },
+        {
+          "term": "guidance",
+          "score": 0.2206,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "llm",
+          "score": 5.7823,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health",
+          "score": 4.4651,
+          "evidence": []
+        },
+        {
+          "term": "llm knowledge",
+          "score": 3.5997,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 3.1286,
+          "evidence": []
+        },
+        {
+          "term": "answer",
+          "score": 2.6861,
+          "evidence": []
+        },
+        {
+          "term": "mcqa",
+          "score": 2.6066,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "llm",
+          "score": 0.4841,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "llm knowledge",
+          "score": 0.3545,
+          "evidence": []
+        },
+        {
+          "term": "mcqa",
+          "score": 0.3368,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "guidance",
+          "score": 0.2206,
+          "evidence": []
+        },
+        {
+          "term": "evaluations",
+          "score": 0.1821,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "benchmark",
+          "score": 0.1343,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "mcqa",
+          "score": 45.2991,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "abdin",
+          "score": 44.3132,
+          "evidence": []
+        },
+        {
+          "term": "olmo",
+          "score": 44.3132,
+          "evidence": []
+        },
+        {
+          "term": "dfph",
+          "score": 37.102,
+          "evidence": []
+        },
+        {
+          "term": "fountain",
+          "score": 36.6229,
+          "evidence": []
+        },
+        {
+          "term": "galena",
+          "score": 36.6229,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-003-synthetic-mcqa-datasets": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "shashidhar",
+          "score": 1.0079,
+          "evidence": []
+        },
+        {
+          "term": "mcqa",
+          "score": 0.8444,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mmlu",
+          "score": 0.769,
+          "evidence": []
+        },
+        {
+          "term": "corpora",
+          "score": 0.6582,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "shashidhar",
+          "score": 14.035,
+          "evidence": []
+        },
+        {
+          "term": "mmlu",
+          "score": 10.4515,
+          "evidence": []
+        },
+        {
+          "term": "mcqa",
+          "score": 8.9836,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "corpora",
+          "score": 8.4898,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health",
+          "score": 0.1365,
+          "evidence": []
+        },
+        {
+          "term": "mcqa",
+          "score": 0.1334,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "llm",
+          "score": 0.1125,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 0.0938,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "llm",
+          "score": 1.3757,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 1.1574,
+          "evidence": []
+        },
+        {
+          "term": "question",
+          "score": 1.1464,
+          "evidence": []
+        },
+        {
+          "term": "wang",
+          "score": 1.1355,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "mcqa",
+          "score": 0.1334,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "llm",
+          "score": 0.1125,
+          "evidence": []
+        },
+        {
+          "term": "llms",
+          "score": 0.0934,
+          "evidence": []
+        },
+        {
+          "term": "datasets",
+          "score": 0.0841,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "shashidhar",
+          "score": 69.3916,
+          "evidence": []
+        },
+        {
+          "term": "asiedu",
+          "score": 67.5948,
+          "evidence": []
+        },
+        {
+          "term": "ghazaryan",
+          "score": 67.5948,
+          "evidence": []
+        },
+        {
+          "term": "guinet",
+          "score": 67.5948,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-004-public-health-evaluations": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "public health",
+          "score": 3.1751,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "evaluations",
+          "score": 1.0896,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "dfph",
+          "score": 1.0079,
+          "evidence": []
+        },
+        {
+          "term": "chatgpt",
+          "score": 0.8072,
+          "evidence": []
+        },
+        {
+          "term": "questions",
+          "score": 0.6648,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "public health",
+          "score": 58.3892,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "evaluations",
+          "score": 14.3341,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "dfph",
+          "score": 14.035,
+          "evidence": []
+        },
+        {
+          "term": "questions",
+          "score": 10.1398,
+          "evidence": []
+        },
+        {
+          "term": "chatgpt",
+          "score": 8.8296,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "public health",
+          "score": 1.3584,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "llm",
+          "score": 0.2253,
+          "evidence": []
+        },
+        {
+          "term": "guidance",
+          "score": 0.2182,
+          "evidence": []
+        },
+        {
+          "term": "evaluations",
+          "score": 0.2149,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "llms",
+          "score": 0.1871,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "public health",
+          "score": 27.7227,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "classification",
+          "score": 4.1324,
+          "evidence": []
+        },
+        {
+          "term": "chatgpt",
+          "score": 3.7883,
+          "evidence": []
+        },
+        {
+          "term": "llm",
+          "score": 3.2107,
+          "evidence": []
+        },
+        {
+          "term": "llms",
+          "score": 2.6831,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "public health",
+          "score": 1.3584,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "llm",
+          "score": 0.2253,
+          "evidence": []
+        },
+        {
+          "term": "guidance",
+          "score": 0.2182,
+          "evidence": []
+        },
+        {
+          "term": "evaluations",
+          "score": 0.2149,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "llms",
+          "score": 0.1871,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "h1n",
+          "score": 109.0297,
+          "evidence": []
+        },
+        {
+          "term": "preparedness",
+          "score": 88.9735,
+          "evidence": []
+        },
+        {
+          "term": "phii",
+          "score": 60.3797,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 55.6004,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "public health",
+          "score": 55.6004,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ]
+    },
+    "sec-005-methods": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "mcqa samples",
+          "score": 1.3442,
+          "evidence": []
+        },
+        {
+          "term": "amenable",
+          "score": 0.5685,
+          "evidence": []
+        },
+        {
+          "term": "chunk",
+          "score": 0.5141,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "mcqa samples",
+          "score": 20.059,
+          "evidence": []
+        },
+        {
+          "term": "automated",
+          "score": 6.3996,
+          "evidence": []
+        },
+        {
+          "term": "amenable",
+          "score": 6.3244,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health",
+          "score": 0.1777,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 0.1443,
+          "evidence": []
+        },
+        {
+          "term": "mcqa samples",
+          "score": 0.1435,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health",
+          "score": 2.176,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 1.5474,
+          "evidence": []
+        },
+        {
+          "term": "answer",
+          "score": 1.5369,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health",
+          "score": 0.1777,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 0.1443,
+          "evidence": []
+        },
+        {
+          "term": "mcqa samples",
+          "score": 0.1435,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "h1n",
+          "score": 39.528,
+          "evidence": []
+        },
+        {
+          "term": "preparedness",
+          "score": 32.3925,
+          "evidence": []
+        },
+        {
+          "term": "antimicrobial",
+          "score": 29.7105,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-uk-public-health-information": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "health",
+          "score": 1.0724,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "government",
+          "score": 0.6235,
+          "evidence": []
+        },
+        {
+          "term": "corpus",
+          "score": 0.6086,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "health",
+          "score": 12.8881,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "government",
+          "score": 8.2543,
+          "evidence": []
+        },
+        {
+          "term": "corpus",
+          "score": 7.6377,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health",
+          "score": 0.4425,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "public",
+          "score": 0.3673,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "guidance",
+          "score": 0.1672,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health",
+          "score": 6.2863,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "public",
+          "score": 4.3748,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "answer",
+          "score": 1.8171,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health",
+          "score": 0.4425,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "public",
+          "score": 0.3673,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "guidance",
+          "score": 0.1672,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "h1n",
+          "score": 60.1849,
+          "evidence": []
+        },
+        {
+          "term": "preparedness",
+          "score": 48.9575,
+          "evidence": []
+        },
+        {
+          "term": "phii",
+          "score": 33.512,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-007-pre-processing-and-chunking": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "markdown headers",
+          "score": 1.8686,
+          "evidence": []
+        },
+        {
+          "term": "pdf",
+          "score": 0.7822,
+          "evidence": []
+        },
+        {
+          "term": "existing tools",
+          "score": 0.7545,
+          "evidence": []
+        },
+        {
+          "term": "hierarchy",
+          "score": 0.6797,
+          "evidence": []
+        },
+        {
+          "term": "page",
+          "score": 0.6792,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "markdown headers",
+          "score": 32.8789,
+          "evidence": []
+        },
+        {
+          "term": "pdf",
+          "score": 12.4659,
+          "evidence": []
+        },
+        {
+          "term": "page",
+          "score": 10.6088,
+          "evidence": []
+        },
+        {
+          "term": "existing tools",
+          "score": 9.7863,
+          "evidence": []
+        },
+        {
+          "term": "hierarchy",
+          "score": 8.8296,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "documents",
+          "score": 0.1157,
+          "evidence": []
+        },
+        {
+          "term": "llm",
+          "score": 0.0918,
+          "evidence": []
+        },
+        {
+          "term": "llms",
+          "score": 0.0911,
+          "evidence": []
+        },
+        {
+          "term": "text",
+          "score": 0.0886,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.0817,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "lsa",
+          "score": 1.8742,
+          "evidence": []
+        },
+        {
+          "term": "document",
+          "score": 1.8392,
+          "evidence": []
+        },
+        {
+          "term": "text",
+          "score": 1.5912,
+          "evidence": []
+        },
+        {
+          "term": "terms",
+          "score": 1.5329,
+          "evidence": []
+        },
+        {
+          "term": "wireframes",
+          "score": 1.4949,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "documents",
+          "score": 0.1157,
+          "evidence": []
+        },
+        {
+          "term": "llm",
+          "score": 0.0918,
+          "evidence": []
+        },
+        {
+          "term": "text",
+          "score": 0.0886,
+          "evidence": []
+        },
+        {
+          "term": "raw",
+          "score": 0.0674,
+          "evidence": []
+        },
+        {
+          "term": "performance",
+          "score": 0.0607,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "ﬁgures",
+          "score": 14.7268,
+          "evidence": []
+        },
+        {
+          "term": "ca-raw",
+          "score": 14.6085,
+          "evidence": []
+        },
+        {
+          "term": "gpt-4-turbo",
+          "score": 14.349,
+          "evidence": []
+        },
+        {
+          "term": "ohs",
+          "score": 14.2705,
+          "evidence": []
+        },
+        {
+          "term": "ca-tfidf",
+          "score": 14.016,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-008-question-generation": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "text chunks",
+          "score": 1.704,
+          "evidence": []
+        },
+        {
+          "term": "question",
+          "score": 1.0668,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "filter out",
+          "score": 0.983,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 0.9734,
+          "evidence": []
+        },
+        {
+          "term": "mcqa",
+          "score": 0.8444,
+          "evidence": []
+        },
+        {
+          "term": "recommendations",
+          "score": 0.63,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "text chunks",
+          "score": 31.9616,
+          "evidence": []
+        },
+        {
+          "term": "mcqa",
+          "score": 13.4753,
+          "evidence": []
+        },
+        {
+          "term": "question",
+          "score": 13.072,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "filter out",
+          "score": 12.8038,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 11.6778,
+          "evidence": []
+        },
+        {
+          "term": "llm",
+          "score": 9.4163,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "public health",
+          "score": 0.6175,
+          "evidence": []
+        },
+        {
+          "term": "question",
+          "score": 0.5968,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "guidance",
+          "score": 0.3208,
+          "evidence": []
+        },
+        {
+          "term": "answer",
+          "score": 0.3007,
+          "evidence": []
+        },
+        {
+          "term": "llm",
+          "score": 0.2834,
+          "evidence": []
+        },
+        {
+          "term": "mcqa",
+          "score": 0.2544,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "question",
+          "score": 11.1103,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "public health",
+          "score": 8.2711,
+          "evidence": []
+        },
+        {
+          "term": "answer",
+          "score": 6.0742,
+          "evidence": []
+        },
+        {
+          "term": "llm",
+          "score": 4.0869,
+          "evidence": []
+        },
+        {
+          "term": "guidance",
+          "score": 4.0468,
+          "evidence": []
+        },
+        {
+          "term": "text chunks",
+          "score": 3.3341,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "public health",
+          "score": 0.6175,
+          "evidence": []
+        },
+        {
+          "term": "question",
+          "score": 0.5968,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "answer",
+          "score": 0.3007,
+          "evidence": []
+        },
+        {
+          "term": "llm",
+          "score": 0.2834,
+          "evidence": []
+        },
+        {
+          "term": "mcqa",
+          "score": 0.2544,
+          "evidence": []
+        },
+        {
+          "term": "text chunks",
+          "score": 0.2192,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "h1n",
+          "score": 37.6865,
+          "evidence": []
+        },
+        {
+          "term": "berkeley",
+          "score": 37.2521,
+          "evidence": []
+        },
+        {
+          "term": "illness",
+          "score": 31.528,
+          "evidence": []
+        },
+        {
+          "term": "symptom",
+          "score": 31.1276,
+          "evidence": []
+        },
+        {
+          "term": "preparedness",
+          "score": 30.7056,
+          "evidence": []
+        },
+        {
+          "term": "headlines",
+          "score": 30.3047,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-009-automated-mcqa-error-detection-and-sampling": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "pdf documents",
+          "score": 1.4049,
+          "evidence": []
+        },
+        {
+          "term": "mcqa",
+          "score": 0.8444,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "questions",
+          "score": 0.7718,
+          "evidence": []
+        },
+        {
+          "term": "detection",
+          "score": 0.7343,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "pdf documents",
+          "score": 22.7186,
+          "evidence": []
+        },
+        {
+          "term": "questions",
+          "score": 13.5197,
+          "evidence": []
+        },
+        {
+          "term": "mcqa",
+          "score": 8.9836,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "detection",
+          "score": 7.721,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "mcqa",
+          "score": 0.2122,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "guidance",
+          "score": 0.1319,
+          "evidence": []
+        },
+        {
+          "term": "answer",
+          "score": 0.128,
+          "evidence": []
+        },
+        {
+          "term": "question",
+          "score": 0.1269,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "answer",
+          "score": 2.4049,
+          "evidence": []
+        },
+        {
+          "term": "question",
+          "score": 2.2053,
+          "evidence": []
+        },
+        {
+          "term": "mcqa",
+          "score": 1.7179,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "terms",
+          "score": 1.3404,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "mcqa",
+          "score": 0.2122,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "guidance",
+          "score": 0.1319,
+          "evidence": []
+        },
+        {
+          "term": "question",
+          "score": 0.1269,
+          "evidence": []
+        },
+        {
+          "term": "pdf documents",
+          "score": 0.1039,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "mcqa",
+          "score": 25.7102,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mij",
+          "score": 24.9124,
+          "evidence": []
+        },
+        {
+          "term": "gpt-4-turbo",
+          "score": 18.9249,
+          "evidence": []
+        },
+        {
+          "term": "command-r",
+          "score": 18.5693,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-010-final-mcqa-benchmark-dataset": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "topic area",
+          "score": 1.3137,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 1.1767,
+          "evidence": []
+        },
+        {
+          "term": "benchmark",
+          "score": 1.0878,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "topic area",
+          "score": 19.21,
+          "evidence": []
+        },
+        {
+          "term": "benchmark",
+          "score": 17.0587,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "public health",
+          "score": 16.9116,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "public health",
+          "score": 0.4639,
+          "evidence": []
+        },
+        {
+          "term": "mcqa",
+          "score": 0.3076,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "guidance",
+          "score": 0.2092,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "public health",
+          "score": 7.3661,
+          "evidence": []
+        },
+        {
+          "term": "mcqa",
+          "score": 2.5102,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "answer",
+          "score": 2.4286,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "public health",
+          "score": 0.4639,
+          "evidence": []
+        },
+        {
+          "term": "mcqa",
+          "score": 0.3076,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "guidance",
+          "score": 0.2092,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "h1n",
+          "score": 88.6296,
+          "evidence": []
+        },
+        {
+          "term": "preparedness",
+          "score": 72.0346,
+          "evidence": []
+        },
+        {
+          "term": "mcqa",
+          "score": 69.3929,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ]
+    },
+    "sec-011-human-expert-quality-assurance": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "invalid questions",
+          "score": 1.7784,
+          "evidence": []
+        },
+        {
+          "term": "correct answer",
+          "score": 1.2917,
+          "evidence": []
+        },
+        {
+          "term": "ambiguous",
+          "score": 0.6589,
+          "evidence": []
+        },
+        {
+          "term": "benchmark",
+          "score": 0.6315,
+          "evidence": []
+        },
+        {
+          "term": "guesses",
+          "score": 0.5997,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "invalid questions",
+          "score": 35.5549,
+          "evidence": []
+        },
+        {
+          "term": "correct answer",
+          "score": 18.7329,
+          "evidence": []
+        },
+        {
+          "term": "benchmark",
+          "score": 11.3725,
+          "evidence": []
+        },
+        {
+          "term": "ambiguous",
+          "score": 9.0652,
+          "evidence": []
+        },
+        {
+          "term": "estimate",
+          "score": 7.1035,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "correct answer",
+          "score": 0.3159,
+          "evidence": []
+        },
+        {
+          "term": "quality",
+          "score": 0.2033,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "invalid questions",
+          "score": 0.1943,
+          "evidence": []
+        },
+        {
+          "term": "guidance",
+          "score": 0.169,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.1421,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "correct answer",
+          "score": 7.4898,
+          "evidence": []
+        },
+        {
+          "term": "question",
+          "score": 4.6122,
+          "evidence": []
+        },
+        {
+          "term": "invalid questions",
+          "score": 3.2862,
+          "evidence": []
+        },
+        {
+          "term": "guidance",
+          "score": 2.8343,
+          "evidence": []
+        },
+        {
+          "term": "incorrect",
+          "score": 2.5366,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "correct answer",
+          "score": 0.3159,
+          "evidence": []
+        },
+        {
+          "term": "quality",
+          "score": 0.2033,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "invalid questions",
+          "score": 0.1943,
+          "evidence": []
+        },
+        {
+          "term": "human",
+          "score": 0.1328,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "expert",
+          "score": 0.1325,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "refusals",
+          "score": 26.6576,
+          "evidence": []
+        },
+        {
+          "term": "antimicrobial",
+          "score": 26.6576,
+          "evidence": []
+        },
+        {
+          "term": "fungal",
+          "score": 26.6576,
+          "evidence": []
+        },
+        {
+          "term": "gastro",
+          "score": 26.6576,
+          "evidence": []
+        },
+        {
+          "term": "hcai",
+          "score": 26.6576,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-012-model-evaluation-approach": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "olmo",
+          "score": 0.9999,
+          "evidence": []
+        },
+        {
+          "term": "abdin",
+          "score": 0.6308,
+          "evidence": []
+        },
+        {
+          "term": "phi",
+          "score": 0.5944,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "olmo",
+          "score": 14.035,
+          "evidence": []
+        },
+        {
+          "term": "openai",
+          "score": 7.135,
+          "evidence": []
+        },
+        {
+          "term": "abdin",
+          "score": 7.0175,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health",
+          "score": 0.1593,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 0.1177,
+          "evidence": []
+        },
+        {
+          "term": "guidance",
+          "score": 0.1105,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health",
+          "score": 1.926,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 1.2323,
+          "evidence": []
+        },
+        {
+          "term": "gpt",
+          "score": 1.0746,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health",
+          "score": 0.1593,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 0.1177,
+          "evidence": []
+        },
+        {
+          "term": "guidance",
+          "score": 0.1105,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "berkeley",
+          "score": 120.293,
+          "evidence": []
+        },
+        {
+          "term": "olmo",
+          "score": 114.6179,
+          "evidence": []
+        },
+        {
+          "term": "abdin",
+          "score": 114.6179,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-014-results": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "full benchmark",
+          "score": 1.0083,
+          "evidence": []
+        },
+        {
+          "term": "pubhealthbench-reviewed",
+          "score": 0.8857,
+          "evidence": []
+        },
+        {
+          "term": "mcqa",
+          "score": 0.6691,
+          "evidence": []
+        },
+        {
+          "term": "reviewed",
+          "score": 0.65,
+          "evidence": []
+        },
+        {
+          "term": "broadest",
+          "score": 0.6308,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "full benchmark",
+          "score": 15.968,
+          "evidence": []
+        },
+        {
+          "term": "pubhealthbench-reviewed",
+          "score": 12.2024,
+          "evidence": []
+        },
+        {
+          "term": "subset",
+          "score": 10.0618,
+          "evidence": []
+        },
+        {
+          "term": "mcqa",
+          "score": 8.9836,
+          "evidence": []
+        },
+        {
+          "term": "reviewed",
+          "score": 8.9836,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health",
+          "score": 0.2854,
+          "evidence": []
+        },
+        {
+          "term": "guidance",
+          "score": 0.2576,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 0.2276,
+          "evidence": []
+        },
+        {
+          "term": "question",
+          "score": 0.2245,
+          "evidence": []
+        },
+        {
+          "term": "llm",
+          "score": 0.2187,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "answer",
+          "score": 3.6464,
+          "evidence": []
+        },
+        {
+          "term": "question",
+          "score": 3.4024,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 2.8085,
+          "evidence": []
+        },
+        {
+          "term": "guidance",
+          "score": 2.6415,
+          "evidence": []
+        },
+        {
+          "term": "llm",
+          "score": 2.4704,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health",
+          "score": 0.2854,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 0.2276,
+          "evidence": []
+        },
+        {
+          "term": "question",
+          "score": 0.2245,
+          "evidence": []
+        },
+        {
+          "term": "llm",
+          "score": 0.2187,
+          "evidence": []
+        },
+        {
+          "term": "answer",
+          "score": 0.2154,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "refusals",
+          "score": 61.2625,
+          "evidence": []
+        },
+        {
+          "term": "antimicrobial",
+          "score": 61.2625,
+          "evidence": []
+        },
+        {
+          "term": "fungal",
+          "score": 61.2625,
+          "evidence": []
+        },
+        {
+          "term": "gastro",
+          "score": 61.2625,
+          "evidence": []
+        },
+        {
+          "term": "hcai",
+          "score": 61.2625,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-015-human-baseline": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "test takers",
+          "score": 1.386,
+          "evidence": []
+        },
+        {
+          "term": "upper bound",
+          "score": 1.1303,
+          "evidence": []
+        },
+        {
+          "term": "baseline",
+          "score": 1.0961,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "human",
+          "score": 1.0276,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "test takers",
+          "score": 19.0264,
+          "evidence": []
+        },
+        {
+          "term": "human",
+          "score": 15.3096,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "upper bound",
+          "score": 13.7733,
+          "evidence": []
+        },
+        {
+          "term": "baseline",
+          "score": 13.7359,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health",
+          "score": 0.1823,
+          "evidence": []
+        },
+        {
+          "term": "guidance",
+          "score": 0.1595,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 0.1561,
+          "evidence": []
+        },
+        {
+          "term": "human",
+          "score": 0.1445,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health",
+          "score": 2.2438,
+          "evidence": []
+        },
+        {
+          "term": "answer",
+          "score": 2.072,
+          "evidence": []
+        },
+        {
+          "term": "question",
+          "score": 1.9529,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 1.6831,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health",
+          "score": 0.1823,
+          "evidence": []
+        },
+        {
+          "term": "guidance",
+          "score": 0.1595,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 0.1561,
+          "evidence": []
+        },
+        {
+          "term": "human",
+          "score": 0.1445,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "h1n",
+          "score": 43.9839,
+          "evidence": []
+        },
+        {
+          "term": "preparedness",
+          "score": 35.7349,
+          "evidence": []
+        },
+        {
+          "term": "berkeley",
+          "score": 29.1619,
+          "evidence": []
+        },
+        {
+          "term": "phii",
+          "score": 24.6651,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-016-experimental-setup": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "setup",
+          "score": 0.8271,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mmlu-pro",
+          "score": 0.5685,
+          "evidence": []
+        },
+        {
+          "term": "comparability",
+          "score": 0.536,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "setup",
+          "score": 9.0652,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mmlu-pro",
+          "score": 6.3244,
+          "evidence": []
+        },
+        {
+          "term": "comparability",
+          "score": 5.9189,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "llm",
+          "score": 0.1283,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.1151,
+          "evidence": []
+        },
+        {
+          "term": "llms",
+          "score": 0.1026,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "llm",
+          "score": 1.5088,
+          "evidence": []
+        },
+        {
+          "term": "prompt",
+          "score": 1.1258,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 1.1128,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "llm",
+          "score": 0.1283,
+          "evidence": []
+        },
+        {
+          "term": "llms",
+          "score": 0.1026,
+          "evidence": []
+        },
+        {
+          "term": "models",
+          "score": 0.0978,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "berkeley",
+          "score": 16.8064,
+          "evidence": []
+        },
+        {
+          "term": "jit",
+          "score": 13.8145,
+          "evidence": []
+        },
+        {
+          "term": "illness",
+          "score": 13.7588,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-017-free-form-response-evaluation": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "ground truth",
+          "score": 1.1865,
+          "evidence": []
+        },
+        {
+          "term": "response",
+          "score": 0.793,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "judge",
+          "score": 0.7842,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "ground truth",
+          "score": 15.6318,
+          "evidence": []
+        },
+        {
+          "term": "judge",
+          "score": 12.2192,
+          "evidence": []
+        },
+        {
+          "term": "response",
+          "score": 10.2064,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "evaluation",
+          "score": 0.174,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "answer",
+          "score": 0.1733,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.17,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "answer",
+          "score": 3.6669,
+          "evidence": []
+        },
+        {
+          "term": "question",
+          "score": 3.3348,
+          "evidence": []
+        },
+        {
+          "term": "llm",
+          "score": 2.3973,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "evaluation",
+          "score": 0.174,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "answer",
+          "score": 0.1733,
+          "evidence": []
+        },
+        {
+          "term": "question",
+          "score": 0.1691,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "berkeley",
+          "score": 32.8333,
+          "evidence": []
+        },
+        {
+          "term": "contradicts",
+          "score": 27.6146,
+          "evidence": []
+        },
+        {
+          "term": "utilising",
+          "score": 27.5585,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-018-pubhealthbench---overall-mcqa-benchmark-results": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "mcqa",
+          "score": 2.3705,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pubhealthbench-full zero-shot",
+          "score": 1.9331,
+          "evidence": []
+        },
+        {
+          "term": "zero-shot accuracy",
+          "score": 1.5741,
+          "evidence": []
+        },
+        {
+          "term": "benchmark",
+          "score": 1.406,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "o3-mini",
+          "score": 1.2859,
+          "evidence": []
+        },
+        {
+          "term": "overall",
+          "score": 1.28,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "generate benchmark",
+          "score": 1.269,
+          "evidence": []
+        },
+        {
+          "term": "refusals",
+          "score": 1.2617,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "mcqa",
+          "score": 53.9013,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pubhealthbench-full zero-shot",
+          "score": 31.1144,
+          "evidence": []
+        },
+        {
+          "term": "benchmark",
+          "score": 28.4312,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "zero-shot accuracy",
+          "score": 28.1863,
+          "evidence": []
+        },
+        {
+          "term": "o3-mini",
+          "score": 24.4049,
+          "evidence": []
+        },
+        {
+          "term": "overall",
+          "score": 23.3189,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "generate benchmark",
+          "score": 23.1654,
+          "evidence": []
+        },
+        {
+          "term": "llama",
+          "score": 23.0367,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "mcqa",
+          "score": 2.2484,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pubhealthbench-full zero-shot",
+          "score": 1.2233,
+          "evidence": []
+        },
+        {
+          "term": "benchmark",
+          "score": 1.1647,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "zero-shot accuracy",
+          "score": 1.1566,
+          "evidence": []
+        },
+        {
+          "term": "generate benchmark",
+          "score": 1.1545,
+          "evidence": []
+        },
+        {
+          "term": "guidance",
+          "score": 1.1391,
+          "evidence": []
+        },
+        {
+          "term": "llama",
+          "score": 1.0888,
+          "evidence": []
+        },
+        {
+          "term": "overall",
+          "score": 1.0147,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "gpt",
+          "score": 12.9528,
+          "evidence": []
+        },
+        {
+          "term": "mcqa",
+          "score": 12.6799,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health",
+          "score": 11.2659,
+          "evidence": []
+        },
+        {
+          "term": "benchmark",
+          "score": 10.9627,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "guidance",
+          "score": 10.0838,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 9.7326,
+          "evidence": []
+        },
+        {
+          "term": "answer",
+          "score": 9.3949,
+          "evidence": []
+        },
+        {
+          "term": "generate benchmark",
+          "score": 9.1515,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "mcqa",
+          "score": 2.2484,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pubhealthbench-full zero-shot",
+          "score": 1.2233,
+          "evidence": []
+        },
+        {
+          "term": "benchmark",
+          "score": 1.1647,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "zero-shot accuracy",
+          "score": 1.1566,
+          "evidence": []
+        },
+        {
+          "term": "generate benchmark",
+          "score": 1.1545,
+          "evidence": []
+        },
+        {
+          "term": "guidance",
+          "score": 1.1391,
+          "evidence": []
+        },
+        {
+          "term": "llama",
+          "score": 1.0888,
+          "evidence": []
+        },
+        {
+          "term": "overall",
+          "score": 1.0147,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "refusals",
+          "score": 533.1742,
+          "evidence": []
+        },
+        {
+          "term": "antimicrobial",
+          "score": 533.1742,
+          "evidence": []
+        },
+        {
+          "term": "fungal",
+          "score": 533.1742,
+          "evidence": []
+        },
+        {
+          "term": "gastro",
+          "score": 533.1742,
+          "evidence": []
+        },
+        {
+          "term": "hcai",
+          "score": 533.1742,
+          "evidence": []
+        },
+        {
+          "term": "immunisation",
+          "score": 533.1742,
+          "evidence": []
+        },
+        {
+          "term": "sepsis",
+          "score": 533.1742,
+          "evidence": []
+        },
+        {
+          "term": "stis",
+          "score": 533.1742,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-019-pubhealthbench---results-by-topic-area-and-audie": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "guidance audience",
+          "score": 1.6441,
+          "evidence": []
+        },
+        {
+          "term": "topic",
+          "score": 1.0634,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pubhealthbench-full",
+          "score": 0.8535,
+          "evidence": []
+        },
+        {
+          "term": "area",
+          "score": 0.8111,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "guidance audience",
+          "score": 31.3367,
+          "evidence": []
+        },
+        {
+          "term": "topic",
+          "score": 14.5325,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pubhealthbench-full",
+          "score": 11.8378,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 9.6661,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "guidance audience",
+          "score": 0.2865,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.2834,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 0.2216,
+          "evidence": []
+        },
+        {
+          "term": "gpt",
+          "score": 0.187,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health",
+          "score": 5.1813,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 3.5408,
+          "evidence": []
+        },
+        {
+          "term": "guidance",
+          "score": 2.5848,
+          "evidence": []
+        },
+        {
+          "term": "guidance audience",
+          "score": 2.5848,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "guidance audience",
+          "score": 0.2865,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.2834,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 0.2216,
+          "evidence": []
+        },
+        {
+          "term": "gpt",
+          "score": 0.187,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "antimicrobial",
+          "score": 134.0972,
+          "evidence": []
+        },
+        {
+          "term": "fungal",
+          "score": 134.0972,
+          "evidence": []
+        },
+        {
+          "term": "gastro",
+          "score": 134.0972,
+          "evidence": []
+        },
+        {
+          "term": "hcai",
+          "score": 134.0972,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-020-pubhealthbench-freeform-results": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "mcqa",
+          "score": 0.9803,
+          "evidence": []
+        },
+        {
+          "term": "ppts",
+          "score": 0.9449,
+          "evidence": []
+        },
+        {
+          "term": "free form",
+          "score": 0.8202,
+          "evidence": []
+        },
+        {
+          "term": "llms",
+          "score": 0.6379,
+          "evidence": []
+        },
+        {
+          "term": "guidance",
+          "score": 0.6297,
+          "evidence": []
+        },
+        {
+          "term": "comparable",
+          "score": 0.598,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "mcqa",
+          "score": 17.9671,
+          "evidence": []
+        },
+        {
+          "term": "ppts",
+          "score": 13.2241,
+          "evidence": []
+        },
+        {
+          "term": "llms",
+          "score": 10.8809,
+          "evidence": []
+        },
+        {
+          "term": "free form",
+          "score": 10.4223,
+          "evidence": []
+        },
+        {
+          "term": "guidance",
+          "score": 9.4703,
+          "evidence": []
+        },
+        {
+          "term": "comparable",
+          "score": 8.1461,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health",
+          "score": 0.272,
+          "evidence": []
+        },
+        {
+          "term": "guidance",
+          "score": 0.2568,
+          "evidence": []
+        },
+        {
+          "term": "mcqa",
+          "score": 0.22,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 0.2101,
+          "evidence": []
+        },
+        {
+          "term": "question",
+          "score": 0.2017,
+          "evidence": []
+        },
+        {
+          "term": "llm",
+          "score": 0.1828,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "answer",
+          "score": 4.221,
+          "evidence": []
+        },
+        {
+          "term": "question",
+          "score": 3.9066,
+          "evidence": []
+        },
+        {
+          "term": "guidance",
+          "score": 3.0214,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 2.7814,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 2.5383,
+          "evidence": []
+        },
+        {
+          "term": "llm",
+          "score": 2.2151,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "guidance",
+          "score": 0.2568,
+          "evidence": []
+        },
+        {
+          "term": "mcqa",
+          "score": 0.22,
+          "evidence": []
+        },
+        {
+          "term": "answer",
+          "score": 0.179,
+          "evidence": []
+        },
+        {
+          "term": "free form",
+          "score": 0.178,
+          "evidence": []
+        },
+        {
+          "term": "llms",
+          "score": 0.1452,
+          "evidence": []
+        },
+        {
+          "term": "correct",
+          "score": 0.1418,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "antimicrobial",
+          "score": 52.9823,
+          "evidence": []
+        },
+        {
+          "term": "fungal",
+          "score": 52.9823,
+          "evidence": []
+        },
+        {
+          "term": "gastro",
+          "score": 52.9823,
+          "evidence": []
+        },
+        {
+          "term": "hcai",
+          "score": 52.9823,
+          "evidence": []
+        },
+        {
+          "term": "immunisation",
+          "score": 52.9823,
+          "evidence": []
+        },
+        {
+          "term": "sepsis",
+          "score": 52.9823,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-021-discussion": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "health guidance",
+          "score": 1.9637,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 1.7021,
+          "evidence": []
+        },
+        {
+          "term": "mcqa questions",
+          "score": 1.5071,
+          "evidence": []
+        },
+        {
+          "term": "judge llm",
+          "score": 1.2024,
+          "evidence": []
+        },
+        {
+          "term": "free form",
+          "score": 1.106,
+          "evidence": []
+        },
+        {
+          "term": "freeform",
+          "score": 1.0079,
+          "evidence": []
+        },
+        {
+          "term": "claude-haiku",
+          "score": 0.9475,
+          "evidence": []
+        },
+        {
+          "term": "command-r-32b",
+          "score": 0.9475,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "health guidance",
+          "score": 47.6778,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 34.4284,
+          "evidence": []
+        },
+        {
+          "term": "mcqa questions",
+          "score": 24.7269,
+          "evidence": []
+        },
+        {
+          "term": "free form",
+          "score": 17.8067,
+          "evidence": []
+        },
+        {
+          "term": "judge llm",
+          "score": 17.5624,
+          "evidence": []
+        },
+        {
+          "term": "llms",
+          "score": 16.3213,
+          "evidence": []
+        },
+        {
+          "term": "llama",
+          "score": 15.3578,
+          "evidence": []
+        },
+        {
+          "term": "open-weight",
+          "score": 14.1448,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health guidance",
+          "score": 1.8116,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 1.5951,
+          "evidence": []
+        },
+        {
+          "term": "mcqa questions",
+          "score": 1.404,
+          "evidence": []
+        },
+        {
+          "term": "judge llm",
+          "score": 0.7852,
+          "evidence": []
+        },
+        {
+          "term": "llama",
+          "score": 0.7794,
+          "evidence": []
+        },
+        {
+          "term": "gpt",
+          "score": 0.7169,
+          "evidence": []
+        },
+        {
+          "term": "gpt-4o",
+          "score": 0.6363,
+          "evidence": []
+        },
+        {
+          "term": "claude-haiku",
+          "score": 0.595,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "public health",
+          "score": 25.1665,
+          "evidence": []
+        },
+        {
+          "term": "health guidance",
+          "score": 23.3396,
+          "evidence": []
+        },
+        {
+          "term": "judge llm",
+          "score": 10.4091,
+          "evidence": []
+        },
+        {
+          "term": "mcqa questions",
+          "score": 10.2855,
+          "evidence": []
+        },
+        {
+          "term": "gpt",
+          "score": 8.973,
+          "evidence": []
+        },
+        {
+          "term": "answer",
+          "score": 7.5756,
+          "evidence": []
+        },
+        {
+          "term": "llms",
+          "score": 6.924,
+          "evidence": []
+        },
+        {
+          "term": "classification",
+          "score": 6.2132,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health guidance",
+          "score": 1.8116,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 1.5951,
+          "evidence": []
+        },
+        {
+          "term": "mcqa questions",
+          "score": 1.404,
+          "evidence": []
+        },
+        {
+          "term": "judge llm",
+          "score": 0.7852,
+          "evidence": []
+        },
+        {
+          "term": "llama",
+          "score": 0.7794,
+          "evidence": []
+        },
+        {
+          "term": "gpt",
+          "score": 0.7169,
+          "evidence": []
+        },
+        {
+          "term": "gpt-4o",
+          "score": 0.6363,
+          "evidence": []
+        },
+        {
+          "term": "claude-haiku",
+          "score": 0.595,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "refusals",
+          "score": 304.2599,
+          "evidence": []
+        },
+        {
+          "term": "antimicrobial",
+          "score": 304.2599,
+          "evidence": []
+        },
+        {
+          "term": "fungal",
+          "score": 304.2599,
+          "evidence": []
+        },
+        {
+          "term": "gastro",
+          "score": 304.2599,
+          "evidence": []
+        },
+        {
+          "term": "hcai",
+          "score": 304.2599,
+          "evidence": []
+        },
+        {
+          "term": "immunisation",
+          "score": 304.2599,
+          "evidence": []
+        },
+        {
+          "term": "sepsis",
+          "score": 304.2599,
+          "evidence": []
+        },
+        {
+          "term": "stis",
+          "score": 304.2599,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-022-limitations": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "public health",
+          "score": 1.3372,
+          "evidence": []
+        },
+        {
+          "term": "llm performance",
+          "score": 0.9196,
+          "evidence": []
+        },
+        {
+          "term": "incorporated",
+          "score": 0.7348,
+          "evidence": []
+        },
+        {
+          "term": "further work",
+          "score": 0.6956,
+          "evidence": []
+        },
+        {
+          "term": "topics",
+          "score": 0.6853,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "public health",
+          "score": 20.7388,
+          "evidence": []
+        },
+        {
+          "term": "llm performance",
+          "score": 13.5752,
+          "evidence": []
+        },
+        {
+          "term": "incorporated",
+          "score": 10.1432,
+          "evidence": []
+        },
+        {
+          "term": "guidance",
+          "score": 9.4703,
+          "evidence": []
+        },
+        {
+          "term": "topics",
+          "score": 9.4298,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "public health",
+          "score": 0.5513,
+          "evidence": []
+        },
+        {
+          "term": "llm performance",
+          "score": 0.316,
+          "evidence": []
+        },
+        {
+          "term": "guidance",
+          "score": 0.1986,
+          "evidence": []
+        },
+        {
+          "term": "llms",
+          "score": 0.1575,
+          "evidence": []
+        },
+        {
+          "term": "mcqa",
+          "score": 0.1374,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "public health",
+          "score": 10.6216,
+          "evidence": []
+        },
+        {
+          "term": "llm performance",
+          "score": 4.8856,
+          "evidence": []
+        },
+        {
+          "term": "classification",
+          "score": 3.2486,
+          "evidence": []
+        },
+        {
+          "term": "llms",
+          "score": 2.5161,
+          "evidence": []
+        },
+        {
+          "term": "guidance",
+          "score": 2.2906,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "public health",
+          "score": 0.5513,
+          "evidence": []
+        },
+        {
+          "term": "llm performance",
+          "score": 0.316,
+          "evidence": []
+        },
+        {
+          "term": "guidance",
+          "score": 0.1986,
+          "evidence": []
+        },
+        {
+          "term": "llms",
+          "score": 0.1575,
+          "evidence": []
+        },
+        {
+          "term": "mcqa",
+          "score": 0.1374,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "h1n",
+          "score": 62.2942,
+          "evidence": []
+        },
+        {
+          "term": "preparedness",
+          "score": 50.8104,
+          "evidence": []
+        },
+        {
+          "term": "phii",
+          "score": 34.9277,
+          "evidence": []
+        },
+        {
+          "term": "berkeley",
+          "score": 23.2912,
+          "evidence": []
+        },
+        {
+          "term": "crdm",
+          "score": 22.9084,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-023-conclusion": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "health guidance",
+          "score": 1.4077,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 1.2283,
+          "evidence": []
+        },
+        {
+          "term": "free form",
+          "score": 1.035,
+          "evidence": []
+        },
+        {
+          "term": "llms across",
+          "score": 1.0205,
+          "evidence": []
+        },
+        {
+          "term": "risks",
+          "score": 0.601,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "health guidance",
+          "score": 22.2932,
+          "evidence": []
+        },
+        {
+          "term": "llms across",
+          "score": 17.5622,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 17.5168,
+          "evidence": []
+        },
+        {
+          "term": "free form",
+          "score": 15.6334,
+          "evidence": []
+        },
+        {
+          "term": "benchmark",
+          "score": 8.5294,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "public health",
+          "score": 0.6357,
+          "evidence": []
+        },
+        {
+          "term": "health guidance",
+          "score": 0.6072,
+          "evidence": []
+        },
+        {
+          "term": "llms across",
+          "score": 0.272,
+          "evidence": []
+        },
+        {
+          "term": "llm",
+          "score": 0.2262,
+          "evidence": []
+        },
+        {
+          "term": "free form",
+          "score": 0.2018,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "public health",
+          "score": 10.5279,
+          "evidence": []
+        },
+        {
+          "term": "health guidance",
+          "score": 9.1336,
+          "evidence": []
+        },
+        {
+          "term": "llms across",
+          "score": 3.9382,
+          "evidence": []
+        },
+        {
+          "term": "llm",
+          "score": 3.2915,
+          "evidence": []
+        },
+        {
+          "term": "classification",
+          "score": 3.1906,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "public health",
+          "score": 0.6357,
+          "evidence": []
+        },
+        {
+          "term": "health guidance",
+          "score": 0.6072,
+          "evidence": []
+        },
+        {
+          "term": "llms across",
+          "score": 0.272,
+          "evidence": []
+        },
+        {
+          "term": "llm",
+          "score": 0.2262,
+          "evidence": []
+        },
+        {
+          "term": "free form",
+          "score": 0.2018,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "h1n",
+          "score": 55.6671,
+          "evidence": []
+        },
+        {
+          "term": "preparedness",
+          "score": 45.4004,
+          "evidence": []
+        },
+        {
+          "term": "refusals",
+          "score": 40.9345,
+          "evidence": []
+        },
+        {
+          "term": "antimicrobial",
+          "score": 40.9345,
+          "evidence": []
+        },
+        {
+          "term": "fungal",
+          "score": 40.9345,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-024-ethics-statement": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "gov",
+          "score": 0.7311,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 0.6482,
+          "evidence": []
+        },
+        {
+          "term": "assuring",
+          "score": 0.6308,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "gov",
+          "score": 10.1432,
+          "evidence": []
+        },
+        {
+          "term": "assuring",
+          "score": 7.0175,
+          "evidence": []
+        },
+        {
+          "term": "in-line",
+          "score": 7.0175,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "terms",
+          "score": 0.0493,
+          "evidence": []
+        },
+        {
+          "term": "language",
+          "score": 0.0434,
+          "evidence": []
+        },
+        {
+          "term": "models",
+          "score": 0.041,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "terms",
+          "score": 0.6506,
+          "evidence": []
+        },
+        {
+          "term": "language",
+          "score": 0.5896,
+          "evidence": []
+        },
+        {
+          "term": "models",
+          "score": 0.5161,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "terms",
+          "score": 0.0493,
+          "evidence": []
+        },
+        {
+          "term": "language",
+          "score": 0.0434,
+          "evidence": []
+        },
+        {
+          "term": "models",
+          "score": 0.041,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "heijden",
+          "score": 83.4432,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 78.5597,
+          "evidence": []
+        },
+        {
+          "term": "hessen",
+          "score": 69.5671,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-025-reproducibility-statement": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hao zhang",
+          "score": 3.2705,
+          "evidence": []
+        },
+        {
+          "term": "url abs",
+          "score": 3.0764,
+          "evidence": []
+        },
+        {
+          "term": "yubo wang",
+          "score": 2.9807,
+          "evidence": []
+        },
+        {
+          "term": "jie wang",
+          "score": 2.8255,
+          "evidence": []
+        },
+        {
+          "term": "url https",
+          "score": 2.6153,
+          "evidence": []
+        },
+        {
+          "term": "org abs",
+          "score": 2.4104,
+          "evidence": []
+        },
+        {
+          "term": "karan singhal",
+          "score": 2.2892,
+          "evidence": []
+        },
+        {
+          "term": "ying sheng",
+          "score": 2.2788,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hao zhang",
+          "score": 128.5569,
+          "evidence": []
+        },
+        {
+          "term": "yubo wang",
+          "score": 128.027,
+          "evidence": []
+        },
+        {
+          "term": "jie wang",
+          "score": 125.6191,
+          "evidence": []
+        },
+        {
+          "term": "url abs",
+          "score": 122.2208,
+          "evidence": []
+        },
+        {
+          "term": "url https",
+          "score": 105.0128,
+          "evidence": []
+        },
+        {
+          "term": "org abs",
+          "score": 55.0036,
+          "evidence": []
+        },
+        {
+          "term": "liu",
+          "score": 50.7519,
+          "evidence": []
+        },
+        {
+          "term": "openai o3-mini",
+          "score": 44.3101,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hao zhang",
+          "score": 3.2915,
+          "evidence": []
+        },
+        {
+          "term": "url abs",
+          "score": 3.1307,
+          "evidence": []
+        },
+        {
+          "term": "yubo wang",
+          "score": 3.0513,
+          "evidence": []
+        },
+        {
+          "term": "jie wang",
+          "score": 2.8824,
+          "evidence": []
+        },
+        {
+          "term": "url https",
+          "score": 2.6692,
+          "evidence": []
+        },
+        {
+          "term": "org abs",
+          "score": 2.3555,
+          "evidence": []
+        },
+        {
+          "term": "karan singhal",
+          "score": 2.2829,
+          "evidence": []
+        },
+        {
+          "term": "ying sheng",
+          "score": 2.2617,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "url abs",
+          "score": 129.4965,
+          "evidence": []
+        },
+        {
+          "term": "hao zhang",
+          "score": 128.3547,
+          "evidence": []
+        },
+        {
+          "term": "yubo wang",
+          "score": 126.2799,
+          "evidence": []
+        },
+        {
+          "term": "jie wang",
+          "score": 125.152,
+          "evidence": []
+        },
+        {
+          "term": "url https",
+          "score": 114.9955,
+          "evidence": []
+        },
+        {
+          "term": "liu",
+          "score": 53.7952,
+          "evidence": []
+        },
+        {
+          "term": "org abs",
+          "score": 48.4932,
+          "evidence": []
+        },
+        {
+          "term": "jason wei",
+          "score": 43.8129,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hao zhang",
+          "score": 3.2915,
+          "evidence": []
+        },
+        {
+          "term": "url abs",
+          "score": 3.1307,
+          "evidence": []
+        },
+        {
+          "term": "yubo wang",
+          "score": 3.0513,
+          "evidence": []
+        },
+        {
+          "term": "jie wang",
+          "score": 2.8824,
+          "evidence": []
+        },
+        {
+          "term": "url https",
+          "score": 2.6692,
+          "evidence": []
+        },
+        {
+          "term": "org abs",
+          "score": 2.3555,
+          "evidence": []
+        },
+        {
+          "term": "karan singhal",
+          "score": 2.2829,
+          "evidence": []
+        },
+        {
+          "term": "ying sheng",
+          "score": 2.2617,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "dustin",
+          "score": 119.0197,
+          "evidence": []
+        },
+        {
+          "term": "kunal",
+          "score": 119.0197,
+          "evidence": []
+        },
+        {
+          "term": "minervini",
+          "score": 119.0197,
+          "evidence": []
+        },
+        {
+          "term": "mitra",
+          "score": 119.0197,
+          "evidence": []
+        },
+        {
+          "term": "pasquale",
+          "score": 119.0197,
+          "evidence": []
+        },
+        {
+          "term": "yuansheng",
+          "score": 119.0197,
+          "evidence": []
+        },
+        {
+          "term": "victoria",
+          "score": 114.4878,
+          "evidence": []
+        },
+        {
+          "term": "olmo",
+          "score": 110.8728,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-027-automated-mcqa-error-detection": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "error detection",
+          "score": 2.512,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "valid question",
+          "score": 2.4165,
+          "evidence": []
+        },
+        {
+          "term": "mcqa",
+          "score": 2.3705,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "question refers",
+          "score": 2.0374,
+          "evidence": []
+        },
+        {
+          "term": "mcqa samples",
+          "score": 2.0004,
+          "evidence": []
+        },
+        {
+          "term": "generated mcqa",
+          "score": 1.9564,
+          "evidence": []
+        },
+        {
+          "term": "correct answer",
+          "score": 1.8131,
+          "evidence": []
+        },
+        {
+          "term": "final pipeline",
+          "score": 1.3971,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "valid question",
+          "score": 89.3487,
+          "evidence": []
+        },
+        {
+          "term": "question refers",
+          "score": 70.0862,
+          "evidence": []
+        },
+        {
+          "term": "mcqa",
+          "score": 53.9013,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mcqa samples",
+          "score": 43.4097,
+          "evidence": []
+        },
+        {
+          "term": "generated mcqa",
+          "score": 42.0015,
+          "evidence": []
+        },
+        {
+          "term": "error detection",
+          "score": 39.8186,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "correct answer",
+          "score": 37.4659,
+          "evidence": []
+        },
+        {
+          "term": "options",
+          "score": 29.3408,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "correct answer",
+          "score": 1.0131,
+          "evidence": []
+        },
+        {
+          "term": "mcqa",
+          "score": 0.8329,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "valid question",
+          "score": 0.8004,
+          "evidence": []
+        },
+        {
+          "term": "mcqa samples",
+          "score": 0.6147,
+          "evidence": []
+        },
+        {
+          "term": "question refers",
+          "score": 0.5662,
+          "evidence": []
+        },
+        {
+          "term": "generated mcqa",
+          "score": 0.5112,
+          "evidence": []
+        },
+        {
+          "term": "guidance",
+          "score": 0.5082,
+          "evidence": []
+        },
+        {
+          "term": "proposed correct",
+          "score": 0.4895,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "correct answer",
+          "score": 35.3436,
+          "evidence": []
+        },
+        {
+          "term": "valid question",
+          "score": 27.6001,
+          "evidence": []
+        },
+        {
+          "term": "question refers",
+          "score": 22.4794,
+          "evidence": []
+        },
+        {
+          "term": "mcqa",
+          "score": 16.576,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mcqa samples",
+          "score": 13.0651,
+          "evidence": []
+        },
+        {
+          "term": "guidance",
+          "score": 12.4701,
+          "evidence": []
+        },
+        {
+          "term": "incorrect",
+          "score": 11.9163,
+          "evidence": []
+        },
+        {
+          "term": "proposed correct",
+          "score": 10.7666,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "correct answer",
+          "score": 1.0131,
+          "evidence": []
+        },
+        {
+          "term": "mcqa",
+          "score": 0.8329,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "valid question",
+          "score": 0.8004,
+          "evidence": []
+        },
+        {
+          "term": "question refers",
+          "score": 0.6393,
+          "evidence": []
+        },
+        {
+          "term": "mcqa samples",
+          "score": 0.6147,
+          "evidence": []
+        },
+        {
+          "term": "generated mcqa",
+          "score": 0.5112,
+          "evidence": []
+        },
+        {
+          "term": "error detection",
+          "score": 0.5097,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "proposed correct",
+          "score": 0.4895,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "mcqa",
+          "score": 33.4142,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "distractor",
+          "score": 21.6986,
+          "evidence": []
+        },
+        {
+          "term": "illness",
+          "score": 19.5112,
+          "evidence": []
+        },
+        {
+          "term": "headlines",
+          "score": 19.3443,
+          "evidence": []
+        },
+        {
+          "term": "utilising",
+          "score": 19.2231,
+          "evidence": []
+        },
+        {
+          "term": "symptom",
+          "score": 19.0229,
+          "evidence": []
+        },
+        {
+          "term": "gastrointestinal",
+          "score": 18.7285,
+          "evidence": []
+        },
+        {
+          "term": "aetiology",
+          "score": 18.7024,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-028-additional-benchmark-statistics": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "pubhealthbench-full",
+          "score": 0.8535,
+          "evidence": []
+        },
+        {
+          "term": "mcqa",
+          "score": 0.6691,
+          "evidence": []
+        },
+        {
+          "term": "revision",
+          "score": 0.6014,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "pubhealthbench-full",
+          "score": 11.8378,
+          "evidence": []
+        },
+        {
+          "term": "mcqa",
+          "score": 8.9836,
+          "evidence": []
+        },
+        {
+          "term": "revision",
+          "score": 7.8529,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "guidance",
+          "score": 0.1086,
+          "evidence": []
+        },
+        {
+          "term": "question",
+          "score": 0.1014,
+          "evidence": []
+        },
+        {
+          "term": "answer",
+          "score": 0.0969,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "answer",
+          "score": 1.7526,
+          "evidence": []
+        },
+        {
+          "term": "question",
+          "score": 1.5938,
+          "evidence": []
+        },
+        {
+          "term": "document",
+          "score": 1.0938,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "guidance",
+          "score": 0.1086,
+          "evidence": []
+        },
+        {
+          "term": "question",
+          "score": 0.1014,
+          "evidence": []
+        },
+        {
+          "term": "mcqa",
+          "score": 0.0956,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "refusals",
+          "score": 82.3621,
+          "evidence": []
+        },
+        {
+          "term": "antimicrobial",
+          "score": 82.3621,
+          "evidence": []
+        },
+        {
+          "term": "fungal",
+          "score": 82.3621,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-029-mcqa-generation-prompts": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "insert incorrect",
+          "score": 3.6877,
+          "evidence": []
+        },
+        {
+          "term": "insert question",
+          "score": 3.4728,
+          "evidence": []
+        },
+        {
+          "term": "highlighted passage",
+          "score": 3.1493,
+          "evidence": []
+        },
+        {
+          "term": "incorrect answer",
+          "score": 3.0762,
+          "evidence": []
+        },
+        {
+          "term": "insert correct",
+          "score": 2.9826,
+          "evidence": []
+        },
+        {
+          "term": "answer options",
+          "score": 2.3809,
+          "evidence": []
+        },
+        {
+          "term": "mcqa generation",
+          "score": 2.2552,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "generate question",
+          "score": 2.1639,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "insert incorrect",
+          "score": 134.4421,
+          "evidence": []
+        },
+        {
+          "term": "insert question",
+          "score": 126.8976,
+          "evidence": []
+        },
+        {
+          "term": "incorrect answer",
+          "score": 120.3755,
+          "evidence": []
+        },
+        {
+          "term": "insert correct",
+          "score": 98.4878,
+          "evidence": []
+        },
+        {
+          "term": "highlighted passage",
+          "score": 88.5167,
+          "evidence": []
+        },
+        {
+          "term": "answer options",
+          "score": 81.7493,
+          "evidence": []
+        },
+        {
+          "term": "generate question",
+          "score": 66.6349,
+          "evidence": []
+        },
+        {
+          "term": "guidance text",
+          "score": 61.0912,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "public health",
+          "score": 1.2526,
+          "evidence": []
+        },
+        {
+          "term": "correct answer",
+          "score": 1.191,
+          "evidence": []
+        },
+        {
+          "term": "incorrect answer",
+          "score": 1.1225,
+          "evidence": []
+        },
+        {
+          "term": "mcqa",
+          "score": 1.1207,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mcqa generation",
+          "score": 1.1207,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "guidance text",
+          "score": 1.1031,
+          "evidence": []
+        },
+        {
+          "term": "answer options",
+          "score": 1.0932,
+          "evidence": []
+        },
+        {
+          "term": "generate question",
+          "score": 0.9979,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "incorrect answer",
+          "score": 65.1125,
+          "evidence": []
+        },
+        {
+          "term": "correct answer",
+          "score": 62.5271,
+          "evidence": []
+        },
+        {
+          "term": "answer options",
+          "score": 60.497,
+          "evidence": []
+        },
+        {
+          "term": "insert question",
+          "score": 59.3302,
+          "evidence": []
+        },
+        {
+          "term": "generate question",
+          "score": 48.0757,
+          "evidence": []
+        },
+        {
+          "term": "guidance text",
+          "score": 35.6494,
+          "evidence": []
+        },
+        {
+          "term": "mcqa",
+          "score": 29.7619,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mcqa generation",
+          "score": 29.7619,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "mcqa generation",
+          "score": 1.269,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "public health",
+          "score": 1.2526,
+          "evidence": []
+        },
+        {
+          "term": "correct answer",
+          "score": 1.191,
+          "evidence": []
+        },
+        {
+          "term": "incorrect answer",
+          "score": 1.1225,
+          "evidence": []
+        },
+        {
+          "term": "guidance text",
+          "score": 1.1031,
+          "evidence": []
+        },
+        {
+          "term": "answer options",
+          "score": 1.0932,
+          "evidence": []
+        },
+        {
+          "term": "generate question",
+          "score": 0.9979,
+          "evidence": []
+        },
+        {
+          "term": "health expert",
+          "score": 0.9518,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "mcqa",
+          "score": 49.1447,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mcqa generation",
+          "score": 49.1447,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "insert incorrect",
+          "score": 44.1933,
+          "evidence": []
+        },
+        {
+          "term": "h1n",
+          "score": 43.9062,
+          "evidence": []
+        },
+        {
+          "term": "insert question",
+          "score": 43.2009,
+          "evidence": []
+        },
+        {
+          "term": "highlighted passage",
+          "score": 39.9551,
+          "evidence": []
+        },
+        {
+          "term": "incorrect answer",
+          "score": 38.368,
+          "evidence": []
+        },
+        {
+          "term": "preparedness",
+          "score": 35.3762,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-030-human-manual-annotation": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "human",
+          "score": 0.8144,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "annotation",
+          "score": 0.7692,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "organisation",
+          "score": 0.5062,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "human",
+          "score": 10.2064,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "annotation",
+          "score": 7.946,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "organisation",
+          "score": 5.6312,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health",
+          "score": 0.0894,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 0.08,
+          "evidence": []
+        },
+        {
+          "term": "human",
+          "score": 0.0766,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health",
+          "score": 1.3396,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 0.975,
+          "evidence": []
+        },
+        {
+          "term": "human",
+          "score": 0.7328,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health",
+          "score": 0.0894,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 0.08,
+          "evidence": []
+        },
+        {
+          "term": "human",
+          "score": 0.0766,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "h1n",
+          "score": 34.0433,
+          "evidence": []
+        },
+        {
+          "term": "preparedness",
+          "score": 27.6084,
+          "evidence": []
+        },
+        {
+          "term": "phii",
+          "score": 18.6061,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-031-estimating-the-benchmark-error-rate": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "answer options",
+          "score": 2.6967,
+          "evidence": []
+        },
+        {
+          "term": "incorrect options",
+          "score": 2.4162,
+          "evidence": []
+        },
+        {
+          "term": "correct answer",
+          "score": 2.3395,
+          "evidence": []
+        },
+        {
+          "term": "valid answer",
+          "score": 2.2772,
+          "evidence": []
+        },
+        {
+          "term": "question valid",
+          "score": 2.1836,
+          "evidence": []
+        },
+        {
+          "term": "standard answer",
+          "score": 1.7738,
+          "evidence": []
+        },
+        {
+          "term": "mcqa samples",
+          "score": 1.3442,
+          "evidence": []
+        },
+        {
+          "term": "some relevance",
+          "score": 1.1959,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "answer options",
+          "score": 90.6528,
+          "evidence": []
+        },
+        {
+          "term": "correct answer",
+          "score": 73.4321,
+          "evidence": []
+        },
+        {
+          "term": "valid answer",
+          "score": 71.5088,
+          "evidence": []
+        },
+        {
+          "term": "question valid",
+          "score": 66.9517,
+          "evidence": []
+        },
+        {
+          "term": "incorrect options",
+          "score": 64.942,
+          "evidence": []
+        },
+        {
+          "term": "standard answer",
+          "score": 54.9615,
+          "evidence": []
+        },
+        {
+          "term": "guidance",
+          "score": 22.0974,
+          "evidence": []
+        },
+        {
+          "term": "some relevance",
+          "score": 21.3203,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "correct answer",
+          "score": 1.2131,
+          "evidence": []
+        },
+        {
+          "term": "answer options",
+          "score": 1.1136,
+          "evidence": []
+        },
+        {
+          "term": "valid answer",
+          "score": 1.012,
+          "evidence": []
+        },
+        {
+          "term": "question valid",
+          "score": 0.9864,
+          "evidence": []
+        },
+        {
+          "term": "standard answer",
+          "score": 0.838,
+          "evidence": []
+        },
+        {
+          "term": "incorrect options",
+          "score": 0.7784,
+          "evidence": []
+        },
+        {
+          "term": "mcqa samples",
+          "score": 0.6788,
+          "evidence": []
+        },
+        {
+          "term": "guidance",
+          "score": 0.6677,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "correct answer",
+          "score": 47.0925,
+          "evidence": []
+        },
+        {
+          "term": "answer options",
+          "score": 45.2328,
+          "evidence": []
+        },
+        {
+          "term": "valid answer",
+          "score": 39.0801,
+          "evidence": []
+        },
+        {
+          "term": "question valid",
+          "score": 36.1363,
+          "evidence": []
+        },
+        {
+          "term": "standard answer",
+          "score": 33.9589,
+          "evidence": []
+        },
+        {
+          "term": "incorrect options",
+          "score": 28.8114,
+          "evidence": []
+        },
+        {
+          "term": "guidance",
+          "score": 16.7218,
+          "evidence": []
+        },
+        {
+          "term": "mcqa samples",
+          "score": 15.7557,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "correct answer",
+          "score": 1.2131,
+          "evidence": []
+        },
+        {
+          "term": "answer options",
+          "score": 1.1136,
+          "evidence": []
+        },
+        {
+          "term": "valid answer",
+          "score": 1.012,
+          "evidence": []
+        },
+        {
+          "term": "question valid",
+          "score": 0.9864,
+          "evidence": []
+        },
+        {
+          "term": "standard answer",
+          "score": 0.838,
+          "evidence": []
+        },
+        {
+          "term": "incorrect options",
+          "score": 0.7784,
+          "evidence": []
+        },
+        {
+          "term": "mcqa samples",
+          "score": 0.6788,
+          "evidence": []
+        },
+        {
+          "term": "guidance",
+          "score": 0.6677,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "distractor",
+          "score": 27.9079,
+          "evidence": []
+        },
+        {
+          "term": "answer options",
+          "score": 26.8044,
+          "evidence": []
+        },
+        {
+          "term": "incorrect options",
+          "score": 24.7804,
+          "evidence": []
+        },
+        {
+          "term": "h1n",
+          "score": 24.2735,
+          "evidence": []
+        },
+        {
+          "term": "utilising",
+          "score": 24.1741,
+          "evidence": []
+        },
+        {
+          "term": "berkeley",
+          "score": 23.9808,
+          "evidence": []
+        },
+        {
+          "term": "contradicting",
+          "score": 22.7174,
+          "evidence": []
+        },
+        {
+          "term": "headlines",
+          "score": 22.6834,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-032-human-baseline": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "human baseline",
+          "score": 3.2346,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "test takers",
+          "score": 1.6296,
+          "evidence": []
+        },
+        {
+          "term": "questions",
+          "score": 1.1042,
+          "evidence": []
+        },
+        {
+          "term": "answer",
+          "score": 0.9885,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 0.9734,
+          "evidence": []
+        },
+        {
+          "term": "multiple choice",
+          "score": 0.8971,
+          "evidence": []
+        },
+        {
+          "term": "ukhsa",
+          "score": 0.7837,
+          "evidence": []
+        },
+        {
+          "term": "reviewed",
+          "score": 0.65,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "human baseline",
+          "score": 68.2975,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "human test",
+          "score": 32.8914,
+          "evidence": []
+        },
+        {
+          "term": "questions",
+          "score": 30.4193,
+          "evidence": []
+        },
+        {
+          "term": "test takers",
+          "score": 26.5136,
+          "evidence": []
+        },
+        {
+          "term": "answer",
+          "score": 20.1237,
+          "evidence": []
+        },
+        {
+          "term": "multiple choice",
+          "score": 12.937,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 11.6778,
+          "evidence": []
+        },
+        {
+          "term": "ukhsa",
+          "score": 10.4515,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "public health",
+          "score": 0.798,
+          "evidence": []
+        },
+        {
+          "term": "guidance",
+          "score": 0.4306,
+          "evidence": []
+        },
+        {
+          "term": "question",
+          "score": 0.4174,
+          "evidence": []
+        },
+        {
+          "term": "answer",
+          "score": 0.4161,
+          "evidence": []
+        },
+        {
+          "term": "human",
+          "score": 0.3849,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "human baseline",
+          "score": 0.3849,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mcqa",
+          "score": 0.3373,
+          "evidence": []
+        },
+        {
+          "term": "human test",
+          "score": 0.3356,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "answer",
+          "score": 12.2114,
+          "evidence": []
+        },
+        {
+          "term": "question",
+          "score": 11.2248,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 10.47,
+          "evidence": []
+        },
+        {
+          "term": "human baseline",
+          "score": 8.4668,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "guidance",
+          "score": 6.9668,
+          "evidence": []
+        },
+        {
+          "term": "incorrect",
+          "score": 5.8741,
+          "evidence": []
+        },
+        {
+          "term": "insert",
+          "score": 5.3745,
+          "evidence": []
+        },
+        {
+          "term": "human test",
+          "score": 5.0995,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "public health",
+          "score": 0.798,
+          "evidence": []
+        },
+        {
+          "term": "human baseline",
+          "score": 0.4573,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "guidance",
+          "score": 0.4306,
+          "evidence": []
+        },
+        {
+          "term": "question",
+          "score": 0.4174,
+          "evidence": []
+        },
+        {
+          "term": "answer",
+          "score": 0.4161,
+          "evidence": []
+        },
+        {
+          "term": "human test",
+          "score": 0.3356,
+          "evidence": []
+        },
+        {
+          "term": "llm",
+          "score": 0.3243,
+          "evidence": []
+        },
+        {
+          "term": "options",
+          "score": 0.2148,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "h1n",
+          "score": 44.4446,
+          "evidence": []
+        },
+        {
+          "term": "preparedness",
+          "score": 35.9119,
+          "evidence": []
+        },
+        {
+          "term": "berkeley",
+          "score": 29.9019,
+          "evidence": []
+        },
+        {
+          "term": "phii",
+          "score": 24.5679,
+          "evidence": []
+        },
+        {
+          "term": "distractor",
+          "score": 24.0543,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 22.905,
+          "evidence": []
+        },
+        {
+          "term": "illness",
+          "score": 22.2042,
+          "evidence": []
+        },
+        {
+          "term": "headlines",
+          "score": 22.2009,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-033-experimental-setup-and-compute-resources": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "proprietary",
+          "score": 0.6953,
+          "evidence": []
+        },
+        {
+          "term": "compute",
+          "score": 0.6362,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "addi",
+          "score": 0.6308,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "proprietary",
+          "score": 9.5324,
+          "evidence": []
+        },
+        {
+          "term": "models",
+          "score": 7.5386,
+          "evidence": []
+        },
+        {
+          "term": "addi",
+          "score": 7.0175,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "models",
+          "score": 0.0993,
+          "evidence": []
+        },
+        {
+          "term": "llm",
+          "score": 0.0949,
+          "evidence": []
+        },
+        {
+          "term": "preprint",
+          "score": 0.087,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "reasoning",
+          "score": 2.2484,
+          "evidence": []
+        },
+        {
+          "term": "arxiv",
+          "score": 1.6055,
+          "evidence": []
+        },
+        {
+          "term": "models",
+          "score": 1.4268,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "models",
+          "score": 0.0993,
+          "evidence": []
+        },
+        {
+          "term": "llm",
+          "score": 0.0949,
+          "evidence": []
+        },
+        {
+          "term": "preprint",
+          "score": 0.087,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "gpt-4-turbo",
+          "score": 26.9964,
+          "evidence": []
+        },
+        {
+          "term": "command-r",
+          "score": 26.3067,
+          "evidence": []
+        },
+        {
+          "term": "llama-2-70b",
+          "score": 25.758,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-034-pubhealthbench-prompts": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "health agency",
+          "score": 1.8574,
+          "evidence": []
+        },
+        {
+          "term": "question relates",
+          "score": 1.7781,
+          "evidence": []
+        },
+        {
+          "term": "health guidance",
+          "score": 1.6808,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 1.5902,
+          "evidence": []
+        },
+        {
+          "term": "health security",
+          "score": 1.3303,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "health agency",
+          "score": 36.3118,
+          "evidence": []
+        },
+        {
+          "term": "question relates",
+          "score": 36.0201,
+          "evidence": []
+        },
+        {
+          "term": "health guidance",
+          "score": 31.9592,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 29.7997,
+          "evidence": []
+        },
+        {
+          "term": "health security",
+          "score": 23.7755,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health guidance",
+          "score": 0.7553,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 0.738,
+          "evidence": []
+        },
+        {
+          "term": "health security",
+          "score": 0.4562,
+          "evidence": []
+        },
+        {
+          "term": "health agency",
+          "score": 0.454,
+          "evidence": []
+        },
+        {
+          "term": "government public",
+          "score": 0.4227,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health guidance",
+          "score": 15.2396,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 14.7555,
+          "evidence": []
+        },
+        {
+          "term": "question relates",
+          "score": 11.2159,
+          "evidence": []
+        },
+        {
+          "term": "answer",
+          "score": 11.0861,
+          "evidence": []
+        },
+        {
+          "term": "health security",
+          "score": 9.1351,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health guidance",
+          "score": 0.7553,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 0.738,
+          "evidence": []
+        },
+        {
+          "term": "health security",
+          "score": 0.4562,
+          "evidence": []
+        },
+        {
+          "term": "health agency",
+          "score": 0.454,
+          "evidence": []
+        },
+        {
+          "term": "government public",
+          "score": 0.4227,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "h1n",
+          "score": 82.7978,
+          "evidence": []
+        },
+        {
+          "term": "pubhealthbench",
+          "score": 67.2433,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "preparedness",
+          "score": 66.9567,
+          "evidence": []
+        },
+        {
+          "term": "phii",
+          "score": 45.6569,
+          "evidence": []
+        },
+        {
+          "term": "berkeley",
+          "score": 42.9028,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-035-free-form-evaluation---llm-as-a-judge-setup": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "llm judge",
+          "score": 4.3067,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "judge evaluation",
+          "score": 3.9165,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "free form",
+          "score": 2.4032,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "correct answer",
+          "score": 1.4996,
+          "evidence": []
+        },
+        {
+          "term": "answer option",
+          "score": 1.3892,
+          "evidence": []
+        },
+        {
+          "term": "source text",
+          "score": 1.063,
+          "evidence": []
+        },
+        {
+          "term": "form responses",
+          "score": 1.0043,
+          "evidence": []
+        },
+        {
+          "term": "chunks",
+          "score": 0.8205,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "llm judge",
+          "score": 126.0024,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "judge evaluation",
+          "score": 111.9064,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "free form",
+          "score": 41.6891,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "correct answer",
+          "score": 24.9773,
+          "evidence": []
+        },
+        {
+          "term": "answer option",
+          "score": 21.1798,
+          "evidence": []
+        },
+        {
+          "term": "source text",
+          "score": 17.0534,
+          "evidence": []
+        },
+        {
+          "term": "form responses",
+          "score": 15.3011,
+          "evidence": []
+        },
+        {
+          "term": "chunks",
+          "score": 11.0269,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "llm judge",
+          "score": 1.0486,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "judge evaluation",
+          "score": 0.6593,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "correct answer",
+          "score": 0.6548,
+          "evidence": []
+        },
+        {
+          "term": "free form",
+          "score": 0.6099,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "answer option",
+          "score": 0.4926,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.4253,
+          "evidence": []
+        },
+        {
+          "term": "question",
+          "score": 0.3908,
+          "evidence": []
+        },
+        {
+          "term": "guidance",
+          "score": 0.3895,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "llm judge",
+          "score": 16.9223,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "correct answer",
+          "score": 14.7936,
+          "evidence": []
+        },
+        {
+          "term": "answer option",
+          "score": 11.1563,
+          "evidence": []
+        },
+        {
+          "term": "judge evaluation",
+          "score": 9.3412,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "question",
+          "score": 9.1264,
+          "evidence": []
+        },
+        {
+          "term": "guidance",
+          "score": 6.2016,
+          "evidence": []
+        },
+        {
+          "term": "free form",
+          "score": 5.8386,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "source text",
+          "score": 5.7707,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "llm judge",
+          "score": 1.0486,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "judge evaluation",
+          "score": 0.6593,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "correct answer",
+          "score": 0.6548,
+          "evidence": []
+        },
+        {
+          "term": "free form",
+          "score": 0.6099,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "answer option",
+          "score": 0.4926,
+          "evidence": []
+        },
+        {
+          "term": "question",
+          "score": 0.3908,
+          "evidence": []
+        },
+        {
+          "term": "guidance",
+          "score": 0.3895,
+          "evidence": []
+        },
+        {
+          "term": "source text",
+          "score": 0.3531,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "judge",
+          "score": 23.0139,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "judge evaluation",
+          "score": 23.0139,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "llm judge",
+          "score": 23.0139,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "distractor",
+          "score": 21.5678,
+          "evidence": []
+        },
+        {
+          "term": "utilising",
+          "score": 21.2678,
+          "evidence": []
+        },
+        {
+          "term": "contradicts",
+          "score": 20.955,
+          "evidence": []
+        },
+        {
+          "term": "contradicting",
+          "score": 20.8212,
+          "evidence": []
+        },
+        {
+          "term": "berkeley",
+          "score": 20.2711,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-036-judge-model-comparisons": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "judge",
+          "score": 1.8208,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "judge models",
+          "score": 1.3326,
+          "evidence": []
+        },
+        {
+          "term": "re-run",
+          "score": 0.5944,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "judge",
+          "score": 32.5845,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "judge models",
+          "score": 21.9462,
+          "evidence": []
+        },
+        {
+          "term": "llm",
+          "score": 7.0622,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "model",
+          "score": 0.2065,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "judge models",
+          "score": 0.1638,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.1205,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "model",
+          "score": 2.2825,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "llm",
+          "score": 1.6517,
+          "evidence": []
+        },
+        {
+          "term": "judge models",
+          "score": 1.3876,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "model",
+          "score": 0.2065,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "judge models",
+          "score": 0.1638,
+          "evidence": []
+        },
+        {
+          "term": "llm",
+          "score": 0.1139,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "refusals",
+          "score": 40.2502,
+          "evidence": []
+        },
+        {
+          "term": "antimicrobial",
+          "score": 40.2502,
+          "evidence": []
+        },
+        {
+          "term": "fungal",
+          "score": 40.2502,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-037-error-analysis": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "truth answer",
+          "score": 2.4938,
+          "evidence": []
+        },
+        {
+          "term": "ground truth",
+          "score": 2.1015,
+          "evidence": []
+        },
+        {
+          "term": "official guidance",
+          "score": 1.4672,
+          "evidence": []
+        },
+        {
+          "term": "correct based",
+          "score": 1.1147,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 0.9734,
+          "evidence": []
+        },
+        {
+          "term": "incorrect",
+          "score": 0.8035,
+          "evidence": []
+        },
+        {
+          "term": "question",
+          "score": 0.7814,
+          "evidence": []
+        },
+        {
+          "term": "preprint",
+          "score": 0.6423,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "truth answer",
+          "score": 79.9301,
+          "evidence": []
+        },
+        {
+          "term": "ground truth",
+          "score": 46.8955,
+          "evidence": []
+        },
+        {
+          "term": "official guidance",
+          "score": 24.5461,
+          "evidence": []
+        },
+        {
+          "term": "correct based",
+          "score": 20.9913,
+          "evidence": []
+        },
+        {
+          "term": "question",
+          "score": 13.072,
+          "evidence": []
+        },
+        {
+          "term": "incorrect",
+          "score": 12.2992,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 11.6778,
+          "evidence": []
+        },
+        {
+          "term": "context",
+          "score": 9.7433,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "public health",
+          "score": 0.6438,
+          "evidence": []
+        },
+        {
+          "term": "truth answer",
+          "score": 0.4489,
+          "evidence": []
+        },
+        {
+          "term": "official guidance",
+          "score": 0.393,
+          "evidence": []
+        },
+        {
+          "term": "question",
+          "score": 0.3334,
+          "evidence": []
+        },
+        {
+          "term": "correct based",
+          "score": 0.2968,
+          "evidence": []
+        },
+        {
+          "term": "llm",
+          "score": 0.2826,
+          "evidence": []
+        },
+        {
+          "term": "mcqa",
+          "score": 0.2708,
+          "evidence": []
+        },
+        {
+          "term": "incorrect",
+          "score": 0.2045,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "truth answer",
+          "score": 17.715,
+          "evidence": []
+        },
+        {
+          "term": "question",
+          "score": 14.1633,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 9.3369,
+          "evidence": []
+        },
+        {
+          "term": "guidance",
+          "score": 8.3108,
+          "evidence": []
+        },
+        {
+          "term": "official guidance",
+          "score": 8.3108,
+          "evidence": []
+        },
+        {
+          "term": "correct based",
+          "score": 8.1829,
+          "evidence": []
+        },
+        {
+          "term": "incorrect",
+          "score": 7.8207,
+          "evidence": []
+        },
+        {
+          "term": "insert",
+          "score": 6.9143,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "public health",
+          "score": 0.6438,
+          "evidence": []
+        },
+        {
+          "term": "truth answer",
+          "score": 0.4489,
+          "evidence": []
+        },
+        {
+          "term": "official guidance",
+          "score": 0.393,
+          "evidence": []
+        },
+        {
+          "term": "question",
+          "score": 0.3334,
+          "evidence": []
+        },
+        {
+          "term": "correct based",
+          "score": 0.2968,
+          "evidence": []
+        },
+        {
+          "term": "incorrect",
+          "score": 0.2045,
+          "evidence": []
+        },
+        {
+          "term": "ground truth",
+          "score": 0.1774,
+          "evidence": []
+        },
+        {
+          "term": "preprint",
+          "score": 0.1746,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "berkeley",
+          "score": 33.9442,
+          "evidence": []
+        },
+        {
+          "term": "h1n",
+          "score": 33.4492,
+          "evidence": []
+        },
+        {
+          "term": "distractor",
+          "score": 27.5208,
+          "evidence": []
+        },
+        {
+          "term": "preparedness",
+          "score": 26.9132,
+          "evidence": []
+        },
+        {
+          "term": "contradicting",
+          "score": 25.6299,
+          "evidence": []
+        },
+        {
+          "term": "utilising",
+          "score": 25.4422,
+          "evidence": []
+        },
+        {
+          "term": "contradicts",
+          "score": 25.3995,
+          "evidence": []
+        },
+        {
+          "term": "deepmind",
+          "score": 24.8282,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-038-problematic-response-examples": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "problematic",
+          "score": 3.1748,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "problematic responses",
+          "score": 2.3905,
+          "evidence": []
+        },
+        {
+          "term": "pubhealthbench-freeform",
+          "score": 1.2446,
+          "evidence": []
+        },
+        {
+          "term": "preprint",
+          "score": 0.6423,
+          "evidence": []
+        },
+        {
+          "term": "official",
+          "score": 0.5833,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "problematic",
+          "score": 71.0267,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "problematic responses",
+          "score": 52.033,
+          "evidence": []
+        },
+        {
+          "term": "pubhealthbench-freeform",
+          "score": 23.059,
+          "evidence": []
+        },
+        {
+          "term": "figure",
+          "score": 8.5086,
+          "evidence": []
+        },
+        {
+          "term": "types",
+          "score": 8.0406,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health",
+          "score": 0.214,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 0.1763,
+          "evidence": []
+        },
+        {
+          "term": "guidance",
+          "score": 0.1681,
+          "evidence": []
+        },
+        {
+          "term": "llm",
+          "score": 0.1407,
+          "evidence": []
+        },
+        {
+          "term": "mcqa",
+          "score": 0.1202,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health",
+          "score": 2.7299,
+          "evidence": []
+        },
+        {
+          "term": "arxiv",
+          "score": 1.9928,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 1.9186,
+          "evidence": []
+        },
+        {
+          "term": "llm",
+          "score": 1.7561,
+          "evidence": []
+        },
+        {
+          "term": "answer",
+          "score": 1.5865,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health",
+          "score": 0.214,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 0.1763,
+          "evidence": []
+        },
+        {
+          "term": "guidance",
+          "score": 0.1681,
+          "evidence": []
+        },
+        {
+          "term": "llm",
+          "score": 0.1407,
+          "evidence": []
+        },
+        {
+          "term": "response",
+          "score": 0.0965,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "h1n",
+          "score": 49.8078,
+          "evidence": []
+        },
+        {
+          "term": "problematic",
+          "score": 45.2633,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "refusals",
+          "score": 40.4716,
+          "evidence": []
+        },
+        {
+          "term": "antimicrobial",
+          "score": 40.4716,
+          "evidence": []
+        },
+        {
+          "term": "fungal",
+          "score": 40.4716,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-039-confidence-intervals": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "confidence intervals",
+          "score": 3.4787,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "wilson score",
+          "score": 2.019,
+          "evidence": []
+        },
+        {
+          "term": "accu racy",
+          "score": 1.7584,
+          "evidence": []
+        },
+        {
+          "term": "pubhealthbench-full zero-shot",
+          "score": 1.7096,
+          "evidence": []
+        },
+        {
+          "term": "accuracy wilson",
+          "score": 1.6228,
+          "evidence": []
+        },
+        {
+          "term": "claude-haiku",
+          "score": 1.388,
+          "evidence": []
+        },
+        {
+          "term": "command-r-32b",
+          "score": 1.388,
+          "evidence": []
+        },
+        {
+          "term": "command-r-7b",
+          "score": 1.388,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "confidence intervals",
+          "score": 58.0367,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "wilson score",
+          "score": 37.5314,
+          "evidence": []
+        },
+        {
+          "term": "llama",
+          "score": 30.7156,
+          "evidence": []
+        },
+        {
+          "term": "accuracy wilson",
+          "score": 27.9852,
+          "evidence": []
+        },
+        {
+          "term": "claude-haiku",
+          "score": 26.4482,
+          "evidence": []
+        },
+        {
+          "term": "command-r-32b",
+          "score": 26.4482,
+          "evidence": []
+        },
+        {
+          "term": "command-r-7b",
+          "score": 26.4482,
+          "evidence": []
+        },
+        {
+          "term": "gemini-pro",
+          "score": 26.4482,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "confidence intervals",
+          "score": 1.5115,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pubhealthbench-full zero-shot",
+          "score": 1.2103,
+          "evidence": []
+        },
+        {
+          "term": "generate benchmark",
+          "score": 1.1273,
+          "evidence": []
+        },
+        {
+          "term": "wilson score",
+          "score": 1.1168,
+          "evidence": []
+        },
+        {
+          "term": "mcqa",
+          "score": 1.1164,
+          "evidence": []
+        },
+        {
+          "term": "guidance",
+          "score": 1.1124,
+          "evidence": []
+        },
+        {
+          "term": "llama",
+          "score": 1.0874,
+          "evidence": []
+        },
+        {
+          "term": "accuracy wilson",
+          "score": 1.0646,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "score confidence",
+          "score": 14.3349,
+          "evidence": []
+        },
+        {
+          "term": "gpt",
+          "score": 13.6098,
+          "evidence": []
+        },
+        {
+          "term": "wilson score",
+          "score": 12.5378,
+          "evidence": []
+        },
+        {
+          "term": "confidence intervals",
+          "score": 11.7863,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health",
+          "score": 10.6992,
+          "evidence": []
+        },
+        {
+          "term": "guidance",
+          "score": 10.659,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 9.6353,
+          "evidence": []
+        },
+        {
+          "term": "openhands",
+          "score": 9.3762,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "confidence intervals",
+          "score": 1.5115,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pubhealthbench-full zero-shot",
+          "score": 1.2103,
+          "evidence": []
+        },
+        {
+          "term": "generate benchmark",
+          "score": 1.1273,
+          "evidence": []
+        },
+        {
+          "term": "wilson score",
+          "score": 1.1168,
+          "evidence": []
+        },
+        {
+          "term": "mcqa",
+          "score": 1.1164,
+          "evidence": []
+        },
+        {
+          "term": "guidance",
+          "score": 1.1124,
+          "evidence": []
+        },
+        {
+          "term": "llama",
+          "score": 1.0874,
+          "evidence": []
+        },
+        {
+          "term": "accuracy wilson",
+          "score": 1.0646,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "accu racy",
+          "score": 891.625,
+          "evidence": []
+        },
+        {
+          "term": "antimicrobial",
+          "score": 804.9293,
+          "evidence": []
+        },
+        {
+          "term": "fungal",
+          "score": 804.9293,
+          "evidence": []
+        },
+        {
+          "term": "gastro",
+          "score": 804.9293,
+          "evidence": []
+        },
+        {
+          "term": "hcai",
+          "score": 804.9293,
+          "evidence": []
+        },
+        {
+          "term": "immunisation",
+          "score": 804.9293,
+          "evidence": []
+        },
+        {
+          "term": "refusals",
+          "score": 804.9293,
+          "evidence": []
+        },
+        {
+          "term": "sepsis",
+          "score": 804.9293,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "public health",
+          "score": 1.6628,
+          "evidence": []
+        },
+        {
+          "term": "pubhealthbench",
+          "score": 1.2354,
+          "evidence": []
+        },
+        {
+          "term": "free form",
+          "score": 1.1306,
+          "evidence": []
+        },
+        {
+          "term": "form responses",
+          "score": 0.9333,
+          "evidence": []
+        },
+        {
+          "term": "model accuracy",
+          "score": 0.8856,
+          "evidence": []
+        },
+        {
+          "term": "mcqa",
+          "score": 0.8444,
+          "evidence": []
+        },
+        {
+          "term": "llms",
+          "score": 0.7713,
+          "evidence": []
+        },
+        {
+          "term": "infor",
+          "score": 0.7182,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "public health",
+          "score": 32.4166,
+          "evidence": []
+        },
+        {
+          "term": "pubhealthbench",
+          "score": 23.059,
+          "evidence": []
+        },
+        {
+          "term": "free form",
+          "score": 18.6713,
+          "evidence": []
+        },
+        {
+          "term": "llms",
+          "score": 16.3213,
+          "evidence": []
+        },
+        {
+          "term": "mcqa",
+          "score": 13.4753,
+          "evidence": []
+        },
+        {
+          "term": "form responses",
+          "score": 13.1278,
+          "evidence": []
+        },
+        {
+          "term": "model accuracy",
+          "score": 12.8234,
+          "evidence": []
+        },
+        {
+          "term": "llm",
+          "score": 11.7703,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "public health",
+          "score": 1.0596,
+          "evidence": []
+        },
+        {
+          "term": "guidance",
+          "score": 0.4063,
+          "evidence": []
+        },
+        {
+          "term": "llm",
+          "score": 0.3999,
+          "evidence": []
+        },
+        {
+          "term": "free form",
+          "score": 0.3593,
+          "evidence": []
+        },
+        {
+          "term": "llms",
+          "score": 0.3277,
+          "evidence": []
+        },
+        {
+          "term": "mcqa",
+          "score": 0.3149,
+          "evidence": []
+        },
+        {
+          "term": "question",
+          "score": 0.3071,
+          "evidence": []
+        },
+        {
+          "term": "model accuracy",
+          "score": 0.2946,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "public health",
+          "score": 19.5223,
+          "evidence": []
+        },
+        {
+          "term": "llm",
+          "score": 6.3427,
+          "evidence": []
+        },
+        {
+          "term": "classification",
+          "score": 5.3187,
+          "evidence": []
+        },
+        {
+          "term": "llms",
+          "score": 5.2037,
+          "evidence": []
+        },
+        {
+          "term": "guidance",
+          "score": 4.4799,
+          "evidence": []
+        },
+        {
+          "term": "text",
+          "score": 4.2724,
+          "evidence": []
+        },
+        {
+          "term": "question",
+          "score": 3.5946,
+          "evidence": []
+        },
+        {
+          "term": "free form",
+          "score": 3.5773,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "public health",
+          "score": 1.0596,
+          "evidence": []
+        },
+        {
+          "term": "llm",
+          "score": 0.3999,
+          "evidence": []
+        },
+        {
+          "term": "free form",
+          "score": 0.3593,
+          "evidence": []
+        },
+        {
+          "term": "llms",
+          "score": 0.3277,
+          "evidence": []
+        },
+        {
+          "term": "mcqa",
+          "score": 0.3149,
+          "evidence": []
+        },
+        {
+          "term": "model accuracy",
+          "score": 0.2946,
+          "evidence": []
+        },
+        {
+          "term": "form responses",
+          "score": 0.2356,
+          "evidence": []
+        },
+        {
+          "term": "gpt",
+          "score": 0.2326,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "h1n",
+          "score": 70.6035,
+          "evidence": []
+        },
+        {
+          "term": "preparedness",
+          "score": 57.5754,
+          "evidence": []
+        },
+        {
+          "term": "olmo",
+          "score": 40.6961,
+          "evidence": []
+        },
+        {
+          "term": "abdin",
+          "score": 40.6961,
+          "evidence": []
+        },
+        {
+          "term": "phii",
+          "score": 39.3626,
+          "evidence": []
+        },
+        {
+          "term": "borowitz",
+          "score": 36.7549,
+          "evidence": []
+        },
+        {
+          "term": "dfph",
+          "score": 35.507,
+          "evidence": []
+        },
+        {
+          "term": "non-pharmaceutical",
+          "score": 34.2681,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,4506 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "arxiv-2504.07199v3",
+  "instance": "cat-harness",
+  "about": "library/arxiv-2504.07199v3",
+  "corpus": {
+    "library": "cat-harness/library/corpus",
+    "sections": 2232,
+    "terms": 15352
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "gnd subject",
+        "score": 21.1528,
+        "evidence": []
+      },
+      {
+        "term": "tib subject",
+        "score": 20.6038,
+        "evidence": []
+      },
+      {
+        "term": "subject tagging",
+        "score": 15.1711,
+        "evidence": []
+      },
+      {
+        "term": "subject classification",
+        "score": 14.1895,
+        "evidence": []
+      },
+      {
+        "term": "subject indexing",
+        "score": 14.0421,
+        "evidence": []
+      },
+      {
+        "term": "subject specialists",
+        "score": 13.7777,
+        "evidence": []
+      },
+      {
+        "term": "llms4subjects shared",
+        "score": 13.7101,
+        "evidence": []
+      },
+      {
+        "term": "subject taxonomy",
+        "score": 13.6974,
+        "evidence": []
+      },
+      {
+        "term": "tibkat records",
+        "score": 13.6548,
+        "evidence": []
+      },
+      {
+        "term": "subject embeddings",
+        "score": 13.6437,
+        "evidence": []
+      },
+      {
+        "term": "gnd dataset",
+        "score": 13.5308,
+        "evidence": []
+      },
+      {
+        "term": "task llms4subjects",
+        "score": 13.4462,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "gnd subject",
+        "score": 447.8957,
+        "evidence": []
+      },
+      {
+        "term": "tib subject",
+        "score": 424.4281,
+        "evidence": []
+      },
+      {
+        "term": "subject embeddings",
+        "score": 336.9325,
+        "evidence": []
+      },
+      {
+        "term": "subject tagging",
+        "score": 326.4494,
+        "evidence": []
+      },
+      {
+        "term": "subject indexing",
+        "score": 309.2814,
+        "evidence": []
+      },
+      {
+        "term": "subject retrieval",
+        "score": 307.2327,
+        "evidence": []
+      },
+      {
+        "term": "subject classification",
+        "score": 306.4992,
+        "evidence": []
+      },
+      {
+        "term": "subject ranking",
+        "score": 303.1181,
+        "evidence": []
+      },
+      {
+        "term": "subject terms",
+        "score": 293.811,
+        "evidence": []
+      },
+      {
+        "term": "relevant subject",
+        "score": 293.3493,
+        "evidence": []
+      },
+      {
+        "term": "subject specialists",
+        "score": 291.0768,
+        "evidence": []
+      },
+      {
+        "term": "subject taxonomy",
+        "score": 290.8903,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "gnd subject",
+        "score": 14.2978,
+        "evidence": []
+      },
+      {
+        "term": "tib subject",
+        "score": 13.7428,
+        "evidence": []
+      },
+      {
+        "term": "subject indexing",
+        "score": 12.9544,
+        "evidence": []
+      },
+      {
+        "term": "subject tagging",
+        "score": 12.9318,
+        "evidence": []
+      },
+      {
+        "term": "subject embeddings",
+        "score": 12.4554,
+        "evidence": []
+      },
+      {
+        "term": "subject retrieval",
+        "score": 12.3781,
+        "evidence": []
+      },
+      {
+        "term": "subject classification",
+        "score": 12.1357,
+        "evidence": []
+      },
+      {
+        "term": "subject ranking",
+        "score": 11.6983,
+        "evidence": []
+      },
+      {
+        "term": "relevant subject",
+        "score": 11.2853,
+        "evidence": []
+      },
+      {
+        "term": "subject terms",
+        "score": 11.2721,
+        "evidence": []
+      },
+      {
+        "term": "subject headings",
+        "score": 11.0275,
+        "evidence": []
+      },
+      {
+        "term": "automated subject",
+        "score": 11.0268,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "subject embeddings",
+        "score": 355.0234,
+        "evidence": []
+      },
+      {
+        "term": "gnd subject",
+        "score": 341.4226,
+        "evidence": []
+      },
+      {
+        "term": "tib subject",
+        "score": 340.293,
+        "evidence": []
+      },
+      {
+        "term": "subject retrieval",
+        "score": 313.8712,
+        "evidence": []
+      },
+      {
+        "term": "subject indexing",
+        "score": 305.5466,
+        "evidence": []
+      },
+      {
+        "term": "subject ranking",
+        "score": 303.7605,
+        "evidence": []
+      },
+      {
+        "term": "subject tagging",
+        "score": 303.4924,
+        "evidence": []
+      },
+      {
+        "term": "subject classification",
+        "score": 285.3352,
+        "evidence": []
+      },
+      {
+        "term": "subject terms",
+        "score": 284.0697,
+        "evidence": []
+      },
+      {
+        "term": "relevant subject",
+        "score": 283.0089,
+        "evidence": []
+      },
+      {
+        "term": "subject labels",
+        "score": 279.057,
+        "evidence": []
+      },
+      {
+        "term": "automated subject",
+        "score": 273.7123,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "gnd subject",
+        "score": 14.2978,
+        "evidence": []
+      },
+      {
+        "term": "tib subject",
+        "score": 13.7428,
+        "evidence": []
+      },
+      {
+        "term": "subject indexing",
+        "score": 12.9544,
+        "evidence": []
+      },
+      {
+        "term": "subject tagging",
+        "score": 12.9318,
+        "evidence": []
+      },
+      {
+        "term": "subject embeddings",
+        "score": 12.4554,
+        "evidence": []
+      },
+      {
+        "term": "subject retrieval",
+        "score": 12.3781,
+        "evidence": []
+      },
+      {
+        "term": "subject classification",
+        "score": 12.1357,
+        "evidence": []
+      },
+      {
+        "term": "subject ranking",
+        "score": 11.6983,
+        "evidence": []
+      },
+      {
+        "term": "relevant subject",
+        "score": 11.2853,
+        "evidence": []
+      },
+      {
+        "term": "subject terms",
+        "score": 11.2721,
+        "evidence": []
+      },
+      {
+        "term": "subject headings",
+        "score": 11.0275,
+        "evidence": []
+      },
+      {
+        "term": "automated subject",
+        "score": 11.0268,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "indonesian",
+        "score": 4994.7525,
+        "evidence": []
+      },
+      {
+        "term": "italian",
+        "score": 4795.915,
+        "evidence": []
+      },
+      {
+        "term": "nian",
+        "score": 4453.4101,
+        "evidence": []
+      },
+      {
+        "term": "hebrew",
+        "score": 3625.6301,
+        "evidence": []
+      },
+      {
+        "term": "latvian",
+        "score": 3417.8272,
+        "evidence": []
+      },
+      {
+        "term": "finnish",
+        "score": 3338.6195,
+        "evidence": []
+      },
+      {
+        "term": "estonian",
+        "score": 3116.3037,
+        "evidence": []
+      },
+      {
+        "term": "turkish",
+        "score": 3113.253,
+        "evidence": []
+      },
+      {
+        "term": "swedish",
+        "score": 3012.1444,
+        "evidence": []
+      },
+      {
+        "term": "croatian",
+        "score": 2552.5683,
+        "evidence": []
+      },
+      {
+        "term": "korean",
+        "score": 2298.085,
+        "evidence": []
+      },
+      {
+        "term": "spanish",
+        "score": 1852.3886,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-introduction": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "subject tagging",
+          "score": 2.2013,
+          "evidence": []
+        },
+        {
+          "term": "national library",
+          "score": 1.9372,
+          "evidence": []
+        },
+        {
+          "term": "digital library",
+          "score": 1.8445,
+          "evidence": []
+        },
+        {
+          "term": "subject classification",
+          "score": 1.8423,
+          "evidence": []
+        },
+        {
+          "term": "automated subject",
+          "score": 1.781,
+          "evidence": []
+        },
+        {
+          "term": "subject indexing",
+          "score": 1.6797,
+          "evidence": []
+        },
+        {
+          "term": "library systems",
+          "score": 1.5814,
+          "evidence": []
+        },
+        {
+          "term": "classifi cation",
+          "score": 1.5655,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "subject tagging",
+          "score": 62.8076,
+          "evidence": []
+        },
+        {
+          "term": "subject classification",
+          "score": 53.7663,
+          "evidence": []
+        },
+        {
+          "term": "automated subject",
+          "score": 53.3421,
+          "evidence": []
+        },
+        {
+          "term": "subject indexing",
+          "score": 50.3506,
+          "evidence": []
+        },
+        {
+          "term": "national library",
+          "score": 42.9813,
+          "evidence": []
+        },
+        {
+          "term": "digital library",
+          "score": 40.1592,
+          "evidence": []
+        },
+        {
+          "term": "shared task",
+          "score": 37.3079,
+          "evidence": []
+        },
+        {
+          "term": "library systems",
+          "score": 34.7962,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "subject indexing",
+          "score": 1.6143,
+          "evidence": []
+        },
+        {
+          "term": "subject tagging",
+          "score": 1.4315,
+          "evidence": []
+        },
+        {
+          "term": "subject classification",
+          "score": 1.4038,
+          "evidence": []
+        },
+        {
+          "term": "automated subject",
+          "score": 1.3573,
+          "evidence": []
+        },
+        {
+          "term": "library systems",
+          "score": 1.0563,
+          "evidence": []
+        },
+        {
+          "term": "national library",
+          "score": 1.053,
+          "evidence": []
+        },
+        {
+          "term": "digital library",
+          "score": 0.9813,
+          "evidence": []
+        },
+        {
+          "term": "shared task",
+          "score": 0.7858,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "subject indexing",
+          "score": 26.3096,
+          "evidence": []
+        },
+        {
+          "term": "subject classification",
+          "score": 24.542,
+          "evidence": []
+        },
+        {
+          "term": "subject tagging",
+          "score": 24.4952,
+          "evidence": []
+        },
+        {
+          "term": "automated subject",
+          "score": 22.7717,
+          "evidence": []
+        },
+        {
+          "term": "semeval",
+          "score": 16.9901,
+          "evidence": []
+        },
+        {
+          "term": "shared task",
+          "score": 12.3372,
+          "evidence": []
+        },
+        {
+          "term": "library systems",
+          "score": 11.3111,
+          "evidence": []
+        },
+        {
+          "term": "digital library",
+          "score": 10.8982,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "subject indexing",
+          "score": 1.6143,
+          "evidence": []
+        },
+        {
+          "term": "subject tagging",
+          "score": 1.4315,
+          "evidence": []
+        },
+        {
+          "term": "subject classification",
+          "score": 1.4038,
+          "evidence": []
+        },
+        {
+          "term": "automated subject",
+          "score": 1.3573,
+          "evidence": []
+        },
+        {
+          "term": "library systems",
+          "score": 1.0563,
+          "evidence": []
+        },
+        {
+          "term": "national library",
+          "score": 1.053,
+          "evidence": []
+        },
+        {
+          "term": "digital library",
+          "score": 0.9813,
+          "evidence": []
+        },
+        {
+          "term": "shared task",
+          "score": 0.7858,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "hannover",
+          "score": 64.9875,
+          "evidence": []
+        },
+        {
+          "term": "mahsa",
+          "score": 63.903,
+          "evidence": []
+        },
+        {
+          "term": "razmara",
+          "score": 63.903,
+          "evidence": []
+        },
+        {
+          "term": "jafar",
+          "score": 58.996,
+          "evidence": []
+        },
+        {
+          "term": "sanaei",
+          "score": 58.996,
+          "evidence": []
+        },
+        {
+          "term": "rahgouy",
+          "score": 54.0837,
+          "evidence": []
+        },
+        {
+          "term": "hamed",
+          "score": 51.6275,
+          "evidence": []
+        },
+        {
+          "term": "onomy",
+          "score": 51.2025,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-001-background": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "authority file",
+          "score": 1.234,
+          "evidence": []
+        },
+        {
+          "term": "gnd",
+          "score": 1.1579,
+          "evidence": []
+        },
+        {
+          "term": "tib",
+          "score": 1.0354,
+          "evidence": []
+        },
+        {
+          "term": "science",
+          "score": 0.8049,
+          "evidence": []
+        },
+        {
+          "term": "tibkat",
+          "score": 0.7022,
+          "evidence": []
+        },
+        {
+          "term": "library",
+          "score": 0.6881,
+          "evidence": []
+        },
+        {
+          "term": "scientific",
+          "score": 0.6764,
+          "evidence": []
+        },
+        {
+          "term": "technology",
+          "score": 0.6553,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "gnd",
+          "score": 25.66,
+          "evidence": []
+        },
+        {
+          "term": "tib",
+          "score": 18.3006,
+          "evidence": []
+        },
+        {
+          "term": "authority file",
+          "score": 16.291,
+          "evidence": []
+        },
+        {
+          "term": "science",
+          "score": 12.7122,
+          "evidence": []
+        },
+        {
+          "term": "library",
+          "score": 10.563,
+          "evidence": []
+        },
+        {
+          "term": "technology",
+          "score": 9.9118,
+          "evidence": []
+        },
+        {
+          "term": "tibkat",
+          "score": 9.6406,
+          "evidence": []
+        },
+        {
+          "term": "scientific",
+          "score": 9.2392,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "subject",
+          "score": 0.457,
+          "evidence": []
+        },
+        {
+          "term": "library",
+          "score": 0.2711,
+          "evidence": []
+        },
+        {
+          "term": "records",
+          "score": 0.2528,
+          "evidence": []
+        },
+        {
+          "term": "headings",
+          "score": 0.2427,
+          "evidence": []
+        },
+        {
+          "term": "indexing",
+          "score": 0.218,
+          "evidence": []
+        },
+        {
+          "term": "authority file",
+          "score": 0.2165,
+          "evidence": []
+        },
+        {
+          "term": "lcsh",
+          "score": 0.1902,
+          "evidence": []
+        },
+        {
+          "term": "semeval",
+          "score": 0.1762,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "subject",
+          "score": 6.0887,
+          "evidence": []
+        },
+        {
+          "term": "license",
+          "score": 2.8426,
+          "evidence": []
+        },
+        {
+          "term": "semeval",
+          "score": 2.5591,
+          "evidence": []
+        },
+        {
+          "term": "all-subjects",
+          "score": 2.5072,
+          "evidence": []
+        },
+        {
+          "term": "science",
+          "score": 2.5026,
+          "evidence": []
+        },
+        {
+          "term": "records",
+          "score": 2.3289,
+          "evidence": []
+        },
+        {
+          "term": "work",
+          "score": 2.2476,
+          "evidence": []
+        },
+        {
+          "term": "headings",
+          "score": 1.9911,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "subject",
+          "score": 0.457,
+          "evidence": []
+        },
+        {
+          "term": "library",
+          "score": 0.2711,
+          "evidence": []
+        },
+        {
+          "term": "records",
+          "score": 0.2528,
+          "evidence": []
+        },
+        {
+          "term": "authority file",
+          "score": 0.2165,
+          "evidence": []
+        },
+        {
+          "term": "gnd",
+          "score": 0.1691,
+          "evidence": []
+        },
+        {
+          "term": "science",
+          "score": 0.1648,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.1434,
+          "evidence": []
+        },
+        {
+          "term": "tib",
+          "score": 0.1247,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "hannover",
+          "score": 59.3723,
+          "evidence": []
+        },
+        {
+          "term": "mahsa",
+          "score": 56.8433,
+          "evidence": []
+        },
+        {
+          "term": "razmara",
+          "score": 56.8433,
+          "evidence": []
+        },
+        {
+          "term": "jafar",
+          "score": 50.8901,
+          "evidence": []
+        },
+        {
+          "term": "sanaei",
+          "score": 50.8901,
+          "evidence": []
+        },
+        {
+          "term": "onomy",
+          "score": 46.9242,
+          "evidence": []
+        },
+        {
+          "term": "rahgouy",
+          "score": 45.1594,
+          "evidence": []
+        },
+        {
+          "term": "bayrami",
+          "score": 44.1203,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-002-source-dataset": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "media types",
+          "score": 1.0198,
+          "evidence": []
+        },
+        {
+          "term": "dataset",
+          "score": 1.0004,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "shared task",
+          "score": 0.7986,
+          "evidence": []
+        },
+        {
+          "term": "records",
+          "score": 0.724,
+          "evidence": []
+        },
+        {
+          "term": "excluded",
+          "score": 0.7154,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "dataset",
+          "score": 14.6259,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "media types",
+          "score": 13.2593,
+          "evidence": []
+        },
+        {
+          "term": "records",
+          "score": 13.0252,
+          "evidence": []
+        },
+        {
+          "term": "shared task",
+          "score": 10.1931,
+          "evidence": []
+        },
+        {
+          "term": "excluded",
+          "score": 9.7549,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "subject",
+          "score": 0.2521,
+          "evidence": []
+        },
+        {
+          "term": "dataset",
+          "score": 0.2257,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "shared task",
+          "score": 0.183,
+          "evidence": []
+        },
+        {
+          "term": "records",
+          "score": 0.1714,
+          "evidence": []
+        },
+        {
+          "term": "library",
+          "score": 0.1353,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "subject",
+          "score": 3.0694,
+          "evidence": []
+        },
+        {
+          "term": "dataset",
+          "score": 2.4353,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "shared task",
+          "score": 1.8427,
+          "evidence": []
+        },
+        {
+          "term": "semeval",
+          "score": 1.4174,
+          "evidence": []
+        },
+        {
+          "term": "terms",
+          "score": 1.3909,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "subject",
+          "score": 0.2521,
+          "evidence": []
+        },
+        {
+          "term": "dataset",
+          "score": 0.2257,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "shared task",
+          "score": 0.183,
+          "evidence": []
+        },
+        {
+          "term": "records",
+          "score": 0.1714,
+          "evidence": []
+        },
+        {
+          "term": "library",
+          "score": 0.1353,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "indonesian",
+          "score": 324.3394,
+          "evidence": []
+        },
+        {
+          "term": "italian",
+          "score": 312.3629,
+          "evidence": []
+        },
+        {
+          "term": "nian",
+          "score": 288.94,
+          "evidence": []
+        },
+        {
+          "term": "hebrew",
+          "score": 240.1997,
+          "evidence": []
+        },
+        {
+          "term": "latvian",
+          "score": 222.6653,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-003-how-are-subject-annotations-obtained": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "subject cataloging",
+          "score": 1.8577,
+          "evidence": []
+        },
+        {
+          "term": "librarians",
+          "score": 0.9505,
+          "evidence": []
+        },
+        {
+          "term": "gnd",
+          "score": 0.8249,
+          "evidence": []
+        },
+        {
+          "term": "num",
+          "score": 0.7929,
+          "evidence": []
+        },
+        {
+          "term": "annotations",
+          "score": 0.715,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "tib",
+          "score": 0.7068,
+          "evidence": []
+        },
+        {
+          "term": "statistics",
+          "score": 0.6406,
+          "evidence": []
+        },
+        {
+          "term": "libraries",
+          "score": 0.6299,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "subject cataloging",
+          "score": 36.5454,
+          "evidence": []
+        },
+        {
+          "term": "librarians",
+          "score": 13.2241,
+          "evidence": []
+        },
+        {
+          "term": "gnd",
+          "score": 12.83,
+          "evidence": []
+        },
+        {
+          "term": "num",
+          "score": 11.0269,
+          "evidence": []
+        },
+        {
+          "term": "tib",
+          "score": 9.1503,
+          "evidence": []
+        },
+        {
+          "term": "statistics",
+          "score": 8.4898,
+          "evidence": []
+        },
+        {
+          "term": "libraries",
+          "score": 8.4283,
+          "evidence": []
+        },
+        {
+          "term": "annotations",
+          "score": 7.3004,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "subject",
+          "score": 0.9304,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "subject cataloging",
+          "score": 0.6296,
+          "evidence": []
+        },
+        {
+          "term": "records",
+          "score": 0.2938,
+          "evidence": []
+        },
+        {
+          "term": "library",
+          "score": 0.2422,
+          "evidence": []
+        },
+        {
+          "term": "headings",
+          "score": 0.2362,
+          "evidence": []
+        },
+        {
+          "term": "gnd",
+          "score": 0.1924,
+          "evidence": []
+        },
+        {
+          "term": "lcsh",
+          "score": 0.1922,
+          "evidence": []
+        },
+        {
+          "term": "indexing",
+          "score": 0.1832,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "subject",
+          "score": 13.3717,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "subject cataloging",
+          "score": 7.5696,
+          "evidence": []
+        },
+        {
+          "term": "all-subjects",
+          "score": 3.1198,
+          "evidence": []
+        },
+        {
+          "term": "records",
+          "score": 2.7442,
+          "evidence": []
+        },
+        {
+          "term": "qualitative",
+          "score": 2.4242,
+          "evidence": []
+        },
+        {
+          "term": "gnd",
+          "score": 2.3033,
+          "evidence": []
+        },
+        {
+          "term": "semeval",
+          "score": 2.1414,
+          "evidence": []
+        },
+        {
+          "term": "tib",
+          "score": 2.1246,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "subject",
+          "score": 0.9304,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "subject cataloging",
+          "score": 0.6296,
+          "evidence": []
+        },
+        {
+          "term": "records",
+          "score": 0.2938,
+          "evidence": []
+        },
+        {
+          "term": "gnd",
+          "score": 0.1924,
+          "evidence": []
+        },
+        {
+          "term": "task",
+          "score": 0.1437,
+          "evidence": []
+        },
+        {
+          "term": "annotations",
+          "score": 0.1408,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "title",
+          "score": 0.1384,
+          "evidence": []
+        },
+        {
+          "term": "tib",
+          "score": 0.1377,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "hannover",
+          "score": 42.8791,
+          "evidence": []
+        },
+        {
+          "term": "mahsa",
+          "score": 39.6281,
+          "evidence": []
+        },
+        {
+          "term": "razmara",
+          "score": 39.6281,
+          "evidence": []
+        },
+        {
+          "term": "jafar",
+          "score": 35.9225,
+          "evidence": []
+        },
+        {
+          "term": "sanaei",
+          "score": 35.9225,
+          "evidence": []
+        },
+        {
+          "term": "firstname",
+          "score": 35.0881,
+          "evidence": []
+        },
+        {
+          "term": "lastname",
+          "score": 35.0881,
+          "evidence": []
+        },
+        {
+          "term": "onomy",
+          "score": 33.4373,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-004-shared-task-description-and-dataset": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "gnd",
+          "score": 0.6537,
+          "evidence": []
+        },
+        {
+          "term": "customizable",
+          "score": 0.6308,
+          "evidence": []
+        },
+        {
+          "term": "partic",
+          "score": 0.6308,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "gnd",
+          "score": 8.5533,
+          "evidence": []
+        },
+        {
+          "term": "subjects",
+          "score": 7.2326,
+          "evidence": []
+        },
+        {
+          "term": "customizable",
+          "score": 7.0175,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "subject",
+          "score": 0.1826,
+          "evidence": []
+        },
+        {
+          "term": "records",
+          "score": 0.1347,
+          "evidence": []
+        },
+        {
+          "term": "dataset",
+          "score": 0.1091,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "subject",
+          "score": 2.3695,
+          "evidence": []
+        },
+        {
+          "term": "all-subjects",
+          "score": 1.4965,
+          "evidence": []
+        },
+        {
+          "term": "qualitative",
+          "score": 1.1461,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "records",
+          "score": 0.1347,
+          "evidence": []
+        },
+        {
+          "term": "dataset",
+          "score": 0.1091,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "subjects",
+          "score": 0.1062,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "alt",
+          "score": 65.3823,
+          "evidence": []
+        },
+        {
+          "term": "customizable",
+          "score": 59.7837,
+          "evidence": []
+        },
+        {
+          "term": "hannover",
+          "score": 55.794,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-005-dataset-collections": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "gnd subject",
+          "score": 1.5647,
+          "evidence": []
+        },
+        {
+          "term": "dataset",
+          "score": 1.5007,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "tib core",
+          "score": 1.0769,
+          "evidence": []
+        },
+        {
+          "term": "participants",
+          "score": 0.8502,
+          "evidence": []
+        },
+        {
+          "term": "engineering",
+          "score": 0.8309,
+          "evidence": []
+        },
+        {
+          "term": "tib-core",
+          "score": 0.8165,
+          "evidence": []
+        },
+        {
+          "term": "all-subjects",
+          "score": 0.8132,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "dataset",
+          "score": 34.1272,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "gnd subject",
+          "score": 26.4996,
+          "evidence": []
+        },
+        {
+          "term": "engineering",
+          "score": 15.2361,
+          "evidence": []
+        },
+        {
+          "term": "tib core",
+          "score": 13.6355,
+          "evidence": []
+        },
+        {
+          "term": "records",
+          "score": 13.0252,
+          "evidence": []
+        },
+        {
+          "term": "participants",
+          "score": 12.1413,
+          "evidence": []
+        },
+        {
+          "term": "tib-core",
+          "score": 10.8161,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "gnd subject",
+          "score": 0.5874,
+          "evidence": []
+        },
+        {
+          "term": "records",
+          "score": 0.2708,
+          "evidence": []
+        },
+        {
+          "term": "dataset",
+          "score": 0.2545,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "recall",
+          "score": 0.1987,
+          "evidence": []
+        },
+        {
+          "term": "tib core",
+          "score": 0.1983,
+          "evidence": []
+        },
+        {
+          "term": "annif",
+          "score": 0.1794,
+          "evidence": []
+        },
+        {
+          "term": "all-subjects",
+          "score": 0.1637,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "gnd subject",
+          "score": 9.601,
+          "evidence": []
+        },
+        {
+          "term": "all-subjects",
+          "score": 4.5499,
+          "evidence": []
+        },
+        {
+          "term": "tib core",
+          "score": 4.101,
+          "evidence": []
+        },
+        {
+          "term": "qualitative",
+          "score": 3.5014,
+          "evidence": []
+        },
+        {
+          "term": "dataset",
+          "score": 3.1762,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "records",
+          "score": 2.9504,
+          "evidence": []
+        },
+        {
+          "term": "ensemble",
+          "score": 2.7037,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "gnd subject",
+          "score": 0.5874,
+          "evidence": []
+        },
+        {
+          "term": "records",
+          "score": 0.2708,
+          "evidence": []
+        },
+        {
+          "term": "dataset",
+          "score": 0.2545,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "tib core",
+          "score": 0.1983,
+          "evidence": []
+        },
+        {
+          "term": "all-subjects",
+          "score": 0.1637,
+          "evidence": []
+        },
+        {
+          "term": "collections",
+          "score": 0.1527,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "tib-core",
+          "score": 0.1334,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "indonesian",
+          "score": 64.1675,
+          "evidence": []
+        },
+        {
+          "term": "italian",
+          "score": 52.1911,
+          "evidence": []
+        },
+        {
+          "term": "hannover",
+          "score": 52.011,
+          "evidence": []
+        },
+        {
+          "term": "record-type",
+          "score": 48.5613,
+          "evidence": []
+        },
+        {
+          "term": "mahsa",
+          "score": 47.0248,
+          "evidence": []
+        },
+        {
+          "term": "razmara",
+          "score": 47.0248,
+          "evidence": []
+        },
+        {
+          "term": "finnish",
+          "score": 46.764,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-dataset-format-and-statistics": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "main shared-task-datasets",
+          "score": 1.7684,
+          "evidence": []
+        },
+        {
+          "term": "llms4subjects blob",
+          "score": 1.61,
+          "evidence": []
+        },
+        {
+          "term": "gnd dataset",
+          "score": 1.3251,
+          "evidence": []
+        },
+        {
+          "term": "record",
+          "score": 0.7625,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "main shared-task-datasets",
+          "score": 28.656,
+          "evidence": []
+        },
+        {
+          "term": "llms4subjects blob",
+          "score": 24.2915,
+          "evidence": []
+        },
+        {
+          "term": "gnd dataset",
+          "score": 20.143,
+          "evidence": []
+        },
+        {
+          "term": "record",
+          "score": 11.11,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "subject",
+          "score": 0.2379,
+          "evidence": []
+        },
+        {
+          "term": "gnd dataset",
+          "score": 0.2044,
+          "evidence": []
+        },
+        {
+          "term": "records",
+          "score": 0.1632,
+          "evidence": []
+        },
+        {
+          "term": "headings",
+          "score": 0.1186,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "subject",
+          "score": 3.2029,
+          "evidence": []
+        },
+        {
+          "term": "gnd dataset",
+          "score": 2.067,
+          "evidence": []
+        },
+        {
+          "term": "all-subjects",
+          "score": 1.4756,
+          "evidence": []
+        },
+        {
+          "term": "records",
+          "score": 1.3677,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "subject",
+          "score": 0.2379,
+          "evidence": []
+        },
+        {
+          "term": "gnd dataset",
+          "score": 0.2044,
+          "evidence": []
+        },
+        {
+          "term": "records",
+          "score": 0.1632,
+          "evidence": []
+        },
+        {
+          "term": "english",
+          "score": 0.092,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "indonesian",
+          "score": 89.4742,
+          "evidence": []
+        },
+        {
+          "term": "italian",
+          "score": 75.0852,
+          "evidence": []
+        },
+        {
+          "term": "nian",
+          "score": 65.5247,
+          "evidence": []
+        },
+        {
+          "term": "finnish",
+          "score": 64.1639,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-007-task-setup": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "teams",
+          "score": 0.683,
+          "evidence": []
+        },
+        {
+          "term": "task",
+          "score": 0.6524,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "dip",
+          "score": 0.6308,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "teams",
+          "score": 8.9836,
+          "evidence": []
+        },
+        {
+          "term": "task",
+          "score": 7.8834,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "dip",
+          "score": 7.0175,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "task",
+          "score": 0.1246,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "subject",
+          "score": 0.1007,
+          "evidence": []
+        },
+        {
+          "term": "com",
+          "score": 0.0791,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "task",
+          "score": 2.1839,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "semeval",
+          "score": 1.7336,
+          "evidence": []
+        },
+        {
+          "term": "subject",
+          "score": 1.7088,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "task",
+          "score": 0.1246,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "subject",
+          "score": 0.1007,
+          "evidence": []
+        },
+        {
+          "term": "com",
+          "score": 0.0791,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "hannover",
+          "score": 38.7728,
+          "evidence": []
+        },
+        {
+          "term": "mahsa",
+          "score": 38.2321,
+          "evidence": []
+        },
+        {
+          "term": "razmara",
+          "score": 38.2321,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-008-shared-task-participant-systems": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "subject embeddings",
+          "score": 2.9743,
+          "evidence": []
+        },
+        {
+          "term": "cross-encoder re-ranking",
+          "score": 2.9232,
+          "evidence": []
+        },
+        {
+          "term": "ruc team",
+          "score": 2.8749,
+          "evidence": []
+        },
+        {
+          "term": "gnd subject",
+          "score": 2.8311,
+          "evidence": []
+        },
+        {
+          "term": "llm ensemble",
+          "score": 2.7331,
+          "evidence": []
+        },
+        {
+          "term": "b-instruct llm",
+          "score": 2.6449,
+          "evidence": []
+        },
+        {
+          "term": "shared task",
+          "score": 2.6291,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "transformer embeddings",
+          "score": 2.5589,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "subject embeddings",
+          "score": 137.1913,
+          "evidence": []
+        },
+        {
+          "term": "gnd subject",
+          "score": 122.0503,
+          "evidence": []
+        },
+        {
+          "term": "subject retrieval",
+          "score": 107.7899,
+          "evidence": []
+        },
+        {
+          "term": "relevant subject",
+          "score": 97.3905,
+          "evidence": []
+        },
+        {
+          "term": "subject labels",
+          "score": 96.5945,
+          "evidence": []
+        },
+        {
+          "term": "subject terms",
+          "score": 95.1917,
+          "evidence": []
+        },
+        {
+          "term": "improve subject",
+          "score": 94.9484,
+          "evidence": []
+        },
+        {
+          "term": "subject tagging",
+          "score": 93.5823,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "gnd subjects",
+          "score": 3.4716,
+          "evidence": []
+        },
+        {
+          "term": "ruc team",
+          "score": 3.3744,
+          "evidence": []
+        },
+        {
+          "term": "subject embeddings",
+          "score": 3.2596,
+          "evidence": []
+        },
+        {
+          "term": "shared task",
+          "score": 2.9436,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "llm ensemble",
+          "score": 2.7781,
+          "evidence": []
+        },
+        {
+          "term": "tibkat records",
+          "score": 2.751,
+          "evidence": []
+        },
+        {
+          "term": "subject retrieval",
+          "score": 2.673,
+          "evidence": []
+        },
+        {
+          "term": "relevant subjects",
+          "score": 2.6723,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "subject embeddings",
+          "score": 142.2799,
+          "evidence": []
+        },
+        {
+          "term": "gnd subject",
+          "score": 131.8061,
+          "evidence": []
+        },
+        {
+          "term": "subject retrieval",
+          "score": 113.9363,
+          "evidence": []
+        },
+        {
+          "term": "relevant subject",
+          "score": 104.9309,
+          "evidence": []
+        },
+        {
+          "term": "subject labels",
+          "score": 103.775,
+          "evidence": []
+        },
+        {
+          "term": "subject tagging",
+          "score": 101.64,
+          "evidence": []
+        },
+        {
+          "term": "improve subject",
+          "score": 100.0832,
+          "evidence": []
+        },
+        {
+          "term": "subject terms",
+          "score": 99.127,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "gnd subjects",
+          "score": 3.4716,
+          "evidence": []
+        },
+        {
+          "term": "ruc team",
+          "score": 3.3744,
+          "evidence": []
+        },
+        {
+          "term": "subject embeddings",
+          "score": 3.2596,
+          "evidence": []
+        },
+        {
+          "term": "shared task",
+          "score": 2.9436,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "llm ensemble",
+          "score": 2.7781,
+          "evidence": []
+        },
+        {
+          "term": "tibkat records",
+          "score": 2.751,
+          "evidence": []
+        },
+        {
+          "term": "subject retrieval",
+          "score": 2.673,
+          "evidence": []
+        },
+        {
+          "term": "relevant subjects",
+          "score": 2.6723,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "asl tekanlou",
+          "score": 105.5979,
+          "evidence": []
+        },
+        {
+          "term": "cross-encoder re-ranking",
+          "score": 82.9127,
+          "evidence": []
+        },
+        {
+          "term": "tibkat records",
+          "score": 69.2872,
+          "evidence": []
+        },
+        {
+          "term": "xtrans",
+          "score": 66.8414,
+          "evidence": []
+        },
+        {
+          "term": "hannover",
+          "score": 65.9409,
+          "evidence": []
+        },
+        {
+          "term": "gnd subjects",
+          "score": 65.9183,
+          "evidence": []
+        },
+        {
+          "term": "mahsa",
+          "score": 63.3802,
+          "evidence": []
+        },
+        {
+          "term": "razmara",
+          "score": 63.3802,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-009-shared-task-leaderboard-results": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "shared task",
+          "score": 2.448,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "qualitative",
+          "score": 0.8673,
+          "evidence": []
+        },
+        {
+          "term": "f1-score",
+          "score": 0.8232,
+          "evidence": []
+        },
+        {
+          "term": "system performance",
+          "score": 0.7918,
+          "evidence": []
+        },
+        {
+          "term": "released",
+          "score": 0.7546,
+          "evidence": []
+        },
+        {
+          "term": "metrics",
+          "score": 0.6643,
+          "evidence": []
+        },
+        {
+          "term": "records",
+          "score": 0.6236,
+          "evidence": []
+        },
+        {
+          "term": "quantitative",
+          "score": 0.6079,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "shared task",
+          "score": 44.7141,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "qualitative",
+          "score": 13.1353,
+          "evidence": []
+        },
+        {
+          "term": "released",
+          "score": 12.2992,
+          "evidence": []
+        },
+        {
+          "term": "system performance",
+          "score": 11.172,
+          "evidence": []
+        },
+        {
+          "term": "f1-score",
+          "score": 11.0269,
+          "evidence": []
+        },
+        {
+          "term": "metrics",
+          "score": 9.9118,
+          "evidence": []
+        },
+        {
+          "term": "records",
+          "score": 9.7689,
+          "evidence": []
+        },
+        {
+          "term": "correct",
+          "score": 8.6711,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "shared task",
+          "score": 0.4929,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "subject",
+          "score": 0.3422,
+          "evidence": []
+        },
+        {
+          "term": "recall",
+          "score": 0.3243,
+          "evidence": []
+        },
+        {
+          "term": "system performance",
+          "score": 0.282,
+          "evidence": []
+        },
+        {
+          "term": "records",
+          "score": 0.2745,
+          "evidence": []
+        },
+        {
+          "term": "precision",
+          "score": 0.2309,
+          "evidence": []
+        },
+        {
+          "term": "scores",
+          "score": 0.2184,
+          "evidence": []
+        },
+        {
+          "term": "evaluation",
+          "score": 0.1991,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "shared task",
+          "score": 6.6867,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "subject",
+          "score": 5.9888,
+          "evidence": []
+        },
+        {
+          "term": "all-subjects",
+          "score": 3.9777,
+          "evidence": []
+        },
+        {
+          "term": "recall",
+          "score": 3.3341,
+          "evidence": []
+        },
+        {
+          "term": "qualitative",
+          "score": 3.332,
+          "evidence": []
+        },
+        {
+          "term": "system performance",
+          "score": 2.9667,
+          "evidence": []
+        },
+        {
+          "term": "records",
+          "score": 2.7577,
+          "evidence": []
+        },
+        {
+          "term": "gnd",
+          "score": 2.5471,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "shared task",
+          "score": 0.4929,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "subject",
+          "score": 0.3422,
+          "evidence": []
+        },
+        {
+          "term": "recall",
+          "score": 0.3243,
+          "evidence": []
+        },
+        {
+          "term": "system performance",
+          "score": 0.282,
+          "evidence": []
+        },
+        {
+          "term": "records",
+          "score": 0.2745,
+          "evidence": []
+        },
+        {
+          "term": "precision",
+          "score": 0.2309,
+          "evidence": []
+        },
+        {
+          "term": "evaluation",
+          "score": 0.1991,
+          "evidence": []
+        },
+        {
+          "term": "qualitative",
+          "score": 0.1948,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "hannover",
+          "score": 32.7951,
+          "evidence": []
+        },
+        {
+          "term": "mahsa",
+          "score": 29.0864,
+          "evidence": []
+        },
+        {
+          "term": "razmara",
+          "score": 29.0864,
+          "evidence": []
+        },
+        {
+          "term": "record-type",
+          "score": 27.8542,
+          "evidence": []
+        },
+        {
+          "term": "ensem",
+          "score": 27.5792,
+          "evidence": []
+        },
+        {
+          "term": "indonesian",
+          "score": 27.391,
+          "evidence": []
+        },
+        {
+          "term": "firstname",
+          "score": 27.3135,
+          "evidence": []
+        },
+        {
+          "term": "lastname",
+          "score": 27.3135,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-010-quantitative-evaluations": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "ruc team",
+          "score": 2.5014,
+          "evidence": []
+        },
+        {
+          "term": "top teams",
+          "score": 1.9294,
+          "evidence": []
+        },
+        {
+          "term": "recall scores",
+          "score": 1.581,
+          "evidence": []
+        },
+        {
+          "term": "average recall",
+          "score": 1.3734,
+          "evidence": []
+        },
+        {
+          "term": "both collections",
+          "score": 1.3711,
+          "evidence": []
+        },
+        {
+          "term": "tib-core",
+          "score": 1.3316,
+          "evidence": []
+        },
+        {
+          "term": "la2i2f",
+          "score": 1.3293,
+          "evidence": []
+        },
+        {
+          "term": "dutir",
+          "score": 1.0866,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "ruc team",
+          "score": 54.1217,
+          "evidence": []
+        },
+        {
+          "term": "top teams",
+          "score": 40.1664,
+          "evidence": []
+        },
+        {
+          "term": "tib-core",
+          "score": 27.0403,
+          "evidence": []
+        },
+        {
+          "term": "recall scores",
+          "score": 25.8967,
+          "evidence": []
+        },
+        {
+          "term": "both collections",
+          "score": 25.6007,
+          "evidence": []
+        },
+        {
+          "term": "la2i2f",
+          "score": 25.2974,
+          "evidence": []
+        },
+        {
+          "term": "average recall",
+          "score": 22.3827,
+          "evidence": []
+        },
+        {
+          "term": "dutir",
+          "score": 17.7567,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "recall scores",
+          "score": 0.8572,
+          "evidence": []
+        },
+        {
+          "term": "average recall",
+          "score": 0.6965,
+          "evidence": []
+        },
+        {
+          "term": "ruc team",
+          "score": 0.5523,
+          "evidence": []
+        },
+        {
+          "term": "scores across",
+          "score": 0.5351,
+          "evidence": []
+        },
+        {
+          "term": "top teams",
+          "score": 0.4737,
+          "evidence": []
+        },
+        {
+          "term": "subject",
+          "score": 0.4294,
+          "evidence": []
+        },
+        {
+          "term": "quantitative",
+          "score": 0.3911,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "records",
+          "score": 0.3888,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "recall scores",
+          "score": 11.6613,
+          "evidence": []
+        },
+        {
+          "term": "subject",
+          "score": 11.0597,
+          "evidence": []
+        },
+        {
+          "term": "ruc team",
+          "score": 10.98,
+          "evidence": []
+        },
+        {
+          "term": "all-subjects",
+          "score": 10.1428,
+          "evidence": []
+        },
+        {
+          "term": "average recall",
+          "score": 8.6507,
+          "evidence": []
+        },
+        {
+          "term": "qualitative",
+          "score": 8.0537,
+          "evidence": []
+        },
+        {
+          "term": "top teams",
+          "score": 7.1653,
+          "evidence": []
+        },
+        {
+          "term": "scores across",
+          "score": 6.4534,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "recall scores",
+          "score": 0.8572,
+          "evidence": []
+        },
+        {
+          "term": "average recall",
+          "score": 0.6965,
+          "evidence": []
+        },
+        {
+          "term": "ruc team",
+          "score": 0.5523,
+          "evidence": []
+        },
+        {
+          "term": "scores across",
+          "score": 0.5351,
+          "evidence": []
+        },
+        {
+          "term": "top teams",
+          "score": 0.4737,
+          "evidence": []
+        },
+        {
+          "term": "subject",
+          "score": 0.4294,
+          "evidence": []
+        },
+        {
+          "term": "quantitative",
+          "score": 0.3911,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "records",
+          "score": 0.3888,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "indonesian",
+          "score": 76.3864,
+          "evidence": []
+        },
+        {
+          "term": "xtrans",
+          "score": 69.5055,
+          "evidence": []
+        },
+        {
+          "term": "italian",
+          "score": 64.6442,
+          "evidence": []
+        },
+        {
+          "term": "ensem",
+          "score": 64.5909,
+          "evidence": []
+        },
+        {
+          "term": "annif-llms4subjects",
+          "score": 63.5615,
+          "evidence": []
+        },
+        {
+          "term": "record-type",
+          "score": 62.6952,
+          "evidence": []
+        },
+        {
+          "term": "mllm",
+          "score": 60.6996,
+          "evidence": []
+        },
+        {
+          "term": "bmx",
+          "score": 60.1754,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-011-qualitative-evaluations": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "qualitative",
+          "score": 2.8812,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ruc team",
+          "score": 2.3189,
+          "evidence": []
+        },
+        {
+          "term": "qualitative eval",
+          "score": 2.1772,
+          "evidence": []
+        },
+        {
+          "term": "top teams",
+          "score": 2.0939,
+          "evidence": []
+        },
+        {
+          "term": "precision among",
+          "score": 1.9966,
+          "evidence": []
+        },
+        {
+          "term": "average recall",
+          "score": 1.9269,
+          "evidence": []
+        },
+        {
+          "term": "precision scores",
+          "score": 1.8936,
+          "evidence": []
+        },
+        {
+          "term": "case treating",
+          "score": 1.4203,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "qualitative",
+          "score": 78.8121,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "precision among",
+          "score": 55.9078,
+          "evidence": []
+        },
+        {
+          "term": "qualitative eval",
+          "score": 48.6453,
+          "evidence": []
+        },
+        {
+          "term": "top teams",
+          "score": 47.9621,
+          "evidence": []
+        },
+        {
+          "term": "precision scores",
+          "score": 47.9426,
+          "evidence": []
+        },
+        {
+          "term": "ruc team",
+          "score": 46.0056,
+          "evidence": []
+        },
+        {
+          "term": "average recall",
+          "score": 44.0207,
+          "evidence": []
+        },
+        {
+          "term": "correct",
+          "score": 31.7941,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "qualitative",
+          "score": 1.399,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "precision scores",
+          "score": 1.2878,
+          "evidence": []
+        },
+        {
+          "term": "average recall",
+          "score": 1.195,
+          "evidence": []
+        },
+        {
+          "term": "ruc team",
+          "score": 1.0724,
+          "evidence": []
+        },
+        {
+          "term": "top teams",
+          "score": 0.9074,
+          "evidence": []
+        },
+        {
+          "term": "qualitative eval",
+          "score": 0.9009,
+          "evidence": []
+        },
+        {
+          "term": "precision among",
+          "score": 0.8126,
+          "evidence": []
+        },
+        {
+          "term": "subject",
+          "score": 0.6864,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "qualitative",
+          "score": 28.489,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ruc team",
+          "score": 18.9202,
+          "evidence": []
+        },
+        {
+          "term": "subject",
+          "score": 18.49,
+          "evidence": []
+        },
+        {
+          "term": "all-subjects",
+          "score": 17.2321,
+          "evidence": []
+        },
+        {
+          "term": "average recall",
+          "score": 15.8021,
+          "evidence": []
+        },
+        {
+          "term": "precision scores",
+          "score": 15.3998,
+          "evidence": []
+        },
+        {
+          "term": "qualitative eval",
+          "score": 14.2445,
+          "evidence": []
+        },
+        {
+          "term": "top teams",
+          "score": 12.9409,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "qualitative",
+          "score": 1.399,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "precision scores",
+          "score": 1.2878,
+          "evidence": []
+        },
+        {
+          "term": "average recall",
+          "score": 1.195,
+          "evidence": []
+        },
+        {
+          "term": "ruc team",
+          "score": 1.0724,
+          "evidence": []
+        },
+        {
+          "term": "top teams",
+          "score": 0.9074,
+          "evidence": []
+        },
+        {
+          "term": "qualitative eval",
+          "score": 0.9009,
+          "evidence": []
+        },
+        {
+          "term": "precision among",
+          "score": 0.8126,
+          "evidence": []
+        },
+        {
+          "term": "subject",
+          "score": 0.6864,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "indonesian",
+          "score": 67.1722,
+          "evidence": []
+        },
+        {
+          "term": "italian",
+          "score": 57.2502,
+          "evidence": []
+        },
+        {
+          "term": "qualitative",
+          "score": 53.4496,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ensem",
+          "score": 51.6579,
+          "evidence": []
+        },
+        {
+          "term": "record-type",
+          "score": 51.5542,
+          "evidence": []
+        },
+        {
+          "term": "nian",
+          "score": 51.2761,
+          "evidence": []
+        },
+        {
+          "term": "xtrans",
+          "score": 51.1803,
+          "evidence": []
+        },
+        {
+          "term": "annif-llms4subjects",
+          "score": 49.052,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-012-discussion": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "assistant api",
+          "score": 1.7231,
+          "evidence": []
+        },
+        {
+          "term": "gnd",
+          "score": 0.9577,
+          "evidence": []
+        },
+        {
+          "term": "subject",
+          "score": 0.6645,
+          "evidence": []
+        },
+        {
+          "term": "vector",
+          "score": 0.6567,
+          "evidence": []
+        },
+        {
+          "term": "prompt",
+          "score": 0.587,
+          "evidence": []
+        },
+        {
+          "term": "baseline",
+          "score": 0.5481,
+          "evidence": []
+        },
+        {
+          "term": "openai",
+          "score": 0.5461,
+          "evidence": []
+        },
+        {
+          "term": "title",
+          "score": 0.4767,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "assistant api",
+          "score": 28.519,
+          "evidence": []
+        },
+        {
+          "term": "gnd",
+          "score": 17.1067,
+          "evidence": []
+        },
+        {
+          "term": "subject",
+          "score": 10.9357,
+          "evidence": []
+        },
+        {
+          "term": "vector",
+          "score": 10.4296,
+          "evidence": []
+        },
+        {
+          "term": "prompt",
+          "score": 9.323,
+          "evidence": []
+        },
+        {
+          "term": "openai",
+          "score": 7.135,
+          "evidence": []
+        },
+        {
+          "term": "baseline",
+          "score": 6.868,
+          "evidence": []
+        },
+        {
+          "term": "abstract",
+          "score": 6.0756,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "subject",
+          "score": 0.3591,
+          "evidence": []
+        },
+        {
+          "term": "records",
+          "score": 0.2493,
+          "evidence": []
+        },
+        {
+          "term": "assistant api",
+          "score": 0.1874,
+          "evidence": []
+        },
+        {
+          "term": "gnd",
+          "score": 0.1849,
+          "evidence": []
+        },
+        {
+          "term": "llm",
+          "score": 0.1681,
+          "evidence": []
+        },
+        {
+          "term": "title",
+          "score": 0.1672,
+          "evidence": []
+        },
+        {
+          "term": "all-subjects",
+          "score": 0.1556,
+          "evidence": []
+        },
+        {
+          "term": "annif",
+          "score": 0.1526,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "subject",
+          "score": 6.1845,
+          "evidence": []
+        },
+        {
+          "term": "all-subjects",
+          "score": 3.7301,
+          "evidence": []
+        },
+        {
+          "term": "qualitative",
+          "score": 2.8875,
+          "evidence": []
+        },
+        {
+          "term": "assistant api",
+          "score": 2.7829,
+          "evidence": []
+        },
+        {
+          "term": "records",
+          "score": 2.7393,
+          "evidence": []
+        },
+        {
+          "term": "gnd",
+          "score": 2.4831,
+          "evidence": []
+        },
+        {
+          "term": "team",
+          "score": 2.3877,
+          "evidence": []
+        },
+        {
+          "term": "llm",
+          "score": 2.3513,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "subject",
+          "score": 0.3591,
+          "evidence": []
+        },
+        {
+          "term": "assistant api",
+          "score": 0.1874,
+          "evidence": []
+        },
+        {
+          "term": "gnd",
+          "score": 0.1849,
+          "evidence": []
+        },
+        {
+          "term": "llm",
+          "score": 0.1681,
+          "evidence": []
+        },
+        {
+          "term": "title",
+          "score": 0.1672,
+          "evidence": []
+        },
+        {
+          "term": "prompt",
+          "score": 0.1511,
+          "evidence": []
+        },
+        {
+          "term": "output",
+          "score": 0.1343,
+          "evidence": []
+        },
+        {
+          "term": "json",
+          "score": 0.0781,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "hannover",
+          "score": 31.4333,
+          "evidence": []
+        },
+        {
+          "term": "indonesian",
+          "score": 30.1844,
+          "evidence": []
+        },
+        {
+          "term": "mahsa",
+          "score": 28.8246,
+          "evidence": []
+        },
+        {
+          "term": "razmara",
+          "score": 28.8246,
+          "evidence": []
+        },
+        {
+          "term": "mistral-7b",
+          "score": 27.5349,
+          "evidence": []
+        },
+        {
+          "term": "record-type",
+          "score": 27.3775,
+          "evidence": []
+        },
+        {
+          "term": "ensem",
+          "score": 26.4898,
+          "evidence": []
+        },
+        {
+          "term": "homa",
+          "score": 26.435,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-013-conclusion": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "semeval task",
+          "score": 3.3978,
+          "evidence": []
+        },
+        {
+          "term": "arxiv preprint",
+          "score": 3.1815,
+          "evidence": []
+        },
+        {
+          "term": "computational linguistics",
+          "score": 2.9331,
+          "evidence": []
+        },
+        {
+          "term": "international conference",
+          "score": 2.8913,
+          "evidence": []
+        },
+        {
+          "term": "international workshop",
+          "score": 2.89,
+          "evidence": []
+        },
+        {
+          "term": "tional linguistics",
+          "score": 2.373,
+          "evidence": []
+        },
+        {
+          "term": "vienna",
+          "score": 2.1561,
+          "evidence": []
+        },
+        {
+          "term": "osma suominen",
+          "score": 2.1283,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "semeval task",
+          "score": 169.2638,
+          "evidence": []
+        },
+        {
+          "term": "international workshop",
+          "score": 100.5935,
+          "evidence": []
+        },
+        {
+          "term": "arxiv preprint",
+          "score": 99.8916,
+          "evidence": []
+        },
+        {
+          "term": "computational linguistics",
+          "score": 97.003,
+          "evidence": []
+        },
+        {
+          "term": "international conference",
+          "score": 93.1869,
+          "evidence": []
+        },
+        {
+          "term": "pages",
+          "score": 85.5333,
+          "evidence": []
+        },
+        {
+          "term": "vienna",
+          "score": 71.0267,
+          "evidence": []
+        },
+        {
+          "term": "tional linguistics",
+          "score": 69.2786,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "semeval task",
+          "score": 3.5416,
+          "evidence": []
+        },
+        {
+          "term": "arxiv preprint",
+          "score": 3.2956,
+          "evidence": []
+        },
+        {
+          "term": "computational linguistics",
+          "score": 2.8843,
+          "evidence": []
+        },
+        {
+          "term": "subject tagging",
+          "score": 2.6103,
+          "evidence": []
+        },
+        {
+          "term": "international conference",
+          "score": 2.6048,
+          "evidence": []
+        },
+        {
+          "term": "international workshop",
+          "score": 2.5924,
+          "evidence": []
+        },
+        {
+          "term": "subject indexing",
+          "score": 2.4354,
+          "evidence": []
+        },
+        {
+          "term": "tional linguistics",
+          "score": 2.3644,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "semeval task",
+          "score": 156.4765,
+          "evidence": []
+        },
+        {
+          "term": "arxiv preprint",
+          "score": 98.6447,
+          "evidence": []
+        },
+        {
+          "term": "international workshop",
+          "score": 92.7317,
+          "evidence": []
+        },
+        {
+          "term": "computational linguistics",
+          "score": 92.6929,
+          "evidence": []
+        },
+        {
+          "term": "international conference",
+          "score": 91.5507,
+          "evidence": []
+        },
+        {
+          "term": "pages",
+          "score": 85.3163,
+          "evidence": []
+        },
+        {
+          "term": "subject indexing",
+          "score": 81.2107,
+          "evidence": []
+        },
+        {
+          "term": "subject tagging",
+          "score": 71.3873,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "semeval task",
+          "score": 3.5416,
+          "evidence": []
+        },
+        {
+          "term": "arxiv preprint",
+          "score": 3.2956,
+          "evidence": []
+        },
+        {
+          "term": "computational linguistics",
+          "score": 2.8843,
+          "evidence": []
+        },
+        {
+          "term": "subject tagging",
+          "score": 2.6103,
+          "evidence": []
+        },
+        {
+          "term": "international conference",
+          "score": 2.6048,
+          "evidence": []
+        },
+        {
+          "term": "international workshop",
+          "score": 2.5924,
+          "evidence": []
+        },
+        {
+          "term": "subject indexing",
+          "score": 2.4354,
+          "evidence": []
+        },
+        {
+          "term": "tional linguistics",
+          "score": 2.3644,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "hamed babaei",
+          "score": 179.6832,
+          "evidence": []
+        },
+        {
+          "term": "juho inkinen",
+          "score": 173.6035,
+          "evidence": []
+        },
+        {
+          "term": "mona lehtinen",
+          "score": 156.8936,
+          "evidence": []
+        },
+        {
+          "term": "babaei giglou",
+          "score": 142.3268,
+          "evidence": []
+        },
+        {
+          "term": "osma suominen",
+          "score": 141.6819,
+          "evidence": []
+        },
+        {
+          "term": "mahsa",
+          "score": 124.6786,
+          "evidence": []
+        },
+        {
+          "term": "razmara",
+          "score": 124.6786,
+          "evidence": []
+        },
+        {
+          "term": "jafar",
+          "score": 118.7564,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-014-tibkat-media-types": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "media",
+          "score": 0.7683,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "academic",
+          "score": 0.6607,
+          "evidence": []
+        },
+        {
+          "term": "audiovisualdocument",
+          "score": 0.6308,
+          "evidence": []
+        },
+        {
+          "term": "bines",
+          "score": 0.6308,
+          "evidence": []
+        },
+        {
+          "term": "newspapers",
+          "score": 0.6308,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "academic",
+          "score": 8.7569,
+          "evidence": []
+        },
+        {
+          "term": "book",
+          "score": 7.946,
+          "evidence": []
+        },
+        {
+          "term": "media",
+          "score": 7.8989,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "findings",
+          "score": 7.764,
+          "evidence": []
+        },
+        {
+          "term": "written",
+          "score": 7.721,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "subject",
+          "score": 0.0848,
+          "evidence": []
+        },
+        {
+          "term": "international",
+          "score": 0.0797,
+          "evidence": []
+        },
+        {
+          "term": "work",
+          "score": 0.078,
+          "evidence": []
+        },
+        {
+          "term": "review",
+          "score": 0.0753,
+          "evidence": []
+        },
+        {
+          "term": "media",
+          "score": 0.0694,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "proceedings",
+          "score": 1.8295,
+          "evidence": []
+        },
+        {
+          "term": "conference",
+          "score": 1.7223,
+          "evidence": []
+        },
+        {
+          "term": "work",
+          "score": 1.6568,
+          "evidence": []
+        },
+        {
+          "term": "international",
+          "score": 1.588,
+          "evidence": []
+        },
+        {
+          "term": "license",
+          "score": 1.1913,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "subject",
+          "score": 0.0848,
+          "evidence": []
+        },
+        {
+          "term": "work",
+          "score": 0.078,
+          "evidence": []
+        },
+        {
+          "term": "media",
+          "score": 0.0694,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "proceedings",
+          "score": 0.0687,
+          "evidence": []
+        },
+        {
+          "term": "conference",
+          "score": 0.0669,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "indonesian",
+          "score": 25.5876,
+          "evidence": []
+        },
+        {
+          "term": "lowercased",
+          "score": 23.4342,
+          "evidence": []
+        },
+        {
+          "term": "italian",
+          "score": 22.1597,
+          "evidence": []
+        },
+        {
+          "term": "qualifier",
+          "score": 21.5014,
+          "evidence": []
+        },
+        {
+          "term": "hebrew",
+          "score": 21.281,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-015-tibkat-language-distribution": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "tibkat",
+          "score": 0.886,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "latvian",
+          "score": 0.6359,
+          "evidence": []
+        },
+        {
+          "term": "swedish",
+          "score": 0.6359,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "tibkat",
+          "score": 9.6406,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "indonesian",
+          "score": 7.0175,
+          "evidence": []
+        },
+        {
+          "term": "italian",
+          "score": 7.0175,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "language",
+          "score": 0.056,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ate",
+          "score": 0.0503,
+          "evidence": []
+        },
+        {
+          "term": "extraction",
+          "score": 0.0463,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "ate",
+          "score": 0.6548,
+          "evidence": []
+        },
+        {
+          "term": "terms",
+          "score": 0.6175,
+          "evidence": []
+        },
+        {
+          "term": "corpus",
+          "score": 0.5134,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "language",
+          "score": 0.056,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "english",
+          "score": 0.0452,
+          "evidence": []
+        },
+        {
+          "term": "french",
+          "score": 0.0288,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "indonesian",
+          "score": 4059.6236,
+          "evidence": []
+        },
+        {
+          "term": "italian",
+          "score": 4035.4601,
+          "evidence": []
+        },
+        {
+          "term": "nian",
+          "score": 3787.3777,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-016-additional-details-about-the-gnd": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "gnd",
+          "score": 2.4748,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "synonyms",
+          "score": 1.3702,
+          "evidence": []
+        },
+        {
+          "term": "topical",
+          "score": 0.7823,
+          "evidence": []
+        },
+        {
+          "term": "details",
+          "score": 0.769,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "terms",
+          "score": 0.7492,
+          "evidence": []
+        },
+        {
+          "term": "tib",
+          "score": 0.7068,
+          "evidence": []
+        },
+        {
+          "term": "naming",
+          "score": 0.6691,
+          "evidence": []
+        },
+        {
+          "term": "llms4subjects",
+          "score": 0.6522,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "gnd",
+          "score": 59.8733,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "synonyms",
+          "score": 28.1561,
+          "evidence": []
+        },
+        {
+          "term": "terms",
+          "score": 15.908,
+          "evidence": []
+        },
+        {
+          "term": "topical",
+          "score": 10.8161,
+          "evidence": []
+        },
+        {
+          "term": "details",
+          "score": 10.1835,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "naming",
+          "score": 9.2392,
+          "evidence": []
+        },
+        {
+          "term": "tib",
+          "score": 9.1503,
+          "evidence": []
+        },
+        {
+          "term": "llms4subjects",
+          "score": 8.9836,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "subject",
+          "score": 0.2754,
+          "evidence": []
+        },
+        {
+          "term": "terms",
+          "score": 0.2245,
+          "evidence": []
+        },
+        {
+          "term": "gnd",
+          "score": 0.2219,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "indexing",
+          "score": 0.1607,
+          "evidence": []
+        },
+        {
+          "term": "records",
+          "score": 0.1498,
+          "evidence": []
+        },
+        {
+          "term": "documents",
+          "score": 0.1405,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 0.1264,
+          "evidence": []
+        },
+        {
+          "term": "library",
+          "score": 0.1243,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "terms",
+          "score": 5.2431,
+          "evidence": []
+        },
+        {
+          "term": "subject",
+          "score": 4.3452,
+          "evidence": []
+        },
+        {
+          "term": "gnd",
+          "score": 3.3714,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "documents",
+          "score": 3.3394,
+          "evidence": []
+        },
+        {
+          "term": "all-subjects",
+          "score": 2.3734,
+          "evidence": []
+        },
+        {
+          "term": "retrieval",
+          "score": 2.2241,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 1.8701,
+          "evidence": []
+        },
+        {
+          "term": "records",
+          "score": 1.8503,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "subject",
+          "score": 0.2754,
+          "evidence": []
+        },
+        {
+          "term": "terms",
+          "score": 0.2245,
+          "evidence": []
+        },
+        {
+          "term": "gnd",
+          "score": 0.2219,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "indexing",
+          "score": 0.1607,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 0.1264,
+          "evidence": []
+        },
+        {
+          "term": "english",
+          "score": 0.0994,
+          "evidence": []
+        },
+        {
+          "term": "german",
+          "score": 0.087,
+          "evidence": []
+        },
+        {
+          "term": "details",
+          "score": 0.0861,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "indonesian",
+          "score": 51.2889,
+          "evidence": []
+        },
+        {
+          "term": "italian",
+          "score": 44.7744,
+          "evidence": []
+        },
+        {
+          "term": "nian",
+          "score": 39.517,
+          "evidence": []
+        },
+        {
+          "term": "hebrew",
+          "score": 37.8408,
+          "evidence": []
+        },
+        {
+          "term": "gnd",
+          "score": 36.5611,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "finnish",
+          "score": 35.7702,
+          "evidence": []
+        },
+        {
+          "term": "latvian",
+          "score": 32.3596,
+          "evidence": []
+        },
+        {
+          "term": "estonian",
+          "score": 30.7845,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-017-pilot-task": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "tib portal",
+          "score": 2.0619,
+          "evidence": []
+        },
+        {
+          "term": "annif",
+          "score": 1.2317,
+          "evidence": []
+        },
+        {
+          "term": "sciences",
+          "score": 0.9118,
+          "evidence": []
+        },
+        {
+          "term": "ogy",
+          "score": 0.8778,
+          "evidence": []
+        },
+        {
+          "term": "engineering",
+          "score": 0.8309,
+          "evidence": []
+        },
+        {
+          "term": "subjects",
+          "score": 0.8173,
+          "evidence": []
+        },
+        {
+          "term": "llms4subjects",
+          "score": 0.6522,
+          "evidence": []
+        },
+        {
+          "term": "assign",
+          "score": 0.6494,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "tib portal",
+          "score": 38.0765,
+          "evidence": []
+        },
+        {
+          "term": "annif",
+          "score": 28.2895,
+          "evidence": []
+        },
+        {
+          "term": "sciences",
+          "score": 16.9797,
+          "evidence": []
+        },
+        {
+          "term": "engineering",
+          "score": 15.2361,
+          "evidence": []
+        },
+        {
+          "term": "subjects",
+          "score": 14.4652,
+          "evidence": []
+        },
+        {
+          "term": "ogy",
+          "score": 12.2024,
+          "evidence": []
+        },
+        {
+          "term": "assign",
+          "score": 8.9836,
+          "evidence": []
+        },
+        {
+          "term": "llms4subjects",
+          "score": 8.9836,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "subject",
+          "score": 0.3731,
+          "evidence": []
+        },
+        {
+          "term": "records",
+          "score": 0.2303,
+          "evidence": []
+        },
+        {
+          "term": "indexing",
+          "score": 0.1872,
+          "evidence": []
+        },
+        {
+          "term": "task",
+          "score": 0.1752,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "terms",
+          "score": 0.1729,
+          "evidence": []
+        },
+        {
+          "term": "annif",
+          "score": 0.1725,
+          "evidence": []
+        },
+        {
+          "term": "gnd",
+          "score": 0.168,
+          "evidence": []
+        },
+        {
+          "term": "headings",
+          "score": 0.1647,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "subject",
+          "score": 6.436,
+          "evidence": []
+        },
+        {
+          "term": "all-subjects",
+          "score": 3.9914,
+          "evidence": []
+        },
+        {
+          "term": "qualitative",
+          "score": 3.0979,
+          "evidence": []
+        },
+        {
+          "term": "task",
+          "score": 2.9731,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "records",
+          "score": 2.7912,
+          "evidence": []
+        },
+        {
+          "term": "embeddings",
+          "score": 2.7034,
+          "evidence": []
+        },
+        {
+          "term": "gnd",
+          "score": 2.6094,
+          "evidence": []
+        },
+        {
+          "term": "tib",
+          "score": 2.5603,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "subject",
+          "score": 0.3731,
+          "evidence": []
+        },
+        {
+          "term": "task",
+          "score": 0.1752,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "annif",
+          "score": 0.1725,
+          "evidence": []
+        },
+        {
+          "term": "tib portal",
+          "score": 0.1601,
+          "evidence": []
+        },
+        {
+          "term": "documents",
+          "score": 0.1461,
+          "evidence": []
+        },
+        {
+          "term": "ing",
+          "score": 0.1101,
+          "evidence": []
+        },
+        {
+          "term": "engineering",
+          "score": 0.1099,
+          "evidence": []
+        },
+        {
+          "term": "information",
+          "score": 0.1052,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "apparel",
+          "score": 87.0339,
+          "evidence": []
+        },
+        {
+          "term": "sports",
+          "score": 79.0408,
+          "evidence": []
+        },
+        {
+          "term": "nike",
+          "score": 72.1004,
+          "evidence": []
+        },
+        {
+          "term": "accessories",
+          "score": 68.6341,
+          "evidence": []
+        },
+        {
+          "term": "footwear",
+          "score": 68.6341,
+          "evidence": []
+        },
+        {
+          "term": "founded",
+          "score": 66.0019,
+          "evidence": []
+        },
+        {
+          "term": "victory",
+          "score": 63.9469,
+          "evidence": []
+        },
+        {
+          "term": "low-cost",
+          "score": 62.3147,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "semeval",
+          "score": 0.8412,
+          "evidence": []
+        },
+        {
+          "term": "tib",
+          "score": 0.7068,
+          "evidence": []
+        },
+        {
+          "term": "tagging",
+          "score": 0.7042,
+          "evidence": []
+        },
+        {
+          "term": "llms4subjects",
+          "score": 0.6522,
+          "evidence": []
+        },
+        {
+          "term": "llm-based",
+          "score": 0.6368,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "semeval",
+          "score": 10.2914,
+          "evidence": []
+        },
+        {
+          "term": "tagging",
+          "score": 9.5324,
+          "evidence": []
+        },
+        {
+          "term": "tib",
+          "score": 9.1503,
+          "evidence": []
+        },
+        {
+          "term": "llms4subjects",
+          "score": 8.9836,
+          "evidence": []
+        },
+        {
+          "term": "subject",
+          "score": 8.2018,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "subject",
+          "score": 0.4475,
+          "evidence": []
+        },
+        {
+          "term": "library",
+          "score": 0.2739,
+          "evidence": []
+        },
+        {
+          "term": "records",
+          "score": 0.2566,
+          "evidence": []
+        },
+        {
+          "term": "semeval",
+          "score": 0.2524,
+          "evidence": []
+        },
+        {
+          "term": "indexing",
+          "score": 0.2377,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "subject",
+          "score": 6.0851,
+          "evidence": []
+        },
+        {
+          "term": "semeval",
+          "score": 5.6183,
+          "evidence": []
+        },
+        {
+          "term": "task",
+          "score": 2.7342,
+          "evidence": []
+        },
+        {
+          "term": "vienna",
+          "score": 2.7329,
+          "evidence": []
+        },
+        {
+          "term": "pages",
+          "score": 2.5678,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "subject",
+          "score": 0.4475,
+          "evidence": []
+        },
+        {
+          "term": "library",
+          "score": 0.2739,
+          "evidence": []
+        },
+        {
+          "term": "records",
+          "score": 0.2566,
+          "evidence": []
+        },
+        {
+          "term": "semeval",
+          "score": 0.2524,
+          "evidence": []
+        },
+        {
+          "term": "gnd",
+          "score": 0.1868,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "hannover",
+          "score": 144.772,
+          "evidence": []
+        },
+        {
+          "term": "mahsa",
+          "score": 140.585,
+          "evidence": []
+        },
+        {
+          "term": "razmara",
+          "score": 140.585,
+          "evidence": []
+        },
+        {
+          "term": "jafar",
+          "score": 129.9137,
+          "evidence": []
+        },
+        {
+          "term": "sanaei",
+          "score": 129.9137,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

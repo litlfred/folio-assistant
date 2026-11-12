@@ -1,0 +1,511 @@
+{
+  "$schema": "folio-library-entry/v1",
+  "id": "arxiv-2301.06767v1",
+  "blocks": [
+    {
+      "id": "library/arxiv-2301.06767v1/blocks/prose-sec-000",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Introduction",
+      "pageStart": 1,
+      "pageEnd": 3,
+      "target": "../sections/sec-000-1-introduction.md",
+      "narrative": null,
+      "content": "INTRODUCTION\nTerms are textual expressions that denote concepts in a specific field of expertise. They are beneficial for several\nterminographical tasks performed by linguists, e.g., construction of term dictionaries [60]. Moreover, terms can also\nimprove several complex downstream natural language processing (NLP) tasks, e.g., information retrieval [62] and\nmachine translation [106]. Manual term extraction is labor- and time-demanding. Therefore, with the new advances in\nmachine learning and the recent introduction of novel neural architectures, we observed a push towards automatizing\nthe tas",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2301.06767v1/blocks/prose-sec-front-matter",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Front matter",
+      "pageStart": 1,
+      "pageEnd": 1,
+      "target": "../sections/sec-front-matter.md",
+      "narrative": null,
+      "content": "The Recent Advances in Automatic Term Extraction: A survey\nHANH THI HONG TRAN, Jozef Stefan Institute, Slovenia; University of La Rochelle, France, Slovenia\nMATEJ MARTINC, Jozef Stefan Institute, Slovenia, Slovenia\nJAYA CAPORUSSO, Jozef Stefan Institute, Slovenia, Slovenia\nANTOINE DOUCET, University of La Rochelle, France, France\nSENJA POLLAK, Jozef Stefan Institute, Slovenia, Slovenia\nAutomatic term extraction (ATE) is a Natural Language Processing (NLP) task that eases the effort of manually identifying terms\nfrom domain-specific corpora by providing a list of candidate terms. As units of kn",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2301.06767v1/blocks/prose-sec-001",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Previous surveys and comparative studies",
+      "pageStart": 3,
+      "pageEnd": 4,
+      "target": "../sections/sec-001-2-previous-surveys-and-comparative-studies.md",
+      "narrative": null,
+      "content": "PREVIOUS SURVEYS AND COMPARATIVE STUDIES\nThe first comprehensive survey of approaches to solving ATE was written by [51]. It provided a systematic overview of\nthe two major trends in the principles and methods of automatic term recognition and introduced a distinction between\nlinguistic and statistical approaches. [80] argued that all contemporary algorithms employed linguistic methods as\na filtering step. A decade later, [20] presented a survey of different approaches in automatic term extraction, which\ncan be divided into three sub-categories: statistical, linguistics, and hybrid (i.e., stat",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2301.06767v1/blocks/figure-img-p004-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 4,
+      "pageEnd": 4,
+      "target": "../images/img-p004-1.png",
+      "narrative": "draft",
+      "content": "Figure 1: the literature-search query as four groups of alternative words joined left to right — {Automatic, Automated, …} → {Term, Terminology, …} → {Extraction, Recognition, Detection, Retrieval, …} → {Data, Dataset, Corpus, Corpora, …}. A bracket under the first three groups is labelled 'Methods/Systems', and a longer bracket under all four is labelled 'Datasets': the first three groups found the systems surveyed, all four found the datasets.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2301.06767v1/blocks/prose-sec-002",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Methodology",
+      "pageStart": 4,
+      "pageEnd": 5,
+      "target": "../sections/sec-002-3-methodology.md",
+      "narrative": null,
+      "content": "METHODOLOGY\nWe searched mainly on the five websites, including Google1, Google Scholar2, Semantic Scholar3, ACL Anthology4,\nand Terminology5 journals to identify suitable articles for this survey. The search progress was taken from October to\nDecember 2022. Our query terms covered two distinct ATE resources: available corpora and neural systems. Therefore,\nwe used 80 different queries to collect the papers that describe either methods/systems (16) or corpora (64), which are\nthe combinations of different keywords as illustrated in Fig. 1 and are listed as examples below:\n• Methods/Systems: auto",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2301.06767v1/blocks/prose-sec-003",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "ATE datasets",
+      "pageStart": 5,
+      "pageEnd": 5,
+      "target": "../sections/sec-003-4-ate-datasets.md",
+      "narrative": null,
+      "content": "ATE DATASETS\nIn this section, we cover linguistic resources for term extraction developed in the past three decades. More specifically,\nwe present and analyze monolingual and multilingual domain-specific gold standard corpora that can be used for the\ntraining and evaluation phase of ATE systems. We only consider resources that are publicly available and for which a\ndescription paper explaining their construction has been published.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2301.06767v1/blocks/prose-sec-004",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Monolingual corpora",
+      "pageStart": 5,
+      "pageEnd": 7,
+      "target": "../sections/sec-004-41-monolingual-corpora.md",
+      "narrative": null,
+      "content": "Monolingual corpora\nTable 1 lists manually annotated monolingual corpora that: (1) have been used for monolingual ATE evaluation, (2)\ncontain more than 100 terms, (3) have annotation or gold standards, and (4) are publicly available at a specific URL or\neasily to reconstruct based on the data description. Note that the years on the Table refer to when the corpora were\nreleased and that the statistics are up-to-date with the latest release. We attach the link of each corpus in the footnote\nfor facilitating access.\nGENIA [53] is one of the best-known biomedical English corpora that was used for",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2301.06767v1/blocks/prose-sec-005",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Multilingual corpora",
+      "pageStart": 7,
+      "pageEnd": 9,
+      "target": "../sections/sec-005-42-multilingual-corpora.md",
+      "narrative": null,
+      "content": "Multilingual corpora\nWith the development of multilingual tasks [25, 58], datasets that cover multiple languages and domains are becoming\nincreasingly important for the training and evaluation of multilingual and cross-lingual models. Table 2 presents the\navailable manually annotated corpora used in multilingual ATE training and/or evaluation that cover more than one\nlanguage.\nThe Terminology Extraction, Translation Tools and Comparable Corpora (TTC) project [22, 38] was one of the first\ndomain-specific corpora made purposefully to enable training and evaluation of multilingual term extraction",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2301.06767v1/blocks/prose-sec-006",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Supervised ATE systems",
+      "pageStart": 9,
+      "pageEnd": 9,
+      "target": "../sections/sec-006-5-supervised-ate-systems.md",
+      "narrative": null,
+      "content": "SUPERVISED ATE SYSTEMS\nIn this section, we offer an extensive overview of recent ATE systems, which tend to rely either on shallow machine\nlearning techniques or deep neural networks. In most cases, traditional approaches to term extraction do not rely\non machine learning. Instead, they tend to extract candidate terms above a certain threshold, derived from several\nlinguistic and statistical features. Traditional approaches are not covered in this survey, since they have been covered in\nprevious surveys (e.g., [51] and [5]). Instead, in this section, starting from the advent of machine learnin",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2301.06767v1/blocks/prose-sec-007",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Machine learning approaches",
+      "pageStart": 9,
+      "pageEnd": 11,
+      "target": "../sections/sec-007-51-machine-learning-approaches.md",
+      "narrative": null,
+      "content": "Machine learning approaches\nDespite several variations in features and models, most supervised machine learning approaches to ATE comply with the\ntraditional approach, following three principal steps: (1) preprocessing, (2) feature engineering, and (3) term extracting\nclassifier. In the preprocessing step, some operations are performed on input texts (e.g., sentence segmentation, word\nsegmentation, and POS tagging) to make the input text ready for further steps. In the feature engineering step, we\ndescribe the candidate terms through several different features (see examples of different types",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2301.06767v1/blocks/figure-img-p010-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 10,
+      "pageEnd": 10,
+      "target": "../images/img-p010-1.png",
+      "narrative": "draft",
+      "content": "Figure 2: a tree of the features used by feature-engineering term extractors. 'Features' branches into six groups: shape (SHAP: length, alphanumeric, capitalisation), linguistic (LING: POS, NER, chunk, stopword), frequency (FREQ: relative frequency in the specialised corpus and in a referral corpus), statistical (STAT), contextual (CTXT: before/after parentheses) and variational (VARI: number of variations, variation statistics). Statistical features split into those computed without a reference corpus (C-Value, TF-IDF, lexicon cohesion) and those computed against one (domain pertinence, domain relevance, weirdness, relevance, termhood).",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2301.06767v1/blocks/prose-sec-008",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Deep learning approaches",
+      "pageStart": 11,
+      "pageEnd": 13,
+      "target": "../sections/sec-008-52-deep-learning-approaches.md",
+      "narrative": null,
+      "content": "Deep learning approaches\nThe use of neural networks, especially language models, to solve ATE, has been gaining a lot of traction recently. Their\napplication is performed either to just represent the information in the text with word embeddings or to apply a deep\narchitecture as an end-to-end classifier. In this section, we describe studies that employed any of these two approaches.\n5.2.1\nEmbeddings. The embeddings for term extraction are often pretrained on a large general corpus, and then poten-\ntially fine-tuned on specific corpora during classification. The most popular general non-context",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2301.06767v1/blocks/figure-img-p012-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 12,
+      "pageEnd": 12,
+      "target": "../images/img-p012-1.png",
+      "narrative": "draft",
+      "content": "Figure 3: three ways a neural model extracts terms, side by side, each fed the sentence 'We meta-analyzed mortality using random-effect models.' Left, a sequence classifier reads a candidate paired with its sentence ('random-effect models.' then the sentence) and a linear layer with softmax answers 'Term?'. Centre, a token classifier labels every token O (not a term), B (beginning of term) or I (inside a term) through a shared linear layer with softmax. Right, a sequence-to-sequence model writes out the list of terms directly: 'meta-analyzed ; mortality ; random-effect models'.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2301.06767v1/blocks/prose-sec-009",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Multilingual learning",
+      "pageStart": 13,
+      "pageEnd": 14,
+      "target": "../sections/sec-009-53-multilingual-learning.md",
+      "narrative": null,
+      "content": "Multilingual learning\nRecently, a new research direction in ATE aims to conduct term extraction in a multilingual setting, testing the\nhypothesis that multilingual information can help during the monolingual extraction phase.\nMultilingual term extraction can be performed on parallel or comparable corpora. According to [74]’s definition,\na comparable corpus is composed of monolingual data collected from different languages using the same sampling\ntechniques. Meanwhile, a parallel corpus is one that is composed of source texts and their translations in one or more\ndifferent languages. While the",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2301.06767v1/blocks/prose-sec-010",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Cross-domain and cross-lingual transfer learning",
+      "pageStart": 14,
+      "pageEnd": 15,
+      "target": "../sections/sec-010-54-cross-domain-and-cross-lingual-transfer-learn.md",
+      "narrative": null,
+      "content": "Cross-domain and cross-lingual transfer learning\nCurrent research on term extraction deals with two major issues: (1) the data collection for a specific field of expertise\nor domain is often non-existent or small, and (2) the available well-annotated corpora are scarce, especially for lesser-\nknown languages (e.g., Slavic languages). To address the former issue, [63] proposed to combine specialized and general\ndomain word embeddings to increase the training corpora. However, this technique is hard to apply for most ATE\ntasks, since it still requires a “reasonable” amount of domain-specific man",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2301.06767v1/blocks/prose-sec-011",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "ATE evaluation metrics",
+      "pageStart": 15,
+      "pageEnd": 17,
+      "target": "../sections/sec-011-6-ate-evaluation-metrics.md",
+      "narrative": null,
+      "content": "ATE EVALUATION METRICS\nATE models usually provide a list of candidate terms from the given domain-specific corpus as the final output, and it is\nimportant to define the correct methods and metrics to evaluate the quality of this output. There are several variations\namong the evaluation methods, including both intrinsic and extrinsic mechanisms. The extrinsic methods assess the\nquality of the extracting system by measuring the improvement in the performance of another system or application\nthat uses the results of term extraction as described in [102]. Meanwhile, the intrinsic ones measure the",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2301.06767v1/blocks/figure-img-p016-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 16,
+      "pageEnd": 16,
+      "target": "../images/img-p016-1.png",
+      "narrative": "draft",
+      "content": "Figure 4: how term extraction is evaluated, on two axes. 'Evaluation levels' splits into evaluation methods (human judges, dictionary-based, gold standard-based) and scope of results (entire results, part of results, top-k results). Beneath both sit the three measures used throughout: precision, recall and F1-score.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2301.06767v1/blocks/prose-sec-012",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Comparative results",
+      "pageStart": 17,
+      "pageEnd": 19,
+      "target": "../sections/sec-012-7-comparative-results.md",
+      "narrative": null,
+      "content": "COMPARATIVE RESULTS\nSince term extraction methods vary greatly in regard to definition, corpora, domains, languages, and evaluation metrics,\na comparative evaluation of term extraction methods is hardly achievable. Nevertheless, in this section, we propose to\nmeasure the performance of several ATE systems by comparing the candidate term list extracted on the whole test set\nlevel with the manually annotated gold standard of each domain using a strictly matching F1-score. All approaches are\napplied to the newest and the most popular up-to-date ATE corpus, namely the ACTER dataset. We chose this",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2301.06767v1/blocks/prose-sec-013",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Challenges and Future directions",
+      "pageStart": 19,
+      "pageEnd": 19,
+      "target": "../sections/sec-013-8-challenges-and-future-directions.md",
+      "narrative": null,
+      "content": "CHALLENGES AND FUTURE DIRECTIONS\nWith the development of deep neural networks and the advent of recent Transformer-based models, deep learning-\nbased ATE benefited significantly from the advances of pretrained embeddings in language models. We now have the\nopportunity to re-examine the term extraction task, the relative challenges, and the potential future directions, without\nhaving to involve complicated feature engineering.\nConsidering the scarcity of well-annotated and well-documented corpora, especially for less-resourced languages,\nthe main objective in the field is to develop a robust ap",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2301.06767v1/blocks/prose-sec-014",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Nested terms",
+      "pageStart": 19,
+      "pageEnd": 19,
+      "target": "../sections/sec-014-81-nested-terms.md",
+      "narrative": null,
+      "content": "Nested terms\nNested terms refer to words or phrases that are both terms themselves and parts of longer terms. This means that a\nshorter term may appear within a larger term and vice versa. For example, in ACTER’s English Corruption dataset,\nthe word “confiscation” is a standalone term that also appears as a part of other longer terms such as “confiscation of\ncorruption proceeds”, “confiscation of criminal assets”, and “confiscation of the proceeds of crime”. This makes the labeling\nharder, as the classifier needs to infer from the context whether a specific term is part of a longer term. This",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2301.06767v1/blocks/prose-sec-015",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Generalisability",
+      "pageStart": 19,
+      "pageEnd": 20,
+      "target": "../sections/sec-015-82-generalisability.md",
+      "narrative": null,
+      "content": "Generalisability\nIn the past decade, we have witnessed a growing data production involving different forms of data, including raw\ndocuments. However, building domain-specific corpora with manually annotated terms from the available raw texts\nis often error-prone, labor-intensive, time-consuming, and subjective35. As a consequence, annotated datasets, on\nwhich the models can be trained, are often scarce, limited, and usually do not cover many languages and domains.\nTherefore, it is necessary for the model to have the ability to adapt and extract terms from new languages and domains,\nwhich were",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2301.06767v1/blocks/prose-sec-016",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Ensembling",
+      "pageStart": 20,
+      "pageEnd": 20,
+      "target": "../sections/sec-016-83-ensembling.md",
+      "narrative": null,
+      "content": "Ensembling\nDeep neural networks based on pretrained language models have a strong predictive power on downstream tasks (e.g.,\nterm extraction), and can be fed raw data directly, without any feature engineering required. However, linguistic and\nstatistical measures of termhoodness can still contribute to the research on ATE, by being added to neural models\nas additional features with the aim of boosting performance. The integration of models with different combinations\nof non-contextual features, contextual features from language models, and linguistics and statistical measures (e.g.,\ntermhood,",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2301.06767v1/blocks/prose-sec-017",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Scalability",
+      "pageStart": 20,
+      "pageEnd": 20,
+      "target": "../sections/sec-017-84-scalability.md",
+      "narrative": null,
+      "content": "Scalability\nDespite showing competitive performance in extracting good candidate terms, large pretrained neural language models\nare computationally expensive. Furthermore, new research is going in the direction of exponentially increasing the\nparameters of the model and the training data size in order to improve performance. While this has been shown\nto be a promising research direction, these models are usually too expensive for being used in production or in\nacademia. Therefore, we believe that going in the opposite direction, i.e., making neural approaches more scalable, is\nalso promising.",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2301.06767v1/blocks/prose-sec-018",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Prompting",
+      "pageStart": 20,
+      "pageEnd": 20,
+      "target": "../sections/sec-018-85-prompting.md",
+      "narrative": null,
+      "content": "Prompting\nPrompt-based methods have been successfully applied to sentence-level few-shot learning tasks such as in NER tasks\n[19]. Instead of replacing the language model head with the classifier head, prompt-based approaches induce the\nprediction from the language model by constructing a template. By re-using the masked language model objective,\nprompt-based approaches alleviate the problem of pre-training and fine-tuning discrepancy (caused by their different\ntraining objectives), as well as benefit the few-shot performance. Furthermore, to avoid the time-consuming issues of\nsearching for ap",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2301.06767v1/blocks/prose-sec-019",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Conclusion",
+      "pageStart": 20,
+      "pageEnd": 21,
+      "target": "../sections/sec-019-9-conclusion.md",
+      "narrative": null,
+      "content": "CONCLUSION\nOur survey summarizes the recent advances in the automatic term extraction task, covering both classic machine\nlearning models based on feature engineering and novel neural network models that have yielded several important\ninsights, especially with the advent of pretrained language models. We first surveyed different resources and presented a\n20\nThe Recent Advances in Automatic Term Extraction: A survey\nACM Computing Surveys Journal, December 12–24, 2022,\nsystematic list of well-annotated monolingual and multilingual corpora for term extraction from the past three decades.\nThen, we",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2301.06767v1/blocks/prose-sec-020",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Acknowledgments",
+      "pageStart": 21,
+      "pageEnd": 21,
+      "target": "../sections/sec-020-acknowledgments.md",
+      "narrative": null,
+      "content": "The work was partially supported by the Slovenian Research Agency (ARRS) core research programme Knowledge\nTechnologies (P2-0103), as well as the Ministry of Culture of the Republic of Slovenia through the project Development\nof Slovene in Digital Environment (RSDO). The first author was partly funded by Région Nouvelle-Aquitaine. This work\nhas also been supported by the TERMITRAD (2020-2019-8510010) project funded by the Nouvelle-Aquitaine Region,\nFrance.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2301.06767v1/blocks/prose-sec-021",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "References",
+      "pageStart": 21,
+      "pageEnd": 25,
+      "target": "../sections/sec-021-references.md",
+      "narrative": null,
+      "content": "[1] Ehsan Amjadian, Diana Inkpen, T Sima Paribakht, and Farahnaz Faez. 2016. Local-Global Vectors to Improve Unigram Terminology Extraction.\nComputerm 2016 (2016), 2.\n[2] Ehsan Amjadian, Diana Inkpen, T Sima Paribakht, and Farahnaz Faez. 2018. Distributed specificity for automatic terminology extraction. Terminology.\nInternational Journal of Theoretical and Applied Issues in Specialized Communication 24, 1 (2018), 23–40.\n[3] UTKA Andrius. 2020. Automatic extraction of lithuanian cybersecurity terms using deep learning approaches. In Human Language Technologies–The\nBaltic Perspective: Proceedin",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    }
+  ]
+}

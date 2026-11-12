@@ -1,0 +1,4400 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-342236",
+  "instance": "who-iris",
+  "about": "library/10665-342236",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7393,
+    "terms": 71095
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "cfe funds",
+        "score": 29.4295,
+        "evidence": []
+      },
+      {
+        "term": "cfe funding",
+        "score": 27.8479,
+        "evidence": []
+      },
+      {
+        "term": "cfe released",
+        "score": 27.1661,
+        "evidence": []
+      },
+      {
+        "term": "cfe allocations",
+        "score": 23.2414,
+        "evidence": []
+      },
+      {
+        "term": "cfe contributions",
+        "score": 23.0916,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "cfe utilization",
+        "score": 22.999,
+        "evidence": []
+      },
+      {
+        "term": "cfe approved",
+        "score": 22.7046,
+        "evidence": []
+      },
+      {
+        "term": "cfe continued",
+        "score": 22.5804,
+        "evidence": []
+      },
+      {
+        "term": "cfe during",
+        "score": 22.3411,
+        "evidence": []
+      },
+      {
+        "term": "cfe contributors",
+        "score": 21.9968,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "table cfe",
+        "score": 21.8962,
+        "evidence": []
+      },
+      {
+        "term": "figure cfe",
+        "score": 21.8587,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "cfe funds",
+        "score": 908.1847,
+        "evidence": []
+      },
+      {
+        "term": "cfe funding",
+        "score": 855.2649,
+        "evidence": []
+      },
+      {
+        "term": "cfe released",
+        "score": 853.619,
+        "evidence": []
+      },
+      {
+        "term": "cfe allocations",
+        "score": 781.2301,
+        "evidence": []
+      },
+      {
+        "term": "cfe contributions",
+        "score": 774.5482,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "cfe utilization",
+        "score": 773.3374,
+        "evidence": []
+      },
+      {
+        "term": "cfe approved",
+        "score": 766.2222,
+        "evidence": []
+      },
+      {
+        "term": "cfe continued",
+        "score": 762.592,
+        "evidence": []
+      },
+      {
+        "term": "cfe during",
+        "score": 761.1781,
+        "evidence": []
+      },
+      {
+        "term": "cfe contributors",
+        "score": 757.0842,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "cfe played",
+        "score": 756.2355,
+        "evidence": []
+      },
+      {
+        "term": "figure cfe",
+        "score": 751.408,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "covid pandemic",
+        "score": 8.738,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "covid response",
+        "score": 7.9114,
+        "evidence": []
+      },
+      {
+        "term": "health emergency",
+        "score": 7.7422,
+        "evidence": []
+      },
+      {
+        "term": "world health",
+        "score": 6.8548,
+        "evidence": []
+      },
+      {
+        "term": "covid global",
+        "score": 6.6747,
+        "evidence": []
+      },
+      {
+        "term": "public health",
+        "score": 6.5509,
+        "evidence": []
+      },
+      {
+        "term": "pandemic preparedness",
+        "score": 6.4669,
+        "evidence": []
+      },
+      {
+        "term": "health organization",
+        "score": 6.3139,
+        "evidence": []
+      },
+      {
+        "term": "health services",
+        "score": 6.146,
+        "evidence": []
+      },
+      {
+        "term": "essential health",
+        "score": 5.9567,
+        "evidence": []
+      },
+      {
+        "term": "health emergencies",
+        "score": 5.9465,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "health facilities",
+        "score": 5.854,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "covid pandemic",
+        "score": 201.9499,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "covid response",
+        "score": 195.4981,
+        "evidence": []
+      },
+      {
+        "term": "covid testing",
+        "score": 168.2005,
+        "evidence": []
+      },
+      {
+        "term": "covid global",
+        "score": 167.4228,
+        "evidence": []
+      },
+      {
+        "term": "public health",
+        "score": 159.6136,
+        "evidence": []
+      },
+      {
+        "term": "boost covid",
+        "score": 150.0728,
+        "evidence": []
+      },
+      {
+        "term": "covid detection",
+        "score": 150.0728,
+        "evidence": []
+      },
+      {
+        "term": "health emergency",
+        "score": 147.1021,
+        "evidence": []
+      },
+      {
+        "term": "somalia",
+        "score": 137.7865,
+        "evidence": []
+      },
+      {
+        "term": "health services",
+        "score": 131.3162,
+        "evidence": []
+      },
+      {
+        "term": "health emergencies",
+        "score": 129.3427,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "health facilities",
+        "score": 126.7762,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "covid pandemic",
+        "score": 8.738,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "covid response",
+        "score": 7.9114,
+        "evidence": []
+      },
+      {
+        "term": "health emergency",
+        "score": 7.7422,
+        "evidence": []
+      },
+      {
+        "term": "world health",
+        "score": 6.8548,
+        "evidence": []
+      },
+      {
+        "term": "covid global",
+        "score": 6.6747,
+        "evidence": []
+      },
+      {
+        "term": "public health",
+        "score": 6.5509,
+        "evidence": []
+      },
+      {
+        "term": "pandemic preparedness",
+        "score": 6.4669,
+        "evidence": []
+      },
+      {
+        "term": "health organization",
+        "score": 6.3139,
+        "evidence": []
+      },
+      {
+        "term": "health services",
+        "score": 6.146,
+        "evidence": []
+      },
+      {
+        "term": "essential health",
+        "score": 5.9567,
+        "evidence": []
+      },
+      {
+        "term": "health emergencies",
+        "score": 5.9465,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "health facilities",
+        "score": 5.854,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "在sars",
+        "score": 831.7974,
+        "evidence": []
+      },
+      {
+        "term": "捐助者",
+        "score": 793.705,
+        "evidence": []
+      },
+      {
+        "term": "在正常情况下",
+        "score": 724.509,
+        "evidence": []
+      },
+      {
+        "term": "共享流感病毒以及获得",
+        "score": 707.0454,
+        "evidence": []
+      },
+      {
+        "term": "必要的",
+        "score": 561.7491,
+        "evidence": []
+      },
+      {
+        "term": "非同寻常",
+        "score": 549.9775,
+        "evidence": []
+      },
+      {
+        "term": "教员询问其余学员每个报告人的报告有无遗漏什么内容",
+        "score": 507.9775,
+        "evidence": []
+      },
+      {
+        "term": "区域和全球各",
+        "score": 497.424,
+        "evidence": []
+      },
+      {
+        "term": "在突发事件时",
+        "score": 491.3049,
+        "evidence": []
+      },
+      {
+        "term": "大流行性流感防范框架",
+        "score": 444.8459,
+        "evidence": []
+      },
+      {
+        "term": "大流行性流感的防范",
+        "score": 442.5603,
+        "evidence": []
+      },
+      {
+        "term": "可持续发展目标和世卫组织",
+        "score": 433.423,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-002-key-figures-in-2020": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "funding mechanisms",
+          "score": 1.5261,
+          "evidence": []
+        },
+        {
+          "term": "health emergencies",
+          "score": 1.2874,
+          "evidence": []
+        },
+        {
+          "term": "cfe",
+          "score": 1.1803,
+          "evidence": []
+        },
+        {
+          "term": "emergency",
+          "score": 0.7234,
+          "evidence": []
+        },
+        {
+          "term": "funds",
+          "score": 0.6236,
+          "evidence": []
+        },
+        {
+          "term": "outbreak",
+          "score": 0.5971,
+          "evidence": []
+        },
+        {
+          "term": "financing",
+          "score": 0.5488,
+          "evidence": []
+        },
+        {
+          "term": "response",
+          "score": 0.488,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "funding mechanisms",
+          "score": 29.6375,
+          "evidence": []
+        },
+        {
+          "term": "cfe",
+          "score": 24.801,
+          "evidence": []
+        },
+        {
+          "term": "health emergencies",
+          "score": 22.9752,
+          "evidence": []
+        },
+        {
+          "term": "emergency",
+          "score": 13.8119,
+          "evidence": []
+        },
+        {
+          "term": "funds",
+          "score": 9.2084,
+          "evidence": []
+        },
+        {
+          "term": "outbreak",
+          "score": 8.6672,
+          "evidence": []
+        },
+        {
+          "term": "financing",
+          "score": 8.4156,
+          "evidence": []
+        },
+        {
+          "term": "response",
+          "score": 8.0216,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health emergencies",
+          "score": 0.3343,
+          "evidence": []
+        },
+        {
+          "term": "pandemic",
+          "score": 0.1946,
+          "evidence": []
+        },
+        {
+          "term": "emergency",
+          "score": 0.1777,
+          "evidence": []
+        },
+        {
+          "term": "response",
+          "score": 0.1641,
+          "evidence": []
+        },
+        {
+          "term": "covid",
+          "score": 0.1597,
+          "evidence": []
+        },
+        {
+          "term": "world",
+          "score": 0.1438,
+          "evidence": []
+        },
+        {
+          "term": "influenza",
+          "score": 0.1359,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 0.1313,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health emergencies",
+          "score": 6.5508,
+          "evidence": []
+        },
+        {
+          "term": "min",
+          "score": 3.536,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 2.9889,
+          "evidence": []
+        },
+        {
+          "term": "ehealth",
+          "score": 2.6148,
+          "evidence": []
+        },
+        {
+          "term": "covid",
+          "score": 2.2428,
+          "evidence": []
+        },
+        {
+          "term": "ethics",
+          "score": 2.2075,
+          "evidence": []
+        },
+        {
+          "term": "emergency",
+          "score": 2.0889,
+          "evidence": []
+        },
+        {
+          "term": "somalia",
+          "score": 1.9179,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health emergencies",
+          "score": 0.3343,
+          "evidence": []
+        },
+        {
+          "term": "emergency",
+          "score": 0.1777,
+          "evidence": []
+        },
+        {
+          "term": "response",
+          "score": 0.1641,
+          "evidence": []
+        },
+        {
+          "term": "world",
+          "score": 0.1438,
+          "evidence": []
+        },
+        {
+          "term": "funding mechanisms",
+          "score": 0.1223,
+          "evidence": []
+        },
+        {
+          "term": "global",
+          "score": 0.1155,
+          "evidence": []
+        },
+        {
+          "term": "outbreak",
+          "score": 0.1034,
+          "evidence": []
+        },
+        {
+          "term": "key",
+          "score": 0.0993,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 38.2455,
+          "evidence": []
+        },
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 34.9415,
+          "evidence": []
+        },
+        {
+          "term": "风险最小化",
+          "score": 30.7702,
+          "evidence": []
+        },
+        {
+          "term": "重要部分",
+          "score": 29.6217,
+          "evidence": []
+        },
+        {
+          "term": "教员询问其余学员每个报告人的报告有无遗漏什么内容",
+          "score": 28.8175,
+          "evidence": []
+        },
+        {
+          "term": "在sars",
+          "score": 27.0653,
+          "evidence": []
+        },
+        {
+          "term": "岁的儿童",
+          "score": 24.0321,
+          "evidence": []
+        },
+        {
+          "term": "不喜欢使用卫生设施",
+          "score": 23.7525,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-004-about-the-who-contingency-fund-for-emergencies": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "measles outbreak",
+          "score": 1.7547,
+          "evidence": []
+        },
+        {
+          "term": "ebola outbreak",
+          "score": 1.7487,
+          "evidence": []
+        },
+        {
+          "term": "democratic republic",
+          "score": 1.7263,
+          "evidence": []
+        },
+        {
+          "term": "disaster",
+          "score": 0.7192,
+          "evidence": []
+        },
+        {
+          "term": "province",
+          "score": 0.6994,
+          "evidence": []
+        },
+        {
+          "term": "lines",
+          "score": 0.6451,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "ebola outbreak",
+          "score": 36.0344,
+          "evidence": []
+        },
+        {
+          "term": "measles outbreak",
+          "score": 35.0791,
+          "evidence": []
+        },
+        {
+          "term": "democratic republic",
+          "score": 34.3416,
+          "evidence": []
+        },
+        {
+          "term": "disaster",
+          "score": 10.7639,
+          "evidence": []
+        },
+        {
+          "term": "province",
+          "score": 9.876,
+          "evidence": []
+        },
+        {
+          "term": "congo",
+          "score": 9.8386,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "world",
+          "score": 0.1991,
+          "evidence": []
+        },
+        {
+          "term": "organization",
+          "score": 0.1854,
+          "evidence": []
+        },
+        {
+          "term": "ebola outbreak",
+          "score": 0.1751,
+          "evidence": []
+        },
+        {
+          "term": "measles outbreak",
+          "score": 0.1621,
+          "evidence": []
+        },
+        {
+          "term": "material",
+          "score": 0.1525,
+          "evidence": []
+        },
+        {
+          "term": "emergencies",
+          "score": 0.1476,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "covid",
+          "score": 3.8126,
+          "evidence": []
+        },
+        {
+          "term": "somalia",
+          "score": 3.4265,
+          "evidence": []
+        },
+        {
+          "term": "mumps",
+          "score": 2.0918,
+          "evidence": []
+        },
+        {
+          "term": "emergencies",
+          "score": 1.8265,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "wpv",
+          "score": 1.7377,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 1.5072,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "ebola outbreak",
+          "score": 0.1751,
+          "evidence": []
+        },
+        {
+          "term": "measles outbreak",
+          "score": 0.1621,
+          "evidence": []
+        },
+        {
+          "term": "emergencies",
+          "score": 0.1476,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "covid",
+          "score": 0.1474,
+          "evidence": []
+        },
+        {
+          "term": "lines",
+          "score": 0.145,
+          "evidence": []
+        },
+        {
+          "term": "democratic republic",
+          "score": 0.1329,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在sars",
+          "score": 88.4664,
+          "evidence": []
+        },
+        {
+          "term": "在正常情况下",
+          "score": 83.1816,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 78.0347,
+          "evidence": []
+        },
+        {
+          "term": "非同寻常",
+          "score": 73.3707,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 69.9374,
+          "evidence": []
+        },
+        {
+          "term": "必要的",
+          "score": 63.8222,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-005-cfe-in-health-emergencies": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "cfe",
+          "score": 1.6114,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "emergencies",
+          "score": 1.2163,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "global response",
+          "score": 0.7206,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "cfe",
+          "score": 24.801,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "emergencies",
+          "score": 17.6786,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "global response",
+          "score": 9.3073,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "global response",
+          "score": 0.1098,
+          "evidence": []
+        },
+        {
+          "term": "covid",
+          "score": 0.0962,
+          "evidence": []
+        },
+        {
+          "term": "pandemic",
+          "score": 0.0881,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "covid",
+          "score": 3.1628,
+          "evidence": []
+        },
+        {
+          "term": "somalia",
+          "score": 2.9197,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 1.5563,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "global response",
+          "score": 0.1098,
+          "evidence": []
+        },
+        {
+          "term": "covid",
+          "score": 0.0962,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.088,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 59.7958,
+          "evidence": []
+        },
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 42.2434,
+          "evidence": []
+        },
+        {
+          "term": "在sars",
+          "score": 39.8687,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-expenditures": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "cfe played",
+          "score": 3.1267,
+          "evidence": []
+        },
+        {
+          "term": "ebola outbreak",
+          "score": 2.6182,
+          "evidence": []
+        },
+        {
+          "term": "measles outbreak",
+          "score": 2.4154,
+          "evidence": []
+        },
+        {
+          "term": "north kivu",
+          "score": 2.0906,
+          "evidence": []
+        },
+        {
+          "term": "democratic republic",
+          "score": 2.0631,
+          "evidence": []
+        },
+        {
+          "term": "arab republic",
+          "score": 1.8985,
+          "evidence": []
+        },
+        {
+          "term": "bridge funding",
+          "score": 1.7239,
+          "evidence": []
+        },
+        {
+          "term": "syrian arab",
+          "score": 1.6335,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "cfe played",
+          "score": 130.0114,
+          "evidence": []
+        },
+        {
+          "term": "ebola outbreak",
+          "score": 82.1017,
+          "evidence": []
+        },
+        {
+          "term": "measles outbreak",
+          "score": 70.1583,
+          "evidence": []
+        },
+        {
+          "term": "democratic republic",
+          "score": 50.9333,
+          "evidence": []
+        },
+        {
+          "term": "arab republic",
+          "score": 43.4059,
+          "evidence": []
+        },
+        {
+          "term": "african republic",
+          "score": 38.138,
+          "evidence": []
+        },
+        {
+          "term": "north kivu",
+          "score": 37.071,
+          "evidence": []
+        },
+        {
+          "term": "released",
+          "score": 32.4214,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "world health",
+          "score": 0.4908,
+          "evidence": []
+        },
+        {
+          "term": "ebola outbreak",
+          "score": 0.4028,
+          "evidence": []
+        },
+        {
+          "term": "covid",
+          "score": 0.3921,
+          "evidence": []
+        },
+        {
+          "term": "pandemic",
+          "score": 0.371,
+          "evidence": []
+        },
+        {
+          "term": "complex emergency",
+          "score": 0.3641,
+          "evidence": []
+        },
+        {
+          "term": "measles outbreak",
+          "score": 0.3482,
+          "evidence": []
+        },
+        {
+          "term": "response",
+          "score": 0.3205,
+          "evidence": []
+        },
+        {
+          "term": "people democratic",
+          "score": 0.277,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "covid",
+          "score": 8.0932,
+          "evidence": []
+        },
+        {
+          "term": "somalia",
+          "score": 7.2765,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 7.2477,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 5.3059,
+          "evidence": []
+        },
+        {
+          "term": "min",
+          "score": 4.803,
+          "evidence": []
+        },
+        {
+          "term": "ebola outbreak",
+          "score": 4.3416,
+          "evidence": []
+        },
+        {
+          "term": "complex emergency",
+          "score": 4.1261,
+          "evidence": []
+        },
+        {
+          "term": "mumps",
+          "score": 3.8806,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "world health",
+          "score": 0.4908,
+          "evidence": []
+        },
+        {
+          "term": "complex emergency",
+          "score": 0.4228,
+          "evidence": []
+        },
+        {
+          "term": "ebola outbreak",
+          "score": 0.4028,
+          "evidence": []
+        },
+        {
+          "term": "covid",
+          "score": 0.3921,
+          "evidence": []
+        },
+        {
+          "term": "measles outbreak",
+          "score": 0.3482,
+          "evidence": []
+        },
+        {
+          "term": "response",
+          "score": 0.3205,
+          "evidence": []
+        },
+        {
+          "term": "people democratic",
+          "score": 0.277,
+          "evidence": []
+        },
+        {
+          "term": "complex emergencies",
+          "score": 0.2456,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 65.225,
+          "evidence": []
+        },
+        {
+          "term": "在sars",
+          "score": 51.9721,
+          "evidence": []
+        },
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 44.9668,
+          "evidence": []
+        },
+        {
+          "term": "在正常情况下",
+          "score": 40.9826,
+          "evidence": []
+        },
+        {
+          "term": "非同寻常",
+          "score": 33.3399,
+          "evidence": []
+        },
+        {
+          "term": "必要的",
+          "score": 33.1616,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 33.0081,
+          "evidence": []
+        },
+        {
+          "term": "区域和全球各",
+          "score": 32.5705,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-007-replenishing-the-cfe": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "cfe",
+          "score": 3.8709,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cfe allocations",
+          "score": 2.9176,
+          "evidence": []
+        },
+        {
+          "term": "amount refunded",
+          "score": 2.6325,
+          "evidence": []
+        },
+        {
+          "term": "ebola outbreak",
+          "score": 1.8459,
+          "evidence": []
+        },
+        {
+          "term": "approved releases",
+          "score": 1.7363,
+          "evidence": []
+        },
+        {
+          "term": "democratic republic",
+          "score": 1.7263,
+          "evidence": []
+        },
+        {
+          "term": "measles outbreak",
+          "score": 1.671,
+          "evidence": []
+        },
+        {
+          "term": "complex emergency",
+          "score": 1.6421,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "cfe",
+          "score": 161.2062,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cfe allocations",
+          "score": 99.2038,
+          "evidence": []
+        },
+        {
+          "term": "amount refunded",
+          "score": 65.6523,
+          "evidence": []
+        },
+        {
+          "term": "complex emergency",
+          "score": 41.9826,
+          "evidence": []
+        },
+        {
+          "term": "ebola outbreak",
+          "score": 36.7173,
+          "evidence": []
+        },
+        {
+          "term": "democratic republic",
+          "score": 34.3416,
+          "evidence": []
+        },
+        {
+          "term": "approved releases",
+          "score": 31.7,
+          "evidence": []
+        },
+        {
+          "term": "measles outbreak",
+          "score": 30.7456,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "ebola outbreak",
+          "score": 0.3017,
+          "evidence": []
+        },
+        {
+          "term": "covid",
+          "score": 0.2776,
+          "evidence": []
+        },
+        {
+          "term": "measles outbreak",
+          "score": 0.274,
+          "evidence": []
+        },
+        {
+          "term": "pandemic",
+          "score": 0.2642,
+          "evidence": []
+        },
+        {
+          "term": "complex emergency",
+          "score": 0.2557,
+          "evidence": []
+        },
+        {
+          "term": "country level",
+          "score": 0.2181,
+          "evidence": []
+        },
+        {
+          "term": "cfe",
+          "score": 0.2181,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "response",
+          "score": 0.205,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "covid",
+          "score": 6.9813,
+          "evidence": []
+        },
+        {
+          "term": "somalia",
+          "score": 6.4311,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 4.2533,
+          "evidence": []
+        },
+        {
+          "term": "min",
+          "score": 4.1963,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 4.0579,
+          "evidence": []
+        },
+        {
+          "term": "district",
+          "score": 3.5007,
+          "evidence": []
+        },
+        {
+          "term": "complex emergency",
+          "score": 3.4193,
+          "evidence": []
+        },
+        {
+          "term": "country level",
+          "score": 3.4031,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "ebola outbreak",
+          "score": 0.3017,
+          "evidence": []
+        },
+        {
+          "term": "complex emergency",
+          "score": 0.2979,
+          "evidence": []
+        },
+        {
+          "term": "covid",
+          "score": 0.2776,
+          "evidence": []
+        },
+        {
+          "term": "measles outbreak",
+          "score": 0.274,
+          "evidence": []
+        },
+        {
+          "term": "country level",
+          "score": 0.2181,
+          "evidence": []
+        },
+        {
+          "term": "cfe",
+          "score": 0.2181,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "response",
+          "score": 0.205,
+          "evidence": []
+        },
+        {
+          "term": "democratic republic",
+          "score": 0.1964,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 55.9204,
+          "evidence": []
+        },
+        {
+          "term": "在sars",
+          "score": 41.499,
+          "evidence": []
+        },
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 41.0252,
+          "evidence": []
+        },
+        {
+          "term": "非同寻常",
+          "score": 31.4129,
+          "evidence": []
+        },
+        {
+          "term": "在正常情况下",
+          "score": 31.3681,
+          "evidence": []
+        },
+        {
+          "term": "区域和全球各",
+          "score": 29.1467,
+          "evidence": []
+        },
+        {
+          "term": "风险最小化",
+          "score": 28.1679,
+          "evidence": []
+        },
+        {
+          "term": "教员询问其余学员每个报告人的报告有无遗漏什么内容",
+          "score": 27.3263,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-008-cfe-contributions": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "cfe contributions",
+          "score": 4.773,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cfe funds",
+          "score": 2.3983,
+          "evidence": []
+        },
+        {
+          "term": "emergencies",
+          "score": 0.7674,
+          "evidence": []
+        },
+        {
+          "term": "austria",
+          "score": 0.7668,
+          "evidence": []
+        },
+        {
+          "term": "covid",
+          "score": 0.7506,
+          "evidence": []
+        },
+        {
+          "term": "disasters",
+          "score": 0.7391,
+          "evidence": []
+        },
+        {
+          "term": "million",
+          "score": 0.7348,
+          "evidence": []
+        },
+        {
+          "term": "contributors",
+          "score": 0.6054,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "cfe contributions",
+          "score": 131.8436,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cfe funds",
+          "score": 63.4146,
+          "evidence": []
+        },
+        {
+          "term": "emergencies",
+          "score": 13.259,
+          "evidence": []
+        },
+        {
+          "term": "austria",
+          "score": 12.2714,
+          "evidence": []
+        },
+        {
+          "term": "million",
+          "score": 11.9214,
+          "evidence": []
+        },
+        {
+          "term": "covid",
+          "score": 11.5371,
+          "evidence": []
+        },
+        {
+          "term": "disasters",
+          "score": 11.3788,
+          "evidence": []
+        },
+        {
+          "term": "contributors",
+          "score": 9.6279,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "covid",
+          "score": 0.1783,
+          "evidence": []
+        },
+        {
+          "term": "pandemic",
+          "score": 0.1613,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.1468,
+          "evidence": []
+        },
+        {
+          "term": "response",
+          "score": 0.141,
+          "evidence": []
+        },
+        {
+          "term": "emergency",
+          "score": 0.1396,
+          "evidence": []
+        },
+        {
+          "term": "cfe",
+          "score": 0.1252,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cfe contributions",
+          "score": 0.1252,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cfe funds",
+          "score": 0.115,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "covid",
+          "score": 5.7678,
+          "evidence": []
+        },
+        {
+          "term": "somalia",
+          "score": 5.309,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 2.995,
+          "evidence": []
+        },
+        {
+          "term": "oxygen",
+          "score": 2.2334,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 1.9968,
+          "evidence": []
+        },
+        {
+          "term": "min",
+          "score": 1.8277,
+          "evidence": []
+        },
+        {
+          "term": "pandemic",
+          "score": 1.6773,
+          "evidence": []
+        },
+        {
+          "term": "emergency",
+          "score": 1.6504,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "cfe contributions",
+          "score": 0.1817,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "covid",
+          "score": 0.1783,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.1468,
+          "evidence": []
+        },
+        {
+          "term": "response",
+          "score": 0.141,
+          "evidence": []
+        },
+        {
+          "term": "cfe funds",
+          "score": 0.115,
+          "evidence": []
+        },
+        {
+          "term": "million",
+          "score": 0.0839,
+          "evidence": []
+        },
+        {
+          "term": "support",
+          "score": 0.077,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 0.0722,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 42.3867,
+          "evidence": []
+        },
+        {
+          "term": "在sars",
+          "score": 39.8786,
+          "evidence": []
+        },
+        {
+          "term": "habana",
+          "score": 35.6688,
+          "evidence": []
+        },
+        {
+          "term": "hannover",
+          "score": 35.6688,
+          "evidence": []
+        },
+        {
+          "term": "hanover",
+          "score": 35.6688,
+          "evidence": []
+        },
+        {
+          "term": "helsingfors",
+          "score": 35.6688,
+          "evidence": []
+        },
+        {
+          "term": "kaiffa",
+          "score": 35.6688,
+          "evidence": []
+        },
+        {
+          "term": "katar",
+          "score": 35.6688,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-009-enabling-a-swift-response": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "cfe funds",
+          "score": 3.4808,
+          "evidence": []
+        },
+        {
+          "term": "beirut port",
+          "score": 2.9684,
+          "evidence": []
+        },
+        {
+          "term": "port explosions",
+          "score": 2.8201,
+          "evidence": []
+        },
+        {
+          "term": "funds enabled",
+          "score": 2.3408,
+          "evidence": []
+        },
+        {
+          "term": "pre-position life-saving",
+          "score": 2.2209,
+          "evidence": []
+        },
+        {
+          "term": "emergency supplies",
+          "score": 1.9278,
+          "evidence": []
+        },
+        {
+          "term": "response",
+          "score": 1.7495,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "necessary repairs",
+          "score": 1.5497,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "cfe funds",
+          "score": 151.4463,
+          "evidence": []
+        },
+        {
+          "term": "beirut port",
+          "score": 85.4504,
+          "evidence": []
+        },
+        {
+          "term": "port explosions",
+          "score": 71.5556,
+          "evidence": []
+        },
+        {
+          "term": "funds enabled",
+          "score": 67.2317,
+          "evidence": []
+        },
+        {
+          "term": "response",
+          "score": 58.8253,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "emergency supplies",
+          "score": 54.8545,
+          "evidence": []
+        },
+        {
+          "term": "pre-position life-saving",
+          "score": 45.5165,
+          "evidence": []
+        },
+        {
+          "term": "humanitarian health",
+          "score": 28.8801,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "response",
+          "score": 0.8207,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health services",
+          "score": 0.7153,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 0.6874,
+          "evidence": []
+        },
+        {
+          "term": "emergency supplies",
+          "score": 0.6178,
+          "evidence": []
+        },
+        {
+          "term": "health emergencies",
+          "score": 0.6127,
+          "evidence": []
+        },
+        {
+          "term": "health workers",
+          "score": 0.5953,
+          "evidence": []
+        },
+        {
+          "term": "covid",
+          "score": 0.5228,
+          "evidence": []
+        },
+        {
+          "term": "humanitarian health",
+          "score": 0.509,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "public health",
+          "score": 17.074,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 16.2193,
+          "evidence": []
+        },
+        {
+          "term": "covid",
+          "score": 15.4058,
+          "evidence": []
+        },
+        {
+          "term": "somalia",
+          "score": 14.2405,
+          "evidence": []
+        },
+        {
+          "term": "health workers",
+          "score": 14.094,
+          "evidence": []
+        },
+        {
+          "term": "health emergencies",
+          "score": 13.6667,
+          "evidence": []
+        },
+        {
+          "term": "humanitarian health",
+          "score": 10.9645,
+          "evidence": []
+        },
+        {
+          "term": "response",
+          "score": 9.7222,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "response",
+          "score": 0.8207,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health services",
+          "score": 0.7153,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 0.6874,
+          "evidence": []
+        },
+        {
+          "term": "emergency supplies",
+          "score": 0.6178,
+          "evidence": []
+        },
+        {
+          "term": "health emergencies",
+          "score": 0.6127,
+          "evidence": []
+        },
+        {
+          "term": "health workers",
+          "score": 0.5953,
+          "evidence": []
+        },
+        {
+          "term": "covid",
+          "score": 0.5228,
+          "evidence": []
+        },
+        {
+          "term": "humanitarian health",
+          "score": 0.509,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 50.4218,
+          "evidence": []
+        },
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 32.1943,
+          "evidence": []
+        },
+        {
+          "term": "abeba",
+          "score": 29.5935,
+          "evidence": []
+        },
+        {
+          "term": "ad-dawhah",
+          "score": 29.5935,
+          "evidence": []
+        },
+        {
+          "term": "al-iskandariyah",
+          "score": 29.5935,
+          "evidence": []
+        },
+        {
+          "term": "al-qahirah",
+          "score": 29.5935,
+          "evidence": []
+        },
+        {
+          "term": "alexandria",
+          "score": 29.5935,
+          "evidence": []
+        },
+        {
+          "term": "alma-ata",
+          "score": 29.5935,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-010-responding-to-multiple-crises-in-the-wake-of-the": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "cyclone harold",
+          "score": 2.6797,
+          "evidence": []
+        },
+        {
+          "term": "cfe funds",
+          "score": 2.3119,
+          "evidence": []
+        },
+        {
+          "term": "explosion",
+          "score": 2.1985,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "covid response",
+          "score": 2.156,
+          "evidence": []
+        },
+        {
+          "term": "cfe released",
+          "score": 2.1172,
+          "evidence": []
+        },
+        {
+          "term": "beirut",
+          "score": 2.0618,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "harold health",
+          "score": 1.9991,
+          "evidence": []
+        },
+        {
+          "term": "covid testing",
+          "score": 1.7954,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "covid response",
+          "score": 66.3675,
+          "evidence": []
+        },
+        {
+          "term": "cyclone harold",
+          "score": 61.4596,
+          "evidence": []
+        },
+        {
+          "term": "cfe funds",
+          "score": 57.2143,
+          "evidence": []
+        },
+        {
+          "term": "cfe released",
+          "score": 52.6649,
+          "evidence": []
+        },
+        {
+          "term": "covid testing",
+          "score": 49.8159,
+          "evidence": []
+        },
+        {
+          "term": "harold health",
+          "score": 48.2686,
+          "evidence": []
+        },
+        {
+          "term": "explosion",
+          "score": 41.7743,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "sector response",
+          "score": 38.9319,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "covid response",
+          "score": 0.6912,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 0.6422,
+          "evidence": []
+        },
+        {
+          "term": "national health",
+          "score": 0.5767,
+          "evidence": []
+        },
+        {
+          "term": "health facilities",
+          "score": 0.5761,
+          "evidence": []
+        },
+        {
+          "term": "covid testing",
+          "score": 0.548,
+          "evidence": []
+        },
+        {
+          "term": "response plan",
+          "score": 0.5133,
+          "evidence": []
+        },
+        {
+          "term": "health sector",
+          "score": 0.4974,
+          "evidence": []
+        },
+        {
+          "term": "harold health",
+          "score": 0.3974,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "covid response",
+          "score": 26.9434,
+          "evidence": []
+        },
+        {
+          "term": "covid testing",
+          "score": 24.4836,
+          "evidence": []
+        },
+        {
+          "term": "somalia",
+          "score": 20.1543,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 16.2451,
+          "evidence": []
+        },
+        {
+          "term": "health facilities",
+          "score": 14.5916,
+          "evidence": []
+        },
+        {
+          "term": "national health",
+          "score": 13.735,
+          "evidence": []
+        },
+        {
+          "term": "health sector",
+          "score": 12.2105,
+          "evidence": []
+        },
+        {
+          "term": "harold health",
+          "score": 10.9575,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "covid response",
+          "score": 0.6912,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 0.6422,
+          "evidence": []
+        },
+        {
+          "term": "national health",
+          "score": 0.5767,
+          "evidence": []
+        },
+        {
+          "term": "health facilities",
+          "score": 0.5761,
+          "evidence": []
+        },
+        {
+          "term": "covid testing",
+          "score": 0.548,
+          "evidence": []
+        },
+        {
+          "term": "response plan",
+          "score": 0.5133,
+          "evidence": []
+        },
+        {
+          "term": "health sector",
+          "score": 0.4974,
+          "evidence": []
+        },
+        {
+          "term": "harold health",
+          "score": 0.4394,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 34.5755,
+          "evidence": []
+        },
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 27.359,
+          "evidence": []
+        },
+        {
+          "term": "在sars",
+          "score": 24.8836,
+          "evidence": []
+        },
+        {
+          "term": "风险最小化",
+          "score": 19.5811,
+          "evidence": []
+        },
+        {
+          "term": "教员询问其余学员每个报告人的报告有无遗漏什么内容",
+          "score": 18.9147,
+          "evidence": []
+        },
+        {
+          "term": "大流行性流感防范框架",
+          "score": 18.6645,
+          "evidence": []
+        },
+        {
+          "term": "abeba",
+          "score": 17.8752,
+          "evidence": []
+        },
+        {
+          "term": "ad-dawhah",
+          "score": 17.8752,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-011-life-saving-health-response-to-tropical-cyclone": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "vanuatu",
+          "score": 3.0611,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cfe funds",
+          "score": 2.8586,
+          "evidence": []
+        },
+        {
+          "term": "vanuatu supported",
+          "score": 2.2292,
+          "evidence": []
+        },
+        {
+          "term": "health supplies",
+          "score": 2.0391,
+          "evidence": []
+        },
+        {
+          "term": "surgical supplies",
+          "score": 2.0354,
+          "evidence": []
+        },
+        {
+          "term": "life-saving",
+          "score": 1.8582,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nes",
+          "score": 1.8459,
+          "evidence": []
+        },
+        {
+          "term": "philippe metois",
+          "score": 1.702,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "vanuatu",
+          "score": 101.7035,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cfe funds",
+          "score": 86.4357,
+          "evidence": []
+        },
+        {
+          "term": "health supplies",
+          "score": 81.2946,
+          "evidence": []
+        },
+        {
+          "term": "nes",
+          "score": 68.2026,
+          "evidence": []
+        },
+        {
+          "term": "surgical supplies",
+          "score": 67.3738,
+          "evidence": []
+        },
+        {
+          "term": "vanuatu supported",
+          "score": 64.9469,
+          "evidence": []
+        },
+        {
+          "term": "health facilities",
+          "score": 37.2535,
+          "evidence": []
+        },
+        {
+          "term": "damaged health",
+          "score": 35.985,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health",
+          "score": 0.889,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health services",
+          "score": 0.7447,
+          "evidence": []
+        },
+        {
+          "term": "health facilities",
+          "score": 0.6901,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 0.6557,
+          "evidence": []
+        },
+        {
+          "term": "health supplies",
+          "score": 0.62,
+          "evidence": []
+        },
+        {
+          "term": "response",
+          "score": 0.6185,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health activities",
+          "score": 0.6145,
+          "evidence": []
+        },
+        {
+          "term": "health authorities",
+          "score": 0.531,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health",
+          "score": 30.2289,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health services",
+          "score": 21.7196,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 19.4341,
+          "evidence": []
+        },
+        {
+          "term": "health facilities",
+          "score": 19.4268,
+          "evidence": []
+        },
+        {
+          "term": "health activities",
+          "score": 17.5595,
+          "evidence": []
+        },
+        {
+          "term": "health supplies",
+          "score": 16.1798,
+          "evidence": []
+        },
+        {
+          "term": "damaged health",
+          "score": 15.1144,
+          "evidence": []
+        },
+        {
+          "term": "health authorities",
+          "score": 15.1144,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health",
+          "score": 0.889,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health services",
+          "score": 0.7447,
+          "evidence": []
+        },
+        {
+          "term": "health facilities",
+          "score": 0.6901,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 0.6557,
+          "evidence": []
+        },
+        {
+          "term": "health supplies",
+          "score": 0.62,
+          "evidence": []
+        },
+        {
+          "term": "response",
+          "score": 0.6185,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health activities",
+          "score": 0.6145,
+          "evidence": []
+        },
+        {
+          "term": "health authorities",
+          "score": 0.531,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 43.7158,
+          "evidence": []
+        },
+        {
+          "term": "abeba",
+          "score": 33.7096,
+          "evidence": []
+        },
+        {
+          "term": "ad-dawhah",
+          "score": 33.7096,
+          "evidence": []
+        },
+        {
+          "term": "al-iskandariyah",
+          "score": 33.7096,
+          "evidence": []
+        },
+        {
+          "term": "al-qahirah",
+          "score": 33.7096,
+          "evidence": []
+        },
+        {
+          "term": "alexandria",
+          "score": 33.7096,
+          "evidence": []
+        },
+        {
+          "term": "alma-ata",
+          "score": 33.7096,
+          "evidence": []
+        },
+        {
+          "term": "antwerpen",
+          "score": 33.7096,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-012-overcoming-closed-borders-to-provide-life-saving": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "ebola outbreak",
+          "score": 2.2573,
+          "evidence": []
+        },
+        {
+          "term": "cfe funds",
+          "score": 1.4293,
+          "evidence": []
+        },
+        {
+          "term": "strategic response",
+          "score": 1.2604,
+          "evidence": []
+        },
+        {
+          "term": "logistical challenges",
+          "score": 1.2582,
+          "evidence": []
+        },
+        {
+          "term": "syria",
+          "score": 1.179,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "north-eastern",
+          "score": 1.1358,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "drc",
+          "score": 1.1105,
+          "evidence": []
+        },
+        {
+          "term": "supplies",
+          "score": 1.1036,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "ebola outbreak",
+          "score": 55.4174,
+          "evidence": []
+        },
+        {
+          "term": "strategic response",
+          "score": 30.2473,
+          "evidence": []
+        },
+        {
+          "term": "logistical challenges",
+          "score": 22.9517,
+          "evidence": []
+        },
+        {
+          "term": "cfe funds",
+          "score": 21.6089,
+          "evidence": []
+        },
+        {
+          "term": "drc",
+          "score": 20.8871,
+          "evidence": []
+        },
+        {
+          "term": "equateur",
+          "score": 20.4865,
+          "evidence": []
+        },
+        {
+          "term": "supplies",
+          "score": 16.4171,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cases",
+          "score": 15.3549,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "emergency",
+          "score": 0.4286,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "covid",
+          "score": 0.2595,
+          "evidence": []
+        },
+        {
+          "term": "strategic response",
+          "score": 0.2452,
+          "evidence": []
+        },
+        {
+          "term": "ebola outbreak",
+          "score": 0.242,
+          "evidence": []
+        },
+        {
+          "term": "pandemic",
+          "score": 0.2339,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.1967,
+          "evidence": []
+        },
+        {
+          "term": "supplies",
+          "score": 0.1858,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cfe funds",
+          "score": 0.1789,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "covid",
+          "score": 6.1158,
+          "evidence": []
+        },
+        {
+          "term": "somalia",
+          "score": 5.6993,
+          "evidence": []
+        },
+        {
+          "term": "emergency",
+          "score": 4.7419,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health",
+          "score": 3.5451,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 2.971,
+          "evidence": []
+        },
+        {
+          "term": "ebola outbreak",
+          "score": 2.6181,
+          "evidence": []
+        },
+        {
+          "term": "oxygen",
+          "score": 2.4197,
+          "evidence": []
+        },
+        {
+          "term": "patients",
+          "score": 2.3887,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "emergency",
+          "score": 0.4286,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "strategic response",
+          "score": 0.2452,
+          "evidence": []
+        },
+        {
+          "term": "ebola outbreak",
+          "score": 0.242,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.1967,
+          "evidence": []
+        },
+        {
+          "term": "supplies",
+          "score": 0.1858,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cfe funds",
+          "score": 0.1789,
+          "evidence": []
+        },
+        {
+          "term": "people",
+          "score": 0.1524,
+          "evidence": []
+        },
+        {
+          "term": "cases",
+          "score": 0.1295,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 41.011,
+          "evidence": []
+        },
+        {
+          "term": "在sars",
+          "score": 32.8415,
+          "evidence": []
+        },
+        {
+          "term": "非同寻常",
+          "score": 25.8255,
+          "evidence": []
+        },
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 25.7585,
+          "evidence": []
+        },
+        {
+          "term": "管理和筹资",
+          "score": 23.0352,
+          "evidence": []
+        },
+        {
+          "term": "教员询问其余学员每个报告人的报告有无遗漏什么内容",
+          "score": 22.8732,
+          "evidence": []
+        },
+        {
+          "term": "风险最小化",
+          "score": 21.6345,
+          "evidence": []
+        },
+        {
+          "term": "结束语",
+          "score": 20.1522,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-013-defeating-the-democratic-republic-of-the-congos": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "ebola outbreak",
+          "score": 5.7088,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "covid pandemic",
+          "score": 4.0436,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ebola vaccine",
+          "score": 2.3158,
+          "evidence": []
+        },
+        {
+          "term": "drc government",
+          "score": 1.9109,
+          "evidence": []
+        },
+        {
+          "term": "youth leaders",
+          "score": 1.6893,
+          "evidence": []
+        },
+        {
+          "term": "cfe funds",
+          "score": 1.6403,
+          "evidence": []
+        },
+        {
+          "term": "response teams",
+          "score": 1.5476,
+          "evidence": []
+        },
+        {
+          "term": "cscs",
+          "score": 1.2988,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "ebola outbreak",
+          "score": 199.7654,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "covid pandemic",
+          "score": 92.196,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ebola vaccine",
+          "score": 74.4966,
+          "evidence": []
+        },
+        {
+          "term": "response teams",
+          "score": 41.1987,
+          "evidence": []
+        },
+        {
+          "term": "drc government",
+          "score": 37.757,
+          "evidence": []
+        },
+        {
+          "term": "youth leaders",
+          "score": 32.6072,
+          "evidence": []
+        },
+        {
+          "term": "responders",
+          "score": 27.8495,
+          "evidence": []
+        },
+        {
+          "term": "cfe funds",
+          "score": 27.8092,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "covid pandemic",
+          "score": 2.1225,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ebola outbreak",
+          "score": 0.9402,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health workers",
+          "score": 0.6874,
+          "evidence": []
+        },
+        {
+          "term": "health facilities",
+          "score": 0.6684,
+          "evidence": []
+        },
+        {
+          "term": "ebola vaccine",
+          "score": 0.5866,
+          "evidence": []
+        },
+        {
+          "term": "response teams",
+          "score": 0.4905,
+          "evidence": []
+        },
+        {
+          "term": "emergency",
+          "score": 0.4022,
+          "evidence": []
+        },
+        {
+          "term": "infection prevention",
+          "score": 0.3864,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "covid pandemic",
+          "score": 54.3478,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "somalia",
+          "score": 18.712,
+          "evidence": []
+        },
+        {
+          "term": "health workers",
+          "score": 15.6617,
+          "evidence": []
+        },
+        {
+          "term": "health facilities",
+          "score": 14.4725,
+          "evidence": []
+        },
+        {
+          "term": "ebola outbreak",
+          "score": 11.9142,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ebola vaccine",
+          "score": 8.3551,
+          "evidence": []
+        },
+        {
+          "term": "oxygen",
+          "score": 7.858,
+          "evidence": []
+        },
+        {
+          "term": "response teams",
+          "score": 7.6473,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "covid pandemic",
+          "score": 2.1225,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ebola outbreak",
+          "score": 0.9402,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health workers",
+          "score": 0.6874,
+          "evidence": []
+        },
+        {
+          "term": "health facilities",
+          "score": 0.6684,
+          "evidence": []
+        },
+        {
+          "term": "ebola vaccine",
+          "score": 0.5866,
+          "evidence": []
+        },
+        {
+          "term": "response teams",
+          "score": 0.4905,
+          "evidence": []
+        },
+        {
+          "term": "emergency",
+          "score": 0.4022,
+          "evidence": []
+        },
+        {
+          "term": "infection prevention",
+          "score": 0.3864,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 36.2312,
+          "evidence": []
+        },
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 24.4499,
+          "evidence": []
+        },
+        {
+          "term": "风险最小化",
+          "score": 23.3788,
+          "evidence": []
+        },
+        {
+          "term": "重要部分",
+          "score": 19.6935,
+          "evidence": []
+        },
+        {
+          "term": "教员询问其余学员每个报告人的报告有无遗漏什么内容",
+          "score": 19.6535,
+          "evidence": []
+        },
+        {
+          "term": "在sars",
+          "score": 18.9144,
+          "evidence": []
+        },
+        {
+          "term": "不喜欢使用卫生设施",
+          "score": 18.4731,
+          "evidence": []
+        },
+        {
+          "term": "从而可降低有色人种的高感染率",
+          "score": 18.4731,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-014-rapid-scale-up-of-the-covid-19-supply-chain-syst": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "health supplies",
+          "score": 3.1604,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cfe funds",
+          "score": 2.657,
+          "evidence": []
+        },
+        {
+          "term": "critical health",
+          "score": 2.142,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "essential supplies",
+          "score": 1.8488,
+          "evidence": []
+        },
+        {
+          "term": "natalie naccache",
+          "score": 1.7802,
+          "evidence": []
+        },
+        {
+          "term": "equitable",
+          "score": 1.3547,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "media natalie",
+          "score": 1.3129,
+          "evidence": []
+        },
+        {
+          "term": "sustainable financing",
+          "score": 1.2964,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "cfe funds",
+          "score": 102.212,
+          "evidence": []
+        },
+        {
+          "term": "health supplies",
+          "score": 86.2356,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "essential supplies",
+          "score": 54.1323,
+          "evidence": []
+        },
+        {
+          "term": "critical health",
+          "score": 44.4218,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "natalie naccache",
+          "score": 28.6401,
+          "evidence": []
+        },
+        {
+          "term": "sustainable financing",
+          "score": 25.9437,
+          "evidence": []
+        },
+        {
+          "term": "equitable",
+          "score": 25.3569,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "response capacity",
+          "score": 21.9169,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health supplies",
+          "score": 0.9432,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "critical health",
+          "score": 0.8985,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "covid",
+          "score": 0.6225,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "global health",
+          "score": 0.5726,
+          "evidence": []
+        },
+        {
+          "term": "response capacity",
+          "score": 0.4795,
+          "evidence": []
+        },
+        {
+          "term": "health emergencies",
+          "score": 0.458,
+          "evidence": []
+        },
+        {
+          "term": "pandemic",
+          "score": 0.3876,
+          "evidence": []
+        },
+        {
+          "term": "access",
+          "score": 0.3795,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "critical health",
+          "score": 17.6764,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health supplies",
+          "score": 15.9565,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "covid",
+          "score": 13.5366,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health emergencies",
+          "score": 9.913,
+          "evidence": []
+        },
+        {
+          "term": "global health",
+          "score": 9.8696,
+          "evidence": []
+        },
+        {
+          "term": "somalia",
+          "score": 6.1743,
+          "evidence": []
+        },
+        {
+          "term": "influenza",
+          "score": 4.2084,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 3.9276,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health supplies",
+          "score": 0.9432,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "critical health",
+          "score": 0.8985,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "covid",
+          "score": 0.6225,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "global health",
+          "score": 0.5726,
+          "evidence": []
+        },
+        {
+          "term": "response capacity",
+          "score": 0.4795,
+          "evidence": []
+        },
+        {
+          "term": "health emergencies",
+          "score": 0.458,
+          "evidence": []
+        },
+        {
+          "term": "pandemic",
+          "score": 0.3876,
+          "evidence": []
+        },
+        {
+          "term": "access",
+          "score": 0.3795,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 41.3171,
+          "evidence": []
+        },
+        {
+          "term": "设想了以下产出",
+          "score": 37.6504,
+          "evidence": []
+        },
+        {
+          "term": "提出了以下政策选择和行动",
+          "score": 37.6193,
+          "evidence": []
+        },
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 33.8148,
+          "evidence": []
+        },
+        {
+          "term": "重要部分",
+          "score": 28.4802,
+          "evidence": []
+        },
+        {
+          "term": "必需的",
+          "score": 28.1833,
+          "evidence": []
+        },
+        {
+          "term": "政策选择和行动",
+          "score": 27.2412,
+          "evidence": []
+        },
+        {
+          "term": "风险最小化",
+          "score": 26.4748,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-015-looking-ahead": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "cfe",
+          "score": 0.8057,
+          "evidence": []
+        },
+        {
+          "term": "metois",
+          "score": 0.6436,
+          "evidence": []
+        },
+        {
+          "term": "dividends",
+          "score": 0.5679,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "cfe",
+          "score": 12.4005,
+          "evidence": []
+        },
+        {
+          "term": "metois",
+          "score": 8.2151,
+          "evidence": []
+        },
+        {
+          "term": "dividends",
+          "score": 7.2989,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pandemic",
+          "score": 0.0691,
+          "evidence": []
+        },
+        {
+          "term": "influenza",
+          "score": 0.0607,
+          "evidence": []
+        },
+        {
+          "term": "emergency",
+          "score": 0.0528,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health",
+          "score": 0.8598,
+          "evidence": []
+        },
+        {
+          "term": "min",
+          "score": 0.8372,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 0.7086,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "emergency",
+          "score": 0.0528,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.0509,
+          "evidence": []
+        },
+        {
+          "term": "response",
+          "score": 0.05,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 46.3261,
+          "evidence": []
+        },
+        {
+          "term": "个月以上的病人提供重要的急",
+          "score": 39.5285,
+          "evidence": []
+        },
+        {
+          "term": "他们可能会在",
+          "score": 39.5285,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-016-approved-releases-in-2020": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "democratic republic",
+          "score": 2.6204,
+          "evidence": []
+        },
+        {
+          "term": "disease outbreak",
+          "score": 2.526,
+          "evidence": []
+        },
+        {
+          "term": "complex emergency",
+          "score": 2.2411,
+          "evidence": []
+        },
+        {
+          "term": "afro",
+          "score": 2.1233,
+          "evidence": []
+        },
+        {
+          "term": "north kivu",
+          "score": 2.0906,
+          "evidence": []
+        },
+        {
+          "term": "jan",
+          "score": 1.606,
+          "evidence": []
+        },
+        {
+          "term": "emro",
+          "score": 1.5352,
+          "evidence": []
+        },
+        {
+          "term": "equateur",
+          "score": 1.5264,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "disease outbreak",
+          "score": 115.7116,
+          "evidence": []
+        },
+        {
+          "term": "democratic republic",
+          "score": 87.591,
+          "evidence": []
+        },
+        {
+          "term": "afro",
+          "score": 81.9462,
+          "evidence": []
+        },
+        {
+          "term": "complex emergency",
+          "score": 81.4238,
+          "evidence": []
+        },
+        {
+          "term": "covid",
+          "score": 53.8397,
+          "evidence": []
+        },
+        {
+          "term": "equateur",
+          "score": 40.9731,
+          "evidence": []
+        },
+        {
+          "term": "ebola",
+          "score": 40.1317,
+          "evidence": []
+        },
+        {
+          "term": "congo",
+          "score": 39.3544,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "dec",
+          "score": 0.6045,
+          "evidence": []
+        },
+        {
+          "term": "jan",
+          "score": 0.5053,
+          "evidence": []
+        },
+        {
+          "term": "jul",
+          "score": 0.4564,
+          "evidence": []
+        },
+        {
+          "term": "disease outbreak",
+          "score": 0.4229,
+          "evidence": []
+        },
+        {
+          "term": "until",
+          "score": 0.3954,
+          "evidence": []
+        },
+        {
+          "term": "democratic republic",
+          "score": 0.3746,
+          "evidence": []
+        },
+        {
+          "term": "mar",
+          "score": 0.3523,
+          "evidence": []
+        },
+        {
+          "term": "apr",
+          "score": 0.35,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "covid",
+          "score": 23.8715,
+          "evidence": []
+        },
+        {
+          "term": "somalia",
+          "score": 22.1601,
+          "evidence": []
+        },
+        {
+          "term": "dec",
+          "score": 16.4593,
+          "evidence": []
+        },
+        {
+          "term": "until",
+          "score": 12.4129,
+          "evidence": []
+        },
+        {
+          "term": "oxygen",
+          "score": 9.296,
+          "evidence": []
+        },
+        {
+          "term": "jan",
+          "score": 6.7532,
+          "evidence": []
+        },
+        {
+          "term": "disease outbreak",
+          "score": 6.5487,
+          "evidence": []
+        },
+        {
+          "term": "jul",
+          "score": 6.2479,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "jan",
+          "score": 0.5053,
+          "evidence": []
+        },
+        {
+          "term": "disease outbreak",
+          "score": 0.4229,
+          "evidence": []
+        },
+        {
+          "term": "democratic republic",
+          "score": 0.3746,
+          "evidence": []
+        },
+        {
+          "term": "mar",
+          "score": 0.3523,
+          "evidence": []
+        },
+        {
+          "term": "apr",
+          "score": 0.35,
+          "evidence": []
+        },
+        {
+          "term": "sep",
+          "score": 0.3492,
+          "evidence": []
+        },
+        {
+          "term": "jun",
+          "score": 0.342,
+          "evidence": []
+        },
+        {
+          "term": "nov",
+          "score": 0.3346,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在正常情况下",
+          "score": 295.255,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 252.4916,
+          "evidence": []
+        },
+        {
+          "term": "反过来",
+          "score": 167.7592,
+          "evidence": []
+        },
+        {
+          "term": "平等主义",
+          "score": 159.963,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 158.8372,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 158.8372,
+          "evidence": []
+        },
+        {
+          "term": "在sars",
+          "score": 154.1176,
+          "evidence": []
+        },
+        {
+          "term": "在突发事件时",
+          "score": 136.7943,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-018-annex-2": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "contractual services",
+          "score": 1.7454,
+          "evidence": []
+        },
+        {
+          "term": "operational costs",
+          "score": 0.9971,
+          "evidence": []
+        },
+        {
+          "term": "expenses",
+          "score": 0.9878,
+          "evidence": []
+        },
+        {
+          "term": "grants",
+          "score": 0.9638,
+          "evidence": []
+        },
+        {
+          "term": "furniture",
+          "score": 0.9346,
+          "evidence": []
+        },
+        {
+          "term": "transfers",
+          "score": 0.9241,
+          "evidence": []
+        },
+        {
+          "term": "vehicles",
+          "score": 0.8259,
+          "evidence": []
+        },
+        {
+          "term": "supplies",
+          "score": 0.8084,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "contractual services",
+          "score": 35.5227,
+          "evidence": []
+        },
+        {
+          "term": "expenses",
+          "score": 21.5277,
+          "evidence": []
+        },
+        {
+          "term": "equipment",
+          "score": 19.8815,
+          "evidence": []
+        },
+        {
+          "term": "grants",
+          "score": 17.5913,
+          "evidence": []
+        },
+        {
+          "term": "transfers",
+          "score": 17.3184,
+          "evidence": []
+        },
+        {
+          "term": "operational costs",
+          "score": 17.0542,
+          "evidence": []
+        },
+        {
+          "term": "supplies",
+          "score": 16.4171,
+          "evidence": []
+        },
+        {
+          "term": "staff",
+          "score": 15.3865,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health",
+          "score": 0.1446,
+          "evidence": []
+        },
+        {
+          "term": "operational costs",
+          "score": 0.1436,
+          "evidence": []
+        },
+        {
+          "term": "contractual services",
+          "score": 0.1098,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.1096,
+          "evidence": []
+        },
+        {
+          "term": "medical",
+          "score": 0.101,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 0.0967,
+          "evidence": []
+        },
+        {
+          "term": "training",
+          "score": 0.0926,
+          "evidence": []
+        },
+        {
+          "term": "activities",
+          "score": 0.0918,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health",
+          "score": 3.4098,
+          "evidence": []
+        },
+        {
+          "term": "contractual services",
+          "score": 1.948,
+          "evidence": []
+        },
+        {
+          "term": "care",
+          "score": 1.6694,
+          "evidence": []
+        },
+        {
+          "term": "covid",
+          "score": 1.5501,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 1.5036,
+          "evidence": []
+        },
+        {
+          "term": "somalia",
+          "score": 1.3756,
+          "evidence": []
+        },
+        {
+          "term": "united",
+          "score": 1.2739,
+          "evidence": []
+        },
+        {
+          "term": "facilities",
+          "score": 1.271,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health",
+          "score": 0.1446,
+          "evidence": []
+        },
+        {
+          "term": "operational costs",
+          "score": 0.1436,
+          "evidence": []
+        },
+        {
+          "term": "contractual services",
+          "score": 0.116,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.1096,
+          "evidence": []
+        },
+        {
+          "term": "training",
+          "score": 0.0926,
+          "evidence": []
+        },
+        {
+          "term": "activities",
+          "score": 0.0918,
+          "evidence": []
+        },
+        {
+          "term": "staff",
+          "score": 0.0788,
+          "evidence": []
+        },
+        {
+          "term": "international",
+          "score": 0.0764,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 36.0147,
+          "evidence": []
+        },
+        {
+          "term": "在sars",
+          "score": 32.4045,
+          "evidence": []
+        },
+        {
+          "term": "教员询问其余学员每个报告人的报告有无遗漏什么内容",
+          "score": 28.7502,
+          "evidence": []
+        },
+        {
+          "term": "重要部分",
+          "score": 25.0808,
+          "evidence": []
+        },
+        {
+          "term": "岁的儿童",
+          "score": 24.1927,
+          "evidence": []
+        },
+        {
+          "term": "必需的",
+          "score": 24.1719,
+          "evidence": []
+        },
+        {
+          "term": "风险最小化",
+          "score": 23.6157,
+          "evidence": []
+        },
+        {
+          "term": "区域和全球各",
+          "score": 23.5394,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-019-annex-3": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "emergencies",
+          "score": 0.6082,
+          "evidence": []
+        },
+        {
+          "term": "kuwait",
+          "score": 0.5391,
+          "evidence": []
+        },
+        {
+          "term": "malta",
+          "score": 0.5256,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "emergencies",
+          "score": 8.8393,
+          "evidence": []
+        },
+        {
+          "term": "switzerland",
+          "score": 6.9755,
+          "evidence": []
+        },
+        {
+          "term": "kuwait",
+          "score": 6.8288,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "united",
+          "score": 0.105,
+          "evidence": []
+        },
+        {
+          "term": "world",
+          "score": 0.0983,
+          "evidence": []
+        },
+        {
+          "term": "organization",
+          "score": 0.0959,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "university",
+          "score": 2.0011,
+          "evidence": []
+        },
+        {
+          "term": "united",
+          "score": 1.8663,
+          "evidence": []
+        },
+        {
+          "term": "usa",
+          "score": 1.3456,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "united",
+          "score": 0.105,
+          "evidence": []
+        },
+        {
+          "term": "world",
+          "score": 0.0983,
+          "evidence": []
+        },
+        {
+          "term": "organization",
+          "score": 0.0959,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在正常情况下",
+          "score": 157.2925,
+          "evidence": []
+        },
+        {
+          "term": "habana",
+          "score": 146.5001,
+          "evidence": []
+        },
+        {
+          "term": "hannover",
+          "score": 146.5001,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "cfe contributors",
+          "score": 2.7648,
+          "evidence": []
+        },
+        {
+          "term": "contingency fund",
+          "score": 2.3263,
+          "evidence": []
+        },
+        {
+          "term": "health emergencies",
+          "score": 1.9262,
+          "evidence": []
+        },
+        {
+          "term": "cyclone harold",
+          "score": 1.7304,
+          "evidence": []
+        },
+        {
+          "term": "democratic republic",
+          "score": 1.6346,
+          "evidence": []
+        },
+        {
+          "term": "port explosion",
+          "score": 1.6318,
+          "evidence": []
+        },
+        {
+          "term": "beirut port",
+          "score": 1.5776,
+          "evidence": []
+        },
+        {
+          "term": "ebola outbreak",
+          "score": 1.4692,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "cfe contributors",
+          "score": 121.2322,
+          "evidence": []
+        },
+        {
+          "term": "health emergencies",
+          "score": 62.7463,
+          "evidence": []
+        },
+        {
+          "term": "contingency fund",
+          "score": 60.9614,
+          "evidence": []
+        },
+        {
+          "term": "democratic republic",
+          "score": 30.4831,
+          "evidence": []
+        },
+        {
+          "term": "cyclone harold",
+          "score": 27.3154,
+          "evidence": []
+        },
+        {
+          "term": "response",
+          "score": 26.7388,
+          "evidence": []
+        },
+        {
+          "term": "port explosion",
+          "score": 25.6523,
+          "evidence": []
+        },
+        {
+          "term": "beirut port",
+          "score": 24.5743,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "world health",
+          "score": 1.1651,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 1.1583,
+          "evidence": []
+        },
+        {
+          "term": "suggested citation",
+          "score": 0.9115,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 0.8748,
+          "evidence": []
+        },
+        {
+          "term": "health emergency",
+          "score": 0.8011,
+          "evidence": []
+        },
+        {
+          "term": "material",
+          "score": 0.7939,
+          "evidence": []
+        },
+        {
+          "term": "work",
+          "score": 0.7583,
+          "evidence": []
+        },
+        {
+          "term": "igo",
+          "score": 0.718,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "world health",
+          "score": 18.1556,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 17.9897,
+          "evidence": []
+        },
+        {
+          "term": "health emergency",
+          "score": 15.6633,
+          "evidence": []
+        },
+        {
+          "term": "health emergencies",
+          "score": 15.2354,
+          "evidence": []
+        },
+        {
+          "term": "covid",
+          "score": 13.2511,
+          "evidence": []
+        },
+        {
+          "term": "somalia",
+          "score": 11.5034,
+          "evidence": []
+        },
+        {
+          "term": "wpv",
+          "score": 9.7982,
+          "evidence": []
+        },
+        {
+          "term": "min",
+          "score": 8.0154,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "world health",
+          "score": 1.1651,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 1.1583,
+          "evidence": []
+        },
+        {
+          "term": "suggested citation",
+          "score": 0.9115,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 0.8748,
+          "evidence": []
+        },
+        {
+          "term": "health emergency",
+          "score": 0.8011,
+          "evidence": []
+        },
+        {
+          "term": "material",
+          "score": 0.7939,
+          "evidence": []
+        },
+        {
+          "term": "work",
+          "score": 0.7583,
+          "evidence": []
+        },
+        {
+          "term": "igo",
+          "score": 0.718,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 53.6909,
+          "evidence": []
+        },
+        {
+          "term": "在sars",
+          "score": 50.0277,
+          "evidence": []
+        },
+        {
+          "term": "非同寻常",
+          "score": 46.0188,
+          "evidence": []
+        },
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 41.0265,
+          "evidence": []
+        },
+        {
+          "term": "风险最小化",
+          "score": 36.7995,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 31.8933,
+          "evidence": []
+        },
+        {
+          "term": "必要的",
+          "score": 31.747,
+          "evidence": []
+        },
+        {
+          "term": "不喜欢使用卫生设施",
+          "score": 30.2822,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

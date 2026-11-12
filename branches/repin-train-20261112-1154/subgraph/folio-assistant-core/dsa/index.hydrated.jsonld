@@ -1,0 +1,1546 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/dsa/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+      "@type": "bootstrap:Subgraph",
+      "contentSource": {
+        "declaredIn": "default",
+        "kind": "directory"
+      },
+      "description": "The Data Sharing Agreement sub-graph — a NAMED SUB-GRAPH of this layer on the pattern of cat-harness's `work-plan/`, and OPT-IN: off in every layer, this one included, unless that layer lists `folio-assistant-core.dsa` in its own `enableSubgraphs` (owner, 2026-11-10, card Q-SG-1 C, wave 1). It holds the four DSA skills and the DSA document life cycle; the graphs inside it are declared FROM WITHIN, in `dsa/graph.json`. The `dsa` typology and `check:dsa-hash` stay outside it.",
+      "fileCount": 0,
+      "holdsGraph": [
+        "cat-harness:graphTypology/cat-harness"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+      "name": "dsa",
+      "path": "dsa/"
+    }
+  ],
+  "hasSubgraph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/dsa/processes/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "@type": "bootstrap:Process",
+          "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/dsa-document-lifecycle.svg",
+          "description": "How a data sharing agreement is drafted, negotiated, signed, published with a version, a hash and a catalogue record, and later amended, renewed or ended. It covers the agreement as a document folio only: processes P1, P2 and P14 of the DSA process catalogue.\nTwo entry points: a request for an agreement (P1, then P2), and a change to one in force (P14). An amendment or a renewal with a new end date runs P1 and P2 again and publishes a new version linked to the old one; the old version stays readable.\nStandards named: ODRL 2.2 (the Agreement), DCAT 3 (catalogue record, distributions, checksums, versions) and DCMI Terms (dcterms:source from the policy to the text). No field is defined here.\nSteps no skill covers yet are user tasks with a no-skill reason starting \"Gap:\".\nConsent rules, which every agreement drawn here keeps. 1. Legal basis: an agreement carries the odrl:obtainConsent duty only when consent is its legal basis; treatment, public-health law and research waivers do not rest on consent (P1.2a, P1.3). 2. Version pinning: a Consent cites the agreement's fixed-version URL and hash (FHIR R4 Consent.policy.uri), and for a computable agreement the ODRL policy uid is that same URL (P2.1, P2.2b, P2.3); an amendment that widens use needs new consent, one that narrows use does not (P14.3). 3. Plain language: every agreement that needs consent publishes a plain-language summary, hashed with the agreement, and that summary is what the person consents to (P1.2b, P2.2a). How a person gives, withdraws or is asked again for consent is the trust layer's, not this diagram's.",
+          "enforcement": "advisory",
+          "flowCount": 59,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "name": "Data sharing agreement document life cycle",
+          "nodeCount": 51,
+          "sourcePath": "dsa/processes/dsa-document-lifecycle.bpmn",
+          "sourceUrl": "https://github.com/litlfred/folio-assistant-core/blob/main/dsa/processes/dsa-document-lifecycle.bpmn",
+          "startNode": [
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Start_Request",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Start_Change"
+          ],
+          "summary": "How a data sharing agreement is drafted, negotiated, signed, published with a version, a hash and a catalogue record, and later amended, renewed or ended."
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F01",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Start_Request",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Call_BeanOpen"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F02",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Call_BeanOpen",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_BeanYours"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F03",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_BeanYours",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "name": "not yours",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/End_BeanNotYours"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F04",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_BeanYours",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "name": "claimed",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_AgreeTerms"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F05",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_AgreeTerms",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_DraftMerge"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F06",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_DraftMerge",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_WriteText"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F07",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_WriteText",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_RecordLegalBasis"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F08",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_Computable",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "name": "yes",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_DeriveOdrl"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F09",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_Computable",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "name": "document only",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_ComputableJoin"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F10",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_DeriveOdrl",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_CheckOdrl"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F11",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_CheckOdrl",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_ComputableJoin"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F12",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_ComputableJoin",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_SplitAnnexes"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F13",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_SplitAnnexes",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_Review"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F14",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_Review",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_PublicComment"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F15",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_PublicComment",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "name": "yes",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Call_PublicComment"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F16",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_PublicComment",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "name": "no",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_CommentJoin"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F17",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Call_PublicComment",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_CommentJoin"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F18",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_CommentJoin",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_ReadyToSign"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F19",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_ReadyToSign",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "name": "changes needed",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_DraftMerge"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F20",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_ReadyToSign",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "name": "ready",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_Render"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F21",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_Render",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_Sign"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F22",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_Sign",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_AssignVersion"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F23",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_AssignVersion",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_Hash"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F24",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_Hash",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_ConsentPublish"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F25",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_CiteComputable",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "name": "yes",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_OdrlCitesText"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F26",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_CiteComputable",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "name": "document only",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_CiteJoin"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F27",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_OdrlCitesText",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_CiteJoin"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F28",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_CiteJoin",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_Publish"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F29",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_Publish",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_Catalogue"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F30",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_Catalogue",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Call_BeanCloseEnded"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F31",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_BeanClosedHow",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "name": "published",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/End_InForce"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F40",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Start_Change",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Call_BeanOpenChange"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F41",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Call_BeanOpenChange",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_BeanYoursChange"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F42",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_BeanYoursChange",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "name": "not yours",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/End_BeanNotYoursChange"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F43",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_BeanYoursChange",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "name": "claimed",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_DecideChange"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F44",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_DecideChange",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_ChangeKind"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F45",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_ChangeKind",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "name": "new version",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_DecideGrants"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F46",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_ChangeKind",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "name": "renew by grant",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/End_RenewedByGrant"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F47",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_ChangeKind",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "name": "end",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_SetStatus"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F48",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_DecideGrants",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_WidensUse"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F49",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_SetStatus",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_EndDuties"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F50",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_EndDuties",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Call_BeanCloseEnded"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F51",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_BeanClosedHow",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "name": "ended",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/End_Ended"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F60",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_RecordLegalBasis",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_ConsentBasis"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F61",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_ConsentBasis",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "name": "consent",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_PlainSummary"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F62",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_ConsentBasis",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "name": "treatment, law or waiver",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_ConsentBasisJoin"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F63",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_PlainSummary",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_ConsentBasisJoin"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F64",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_ConsentBasisJoin",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_Computable"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F65",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_ConsentPublish",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "name": "consent",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_HashSummary"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F66",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_ConsentPublish",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "name": "not consent-based",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_ConsentPublishJoin"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F67",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_HashSummary",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_ConsentCitation"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F68",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_ConsentCitation",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_ConsentPublishJoin"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F69",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_ConsentPublishJoin",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_CiteComputable"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F70",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_WidensUse",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "name": "widens use",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_NewConsentNeeded"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F71",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_WidensUse",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "name": "narrows use",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_WidensJoin"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F72",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_WidensUse",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "name": "not consent-based",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_WidensJoin"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F73",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_NewConsentNeeded",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_WidensJoin"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F74",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_WidensJoin",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_DraftMerge"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/Flow_GW_BeanClosedHow",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Call_BeanCloseEnded",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_BeanClosedHow"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Author",
+          "@type": "cat-harness:Lane",
+          "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "name": "Author and policy author",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Build",
+          "@type": "cat-harness:Lane",
+          "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "name": "Build pipeline (system)",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Parties",
+          "@type": "cat-harness:Lane",
+          "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/stakeholder",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "name": "Parties and signatories (provider, recipient)",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_PublicReview",
+          "@type": "cat-harness:Lane",
+          "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/review-coordinator",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "name": "Public review (commenters, review committee, editor)",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Publisher",
+          "@type": "cat-harness:Lane",
+          "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "name": "Publisher (data provider's publication manager)",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Reviewer",
+          "@type": "cat-harness:Lane",
+          "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "name": "Reviewer (legal, policy)",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Call_BeanCloseEnded",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:CallActivity",
+          "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Author",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "incoming": [
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F30",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F50"
+          ],
+          "name": "Close the bean",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/Flow_GW_BeanClosedHow",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/todo-manager",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Call_BeanOpen",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:CallActivity",
+          "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Author",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F01",
+          "name": "Open the bean",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F02",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/bean-coordination",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Call_BeanOpenChange",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:CallActivity",
+          "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Author",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F40",
+          "name": "Open the bean",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F41",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/bean-coordination",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Call_PublicComment",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:CallActivity",
+          "calledElement": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment",
+          "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_PublicReview",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F15",
+          "name": "Public comment on the template",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F17",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/review-coordinator",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/public-comment",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/End_BeanNotYours",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:EndEvent",
+          "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Author",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F03",
+          "name": "Not yours — left alone",
+          "nodeKind": "end",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/End_BeanNotYoursChange",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:EndEvent",
+          "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Author",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F42",
+          "name": "Not yours — left alone",
+          "nodeKind": "end",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/End_Ended",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:EndEvent",
+          "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Author",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F51",
+          "name": "Agreement ended",
+          "nodeKind": "end",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/End_InForce",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:EndEvent",
+          "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Author",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F31",
+          "name": "Version published — agreement in force",
+          "nodeKind": "end",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/End_RenewedByGrant",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:EndEvent",
+          "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Parties",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F46",
+          "name": "Renewed by a new grant",
+          "nodeKind": "end",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/stakeholder",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_BeanClosedHow",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:ExclusiveGateway",
+          "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Author",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/Flow_GW_BeanClosedHow",
+          "name": "How did it end?",
+          "nodeKind": "exclusive",
+          "outgoing": [
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F31",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F51"
+          ],
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_BeanYours",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:ExclusiveGateway",
+          "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Author",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F02",
+          "name": "Bean claimed?",
+          "nodeKind": "exclusive",
+          "outgoing": [
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F03",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F04"
+          ],
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_BeanYoursChange",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:ExclusiveGateway",
+          "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Author",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F41",
+          "name": "Bean claimed?",
+          "nodeKind": "exclusive",
+          "outgoing": [
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F42",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F43"
+          ],
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_ChangeKind",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:ExclusiveGateway",
+          "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Parties",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F44",
+          "name": "Amend, renew or end?",
+          "nodeKind": "exclusive",
+          "outgoing": [
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F45",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F46",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F47"
+          ],
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/stakeholder",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_CiteComputable",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:ExclusiveGateway",
+          "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Publisher",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F69",
+          "name": "ODRL to update?",
+          "nodeKind": "exclusive",
+          "outgoing": [
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F25",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F26"
+          ],
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_CiteJoin",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:ExclusiveGateway",
+          "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Publisher",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "incoming": [
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F26",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F27"
+          ],
+          "name": "GW_CiteJoin",
+          "nodeKind": "exclusive",
+          "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F28",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_CommentJoin",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:ExclusiveGateway",
+          "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Reviewer",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "incoming": [
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F16",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F17"
+          ],
+          "name": "GW_CommentJoin",
+          "nodeKind": "exclusive",
+          "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F18",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_Computable",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:ExclusiveGateway",
+          "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Author",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F64",
+          "name": "Computable agreement?",
+          "nodeKind": "exclusive",
+          "outgoing": [
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F08",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F09"
+          ],
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_ComputableJoin",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:ExclusiveGateway",
+          "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Author",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "incoming": [
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F09",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F11"
+          ],
+          "name": "GW_ComputableJoin",
+          "nodeKind": "exclusive",
+          "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F12",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_ConsentBasis",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:ExclusiveGateway",
+          "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Author",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F60",
+          "name": "Consent the legal basis?",
+          "nodeKind": "exclusive",
+          "outgoing": [
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F61",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F62"
+          ],
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_ConsentBasisJoin",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:ExclusiveGateway",
+          "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Author",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "incoming": [
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F62",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F63"
+          ],
+          "name": "GW_ConsentBasisJoin",
+          "nodeKind": "exclusive",
+          "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F64",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_ConsentPublish",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:ExclusiveGateway",
+          "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Publisher",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F24",
+          "name": "Consent-based agreement?",
+          "nodeKind": "exclusive",
+          "outgoing": [
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F65",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F66"
+          ],
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_ConsentPublishJoin",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:ExclusiveGateway",
+          "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Publisher",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "incoming": [
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F66",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F68"
+          ],
+          "name": "GW_ConsentPublishJoin",
+          "nodeKind": "exclusive",
+          "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F69",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_DraftMerge",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:ExclusiveGateway",
+          "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Author",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "incoming": [
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F05",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F19",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F74"
+          ],
+          "name": "GW_DraftMerge",
+          "nodeKind": "exclusive",
+          "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F06",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_PublicComment",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:ExclusiveGateway",
+          "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Reviewer",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F14",
+          "name": "Public comment on the public terms?",
+          "nodeKind": "exclusive",
+          "outgoing": [
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F15",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F16"
+          ],
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_ReadyToSign",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:ExclusiveGateway",
+          "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Reviewer",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F18",
+          "name": "Ready to sign?",
+          "nodeKind": "exclusive",
+          "outgoing": [
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F19",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F20"
+          ],
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_WidensJoin",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:ExclusiveGateway",
+          "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Parties",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "incoming": [
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F71",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F72",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F73"
+          ],
+          "name": "GW_WidensJoin",
+          "nodeKind": "exclusive",
+          "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F74",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/stakeholder",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_WidensUse",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:ExclusiveGateway",
+          "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Parties",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F48",
+          "name": "Consent-based: does the amendment widen use?",
+          "nodeKind": "exclusive",
+          "outgoing": [
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F70",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F71",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F72"
+          ],
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/stakeholder",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Start_Change",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:StartEvent",
+          "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Parties",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "name": "Terms change, end date reached, or notice given",
+          "nodeKind": "start",
+          "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F40",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/stakeholder",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Start_Request",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:StartEvent",
+          "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Parties",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "name": "Data requested, or a standing agreement needed",
+          "nodeKind": "start",
+          "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F01",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/stakeholder",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_AgreeTerms",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:UserTask",
+          "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Parties",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F04",
+          "name": "P1.1 · Agree the terms",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F05",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/stakeholder",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_AssignVersion",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:UserTask",
+          "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Publisher",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F22",
+          "name": "P2.1 · Assign version and fixed URL",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F23",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
+          "relaxable": true,
+          "requires": [
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-publish",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/package-release"
+          ],
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_Catalogue",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:UserTask",
+          "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Publisher",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F29",
+          "name": "P2.4–5 · Write the DCAT 3 record",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F30",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/dsa-dcat-record",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_CheckOdrl",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:UserTask",
+          "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Reviewer",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F10",
+          "name": "P1.4 · Check the ODRL against the text",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F11",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-review",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_ConsentCitation",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:UserTask",
+          "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Publisher",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F67",
+          "name": "P2.2b · State the URL and hash to cite",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F68",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-publish",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_DecideChange",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:UserTask",
+          "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Parties",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F43",
+          "name": "Decide: amend, renew or end",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F44",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/stakeholder",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_DecideGrants",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:UserTask",
+          "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Parties",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F45",
+          "name": "P14.2 · Decide what happens to existing grants",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F48",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/stakeholder",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_DeriveOdrl",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:UserTask",
+          "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Author",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F08",
+          "name": "P1.3 · Derive the ODRL 2.2 Agreement",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F10",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_EndDuties",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:UserTask",
+          "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Parties",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F49",
+          "name": "Revoke grants and start end-of-agreement duties",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F50",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/stakeholder",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_Hash",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:UserTask",
+          "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Publisher",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F23",
+          "name": "P2.2 · Record each file's SHA-256",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F24",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/dsa-checksum",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_HashSummary",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:UserTask",
+          "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Publisher",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F65",
+          "name": "P2.2a · Hash the plain summary",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F67",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/dsa-checksum",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_NewConsentNeeded",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:UserTask",
+          "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Parties",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F70",
+          "name": "P14.3 · New consent needed",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F73",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/stakeholder",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_OdrlCitesText",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:UserTask",
+          "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Author",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F25",
+          "name": "P2.3 · Make the ODRL cite the text",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F27",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/dsa-odrl-source",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_PlainSummary",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:UserTask",
+          "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Author",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F61",
+          "name": "P1.2b · Draft the plain summary",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F63",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-authoring",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_Publish",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:ServiceTask",
+          "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Build",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F28",
+          "name": "Publish the version at its URL",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F29",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-publish",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_RecordLegalBasis",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:UserTask",
+          "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Author",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F07",
+          "name": "P1.2a · Record the legal basis",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F60",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/normative-statements",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_Render",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:ServiceTask",
+          "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Build",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F20",
+          "name": "Render the text to HTML and PDF",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F21",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-publishing",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_Review",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:UserTask",
+          "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Reviewer",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F13",
+          "name": "Review the draft agreement",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F14",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+          "relaxable": true,
+          "requires": [
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-review",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/review-comments"
+          ],
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_SetStatus",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:UserTask",
+          "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Publisher",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F47",
+          "name": "P14.5 · Set the status to ended",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F49",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/dsa-catalogue-status",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_Sign",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:UserTask",
+          "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Parties",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F21",
+          "name": "P1.6 · Sign",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F22",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/stakeholder",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_SplitAnnexes",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:UserTask",
+          "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Author",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F12",
+          "name": "P1.5 · Split public terms from private annexes",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F13",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_WriteText",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:UserTask",
+          "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Author",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+          "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F06",
+          "name": "P1.2 · Write the legal text",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F07",
+          "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
+          "relaxable": true,
+          "requires": [
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-authoring",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/normative-statements",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-structure"
+          ],
+          "touchesWorkPlan": false
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/processes"
+      ],
+      "name": "dsa/processes",
+      "path": "dsa/processes/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/dsa/skills/",
+      "@type": "bootstrap:Subgraph",
+      "hasSubgraph": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/dsa/skills/dsa/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/dsa-catalogue-status",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "Set the life-cycle status (`adms:status`, W3C DCAT 3 §6.4.30) on a Data Sharing Agreement's DCAT 3 catalogue record when the agreement is amended, renewed, terminated, or expires, while keeping all published versions readable at their immutable URLs (DSA building block B3, process step P14.5 `Task_SetStatus`).",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+              "instructionLines": 54,
+              "instructionsPath": "dsa/skills/dsa/dsa-catalogue-status.md",
+              "name": "dsa-catalogue-status",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/dd9d4742df2113ab8a29cc9e554bc20e9cf2e98dbd343c49378c6ccfbd8fb598",
+                "bytes": 2281,
+                "sha256": "dd9d4742df2113ab8a29cc9e554bc20e9cf2e98dbd343c49378c6ccfbd8fb598"
+              },
+              "title": "`dsa-catalogue-status` — Set the catalogue status when an agreement changes or ends (P14.5)"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/dsa-checksum",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "Compute and record the SHA-256 cryptographic digest of a signed Data Sharing Agreement's legal text as a W3C DCAT 3 `spdx:checksum` (`spdx:Checksum` with `spdx:checksumAlgorithm_sha256` and 64-character lowercase hex `spdx:checksumValue`), verified by `check:dsa-hash` (DSA building block B3, process steps P2.2 `Task_Hash` and P2.2a `Task_HashSummary`).",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+              "instructionLines": 79,
+              "instructionsPath": "dsa/skills/dsa/dsa-checksum.md",
+              "name": "dsa-checksum",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/098183a4d564b2eab9f28c6f22a3ef7e1863209b0e1e782dda760bbed4264e56",
+                "bytes": 3378,
+                "sha256": "098183a4d564b2eab9f28c6f22a3ef7e1863209b0e1e782dda760bbed4264e56"
+              },
+              "title": "`dsa-checksum` — Compute and record the SHA-256 of the legal text (P2.2)"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/dsa-dcat-record",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "Write the W3C DCAT 3 `dcat:Resource` and `dcat:Distribution` catalogue record for a Data Sharing Agreement (`dcat:downloadURL`, `spdx:checksum`, `odrl:hasPolicy`) and link versions with `dcat:version` and `dcat:previousVersion` (DSA building block B3, process step P2.4–5 `Task_Catalogue`).",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+              "instructionLines": 65,
+              "instructionsPath": "dsa/skills/dsa/dsa-dcat-record.md",
+              "name": "dsa-dcat-record",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/049ad02651072f5686b562416b86f4219f18fefa36bbfacb40efe39d5ddd6b8a",
+                "bytes": 3358,
+                "sha256": "049ad02651072f5686b562416b86f4219f18fefa36bbfacb40efe39d5ddd6b8a"
+              },
+              "title": "`dsa-dcat-record` — Write the DCAT 3 record and link versions (P2.4–5)"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/dsa-odrl-source",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "Bind a computable Data Sharing Agreement's W3C ODRL 2.2 `Agreement` to its signed legal text distribution using DCMI Metadata Terms `dcterms:source`, naming the exact `dcat:Distribution` whose `spdx:checksum` is checked (DSA building block B3, process step P2.3 `Task_OdrlCitesText`).",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+              "instructionLines": 91,
+              "instructionsPath": "dsa/skills/dsa/dsa-odrl-source.md",
+              "name": "dsa-odrl-source",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e3f37c7fd2c6182ced7d3e07918d362d645267bf75c8b8a0d8f1ef5476deec2c",
+                "bytes": 3363,
+                "sha256": "e3f37c7fd2c6182ced7d3e07918d362d645267bf75c8b8a0d8f1ef5476deec2c"
+              },
+              "title": "`dsa-odrl-source` — Make the ODRL Agreement cite the legal text distribution (P2.3)"
+            }
+          ],
+          "holdsGraph": [
+            "bootstrap:graphTypology/skills"
+          ],
+          "name": "dsa/skills/dsa",
+          "path": "dsa/skills/dsa/"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "dsa/skills",
+      "path": "dsa/skills/"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/cat-harness"
+  ],
+  "name": "dsa",
+  "path": "dsa/"
+}

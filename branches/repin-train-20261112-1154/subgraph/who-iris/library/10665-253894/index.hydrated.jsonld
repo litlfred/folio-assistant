@@ -1,0 +1,67 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/who-iris/library/10665-253894/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/who-iris/source/10665-253894",
+      "@type": "cat-harness:SourceDocument",
+      "path": "library/10665-253894/manifest.jsonld",
+      "title": "Картирование риска желтой лихорадки и рекомендованная вакцинация для лиц, совершающих поездки"
+    }
+  ],
+  "hasSubgraph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/who-iris/library/10665-253894/blocks/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio/library/10665-253894/blocks/prose-sec-000",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/10665-253894/blocks/prose-sec-000.jsonld",
+          "title": "Картирование риска желтой лихорадки и рекомендованная вакцинация для лиц, совершающих поездки"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/10665-253894/blocks/prose-sec-front-matter",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/10665-253894/blocks/prose-sec-front-matter.jsonld",
+          "title": "Front matter"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "name": "library/10665-253894/blocks",
+      "path": "library/10665-253894/blocks/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/who-iris/library/10665-253894/sections/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio/library/10665-253894/sections/sec-000",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/10665-253894/sections/sec-000.jsonld",
+          "title": "Картирование риска желтой лихорадки и рекомендованная вакцинация для лиц, совершающих поездки"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/10665-253894/sections/sec-front-matter",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/10665-253894/sections/sec-front-matter.jsonld",
+          "title": "Front matter"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "name": "library/10665-253894/sections",
+      "path": "library/10665-253894/sections/"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/library"
+  ],
+  "name": "library/10665-253894",
+  "path": "library/10665-253894/"
+}

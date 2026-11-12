@@ -1,0 +1,1734 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-68092",
+  "instance": "who-iris",
+  "about": "library/10665-68092",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7393,
+    "terms": 71095
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "smallpox cases",
+        "score": 9.0671,
+        "evidence": []
+      },
+      {
+        "term": "delhi municipal",
+        "score": 7.8377,
+        "evidence": []
+      },
+      {
+        "term": "smallpox eradication",
+        "score": 7.6197,
+        "evidence": []
+      },
+      {
+        "term": "national smallpox",
+        "score": 6.7916,
+        "evidence": []
+      },
+      {
+        "term": "smallpox epidemic",
+        "score": 6.6979,
+        "evidence": []
+      },
+      {
+        "term": "rural zone",
+        "score": 6.5607,
+        "evidence": []
+      },
+      {
+        "term": "delhi south",
+        "score": 6.4797,
+        "evidence": []
+      },
+      {
+        "term": "bagh zone",
+        "score": 6.2217,
+        "evidence": []
+      },
+      {
+        "term": "ganj zone",
+        "score": 6.2217,
+        "evidence": []
+      },
+      {
+        "term": "shahdara zone",
+        "score": 6.2217,
+        "evidence": []
+      },
+      {
+        "term": "city zone",
+        "score": 6.1268,
+        "evidence": []
+      },
+      {
+        "term": "west zone",
+        "score": 5.7623,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "smallpox cases",
+        "score": 210.3519,
+        "evidence": []
+      },
+      {
+        "term": "smallpox eradication",
+        "score": 164.5538,
+        "evidence": []
+      },
+      {
+        "term": "delhi municipal",
+        "score": 157.7616,
+        "evidence": []
+      },
+      {
+        "term": "smallpox epidemic",
+        "score": 148.921,
+        "evidence": []
+      },
+      {
+        "term": "national smallpox",
+        "score": 147.7023,
+        "evidence": []
+      },
+      {
+        "term": "rural zone",
+        "score": 140.4795,
+        "evidence": []
+      },
+      {
+        "term": "bagh zone",
+        "score": 134.9422,
+        "evidence": []
+      },
+      {
+        "term": "ganj zone",
+        "score": 134.9422,
+        "evidence": []
+      },
+      {
+        "term": "shahdara zone",
+        "score": 134.9422,
+        "evidence": []
+      },
+      {
+        "term": "city zone",
+        "score": 134.7058,
+        "evidence": []
+      },
+      {
+        "term": "south zone",
+        "score": 130.6792,
+        "evidence": []
+      },
+      {
+        "term": "west zone",
+        "score": 128.6282,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "vaccination coverage",
+        "score": 0.8543,
+        "evidence": []
+      },
+      {
+        "term": "vaccination status",
+        "score": 0.8424,
+        "evidence": []
+      },
+      {
+        "term": "cases reported",
+        "score": 0.7932,
+        "evidence": []
+      },
+      {
+        "term": "vaccine",
+        "score": 0.6218,
+        "evidence": []
+      },
+      {
+        "term": "local cases",
+        "score": 0.6151,
+        "evidence": []
+      },
+      {
+        "term": "vaccination inspectors",
+        "score": 0.6076,
+        "evidence": []
+      },
+      {
+        "term": "total population",
+        "score": 0.5959,
+        "evidence": []
+      },
+      {
+        "term": "health",
+        "score": 0.474,
+        "evidence": []
+      },
+      {
+        "term": "smallpox cases",
+        "score": 0.4632,
+        "evidence": []
+      },
+      {
+        "term": "year",
+        "score": 0.4586,
+        "evidence": []
+      },
+      {
+        "term": "age group",
+        "score": 0.4518,
+        "evidence": []
+      },
+      {
+        "term": "immunization",
+        "score": 0.4373,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "vaccination coverage",
+        "score": 12.5584,
+        "evidence": []
+      },
+      {
+        "term": "vaccination status",
+        "score": 11.4768,
+        "evidence": []
+      },
+      {
+        "term": "treatment",
+        "score": 10.93,
+        "evidence": []
+      },
+      {
+        "term": "cancer",
+        "score": 9.6683,
+        "evidence": []
+      },
+      {
+        "term": "vaccination inspectors",
+        "score": 8.8665,
+        "evidence": []
+      },
+      {
+        "term": "district",
+        "score": 8.6079,
+        "evidence": []
+      },
+      {
+        "term": "bagh zone",
+        "score": 8.4378,
+        "evidence": []
+      },
+      {
+        "term": "city zone",
+        "score": 8.4378,
+        "evidence": []
+      },
+      {
+        "term": "ganj zone",
+        "score": 8.4378,
+        "evidence": []
+      },
+      {
+        "term": "line zone",
+        "score": 8.4378,
+        "evidence": []
+      },
+      {
+        "term": "rural zone",
+        "score": 8.4378,
+        "evidence": []
+      },
+      {
+        "term": "shahdara zone",
+        "score": 8.4378,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "vaccination coverage",
+        "score": 0.8543,
+        "evidence": []
+      },
+      {
+        "term": "vaccination status",
+        "score": 0.8424,
+        "evidence": []
+      },
+      {
+        "term": "cases reported",
+        "score": 0.7932,
+        "evidence": []
+      },
+      {
+        "term": "vaccination inspectors",
+        "score": 0.618,
+        "evidence": []
+      },
+      {
+        "term": "local cases",
+        "score": 0.6151,
+        "evidence": []
+      },
+      {
+        "term": "total population",
+        "score": 0.5959,
+        "evidence": []
+      },
+      {
+        "term": "smallpox cases",
+        "score": 0.5089,
+        "evidence": []
+      },
+      {
+        "term": "health",
+        "score": 0.474,
+        "evidence": []
+      },
+      {
+        "term": "year",
+        "score": 0.4586,
+        "evidence": []
+      },
+      {
+        "term": "age group",
+        "score": 0.4518,
+        "evidence": []
+      },
+      {
+        "term": "surveillance",
+        "score": 0.4157,
+        "evidence": []
+      },
+      {
+        "term": "medical officer",
+        "score": 0.3717,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "平等主义",
+        "score": 167.8138,
+        "evidence": []
+      },
+      {
+        "term": "风险最小化",
+        "score": 165.6254,
+        "evidence": []
+      },
+      {
+        "term": "的原则",
+        "score": 164.231,
+        "evidence": []
+      },
+      {
+        "term": "中所讨论的一样",
+        "score": 157.8203,
+        "evidence": []
+      },
+      {
+        "term": "原则或价值观",
+        "score": 153.1792,
+        "evidence": []
+      },
+      {
+        "term": "大流行性流感防范框架",
+        "score": 151.5921,
+        "evidence": []
+      },
+      {
+        "term": "巴西登革热",
+        "score": 141.7852,
+        "evidence": []
+      },
+      {
+        "term": "共享流感病毒以及获得",
+        "score": 137.7591,
+        "evidence": []
+      },
+      {
+        "term": "对使用传统药物治疗腹泻的评价",
+        "score": 130.8817,
+        "evidence": []
+      },
+      {
+        "term": "疫苗储备",
+        "score": 129.9431,
+        "evidence": []
+      },
+      {
+        "term": "世卫组织会员国",
+        "score": 114.9508,
+        "evidence": []
+      },
+      {
+        "term": "反过来",
+        "score": 114.8522,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "page-001": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "delhi municipal",
+          "score": 2.9567,
+          "evidence": []
+        },
+        {
+          "term": "municipal corporation",
+          "score": 2.5247,
+          "evidence": []
+        },
+        {
+          "term": "smallpox eradication",
+          "score": 1.9646,
+          "evidence": []
+        },
+        {
+          "term": "capital city",
+          "score": 1.2619,
+          "evidence": []
+        },
+        {
+          "term": "union territory",
+          "score": 1.0668,
+          "evidence": []
+        },
+        {
+          "term": "attracts",
+          "score": 1.0201,
+          "evidence": []
+        },
+        {
+          "term": "maintained",
+          "score": 0.5831,
+          "evidence": []
+        },
+        {
+          "term": "administrative",
+          "score": 0.5331,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "delhi municipal",
+          "score": 88.7894,
+          "evidence": []
+        },
+        {
+          "term": "municipal corporation",
+          "score": 56.8839,
+          "evidence": []
+        },
+        {
+          "term": "smallpox eradication",
+          "score": 43.2207,
+          "evidence": []
+        },
+        {
+          "term": "capital city",
+          "score": 23.8232,
+          "evidence": []
+        },
+        {
+          "term": "union territory",
+          "score": 16.4529,
+          "evidence": []
+        },
+        {
+          "term": "attracts",
+          "score": 16.4303,
+          "evidence": []
+        },
+        {
+          "term": "population",
+          "score": 9.5672,
+          "evidence": []
+        },
+        {
+          "term": "maintained",
+          "score": 8.5666,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "world",
+          "score": 0.1293,
+          "evidence": []
+        },
+        {
+          "term": "organization",
+          "score": 0.118,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.1155,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 0.1029,
+          "evidence": []
+        },
+        {
+          "term": "surveillance",
+          "score": 0.1028,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.0815,
+          "evidence": []
+        },
+        {
+          "term": "international",
+          "score": 0.0814,
+          "evidence": []
+        },
+        {
+          "term": "poliovirus",
+          "score": 0.0786,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health",
+          "score": 1.9909,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 1.2722,
+          "evidence": []
+        },
+        {
+          "term": "source",
+          "score": 1.249,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 1.1452,
+          "evidence": []
+        },
+        {
+          "term": "wpv",
+          "score": 1.1068,
+          "evidence": []
+        },
+        {
+          "term": "world",
+          "score": 1.0845,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 1.0789,
+          "evidence": []
+        },
+        {
+          "term": "organization",
+          "score": 1.0211,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "surveillance",
+          "score": 0.1028,
+          "evidence": []
+        },
+        {
+          "term": "cases",
+          "score": 0.0776,
+          "evidence": []
+        },
+        {
+          "term": "infection",
+          "score": 0.0731,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.0688,
+          "evidence": []
+        },
+        {
+          "term": "transmission",
+          "score": 0.0618,
+          "evidence": []
+        },
+        {
+          "term": "union territory",
+          "score": 0.0531,
+          "evidence": []
+        },
+        {
+          "term": "population",
+          "score": 0.0497,
+          "evidence": []
+        },
+        {
+          "term": "capital city",
+          "score": 0.0492,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在sars",
+          "score": 32.0238,
+          "evidence": []
+        },
+        {
+          "term": "非同寻常",
+          "score": 30.9232,
+          "evidence": []
+        },
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 26.7431,
+          "evidence": []
+        },
+        {
+          "term": "更大利益",
+          "score": 25.1789,
+          "evidence": []
+        },
+        {
+          "term": "在正常情况下",
+          "score": 23.7953,
+          "evidence": []
+        },
+        {
+          "term": "必要的",
+          "score": 21.9105,
+          "evidence": []
+        },
+        {
+          "term": "大流行性流感防范框架",
+          "score": 21.2764,
+          "evidence": []
+        },
+        {
+          "term": "风险最小化",
+          "score": 21.0729,
+          "evidence": []
+        }
+      ]
+    },
+    "page-002": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "smallpox eradication",
+          "score": 2.3742,
+          "evidence": []
+        },
+        {
+          "term": "national smallpox",
+          "score": 1.8775,
+          "evidence": []
+        },
+        {
+          "term": "primary vaccinations",
+          "score": 1.6112,
+          "evidence": []
+        },
+        {
+          "term": "vaccinators",
+          "score": 1.3134,
+          "evidence": []
+        },
+        {
+          "term": "eradication programme",
+          "score": 1.2591,
+          "evidence": []
+        },
+        {
+          "term": "vaccinate",
+          "score": 1.0798,
+          "evidence": []
+        },
+        {
+          "term": "total population",
+          "score": 0.9296,
+          "evidence": []
+        },
+        {
+          "term": "containment",
+          "score": 0.8236,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "smallpox eradication",
+          "score": 64.8311,
+          "evidence": []
+        },
+        {
+          "term": "national smallpox",
+          "score": 54.0755,
+          "evidence": []
+        },
+        {
+          "term": "primary vaccinations",
+          "score": 32.2889,
+          "evidence": []
+        },
+        {
+          "term": "vaccinators",
+          "score": 31.7167,
+          "evidence": []
+        },
+        {
+          "term": "vaccinate",
+          "score": 22.4498,
+          "evidence": []
+        },
+        {
+          "term": "eradication programme",
+          "score": 21.3844,
+          "evidence": []
+        },
+        {
+          "term": "total population",
+          "score": 16.9043,
+          "evidence": []
+        },
+        {
+          "term": "door",
+          "score": 13.0208,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "vaccination",
+          "score": 0.2626,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 0.2624,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.1975,
+          "evidence": []
+        },
+        {
+          "term": "total population",
+          "score": 0.1785,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.1643,
+          "evidence": []
+        },
+        {
+          "term": "primary vaccinations",
+          "score": 0.1433,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 0.1429,
+          "evidence": []
+        },
+        {
+          "term": "year",
+          "score": 0.1416,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "vaccination",
+          "score": 4.596,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 4.077,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 3.532,
+          "evidence": []
+        },
+        {
+          "term": "district",
+          "score": 3.1906,
+          "evidence": []
+        },
+        {
+          "term": "immz",
+          "score": 2.7216,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 2.6709,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 2.5402,
+          "evidence": []
+        },
+        {
+          "term": "ddcc",
+          "score": 2.0853,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "vaccination",
+          "score": 0.2626,
+          "evidence": []
+        },
+        {
+          "term": "total population",
+          "score": 0.1785,
+          "evidence": []
+        },
+        {
+          "term": "primary vaccinations",
+          "score": 0.1433,
+          "evidence": []
+        },
+        {
+          "term": "national smallpox",
+          "score": 0.1283,
+          "evidence": []
+        },
+        {
+          "term": "case",
+          "score": 0.1192,
+          "evidence": []
+        },
+        {
+          "term": "eradication programme",
+          "score": 0.1094,
+          "evidence": []
+        },
+        {
+          "term": "activities",
+          "score": 0.0932,
+          "evidence": []
+        },
+        {
+          "term": "rate",
+          "score": 0.0798,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 21.7936,
+          "evidence": []
+        },
+        {
+          "term": "在sars",
+          "score": 20.7442,
+          "evidence": []
+        },
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 20.1728,
+          "evidence": []
+        },
+        {
+          "term": "风险最小化",
+          "score": 19.5801,
+          "evidence": []
+        },
+        {
+          "term": "重要部分",
+          "score": 18.1642,
+          "evidence": []
+        },
+        {
+          "term": "中所讨论的一样",
+          "score": 17.2776,
+          "evidence": []
+        },
+        {
+          "term": "教员询问其余学员每个报告人的报告有无遗漏什么内容",
+          "score": 17.2682,
+          "evidence": []
+        },
+        {
+          "term": "非同寻常",
+          "score": 15.597,
+          "evidence": []
+        }
+      ]
+    },
+    "page-003": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "eight zones",
+          "score": 1.5775,
+          "evidence": []
+        },
+        {
+          "term": "local cases",
+          "score": 1.307,
+          "evidence": []
+        },
+        {
+          "term": "smallpox",
+          "score": 1.103,
+          "evidence": []
+        },
+        {
+          "term": "imported",
+          "score": 1.0032,
+          "evidence": []
+        },
+        {
+          "term": "age group",
+          "score": 0.884,
+          "evidence": []
+        },
+        {
+          "term": "delhi",
+          "score": 0.7258,
+          "evidence": []
+        },
+        {
+          "term": "trend",
+          "score": 0.692,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "local cases",
+          "score": 31.2421,
+          "evidence": []
+        },
+        {
+          "term": "eight zones",
+          "score": 30.8967,
+          "evidence": []
+        },
+        {
+          "term": "smallpox",
+          "score": 22.6008,
+          "evidence": []
+        },
+        {
+          "term": "imported",
+          "score": 18.8077,
+          "evidence": []
+        },
+        {
+          "term": "age group",
+          "score": 13.6396,
+          "evidence": []
+        },
+        {
+          "term": "delhi",
+          "score": 11.1522,
+          "evidence": []
+        },
+        {
+          "term": "trend",
+          "score": 10.4895,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "age group",
+          "score": 0.1261,
+          "evidence": []
+        },
+        {
+          "term": "years",
+          "score": 0.1226,
+          "evidence": []
+        },
+        {
+          "term": "number",
+          "score": 0.1126,
+          "evidence": []
+        },
+        {
+          "term": "cases",
+          "score": 0.1077,
+          "evidence": []
+        },
+        {
+          "term": "local cases",
+          "score": 0.1077,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.1075,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 0.1023,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "district",
+          "score": 2.0806,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 1.6179,
+          "evidence": []
+        },
+        {
+          "term": "age group",
+          "score": 1.5783,
+          "evidence": []
+        },
+        {
+          "term": "number",
+          "score": 1.4673,
+          "evidence": []
+        },
+        {
+          "term": "studies",
+          "score": 1.424,
+          "evidence": []
+        },
+        {
+          "term": "status",
+          "score": 1.4221,
+          "evidence": []
+        },
+        {
+          "term": "lupara",
+          "score": 1.382,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "age group",
+          "score": 0.1261,
+          "evidence": []
+        },
+        {
+          "term": "local cases",
+          "score": 0.1228,
+          "evidence": []
+        },
+        {
+          "term": "years",
+          "score": 0.1226,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.1075,
+          "evidence": []
+        },
+        {
+          "term": "population",
+          "score": 0.0924,
+          "evidence": []
+        },
+        {
+          "term": "reported",
+          "score": 0.0896,
+          "evidence": []
+        },
+        {
+          "term": "incidence",
+          "score": 0.0723,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "很重要",
+          "score": 24.1946,
+          "evidence": []
+        },
+        {
+          "term": "疫苗有关的",
+          "score": 22.7175,
+          "evidence": []
+        },
+        {
+          "term": "挑战性",
+          "score": 22.4789,
+          "evidence": []
+        },
+        {
+          "term": "的妇女",
+          "score": 21.6886,
+          "evidence": []
+        },
+        {
+          "term": "十分重要",
+          "score": 17.7111,
+          "evidence": []
+        },
+        {
+          "term": "和其他",
+          "score": 16.8166,
+          "evidence": []
+        },
+        {
+          "term": "行动要点",
+          "score": 15.8083,
+          "evidence": []
+        }
+      ]
+    },
+    "page-004": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "outbreaks",
+          "score": 1.614,
+          "evidence": []
+        },
+        {
+          "term": "zone",
+          "score": 1.4309,
+          "evidence": []
+        },
+        {
+          "term": "haryana",
+          "score": 1.2988,
+          "evidence": []
+        },
+        {
+          "term": "epidemiological investigations",
+          "score": 1.1018,
+          "evidence": []
+        },
+        {
+          "term": "gurgaon",
+          "score": 1.0201,
+          "evidence": []
+        },
+        {
+          "term": "hissar",
+          "score": 1.0201,
+          "evidence": []
+        },
+        {
+          "term": "rajasthan",
+          "score": 0.9704,
+          "evidence": []
+        },
+        {
+          "term": "cases",
+          "score": 0.8655,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "outbreaks",
+          "score": 78.0436,
+          "evidence": []
+        },
+        {
+          "term": "zone",
+          "score": 39.504,
+          "evidence": []
+        },
+        {
+          "term": "cases",
+          "score": 28.1506,
+          "evidence": []
+        },
+        {
+          "term": "haryana",
+          "score": 24.6454,
+          "evidence": []
+        },
+        {
+          "term": "delay",
+          "score": 16.9794,
+          "evidence": []
+        },
+        {
+          "term": "epidemiological investigations",
+          "score": 16.6694,
+          "evidence": []
+        },
+        {
+          "term": "gurgaon",
+          "score": 16.4303,
+          "evidence": []
+        },
+        {
+          "term": "hissar",
+          "score": 16.4303,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "cases",
+          "score": 0.1051,
+          "evidence": []
+        },
+        {
+          "term": "surveillance",
+          "score": 0.1046,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 0.1043,
+          "evidence": []
+        },
+        {
+          "term": "district",
+          "score": 0.0902,
+          "evidence": []
+        },
+        {
+          "term": "year",
+          "score": 0.0839,
+          "evidence": []
+        },
+        {
+          "term": "hospital",
+          "score": 0.0793,
+          "evidence": []
+        },
+        {
+          "term": "infection",
+          "score": 0.0778,
+          "evidence": []
+        },
+        {
+          "term": "months",
+          "score": 0.0773,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "source",
+          "score": 4.4132,
+          "evidence": []
+        },
+        {
+          "term": "treatment",
+          "score": 3.3486,
+          "evidence": []
+        },
+        {
+          "term": "cancer",
+          "score": 2.7398,
+          "evidence": []
+        },
+        {
+          "term": "zone",
+          "score": 2.7033,
+          "evidence": []
+        },
+        {
+          "term": "cin",
+          "score": 2.3762,
+          "evidence": []
+        },
+        {
+          "term": "wpv",
+          "score": 2.2171,
+          "evidence": []
+        },
+        {
+          "term": "applicable",
+          "score": 2.1686,
+          "evidence": []
+        },
+        {
+          "term": "cervical",
+          "score": 2.1607,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "cases",
+          "score": 0.1051,
+          "evidence": []
+        },
+        {
+          "term": "infection",
+          "score": 0.0778,
+          "evidence": []
+        },
+        {
+          "term": "page",
+          "score": 0.0604,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "weeks",
+          "score": 0.056,
+          "evidence": []
+        },
+        {
+          "term": "received",
+          "score": 0.0546,
+          "evidence": []
+        },
+        {
+          "term": "out",
+          "score": 0.0501,
+          "evidence": []
+        },
+        {
+          "term": "epidemiological investigations",
+          "score": 0.048,
+          "evidence": []
+        },
+        {
+          "term": "source",
+          "score": 0.0464,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "风险最小化",
+          "score": 33.0399,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 31.898,
+          "evidence": []
+        },
+        {
+          "term": "中所讨论的一样",
+          "score": 31.7072,
+          "evidence": []
+        },
+        {
+          "term": "平等主义",
+          "score": 27.2358,
+          "evidence": []
+        },
+        {
+          "term": "的原则",
+          "score": 25.3421,
+          "evidence": []
+        },
+        {
+          "term": "大流行性流感防范框架",
+          "score": 24.6242,
+          "evidence": []
+        },
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 24.051,
+          "evidence": []
+        },
+        {
+          "term": "原则或价值观",
+          "score": 23.9365,
+          "evidence": []
+        }
+      ]
+    },
+    "page-005": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "smallpox epidemic",
+          "score": 1.4555,
+          "evidence": []
+        },
+        {
+          "term": "delhi",
+          "score": 0.7258,
+          "evidence": []
+        },
+        {
+          "term": "insisted",
+          "score": 0.6436,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "smallpox epidemic",
+          "score": 24.6168,
+          "evidence": []
+        },
+        {
+          "term": "delhi",
+          "score": 11.1522,
+          "evidence": []
+        },
+        {
+          "term": "insisted",
+          "score": 8.2151,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "vaccine",
+          "score": 0.0489,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.0487,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.0477,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "district",
+          "score": 0.9138,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.5998,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.5885,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health",
+          "score": 0.0487,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.0477,
+          "evidence": []
+        },
+        {
+          "term": "system",
+          "score": 0.0285,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在sars",
+          "score": 37.693,
+          "evidence": []
+        },
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 26.2409,
+          "evidence": []
+        },
+        {
+          "term": "大流行性流感防范框架",
+          "score": 22.3485,
+          "evidence": []
+        }
+      ]
+    },
+    "page-006": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "rural zone",
+          "score": 1.695,
+          "evidence": []
+        },
+        {
+          "term": "delhi",
+          "score": 0.7258,
+          "evidence": []
+        },
+        {
+          "term": "gurgaon",
+          "score": 0.6436,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "rural zone",
+          "score": 30.7358,
+          "evidence": []
+        },
+        {
+          "term": "delhi",
+          "score": 11.1522,
+          "evidence": []
+        },
+        {
+          "term": "bullundshahar",
+          "score": 8.2151,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "rural zone",
+          "score": 0.0312,
+          "evidence": []
+        },
+        {
+          "term": "study",
+          "score": 0.0247,
+          "evidence": []
+        },
+        {
+          "term": "number",
+          "score": 0.0246,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "rural zone",
+          "score": 1.3856,
+          "evidence": []
+        },
+        {
+          "term": "cancer",
+          "score": 1.2879,
+          "evidence": []
+        },
+        {
+          "term": "treatment",
+          "score": 1.2038,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "rural zone",
+          "score": 0.0312,
+          "evidence": []
+        },
+        {
+          "term": "number",
+          "score": 0.0246,
+          "evidence": []
+        },
+        {
+          "term": "page",
+          "score": 0.0202,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "平等主义",
+          "score": 41.7296,
+          "evidence": []
+        },
+        {
+          "term": "的原则",
+          "score": 40.1832,
+          "evidence": []
+        },
+        {
+          "term": "原则或价值观",
+          "score": 37.3901,
+          "evidence": []
+        }
+      ]
+    },
+    "page-008": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "zone",
+          "score": 1.5616,
+          "evidence": []
+        },
+        {
+          "term": "nil",
+          "score": 1.3349,
+          "evidence": []
+        },
+        {
+          "term": "bagh",
+          "score": 0.6392,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "zone",
+          "score": 49.38,
+          "evidence": []
+        },
+        {
+          "term": "nil",
+          "score": 28.4661,
+          "evidence": []
+        },
+        {
+          "term": "bagh",
+          "score": 8.2151,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "vaccination",
+          "score": 0.0461,
+          "evidence": []
+        },
+        {
+          "term": "hpv",
+          "score": 0.0443,
+          "evidence": []
+        },
+        {
+          "term": "cervical",
+          "score": 0.042,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "cancer",
+          "score": 3.3158,
+          "evidence": []
+        },
+        {
+          "term": "zone",
+          "score": 3.0954,
+          "evidence": []
+        },
+        {
+          "term": "treatment",
+          "score": 2.9713,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "vaccination",
+          "score": 0.0461,
+          "evidence": []
+        },
+        {
+          "term": "population",
+          "score": 0.0342,
+          "evidence": []
+        },
+        {
+          "term": "page",
+          "score": 0.0322,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "的原则",
+          "score": 96.0888,
+          "evidence": []
+        },
+        {
+          "term": "平等主义",
+          "score": 93.1972,
+          "evidence": []
+        },
+        {
+          "term": "原则或价值观",
+          "score": 86.5198,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

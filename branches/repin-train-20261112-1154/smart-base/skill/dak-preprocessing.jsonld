@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1154/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1154/smart-base/skill/dak-preprocessing.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1154/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/skill/dak-preprocessing.jsonld",
+  "staging": {
+    "branch": "repin-train/20261112-1154",
+    "sha": "682eb5bed6a695ef552ed2872bdf49018e60c915",
+    "pr": "repin-train/20261112-1154",
+    "run": "43213290906"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/skill/dak-preprocessing",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "dak-preprocessing",
+      "title": "dak-preprocessing",
+      "description": "What each DAK pre-processing step does before the IG Publisher runs, which steps exist only to feed the Publisher's page index, and how the phase runs as the overlay on fhir-harness's AST cache refresh (`dak-pre-export.sh`). Also which files in a DAK repository are authored and which are generated, and the SEMVER rule for DAK and IG versions. Read before changing, assuming or moving a pre-processing step.",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/dak-preprocessing.md",
+      "instructionLines": 224,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills"
+    }
+  ]
+}

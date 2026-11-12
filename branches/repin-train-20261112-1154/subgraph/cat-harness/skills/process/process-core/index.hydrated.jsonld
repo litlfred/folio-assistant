@@ -1,0 +1,184 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/process/process-core/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/package/process-core",
+      "@type": "cat-harness:SkillPackage",
+      "declaresSkill": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/compiled-artefact-cache",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/decision-methodology-selector",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/git-friendly-churn",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/methodology-adoption",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/role-model",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/swimlane-glossary",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/swot-analysis",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/task-authorization"
+      ],
+      "description": "The process model's supporting knowledge: the role model and task authorization, the swimlane glossary, and how a methodology is chosen and adopted (decision-methodology-selector, methodology-adoption, swot-analysis). Moved out of folio-core into the process topic (bean 9umr, owner ruling 2026-09-30); workflow (BPMN/DMN authoring and the engine's state) and raci are its siblings in the same topic.",
+      "hasManifest": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+      "name": "process-core",
+      "path": "skills/process/process-core",
+      "version": "0.1.0"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/compiled-artefact-cache",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "The general pattern for caching expensive compiled artefacts (Lean .oleans, FHIR ASTs) across builds. Defines branch-based storage, validity checking, exit code protocol, safety guards, and the restore→build→contribute loop.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/process-core",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+      "instructionLines": 99,
+      "instructionsPath": "skills/process/process-core/compiled-artefact-cache.md",
+      "name": "compiled-artefact-cache",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3dc4d1be8d98db83e6ef5d8336dddb57ac84698376e48f8a2eb1e7b5732d7a75",
+        "bytes": 6282,
+        "sha256": "3dc4d1be8d98db83e6ef5d8336dddb57ac84698376e48f8a2eb1e7b5732d7a75"
+      },
+      "title": "Compiled Artefact Cache"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/decision-methodology-selector",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Given a decision context, select the applicable methodology from the methodology graph. Reads the graph's applies-when declarations, matches them against the context, and returns the ranked applicable methods with rationale. Extends methodology-adoption's four-question protocol with quantitative method-selection criteria from the MCDM literature.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/process-core",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+      "instructionLines": 229,
+      "instructionsPath": "skills/process/process-core/decision-methodology-selector.md",
+      "name": "decision-methodology-selector",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b2d5d135907493726735a202edce6e759e9921c32ff7baced40f489d575da851",
+        "bytes": 11720,
+        "sha256": "b2d5d135907493726735a202edce6e759e9921c32ff7baced40f489d575da851"
+      },
+      "title": "Decision methodology selector"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/git-friendly-churn",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Write files that git keeps many versions of (caches, published sites, generated indexes) so each new version costs a small delta, not a whole copy. The rules: the same bytes when nothing changed, stable paths, per-build facts kept apart, no compressed blobs, and how to measure it.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/process-core",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+      "instructionLines": 136,
+      "instructionsPath": "skills/process/process-core/git-friendly-churn.md",
+      "name": "git-friendly-churn",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a45f0ff6189e06765905827a8c0938a70b1b4a0be458602b4c2f4915864008cb",
+        "bytes": 6580,
+        "sha256": "a45f0ff6189e06765905827a8c0938a70b1b4a0be458602b4c2f4915864008cb"
+      },
+      "title": "Files git keeps many versions of"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/methodology-adoption",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "How a named external methodology enters the knowledge graph, and how an agent picks which one applies. Read before following a judgement method, before adopting a new one, and before writing a house method instead of adopting one.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/process-core",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+      "instructionLines": 221,
+      "instructionsPath": "skills/process/process-core/methodology-adoption.md",
+      "name": "methodology-adoption",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7fad86c0d8ae5fdb39dafb6b5a2f954b5d8fb36ca8fe3936346201db865a9263",
+        "bytes": 11693,
+        "sha256": "7fad86c0d8ae5fdb39dafb6b5a2f954b5d8fb36ca8fe3936346201db865a9263"
+      },
+      "title": "Adopting a methodology, and choosing between them"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/role-model",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Actors, roles and skills — who performs a BPMN task, under which swimlane, with which skills. How a role's skill set is resolved through `inherits` and through a subprocess call chain, how a lane binds to a declared role, and how `kg:audit` finds a dangling skill, lane, role or decision.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/process-core",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+      "instructionLines": 606,
+      "instructionsPath": "skills/process/process-core/role-model.md",
+      "name": "role-model",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fb1a74ce884f999fcfbde667fce705605b01fb90e17513a0ae9f4ea7519dccfa",
+        "bytes": 32618,
+        "sha256": "fb1a74ce884f999fcfbde667fce705605b01fb90e17513a0ae9f4ea7519dccfa"
+      },
+      "title": "Roles are swimlanes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/swimlane-glossary",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/process-core",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+      "instructionLines": 149,
+      "instructionsPath": "skills/process/process-core/swimlane-glossary.md",
+      "name": "swimlane-glossary",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/bf7528803b60ee6de5490a1ee24ded4aa419d0d27002ed859e9a3df7cfcfdab8",
+        "bytes": 6769,
+        "sha256": "bf7528803b60ee6de5490a1ee24ded4aa419d0d27002ed859e9a3df7cfcfdab8"
+      },
+      "title": "Swimlane Glossary Skill"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/swot-analysis",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Running a SWOT situation analysis — the activities of `swot-analysis.bpmn`, what each step must produce, and the one thing the technique must never be used for. The method itself lives in the `methodology` graph and is not repeated here.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/process-core",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+      "instructionLines": 77,
+      "instructionsPath": "skills/process/process-core/swot-analysis.md",
+      "name": "swot-analysis",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2a562c978b1f4e37094f0df2331f697a36b157280e8411bebd76a1879795503a",
+        "bytes": 4033,
+        "sha256": "2a562c978b1f4e37094f0df2331f697a36b157280e8411bebd76a1879795503a"
+      },
+      "title": "Running a SWOT scan"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/task-authorization",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "The check every BPMN task execution runs before anything is recorded: is the actor authenticated, assigned to the role the lane binds, authorized by an ODRL policy to perform the task, and allowed access to the content it acts on? One generic check in the engine rather than a step drawn in some diagrams; strict, with GitHub as the authenticator. Also how the HTTP routes ask the same policies. Triggers on: may this actor, who may perform, authorization, authentication, access rights, permission check, RBAC, rbac.ts, workflow_complete refused, not eligible for role.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/process-core",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+      "instructionLines": 323,
+      "instructionsPath": "skills/process/process-core/task-authorization.md",
+      "name": "task-authorization",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/850bc15d43b5a348c4d8094f2576baaf98fa9a4874d01b0a5793d81294264cf5",
+        "bytes": 16884,
+        "sha256": "850bc15d43b5a348c4d8094f2576baaf98fa9a4874d01b0a5793d81294264cf5"
+      },
+      "title": "Task authorization — four questions before every task"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills/process/process-core",
+  "path": "skills/process/process-core/"
+}

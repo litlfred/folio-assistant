@@ -1,0 +1,2080 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "arxiv-2203.02010v1",
+  "instance": "cat-harness",
+  "about": "library/arxiv-2203.02010v1",
+  "corpus": {
+    "library": "cat-harness/library/corpus",
+    "sections": 2232,
+    "terms": 15352
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "diﬀerent noise",
+        "score": 12.615,
+        "evidence": []
+      },
+      {
+        "term": "ngse technique",
+        "score": 12.306,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "true noise",
+        "score": 11.8947,
+        "evidence": []
+      },
+      {
+        "term": "correlated noise",
+        "score": 11.8409,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "estimated noise",
+        "score": 11.2391,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "diﬀerent methods",
+        "score": 10.8273,
+        "evidence": []
+      },
+      {
+        "term": "imaging methods",
+        "score": 10.7464,
+        "evidence": []
+      },
+      {
+        "term": "noise standard",
+        "score": 9.9039,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "true nsr",
+        "score": 9.8214,
+        "evidence": []
+      },
+      {
+        "term": "true slope",
+        "score": 9.8206,
+        "evidence": []
+      },
+      {
+        "term": "quantitative imaging",
+        "score": 9.6509,
+        "evidence": []
+      },
+      {
+        "term": "no-gold-standard technique",
+        "score": 9.0381,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "imaging methods",
+        "score": 289.8483,
+        "evidence": []
+      },
+      {
+        "term": "true noise",
+        "score": 269.1508,
+        "evidence": []
+      },
+      {
+        "term": "ngse technique",
+        "score": 265.1435,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "diﬀerent noise",
+        "score": 263.9459,
+        "evidence": []
+      },
+      {
+        "term": "estimated noise",
+        "score": 255.6848,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "correlated noise",
+        "score": 244.6765,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "quantitative imaging",
+        "score": 232.3871,
+        "evidence": []
+      },
+      {
+        "term": "noise standard",
+        "score": 231.1225,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "spect imaging",
+        "score": 221.2677,
+        "evidence": []
+      },
+      {
+        "term": "segmentation methods",
+        "score": 218.929,
+        "evidence": []
+      },
+      {
+        "term": "true nsr",
+        "score": 194.5628,
+        "evidence": []
+      },
+      {
+        "term": "no-gold-standard technique",
+        "score": 190.7649,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "quantitative imaging",
+        "score": 9.7807,
+        "evidence": []
+      },
+      {
+        "term": "imaging methods",
+        "score": 9.5003,
+        "evidence": []
+      },
+      {
+        "term": "ngse technique",
+        "score": 8.8053,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "spect imaging",
+        "score": 8.4043,
+        "evidence": []
+      },
+      {
+        "term": "rwt technique",
+        "score": 8.3447,
+        "evidence": []
+      },
+      {
+        "term": "true noise",
+        "score": 8.0046,
+        "evidence": []
+      },
+      {
+        "term": "segmentation methods",
+        "score": 7.6163,
+        "evidence": []
+      },
+      {
+        "term": "no-gold-standard technique",
+        "score": 7.5602,
+        "evidence": []
+      },
+      {
+        "term": "quantitative values",
+        "score": 7.3325,
+        "evidence": []
+      },
+      {
+        "term": "medical imaging",
+        "score": 7.1524,
+        "evidence": []
+      },
+      {
+        "term": "proposed technique",
+        "score": 6.961,
+        "evidence": []
+      },
+      {
+        "term": "true slope",
+        "score": 6.7351,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "imaging methods",
+        "score": 284.5518,
+        "evidence": []
+      },
+      {
+        "term": "quantitative imaging",
+        "score": 267.5032,
+        "evidence": []
+      },
+      {
+        "term": "spect imaging",
+        "score": 224.8491,
+        "evidence": []
+      },
+      {
+        "term": "ngse technique",
+        "score": 222.4204,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "segmentation methods",
+        "score": 208.467,
+        "evidence": []
+      },
+      {
+        "term": "medical imaging",
+        "score": 190.0723,
+        "evidence": []
+      },
+      {
+        "term": "rwt technique",
+        "score": 183.4671,
+        "evidence": []
+      },
+      {
+        "term": "no-gold-standard technique",
+        "score": 172.1102,
+        "evidence": []
+      },
+      {
+        "term": "diﬀerent methods",
+        "score": 167.0444,
+        "evidence": []
+      },
+      {
+        "term": "true noise",
+        "score": 166.6775,
+        "evidence": []
+      },
+      {
+        "term": "reconstruction methods",
+        "score": 165.6113,
+        "evidence": []
+      },
+      {
+        "term": "nuclear-medicine imaging",
+        "score": 164.7214,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "quantitative imaging",
+        "score": 9.7807,
+        "evidence": []
+      },
+      {
+        "term": "imaging methods",
+        "score": 9.5003,
+        "evidence": []
+      },
+      {
+        "term": "ngse technique",
+        "score": 8.8053,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "spect imaging",
+        "score": 8.4043,
+        "evidence": []
+      },
+      {
+        "term": "rwt technique",
+        "score": 8.3447,
+        "evidence": []
+      },
+      {
+        "term": "true noise",
+        "score": 8.0046,
+        "evidence": []
+      },
+      {
+        "term": "segmentation methods",
+        "score": 7.6163,
+        "evidence": []
+      },
+      {
+        "term": "no-gold-standard technique",
+        "score": 7.5602,
+        "evidence": []
+      },
+      {
+        "term": "quantitative values",
+        "score": 7.3325,
+        "evidence": []
+      },
+      {
+        "term": "medical imaging",
+        "score": 7.1524,
+        "evidence": []
+      },
+      {
+        "term": "proposed technique",
+        "score": 6.961,
+        "evidence": []
+      },
+      {
+        "term": "true slope",
+        "score": 6.7351,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "resultant nsr",
+        "score": 1526.2118,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "estimated nsr",
+        "score": 1124.3405,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "emission tomography",
+        "score": 1082.0816,
+        "evidence": []
+      },
+      {
+        "term": "positron emission",
+        "score": 1069.0586,
+        "evidence": []
+      },
+      {
+        "term": "gaussian-distributed noise",
+        "score": 1062.9792,
+        "evidence": []
+      },
+      {
+        "term": "metabolic tumor",
+        "score": 1024.6612,
+        "evidence": []
+      },
+      {
+        "term": "true nsr",
+        "score": 972.5057,
+        "evidence": []
+      },
+      {
+        "term": "ngse technique",
+        "score": 963.3666,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "oncological pet",
+        "score": 958.3685,
+        "evidence": []
+      },
+      {
+        "term": "cine mri",
+        "score": 950.806,
+        "evidence": []
+      },
+      {
+        "term": "cardiac cine",
+        "score": 945.0878,
+        "evidence": []
+      },
+      {
+        "term": "pth patient",
+        "score": 927.8621,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-2-methods": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "correlated noise",
+          "score": 2.0016,
+          "evidence": []
+        },
+        {
+          "term": "ngse technique",
+          "score": 1.9962,
+          "evidence": []
+        },
+        {
+          "term": "quantitative imaging",
+          "score": 1.7676,
+          "evidence": []
+        },
+        {
+          "term": "methods",
+          "score": 1.3496,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "washington university",
+          "score": 1.2738,
+          "evidence": []
+        },
+        {
+          "term": "covariance matrix",
+          "score": 1.1759,
+          "evidence": []
+        },
+        {
+          "term": "measured values",
+          "score": 1.0732,
+          "evidence": []
+        },
+        {
+          "term": "objective evaluation",
+          "score": 1.0409,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "correlated noise",
+          "score": 40.4093,
+          "evidence": []
+        },
+        {
+          "term": "ngse technique",
+          "score": 36.6261,
+          "evidence": []
+        },
+        {
+          "term": "quantitative imaging",
+          "score": 26.9555,
+          "evidence": []
+        },
+        {
+          "term": "methods",
+          "score": 26.9111,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "washington university",
+          "score": 16.5649,
+          "evidence": []
+        },
+        {
+          "term": "measured values",
+          "score": 15.876,
+          "evidence": []
+        },
+        {
+          "term": "covariance matrix",
+          "score": 15.5846,
+          "evidence": []
+        },
+        {
+          "term": "objective evaluation",
+          "score": 14.1184,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "methods",
+          "score": 1.3468,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ngse technique",
+          "score": 1.1555,
+          "evidence": []
+        },
+        {
+          "term": "quantitative imaging",
+          "score": 1.0863,
+          "evidence": []
+        },
+        {
+          "term": "patient data",
+          "score": 0.8742,
+          "evidence": []
+        },
+        {
+          "term": "measured values",
+          "score": 0.8164,
+          "evidence": []
+        },
+        {
+          "term": "correlated noise",
+          "score": 0.8143,
+          "evidence": []
+        },
+        {
+          "term": "gold standard",
+          "score": 0.6694,
+          "evidence": []
+        },
+        {
+          "term": "true",
+          "score": 0.6612,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "methods",
+          "score": 26.7152,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ngse technique",
+          "score": 21.1097,
+          "evidence": []
+        },
+        {
+          "term": "quantitative imaging",
+          "score": 20.9484,
+          "evidence": []
+        },
+        {
+          "term": "true",
+          "score": 12.1785,
+          "evidence": []
+        },
+        {
+          "term": "correlated noise",
+          "score": 10.0147,
+          "evidence": []
+        },
+        {
+          "term": "gold standard",
+          "score": 9.5972,
+          "evidence": []
+        },
+        {
+          "term": "measured values",
+          "score": 9.4584,
+          "evidence": []
+        },
+        {
+          "term": "patient data",
+          "score": 9.4456,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "methods",
+          "score": 1.3468,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ngse technique",
+          "score": 1.1555,
+          "evidence": []
+        },
+        {
+          "term": "quantitative imaging",
+          "score": 1.0863,
+          "evidence": []
+        },
+        {
+          "term": "patient data",
+          "score": 0.8742,
+          "evidence": []
+        },
+        {
+          "term": "measured values",
+          "score": 0.8164,
+          "evidence": []
+        },
+        {
+          "term": "correlated noise",
+          "score": 0.8143,
+          "evidence": []
+        },
+        {
+          "term": "gold standard",
+          "score": 0.6694,
+          "evidence": []
+        },
+        {
+          "term": "true",
+          "score": 0.6612,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "ˆuk",
+          "score": 139.5381,
+          "evidence": []
+        },
+        {
+          "term": "ˆσk",
+          "score": 139.5381,
+          "evidence": []
+        },
+        {
+          "term": "ngse technique",
+          "score": 137.9021,
+          "evidence": []
+        },
+        {
+          "term": "nsr",
+          "score": 126.2066,
+          "evidence": []
+        },
+        {
+          "term": "fpbd",
+          "score": 124.6622,
+          "evidence": []
+        },
+        {
+          "term": "pth",
+          "score": 118.5663,
+          "evidence": []
+        },
+        {
+          "term": "ˆap",
+          "score": 118.5663,
+          "evidence": []
+        },
+        {
+          "term": "resultant",
+          "score": 115.468,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-001-1-introduction": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "rwt technique",
+          "score": 2.2224,
+          "evidence": []
+        },
+        {
+          "term": "regional uptake",
+          "score": 1.9266,
+          "evidence": []
+        },
+        {
+          "term": "metabolic tumor",
+          "score": 1.7827,
+          "evidence": []
+        },
+        {
+          "term": "segmentation methods",
+          "score": 1.7316,
+          "evidence": []
+        },
+        {
+          "term": "gold standard",
+          "score": 1.6207,
+          "evidence": []
+        },
+        {
+          "term": "tumor volume",
+          "score": 1.4439,
+          "evidence": []
+        },
+        {
+          "term": "measurements obtained",
+          "score": 1.3814,
+          "evidence": []
+        },
+        {
+          "term": "noise term",
+          "score": 1.2893,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "rwt technique",
+          "score": 45.7681,
+          "evidence": []
+        },
+        {
+          "term": "segmentation methods",
+          "score": 41.8478,
+          "evidence": []
+        },
+        {
+          "term": "gold standard",
+          "score": 30.9366,
+          "evidence": []
+        },
+        {
+          "term": "regional uptake",
+          "score": 29.5661,
+          "evidence": []
+        },
+        {
+          "term": "metabolic tumor",
+          "score": 24.4865,
+          "evidence": []
+        },
+        {
+          "term": "diﬀerent",
+          "score": 21.251,
+          "evidence": []
+        },
+        {
+          "term": "objective evaluation",
+          "score": 21.1948,
+          "evidence": []
+        },
+        {
+          "term": "clinical",
+          "score": 20.2355,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "rwt technique",
+          "score": 1.825,
+          "evidence": []
+        },
+        {
+          "term": "segmentation methods",
+          "score": 1.503,
+          "evidence": []
+        },
+        {
+          "term": "true value",
+          "score": 1.2164,
+          "evidence": []
+        },
+        {
+          "term": "gold standard",
+          "score": 1.1196,
+          "evidence": []
+        },
+        {
+          "term": "noise term",
+          "score": 1.0386,
+          "evidence": []
+        },
+        {
+          "term": "patient",
+          "score": 1.0355,
+          "evidence": []
+        },
+        {
+          "term": "quantitative",
+          "score": 0.954,
+          "evidence": []
+        },
+        {
+          "term": "imaging",
+          "score": 0.9114,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "segmentation methods",
+          "score": 32.4678,
+          "evidence": []
+        },
+        {
+          "term": "rwt technique",
+          "score": 30.2199,
+          "evidence": []
+        },
+        {
+          "term": "imaging",
+          "score": 20.931,
+          "evidence": []
+        },
+        {
+          "term": "true value",
+          "score": 20.7684,
+          "evidence": []
+        },
+        {
+          "term": "quantitative",
+          "score": 17.3617,
+          "evidence": []
+        },
+        {
+          "term": "ngse",
+          "score": 16.6081,
+          "evidence": []
+        },
+        {
+          "term": "gold standard",
+          "score": 16.5906,
+          "evidence": []
+        },
+        {
+          "term": "objective evaluation",
+          "score": 13.7763,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "rwt technique",
+          "score": 1.825,
+          "evidence": []
+        },
+        {
+          "term": "segmentation methods",
+          "score": 1.503,
+          "evidence": []
+        },
+        {
+          "term": "true value",
+          "score": 1.2164,
+          "evidence": []
+        },
+        {
+          "term": "gold standard",
+          "score": 1.1196,
+          "evidence": []
+        },
+        {
+          "term": "noise term",
+          "score": 1.0386,
+          "evidence": []
+        },
+        {
+          "term": "quantitative",
+          "score": 0.954,
+          "evidence": []
+        },
+        {
+          "term": "imaging",
+          "score": 0.9114,
+          "evidence": []
+        },
+        {
+          "term": "objective evaluation",
+          "score": 0.8651,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "metabolic tumor",
+          "score": 142.273,
+          "evidence": []
+        },
+        {
+          "term": "rwt technique",
+          "score": 113.7078,
+          "evidence": []
+        },
+        {
+          "term": "ˆuk",
+          "score": 99.1314,
+          "evidence": []
+        },
+        {
+          "term": "ˆσk",
+          "score": 99.1314,
+          "evidence": []
+        },
+        {
+          "term": "regional uptake",
+          "score": 97.8573,
+          "evidence": []
+        },
+        {
+          "term": "nsr",
+          "score": 94.7529,
+          "evidence": []
+        },
+        {
+          "term": "ziping",
+          "score": 91.9513,
+          "evidence": []
+        },
+        {
+          "term": "fpbd",
+          "score": 88.011,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-002-21-theory": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "pth patient",
+          "score": 1.996,
+          "evidence": []
+        },
+        {
+          "term": "ˆap",
+          "score": 1.8925,
+          "evidence": []
+        },
+        {
+          "term": "true values",
+          "score": 1.8097,
+          "evidence": []
+        },
+        {
+          "term": "kth method",
+          "score": 1.787,
+          "evidence": []
+        },
+        {
+          "term": "measured values",
+          "score": 1.4872,
+          "evidence": []
+        },
+        {
+          "term": "quantitative values",
+          "score": 1.336,
+          "evidence": []
+        },
+        {
+          "term": "estimated parameters",
+          "score": 1.3071,
+          "evidence": []
+        },
+        {
+          "term": "fpbd",
+          "score": 1.2653,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "true values",
+          "score": 51.0573,
+          "evidence": []
+        },
+        {
+          "term": "ˆap",
+          "score": 49.1225,
+          "evidence": []
+        },
+        {
+          "term": "measured values",
+          "score": 33.5414,
+          "evidence": []
+        },
+        {
+          "term": "kth method",
+          "score": 31.1773,
+          "evidence": []
+        },
+        {
+          "term": "quantitative values",
+          "score": 29.079,
+          "evidence": []
+        },
+        {
+          "term": "pth patient",
+          "score": 27.8938,
+          "evidence": []
+        },
+        {
+          "term": "noise",
+          "score": 26.1825,
+          "evidence": []
+        },
+        {
+          "term": "denote",
+          "score": 22.913,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "true values",
+          "score": 1.3507,
+          "evidence": []
+        },
+        {
+          "term": "quantitative values",
+          "score": 1.0631,
+          "evidence": []
+        },
+        {
+          "term": "measured values",
+          "score": 0.9635,
+          "evidence": []
+        },
+        {
+          "term": "pth patient",
+          "score": 0.9336,
+          "evidence": []
+        },
+        {
+          "term": "estimated parameters",
+          "score": 0.8868,
+          "evidence": []
+        },
+        {
+          "term": "rwt",
+          "score": 0.6954,
+          "evidence": []
+        },
+        {
+          "term": "methods",
+          "score": 0.6721,
+          "evidence": []
+        },
+        {
+          "term": "noise",
+          "score": 0.6694,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "true values",
+          "score": 31.6673,
+          "evidence": []
+        },
+        {
+          "term": "quantitative values",
+          "score": 16.8765,
+          "evidence": []
+        },
+        {
+          "term": "methods",
+          "score": 14.511,
+          "evidence": []
+        },
+        {
+          "term": "measured values",
+          "score": 14.2369,
+          "evidence": []
+        },
+        {
+          "term": "pth patient",
+          "score": 12.8234,
+          "evidence": []
+        },
+        {
+          "term": "technique",
+          "score": 11.4515,
+          "evidence": []
+        },
+        {
+          "term": "rwt",
+          "score": 11.3029,
+          "evidence": []
+        },
+        {
+          "term": "estimated parameters",
+          "score": 11.1433,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "true values",
+          "score": 1.3507,
+          "evidence": []
+        },
+        {
+          "term": "quantitative values",
+          "score": 1.0631,
+          "evidence": []
+        },
+        {
+          "term": "measured values",
+          "score": 0.9635,
+          "evidence": []
+        },
+        {
+          "term": "pth patient",
+          "score": 0.9336,
+          "evidence": []
+        },
+        {
+          "term": "estimated parameters",
+          "score": 0.8868,
+          "evidence": []
+        },
+        {
+          "term": "methods",
+          "score": 0.6721,
+          "evidence": []
+        },
+        {
+          "term": "noise",
+          "score": 0.6694,
+          "evidence": []
+        },
+        {
+          "term": "technique",
+          "score": 0.6383,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "pth patient",
+          "score": 191.7991,
+          "evidence": []
+        },
+        {
+          "term": "ˆuk",
+          "score": 181.0905,
+          "evidence": []
+        },
+        {
+          "term": "ˆσk",
+          "score": 181.0905,
+          "evidence": []
+        },
+        {
+          "term": "fpbd",
+          "score": 163.9443,
+          "evidence": []
+        },
+        {
+          "term": "ˆap",
+          "score": 159.9528,
+          "evidence": []
+        },
+        {
+          "term": "nsr",
+          "score": 154.8745,
+          "evidence": []
+        },
+        {
+          "term": "resultant",
+          "score": 139.1976,
+          "evidence": []
+        },
+        {
+          "term": "kth",
+          "score": 136.4043,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-003-22-evaluating-the-ngse-technique-using-numerical": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "ngse technique",
+          "score": 3.9694,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "correlated noise",
+          "score": 2.0004,
+          "evidence": []
+        },
+        {
+          "term": "true values",
+          "score": 1.3784,
+          "evidence": []
+        },
+        {
+          "term": "fpbd",
+          "score": 1.0027,
+          "evidence": []
+        },
+        {
+          "term": "diﬀerent",
+          "score": 0.9789,
+          "evidence": []
+        },
+        {
+          "term": "slope",
+          "score": 0.8863,
+          "evidence": []
+        },
+        {
+          "term": "covariance",
+          "score": 0.769,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "ngse technique",
+          "score": 70.0859,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "correlated noise",
+          "score": 43.3982,
+          "evidence": []
+        },
+        {
+          "term": "true values",
+          "score": 26.5014,
+          "evidence": []
+        },
+        {
+          "term": "diﬀerent",
+          "score": 15.9383,
+          "evidence": []
+        },
+        {
+          "term": "methods",
+          "score": 15.6982,
+          "evidence": []
+        },
+        {
+          "term": "fpbd",
+          "score": 14.035,
+          "evidence": []
+        },
+        {
+          "term": "slope",
+          "score": 13.9984,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "ngse technique",
+          "score": 1.3678,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "true values",
+          "score": 0.8223,
+          "evidence": []
+        },
+        {
+          "term": "correlated noise",
+          "score": 0.5348,
+          "evidence": []
+        },
+        {
+          "term": "patient",
+          "score": 0.4384,
+          "evidence": []
+        },
+        {
+          "term": "methods",
+          "score": 0.4158,
+          "evidence": []
+        },
+        {
+          "term": "rwt",
+          "score": 0.4101,
+          "evidence": []
+        },
+        {
+          "term": "quantitative",
+          "score": 0.3218,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "ngse technique",
+          "score": 29.0602,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "true values",
+          "score": 18.1873,
+          "evidence": []
+        },
+        {
+          "term": "methods",
+          "score": 9.5744,
+          "evidence": []
+        },
+        {
+          "term": "correlated noise",
+          "score": 8.4346,
+          "evidence": []
+        },
+        {
+          "term": "rwt",
+          "score": 6.8537,
+          "evidence": []
+        },
+        {
+          "term": "patient",
+          "score": 6.0591,
+          "evidence": []
+        },
+        {
+          "term": "quantitative",
+          "score": 5.7154,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "ngse technique",
+          "score": 1.3678,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "true values",
+          "score": 0.8223,
+          "evidence": []
+        },
+        {
+          "term": "correlated noise",
+          "score": 0.5348,
+          "evidence": []
+        },
+        {
+          "term": "methods",
+          "score": 0.4158,
+          "evidence": []
+        },
+        {
+          "term": "slope",
+          "score": 0.3093,
+          "evidence": []
+        },
+        {
+          "term": "numerical",
+          "score": 0.3024,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "bias",
+          "score": 0.2354,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "ngse technique",
+          "score": 294.5692,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ˆuk",
+          "score": 180.9335,
+          "evidence": []
+        },
+        {
+          "term": "ˆσk",
+          "score": 180.9335,
+          "evidence": []
+        },
+        {
+          "term": "fpbd",
+          "score": 162.4695,
+          "evidence": []
+        },
+        {
+          "term": "nsr",
+          "score": 157.5943,
+          "evidence": []
+        },
+        {
+          "term": "pth",
+          "score": 155.1322,
+          "evidence": []
+        },
+        {
+          "term": "ˆap",
+          "score": 155.1322,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-004-3-results": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "estimated nsr",
+          "score": 3.1994,
+          "evidence": []
+        },
+        {
+          "term": "resultant nsr",
+          "score": 3.169,
+          "evidence": []
+        },
+        {
+          "term": "estimated slope",
+          "score": 2.8224,
+          "evidence": []
+        },
+        {
+          "term": "true nsr",
+          "score": 2.787,
+          "evidence": []
+        },
+        {
+          "term": "estimated noise",
+          "score": 2.7865,
+          "evidence": []
+        },
+        {
+          "term": "ngse technique",
+          "score": 2.5823,
+          "evidence": []
+        },
+        {
+          "term": "correlated noise",
+          "score": 2.4058,
+          "evidence": []
+        },
+        {
+          "term": "noise standard",
+          "score": 2.2891,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "estimated nsr",
+          "score": 100.7179,
+          "evidence": []
+        },
+        {
+          "term": "estimated noise",
+          "score": 97.9486,
+          "evidence": []
+        },
+        {
+          "term": "estimated slope",
+          "score": 87.5787,
+          "evidence": []
+        },
+        {
+          "term": "noise standard",
+          "score": 80.279,
+          "evidence": []
+        },
+        {
+          "term": "resultant nsr",
+          "score": 79.5391,
+          "evidence": []
+        },
+        {
+          "term": "true nsr",
+          "score": 75.8943,
+          "evidence": []
+        },
+        {
+          "term": "correlated noise",
+          "score": 70.3322,
+          "evidence": []
+        },
+        {
+          "term": "standard deviation",
+          "score": 67.3199,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "true noise",
+          "score": 1.0695,
+          "evidence": []
+        },
+        {
+          "term": "true slope",
+          "score": 0.9635,
+          "evidence": []
+        },
+        {
+          "term": "true nsr",
+          "score": 0.905,
+          "evidence": []
+        },
+        {
+          "term": "ngse technique",
+          "score": 0.8332,
+          "evidence": []
+        },
+        {
+          "term": "estimated noise",
+          "score": 0.8036,
+          "evidence": []
+        },
+        {
+          "term": "noise standard",
+          "score": 0.7278,
+          "evidence": []
+        },
+        {
+          "term": "nsr values",
+          "score": 0.7052,
+          "evidence": []
+        },
+        {
+          "term": "correlated noise",
+          "score": 0.6512,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "true noise",
+          "score": 37.1095,
+          "evidence": []
+        },
+        {
+          "term": "true nsr",
+          "score": 32.9694,
+          "evidence": []
+        },
+        {
+          "term": "true slope",
+          "score": 32.1412,
+          "evidence": []
+        },
+        {
+          "term": "ngse technique",
+          "score": 27.0293,
+          "evidence": []
+        },
+        {
+          "term": "estimated noise",
+          "score": 20.2205,
+          "evidence": []
+        },
+        {
+          "term": "considered methods",
+          "score": 18.9977,
+          "evidence": []
+        },
+        {
+          "term": "noise standard",
+          "score": 18.7803,
+          "evidence": []
+        },
+        {
+          "term": "nsr values",
+          "score": 17.8081,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "true noise",
+          "score": 1.0695,
+          "evidence": []
+        },
+        {
+          "term": "true slope",
+          "score": 0.9635,
+          "evidence": []
+        },
+        {
+          "term": "true nsr",
+          "score": 0.905,
+          "evidence": []
+        },
+        {
+          "term": "ngse technique",
+          "score": 0.8332,
+          "evidence": []
+        },
+        {
+          "term": "estimated noise",
+          "score": 0.8036,
+          "evidence": []
+        },
+        {
+          "term": "noise standard",
+          "score": 0.7278,
+          "evidence": []
+        },
+        {
+          "term": "nsr values",
+          "score": 0.7052,
+          "evidence": []
+        },
+        {
+          "term": "correlated noise",
+          "score": 0.6512,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "resultant nsr",
+          "score": 441.0421,
+          "evidence": []
+        },
+        {
+          "term": "estimated nsr",
+          "score": 321.6685,
+          "evidence": []
+        },
+        {
+          "term": "true nsr",
+          "score": 279.4138,
+          "evidence": []
+        },
+        {
+          "term": "ˆuk",
+          "score": 262.349,
+          "evidence": []
+        },
+        {
+          "term": "ˆσk",
+          "score": 262.349,
+          "evidence": []
+        },
+        {
+          "term": "estimated slope",
+          "score": 251.1295,
+          "evidence": []
+        },
+        {
+          "term": "fpbd",
+          "score": 233.7526,
+          "evidence": []
+        },
+        {
+          "term": "nsr values",
+          "score": 230.506,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-005-4-discussion-and-conclusion": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "spect imaging",
+          "score": 4.0173,
+          "evidence": []
+        },
+        {
+          "term": "quantitative imaging",
+          "score": 3.6235,
+          "evidence": []
+        },
+        {
+          "term": "pet segmentation",
+          "score": 3.4946,
+          "evidence": []
+        },
+        {
+          "term": "imaging methods",
+          "score": 3.2271,
+          "evidence": []
+        },
+        {
+          "term": "medical imaging",
+          "score": 3.0918,
+          "evidence": []
+        },
+        {
+          "term": "nuclear-medicine imaging",
+          "score": 3.0755,
+          "evidence": []
+        },
+        {
+          "term": "brain spect",
+          "score": 3.0099,
+          "evidence": []
+        },
+        {
+          "term": "ngse technique",
+          "score": 2.8231,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "spect imaging",
+          "score": 153.2704,
+          "evidence": []
+        },
+        {
+          "term": "quantitative imaging",
+          "score": 146.375,
+          "evidence": []
+        },
+        {
+          "term": "imaging methods",
+          "score": 144.2023,
+          "evidence": []
+        },
+        {
+          "term": "segmentation methods",
+          "score": 114.2886,
+          "evidence": []
+        },
+        {
+          "term": "medical imaging",
+          "score": 109.6023,
+          "evidence": []
+        },
+        {
+          "term": "nuclear-medicine imaging",
+          "score": 105.8468,
+          "evidence": []
+        },
+        {
+          "term": "pet segmentation",
+          "score": 104.1412,
+          "evidence": []
+        },
+        {
+          "term": "ngse technique",
+          "score": 83.5962,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "quantitative imaging",
+          "score": 4.4178,
+          "evidence": []
+        },
+        {
+          "term": "spect imaging",
+          "score": 4.2441,
+          "evidence": []
+        },
+        {
+          "term": "medical imaging",
+          "score": 3.8801,
+          "evidence": []
+        },
+        {
+          "term": "imaging methods",
+          "score": 3.7999,
+          "evidence": []
+        },
+        {
+          "term": "nuclear-medicine imaging",
+          "score": 3.4045,
+          "evidence": []
+        },
+        {
+          "term": "no-gold-standard technique",
+          "score": 3.0829,
+          "evidence": []
+        },
+        {
+          "term": "pet segmentation",
+          "score": 3.037,
+          "evidence": []
+        },
+        {
+          "term": "ngse technique",
+          "score": 2.9793,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "quantitative imaging",
+          "score": 160.5247,
+          "evidence": []
+        },
+        {
+          "term": "imaging methods",
+          "score": 152.7205,
+          "evidence": []
+        },
+        {
+          "term": "spect imaging",
+          "score": 142.2245,
+          "evidence": []
+        },
+        {
+          "term": "medical imaging",
+          "score": 122.2923,
+          "evidence": []
+        },
+        {
+          "term": "nuclear-medicine imaging",
+          "score": 108.3161,
+          "evidence": []
+        },
+        {
+          "term": "segmentation methods",
+          "score": 103.244,
+          "evidence": []
+        },
+        {
+          "term": "ngse technique",
+          "score": 98.41,
+          "evidence": []
+        },
+        {
+          "term": "no-gold-standard technique",
+          "score": 85.7478,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "quantitative imaging",
+          "score": 4.4178,
+          "evidence": []
+        },
+        {
+          "term": "spect imaging",
+          "score": 4.2441,
+          "evidence": []
+        },
+        {
+          "term": "medical imaging",
+          "score": 3.8801,
+          "evidence": []
+        },
+        {
+          "term": "imaging methods",
+          "score": 3.7999,
+          "evidence": []
+        },
+        {
+          "term": "nuclear-medicine imaging",
+          "score": 3.4045,
+          "evidence": []
+        },
+        {
+          "term": "no-gold-standard technique",
+          "score": 3.0829,
+          "evidence": []
+        },
+        {
+          "term": "pet segmentation",
+          "score": 3.037,
+          "evidence": []
+        },
+        {
+          "term": "ngse technique",
+          "score": 2.9793,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "nuclear-medicine imaging",
+          "score": 311.7347,
+          "evidence": []
+        },
+        {
+          "term": "acrin rtog",
+          "score": 279.3076,
+          "evidence": []
+        },
+        {
+          "term": "radionuclide therapy",
+          "score": 266.7908,
+          "evidence": []
+        },
+        {
+          "term": "oncological pet",
+          "score": 252.8353,
+          "evidence": []
+        },
+        {
+          "term": "spect imaging",
+          "score": 242.445,
+          "evidence": []
+        },
+        {
+          "term": "radiol",
+          "score": 239.3102,
+          "evidence": []
+        },
+        {
+          "term": "pet segmentation",
+          "score": 222.7211,
+          "evidence": []
+        },
+        {
+          "term": "clin",
+          "score": 215.6478,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "medical imaging",
+          "score": 1.6604,
+          "evidence": []
+        },
+        {
+          "term": "spie medical",
+          "score": 1.6104,
+          "evidence": []
+        },
+        {
+          "term": "med-ph",
+          "score": 0.6308,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "medical imaging",
+          "score": 23.9269,
+          "evidence": []
+        },
+        {
+          "term": "spie medical",
+          "score": 21.7139,
+          "evidence": []
+        },
+        {
+          "term": "manuscript",
+          "score": 7.4066,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "medical imaging",
+          "score": 0.27,
+          "evidence": []
+        },
+        {
+          "term": "jha",
+          "score": 0.1421,
+          "evidence": []
+        },
+        {
+          "term": "quantitative",
+          "score": 0.1371,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "medical imaging",
+          "score": 6.222,
+          "evidence": []
+        },
+        {
+          "term": "jha",
+          "score": 3.1217,
+          "evidence": []
+        },
+        {
+          "term": "quantitative",
+          "score": 3.0423,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "medical imaging",
+          "score": 0.27,
+          "evidence": []
+        },
+        {
+          "term": "jha",
+          "score": 0.1421,
+          "evidence": []
+        },
+        {
+          "term": "quantitative",
+          "score": 0.1371,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "spie medical",
+          "score": 268.5461,
+          "evidence": []
+        },
+        {
+          "term": "radiol",
+          "score": 261.7534,
+          "evidence": []
+        },
+        {
+          "term": "clin",
+          "score": 234.9636,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

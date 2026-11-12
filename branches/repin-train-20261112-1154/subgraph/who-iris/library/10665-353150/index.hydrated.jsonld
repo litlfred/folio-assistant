@@ -1,0 +1,83 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/who-iris/library/10665-353150/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/who-iris/source/10665-353150",
+      "@type": "cat-harness:SourceDocument",
+      "path": "library/10665-353150/manifest.jsonld",
+      "title": "Guide d’investissement pour la mise en oeuvre numérique (DIIG) : intégrer les interventions numériques dans les programmes de santé"
+    }
+  ],
+  "hasSubgraph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/who-iris/library/10665-353150/blocks/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio/library/10665-353150/blocks/figure-img-p009-1",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Figure",
+          "path": "library/10665-353150/blocks/figure-img-p009-1.jsonld"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/10665-353150/blocks/figure-img-p071-1",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Figure",
+          "path": "library/10665-353150/blocks/figure-img-p071-1.jsonld"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/10665-353150/blocks/prose-sec-000",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/10665-353150/blocks/prose-sec-000.jsonld",
+          "title": "Document"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "name": "library/10665-353150/blocks",
+      "path": "library/10665-353150/blocks/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/who-iris/library/10665-353150/figures/",
+      "@type": "bootstrap:Subgraph",
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "name": "library/10665-353150/figures",
+      "path": "library/10665-353150/figures/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/who-iris/library/10665-353150/images/",
+      "@type": "bootstrap:Subgraph",
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "name": "library/10665-353150/images",
+      "path": "library/10665-353150/images/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/who-iris/library/10665-353150/sections/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio/library/10665-353150/sections/sec-000",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/10665-353150/sections/sec-000.jsonld",
+          "title": "Document"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "name": "library/10665-353150/sections",
+      "path": "library/10665-353150/sections/"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/library"
+  ],
+  "name": "library/10665-353150",
+  "path": "library/10665-353150/"
+}

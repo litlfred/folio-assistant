@@ -1,0 +1,78 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/library-extras/skills/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasSubgraph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/library-extras/skills/library-extras/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/audio-transcription",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Turn recorded speech (a meeting recording, a video with audio, an interview) into a transcript the library can cite, and choose WHICH open-source recogniser to run for the job: whisper.cpp by default, faster-whisper, WhisperX with pyannote, Vosk, NVIDIA Parakeet/Canary, or Distil-Whisper. Covers audio extraction, why two exports of one recogniser are one opinion, how to compare transcripts (WER, CER, DER), translation, and what blocks a run. Use when an upload contains audio or video, when someone asks which transcription tool to use, or before declaring a new transcription Tool.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/library-extras",
+          "instructionLines": 145,
+          "instructionsPath": "library-extras/skills/library-extras/audio-transcription.md",
+          "name": "audio-transcription",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/cafc699e08d4b54a1e81cb78cbb4983f9c8b3a0bd56602fbbd127877c5d7ff1e",
+            "bytes": 8211,
+            "sha256": "cafc699e08d4b54a1e81cb78cbb4983f9c8b3a0bd56602fbbd127877c5d7ff1e"
+          },
+          "title": "Audio transcription: which recogniser, when, and how to check it"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/bib-photo-ingestion-watcher",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Integration-watcher for bib physical-review issues. When a page photo is uploaded to a `bib-physical-review` issue (or an in-repo source passage is agent-identified), OCR/read it, formalise the cited result (if the project has a formal-proof pipeline), confirm the project's usage matches the source, run machine + agent bib validation, then set the reference status to `validated` and refresh references.review.json. Use when processing a bib-physical-review issue that has an attached photo, or when ingesting an uploaded paper.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/library-extras",
+          "instructionLines": 53,
+          "instructionsPath": "library-extras/skills/library-extras/bib-photo-ingestion-watcher.md",
+          "name": "bib-photo-ingestion-watcher",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b6ab9a109460a3476af9a997c780ec6447b6a32c5d92847bf4855768bb923e79",
+            "bytes": 2705,
+            "sha256": "b6ab9a109460a3476af9a997c780ec6447b6a32c5d92847bf4855768bb923e79"
+          },
+          "title": "bib-photo-ingestion-watcher"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/oxigraph-catalogue-search",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "How to compile, partition, distribute via CDN, and query digital library catalogue and Qualified Dublin Core metadata using Oxigraph in-memory WebAssembly on the static edge. Establishes the 2-tier on-demand loading hierarchy, upstream skolemization for zero blank nodes, append-only streaming partition writes, and SPARQL 1.1 cross-graph query recipes.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/library-extras",
+          "instructionLines": 216,
+          "instructionsPath": "library-extras/skills/library-extras/oxigraph-catalogue-search.md",
+          "name": "oxigraph-catalogue-search",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/0517da62963a0801ccb2d0a068c189a462ce57bf2b356d4870fbfb012d439155",
+            "bytes": 8666,
+            "sha256": "0517da62963a0801ccb2d0a068c189a462ce57bf2b356d4870fbfb012d439155"
+          },
+          "title": "Oxigraph Multi-Graph Static Search & Catalog Discovery"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "library-extras/skills/library-extras",
+      "path": "library-extras/skills/library-extras/"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "library-extras/skills",
+  "path": "library-extras/skills/"
+}
