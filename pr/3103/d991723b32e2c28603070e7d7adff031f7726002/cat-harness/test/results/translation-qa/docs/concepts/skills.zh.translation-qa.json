@@ -1,0 +1,99 @@
+{
+  "$schema": "translation-qa/v1",
+  "label": "trans:zh/skills",
+  "block": "Skills & roles",
+  "locale": "zh",
+  "paths": {
+    "md": "docs/concepts/skills.md"
+  },
+  "po": "translations/zh/concepts/skills.po",
+  "source_hashes": {
+    "md": "ad8131243437",
+    "po": "76a9ecea849c"
+  },
+  "criteria": {
+    "translation-coverage": [
+      {
+        "field_hash": {
+          "md": "ad8131243437",
+          "po": "76a9ecea849c"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "pipeline/translation-block-qa.ts",
+          "actor": "ci-pipeline",
+          "version": "v1",
+          "script_hash": "218e592ac437",
+          "script_commit_sha": "unknown"
+        },
+        "reviewed_tree": "61e4535b723af370cc967f539ae95654c0dba73b",
+        "severity": "minor",
+        "metrics": {
+          "translated": 96,
+          "total": 138,
+          "pct": 70
+        },
+        "notes": "42 of 138 strings carry no translation in this locale."
+      }
+    ],
+    "translation-terms-preserved": [
+      {
+        "field_hash": {
+          "md": "ad8131243437",
+          "po": "76a9ecea849c"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "pipeline/translation-block-qa.ts",
+          "actor": "ci-pipeline",
+          "version": "v1",
+          "script_hash": "218e592ac437",
+          "script_commit_sha": "unknown"
+        },
+        "reviewed_tree": "61e4535b723af370cc967f539ae95654c0dba73b",
+        "severity": "minor",
+        "evidence": [
+          {
+            "text": "UN — absent from: \"面向联合国支持语言的本地化。\""
+          }
+        ],
+        "metrics": {
+          "checked": 96,
+          "missing": 1,
+          "missing_strict": 0,
+          "missing_acronyms": 1,
+          "glossary_broken": 0,
+          "glossary_resolved": 1
+        },
+        "notes": "1 acronym(s) from the source do not appear verbatim in the translation and no glossary entry speaks for them. That is right for one the target language localises — WHO is OMS in French — and wrong for one silently dropped, and this check cannot tell the two apart. Add them to translations/zh/glossary.po: a pinned msgstr says what the term must become, and a \"#, localised\" flag says it is rendered in the target language without pinning how. 1 further acronym(s) are absent verbatim and the glossary accounts for each: LLM — the glossary marks it localised, so an absent verbatim form is expected."
+      }
+    ],
+    "translation-not-echo": [
+      {
+        "field_hash": {
+          "md": "ad8131243437",
+          "po": "76a9ecea849c"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "pipeline/translation-block-qa.ts",
+          "actor": "ci-pipeline",
+          "version": "v1",
+          "script_hash": "218e592ac437",
+          "script_commit_sha": "unknown"
+        },
+        "reviewed_tree": "61e4535b723af370cc967f539ae95654c0dba73b",
+        "severity": "minor",
+        "metrics": {
+          "echoed": 7,
+          "translated": 96
+        },
+        "notes": "7 string(s) are byte-identical to the source. That is right for a proper noun and wrong for a sentence, which is why this warns rather than fails."
+      }
+    ],
+    "translation-semantic-roundtrip": []
+  }
+}
