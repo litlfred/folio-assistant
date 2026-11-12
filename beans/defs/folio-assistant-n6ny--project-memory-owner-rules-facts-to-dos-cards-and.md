@@ -49,7 +49,7 @@ Resume prompt: "read bean folio-assistant-n6ny on branch cat/cat-harness/beans o
 | folio-assistant-1zrq | `review-brief-pane.md` | project | Review page "What to expect in this review" pane (cat-harness-tools#1153/#1154): data source and PR-body marker format |
 | folio-assistant-20kq | `data-stores-2026-11-01.md` | project | Data store inventory and consistency pattern (2026-11-01): report link, findings, cards Q-DS-1..6, interpreter blocker |
 | folio-assistant-2a0d | `dpi-h-review-sheet.md` | project | Where the DPI-H public-comment Google Sheet lives, its tabs, and the scheduled sync task |
-| folio-assistant-2gst | `gh-pages-before-pages-settings.md` | feedback | Never ask the owner to turn on Pages until that repo's gh-pages branch exists (checked live at ask time) |
+| folio-assistant-m7q2 | `gh-pages-before-pages-settings.md` | feedback | Never ask the owner to turn on Pages until that repo's gh-pages branch exists (checked live at ask time) |
 | folio-assistant-2hay | `public-comment-process-2026-10-31.md` | project | Public comment process model work on 2026-10-31: merged PRs, the release-cycle process, sibling threads and the preview repin PR |
 | folio-assistant-2mfw | `mvp-freeze-2026-11-01.md` | project | MVP functional freeze: epic fa#2894 + milestone 1, scope, owners/threads, cascade status, rules learned |
 | folio-assistant-2ncj | `figure-previews-svg.md` | feedback | When showing the user a generated figure, attach the SVG, not a PNG render |

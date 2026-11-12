@@ -1,5 +1,5 @@
 ---
-# folio-assistant-2gst
+# folio-assistant-m7q2
 $schema: bean/1.0.0
 title: 'Memory: Never ask the owner to turn on Pages until that repo''s gh-pages branch exists (checked live at ask time)'
 status: completed
@@ -21,3 +21,5 @@ Owner, 2026-11-10 20:22Z (thread "Harness the 10 new WHO forks"): "you need to c
 **Why:** Pages cannot serve a branch that doesn't exist; asking early wastes the owner's effort (typing is hard for them) and repeats a known mistake.
 
 **How to apply:** before any Pages ask, run `gh api repos/<o>/<r>/branches/gh-pages` for EACH repo right then; list only repos where it exists; ask for the rest later. Create the branch first (first Site publish run, or an orphan placeholder). The Pages settings API is proxy-blocked here, so the ask goes to the owner. Rule written into bootstrap skills/publish-site.md (bootstrap#49, issue #48). Related: folio-assistant-nbtb, folio-assistant-lwdn.
+
+_2026-11-12T11:15:00Z_ — Re-keyed from folio-assistant-2gst, which collided with an existing cat-harness-tools bean (check:bean-one-home turned every PR red).
