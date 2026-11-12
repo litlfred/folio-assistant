@@ -1,0 +1,95 @@
+{
+  "@context": [
+    "https://litlfred.github.io/cat-harness/ns/context/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/",
+      "folio-assistant-core": "https://litlfred.github.io/folio-assistant-core/v0/ns/"
+    }
+  ],
+  "@id": "library/arxiv-2301.06767v1/blocks/figure-img-p012-1",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../images/img-p012-1.png",
+  "pageStart": 12,
+  "pageEnd": 12,
+  "narrative": [
+    {
+      "text": "Figure 3: three ways a neural model extracts terms, side by side, each fed the sentence 'We meta-analyzed mortality using random-effect models.' Left, a sequence classifier reads a candidate paired with its sentence ('random-effect models.' then the sentence) and a linear layer with softmax answers 'Term?'. Centre, a token classifier labels every token O (not a term), B (beginning of term) or I (inside a term) through a shared linear layer with softmax. Right, a sequence-to-sequence model writes out the list of terms directly: 'meta-analyzed ; mortality ; random-effect models'.",
+      "lang": "en",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude",
+        "model": "claude-opus-5-5",
+        "session": "https://claude.ai/code/session_01Qmmkt5HtqnterAfxauAG12"
+      },
+      "drafted_at": "2026-11-10"
+    },
+    {
+      "text": "Figure 3 : trois manières dont un modèle neuronal extrait des termes, côte à côte, chacune recevant la phrase « We meta-analyzed mortality using random-effect models. ». À gauche, un classifieur de séquence lit un candidat accolé à sa phrase (« random-effect models. » puis la phrase) et une couche linéaire avec softmax répond « Term? ». Au centre, un classifieur de jetons étiquette chaque jeton O (pas un terme), B (début de terme) ou I (intérieur d'un terme) par une couche linéaire partagée avec softmax. À droite, un modèle séquence-à-séquence écrit directement la liste des termes : « meta-analyzed ; mortality ; random-effect models ».",
+      "lang": "fr",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude",
+        "model": "claude-opus-5-5",
+        "session": "https://claude.ai/code/session_01Qmmkt5HtqnterAfxauAG12"
+      },
+      "drafted_at": "2026-11-10"
+    },
+    {
+      "text": "Figura 3: tres formas en que un modelo neuronal extrae términos, lado a lado, cada una alimentada con la oración «We meta-analyzed mortality using random-effect models.». A la izquierda, un clasificador de secuencias lee un candidato unido a su oración («random-effect models.» y luego la oración) y una capa lineal con softmax responde «Term?». En el centro, un clasificador de tokens etiqueta cada token como O (no es término), B (inicio de término) o I (dentro de un término) mediante una capa lineal compartida con softmax. A la derecha, un modelo secuencia a secuencia escribe directamente la lista de términos: «meta-analyzed ; mortality ; random-effect models».",
+      "lang": "es",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude",
+        "model": "claude-opus-5-5",
+        "session": "https://claude.ai/code/session_01Qmmkt5HtqnterAfxauAG12"
+      },
+      "drafted_at": "2026-11-10"
+    },
+    {
+      "text": "الشكل 3: ثلاث طرق يستخرج بها نموذج عصبي المصطلحات، جنبًا إلى جنب، وتتلقى كل منها الجملة «We meta-analyzed mortality using random-effect models.». على اليسار، يقرأ مصنِّف التسلسل مرشحًا مقرونًا بجملته («random-effect models.» ثم الجملة) وتجيب طبقة خطية مع softmax عن السؤال «Term?». في الوسط، يوسم مصنِّف الرموز كل رمز بـ O (ليس مصطلحًا) أو B (بداية مصطلح) أو I (داخل مصطلح) عبر طبقة خطية مشتركة مع softmax. على اليمين، يكتب نموذج تسلسل إلى تسلسل قائمة المصطلحات مباشرة: «meta-analyzed ; mortality ; random-effect models».",
+      "lang": "ar",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude",
+        "model": "claude-opus-5-5",
+        "session": "https://claude.ai/code/session_01Qmmkt5HtqnterAfxauAG12"
+      },
+      "drafted_at": "2026-11-10"
+    },
+    {
+      "text": "Рисунок 3: три способа, которыми нейросетевая модель извлекает термины, рядом друг с другом; на вход каждому подаётся предложение «We meta-analyzed mortality using random-effect models.». Слева классификатор последовательностей читает кандидата вместе с его предложением («random-effect models.», затем предложение), и линейный слой с softmax отвечает на вопрос «Term?». В центре классификатор токенов помечает каждый токен как O (не термин), B (начало термина) или I (внутри термина) через общий линейный слой с softmax. Справа модель «последовательность в последовательность» сразу выписывает список терминов: «meta-analyzed ; mortality ; random-effect models».",
+      "lang": "ru",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude",
+        "model": "claude-opus-5-5",
+        "session": "https://claude.ai/code/session_01Qmmkt5HtqnterAfxauAG12"
+      },
+      "drafted_at": "2026-11-10"
+    },
+    {
+      "text": "图 3：神经模型抽取术语的三种方式并排展示，每种都输入句子“We meta-analyzed mortality using random-effect models.”。左侧，序列分类器读取与所在句子拼接的候选词（先是“random-effect models.”，再是句子），由线性层加 softmax 回答“Term?”。中间，词元分类器通过共享参数的线性层加 softmax，把每个词元标为 O（非术语）、B（术语开头）或 I（术语内部）。右侧，序列到序列模型直接写出术语列表：“meta-analyzed ; mortality ; random-effect models”。",
+      "lang": "zh",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude",
+        "model": "claude-opus-5-5",
+        "session": "https://claude.ai/code/session_01Qmmkt5HtqnterAfxauAG12"
+      },
+      "drafted_at": "2026-11-10"
+    }
+  ],
+  "derivedFrom": "library/arxiv-2301.06767v1/sections/sec-008",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/source/arxiv-2301.06767v1",
+  "provenance": "ingested"
+}
