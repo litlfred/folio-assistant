@@ -6,7 +6,7 @@ status: completed
 type: task
 priority: low
 created_at: 2026-11-11T23:55:17Z
-updated_at: 2026-11-12T09:45:00Z
+updated_at: 2026-11-12T09:50:00Z
 parent: folio-assistant-n6ny
 tags:
     - project-memory
@@ -22,4 +22,6 @@ Cause: who-iris#226 (owner: "all who-iris docs that have references put into the
 
 Card answered 11-12 06:07Z: A (IGs list own refs only). Fix: core#760 (issue #759, branch claude/ig-bib-own-refs-only): forInstance drops a lower layer's provenance:extracted refs; each IG ~8.2k -> ~1k files; platform unchanged 8,621.
 
-Same thread also holds: cat-harness-tools branch claude/todo-e2e-singular-path (local, not pushed; todo e2e on todo/<id> after dbc369d4 + who-iris-search "Show more"), awaiting user card. Re-pins with workflow-ref edits must go through the bot's repin-train (threads can't push .github/workflows).
+core#760 MERGED 11-12 09:36Z (294f49d5). Trains #3082–#3088 all failed only on `stage` before it; the next train should pass stage. Also merged: tools#1930 (todo e2e on todo/<id> + who-iris facet via Show more), tools#1940 (security-gate layer-checkout test 60 s timeout). fa#3075's old reds (id-lookup, todo, ledger) are all fixed upstream; it needs a merged train + Update branch. Re-pins with workflow-ref edits must go through the bot's repin-train (threads can't push .github/workflows).
+
+_2026-11-12T09:50:00Z_ — Re-synced with the final memory copy (edits made 09:35–09:41Z, just before project memory was cut).
