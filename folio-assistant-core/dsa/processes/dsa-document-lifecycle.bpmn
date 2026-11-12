@@ -1,0 +1,791 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  folio-assistant — the life cycle of a data sharing agreement (DSA) document.
+
+  Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
+  BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
+  by `bun run cat render:bpmn` — never hand-edit the SVG.
+
+  Only the DOCUMENT's life cycle is drawn here: P1 (draft and negotiate),
+  P2 (publish: version, hash, catalogue) and P14 (amend, renew, terminate,
+  expire) of the DSA process catalogue. The server, wallet and consent
+  processes (P3 to P13, P15) are real-world business processes between
+  organisations, not harness work, and belong in the trust IG layer
+  (https://github.com/litlfred/smart-trust) and its siblings.
+
+  A step no skill covers yet is a user task with a
+  <cat-harness.processes:no-skill reason="Gap: …"/>. No skill was invented.
+-->
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/bootstrap/v0/processes/ns/"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/cat-harness/v0/processes/ns/"
+                  id="Definitions_DsaDocumentLifecycle"
+                  targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
+                  exporter="folio-assistant" exporterVersion="1">
+  <bpmn:import namespace="https://litlfred.github.io/bootstrap/v0/processes/ns/" location="https://litlfred.github.io/bootstrap/v0/processes/ns.jsonld" importType="http://www.w3.org/ns/json-ld"/>
+  <bpmn:resource id="author" name="Author"/>
+  <bpmn:resource id="build-pipeline" name="Build pipeline"/>
+  <bpmn:resource id="publication-manager" name="Publication manager"/>
+  <bpmn:resource id="review-coordinator" name="Review coordinator"/>
+  <bpmn:resource id="reviewer" name="Reviewer / SME"/>
+  <bpmn:resource id="stakeholder" name="Stakeholder"/>
+  <bpmn:resource id="work-plan" name="Work plan (beans)"/>
+  <bpmn:import namespace="https://litlfred.github.io/folio-assistant/workflows" location="public-comment.bpmn" importType="http://www.omg.org/spec/BPMN/20100524/MODEL" />
+  <bpmn:collaboration id="Collaboration_DsaDocumentLifecycle">
+    <bpmn:participant id="Participant_DsaDocumentLifecycle" name="Data sharing agreement — the document, from request to end" processRef="Process_DsaDocumentLifecycle" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_DsaDocumentLifecycle" name="Data sharing agreement document life cycle" isExecutable="false">
+    <bpmn:documentation>
+      How a data sharing agreement is drafted, negotiated, signed, published with a version, a hash and a catalogue record, and later amended, renewed or ended. It covers the agreement as a document folio only: processes P1, P2 and P14 of the DSA process catalogue.
+      Two entry points: a request for an agreement (P1, then P2), and a change to one in force (P14). An amendment or a renewal with a new end date runs P1 and P2 again and publishes a new version linked to the old one; the old version stays readable.
+      Standards named: ODRL 2.2 (the Agreement), DCAT 3 (catalogue record, distributions, checksums, versions) and DCMI Terms (dcterms:source from the policy to the text). No field is defined here.
+      Steps no skill covers yet are user tasks with a no-skill reason starting "Gap:".
+      Consent rules, which every agreement drawn here keeps. 1. Legal basis: an agreement carries the odrl:obtainConsent duty only when consent is its legal basis; treatment, public-health law and research waivers do not rest on consent (P1.2a, P1.3). 2. Version pinning: a Consent cites the agreement's fixed-version URL and hash (FHIR R4 Consent.policy.uri), and for a computable agreement the ODRL policy uid is that same URL (P2.1, P2.2b, P2.3); an amendment that widens use needs new consent, one that narrows use does not (P14.3). 3. Plain language: every agreement that needs consent publishes a plain-language summary, hashed with the agreement, and that summary is what the person consents to (P1.2b, P2.2a). How a person gives, withdraws or is asked again for consent is the trust layer's, not this diagram's.
+    </bpmn:documentation>
+    <bpmn:extensionElements>
+      <cat-harness.processes:policy enforcement="advisory" />
+    </bpmn:extensionElements>
+    <bpmn:laneSet id="Process_DsaDocumentLifecycle_LaneSet">
+      <bpmn:lane id="Lane_Parties" name="Parties and signatories (provider, recipient)" partitionElementRef="stakeholder">
+        <bpmn:documentation>The data provider and the data recipient (ODRL 2.2 assigner and assignee) and the people who sign for them. Their role is judgement only: they agree the terms, sign, and decide whether to amend, renew or end the agreement. No skill can make those choices for them, so no activity in this lane names one.</bpmn:documentation>
+        <bpmn:flowNodeRef>Start_Request</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_AgreeTerms</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Sign</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Start_Change</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_DecideChange</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_ChangeKind</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_RenewedByGrant</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_DecideGrants</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_WidensUse</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_NewConsentNeeded</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_WidensJoin</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_EndDuties</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Author" name="Author and policy author" partitionElementRef="author">
+        <bpmn:documentation>Writes the legal text and, for a computable agreement, derives the ODRL 2.2 Agreement from it. Every loop comes back here: a review that asks for changes, an amendment, and a renewal that needs a new version.</bpmn:documentation>
+        <bpmn:flowNodeRef>GW_DraftMerge</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_WriteText</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_RecordLegalBasis</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_ConsentBasis</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_PlainSummary</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_ConsentBasisJoin</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_Computable</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_DeriveOdrl</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_ComputableJoin</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_SplitAnnexes</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_OdrlCitesText</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Call_BeanOpen</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_BeanYours</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_BeanNotYours</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_InForce</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Call_BeanOpenChange</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_BeanYoursChange</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_BeanNotYoursChange</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Call_BeanCloseEnded</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_BeanClosedHow</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Ended</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Reviewer" name="Reviewer (legal, policy)" partitionElementRef="reviewer">
+        <bpmn:documentation>Checks the ODRL against the text, and reviews the whole draft. Decides whether the public terms go out for public comment, and whether the draft is ready to sign.</bpmn:documentation>
+        <bpmn:flowNodeRef>Task_CheckOdrl</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Review</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_PublicComment</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_CommentJoin</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_ReadyToSign</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_PublicReview" name="Public review (commenters, review committee, editor)" partitionElementRef="review-coordinator">
+        <bpmn:documentation>Used only when the public part of the agreement (the template) goes out for public comment. Comments are handled in Process_PublicComment, the same as for any document folio.</bpmn:documentation>
+        <bpmn:flowNodeRef>Call_PublicComment</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Publisher" name="Publisher (data provider's publication manager)" partitionElementRef="publication-manager">
+        <bpmn:documentation>Gives each signed version its own immutable URL, records its SHA-256 hash, and writes the DCAT 3 catalogue record. Also sets the catalogue status when the agreement ends.</bpmn:documentation>
+        <bpmn:flowNodeRef>Task_AssignVersion</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Hash</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_ConsentPublish</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_HashSummary</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_ConsentCitation</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_ConsentPublishJoin</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_CiteComputable</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_CiteJoin</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Catalogue</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_SetStatus</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Build" name="Build pipeline (system)" partitionElementRef="build-pipeline">
+        <bpmn:documentation>Renders the agreed text before it is signed, and publishes the signed version at its immutable URL.</bpmn:documentation>
+        <bpmn:flowNodeRef>Task_Render</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Publish</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="Start_Request" name="Data requested, or a standing agreement needed">
+      <bpmn:documentation>P1 trigger: a recipient asks for data, or a programme needs a standing agreement (for example a cross-border surveillance feed).</bpmn:documentation>
+      <bpmn:outgoing>F01</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:callActivity id="Call_BeanOpen" name="Open the bean" calledElement="Process_BeanOpen">
+      <bpmn:documentation>Process_BeanOpen: check before you create, find out whose the bean is, and claim it — or leave it alone when it is someone else's. The one place a claim is drawn; the gateway after this reads which end it reached.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="bean-coordination"/></bpmn:extensionElements>
+      <bpmn:incoming>F01</bpmn:incoming>
+      <bpmn:outgoing>F02</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:exclusiveGateway id="GW_BeanYours" name="Bean claimed?">
+      <bpmn:documentation>Reads which end Process_BeanOpen reached. `claimed`: the bean is in progress and this process works it. `not yours`: a sibling session or a human holds it, nothing was written to it, and this process stops here rather than work a bean it does not own (bean-coordination).</bpmn:documentation>
+      <bpmn:incoming>F02</bpmn:incoming>
+      <bpmn:outgoing>F03</bpmn:outgoing>
+      <bpmn:outgoing>F04</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="End_BeanNotYours" name="Not yours —&#10;left alone">
+      <bpmn:documentation>Someone else holds the bean; this run stops without touching it.</bpmn:documentation>
+      <bpmn:incoming>F03</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="Task_AgreeTerms" name="P1.1 · Agree the terms">
+      <bpmn:documentation>The parties agree the purpose, the datasets, the period, the conditions and duties, which trust anchors each side accepts, and the legal basis the sharing rests on (consent, treatment, public-health law or a research waiver). This sets what the text must say; it is a negotiation between people.</bpmn:documentation>
+      <bpmn:extensionElements><cat-harness.processes:no-skill reason="A negotiation between the parties. It is judgement, not a procedure a skill could carry out; the stakeholder role is judgement-only."/></bpmn:extensionElements>
+      <bpmn:incoming>F04</bpmn:incoming>
+      <bpmn:outgoing>F05</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="GW_DraftMerge" name="">
+      <bpmn:documentation>Merge: the first draft, a review that asks for changes, and an amendment or renewal (P14) all come back to writing the text.</bpmn:documentation>
+      <bpmn:incoming>F05</bpmn:incoming>
+      <bpmn:incoming>F19</bpmn:incoming>
+      <bpmn:incoming>F74</bpmn:incoming>
+      <bpmn:outgoing>F06</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="Task_WriteText" name="P1.2 · Write the legal text">
+      <bpmn:documentation>Write the agreement as a document folio: one normative statement per clause the parties must keep, through normative-statements. The text says which governs if it and a machine-readable form disagree (suggested: the text).</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="document-authoring"/><bootstrap.processes:skill ref="normative-statements"/><bootstrap.processes:skill ref="document-structure"/></bpmn:extensionElements>
+      <bpmn:incoming>F06</bpmn:incoming>
+      <bpmn:outgoing>F07</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="Task_RecordLegalBasis" name="P1.2a · Record the legal basis">
+      <bpmn:documentation>The text states the legal basis the parties agreed in P1.1 as a normative statement: consent, treatment, public-health law, or a research waiver. Consent rule 1: only an agreement whose legal basis is consent carries the odrl:obtainConsent duty; treatment, public-health law and research waivers do not rest on consent. The gateway that follows, the ODRL and the reviewers all read the basis from this statement.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="normative-statements"/></bpmn:extensionElements>
+      <bpmn:incoming>F07</bpmn:incoming>
+      <bpmn:outgoing>F60</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="GW_ConsentBasis" name="Consent the legal basis?">
+      <bpmn:documentation>Reads the legal basis recorded in P1.2a. `consent`: the agreement needs a plain-language summary (consent rule 3) and, if it is computable, the odrl:obtainConsent duty (consent rule 1). `treatment, law or waiver`: no summary for consent and no consent duty.</bpmn:documentation>
+      <bpmn:incoming>F60</bpmn:incoming>
+      <bpmn:outgoing>F61</bpmn:outgoing>
+      <bpmn:outgoing>F62</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="Task_PlainSummary" name="P1.2b · Draft the plain summary">
+      <bpmn:documentation>Consent-based only. Write a plain-language summary of the agreement in the same document folio: what it lets the recipient do with the person's data, in words the person can read. Consent rule 3: every agreement that needs consent publishes this summary, hashed with the agreement (P2.2a), and the summary is what the person consents to. It is reviewed, rendered and versioned with the text.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="document-authoring"/></bpmn:extensionElements>
+      <bpmn:incoming>F61</bpmn:incoming>
+      <bpmn:outgoing>F63</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="GW_ConsentBasisJoin" name="">
+      <bpmn:documentation>Merge: consent-based agreements and the others meet before the computable question.</bpmn:documentation>
+      <bpmn:incoming>F62</bpmn:incoming>
+      <bpmn:incoming>F63</bpmn:incoming>
+      <bpmn:outgoing>F64</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:exclusiveGateway id="GW_Computable" name="Computable agreement?">
+      <bpmn:documentation>Does this agreement carry a machine-readable ODRL 2.2 Agreement beside its text? `yes` derives it and has it checked; `document only` goes straight on (a signed PDF is a valid agreement).</bpmn:documentation>
+      <bpmn:incoming>F64</bpmn:incoming>
+      <bpmn:outgoing>F08</bpmn:outgoing>
+      <bpmn:outgoing>F09</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="Task_DeriveOdrl" name="P1.3 · Derive the ODRL 2.2 Agreement">
+      <bpmn:documentation>Computable only. One assigner and one assignee (ODRL 2.2 §2.1.3), permissions and prohibitions with target assets (§2.2), constraints (§2.5.1) and duties (§2.6.3), written as JSON-LD. Purposes from HL7 PurposeOfUse. Consent rule 1: the Agreement carries the odrl:obtainConsent duty only when the legal basis recorded in P1.2a is consent.</bpmn:documentation>
+      <bpmn:extensionElements><cat-harness.processes:no-skill reason="Gap: no skill yet for deriving an ODRL 2.2 Agreement from agreement text. Done by hand by the policy author until one exists (DSA building block B1/B3)."/></bpmn:extensionElements>
+      <bpmn:incoming>F08</bpmn:incoming>
+      <bpmn:outgoing>F10</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="Task_CheckOdrl" name="P1.4 · Check the ODRL against the text">
+      <bpmn:documentation>Computable only. A person checks that the ODRL says what the text says, and signs it off. A program can check the ODRL is well formed; it cannot check that it matches the text. The check includes the consent duty: present when the legal basis is consent, absent otherwise (consent rule 1).</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="content-review"/></bpmn:extensionElements>
+      <bpmn:incoming>F10</bpmn:incoming>
+      <bpmn:outgoing>F11</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="GW_ComputableJoin" name="">
+      <bpmn:documentation>Merge: the computable and the document-only paths meet before the text is split into public terms and private annexes.</bpmn:documentation>
+      <bpmn:incoming>F09</bpmn:incoming>
+      <bpmn:incoming>F11</bpmn:incoming>
+      <bpmn:outgoing>F12</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="Task_SplitAnnexes" name="P1.5 · Split public terms from private annexes">
+      <bpmn:documentation>Split the agreement into a public template and private annexes (security controls, named staff). Only the hash of a private annex is ever published.</bpmn:documentation>
+      <bpmn:extensionElements><cat-harness.processes:no-skill reason="Gap: no skill yet for splitting an agreement into public terms and private annexes. Done by hand until one exists."/></bpmn:extensionElements>
+      <bpmn:incoming>F12</bpmn:incoming>
+      <bpmn:outgoing>F13</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="Task_Review" name="Review the draft agreement">
+      <bpmn:documentation>Legal and policy review of the whole draft. Reviewers comment on blocks through review-comments; review says which review skill answers which question. For a consent-based agreement the reviewers also check that the plain-language summary says what the text says, since it is what the person consents to (consent rule 3).</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="content-review"/><bootstrap.processes:skill ref="review-comments"/></bpmn:extensionElements>
+      <bpmn:incoming>F13</bpmn:incoming>
+      <bpmn:outgoing>F14</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="GW_PublicComment" name="Public comment on the public terms?">
+      <bpmn:documentation>Should the public template go out for public comment before signing? `yes` runs Process_PublicComment; `no` goes straight to the readiness decision. A private agreement between two parties usually answers `no`.</bpmn:documentation>
+      <bpmn:incoming>F14</bpmn:incoming>
+      <bpmn:outgoing>F15</bpmn:outgoing>
+      <bpmn:outgoing>F16</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:callActivity id="Call_PublicComment" name="Public comment on the template" calledElement="Process_PublicComment">
+      <bpmn:documentation>Comments on the frozen, line-numbered review version of the public template are placed, triaged, weighed and decided (public-comment.bpmn). Private annexes are never circulated.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="public-comment"/></bpmn:extensionElements>
+      <bpmn:incoming>F15</bpmn:incoming>
+      <bpmn:outgoing>F17</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:exclusiveGateway id="GW_CommentJoin" name="">
+      <bpmn:documentation>Merge: with or without public comment, the reviewers then decide whether the draft is ready to sign.</bpmn:documentation>
+      <bpmn:incoming>F16</bpmn:incoming>
+      <bpmn:incoming>F17</bpmn:incoming>
+      <bpmn:outgoing>F18</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:exclusiveGateway id="GW_ReadyToSign" name="Ready to sign?">
+      <bpmn:documentation>The reviewers' call. `changes needed` sends the draft back to the author; `ready` renders it for signing.</bpmn:documentation>
+      <bpmn:incoming>F18</bpmn:incoming>
+      <bpmn:outgoing>F19</bpmn:outgoing>
+      <bpmn:outgoing>F20</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="Task_Render" name="Render the text to HTML and PDF">
+      <bpmn:documentation>Render the agreed text to the form that will be signed (HTML and PDF), without a TeX installation. A consent-based agreement's plain-language summary is rendered with it.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="document-publishing"/></bpmn:extensionElements>
+      <bpmn:incoming>F20</bpmn:incoming>
+      <bpmn:outgoing>F21</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="Task_Sign" name="P1.6 · Sign">
+      <bpmn:documentation>The signatories sign: wet ink, or an electronic signature under national law. Technically a detached JWS (RFC 7515) or CMS (RFC 5652); PAdES for a signed PDF needs the owner's approval.</bpmn:documentation>
+      <bpmn:extensionElements><cat-harness.processes:no-skill reason="Gap: signing the agreement is the signatories' legal act. No skill covers it, and the signing skill-or-tool question is still open (signing-skill-vs-tool.md)."/></bpmn:extensionElements>
+      <bpmn:incoming>F21</bpmn:incoming>
+      <bpmn:outgoing>F22</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="Task_AssignVersion" name="P2.1 · Assign version and fixed URL">
+      <bpmn:documentation>Each signed version gets its own immutable URL (for example /dsa/42/v3). A 'latest' URL may exist; nothing cites it. A new version never overwrites an old one. This fixed-version URL is the one a Consent cites (consent rule 2), and a computable agreement's ODRL policy uid is set to it (P2.3).</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="content-publish"/><bootstrap.processes:skill ref="package-release"/></bpmn:extensionElements>
+      <bpmn:incoming>F22</bpmn:incoming>
+      <bpmn:outgoing>F23</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="Task_Hash" name="P2.2 · Record each file's SHA-256">
+      <bpmn:documentation>Compute SHA-256 (FIPS 180-4) of the signed text, and of the ODRL file if there is one, recorded as DCAT 3 spdx:checksum and verified by check:dsa-hash.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="dsa-checksum"/></bpmn:extensionElements>
+      <bpmn:incoming>F23</bpmn:incoming>
+      <bpmn:outgoing>F24</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="GW_ConsentPublish" name="Consent-based agreement?">
+      <bpmn:documentation>The legal basis recorded in P1.2a. `consent`: hash the plain-language summary with the agreement, and state the fixed-version URL and hash a Consent cites. `not consent-based`: go straight on.</bpmn:documentation>
+      <bpmn:incoming>F24</bpmn:incoming>
+      <bpmn:outgoing>F65</bpmn:outgoing>
+      <bpmn:outgoing>F66</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="Task_HashSummary" name="P2.2a · Hash the plain summary">
+      <bpmn:documentation>Consent-based only. Record the SHA-256 of the plain-language summary beside the agreement's, in the same version (consent rule 3). The summary a person consented to can then be checked against the agreement it summarises; a changed summary is a new version.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="dsa-checksum"/></bpmn:extensionElements>
+      <bpmn:incoming>F65</bpmn:incoming>
+      <bpmn:outgoing>F67</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="Task_ConsentCitation" name="P2.2b · State the URL and hash to cite">
+      <bpmn:documentation>Consent-based only. The version's publication metadata states the fixed-version URL (P2.1) and the hash (P2.2) that a Consent cites in FHIR R4 Consent.policy.uri (consent rule 2), never the 'latest' URL. For a computable agreement that URL is also the ODRL policy uid (P2.3): a Consent counts only when its Consent.policy.uri equals the agreement's ODRL policy uid, so the two are the same string.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="content-publish"/></bpmn:extensionElements>
+      <bpmn:incoming>F67</bpmn:incoming>
+      <bpmn:outgoing>F68</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="GW_ConsentPublishJoin" name="">
+      <bpmn:documentation>Merge: consent-based agreements and the others meet before the ODRL question.</bpmn:documentation>
+      <bpmn:incoming>F66</bpmn:incoming>
+      <bpmn:incoming>F68</bpmn:incoming>
+      <bpmn:outgoing>F69</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:exclusiveGateway id="GW_CiteComputable" name="ODRL to update?">
+      <bpmn:documentation>Is there an ODRL Agreement for this version? `yes`: it must cite the text by URL and hash. `document only`: go straight to publishing.</bpmn:documentation>
+      <bpmn:incoming>F69</bpmn:incoming>
+      <bpmn:outgoing>F25</bpmn:outgoing>
+      <bpmn:outgoing>F26</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="Task_OdrlCitesText" name="P2.3 · Make the ODRL cite the text">
+      <bpmn:documentation>The ODRL policy names the signed text distribution with dcterms:source (DCMI Terms), pointing at the immutable URL whose spdx:checksum was just recorded. Its uid is that same fixed-version URL, the URL a Consent cites in Consent.policy.uri (consent rule 2).</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="dsa-odrl-source"/></bpmn:extensionElements>
+      <bpmn:incoming>F25</bpmn:incoming>
+      <bpmn:outgoing>F27</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="GW_CiteJoin" name="">
+      <bpmn:documentation>Merge: the computable and document-only paths meet before the version is published.</bpmn:documentation>
+      <bpmn:incoming>F26</bpmn:incoming>
+      <bpmn:incoming>F27</bpmn:incoming>
+      <bpmn:outgoing>F28</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="Task_Publish" name="Publish the version at its URL">
+      <bpmn:documentation>Publish the files at the version's immutable URL. If the parties' names are sensitive, publish only the template and the hash of the signed instance. A consent-based agreement publishes its plain-language summary and its hash with the text (consent rule 3). Check before publishing (consent rule 2): a computable agreement's ODRL policy uid equals this version's fixed-version URL, the URL a Consent cites; if they differ, the version is not published.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="content-publish"/></bpmn:extensionElements>
+      <bpmn:incoming>F28</bpmn:incoming>
+      <bpmn:outgoing>F29</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="Task_Catalogue" name="P2.4–5 · Write the DCAT 3 record">
+      <bpmn:documentation>One DCAT 3 record: the agreement as a catalogued resource, each file a dcat:Distribution with dcat:downloadURL and spdx:checksum; datasets it covers carry odrl:hasPolicy. Versions are linked with DCAT 3 versioning (previous version, version, current version).</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="dsa-dcat-record"/></bpmn:extensionElements>
+      <bpmn:incoming>F29</bpmn:incoming>
+      <bpmn:outgoing>F30</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="End_InForce" name="Version published — agreement in force">
+      <bpmn:documentation>The signed version is at its immutable URL, with its hash and catalogue record. Grants and keys that cite it are issued in the server processes (smart-trust), not here.</bpmn:documentation>
+      <bpmn:incoming>F31</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:startEvent id="Start_Change" name="Terms change, end date reached, or notice given">
+      <bpmn:documentation>P14 trigger: the parties want to change the terms, the end date is reached, or one party gives notice of termination.</bpmn:documentation>
+      <bpmn:outgoing>F40</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:callActivity id="Call_BeanOpenChange" name="Open the bean" calledElement="Process_BeanOpen">
+      <bpmn:documentation>Process_BeanOpen: check before you create, find out whose the bean is, and claim it — or leave it alone when it is someone else's. The one place a claim is drawn; the gateway after this reads which end it reached.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="bean-coordination"/></bpmn:extensionElements>
+      <bpmn:incoming>F40</bpmn:incoming>
+      <bpmn:outgoing>F41</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:exclusiveGateway id="GW_BeanYoursChange" name="Bean claimed?">
+      <bpmn:documentation>Reads which end Process_BeanOpen reached. `claimed`: the bean is in progress and this process works it. `not yours`: a sibling session or a human holds it, nothing was written to it, and this process stops here rather than work a bean it does not own (bean-coordination).</bpmn:documentation>
+      <bpmn:incoming>F41</bpmn:incoming>
+      <bpmn:outgoing>F42</bpmn:outgoing>
+      <bpmn:outgoing>F43</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="End_BeanNotYoursChange" name="Not yours —&#10;left alone">
+      <bpmn:documentation>Someone else holds the bean; this run stops without touching it.</bpmn:documentation>
+      <bpmn:incoming>F42</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="Task_DecideChange" name="Decide: amend, renew or end">
+      <bpmn:documentation>The parties decide what happens to the agreement. Deciding to amend or terminate is human; expiry of a computable agreement is already enforced by its ODRL dateTime constraint.</bpmn:documentation>
+      <bpmn:extensionElements><cat-harness.processes:no-skill reason="A decision between the parties. It is judgement, not a procedure; the stakeholder role is judgement-only."/></bpmn:extensionElements>
+      <bpmn:incoming>F43</bpmn:incoming>
+      <bpmn:outgoing>F44</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="GW_ChangeKind" name="Amend, renew or end?">
+      <bpmn:documentation>The parties' decision. `new version` (amend, or renew with a new end date) runs P1 again and publishes a new version linked to the old one. `renew by grant` (the version has no end date): nothing in the document changes. `end` (expiry or termination) closes the agreement.</bpmn:documentation>
+      <bpmn:incoming>F44</bpmn:incoming>
+      <bpmn:outgoing>F45</bpmn:outgoing>
+      <bpmn:outgoing>F46</bpmn:outgoing>
+      <bpmn:outgoing>F47</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="End_RenewedByGrant" name="Renewed by a new grant">
+      <bpmn:documentation>The version has no end date, so renewal is a new grant under the same version. Grants are issued in the server processes (smart-trust), not here.</bpmn:documentation>
+      <bpmn:incoming>F46</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="Task_DecideGrants" name="P14.2 · Decide what happens to existing grants">
+      <bpmn:documentation>Existing grants keep citing the old hash. The parties decide, per agreement: they stay valid until expiry, or they are revoked and reissued against the new version (in smart-trust). The old version stays readable.</bpmn:documentation>
+      <bpmn:extensionElements><cat-harness.processes:no-skill reason="A decision between the parties. It is judgement, not a procedure; the stakeholder role is judgement-only."/></bpmn:extensionElements>
+      <bpmn:incoming>F45</bpmn:incoming>
+      <bpmn:outgoing>F48</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="GW_WidensUse" name="Consent-based: does the amendment widen use?">
+      <bpmn:documentation>Consent rule 2, for a new version only. `widens use` (for example more data, more purposes, more recipients or a longer period): the Consents that cite the old version do not cover the new one, so new consent is needed. `narrows use`: no new consent is needed. `not consent-based`: there is no consent to renew.</bpmn:documentation>
+      <bpmn:incoming>F48</bpmn:incoming>
+      <bpmn:outgoing>F70</bpmn:outgoing>
+      <bpmn:outgoing>F71</bpmn:outgoing>
+      <bpmn:outgoing>F72</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="Task_NewConsentNeeded" name="P14.3 · New consent needed">
+      <bpmn:documentation>The amendment widens use, so a Consent citing the old version's URL and hash does not cover the new version (consent rule 2). Record on the bean, and in the new version's text, that new consent is needed; the new version gets its own plain-language summary (P1.2b). Asking each person again is the trust layer's.</bpmn:documentation>
+      <bpmn:extensionElements><cat-harness.processes:no-skill reason="Gap: asking people for new consent is a trust-layer Consent process, not harness work. This step only records that the Consents citing the old version do not cover the new one."/></bpmn:extensionElements>
+      <bpmn:incoming>F70</bpmn:incoming>
+      <bpmn:outgoing>F73</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="GW_WidensJoin" name="">
+      <bpmn:documentation>Merge: with or without new consent, the new version is written and published again (P1, P2). Its DCAT 3 record carries dcat:previousVersion naming the fixed-version URL of the version it amends (P2.4–5, dsa-dcat-record); older Consents are carried across a narrowing amendment along that chain.</bpmn:documentation>
+      <bpmn:incoming>F71</bpmn:incoming>
+      <bpmn:incoming>F72</bpmn:incoming>
+      <bpmn:incoming>F73</bpmn:incoming>
+      <bpmn:outgoing>F74</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="Task_SetStatus" name="P14.5 · Set the status to ended">
+      <bpmn:documentation>Set the life-cycle status of the agreement's DCAT 3 record (DCAT 3 §6.4.30). The published versions stay readable at their URLs.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="dsa-catalogue-status"/></bpmn:extensionElements>
+      <bpmn:incoming>F47</bpmn:incoming>
+      <bpmn:outgoing>F49</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="Task_EndDuties" name="Revoke grants and start end-of-agreement duties">
+      <bpmn:documentation>All grants are revoked (P13) and the end-of-agreement duties start: return or delete the data, then check them (P12). Those are server processes in smart-trust; this step records that the parties started them.</bpmn:documentation>
+      <bpmn:extensionElements><cat-harness.processes:no-skill reason="Gap: revocation and duty checks are smart-trust server processes (P12, P13), not harness work. This step only records the parties' hand-over."/></bpmn:extensionElements>
+      <bpmn:incoming>F49</bpmn:incoming>
+      <bpmn:outgoing>F50</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:callActivity id="Call_BeanCloseEnded" name="Close the bean" calledElement="Process_BeanClose">
+      <bpmn:documentation>Process_BeanClose: end the bean in a state that says why — complete and archive it, scrap it with its reasons and archive it, or record the blocker and hand it back. The one place resolve and archive are drawn; placed straight before the end so the engine's resolve sees nothing left but the archive step.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="todo-manager"/></bpmn:extensionElements>
+    </bpmn:callActivity>
+    <bpmn:exclusiveGateway id="GW_BeanClosedHow" name="How did it end?">
+      <bpmn:documentation>Which outcome the bean was closed with, so each ends at its own named end event. The bean is closed once, on every path (bpmn-authoring: open and close the bean at the top, once).</bpmn:documentation>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="End_Ended" name="Agreement ended">
+      <bpmn:documentation>The agreement has expired or been terminated, its catalogue status says so, and its versions stay readable.</bpmn:documentation>
+      <bpmn:incoming>F51</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="F01" sourceRef="Start_Request" targetRef="Call_BeanOpen" />
+    <bpmn:sequenceFlow id="F02" sourceRef="Call_BeanOpen" targetRef="GW_BeanYours" />
+    <bpmn:sequenceFlow id="F03" name="not yours" sourceRef="GW_BeanYours" targetRef="End_BeanNotYours" />
+    <bpmn:sequenceFlow id="F04" name="claimed" sourceRef="GW_BeanYours" targetRef="Task_AgreeTerms" />
+    <bpmn:sequenceFlow id="F05" sourceRef="Task_AgreeTerms" targetRef="GW_DraftMerge" />
+    <bpmn:sequenceFlow id="F06" sourceRef="GW_DraftMerge" targetRef="Task_WriteText" />
+    <bpmn:sequenceFlow id="F07" sourceRef="Task_WriteText" targetRef="Task_RecordLegalBasis" />
+    <bpmn:sequenceFlow id="F60" sourceRef="Task_RecordLegalBasis" targetRef="GW_ConsentBasis" />
+    <bpmn:sequenceFlow id="F61" name="consent" sourceRef="GW_ConsentBasis" targetRef="Task_PlainSummary" />
+    <bpmn:sequenceFlow id="F62" name="treatment, law or waiver" sourceRef="GW_ConsentBasis" targetRef="GW_ConsentBasisJoin" />
+    <bpmn:sequenceFlow id="F63" sourceRef="Task_PlainSummary" targetRef="GW_ConsentBasisJoin" />
+    <bpmn:sequenceFlow id="F64" sourceRef="GW_ConsentBasisJoin" targetRef="GW_Computable" />
+    <bpmn:sequenceFlow id="F08" name="yes" sourceRef="GW_Computable" targetRef="Task_DeriveOdrl" />
+    <bpmn:sequenceFlow id="F09" name="document only" sourceRef="GW_Computable" targetRef="GW_ComputableJoin" />
+    <bpmn:sequenceFlow id="F10" sourceRef="Task_DeriveOdrl" targetRef="Task_CheckOdrl" />
+    <bpmn:sequenceFlow id="F11" sourceRef="Task_CheckOdrl" targetRef="GW_ComputableJoin" />
+    <bpmn:sequenceFlow id="F12" sourceRef="GW_ComputableJoin" targetRef="Task_SplitAnnexes" />
+    <bpmn:sequenceFlow id="F13" sourceRef="Task_SplitAnnexes" targetRef="Task_Review" />
+    <bpmn:sequenceFlow id="F14" sourceRef="Task_Review" targetRef="GW_PublicComment" />
+    <bpmn:sequenceFlow id="F15" name="yes" sourceRef="GW_PublicComment" targetRef="Call_PublicComment" />
+    <bpmn:sequenceFlow id="F16" name="no" sourceRef="GW_PublicComment" targetRef="GW_CommentJoin" />
+    <bpmn:sequenceFlow id="F17" sourceRef="Call_PublicComment" targetRef="GW_CommentJoin" />
+    <bpmn:sequenceFlow id="F18" sourceRef="GW_CommentJoin" targetRef="GW_ReadyToSign" />
+    <bpmn:sequenceFlow id="F19" name="changes needed" sourceRef="GW_ReadyToSign" targetRef="GW_DraftMerge" />
+    <bpmn:sequenceFlow id="F20" name="ready" sourceRef="GW_ReadyToSign" targetRef="Task_Render" />
+    <bpmn:sequenceFlow id="F21" sourceRef="Task_Render" targetRef="Task_Sign" />
+    <bpmn:sequenceFlow id="F22" sourceRef="Task_Sign" targetRef="Task_AssignVersion" />
+    <bpmn:sequenceFlow id="F23" sourceRef="Task_AssignVersion" targetRef="Task_Hash" />
+    <bpmn:sequenceFlow id="F24" sourceRef="Task_Hash" targetRef="GW_ConsentPublish" />
+    <bpmn:sequenceFlow id="F65" name="consent" sourceRef="GW_ConsentPublish" targetRef="Task_HashSummary" />
+    <bpmn:sequenceFlow id="F66" name="not consent-based" sourceRef="GW_ConsentPublish" targetRef="GW_ConsentPublishJoin" />
+    <bpmn:sequenceFlow id="F67" sourceRef="Task_HashSummary" targetRef="Task_ConsentCitation" />
+    <bpmn:sequenceFlow id="F68" sourceRef="Task_ConsentCitation" targetRef="GW_ConsentPublishJoin" />
+    <bpmn:sequenceFlow id="F69" sourceRef="GW_ConsentPublishJoin" targetRef="GW_CiteComputable" />
+    <bpmn:sequenceFlow id="F25" name="yes" sourceRef="GW_CiteComputable" targetRef="Task_OdrlCitesText" />
+    <bpmn:sequenceFlow id="F26" name="document only" sourceRef="GW_CiteComputable" targetRef="GW_CiteJoin" />
+    <bpmn:sequenceFlow id="F27" sourceRef="Task_OdrlCitesText" targetRef="GW_CiteJoin" />
+    <bpmn:sequenceFlow id="F28" sourceRef="GW_CiteJoin" targetRef="Task_Publish" />
+    <bpmn:sequenceFlow id="F29" sourceRef="Task_Publish" targetRef="Task_Catalogue" />
+    <bpmn:sequenceFlow id="F30" sourceRef="Task_Catalogue" targetRef="Call_BeanCloseEnded" />
+    <bpmn:sequenceFlow id="Flow_GW_BeanClosedHow" sourceRef="Call_BeanCloseEnded" targetRef="GW_BeanClosedHow"/>
+    <bpmn:sequenceFlow name="published" id="F31" sourceRef="GW_BeanClosedHow" targetRef="End_InForce" />
+    <bpmn:sequenceFlow id="F40" sourceRef="Start_Change" targetRef="Call_BeanOpenChange" />
+    <bpmn:sequenceFlow id="F41" sourceRef="Call_BeanOpenChange" targetRef="GW_BeanYoursChange" />
+    <bpmn:sequenceFlow id="F42" name="not yours" sourceRef="GW_BeanYoursChange" targetRef="End_BeanNotYoursChange" />
+    <bpmn:sequenceFlow id="F43" name="claimed" sourceRef="GW_BeanYoursChange" targetRef="Task_DecideChange" />
+    <bpmn:sequenceFlow id="F44" sourceRef="Task_DecideChange" targetRef="GW_ChangeKind" />
+    <bpmn:sequenceFlow id="F45" name="new version" sourceRef="GW_ChangeKind" targetRef="Task_DecideGrants" />
+    <bpmn:sequenceFlow id="F46" name="renew by grant" sourceRef="GW_ChangeKind" targetRef="End_RenewedByGrant" />
+    <bpmn:sequenceFlow id="F47" name="end" sourceRef="GW_ChangeKind" targetRef="Task_SetStatus" />
+    <bpmn:sequenceFlow id="F48" sourceRef="Task_DecideGrants" targetRef="GW_WidensUse" />
+    <bpmn:sequenceFlow id="F70" name="widens use" sourceRef="GW_WidensUse" targetRef="Task_NewConsentNeeded" />
+    <bpmn:sequenceFlow id="F71" name="narrows use" sourceRef="GW_WidensUse" targetRef="GW_WidensJoin" />
+    <bpmn:sequenceFlow id="F72" name="not consent-based" sourceRef="GW_WidensUse" targetRef="GW_WidensJoin" />
+    <bpmn:sequenceFlow id="F73" sourceRef="Task_NewConsentNeeded" targetRef="GW_WidensJoin" />
+    <bpmn:sequenceFlow id="F74" sourceRef="GW_WidensJoin" targetRef="GW_DraftMerge" />
+    <bpmn:sequenceFlow id="F49" sourceRef="Task_SetStatus" targetRef="Task_EndDuties" />
+    <bpmn:sequenceFlow id="F50" sourceRef="Task_EndDuties" targetRef="Call_BeanCloseEnded" />
+    <bpmn:sequenceFlow name="ended" id="F51" sourceRef="GW_BeanClosedHow" targetRef="End_Ended" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_DsaDocumentLifecycle">
+    <bpmndi:BPMNPlane id="BPMNPlane_DsaDocumentLifecycle" bpmnElement="Collaboration_DsaDocumentLifecycle">
+      <bpmndi:BPMNEdge id="Edge_Flow_GW_BeanClosedHow" bpmnElement="Flow_GW_BeanClosedHow">
+        <di:waypoint x="6945" y="305" />
+        <di:waypoint x="6990" y="305" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Participant_DsaDocumentLifecycle_di" bpmnElement="Participant_DsaDocumentLifecycle" isHorizontal="true"><dc:Bounds x="160" y="80" width="6938" height="1080" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Parties_di" bpmnElement="Lane_Parties" isHorizontal="true"><dc:Bounds x="190" y="80" width="6908" height="150" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Author_di" bpmnElement="Lane_Author" isHorizontal="true"><dc:Bounds x="190" y="230" width="6908" height="330" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Reviewer_di" bpmnElement="Lane_Reviewer" isHorizontal="true"><dc:Bounds x="190" y="560" width="6908" height="150" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_PublicReview_di" bpmnElement="Lane_PublicReview" isHorizontal="true"><dc:Bounds x="190" y="710" width="6908" height="150" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Publisher_di" bpmnElement="Lane_Publisher" isHorizontal="true"><dc:Bounds x="190" y="860" width="6908" height="150" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Build_di" bpmnElement="Lane_Build" isHorizontal="true"><dc:Bounds x="190" y="1010" width="6908" height="150" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Start_Request_di" bpmnElement="Start_Request"><dc:Bounds x="252" y="137" width="36" height="36" /><bpmndi:BPMNLabel><dc:Bounds x="292" y="97" width="195" height="36" /></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Call_BeanOpen_di" bpmnElement="Call_BeanOpen"><dc:Bounds x="335" y="245" width="120" height="120" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="GW_BeanYours_di" bpmnElement="GW_BeanYours" isMarkerVisible="true"><dc:Bounds x="510" y="280" width="50" height="50" /><bpmndi:BPMNLabel><dc:Bounds x="470" y="334" width="130" height="30" /></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_BeanNotYours_di" bpmnElement="End_BeanNotYours"><dc:Bounds x="517" y="242" width="36" height="36" /><bpmndi:BPMNLabel><dc:Bounds x="557" y="242" width="130" height="30" /></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_AgreeTerms_di" bpmnElement="Task_AgreeTerms"><dc:Bounds x="615" y="95" width="120" height="120" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="GW_DraftMerge_di" bpmnElement="GW_DraftMerge" isMarkerVisible="true"><dc:Bounds x="800" y="460" width="50" height="50" /><bpmndi:BPMNLabel><dc:Bounds x="760" y="514" width="130" height="30" /></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_WriteText_di" bpmnElement="Task_WriteText"><dc:Bounds x="895" y="425" width="120" height="120" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="GW_Computable_di" bpmnElement="GW_Computable" isMarkerVisible="true"><dc:Bounds x="1630" y="460" width="50" height="50" /><bpmndi:BPMNLabel><dc:Bounds x="1590" y="514" width="130" height="30" /></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_DeriveOdrl_di" bpmnElement="Task_DeriveOdrl"><dc:Bounds x="1735" y="425" width="120" height="120" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_CheckOdrl_di" bpmnElement="Task_CheckOdrl"><dc:Bounds x="1915" y="575" width="120" height="120" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="GW_ComputableJoin_di" bpmnElement="GW_ComputableJoin" isMarkerVisible="true"><dc:Bounds x="2090" y="460" width="50" height="50" /><bpmndi:BPMNLabel><dc:Bounds x="2050" y="514" width="130" height="30" /></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_SplitAnnexes_di" bpmnElement="Task_SplitAnnexes"><dc:Bounds x="2195" y="425" width="120" height="120" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Review_di" bpmnElement="Task_Review"><dc:Bounds x="2375" y="575" width="120" height="120" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="GW_PublicComment_di" bpmnElement="GW_PublicComment" isMarkerVisible="true"><dc:Bounds x="2550" y="610" width="50" height="50" /><bpmndi:BPMNLabel><dc:Bounds x="2495.22" y="663.5" width="131.73" height="36" /></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Call_PublicComment_di" bpmnElement="Call_PublicComment"><dc:Bounds x="2655" y="725" width="120" height="120" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="GW_CommentJoin_di" bpmnElement="GW_CommentJoin" isMarkerVisible="true"><dc:Bounds x="2830" y="610" width="50" height="50" /><bpmndi:BPMNLabel><dc:Bounds x="2790" y="664" width="130" height="30" /></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="GW_ReadyToSign_di" bpmnElement="GW_ReadyToSign" isMarkerVisible="true"><dc:Bounds x="2930" y="610" width="50" height="50" /><bpmndi:BPMNLabel><dc:Bounds x="2890" y="664" width="130" height="30" /></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Render_di" bpmnElement="Task_Render"><dc:Bounds x="3035" y="1025" width="120" height="120" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Sign_di" bpmnElement="Task_Sign"><dc:Bounds x="3215" y="95" width="120" height="120" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_AssignVersion_di" bpmnElement="Task_AssignVersion"><dc:Bounds x="3395" y="875" width="120" height="120" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Hash_di" bpmnElement="Task_Hash"><dc:Bounds x="3575" y="875" width="120" height="120" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="GW_CiteComputable_di" bpmnElement="GW_CiteComputable" isMarkerVisible="true"><dc:Bounds x="4310" y="910" width="50" height="50" /><bpmndi:BPMNLabel><dc:Bounds x="4270" y="964" width="130" height="30" /></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_OdrlCitesText_di" bpmnElement="Task_OdrlCitesText"><dc:Bounds x="4415" y="425" width="120" height="120" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="GW_CiteJoin_di" bpmnElement="GW_CiteJoin" isMarkerVisible="true"><dc:Bounds x="4590" y="910" width="50" height="50" /><bpmndi:BPMNLabel><dc:Bounds x="4550" y="964" width="130" height="30" /></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Publish_di" bpmnElement="Task_Publish"><dc:Bounds x="4695" y="1025" width="120" height="120" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Catalogue_di" bpmnElement="Task_Catalogue"><dc:Bounds x="4875" y="875" width="120" height="120" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_InForce_di" bpmnElement="End_InForce"><dc:Bounds x="7130" y="338" width="36" height="36" />
+        
+      <bpmndi:BPMNLabel><dc:Bounds x="6979.05" y="375" width="180" height="36" /></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Start_Change_di" bpmnElement="Start_Change"><dc:Bounds x="5372" y="137" width="36" height="36" /><bpmndi:BPMNLabel><dc:Bounds x="5236.25" y="128" width="131.75" height="54" /></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Call_BeanOpenChange_di" bpmnElement="Call_BeanOpenChange"><dc:Bounds x="5455" y="245" width="120" height="120" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="GW_BeanYoursChange_di" bpmnElement="GW_BeanYoursChange" isMarkerVisible="true"><dc:Bounds x="5630" y="280" width="50" height="50" /><bpmndi:BPMNLabel><dc:Bounds x="5590" y="334" width="130" height="30" /></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_BeanNotYoursChange_di" bpmnElement="End_BeanNotYoursChange"><dc:Bounds x="5637" y="242" width="36" height="36" /><bpmndi:BPMNLabel><dc:Bounds x="5677" y="242" width="130" height="30" /></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_DecideChange_di" bpmnElement="Task_DecideChange"><dc:Bounds x="5735" y="95" width="120" height="120" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="GW_ChangeKind_di" bpmnElement="GW_ChangeKind" isMarkerVisible="true"><dc:Bounds x="5910" y="130" width="50" height="50" /><bpmndi:BPMNLabel><dc:Bounds x="5854.51" y="183.5" width="130" height="35" /></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_RenewedByGrant_di" bpmnElement="End_RenewedByGrant"><dc:Bounds x="5917" y="92" width="36" height="36" /><bpmndi:BPMNLabel><dc:Bounds x="5653" y="92" width="260" height="18" /></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_DecideGrants_di" bpmnElement="Task_DecideGrants"><dc:Bounds x="6015" y="95" width="120" height="120" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_SetStatus_di" bpmnElement="Task_SetStatus"><dc:Bounds x="6015" y="875" width="120" height="120" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_EndDuties_di" bpmnElement="Task_EndDuties"><dc:Bounds x="6645" y="95" width="120" height="120" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_BeanClosedHow" bpmnElement="GW_BeanClosedHow" isMarkerVisible="true"><dc:Bounds x="6990" y="280" width="50" height="50" />
+        
+      <bpmndi:BPMNLabel><dc:Bounds x="7044" y="280" width="90" height="35" /></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Call_BeanCloseEnded_di" bpmnElement="Call_BeanCloseEnded"><dc:Bounds x="6825" y="245" width="120" height="120" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_Ended_di" bpmnElement="End_Ended"><dc:Bounds x="7130" y="238" width="36" height="36" />
+        
+      <bpmndi:BPMNLabel><dc:Bounds x="6946" y="238" width="180" height="18" /></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_RecordLegalBasis_di" bpmnElement="Task_RecordLegalBasis"><dc:Bounds x="1075" y="425" width="120" height="120" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="GW_ConsentBasis_di" bpmnElement="GW_ConsentBasis" isMarkerVisible="true"><dc:Bounds x="1250" y="460" width="50" height="50" /><bpmndi:BPMNLabel><dc:Bounds x="1210" y="514" width="130" height="30" /></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_PlainSummary_di" bpmnElement="Task_PlainSummary"><dc:Bounds x="1355" y="425" width="120" height="120" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="GW_ConsentBasisJoin_di" bpmnElement="GW_ConsentBasisJoin" isMarkerVisible="true"><dc:Bounds x="1530" y="460" width="50" height="50" /><bpmndi:BPMNLabel><dc:Bounds x="1490" y="514" width="130" height="30" /></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="GW_ConsentPublish_di" bpmnElement="GW_ConsentPublish" isMarkerVisible="true"><dc:Bounds x="3750" y="910" width="50" height="50" /><bpmndi:BPMNLabel><dc:Bounds x="3710" y="870" width="130" height="36" /></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_HashSummary_di" bpmnElement="Task_HashSummary"><dc:Bounds x="3855" y="875" width="120" height="120" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_ConsentCitation_di" bpmnElement="Task_ConsentCitation"><dc:Bounds x="4035" y="875" width="120" height="120" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="GW_ConsentPublishJoin_di" bpmnElement="GW_ConsentPublishJoin" isMarkerVisible="true"><dc:Bounds x="4210" y="910" width="50" height="50" /><bpmndi:BPMNLabel><dc:Bounds x="4170" y="964" width="130" height="30" /></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="GW_WidensUse_di" bpmnElement="GW_WidensUse" isMarkerVisible="true"><dc:Bounds x="6190" y="130" width="50" height="50" /><bpmndi:BPMNLabel><dc:Bounds x="6100" y="184" width="110" height="40" /></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_NewConsentNeeded_di" bpmnElement="Task_NewConsentNeeded"><dc:Bounds x="6290" y="110" width="130" height="90" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="GW_WidensJoin_di" bpmnElement="GW_WidensJoin" isMarkerVisible="true"><dc:Bounds x="6470" y="130" width="50" height="50" /><bpmndi:BPMNLabel><dc:Bounds x="6430" y="184" width="130" height="30" /></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="F01_di" bpmnElement="F01">
+        <di:waypoint x="288" y="155" />
+        <di:waypoint x="311.5" y="155" />
+        <di:waypoint x="311.5" y="305" />
+        <di:waypoint x="335" y="305" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F02_di" bpmnElement="F02">
+        <di:waypoint x="455" y="305" />
+        <di:waypoint x="510" y="305" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F03_di" bpmnElement="F03">
+        <di:waypoint x="535" y="280" />
+        <di:waypoint x="535" y="278" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F04_di" bpmnElement="F04">
+        <di:waypoint x="560" y="305" />
+        <di:waypoint x="587.5" y="305" />
+        <di:waypoint x="587.5" y="155" />
+        <di:waypoint x="615" y="155" />
+        <bpmndi:BPMNLabel><dc:Bounds x="493.5" y="184" width="90" height="17" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F05_di" bpmnElement="F05">
+        <di:waypoint x="735" y="155" />
+        <di:waypoint x="767.5" y="155" />
+        <di:waypoint x="767.5" y="485" />
+        <di:waypoint x="800" y="485" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F06_di" bpmnElement="F06">
+        <di:waypoint x="850" y="485" />
+        <di:waypoint x="895" y="485" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F07_di" bpmnElement="F07">
+        <di:waypoint x="1015" y="485" />
+        <di:waypoint x="1075" y="485" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F08_di" bpmnElement="F08">
+        <di:waypoint x="1680" y="485" />
+        <di:waypoint x="1735" y="485" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F09_di" bpmnElement="F09"><di:waypoint x="1655" y="460" /><di:waypoint x="1655" y="422" /><di:waypoint x="2115" y="422" /><di:waypoint x="2115" y="460" />
+        <bpmndi:BPMNLabel><dc:Bounds x="1955" y="425" width="90" height="36" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F10_di" bpmnElement="F10">
+        <di:waypoint x="1855" y="485" />
+        <di:waypoint x="1885" y="485" />
+        <di:waypoint x="1885" y="635" />
+        <di:waypoint x="1915" y="635" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F11_di" bpmnElement="F11">
+        <di:waypoint x="2035" y="635" />
+        <di:waypoint x="2062.5" y="635" />
+        <di:waypoint x="2062.5" y="485" />
+        <di:waypoint x="2090" y="485" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F12_di" bpmnElement="F12">
+        <di:waypoint x="2140" y="485" />
+        <di:waypoint x="2195" y="485" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F13_di" bpmnElement="F13">
+        <di:waypoint x="2315" y="485" />
+        <di:waypoint x="2345" y="485" />
+        <di:waypoint x="2345" y="635" />
+        <di:waypoint x="2375" y="635" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F14_di" bpmnElement="F14">
+        <di:waypoint x="2495" y="635" />
+        <di:waypoint x="2550" y="635" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F15_di" bpmnElement="F15">
+        <di:waypoint x="2600" y="635" />
+        <di:waypoint x="2627.5" y="635" />
+        <di:waypoint x="2627.5" y="785" />
+        <di:waypoint x="2655" y="785" />
+        <bpmndi:BPMNLabel><dc:Bounds x="2606" y="614" width="90" height="18" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F16_di" bpmnElement="F16"><di:waypoint x="2600" y="635" /><di:waypoint x="2830" y="635" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F17_di" bpmnElement="F17">
+        <di:waypoint x="2775" y="785" />
+        <di:waypoint x="2802.5" y="785" />
+        <di:waypoint x="2802.5" y="635" />
+        <di:waypoint x="2830" y="635" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F18_di" bpmnElement="F18"><di:waypoint x="2880" y="635" /><di:waypoint x="2930" y="635" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F19_di" bpmnElement="F19"><di:waypoint x="2955" y="610" /><di:waypoint x="2955" y="572" /><di:waypoint x="825" y="572" /><di:waypoint x="825" y="510" />
+        <bpmndi:BPMNLabel><dc:Bounds x="2959" y="573.5" width="90" height="35" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F20_di" bpmnElement="F20">
+        <di:waypoint x="2980" y="635" />
+        <di:waypoint x="3007.5" y="635" />
+        <di:waypoint x="3007.5" y="1085" />
+        <di:waypoint x="3035" y="1085" />
+        <bpmndi:BPMNLabel><dc:Bounds x="2986" y="614" width="90" height="18" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F21_di" bpmnElement="F21">
+        <di:waypoint x="3155" y="1085" />
+        <di:waypoint x="3185" y="1085" />
+        <di:waypoint x="3185" y="155" />
+        <di:waypoint x="3215" y="155" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F22_di" bpmnElement="F22">
+        <di:waypoint x="3335" y="155" />
+        <di:waypoint x="3365" y="155" />
+        <di:waypoint x="3365" y="935" />
+        <di:waypoint x="3395" y="935" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F23_di" bpmnElement="F23">
+        <di:waypoint x="3515" y="935" />
+        <di:waypoint x="3575" y="935" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F24_di" bpmnElement="F24">
+        <di:waypoint x="3695" y="935" />
+        <di:waypoint x="3750" y="935" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F25_di" bpmnElement="F25">
+        <di:waypoint x="4360" y="935" />
+        <di:waypoint x="4387.5" y="935" />
+        <di:waypoint x="4387.5" y="485" />
+        <di:waypoint x="4415" y="485" />
+        <bpmndi:BPMNLabel><dc:Bounds x="4391.5" y="813.5" width="90" height="18" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F26_di" bpmnElement="F26"><di:waypoint x="4360" y="935" /><di:waypoint x="4590" y="935" />
+        <bpmndi:BPMNLabel><dc:Bounds x="4430" y="896" width="90" height="36" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F27_di" bpmnElement="F27">
+        <di:waypoint x="4535" y="485" />
+        <di:waypoint x="4562.5" y="485" />
+        <di:waypoint x="4562.5" y="935" />
+        <di:waypoint x="4590" y="935" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F28_di" bpmnElement="F28">
+        <di:waypoint x="4640" y="935" />
+        <di:waypoint x="4667.5" y="935" />
+        <di:waypoint x="4667.5" y="1085" />
+        <di:waypoint x="4695" y="1085" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F29_di" bpmnElement="F29">
+        <di:waypoint x="4815" y="1085" />
+        <di:waypoint x="4845" y="1085" />
+        <di:waypoint x="4845" y="935" />
+        <di:waypoint x="4875" y="935" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F30_di" bpmnElement="F30">
+        <di:waypoint x="4935" y="980" />
+        <di:waypoint x="4935" y="395" />
+        <di:waypoint x="6885" y="395" />
+        <di:waypoint x="6885" y="350" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F31_di" bpmnElement="F31"><di:waypoint x="7015" y="330"/><di:waypoint x="7015" y="356"/><di:waypoint x="7130" y="356"/>
+        <bpmndi:BPMNLabel><dc:Bounds x="7049.5" y="316.5" width="90" height="18" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F40_di" bpmnElement="F40">
+        <di:waypoint x="5408" y="155" />
+        <di:waypoint x="5431.5" y="155" />
+        <di:waypoint x="5431.5" y="305" />
+        <di:waypoint x="5455" y="305" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F41_di" bpmnElement="F41">
+        <di:waypoint x="5575" y="305" />
+        <di:waypoint x="5630" y="305" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F42_di" bpmnElement="F42">
+        <di:waypoint x="5655" y="280" />
+        <di:waypoint x="5655" y="278" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F43_di" bpmnElement="F43">
+        <di:waypoint x="5680" y="305" />
+        <di:waypoint x="5707.5" y="305" />
+        <di:waypoint x="5707.5" y="155" />
+        <di:waypoint x="5735" y="155" />
+        <bpmndi:BPMNLabel><dc:Bounds x="5613.5" y="184" width="90" height="17" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F44_di" bpmnElement="F44">
+        <di:waypoint x="5855" y="155" />
+        <di:waypoint x="5910" y="155" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F45_di" bpmnElement="F45">
+        <di:waypoint x="5960" y="155" />
+        <di:waypoint x="6015" y="155" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F46_di" bpmnElement="F46">
+        <di:waypoint x="5935" y="130" />
+        <di:waypoint x="5935" y="128" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F47_di" bpmnElement="F47">
+        <di:waypoint x="5960" y="155" />
+        <di:waypoint x="5987.5" y="155" />
+        <di:waypoint x="5987.5" y="935" />
+        <di:waypoint x="6015" y="935" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F48_di" bpmnElement="F48">
+        <di:waypoint x="6135" y="155" />
+        <di:waypoint x="6190" y="155" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F49_di" bpmnElement="F49">
+        <di:waypoint x="6135" y="935" />
+        <di:waypoint x="6705" y="935" />
+        <di:waypoint x="6705" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F50_di" bpmnElement="F50">
+        <di:waypoint x="6765" y="155" />
+        <di:waypoint x="6795" y="155" />
+        <di:waypoint x="6795" y="305" />
+        <di:waypoint x="6825" y="305" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F51_di" bpmnElement="F51"><di:waypoint x="7015" y="280"/><di:waypoint x="7015" y="256"/><di:waypoint x="7130" y="256"/>
+        <bpmndi:BPMNLabel><dc:Bounds x="7019" y="259.5" width="90" height="17" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F60_di" bpmnElement="F60">
+        <di:waypoint x="1195" y="485" />
+        <di:waypoint x="1250" y="485" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F61_di" bpmnElement="F61">
+        <di:waypoint x="1300" y="485" />
+        <di:waypoint x="1355" y="485" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F62_di" bpmnElement="F62"><di:waypoint x="1275" y="460" /><di:waypoint x="1275" y="422" /><di:waypoint x="1555" y="422" /><di:waypoint x="1555" y="460" />
+        <bpmndi:BPMNLabel><dc:Bounds x="1559" y="423.5" width="90" height="35" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F63_di" bpmnElement="F63">
+        <di:waypoint x="1475" y="485" />
+        <di:waypoint x="1530" y="485" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F64_di" bpmnElement="F64"><di:waypoint x="1580" y="485" /><di:waypoint x="1630" y="485" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F65_di" bpmnElement="F65">
+        <di:waypoint x="3800" y="935" />
+        <di:waypoint x="3855" y="935" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F66_di" bpmnElement="F66"><di:waypoint x="3775" y="960" /><di:waypoint x="3775" y="998" /><di:waypoint x="4235" y="998" /><di:waypoint x="4235" y="960" />
+        <bpmndi:BPMNLabel><dc:Bounds x="3960.51" y="1012.5" width="90" height="53" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F67_di" bpmnElement="F67">
+        <di:waypoint x="3975" y="935" />
+        <di:waypoint x="4035" y="935" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F68_di" bpmnElement="F68">
+        <di:waypoint x="4155" y="935" />
+        <di:waypoint x="4210" y="935" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F69_di" bpmnElement="F69"><di:waypoint x="4260" y="935" /><di:waypoint x="4310" y="935" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F70_di" bpmnElement="F70"><di:waypoint x="6240" y="155" /><di:waypoint x="6290" y="155" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F71_di" bpmnElement="F71"><di:waypoint x="6215" y="180" /><di:waypoint x="6215" y="210" /><di:waypoint x="6495" y="210" /><di:waypoint x="6495" y="180" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F72_di" bpmnElement="F72"><di:waypoint x="6215" y="130" /><di:waypoint x="6215" y="95" /><di:waypoint x="6495" y="95" /><di:waypoint x="6495" y="130" />
+        <bpmndi:BPMNLabel><dc:Bounds x="6499" y="94.5" width="135" height="36" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F73_di" bpmnElement="F73"><di:waypoint x="6420" y="155" /><di:waypoint x="6470" y="155" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F74_di" bpmnElement="F74"><di:waypoint x="6520" y="155" /><di:waypoint x="6580" y="155" /><di:waypoint x="6580" y="222" /><di:waypoint x="825" y="222" /><di:waypoint x="825" y="460" /></bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
