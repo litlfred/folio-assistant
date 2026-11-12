@@ -6,7 +6,7 @@ status: in-progress
 type: epic
 priority: high
 created_at: 2026-11-12T09:45:00Z
-updated_at: 2026-11-12T19:23:00Z
+updated_at: 2026-11-12T19:47:00Z
 tags:
     - project-memory
     - handover
@@ -25,4 +25,4 @@ _2026-11-12T10:55:00Z_ — Parent link to the n6ny epic removed: an epic may onl
 
 _2026-11-12T18:12:00Z_ — Updated children `folio-assistant-um0y` and `folio-assistant-oiah` with Round 22 merges (`cat-harness#1275`, `cat-harness-tools#1961`–`#1965` & `#1967`, `bootstrap-tools#89`, `folio-assistant-core#769`, `fhir-harness#388`, `smart-trust-phw#60` & `#61`, `smart-immunizations#136`, `folio-assistant#3075` & `#3099`).
 
-_2026-11-12T19:23:00Z_ — Updated children `folio-assistant-um0y` and `folio-assistant-oiah` with Round 23 merges (`bootstrap-tools#90`, `cat-harness#1276`–`#1280`, `cat-harness-tools#1966` & `#1968`–`#1969`, `folio-assistant-core#770`–`#771`, `smart-trust#206`–`#207`, `smart-immunizations-uganda#27`, `who-iris#239`, `#243`, `#251`).
+_2026-11-12T19:47:00Z_ — Updated children `folio-assistant-um0y` and `folio-assistant-oiah` with Round 23 merges (`bootstrap-tools#90`, `cat-harness#1276`–`#1281`, `cat-harness-tools#1966` & `#1968`–`#1969`, `folio-assistant-core#770`–`#772`, `smart-trust#206`–`#208`, `smart-immunizations-uganda#27`, `who-iris#239`, `#243`, `#251`, `#254`–`#255`).
