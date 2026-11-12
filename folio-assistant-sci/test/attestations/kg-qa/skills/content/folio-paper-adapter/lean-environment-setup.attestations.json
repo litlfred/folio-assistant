@@ -1,0 +1,19 @@
+{
+  "$schema": "qa-attestations/v1",
+  "family": "kg-qa",
+  "subject": {
+    "kind": "skill",
+    "id": "lean-environment-setup",
+    "path": "skills/content/folio-paper-adapter/lean-environment-setup.md"
+  },
+  "pair_attestations": [
+    {
+      "kind": "co-located",
+      "prose": "folio-assistant-sci/skills/content/folio-paper-adapter/lean-environment-setup.md",
+      "code": "folio-assistant-sci/skills/content/folio-paper-adapter/lean-environment-setup.ts",
+      "prose_hash": "29cd615632b0",
+      "code_hash": "7a2dfc6545fd",
+      "by": "baseline"
+    }
+  ]
+}

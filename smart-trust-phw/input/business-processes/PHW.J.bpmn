@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="PHW.J.Definitions" targetNamespace="http://smart.who.int/trust-phw/bpmn">
+  <bpmn:collaboration id="PHW.J.Collaboration">
+    <bpmn:participant id="PHW.J.Participant" name="J. Issue a Verifiable Digital Health Certificate (shared block B4)" processRef="PHW.J" />
+  </bpmn:collaboration>
+  <bpmn:process id="PHW.J" name="J. Issue a Verifiable Digital Health Certificate (shared block B4)" isExecutable="false">
+    <bpmn:documentation>Shared block B4 of the BPMN reuse proposal (Q-BPMN-1 A, 2026-11-01): one issuing process for every certificate type. The certificate profile is a data input (a logical model canonical, for example the DDCC core data set in who.ddcc, the ICVP model in smart-icvp, or DVCMin in this IG), so a trust domain or jurisdiction calls this process instead of copying its steps. Steps are taken from smart-icvp's 'Issue Digital ICVP Card from EIR Data', 'Immunize &amp; Issue Digital ICVP Card' and 'Digitize Existing Physical ICVP Card' diagrams, which share them. The issuer's signing key is registered with the trust anchor beforehand (smart-trust onboarding; [ITI-YY1] in process B). Call it from another IG with bpmn:import namespace http://smart.who.int/trust-phw/bpmn and calledElement PHW.J (Q-BPMN-2 A).</bpmn:documentation>
+    <bpmn:ioSpecification>
+      <bpmn:dataInput id="PHW.J.CertificateProfile" name="Certificate profile (logical model canonical)" />
+      <bpmn:inputSet><bpmn:dataInputRefs>PHW.J.CertificateProfile</bpmn:dataInputRefs></bpmn:inputSet>
+      <bpmn:outputSet />
+    </bpmn:ioSpecification>
+    <bpmn:laneSet id="PHW.J.LaneSet">
+      <bpmn:lane id="PHW.Lane.Holder" name="Certificate Holder (person / Personal Health Wallet)">
+        <bpmn:documentation>The person the certificate is about, and the wallet that keeps it. smart-icvp: 'Traveller'.</bpmn:documentation>
+        <bpmn:flowNodeRef>PHW.J.EndNo</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.J.6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.J.End</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="PHW.Lane.Issuer" name="Certificate Issuer (health worker or issuing system)">
+        <bpmn:documentation>The health worker or system that records the health event and asks for issuance. smart-icvp: 'Actor' and 'National Health Authority'.</bpmn:documentation>
+        <bpmn:flowNodeRef>PHW.J.Start</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.J.1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.J.Gateway1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.J.2</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="PHW.Lane.IssuanceService" name="Certificate Issuance Service">
+        <bpmn:documentation>Signs the certificate with a key whose public part the trust anchor publishes. smart-icvp: 'Certificate Issuance Service'.</bpmn:documentation>
+        <bpmn:flowNodeRef>PHW.J.3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.J.4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.J.5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.J.2a</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="PHW.J.Start" name="Certificate requested">
+      <bpmn:documentation>After a health event (for example a vaccination), from existing records (for example an immunization registry), or from a paper certificate being digitised. smart-icvp has one diagram for each of these starts; the steps after them are the same.</bpmn:documentation>
+      <bpmn:outgoing>PHW.J.Flow1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="PHW.J.1" name="J1. Inform the holder and ask for consent to issue">
+      <bpmn:documentation>smart-icvp: 'Inform traveller and request consent to digitize' and 'Counsel patient on consent'. This is consent to issue the certificate. Consent to share it later is recorded by process A and checked by process B.</bpmn:documentation>
+      <bpmn:incoming>PHW.J.Flow1</bpmn:incoming>
+      <bpmn:outgoing>PHW.J.Flow2</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="PHW.J.Gateway1" name="Consent given?" default="PHW.J.Flow3">
+      <bpmn:documentation>smart-icvp: 'Traveller provides consent'.</bpmn:documentation>
+      <bpmn:incoming>PHW.J.Flow2</bpmn:incoming>
+      <bpmn:outgoing>PHW.J.Flow3</bpmn:outgoing>
+      <bpmn:outgoing>PHW.J.Flow4</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="PHW.J.EndNo" name="Not issued">
+      <bpmn:documentation>The holder declined. No certificate is issued.</bpmn:documentation>
+      <bpmn:incoming>PHW.J.Flow4</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="PHW.J.2" name="J2. Collect the data the certificate profile needs">
+      <bpmn:documentation>smart-icvp: 'Capture Vaccination Data', 'Collate ICVP data', 'Conduct data entry from physical card into system'. What is collected is set by the certificate profile input.</bpmn:documentation>
+      <bpmn:incoming>PHW.J.Flow3</bpmn:incoming>
+      <bpmn:outgoing>PHW.J.Flow5</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="PHW.J.3" name="J3. Issue and sign the certificate">
+      <bpmn:documentation>smart-icvp: 'Issue Digital ICVP Card'. Signed with the issuer's key registered with the trust anchor.</bpmn:documentation>
+      <bpmn:incoming>PHW.J.2a.FlowOut</bpmn:incoming>
+      <bpmn:outgoing>PHW.J.Flow6</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:callActivity id="PHW.J.4" name="J4. Issue a consent-backed VHL (process B)" calledElement="PHW.B">
+      <bpmn:documentation>smart-icvp: 'Configure VHL'. Reuses process B: consent check [ITI-108] and Generate VHL [ITI-YY3].</bpmn:documentation>
+      <bpmn:incoming>PHW.J.Flow6</bpmn:incoming>
+      <bpmn:outgoing>PHW.J.Flow7</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:serviceTask id="PHW.J.5" name="J5. Generate the QR code">
+      <bpmn:documentation>smart-icvp: 'Generate QR Code'.</bpmn:documentation>
+      <bpmn:incoming>PHW.J.Flow7</bpmn:incoming>
+      <bpmn:outgoing>PHW.J.Flow8</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:task id="PHW.J.6" name="J6. Receive the certificate in the wallet">
+      <bpmn:documentation>smart-icvp: 'Receive Digital ICVP Card', 'Digital ICVP Card issued and available for use'.</bpmn:documentation>
+      <bpmn:incoming>PHW.J.Flow8</bpmn:incoming>
+      <bpmn:outgoing>PHW.J.Flow9</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="PHW.J.End" name="Certificate issued">
+      <bpmn:documentation>The holder has the signed certificate and its VHL.</bpmn:documentation>
+      <bpmn:incoming>PHW.J.Flow9</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:callActivity id="PHW.J.2a" name="J2a. Add the consent directives to the certificate (process M, optional)" calledElement="PHW.M">
+      <bpmn:documentation>Optional (owner, 2026-11-07): before the certificate is signed, process M adds the consent directives it is issued under, explicit (PHWExplicitConsent, recorded by process L) or implied (PHWImpliedConsent, the trust domain's default policy), as consent entries listed in the Advance Directives section. The copy in the certificate is evidence for a receiver; the Consent Registry copy is the one enforced.</bpmn:documentation>
+      <bpmn:incoming>PHW.J.Flow5</bpmn:incoming>
+      <bpmn:outgoing>PHW.J.2a.FlowOut</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:sequenceFlow id="PHW.J.Flow1" sourceRef="PHW.J.Start" targetRef="PHW.J.1" />
+    <bpmn:sequenceFlow id="PHW.J.Flow2" sourceRef="PHW.J.1" targetRef="PHW.J.Gateway1" />
+    <bpmn:sequenceFlow id="PHW.J.Flow3" name="Yes" sourceRef="PHW.J.Gateway1" targetRef="PHW.J.2" />
+    <bpmn:sequenceFlow id="PHW.J.Flow4" name="No" sourceRef="PHW.J.Gateway1" targetRef="PHW.J.EndNo" />
+    <bpmn:sequenceFlow id="PHW.J.Flow5" sourceRef="PHW.J.2" targetRef="PHW.J.2a" />
+    <bpmn:sequenceFlow id="PHW.J.2a.FlowOut" sourceRef="PHW.J.2a" targetRef="PHW.J.3" />
+    <bpmn:sequenceFlow id="PHW.J.Flow6" sourceRef="PHW.J.3" targetRef="PHW.J.4" />
+    <bpmn:sequenceFlow id="PHW.J.Flow7" sourceRef="PHW.J.4" targetRef="PHW.J.5" />
+    <bpmn:sequenceFlow id="PHW.J.Flow8" sourceRef="PHW.J.5" targetRef="PHW.J.6" />
+    <bpmn:sequenceFlow id="PHW.J.Flow9" sourceRef="PHW.J.6" targetRef="PHW.J.End" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="PHW.J.Diagram">
+    <bpmndi:BPMNPlane id="PHW.J.Plane" bpmnElement="PHW.J.Collaboration">
+      <bpmndi:BPMNShape id="PHW.J.Participant_di" bpmnElement="PHW.J.Participant" isHorizontal="true"><dc:Bounds x="120" y="60" width="2220" height="450" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.Lane.Holder_di" bpmnElement="PHW.Lane.Holder" isHorizontal="true"><dc:Bounds x="150" y="60" width="2190" height="150" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.Lane.Issuer_di" bpmnElement="PHW.Lane.Issuer" isHorizontal="true"><dc:Bounds x="150" y="210" width="2190" height="150" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.Lane.IssuanceService_di" bpmnElement="PHW.Lane.IssuanceService" isHorizontal="true"><dc:Bounds x="150" y="360" width="2190" height="150" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.J.Start_di" bpmnElement="PHW.J.Start"><dc:Bounds x="267" y="267" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.J.1_di" bpmnElement="PHW.J.1"><dc:Bounds x="405" y="245" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.J.Gateway1_di" bpmnElement="PHW.J.Gateway1" isMarkerVisible="true"><dc:Bounds x="670" y="260" width="50" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.J.EndNo_di" bpmnElement="PHW.J.EndNo"><dc:Bounds x="677" y="117" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.J.2_di" bpmnElement="PHW.J.2"><dc:Bounds x="815" y="245" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.J.3_di" bpmnElement="PHW.J.3"><dc:Bounds x="1255" y="395" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.J.4_di" bpmnElement="PHW.J.4"><dc:Bounds x="1460" y="395" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.J.5_di" bpmnElement="PHW.J.5"><dc:Bounds x="1665" y="395" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.J.6_di" bpmnElement="PHW.J.6"><dc:Bounds x="1870" y="95" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.J.End_di" bpmnElement="PHW.J.End"><dc:Bounds x="2142" y="117" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.J.2a_di" bpmnElement="PHW.J.2a"><dc:Bounds x="1020" y="395" width="185" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="PHW.J.2a.FlowOut_di" bpmnElement="PHW.J.2a.FlowOut">
+        <di:waypoint x="1205" y="435" />
+        <di:waypoint x="1255" y="435" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.J.Flow1_di" bpmnElement="PHW.J.Flow1">
+        <di:waypoint x="303" y="285" />
+        <di:waypoint x="405" y="285" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.J.Flow2_di" bpmnElement="PHW.J.Flow2">
+        <di:waypoint x="575" y="285" />
+        <di:waypoint x="670" y="285" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.J.Flow3_di" bpmnElement="PHW.J.Flow3">
+        <di:waypoint x="720" y="285" />
+        <di:waypoint x="815" y="285" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.J.Flow4_di" bpmnElement="PHW.J.Flow4">
+        <di:waypoint x="695" y="260" />
+        <di:waypoint x="695" y="153" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.J.Flow5_di" bpmnElement="PHW.J.Flow5">
+        <di:waypoint x="985" y="285" />
+        <di:waypoint x="1002" y="285" />
+        <di:waypoint x="1002" y="435" />
+        <di:waypoint x="1020" y="435" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.J.Flow6_di" bpmnElement="PHW.J.Flow6">
+        <di:waypoint x="1425" y="435" />
+        <di:waypoint x="1460" y="435" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.J.Flow7_di" bpmnElement="PHW.J.Flow7">
+        <di:waypoint x="1630" y="435" />
+        <di:waypoint x="1665" y="435" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.J.Flow8_di" bpmnElement="PHW.J.Flow8">
+        <di:waypoint x="1835" y="435" />
+        <di:waypoint x="1852" y="435" />
+        <di:waypoint x="1852" y="135" />
+        <di:waypoint x="1870" y="135" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.J.Flow9_di" bpmnElement="PHW.J.Flow9">
+        <di:waypoint x="2040" y="135" />
+        <di:waypoint x="2142" y="135" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
