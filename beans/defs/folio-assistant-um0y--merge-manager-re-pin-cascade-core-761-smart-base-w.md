@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-12T09:45:00Z
-updated_at: 2026-11-12T09:50:00Z
+updated_at: 2026-11-12T09:58:00Z
 parent: folio-assistant-v8bg
 tags:
     - handover-2026-11-12
@@ -40,3 +40,7 @@ _2026-11-12T09:50:00Z_ — Merge manager's own handover (session https://claude.
 - No open cards in the merge manager thread.
 
 _2026-11-12T09:44:00Z_ — smart-trust publish 43189576552 FAILED: injection check refuses 14 object SVGs + hcert-demo script (no trustedScripts). Publish-on-push thread card Q-INJ-2 (img now, SVG allowlist later); merge its fix PR under the owner game override, then re-check the game URL.
+
+_2026-11-12T09:58:00Z_ — Merge manager role taken over by session https://claude.ai/code/session_01EucfRpkvK7d4FJyuqypQzm (owner card Q-TAKE-1 = A). The old thread's helpers (m.sh, lk.sh, tapped.txt) are not in this session; it works over REST.
+- Live 09:50Z: core#761 (87c666a3), tools#1941/#1943/#1945/#1952 and smart-trust#200 all still running CI, nothing red yet. smart-trust Site publish 43189576552 failed (injection QA: <object> diagrams and an untrusted hcert script); the fix is smart-trust#203, held for Q-INJ-2. The fa re-pin train PR is not open yet.
+- Owner 09:57Z: smart-ra / dth-* content PRs that need committee or author review are NOT merged; only functional PRs. The smart-ra drafts (#154 #185 #190 #191 #192 #195) are on hold despite Q-RA-VAL-2 A.

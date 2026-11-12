@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: critical
 created_at: 2026-11-12T09:45:00Z
-updated_at: 2026-11-12T09:45:00Z
+updated_at: 2026-11-12T09:58:00Z
 parent: folio-assistant-n6ny
 tags:
     - project-memory
@@ -45,3 +45,7 @@ Every agent follows these. Newest rule wins where two disagree; the owner's mess
 - QUESTIONS TO THE OWNER (project instructions): the owner is disabled and finds typing hard. Every question = a full written question with every lettered option, trade-off and a recommendation, THEN a tappable decision card with the same letters. Never ask them to type answers.
 
 _2026-11-12T09:45:00Z_ — Filed by thread "Record handover in beans" (https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G9E8Y9ccXJsk3qvGEie1X5Pr), session https://claude.ai/code/session_01Qmmkt7NmLVnjA5oNtkbv3f.
+
+- FUNCTIONAL ONLY FOR smart-ra / dth-* (owner 09:57Z 11-12): never merge smart-ra or dth-* content PRs that need committee or author review; merge only functional PRs (code, CI, pins). Supersedes any earlier card that queued content drafts for merge (e.g. Q-RA-VAL-2 A).
+
+_2026-11-12T09:58:00Z_ — Rule added by https://claude.ai/code/session_01EucfRpkvK7d4FJyuqypQzm.
