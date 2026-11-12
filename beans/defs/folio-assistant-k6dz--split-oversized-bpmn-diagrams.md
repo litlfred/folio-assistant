@@ -2,11 +2,11 @@
 # folio-assistant-k6dz
 $schema: bean/1.0.0
 title: 'Split the 23 oversized harness BPMN diagrams into phases'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-11-06T05:31:14Z
-updated_at: 2026-11-11T14:33:00Z
+updated_at: 2026-11-12T09:58:00Z
 parent: folio-assistant-rwmf
 tags:
     - bpmn-layout
@@ -79,3 +79,14 @@ Each of the 23 (and the 8 additional diagrams > 1400 px) passes `--check`, or th
 - **Batch 2 (`litlfred/cat-harness#1220`, merged `5d452a66adc5`):** `processes/content/review-narrative.bpmn` (1540 → 1360 px), `processes/ui/theme-ui-review.bpmn` (1620 → 1350 px), `library/processes/translation-workflow.bpmn` (1636 → 1390 px), `library/processes/copy-out-materialized.bpmn` (1760 → 1360 px).
 - **Batch 3 (`litlfred/cat-harness#1233`, merged `4b31dcf7a015`):** `processes/process/crdm-needs.bpmn` (1466 → 1200 px), `processes/process/hand-back-to-discussion.bpmn` (1500 → 1360 px), `sdlc/processes/code-quality-gates.bpmn` (1540 → 1380 px), `processes/process/actor-role-administration.bpmn` (1550 → 1320 px).
 - **Batch 4 (`litlfred/cat-harness#1245`, merged `be6f9dde8ae3`):** `processes/process/crdm-data-model.bpmn` (1666 → 1220 px), `library/processes/content-acquisition.bpmn` (1680 → 1320 px), `sdlc/processes/test-plan-execution.bpmn` (1760 → 1380 px), `library/processes/sample-import.bpmn` (1850 → 1360 px).
+
+## Round 16–17 Completion Update (2026-11-12 — All 93 `cat-harness` & All 31 `folio-assistant-core` BPMN Diagrams Now Pass `<= 1400 × 900 px` with 0 Findings)
+
+- **Batch 5 (`litlfred/cat-harness#1255`, merged):** `processes/kg/kg-to-portal.bpmn` (1720×921 → 1360×889), `sdlc/processes/merge-refusal.bpmn` (1970×720 → 1400×725), `processes/kg/kg-separation-prepare.bpmn` (2030×1000 → 1360×760), `sdlc/processes/requirements-filing.bpmn` (2226×440 → 1360×530).
+- **Batch 6 (`litlfred/cat-harness#1257`, merged):** `library/processes/methodology-from-source.bpmn` (2270 → ≤1400), `processes/ui/wireframe-design-review.bpmn` (2270 → ≤1400), `processes/kg/kg-separation-move.bpmn` (2380 → ≤1400), `sdlc/processes/merge-train.bpmn` (2550 → ≤1400).
+- **Batch 7 (`litlfred/cat-harness#1256`, merged):** `processes/process/crdm-deliver.bpmn`, `sdlc/processes/merge-to-main.bpmn`, `processes/kg/kg-separation.bpmn` (all ≤1400×900, 0 findings).
+- **Batch 8 (`litlfred/cat-harness#1262`, merged `b553b14b93`):** `sdlc/processes/docs-site-publish.bpmn` (3203×342 → 1360×720), `sdlc/processes/upstream-version-adoption.bpmn` (3060×760 → 1360×790), `processes/kg/sub-kg-lifecycle.bpmn` (3780×1500 → 1360×800), `library/processes/subscribe-kg.bpmn` (3812×604 → 1360×720), `library/processes/human-translation-workflow.bpmn` (3876×720 → 1360×780).
+- **Core Batch 1 (`litlfred/folio-assistant-core#758`, merged):** 7 oversized `folio-assistant-core` BPMN diagrams (including `processes/scientific/formalize-theorem.bpmn` and library processes) compacted to ≤1400×900 with 0 findings.
+- **Core Batch 2 (`litlfred/folio-assistant-core#762`, merged `e2d3d08791`):** `processes/content/contributor-feedback.bpmn` (2136×660 → 1380×660), `processes/content/content-change-review-committee.bpmn` (2710×430 → 1380×450), `processes/content/evidence-retrieval.bpmn` (2765×767 → 1380×720), `processes/content/content-lifecycle.bpmn` (2820×1650 → 1380×750), `processes/conduct/getting-started.bpmn` (2920×2112 → 1380×750).
+- **Core Batch 3 (`litlfred/folio-assistant-core#765`, merged `57c7d09bcb`):** `processes/content/draft-to-publication.bpmn` (2900×1235 → 1380×835), `processes/content/editing-hci-validation.bpmn` (3394×1272 → 1380×855), `processes/library/l1-document-ingestion.bpmn` (3820×874 → 1360×800), `dsa/processes/dsa-document-lifecycle.bpmn` (10180×1844 → 1380×875).
+- **Verification:** `0` `.bpmn` diagrams remain `diagram-too-wide` or `diagram-too-tall` across all 93 `.bpmn` files in `litlfred/cat-harness` and all 31 `.bpmn` files in `litlfred/folio-assistant-core`. Bean completed.
