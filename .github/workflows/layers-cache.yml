@@ -85,7 +85,13 @@ jobs:
           # A ref that is missing, stale or does not verify is rebuilt.
           key=$(bun -e 'const l=JSON.parse(await Bun.file("index.lock.json").text());console.log(new Bun.CryptoHasher("sha256").update(JSON.stringify(l.instances)).digest("hex"))')
           if grep -qx "  layers cache: refs/cat/layers/$key" "$RUNNER_TEMP/mount.log"; then
-            sha=$(git ls-remote origin "refs/cat/layers/$key" | cut -f1)
+            # The mount read this ref into a scratch repository and then
+            # deleted it, so the commit is not in this checkout, and push
+            # refuses an object it does not have ("fatal: bad object").
+            # Fetch only the commit (tree:0): the remote already has the
+            # rest, so the push sends no objects.
+            git fetch -q --depth 1 --filter=tree:0 origin "refs/cat/layers/$key"
+            sha=$(git rev-parse FETCH_HEAD)
             git push -q --force origin "$sha:refs/cat/layers/main"
             echo "refs/cat/layers/$key already verified for this lock: not rebuilt; refs/cat/layers/main -> ${sha:0:12}"
             exit 0

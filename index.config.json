@@ -2,13 +2,13 @@
   "$schema": "folio-index-config/v1",
   "title": "folio-assistant",
   "description": "**A content-agnostic agent skills framework.** Author rigorous content with an LLM — documents and policy guidance, scientific papers & books, WHO SMART Guidelines, and FHIR Implementation Guides — backed by an optional MCP server, typed content-object model, and a per-content-type skill system.",
-  "instances": [
+  "layers": [
     {
       "name": "cat-harness",
       "source": {
         "remote": {
           "repository": "litlfred/cat-harness",
-          "ref": "4041cf5620e287a98d7ddeb465dd5841185114d0",
+          "ref": "5244c319cd2f7e2fb19a1f5fe9942cc70a15fd38",
           "overrides": {
             "cat-harness": {
               "whole": true
@@ -18,8 +18,8 @@
           "trust": {
             "consent": {
               "by": "litlfred",
-              "on": "2026-11-11",
-              "ref": "4041cf5620e287a98d7ddeb465dd5841185114d0",
+              "on": "2026-11-12",
+              "ref": "5244c319cd2f7e2fb19a1f5fe9942cc70a15fd38",
               "evidence": "standing consent by litlfred given 2026-11-01: follow `main` — Owner litlfred tapped card Q-TRAIN-1 'A. All except smart-base' on 2026-11-01 11:26:02Z in the project thread 'Run re-pins as a 2-hour train' (cmsg_017WNUkNK8kdDziPK58Pv6G9RghqtQeZR4QPwyKsTCohv3), after card Q-SPD-3 B: re-pins run as a 2-hour train (repin-train.yml, issue #2873); a person still merges each train PR.",
               "standing": {
                 "follows": "main",
@@ -50,7 +50,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/cat-harness-tools",
-          "ref": "02897c223c9710d42a7a4d949131a4a5faf23c41",
+          "ref": "93bf7aea288621a0720a3f2ed74494fb4c82d1ba",
           "overrides": {
             "cat-harness-tools": {
               "whole": true
@@ -60,8 +60,8 @@
           "trust": {
             "consent": {
               "by": "litlfred",
-              "on": "2026-11-11",
-              "ref": "02897c223c9710d42a7a4d949131a4a5faf23c41",
+              "on": "2026-11-12",
+              "ref": "93bf7aea288621a0720a3f2ed74494fb4c82d1ba",
               "evidence": "standing consent by litlfred given 2026-11-01: follow `main` — Owner litlfred tapped card Q-TRAIN-1 'A. All except smart-base' on 2026-11-01 11:26:02Z in the project thread 'Run re-pins as a 2-hour train' (cmsg_017WNUkNK8kdDziPK58Pv6G9RghqtQeZR4QPwyKsTCohv3), after card Q-SPD-3 B: re-pins run as a 2-hour train (repin-train.yml, issue #2873); a person still merges each train PR.",
               "standing": {
                 "follows": "main",
@@ -83,7 +83,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/folio-assistant-core",
-          "ref": "1874fd5fd7a1f57ea13faf619af66d25aef31e97",
+          "ref": "294f49d530ea3af70a19c5817c8d9b386e3e48b2",
           "overrides": {
             "folio-assistant-core": {
               "whole": true
@@ -93,8 +93,8 @@
           "trust": {
             "consent": {
               "by": "litlfred",
-              "on": "2026-11-11",
-              "ref": "1874fd5fd7a1f57ea13faf619af66d25aef31e97",
+              "on": "2026-11-12",
+              "ref": "294f49d530ea3af70a19c5817c8d9b386e3e48b2",
               "evidence": "standing consent by litlfred given 2026-11-01: follow `main` — Owner litlfred tapped card Q-TRAIN-1 'A. All except smart-base' on 2026-11-01 11:26:02Z in the project thread 'Run re-pins as a 2-hour train' (cmsg_017WNUkNK8kdDziPK58Pv6G9RghqtQeZR4QPwyKsTCohv3), after card Q-SPD-3 B: re-pins run as a 2-hour train (repin-train.yml, issue #2873); a person still merges each train PR.",
               "standing": {
                 "follows": "main",
@@ -167,7 +167,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/smart-trust",
-          "ref": "aa6cde1b13b26524f5cfc577688552b98acc2a56",
+          "ref": "414f5b938fc3a268583499d8dcc8994a40b2b1a0",
           "overrides": {
             "smart-trust": {
               "path": "smart-trust",
@@ -186,8 +186,8 @@
           "trust": {
             "consent": {
               "by": "litlfred",
-              "on": "2026-11-11",
-              "ref": "aa6cde1b13b26524f5cfc577688552b98acc2a56",
+              "on": "2026-11-12",
+              "ref": "414f5b938fc3a268583499d8dcc8994a40b2b1a0",
               "evidence": "standing consent by litlfred given 2026-11-01: follow `main` — Owner litlfred tapped card Q-TRAIN-1 'A. All except smart-base' on 2026-11-01 11:26:02Z in the project thread 'Run re-pins as a 2-hour train' (cmsg_017WNUkNK8kdDziPK58Pv6G9RghqtQeZR4QPwyKsTCohv3), after card Q-SPD-3 B: re-pins run as a 2-hour train (repin-train.yml, issue #2873); a person still merges each train PR.",
               "standing": {
                 "follows": "main",
@@ -210,7 +210,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/smart-trust-phw",
-          "ref": "ab515033888bee4fbcf782a0a297c1813004a6bb",
+          "ref": "447c1c78e1847c2f62ba671a3421183e74a33b85",
           "overrides": {
             "smart-trust-phw": {
               "path": "smart-trust-phw",
@@ -230,7 +230,7 @@
             "consent": {
               "by": "litlfred",
               "on": "2026-11-11",
-              "ref": "ab515033888bee4fbcf782a0a297c1813004a6bb",
+              "ref": "447c1c78e1847c2f62ba671a3421183e74a33b85",
               "evidence": "standing consent by litlfred given 2026-11-01: follow `main` — Owner litlfred tapped card Q-TRAIN-1 'A. All except smart-base' on 2026-11-01 11:26:02Z in the project thread 'Run re-pins as a 2-hour train' (cmsg_017WNUkNK8kdDziPK58Pv6G9RghqtQeZR4QPwyKsTCohv3), after card Q-SPD-3 B: re-pins run as a 2-hour train (repin-train.yml, issue #2873); a person still merges each train PR.",
               "standing": {
                 "follows": "main",
@@ -253,7 +253,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/bootstrap",
-          "ref": "1c36aef5ab70d7e95ee6026124cd004cab0c0990",
+          "ref": "823e7921d9c73f3b0e5258e0d673e31c85df76ea",
           "overrides": {
             "bootstrap": {
               "whole": true
@@ -264,7 +264,7 @@
             "consent": {
               "by": "litlfred",
               "on": "2026-11-11",
-              "ref": "1c36aef5ab70d7e95ee6026124cd004cab0c0990",
+              "ref": "823e7921d9c73f3b0e5258e0d673e31c85df76ea",
               "evidence": "standing consent by litlfred given 2026-11-01: follow `main` — Owner litlfred tapped card Q-TRAIN-1 'A. All except smart-base' on 2026-11-01 11:26:02Z in the project thread 'Run re-pins as a 2-hour train' (cmsg_017WNUkNK8kdDziPK58Pv6G9RghqtQeZR4QPwyKsTCohv3), after card Q-SPD-3 B: re-pins run as a 2-hour train (repin-train.yml, issue #2873); a person still merges each train PR.",
               "standing": {
                 "follows": "main",
@@ -287,7 +287,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/bootstrap-tools",
-          "ref": "30c4585d5dfbf6960e3ecca86b18d131d6cd3921",
+          "ref": "9f478d4d9fcd87842e9a4f5b886232ec806e657e",
           "overrides": {
             "bootstrap-tools": {
               "whole": true
@@ -297,8 +297,8 @@
           "trust": {
             "consent": {
               "by": "litlfred",
-              "on": "2026-11-08",
-              "ref": "30c4585d5dfbf6960e3ecca86b18d131d6cd3921",
+              "on": "2026-11-11",
+              "ref": "9f478d4d9fcd87842e9a4f5b886232ec806e657e",
               "evidence": "standing consent by litlfred given 2026-11-01: follow `main` — Owner litlfred tapped card Q-TRAIN-1 'A. All except smart-base' on 2026-11-01 11:26:02Z in the project thread 'Run re-pins as a 2-hour train' (cmsg_017WNUkNK8kdDziPK58Pv6G9RghqtQeZR4QPwyKsTCohv3), after card Q-SPD-3 B: re-pins run as a 2-hour train (repin-train.yml, issue #2873); a person still merges each train PR.",
               "standing": {
                 "follows": "main",
@@ -320,7 +320,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/who-iris",
-          "ref": "c7d06d51dfc5c3dde0aaf702c3f51252ace0bb90",
+          "ref": "2868ff44a3a2d28fa7c88f40668986c01df90f0f",
           "overrides": {
             "who-iris": {
               "whole": true
@@ -330,8 +330,8 @@
           "trust": {
             "consent": {
               "by": "litlfred",
-              "on": "2026-11-11",
-              "ref": "c7d06d51dfc5c3dde0aaf702c3f51252ace0bb90",
+              "on": "2026-11-12",
+              "ref": "2868ff44a3a2d28fa7c88f40668986c01df90f0f",
               "evidence": "standing consent by litlfred given 2026-11-01: follow `main` — Owner litlfred tapped card Q-TRAIN-1 'A. All except smart-base' on 2026-11-01 11:26:02Z in the project thread 'Run re-pins as a 2-hour train' (cmsg_017WNUkNK8kdDziPK58Pv6G9RghqtQeZR4QPwyKsTCohv3), after card Q-SPD-3 B: re-pins run as a 2-hour train (repin-train.yml, issue #2873); a person still merges each train PR.",
               "standing": {
                 "follows": "main",
@@ -354,7 +354,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/fhir-harness",
-          "ref": "1e00cf456fac2046d8bffe0070de84be1b3d3164",
+          "ref": "9c39de71cdf7fcb173d73121f97ffddbe4f1973c",
           "overrides": {
             "fhir-harness": {
               "whole": true
@@ -364,8 +364,8 @@
           "trust": {
             "consent": {
               "by": "litlfred",
-              "on": "2026-11-11",
-              "ref": "1e00cf456fac2046d8bffe0070de84be1b3d3164",
+              "on": "2026-11-12",
+              "ref": "9c39de71cdf7fcb173d73121f97ffddbe4f1973c",
               "evidence": "standing consent by litlfred given 2026-11-01: follow `main` — Owner litlfred tapped card Q-TRAIN-1 'A. All except smart-base' on 2026-11-01 11:26:02Z in the project thread 'Run re-pins as a 2-hour train' (cmsg_017WNUkNK8kdDziPK58Pv6G9RghqtQeZR4QPwyKsTCohv3), after card Q-SPD-3 B: re-pins run as a 2-hour train (repin-train.yml, issue #2873); a person still merges each train PR.",
               "standing": {
                 "follows": "main",
@@ -387,7 +387,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/folio-assistant-sci",
-          "ref": "18ce398ce1515a8de5273ccb4d358ed67ce1f85a",
+          "ref": "ab7b84963e4c0152e4e1b90f7a62ce6c1e0f6ef2",
           "overrides": {
             "folio-assistant-sci": {
               "whole": true
@@ -398,7 +398,7 @@
             "consent": {
               "by": "litlfred",
               "on": "2026-11-11",
-              "ref": "18ce398ce1515a8de5273ccb4d358ed67ce1f85a",
+              "ref": "ab7b84963e4c0152e4e1b90f7a62ce6c1e0f6ef2",
               "evidence": "standing consent by litlfred given 2026-11-01: follow `main` — Owner litlfred tapped card Q-TRAIN-1 'A. All except smart-base' on 2026-11-01 11:26:02Z in the project thread 'Run re-pins as a 2-hour train' (cmsg_017WNUkNK8kdDziPK58Pv6G9RghqtQeZR4QPwyKsTCohv3), after card Q-SPD-3 B: re-pins run as a 2-hour train (repin-train.yml, issue #2873); a person still merges each train PR.",
               "standing": {
                 "follows": "main",
@@ -420,7 +420,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/smart-immunizations",
-          "ref": "7642fa4fb51a75c085b7d92b50d93885abc299cf",
+          "ref": "1008c532994fabcd52676f0e272ca02d3907257b",
           "overrides": {
             "smart-immunizations": {
               "path": "smart-immunizations",
@@ -437,8 +437,8 @@
           "trust": {
             "consent": {
               "by": "litlfred",
-              "on": "2026-11-11",
-              "ref": "7642fa4fb51a75c085b7d92b50d93885abc299cf",
+              "on": "2026-11-12",
+              "ref": "1008c532994fabcd52676f0e272ca02d3907257b",
               "evidence": "standing consent by litlfred given 2026-11-01: follow `main` — Owner litlfred tapped card Q-TRAIN-1 'A. All except smart-base' on 2026-11-01 11:26:02Z in the project thread 'Run re-pins as a 2-hour train' (cmsg_017WNUkNK8kdDziPK58Pv6G9RghqtQeZR4QPwyKsTCohv3), after card Q-SPD-3 B: re-pins run as a 2-hour train (repin-train.yml, issue #2873); a person still merges each train PR.",
               "standing": {
                 "follows": "main",
@@ -454,6 +454,29 @@
           }
         }
       }
+    }
+  ],
+  "harnesses": [
+    {
+      "name": "cat-harness"
+    },
+    {
+      "name": "folio-assistant-core"
+    },
+    {
+      "name": "smart-base"
+    },
+    {
+      "name": "smart-trust"
+    },
+    {
+      "name": "smart-trust-phw"
+    },
+    {
+      "name": "bootstrap"
+    },
+    {
+      "name": "who-iris"
     }
   ],
   "site": {
