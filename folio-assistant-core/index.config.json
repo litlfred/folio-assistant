@@ -1,0 +1,131 @@
+{
+  "$schema": "folio-index-config/v1",
+  "layers": [
+    {
+      "name": "folio-assistant-core",
+      "source": {
+        "local": {
+          "at": "."
+        }
+      },
+      "site": {
+        "build": {
+          "home": "docs/index.md",
+          "keep": [
+            "v0",
+            "ns",
+            "0.1.0"
+          ]
+        }
+      }
+    },
+    {
+      "name": "cat-harness",
+      "source": {
+        "remote": {
+          "repository": "litlfred/cat-harness",
+          "ref": "5244c319cd2f7e2fb19a1f5fe9942cc70a15fd38",
+          "overrides": {
+            "cat-harness": {
+              "whole": true
+            },
+            "bootstrap": {
+              "skip": true
+            },
+            "bootstrap-tools": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-12",
+              "ref": "5244c319cd2f7e2fb19a1f5fe9942cc70a15fd38",
+              "evidence": "owner message 2026-11-12T06:04:48Z '+12hrs window' (repin+merge window to 2026-11-12T18:05Z): bottom-up re-pin cascade moving every pinned harness to its current main HEAD"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "cat-harness-tools",
+      "source": {
+        "remote": {
+          "repository": "litlfred/cat-harness-tools",
+          "ref": "4216ebbed7e1b35d5f63061f093959a560c9b839",
+          "overrides": {
+            "cat-harness-tools": {
+              "whole": true
+            },
+            "cat-harness": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-12",
+              "ref": "4216ebbed7e1b35d5f63061f093959a560c9b839",
+              "evidence": "owner message 2026-11-12T06:04:48Z '+12hrs window' (repin+merge window to 2026-11-12T18:05Z): bottom-up re-pin cascade moving every pinned harness to its current main HEAD"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "bootstrap",
+      "source": {
+        "remote": {
+          "repository": "litlfred/bootstrap",
+          "ref": "f5c124f1a8067ce16b42fd251380c6d67e426374",
+          "overrides": {
+            "bootstrap": {
+              "whole": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-12",
+              "ref": "f5c124f1a8067ce16b42fd251380c6d67e426374",
+              "evidence": "owner message 2026-11-12T06:04:48Z '+12hrs window' (repin+merge window to 2026-11-12T18:05Z): bottom-up re-pin cascade moving every pinned harness to its current main HEAD"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "bootstrap-tools",
+      "source": {
+        "remote": {
+          "repository": "litlfred/bootstrap-tools",
+          "ref": "b31c5346b0b2803354423511b6d18b599b7bdc41",
+          "overrides": {
+            "bootstrap-tools": {
+              "whole": true
+            },
+            "bootstrap": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-12",
+              "ref": "b31c5346b0b2803354423511b6d18b599b7bdc41",
+              "evidence": "owner message 2026-11-12T06:04:48Z '+12hrs window' (repin+merge window to 2026-11-12T18:05Z): bottom-up re-pin cascade moving every pinned harness to its current main HEAD"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "harnesses": [
+    {
+      "name": "folio-assistant-core"
+    }
+  ],
+  "site": {
+    "landing": "folio-assistant-core"
+  }
+}

@@ -1,0 +1,69 @@
+/**
+ * Post-merge QA of main: the workflow's own guard keeps an `unknown` verdict
+ * from going green while a layer still pins a report.py from before
+ * cat-harness-tools#1961 (owner, Q-MQA-1 A, 2026-11-12).
+ *
+ * The step's script is read out of `layer-main-qa.yml` and run with a stub
+ * report.py and a fake `gh` on PATH, so what is tested is the shell the
+ * workflow runs, not a copy of it.
+ *
+ * @module test/layer-main-qa-guard.test
+ */
+import { describe, expect, test } from "bun:test";
+import { spawnSync } from "node:child_process";
+import { chmodSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join, resolve } from "node:path";
+import { parse } from "yaml";
+
+const WORKFLOW = resolve(import.meta.dir, "..", ".github", "workflows", "layer-main-qa.yml");
+const SHA = "a".repeat(40);
+
+/** The `run:` of the step that keeps the main-red issue in step. */
+function stepScript(): string {
+  const wf = parse(readFileSync(WORKFLOW, "utf-8")) as { jobs: Record<string, { steps: Array<{ name?: string; run?: string }> }> };
+  const step = wf.jobs.report!.steps.find((s) => s.name === "Keep the main-red issue in step with main's verdict");
+  if (!step?.run) throw new Error("the report step has no run script");
+  return step.run;
+}
+
+/** Run the step with report.py exiting `reportExit`, main's head at `head`. */
+function run(verdict: string, reportExit: number, head: string): { status: number; out: string } {
+  const dir = mkdtempSync(join(tmpdir(), "main-qa-guard-"));
+  const scripts = join(dir, "qa", ".github", "scripts", "layer-main-qa");
+  mkdirSync(scripts, { recursive: true });
+  // A report.py from before #1961: it prints and exits as told.
+  writeFileSync(join(scripts, "report.py"), `import sys\nprint("stub report")\nsys.exit(${reportExit})\n`);
+  const bin = join(dir, "bin");
+  mkdirSync(bin);
+  writeFileSync(
+    join(bin, "gh"),
+    ["#!/usr/bin/env bash", 'case "$2" in', '  repos/o/r) echo main ;;', `  repos/o/r/commits/main) echo ${head} ;;`, "  *) exit 1 ;;", "esac"].join("\n"),
+  );
+  chmodSync(join(bin, "gh"), 0o755);
+  const r = spawnSync("bash", ["-e", "-c", stepScript()], {
+    cwd: dir,
+    encoding: "utf-8",
+    // input-site: env PATH #34b0985f — PATH handed to a child process, which decides which binaries it runs
+    env: { PATH: `${bin}:${process.env.PATH ?? ""}`, GITHUB_REPOSITORY: "o/r", VERDICT: verdict, SHA },
+  });
+  return { status: r.status ?? -1, out: r.stdout + r.stderr };
+}
+
+describe("layer-main-qa.yml: an unknown verdict is red even with a pinned report.py from before #1961", () => {
+  test("unknown on main's head, report.py exits 0: the step is red (2)", () => {
+    const r = run("unknown", 0, SHA);
+    expect(r.status).toBe(2);
+    expect(r.out).toContain("::error::main's verdict");
+  });
+
+  test("unknown on a commit main has moved past: left to the newer push (0)", () => {
+    expect(run("unknown", 0, "b".repeat(40)).status).toBe(0);
+  });
+
+  test("green passes, red stays red, and a report.py that already said 2 keeps it", () => {
+    expect(run("green", 0, SHA).status).toBe(0);
+    expect(run("red", 1, SHA).status).toBe(1);
+    expect(run("unknown", 2, SHA).status).toBe(2);
+  });
+});
