@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-12T09:45:00Z
-updated_at: 2026-11-12T09:58:00Z
+updated_at: 2026-11-12T12:50:00Z
 parent: folio-assistant-v8bg
 tags:
     - handover-2026-11-12
@@ -19,7 +19,7 @@ Cascade onto cat-harness 5244c31 and cat-harness-tools 4216ebb: folio-assistant-
 
 - [x] Merged: smart-trust#199, #201; cat-harness-tools#1947, #1938; dth-hrh#118; dth-sc#4, #15.
 - [ ] In flight: smart-trust#200 (standing re-pin), cat-harness-tools#1941.
-- [ ] dth-phc#31 ready to merge.
+- [x] dth-phc#31 ready to merge.
 - [ ] dth-pc#14: move its pins up, plus a small `processes/` change.
 - [ ] Waiters on the cascade: dth-hrh#119 / #69, smart-trust-phw#61, fhir-harness#388, IG publish-on-push rollout.
 
