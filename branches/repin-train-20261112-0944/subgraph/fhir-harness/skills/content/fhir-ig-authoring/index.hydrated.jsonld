@@ -1,0 +1,144 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/skills/content/fhir-ig-authoring/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/fhir-questionnaire-wireframe",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "hasIOContract": true,
+      "hasInstructions": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-ig-skills",
+      "inputSchema": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/skills/fhir-questionnaire-wireframe/input.schema.json",
+      "instructionLines": 268,
+      "instructionsPath": "skills/content/fhir-ig-authoring/fhir-questionnaire-wireframe.md",
+      "name": "fhir-questionnaire-wireframe",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/skills/fhir-questionnaire-wireframe/output.schema.json",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2ba1dbe9578dc3cef6146c839cde6fbe0828c3c5c421a3debec9f314a3bcde97",
+        "bytes": 15607,
+        "sha256": "2ba1dbe9578dc3cef6146c839cde6fbe0828c3c5c421a3debec9f314a3bcde97"
+      },
+      "title": "fhir-questionnaire-wireframe"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/fhir-validation",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "hasIOContract": true,
+      "hasInstructions": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-ig-skills",
+      "inputSchema": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/skills/fhir-validation/input.schema.json",
+      "instructionLines": 108,
+      "instructionsPath": "skills/content/fhir-ig-authoring/fhir-validation.md",
+      "name": "fhir-validation",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/skills/fhir-validation/output.schema.json",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/bf6bb8b9d93f7f4fb72207793dc8705d74096165e7e4474a03befaa104db8070",
+        "bytes": 4745,
+        "sha256": "bf6bb8b9d93f7f4fb72207793dc8705d74096165e7e4474a03befaa104db8070"
+      },
+      "title": "fhir-validation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-publication",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "hasIOContract": true,
+      "hasInstructions": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-ig-skills",
+      "inputSchema": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/skills/ig-publication/input.schema.json",
+      "instructionLines": 223,
+      "instructionsPath": "skills/content/fhir-ig-authoring/ig-publication.md",
+      "name": "ig-publication",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/skills/ig-publication/output.schema.json",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2a5653b44623cedf7217fa85f3e2e9e9349a9b8f42bd07b1a490253fe96e6a7e",
+        "bytes": 11954,
+        "sha256": "2a5653b44623cedf7217fa85f3e2e9e9349a9b8f42bd07b1a490253fe96e6a7e"
+      },
+      "title": "ig-publication"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-publisher-service-contract",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "The contract the `ig-publisher-service` role is held to: what the JVM services an IG build shells out to must produce, and how a caller tells a pass from a run that never happened. A mechanical role's skill is a contract to test against, not instructions to read.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-ig-skills",
+      "instructionLines": 47,
+      "instructionsPath": "skills/content/fhir-ig-authoring/ig-publisher-service-contract.md",
+      "name": "ig-publisher-service-contract",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/38dc46508df5e10893245d29fc3fb4f84ee4ecbca2c5947b47d782983f775461",
+        "bytes": 2257,
+        "sha256": "38dc46508df5e10893245d29fc3fb4f84ee4ecbca2c5947b47d782983f775461"
+      },
+      "title": "IG publisher + validator — the role's contract"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/l3-fhir-authoring",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "hasIOContract": true,
+      "hasInstructions": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-ig-skills",
+      "inputSchema": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/skills/l3-fhir-authoring/input.schema.json",
+      "instructionLines": 77,
+      "instructionsPath": "skills/content/fhir-ig-authoring/l3-fhir-authoring.md",
+      "name": "l3-fhir-authoring",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/skills/l3-fhir-authoring/output.schema.json",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7d079f32f60aea0879669bebebf9dc1bdec4d942e05b0b5b4403a58a0f1030a3",
+        "bytes": 3177,
+        "sha256": "7d079f32f60aea0879669bebebf9dc1bdec4d942e05b0b5b4403a58a0f1030a3"
+      },
+      "title": "l3-fhir-authoring"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/pcf-consent",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Model IHE Privacy Consent on FHIR (PCF 1.1.0, Trial Implementation) and HL7 FHIR R4 `Consent` (Trial Use) resources referenced by canonical URL only, translate PCF Basic and Additional `PurposeOfUse` Consents plus the four IHE PCF Volume 1 §1:53.2.1 implicit-policy `Set`s into W3C ODRL 2.2 `Set` policies (`consentToOdrl()`), and evaluate three-valued access-control decisions (`permit` | `deny` | `unknown`) across `decide()` / `permits()`, `odrl:obtainConsent` duties, IHE ITI-108 Consent Registry reads, and PROV-O decision records citing `Consent.id` and `Consent.meta.versionId`.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-ig-skills",
+      "instructionLines": 323,
+      "instructionsPath": "skills/content/fhir-ig-authoring/pcf-consent.md",
+      "name": "pcf-consent",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/beab2a010a0a84256a891a0c3531e275509646a6ec296e03d7fb022894babeaf",
+        "bytes": 21253,
+        "sha256": "beab2a010a0a84256a891a0c3531e275509646a6ec296e03d7fb022894babeaf"
+      },
+      "title": "pcf-consent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/terminology-management",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "hasIOContract": true,
+      "hasInstructions": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-ig-skills",
+      "inputSchema": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/skills/terminology-management/input.schema.json",
+      "instructionLines": 60,
+      "instructionsPath": "skills/content/fhir-ig-authoring/terminology-management.md",
+      "name": "terminology-management",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/skills/terminology-management/output.schema.json",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9164626153036d81549fbb06282158641fe759af586c266f4ce07d16a2819286",
+        "bytes": 2488,
+        "sha256": "9164626153036d81549fbb06282158641fe759af586c266f4ce07d16a2819286"
+      },
+      "title": "terminology-management"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills/content/fhir-ig-authoring",
+  "path": "skills/content/fhir-ig-authoring/"
+}

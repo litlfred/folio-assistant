@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-0944/cat-harness-tools/cat-harness-tools.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-0944/cat-harness-tools/schema/window-stack.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-0944/cat-harness-tools/cat-harness-tools.jsonld",
+  "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/window-stack.jsonld",
+  "staging": {
+    "branch": "repin-train/20261112-0944",
+    "sha": "b80b34e466ce7864b7854cbba67b870740353603",
+    "pr": "repin-train/20261112-0944",
+    "run": "43194386196"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/window-stack",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "window-stack",
+      "title": "window-stack",
+      "summary": "Which cards are OPEN on a board, and in what order they stack.",
+      "module": "schemas/ui/window-stack.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-schemas"
+    }
+  ]
+}

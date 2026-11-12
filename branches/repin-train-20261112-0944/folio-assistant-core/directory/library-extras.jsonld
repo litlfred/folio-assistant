@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-0944/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-0944/folio-assistant-core/directory/library-extras.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-0944/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "repin-train/20261112-0944",
+    "sha": "b80b34e466ce7864b7854cbba67b870740353603",
+    "pr": "repin-train/20261112-0944",
+    "run": "43194386196"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-0944/folio-assistant-core/directory/library-extras",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "library-extras",
+      "path": "library-extras/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/cat-harness"
+      ],
+      "description": "The library extras sub-graph — a NAMED SUB-GRAPH of this layer, OPT-IN: off in every layer, this one included, unless that layer lists `folio-assistant-core.library-extras` in its own `enableSubgraphs` (owner, 2026-11-10, card Q-SG-1 C, wave 3). It holds library skills a layer reaches for rarely: audio transcription, the bibliography photo-ingestion watcher and Oxigraph catalogue search. The L1 ingestion skills and processes stay in `skills/library/` and `processes/library/`, because always-on content calls them. Declared FROM WITHIN in `library-extras/graph.json`.",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-0944/folio-assistant-core/directory/library-extras",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/library-extras"
+    }
+  ]
+}

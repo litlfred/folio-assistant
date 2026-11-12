@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-0944/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-0944/cat-harness/skill/cache-first-ci.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-0944/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261112-0944",
+    "sha": "b80b34e466ce7864b7854cbba67b870740353603",
+    "pr": "repin-train/20261112-0944",
+    "run": "43194386196"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-0944/cat-harness/skill/cache-first-ci",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "cache-first-ci",
+      "title": "Cache-first CI — a step is a pure function of its inputs",
+      "description": "Every CI step is a pure function of its inputs: derive the inputs, hash them into a key, restore on a hit, run and save on a miss. Read before adding a cache to a workflow, before writing a cache key, before trusting a restored output or a skipped verdict, and before pushing a change that moves a cached step's key. Covers the one primitive (`cached-step` + `cache:key`), the trust classes, what a committer publishes, the 10 GB budget, and the hit-rate report.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-0944/cat-harness/package/sdlc-core"
+      ],
+      "instructionsPath": "sdlc/skills/sdlc-core/cache-first-ci.md",
+      "instructionLines": 127,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-0944/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/cache-first-ci"
+    }
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/ui/theming/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/package/theming",
+      "@type": "cat-harness:SkillPackage",
+      "declaresSkill": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/site-presentation-assets",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/theme-art-intake",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/theming"
+      ],
+      "description": "Theming, split on PIPELINE STAGE first (intake -> declaration -> generation -> contrast), with producer/consumer as the direction each stage faces and per-artefact specialisation last. The owner chose that axis on 2026-09-20 — \"1 + 2, then specialized to 3\" — and the ordering matters more than the names: going artefact-first would duplicate intake and contrast into every surface, which is the shape that put the scrim rule in one skill's prose and let it be rediscovered rather than read. TWO SESSIONS BUILT THIS PACKAGE INDEPENDENTLY and the merge kept both halves: this LOCATION and the relocation of `create-sticky-note`, `site-presentation-assets` and `theme-art-intake` out of folio-core came from one; the stage split, the `theme:sheet` visualiser and the documentation entry came from the other, which had put them in a top-level `cat-harness/theming/`. The location here won on evidence rather than on arriving first — bean `lps0` measured that `kg-audit`'s `skillFiles()` walks a hardcoded `skills/`, so a top-level topical directory silently drops its skills out of skill QA, and `theme-art-intake` would have lost the sidecar it has here. Beans `1hvo`, `lps0`.",
+      "hasManifest": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+      "name": "theming",
+      "path": "skills/ui/theming",
+      "version": "0.1.0"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/site-presentation-assets",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "A visual fact — a colour, a glyph, a theme — lives in a graph node, and the stylesheet the site serves is a rendering of it. Read before adding a colour, an icon or a theme, before hand-editing any generated stylesheet, and before referencing a generated asset from a page.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/theming",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+      "instructionLines": 90,
+      "instructionsPath": "skills/ui/theming/site-presentation-assets.md",
+      "name": "site-presentation-assets",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7080cee21a19d40d5078fae827fab430ab9c5665d4bcfb214de035a9b5a4027c",
+        "bytes": 4290,
+        "sha256": "7080cee21a19d40d5078fae827fab430ab9c5665d4bcfb214de035a9b5a4027c"
+      },
+      "title": "Site presentation assets — the node is the source, the stylesheet is a rendering"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/theme-art-intake",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Accept or refuse a set of three theme/avatar layouts arriving through document ingestion, with a named reason for every refusal.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/theming",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+      "instructionLines": 117,
+      "instructionsPath": "skills/ui/theming/theme-art-intake.md",
+      "name": "theme-art-intake",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e96b1075868ae79df781a3c76034701a744939295a890a4f01e7a51bd772dd2a",
+        "bytes": 6008,
+        "sha256": "e96b1075868ae79df781a3c76034701a744939295a890a4f01e7a51bd772dd2a"
+      },
+      "title": "Theme art intake"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/theming",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "The map of this subgraph: theming is split on PIPELINE STAGE first — intake, declaration, generation, contrast — with producer/consumer as the direction each stage faces, and per-artefact specialisation last. Read this to find which stage owns the fact you need; read the stage for the fact.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/theming",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+      "instructionLines": 83,
+      "instructionsPath": "skills/ui/theming/theming.md",
+      "name": "theming",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7c4e4ace00cc0a1376749c10746a9e30f81c5dc90d82d487238a23a9f13f2a2b",
+        "bytes": 4529,
+        "sha256": "7c4e4ace00cc0a1376749c10746a9e30f81c5dc90d82d487238a23a9f13f2a2b"
+      },
+      "title": "Theming, split on the stage it fails at"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills/ui/theming",
+  "path": "skills/ui/theming/"
+}

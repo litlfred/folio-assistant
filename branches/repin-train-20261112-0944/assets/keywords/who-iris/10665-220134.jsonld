@@ -1,0 +1,324 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-220134",
+  "instance": "who-iris",
+  "about": "library/10665-220134",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7393,
+    "terms": 71095
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "vaccination certificate",
+        "score": 1.526,
+        "evidence": []
+      },
+      {
+        "term": "certificate requirements",
+        "score": 1.3599,
+        "evidence": []
+      },
+      {
+        "term": "exigés",
+        "score": 0.9063,
+        "evidence": []
+      },
+      {
+        "term": "certificats",
+        "score": 0.8349,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "vaccination certificate",
+        "score": 25.192,
+        "evidence": []
+      },
+      {
+        "term": "certificate requirements",
+        "score": 20.197,
+        "evidence": []
+      },
+      {
+        "term": "exigés",
+        "score": 14.5977,
+        "evidence": []
+      },
+      {
+        "term": "certificats",
+        "score": 12.8468,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "les",
+        "score": 0.207,
+        "evidence": []
+      },
+      {
+        "term": "vaccination certificate",
+        "score": 0.2037,
+        "evidence": []
+      },
+      {
+        "term": "des",
+        "score": 0.2021,
+        "evidence": []
+      },
+      {
+        "term": "pour",
+        "score": 0.1458,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "vaccination certificate",
+        "score": 3.6176,
+        "evidence": []
+      },
+      {
+        "term": "les",
+        "score": 3.3189,
+        "evidence": []
+      },
+      {
+        "term": "des",
+        "score": 2.9158,
+        "evidence": []
+      },
+      {
+        "term": "ddcc",
+        "score": 2.4256,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "les",
+        "score": 0.207,
+        "evidence": []
+      },
+      {
+        "term": "vaccination certificate",
+        "score": 0.2037,
+        "evidence": []
+      },
+      {
+        "term": "des",
+        "score": 0.2021,
+        "evidence": []
+      },
+      {
+        "term": "dans",
+        "score": 0.1291,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "如果没有",
+        "score": 157.0191,
+        "evidence": []
+      },
+      {
+        "term": "显而易见",
+        "score": 111.5215,
+        "evidence": []
+      },
+      {
+        "term": "更大利益",
+        "score": 99.4012,
+        "evidence": []
+      },
+      {
+        "term": "的研究中",
+        "score": 86.7894,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "page-001": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "vaccination certificate",
+          "score": 1.526,
+          "evidence": []
+        },
+        {
+          "term": "certificate requirements",
+          "score": 1.3599,
+          "evidence": []
+        },
+        {
+          "term": "exigés",
+          "score": 0.9063,
+          "evidence": []
+        },
+        {
+          "term": "certificats",
+          "score": 0.8349,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "vaccination certificate",
+          "score": 25.192,
+          "evidence": []
+        },
+        {
+          "term": "certificate requirements",
+          "score": 20.197,
+          "evidence": []
+        },
+        {
+          "term": "exigés",
+          "score": 14.5977,
+          "evidence": []
+        },
+        {
+          "term": "certificats",
+          "score": 12.8468,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "les",
+          "score": 0.207,
+          "evidence": []
+        },
+        {
+          "term": "vaccination certificate",
+          "score": 0.2037,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.2021,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.1458,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "vaccination certificate",
+          "score": 3.6176,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 3.3189,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 2.9158,
+          "evidence": []
+        },
+        {
+          "term": "ddcc",
+          "score": 2.4256,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "les",
+          "score": 0.207,
+          "evidence": []
+        },
+        {
+          "term": "vaccination certificate",
+          "score": 0.2037,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.2021,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.1291,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 157.0191,
+          "evidence": []
+        },
+        {
+          "term": "显而易见",
+          "score": 111.5215,
+          "evidence": []
+        },
+        {
+          "term": "更大利益",
+          "score": 99.4012,
+          "evidence": []
+        },
+        {
+          "term": "的研究中",
+          "score": 86.7894,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

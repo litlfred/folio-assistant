@@ -1,0 +1,120 @@
+{
+  "$schema": "folio-library-entry/v1",
+  "id": "frantzi-ananiadou-1996-c-value",
+  "blocks": [
+    {
+      "id": "library/frantzi-ananiadou-1996-c-value/blocks/prose-page-001",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 1",
+      "pageStart": 1,
+      "pageEnd": 1,
+      "target": "../sections/page-001.md",
+      "narrative": null,
+      "content": "Extracting Nested Collocations\n\nKaterina T. Frantzi and Sophia Ananiadou\nDept. of Computing\nManchester Metropolitan University\nManchester, ML 5GD, U.K.\n{Is Vrantzi,S. Ananiadou} @doc.mmu.ac.uk\n\nAbstract\n\nThis paper provides an approach to\nthe semi-automatic extraction of colloca-\nLions from corpora using statistics. ‘The\ngrowing availability of large textual cor-\npora, and the increasing nutuber of ap-\nplications of collocation extraction, has\ngiven rise to various approaches on the\ntopic. i this paper, we address the\nproblem of nested collocations, that is,\nthose being part of longer collocat",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/frantzi-ananiadou-1996-c-value/blocks/prose-page-002",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 2",
+      "pageStart": 2,
+      "pageEnd": 2,
+      "target": "../sections/page-002.md",
+      "narrative": null,
+      "content": "It is not the goal of this paper to provide yet\nanother definition of collocation. We adopt as a\nworking definition the one by (Sinclair, 1991)\n\nCollocation is the occurrence of two or\nmore words within a short space of cach\nother in a text.\n\nLet us recall that collocations are domain-\ndependent. Sublanguages have remarkably high\nincidences of collocation (Ananiadou and Mc-\nNaught, 1995). (Frawley, 1988) neatly sums up\nthe nature of sublanguage, showing the key con-\ntribution of collocation:\n\nsublanguage is strongly lexically based\nsublanguage texts focus on content:\n\nlexical selection is synt",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/frantzi-ananiadou-1996-c-value/blocks/prose-page-003",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 3",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../sections/page-003.md",
+      "narrative": null,
+      "content": "3 Our approach ~ The Algorithm\n\nWe call the extracted strings candidate celloca-\ntions rather than collocations, since what we ac-\ncept as collocations depends on the application.\nTt is the human judge that, will give the final de-\ncision. This is the reason we consider the method\nas semi-automatic.\n\nLet. us consider the string “New York Stock Ex-\nchange”. Within this string, that has already been\nextracted as a candidate collocation, there are two\nsubstrings that should be extracted, and one that:\nshould not. ‘The issue is how to distinguish when\na substring of a candidate collocation is a ca",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/frantzi-ananiadou-1996-c-value/blocks/prose-page-004",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 4",
+      "pageStart": 4,
+      "pageEnd": 4,
+      "target": "../sections/page-004.md",
+      "narrative": null,
+      "content": "n-gram a, the values é(6) and c(b) are revised:\ni(b) = t(b) + (n(a) — t(a))\n\no(b) = e(b) + 1.\n\nIn the initial stage, (a) is set to the frequency of\n@ appearing on its own, and é(a) and c(a) are set\n\nto 0.\n\nTable 2: n-graims extracted by C-valuc containing\n“Wall Street”\n\n[CV TF ] Jandidate Collocations ]\n4 19 | Staff Reporter of\nThe Wall Street Journal\n37.34 | 26 | Wall Street Journal\n36 22 | The Wall Strect Journal\n33 38 | Wall Street\n31.34 | 23 | The Wall Street\n6 3 Wall Strect analysts\n4 20 | of The Wall Street Journal\n0 19 | Reporter of The Wall Street.\n0 19 | Reporter of he Wall Street Jou",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/frantzi-ananiadou-1996-c-value/blocks/prose-page-005",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 5",
+      "pageStart": 5,
+      "pageEnd": 5,
+      "target": "../sections/page-005.md",
+      "narrative": null,
+      "content": "Vable 3: Extracted candidate collocation with C-\n\nvalue in descending order.\n\nCov Try.\n\n184 |\n\n114\n\n87.6\n79.6\n53.2\n49.5\nA475\nAd\nALAT\n37.34\n36\n\n36\n\n33\n31.54\n27,8\n27\n\n16\n16\n15\n15\n1S\n15\n15\n\n15\n\n19\n\n93\ndd\n59\n20,\n25\nAS\nAA\n26\n6\n\n22\n38\n23\n3\n3\n\n3\n\n30\n27\n10\n27\n27\n10\n\n10\noO\n23\n23\n\n21\n\nk\n5\n\n[18\n\n| 92 |\n\nWALL STREET JOURNAL\nStaff Reporter of The Wall Street,\nJournal\n\nUnited States\n\nthe United States\n\nthe United\n\n<mumber> to <money> from\n\nto <money> from\n\nsaid it\n\nthe company\n\nWall Street, Journal\n\n<number> to <anoney> from\n\n<momcy > a year\n\n‘The Wall Street. Journal\n\nWall Street,\n\n‘The Wall Street.\n\na yea",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/frantzi-ananiadou-1996-c-value/blocks/prose-page-006",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Page 6",
+      "pageStart": 6,
+      "pageEnd": 6,
+      "target": "../sections/page-006.md",
+      "narrative": null,
+      "content": "of compound words. They extend the measure\nfor three words in a different way than that de-\nfined by (Fano, 1961), and no mention is given to\nhow their formulas would be extended for word-\nsequences of length more that three. They do not\nconsider nested collocations.\n\n(Smadja, 1993), extracts uninterrupted as well\nas interrupted collocations (predicative relations,\nrigid noun phrases and phrasal templates). The\nsystem performs very well under two conditions:\nthe corpus must be large, and the collocations we\nare interested in extracting, must have high fre-\nquencies.\n\n(Nagao and Mori, 1994), ex",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    }
+  ]
+}

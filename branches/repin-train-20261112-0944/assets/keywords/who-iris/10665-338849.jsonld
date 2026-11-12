@@ -1,0 +1,6216 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-338849",
+  "instance": "who-iris",
+  "about": "library/10665-338849",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7393,
+    "terms": 71095
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "las que",
+        "score": 49.5667,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "vacuna las",
+        "score": 47.1853,
+        "evidence": []
+      },
+      {
+        "term": "los que",
+        "score": 45.846,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "las personas",
+        "score": 40.4161,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "para las",
+        "score": 37.8648,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "con las",
+        "score": 36.8262,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "bnt162b las",
+        "score": 36.1421,
+        "evidence": []
+      },
+      {
+        "term": "una vacuna",
+        "score": 35.7175,
+        "evidence": []
+      },
+      {
+        "term": "los datos",
+        "score": 35.0411,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "recomienda que",
+        "score": 33.8919,
+        "evidence": []
+      },
+      {
+        "term": "covid que",
+        "score": 33.1254,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "sobre los",
+        "score": 31.9785,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "las que",
+        "score": 1053.6925,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "los que",
+        "score": 1004.9739,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "vacuna las",
+        "score": 938.2894,
+        "evidence": []
+      },
+      {
+        "term": "personas que",
+        "score": 807.0188,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "que bnt162b",
+        "score": 738.3962,
+        "evidence": []
+      },
+      {
+        "term": "para que",
+        "score": 726.5697,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "recomienda que",
+        "score": 700.4209,
+        "evidence": []
+      },
+      {
+        "term": "covid que",
+        "score": 689.6588,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "una vacuna",
+        "score": 670.4936,
+        "evidence": []
+      },
+      {
+        "term": "posible que",
+        "score": 659.3724,
+        "evidence": []
+      },
+      {
+        "term": "que tengan",
+        "score": 625.2343,
+        "evidence": []
+      },
+      {
+        "term": "que esas",
+        "score": 623.4734,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "los que",
+        "score": 35.5383,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "para los",
+        "score": 34.5675,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "las que",
+        "score": 33.0764,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "con los",
+        "score": 31.1278,
+        "evidence": []
+      },
+      {
+        "term": "vacuna los",
+        "score": 26.6109,
+        "evidence": []
+      },
+      {
+        "term": "sobre los",
+        "score": 26.4751,
+        "evidence": []
+      },
+      {
+        "term": "los servicios",
+        "score": 26.3199,
+        "evidence": []
+      },
+      {
+        "term": "los países",
+        "score": 24.9177,
+        "evidence": []
+      },
+      {
+        "term": "los programas",
+        "score": 24.8973,
+        "evidence": []
+      },
+      {
+        "term": "los datos",
+        "score": 24.7334,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "contra las",
+        "score": 24.5906,
+        "evidence": []
+      },
+      {
+        "term": "entre los",
+        "score": 24.3179,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "los que",
+        "score": 792.3195,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "las que",
+        "score": 755.0143,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "para los",
+        "score": 671.9313,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "vacuna los",
+        "score": 622.8868,
+        "evidence": []
+      },
+      {
+        "term": "con los",
+        "score": 587.311,
+        "evidence": []
+      },
+      {
+        "term": "sobre los",
+        "score": 523.3466,
+        "evidence": []
+      },
+      {
+        "term": "los países",
+        "score": 498.3508,
+        "evidence": []
+      },
+      {
+        "term": "los servicios",
+        "score": 479.7784,
+        "evidence": []
+      },
+      {
+        "term": "los miembros",
+        "score": 478.9797,
+        "evidence": []
+      },
+      {
+        "term": "los programas",
+        "score": 471.9763,
+        "evidence": []
+      },
+      {
+        "term": "durante los",
+        "score": 470.0077,
+        "evidence": []
+      },
+      {
+        "term": "todos los",
+        "score": 468.8331,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "los que",
+        "score": 35.5383,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "para los",
+        "score": 34.5675,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "las que",
+        "score": 33.0764,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "con los",
+        "score": 31.1278,
+        "evidence": []
+      },
+      {
+        "term": "vacuna los",
+        "score": 26.6109,
+        "evidence": []
+      },
+      {
+        "term": "sobre los",
+        "score": 26.4751,
+        "evidence": []
+      },
+      {
+        "term": "los servicios",
+        "score": 26.3199,
+        "evidence": []
+      },
+      {
+        "term": "los países",
+        "score": 24.9177,
+        "evidence": []
+      },
+      {
+        "term": "los programas",
+        "score": 24.8973,
+        "evidence": []
+      },
+      {
+        "term": "los datos",
+        "score": 24.7334,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "contra las",
+        "score": 24.5906,
+        "evidence": []
+      },
+      {
+        "term": "entre los",
+        "score": 24.3179,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "如果没有",
+        "score": 2598.0851,
+        "evidence": []
+      },
+      {
+        "term": "文件a",
+        "score": 1377.2374,
+        "evidence": []
+      },
+      {
+        "term": "还包括区域经济一体化组织",
+        "score": 1351.285,
+        "evidence": []
+      },
+      {
+        "term": "适用时",
+        "score": 1351.285,
+        "evidence": []
+      },
+      {
+        "term": "要求总干事",
+        "score": 1023.047,
+        "evidence": []
+      },
+      {
+        "term": "reacción alérgica",
+        "score": 1020.2416,
+        "evidence": []
+      },
+      {
+        "term": "显而易见",
+        "score": 880.6085,
+        "evidence": []
+      },
+      {
+        "term": "敦促会员国",
+        "score": 874.9898,
+        "evidence": []
+      },
+      {
+        "term": "确定优先领域",
+        "score": 874.9898,
+        "evidence": []
+      },
+      {
+        "term": "可能性",
+        "score": 823.3994,
+        "evidence": []
+      },
+      {
+        "term": "世界医学协会",
+        "score": 818.8553,
+        "evidence": []
+      },
+      {
+        "term": "非同寻常",
+        "score": 798.6808,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-antecedentes": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "del sage",
+          "score": 1.8615,
+          "evidence": []
+        },
+        {
+          "term": "las declaraciones",
+          "score": 1.6038,
+          "evidence": []
+        },
+        {
+          "term": "intereses",
+          "score": 1.1909,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "del sage",
+          "score": 30.816,
+          "evidence": []
+        },
+        {
+          "term": "las declaraciones",
+          "score": 23.3629,
+          "evidence": []
+        },
+        {
+          "term": "intereses",
+          "score": 22.566,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "los",
+          "score": 0.3853,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.3496,
+          "evidence": []
+        },
+        {
+          "term": "las declaraciones",
+          "score": 0.3496,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "las",
+          "score": 6.6613,
+          "evidence": []
+        },
+        {
+          "term": "las declaraciones",
+          "score": 6.6613,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 6.2399,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "los",
+          "score": 0.3853,
+          "evidence": []
+        },
+        {
+          "term": "las declaraciones",
+          "score": 0.3608,
+          "evidence": []
+        },
+        {
+          "term": "del sage",
+          "score": 0.3081,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "到辩护",
+          "score": 78.6589,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 72.2352,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 69.7456,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-001-métodos": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "datos científicos",
+          "score": 2.3717,
+          "evidence": []
+        },
+        {
+          "term": "vacunas contra",
+          "score": 1.2364,
+          "evidence": []
+        },
+        {
+          "term": "las vacunas",
+          "score": 1.2284,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 0.9109,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "datos científicos",
+          "score": 42.6824,
+          "evidence": []
+        },
+        {
+          "term": "vacunas contra",
+          "score": 18.1365,
+          "evidence": []
+        },
+        {
+          "term": "las vacunas",
+          "score": 15.5821,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 13.2842,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "las vacunas",
+          "score": 0.7212,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 0.6058,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 0.4016,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 0.3956,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "los",
+          "score": 11.0843,
+          "evidence": []
+        },
+        {
+          "term": "las vacunas",
+          "score": 9.242,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 5.9313,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 5.855,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "las vacunas",
+          "score": 0.7212,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 0.6058,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 0.4016,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 0.3956,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 55.3118,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 42.2602,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 37.4018,
+          "evidence": []
+        },
+        {
+          "term": "还包括区域经济一体化组织",
+          "score": 30.0115,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-002-objetivo-y-estrategia-generales-para-la-utilizac": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "pfizer biontech",
+          "score": 4.4619,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "arnm contra",
+          "score": 2.9525,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "sanitario que",
+          "score": 2.5002,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 2.1889,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los datos",
+          "score": 2.1808,
+          "evidence": []
+        },
+        {
+          "term": "oms para",
+          "score": 2.094,
+          "evidence": []
+        },
+        {
+          "term": "bnt162b",
+          "score": 1.9736,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las personas",
+          "score": 1.9669,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "pfizer biontech",
+          "score": 83.6723,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "sanitario que",
+          "score": 65.9741,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 49.2225,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "oms para",
+          "score": 47.9859,
+          "evidence": []
+        },
+        {
+          "term": "los datos",
+          "score": 47.7715,
+          "evidence": []
+        },
+        {
+          "term": "arnm contra",
+          "score": 46.2127,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "bnt162b",
+          "score": 36.8142,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las personas",
+          "score": 35.0619,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "para",
+          "score": 1.975,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los datos",
+          "score": 1.7338,
+          "evidence": []
+        },
+        {
+          "term": "las personas",
+          "score": 1.532,
+          "evidence": []
+        },
+        {
+          "term": "oms para",
+          "score": 1.309,
+          "evidence": []
+        },
+        {
+          "term": "sanitario que",
+          "score": 1.0871,
+          "evidence": []
+        },
+        {
+          "term": "salud pública",
+          "score": 0.9519,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 0.9301,
+          "evidence": []
+        },
+        {
+          "term": "arnm contra",
+          "score": 0.7583,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "para",
+          "score": 41.3075,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los datos",
+          "score": 38.928,
+          "evidence": []
+        },
+        {
+          "term": "las personas",
+          "score": 30.5173,
+          "evidence": []
+        },
+        {
+          "term": "sanitario que",
+          "score": 28.9763,
+          "evidence": []
+        },
+        {
+          "term": "oms para",
+          "score": 28.757,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 19.9379,
+          "evidence": []
+        },
+        {
+          "term": "vacuna",
+          "score": 16.5304,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "con",
+          "score": 11.999,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "para",
+          "score": 1.975,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los datos",
+          "score": 1.7338,
+          "evidence": []
+        },
+        {
+          "term": "las personas",
+          "score": 1.532,
+          "evidence": []
+        },
+        {
+          "term": "oms para",
+          "score": 1.309,
+          "evidence": []
+        },
+        {
+          "term": "sanitario que",
+          "score": 1.0871,
+          "evidence": []
+        },
+        {
+          "term": "salud pública",
+          "score": 0.9519,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 0.9301,
+          "evidence": []
+        },
+        {
+          "term": "arnm contra",
+          "score": 0.8081,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "文件a",
+          "score": 28.7968,
+          "evidence": []
+        },
+        {
+          "term": "还包括区域经济一体化组织",
+          "score": 27.2349,
+          "evidence": []
+        },
+        {
+          "term": "适用时",
+          "score": 27.2349,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 23.6671,
+          "evidence": []
+        },
+        {
+          "term": "风险最小化",
+          "score": 19.3504,
+          "evidence": []
+        },
+        {
+          "term": "世界医学协会",
+          "score": 19.3484,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 18.5035,
+          "evidence": []
+        },
+        {
+          "term": "要求总干事",
+          "score": 18.4712,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-004-aplicación": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "segunda dosis",
+          "score": 2.2229,
+          "evidence": []
+        },
+        {
+          "term": "dos dosis",
+          "score": 2.1053,
+          "evidence": []
+        },
+        {
+          "term": "con arreglo",
+          "score": 1.4474,
+          "evidence": []
+        },
+        {
+          "term": "aplicación",
+          "score": 0.8972,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "segunda dosis",
+          "score": 48.3536,
+          "evidence": []
+        },
+        {
+          "term": "dos dosis",
+          "score": 45.3139,
+          "evidence": []
+        },
+        {
+          "term": "con arreglo",
+          "score": 19.2569,
+          "evidence": []
+        },
+        {
+          "term": "recomienda",
+          "score": 15.4413,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "los",
+          "score": 0.4327,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.3948,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.3822,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 0.3128,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "que",
+          "score": 6.5307,
+          "evidence": []
+        },
+        {
+          "term": "vacuna",
+          "score": 6.3884,
+          "evidence": []
+        },
+        {
+          "term": "anti-hepb",
+          "score": 6.1526,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 5.8465,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "las",
+          "score": 0.3948,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.3822,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 0.3128,
+          "evidence": []
+        },
+        {
+          "term": "con",
+          "score": 0.2267,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 122.8789,
+          "evidence": []
+        },
+        {
+          "term": "还包括区域经济一体化组织",
+          "score": 67.9861,
+          "evidence": []
+        },
+        {
+          "term": "适用时",
+          "score": 67.9861,
+          "evidence": []
+        },
+        {
+          "term": "文件a",
+          "score": 63.3221,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-005-aspectos-que-deben-tenerse-en-cuenta-para-aplaza": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "segunda dosis",
+          "score": 6.3,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "primera dosis",
+          "score": 2.8654,
+          "evidence": []
+        },
+        {
+          "term": "los que",
+          "score": 2.679,
+          "evidence": []
+        },
+        {
+          "term": "los días",
+          "score": 2.4643,
+          "evidence": []
+        },
+        {
+          "term": "los países",
+          "score": 2.2557,
+          "evidence": []
+        },
+        {
+          "term": "aplicación",
+          "score": 2.0832,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "entre los",
+          "score": 2.0533,
+          "evidence": []
+        },
+        {
+          "term": "aplazar",
+          "score": 1.9408,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "segunda dosis",
+          "score": 204.5666,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "primera dosis",
+          "score": 90.3772,
+          "evidence": []
+        },
+        {
+          "term": "los que",
+          "score": 79.3285,
+          "evidence": []
+        },
+        {
+          "term": "los días",
+          "score": 58.8825,
+          "evidence": []
+        },
+        {
+          "term": "los países",
+          "score": 55.835,
+          "evidence": []
+        },
+        {
+          "term": "entre los",
+          "score": 48.8126,
+          "evidence": []
+        },
+        {
+          "term": "aplicación",
+          "score": 37.7491,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "aplazar",
+          "score": 31.2387,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "los que",
+          "score": 1.9471,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 1.4956,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los países",
+          "score": 1.3475,
+          "evidence": []
+        },
+        {
+          "term": "entre los",
+          "score": 1.3024,
+          "evidence": []
+        },
+        {
+          "term": "los días",
+          "score": 1.1102,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.9916,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 0.7193,
+          "evidence": []
+        },
+        {
+          "term": "salud",
+          "score": 0.5556,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "los que",
+          "score": 50.1096,
+          "evidence": []
+        },
+        {
+          "term": "los países",
+          "score": 32.8757,
+          "evidence": []
+        },
+        {
+          "term": "entre los",
+          "score": 30.3137,
+          "evidence": []
+        },
+        {
+          "term": "los días",
+          "score": 28.9872,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 28.6435,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "segunda dosis",
+          "score": 25.9991,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las",
+          "score": 22.8331,
+          "evidence": []
+        },
+        {
+          "term": "vacuna",
+          "score": 17.1769,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "los que",
+          "score": 1.9471,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 1.4956,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los países",
+          "score": 1.3475,
+          "evidence": []
+        },
+        {
+          "term": "entre los",
+          "score": 1.3024,
+          "evidence": []
+        },
+        {
+          "term": "los días",
+          "score": 1.1442,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.9916,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 0.7193,
+          "evidence": []
+        },
+        {
+          "term": "con",
+          "score": 0.5375,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 126.6454,
+          "evidence": []
+        },
+        {
+          "term": "还包括区域经济一体化组织",
+          "score": 52.4457,
+          "evidence": []
+        },
+        {
+          "term": "适用时",
+          "score": 52.4457,
+          "evidence": []
+        },
+        {
+          "term": "文件a",
+          "score": 51.7108,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 50.5262,
+          "evidence": []
+        },
+        {
+          "term": "显而易见",
+          "score": 43.4822,
+          "evidence": []
+        },
+        {
+          "term": "的研究中",
+          "score": 42.4714,
+          "evidence": []
+        },
+        {
+          "term": "要求总干事",
+          "score": 40.2189,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-dosis-de-refuerzo": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "dosis",
+          "score": 2.1654,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "refuerzo",
+          "score": 1.8123,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "necesario",
+          "score": 0.6607,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "dosis",
+          "score": 37.2014,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "refuerzo",
+          "score": 29.1954,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "necesario",
+          "score": 9.6615,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "los",
+          "score": 0.1552,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.1336,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 0.1159,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "dosis",
+          "score": 5.107,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "anti-hepb",
+          "score": 3.5517,
+          "evidence": []
+        },
+        {
+          "term": "vacuna",
+          "score": 3.4784,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "para",
+          "score": 0.1159,
+          "evidence": []
+        },
+        {
+          "term": "una",
+          "score": 0.0743,
+          "evidence": []
+        },
+        {
+          "term": "vacuna",
+          "score": 0.0532,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 127.636,
+          "evidence": []
+        },
+        {
+          "term": "文件a",
+          "score": 67.4656,
+          "evidence": []
+        },
+        {
+          "term": "还包括区域经济一体化组织",
+          "score": 66.697,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-007-intercambiabilidad-con-las-demás-vacunas": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "intercambiabilidad",
+          "score": 2.0402,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vacunas",
+          "score": 1.8336,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las",
+          "score": 1.7655,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "vacunas",
+          "score": 35.8198,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "intercambiabilidad",
+          "score": 32.8606,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vacunas contra",
+          "score": 27.0915,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "las",
+          "score": 0.7564,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los",
+          "score": 0.4291,
+          "evidence": []
+        },
+        {
+          "term": "las dos",
+          "score": 0.4277,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "las",
+          "score": 13.3993,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las dos",
+          "score": 7.7124,
+          "evidence": []
+        },
+        {
+          "term": "vacuna",
+          "score": 5.4792,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "las",
+          "score": 0.7564,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las dos",
+          "score": 0.4277,
+          "evidence": []
+        },
+        {
+          "term": "con",
+          "score": 0.4047,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 168.6514,
+          "evidence": []
+        },
+        {
+          "term": "还包括区域经济一体化组织",
+          "score": 66.2965,
+          "evidence": []
+        },
+        {
+          "term": "适用时",
+          "score": 66.2965,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-008-administración-simultánea-con-otras-vacunas": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "administración",
+          "score": 1.5789,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vacunas",
+          "score": 1.2516,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "simultánea",
+          "score": 1.2153,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "administración",
+          "score": 20.7789,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vacunas",
+          "score": 17.9099,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "simultánea",
+          "score": 15.6194,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "los",
+          "score": 0.1997,
+          "evidence": []
+        },
+        {
+          "term": "con",
+          "score": 0.1923,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las",
+          "score": 0.176,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "las",
+          "score": 2.0951,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 1.7711,
+          "evidence": []
+        },
+        {
+          "term": "vacuna",
+          "score": 1.728,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "con",
+          "score": 0.1923,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las",
+          "score": 0.176,
+          "evidence": []
+        },
+        {
+          "term": "vacunas",
+          "score": 0.1664,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 111.8278,
+          "evidence": []
+        },
+        {
+          "term": "还包括区域经济一体化组织",
+          "score": 58.1535,
+          "evidence": []
+        },
+        {
+          "term": "适用时",
+          "score": 58.1535,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-009-contraindicaciones": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "reacción alérgica",
+          "score": 1.9309,
+          "evidence": []
+        },
+        {
+          "term": "alérgica grave",
+          "score": 1.7238,
+          "evidence": []
+        },
+        {
+          "term": "una reacción",
+          "score": 1.7049,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "reacción alérgica",
+          "score": 30.6633,
+          "evidence": []
+        },
+        {
+          "term": "alérgica grave",
+          "score": 27.6552,
+          "evidence": []
+        },
+        {
+          "term": "haber presentado",
+          "score": 25.7499,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "los",
+          "score": 0.4044,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.3576,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.2867,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "las",
+          "score": 5.2282,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 5.0196,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 4.8302,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "los",
+          "score": 0.4044,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.3576,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.2867,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 136.5862,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 66.2601,
+          "evidence": []
+        },
+        {
+          "term": "还包括区域经济一体化组织",
+          "score": 65.8541,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-010-precauciones": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "reacción alérgica",
+          "score": 3.2184,
+          "evidence": []
+        },
+        {
+          "term": "una reacción",
+          "score": 3.1474,
+          "evidence": []
+        },
+        {
+          "term": "personas que",
+          "score": 2.867,
+          "evidence": []
+        },
+        {
+          "term": "vacuna bnt162b",
+          "score": 2.8426,
+          "evidence": []
+        },
+        {
+          "term": "las personas",
+          "score": 2.6717,
+          "evidence": []
+        },
+        {
+          "term": "con una",
+          "score": 2.592,
+          "evidence": []
+        },
+        {
+          "term": "alérgica inmediata",
+          "score": 2.5542,
+          "evidence": []
+        },
+        {
+          "term": "notificado que",
+          "score": 2.3925,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "personas que",
+          "score": 114.0491,
+          "evidence": []
+        },
+        {
+          "term": "una reacción",
+          "score": 89.3616,
+          "evidence": []
+        },
+        {
+          "term": "vacuna bnt162b",
+          "score": 87.6714,
+          "evidence": []
+        },
+        {
+          "term": "notificado que",
+          "score": 84.7075,
+          "evidence": []
+        },
+        {
+          "term": "que presenten",
+          "score": 83.8966,
+          "evidence": []
+        },
+        {
+          "term": "considera que",
+          "score": 83.5883,
+          "evidence": []
+        },
+        {
+          "term": "reacción alérgica",
+          "score": 82.6763,
+          "evidence": []
+        },
+        {
+          "term": "que sea",
+          "score": 82.603,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "las personas",
+          "score": 1.4555,
+          "evidence": []
+        },
+        {
+          "term": "los beneficios",
+          "score": 1.4321,
+          "evidence": []
+        },
+        {
+          "term": "con una",
+          "score": 1.3605,
+          "evidence": []
+        },
+        {
+          "term": "los riesgos",
+          "score": 1.3545,
+          "evidence": []
+        },
+        {
+          "term": "personas que",
+          "score": 1.252,
+          "evidence": []
+        },
+        {
+          "term": "hasta que",
+          "score": 1.1334,
+          "evidence": []
+        },
+        {
+          "term": "que sea",
+          "score": 1.131,
+          "evidence": []
+        },
+        {
+          "term": "pacientes que",
+          "score": 1.1248,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "personas que",
+          "score": 43.4152,
+          "evidence": []
+        },
+        {
+          "term": "que sea",
+          "score": 40.3083,
+          "evidence": []
+        },
+        {
+          "term": "hasta que",
+          "score": 39.1757,
+          "evidence": []
+        },
+        {
+          "term": "que tengan",
+          "score": 38.9505,
+          "evidence": []
+        },
+        {
+          "term": "las personas",
+          "score": 38.0335,
+          "evidence": []
+        },
+        {
+          "term": "considera que",
+          "score": 37.793,
+          "evidence": []
+        },
+        {
+          "term": "notificado que",
+          "score": 37.793,
+          "evidence": []
+        },
+        {
+          "term": "pacientes que",
+          "score": 37.793,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "las personas",
+          "score": 1.4555,
+          "evidence": []
+        },
+        {
+          "term": "los beneficios",
+          "score": 1.4321,
+          "evidence": []
+        },
+        {
+          "term": "los riesgos",
+          "score": 1.4035,
+          "evidence": []
+        },
+        {
+          "term": "con una",
+          "score": 1.3605,
+          "evidence": []
+        },
+        {
+          "term": "personas que",
+          "score": 1.252,
+          "evidence": []
+        },
+        {
+          "term": "hasta que",
+          "score": 1.1334,
+          "evidence": []
+        },
+        {
+          "term": "que sea",
+          "score": 1.131,
+          "evidence": []
+        },
+        {
+          "term": "pacientes que",
+          "score": 1.1248,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 104.8919,
+          "evidence": []
+        },
+        {
+          "term": "还包括区域经济一体化组织",
+          "score": 52.5354,
+          "evidence": []
+        },
+        {
+          "term": "适用时",
+          "score": 52.5354,
+          "evidence": []
+        },
+        {
+          "term": "文件a",
+          "score": 49.8349,
+          "evidence": []
+        },
+        {
+          "term": "显而易见",
+          "score": 48.1241,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 40.4783,
+          "evidence": []
+        },
+        {
+          "term": "的研究中",
+          "score": 40.3986,
+          "evidence": []
+        },
+        {
+          "term": "要求总干事",
+          "score": 39.3898,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-013-personas-mayores": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "mayores",
+          "score": 1.0126,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los",
+          "score": 0.7846,
+          "evidence": []
+        },
+        {
+          "term": "personas",
+          "score": 0.7614,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "mayores",
+          "score": 12.4005,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "edad",
+          "score": 11.5456,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 9.9631,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "los",
+          "score": 0.3732,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.3254,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 0.2295,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "los",
+          "score": 6.4952,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 4.254,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 2.1799,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "los",
+          "score": 0.3732,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.3254,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 0.2295,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 109.7924,
+          "evidence": []
+        },
+        {
+          "term": "文件a",
+          "score": 52.1863,
+          "evidence": []
+        },
+        {
+          "term": "非同寻常",
+          "score": 52.1106,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-014-personas-que-presenten-enfermedades-concomitante": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "enfermedades concomitantes",
+          "score": 4.7637,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "concomitantes que",
+          "score": 4.5136,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "personas que",
+          "score": 3.0729,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las enfermedades",
+          "score": 2.1254,
+          "evidence": []
+        },
+        {
+          "term": "presentar tipos",
+          "score": 1.7958,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "enfermedades concomitantes",
+          "score": 104.9064,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "concomitantes que",
+          "score": 94.0861,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "personas que",
+          "score": 51.9491,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las enfermedades",
+          "score": 43.8685,
+          "evidence": []
+        },
+        {
+          "term": "presentar tipos",
+          "score": 32.4405,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "personas que",
+          "score": 0.9441,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "concomitantes que",
+          "score": 0.7189,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las personas",
+          "score": 0.5622,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 0.5119,
+          "evidence": []
+        },
+        {
+          "term": "los ensayos",
+          "score": 0.5119,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "personas que",
+          "score": 20.8396,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "concomitantes que",
+          "score": 19.0054,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las enfermedades",
+          "score": 11.2625,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 10.5114,
+          "evidence": []
+        },
+        {
+          "term": "los ensayos",
+          "score": 10.5114,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "personas que",
+          "score": 0.9441,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "concomitantes que",
+          "score": 0.7353,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las personas",
+          "score": 0.5622,
+          "evidence": []
+        },
+        {
+          "term": "los ensayos",
+          "score": 0.5276,
+          "evidence": []
+        },
+        {
+          "term": "las enfermedades",
+          "score": 0.4977,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 71.3562,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 49.7594,
+          "evidence": []
+        },
+        {
+          "term": "文件a",
+          "score": 45.8243,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 38.2157,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 38.2157,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-016-pacientes-mayores-de-85-años-de-edad": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "mayores",
+          "score": 2.3511,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "personas mayores",
+          "score": 2.0595,
+          "evidence": []
+        },
+        {
+          "term": "las personas",
+          "score": 1.7667,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "mayores",
+          "score": 49.6019,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "personas mayores",
+          "score": 39.5962,
+          "evidence": []
+        },
+        {
+          "term": "las personas",
+          "score": 28.0495,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "las personas",
+          "score": 0.5439,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 0.4797,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.2978,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "las personas",
+          "score": 9.7278,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 9.5906,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 5.343,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "las personas",
+          "score": 0.5439,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 0.4797,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.2978,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 115.7816,
+          "evidence": []
+        },
+        {
+          "term": "非同寻常",
+          "score": 52.8533,
+          "evidence": []
+        },
+        {
+          "term": "文件a",
+          "score": 48.6516,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-017-niños-y-adolescentes-menores-de-16-años-de-edad": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "menores",
+          "score": 1.5865,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "años",
+          "score": 1.547,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "edad",
+          "score": 1.4724,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "menores",
+          "score": 25.3734,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "edad",
+          "score": 23.0912,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "años",
+          "score": 21.5277,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "los",
+          "score": 0.1958,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.172,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.1287,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "las",
+          "score": 2.3351,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 1.7583,
+          "evidence": []
+        },
+        {
+          "term": "salud",
+          "score": 1.5751,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "las",
+          "score": 0.172,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.1287,
+          "evidence": []
+        },
+        {
+          "term": "vacuna",
+          "score": 0.06,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 114.3643,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 71.2381,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 62.8824,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-018-embarazadas": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "embarazadas",
+          "score": 2.9374,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las embarazadas",
+          "score": 2.4514,
+          "evidence": []
+        },
+        {
+          "term": "vacuna bnt162b",
+          "score": 2.3293,
+          "evidence": []
+        },
+        {
+          "term": "los riesgos",
+          "score": 1.8059,
+          "evidence": []
+        },
+        {
+          "term": "mayor riesgo",
+          "score": 1.7312,
+          "evidence": []
+        },
+        {
+          "term": "alto riesgo",
+          "score": 1.6753,
+          "evidence": []
+        },
+        {
+          "term": "presentar tipos",
+          "score": 1.4232,
+          "evidence": []
+        },
+        {
+          "term": "tipos graves",
+          "score": 1.3735,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "embarazadas",
+          "score": 78.1247,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vacuna bnt162b",
+          "score": 56.4023,
+          "evidence": []
+        },
+        {
+          "term": "las embarazadas",
+          "score": 55.6302,
+          "evidence": []
+        },
+        {
+          "term": "alto riesgo",
+          "score": 30.0221,
+          "evidence": []
+        },
+        {
+          "term": "mayor riesgo",
+          "score": 29.9388,
+          "evidence": []
+        },
+        {
+          "term": "los riesgos",
+          "score": 27.6872,
+          "evidence": []
+        },
+        {
+          "term": "embarazo",
+          "score": 26.8443,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 25.5433,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "los",
+          "score": 0.9739,
+          "evidence": []
+        },
+        {
+          "term": "los riesgos",
+          "score": 0.9739,
+          "evidence": []
+        },
+        {
+          "term": "las embarazadas",
+          "score": 0.899,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.6847,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 0.6461,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 0.6057,
+          "evidence": []
+        },
+        {
+          "term": "con",
+          "score": 0.4883,
+          "evidence": []
+        },
+        {
+          "term": "salud",
+          "score": 0.4751,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "los",
+          "score": 18.3724,
+          "evidence": []
+        },
+        {
+          "term": "los riesgos",
+          "score": 18.3724,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 16.1419,
+          "evidence": []
+        },
+        {
+          "term": "las embarazadas",
+          "score": 16.1419,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 14.704,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 10.1889,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 9.5075,
+          "evidence": []
+        },
+        {
+          "term": "vacuna",
+          "score": 9.1131,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "los riesgos",
+          "score": 1.0055,
+          "evidence": []
+        },
+        {
+          "term": "las embarazadas",
+          "score": 0.899,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.6847,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 0.6057,
+          "evidence": []
+        },
+        {
+          "term": "por",
+          "score": 0.4598,
+          "evidence": []
+        },
+        {
+          "term": "una",
+          "score": 0.454,
+          "evidence": []
+        },
+        {
+          "term": "vacuna bnt162b",
+          "score": 0.3403,
+          "evidence": []
+        },
+        {
+          "term": "sobre",
+          "score": 0.2592,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 82.4848,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 63.9654,
+          "evidence": []
+        },
+        {
+          "term": "文件a",
+          "score": 57.8563,
+          "evidence": []
+        },
+        {
+          "term": "还包括区域经济一体化组织",
+          "score": 50.0535,
+          "evidence": []
+        },
+        {
+          "term": "适用时",
+          "score": 50.0535,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 47.7031,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 47.7031,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 44.4839,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-019-mujeres-lactantes": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "mujeres lactantes",
+          "score": 4.3485,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los niños",
+          "score": 2.2276,
+          "evidence": []
+        },
+        {
+          "term": "que toman",
+          "score": 2.1549,
+          "evidence": []
+        },
+        {
+          "term": "las mujeres",
+          "score": 2.0211,
+          "evidence": []
+        },
+        {
+          "term": "sobre los",
+          "score": 1.9872,
+          "evidence": []
+        },
+        {
+          "term": "lactancia materna",
+          "score": 1.6829,
+          "evidence": []
+        },
+        {
+          "term": "las vacunas",
+          "score": 1.6086,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "mujeres lactantes",
+          "score": 83.691,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "que toman",
+          "score": 46.4304,
+          "evidence": []
+        },
+        {
+          "term": "los niños",
+          "score": 44.1596,
+          "evidence": []
+        },
+        {
+          "term": "sobre los",
+          "score": 40.1964,
+          "evidence": []
+        },
+        {
+          "term": "las mujeres",
+          "score": 38.5963,
+          "evidence": []
+        },
+        {
+          "term": "vacuna",
+          "score": 28.4964,
+          "evidence": []
+        },
+        {
+          "term": "lactancia materna",
+          "score": 26.6785,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "sobre los",
+          "score": 1.03,
+          "evidence": []
+        },
+        {
+          "term": "las vacunas",
+          "score": 1.0067,
+          "evidence": []
+        },
+        {
+          "term": "los niños",
+          "score": 0.8844,
+          "evidence": []
+        },
+        {
+          "term": "las mujeres",
+          "score": 0.8489,
+          "evidence": []
+        },
+        {
+          "term": "niños que",
+          "score": 0.6297,
+          "evidence": []
+        },
+        {
+          "term": "que toman",
+          "score": 0.5716,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 0.5309,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "sobre los",
+          "score": 23.0972,
+          "evidence": []
+        },
+        {
+          "term": "los niños",
+          "score": 20.7943,
+          "evidence": []
+        },
+        {
+          "term": "las vacunas",
+          "score": 20.7512,
+          "evidence": []
+        },
+        {
+          "term": "las mujeres",
+          "score": 17.0466,
+          "evidence": []
+        },
+        {
+          "term": "niños que",
+          "score": 13.8769,
+          "evidence": []
+        },
+        {
+          "term": "que toman",
+          "score": 13.2543,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 8.9523,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "sobre los",
+          "score": 1.03,
+          "evidence": []
+        },
+        {
+          "term": "las vacunas",
+          "score": 1.0067,
+          "evidence": []
+        },
+        {
+          "term": "los niños",
+          "score": 0.8844,
+          "evidence": []
+        },
+        {
+          "term": "las mujeres",
+          "score": 0.8489,
+          "evidence": []
+        },
+        {
+          "term": "niños que",
+          "score": 0.6297,
+          "evidence": []
+        },
+        {
+          "term": "que toman",
+          "score": 0.5767,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 0.5309,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 114.6233,
+          "evidence": []
+        },
+        {
+          "term": "文件a",
+          "score": 59.271,
+          "evidence": []
+        },
+        {
+          "term": "还包括区域经济一体化组织",
+          "score": 56.2998,
+          "evidence": []
+        },
+        {
+          "term": "适用时",
+          "score": 56.2998,
+          "evidence": []
+        },
+        {
+          "term": "非同寻常",
+          "score": 45.7018,
+          "evidence": []
+        },
+        {
+          "term": "要求总干事",
+          "score": 43.6409,
+          "evidence": []
+        },
+        {
+          "term": "敦促会员国",
+          "score": 40.3668,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-020-personas-infectadas-por-el-vih": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "personas infectadas",
+          "score": 4.4635,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "infectadas por",
+          "score": 4.224,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las personas",
+          "score": 2.2093,
+          "evidence": []
+        },
+        {
+          "term": "vih que",
+          "score": 2.0652,
+          "evidence": []
+        },
+        {
+          "term": "vacunar las",
+          "score": 1.9186,
+          "evidence": []
+        },
+        {
+          "term": "una evaluación",
+          "score": 1.7472,
+          "evidence": []
+        },
+        {
+          "term": "posible vacunar",
+          "score": 1.669,
+          "evidence": []
+        },
+        {
+          "term": "recomienda aplicar",
+          "score": 1.5306,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "personas infectadas",
+          "score": 94.5395,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "infectadas por",
+          "score": 90.1419,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vih que",
+          "score": 51.9281,
+          "evidence": []
+        },
+        {
+          "term": "las personas",
+          "score": 45.3879,
+          "evidence": []
+        },
+        {
+          "term": "vacuna",
+          "score": 37.9952,
+          "evidence": []
+        },
+        {
+          "term": "vacunar las",
+          "score": 35.7335,
+          "evidence": []
+        },
+        {
+          "term": "una evaluación",
+          "score": 27.7773,
+          "evidence": []
+        },
+        {
+          "term": "posible vacunar",
+          "score": 27.1873,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "infectadas por",
+          "score": 1.0445,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las personas",
+          "score": 1.0242,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 0.9319,
+          "evidence": []
+        },
+        {
+          "term": "vih que",
+          "score": 0.9189,
+          "evidence": []
+        },
+        {
+          "term": "vacunar las",
+          "score": 0.8134,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 0.6488,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 0.5769,
+          "evidence": []
+        },
+        {
+          "term": "una evaluación",
+          "score": 0.4845,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "las personas",
+          "score": 21.0607,
+          "evidence": []
+        },
+        {
+          "term": "vih que",
+          "score": 19.6038,
+          "evidence": []
+        },
+        {
+          "term": "vacunar las",
+          "score": 18.0716,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 17.2933,
+          "evidence": []
+        },
+        {
+          "term": "infectadas por",
+          "score": 15.3732,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vacuna",
+          "score": 10.1774,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 10.1031,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 9.6607,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "infectadas por",
+          "score": 1.0445,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las personas",
+          "score": 1.0242,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 0.9319,
+          "evidence": []
+        },
+        {
+          "term": "vih que",
+          "score": 0.9189,
+          "evidence": []
+        },
+        {
+          "term": "vacunar las",
+          "score": 0.8536,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 0.6488,
+          "evidence": []
+        },
+        {
+          "term": "una evaluación",
+          "score": 0.4845,
+          "evidence": []
+        },
+        {
+          "term": "vacuna",
+          "score": 0.2796,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 59.7954,
+          "evidence": []
+        },
+        {
+          "term": "文件a",
+          "score": 49.6167,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 47.6276,
+          "evidence": []
+        },
+        {
+          "term": "问题的讨论结束",
+          "score": 47.6276,
+          "evidence": []
+        },
+        {
+          "term": "还包括区域经济一体化组织",
+          "score": 44.8953,
+          "evidence": []
+        },
+        {
+          "term": "适用时",
+          "score": 44.8953,
+          "evidence": []
+        },
+        {
+          "term": "世界医学协会",
+          "score": 44.6136,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 37.3818,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-021-personas-inmunodeprimidas": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "personas inmunodeprimidas",
+          "score": 4.2448,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las personas",
+          "score": 1.6444,
+          "evidence": []
+        },
+        {
+          "term": "vacuna",
+          "score": 1.0948,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.933,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 0.9109,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "personas inmunodeprimidas",
+          "score": 76.4485,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las personas",
+          "score": 24.7359,
+          "evidence": []
+        },
+        {
+          "term": "vacuna",
+          "score": 23.747,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 18.5769,
+          "evidence": []
+        },
+        {
+          "term": "eficacia",
+          "score": 15.1113,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "las personas",
+          "score": 0.7244,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 0.6538,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.4468,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 0.4294,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 0.4074,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "las personas",
+          "score": 11.8495,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 11.6229,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 9.4044,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 5.8673,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 5.401,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "las personas",
+          "score": 0.7244,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 0.6538,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.4468,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 0.4294,
+          "evidence": []
+        },
+        {
+          "term": "personas inmunodeprimidas",
+          "score": 0.3269,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 73.2995,
+          "evidence": []
+        },
+        {
+          "term": "文件a",
+          "score": 47.6438,
+          "evidence": []
+        },
+        {
+          "term": "还包括区域经济一体化组织",
+          "score": 42.6571,
+          "evidence": []
+        },
+        {
+          "term": "适用时",
+          "score": 42.6571,
+          "evidence": []
+        },
+        {
+          "term": "在其他情况下",
+          "score": 34.5423,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-022-personas-que-presentan-enfermedades-autoinmunita": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "enfermedades autoinmunitarias",
+          "score": 3.3378,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "personas que",
+          "score": 3.0445,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "que presentan",
+          "score": 2.9532,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "enfermedades autoinmunitarias",
+          "score": 52.0502,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "que presentan",
+          "score": 45.5255,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "personas que",
+          "score": 45.414,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "personas que",
+          "score": 0.7423,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "que presentan",
+          "score": 0.5461,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los",
+          "score": 0.3427,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "personas que",
+          "score": 14.5092,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "que presentan",
+          "score": 11.9942,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las",
+          "score": 3.9158,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "personas que",
+          "score": 0.7423,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "que presentan",
+          "score": 0.5645,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los",
+          "score": 0.3427,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 110.5937,
+          "evidence": []
+        },
+        {
+          "term": "文件a",
+          "score": 46.4586,
+          "evidence": []
+        },
+        {
+          "term": "非同寻常",
+          "score": 44.8891,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-023-personas-con-antecedentes-de-parálisis-facial": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "parálisis facial",
+          "score": 3.81,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "que exista",
+          "score": 1.7181,
+          "evidence": []
+        },
+        {
+          "term": "exista una",
+          "score": 1.6859,
+          "evidence": []
+        },
+        {
+          "term": "que tengan",
+          "score": 1.5742,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "parálisis facial",
+          "score": 61.3267,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "que exista",
+          "score": 28.1658,
+          "evidence": []
+        },
+        {
+          "term": "que tengan",
+          "score": 25.6602,
+          "evidence": []
+        },
+        {
+          "term": "exista una",
+          "score": 25.0183,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "los",
+          "score": 0.4925,
+          "evidence": []
+        },
+        {
+          "term": "con",
+          "score": 0.4735,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las",
+          "score": 0.4308,
+          "evidence": []
+        },
+        {
+          "term": "que tengan",
+          "score": 0.3865,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "que",
+          "score": 7.4465,
+          "evidence": []
+        },
+        {
+          "term": "que exista",
+          "score": 7.4465,
+          "evidence": []
+        },
+        {
+          "term": "que tengan",
+          "score": 7.4465,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 7.0634,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "los",
+          "score": 0.4925,
+          "evidence": []
+        },
+        {
+          "term": "con",
+          "score": 0.4735,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las",
+          "score": 0.4308,
+          "evidence": []
+        },
+        {
+          "term": "que tengan",
+          "score": 0.3865,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 74.575,
+          "evidence": []
+        },
+        {
+          "term": "文件a",
+          "score": 51.4162,
+          "evidence": []
+        },
+        {
+          "term": "还包括区域经济一体化组织",
+          "score": 45.0641,
+          "evidence": []
+        },
+        {
+          "term": "适用时",
+          "score": 45.0641,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-024-personas-que-anteriormente-presentaron-una-infec": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "una infección",
+          "score": 4.9883,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "personas que",
+          "score": 4.3229,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "presentado una",
+          "score": 2.551,
+          "evidence": []
+        },
+        {
+          "term": "haber presentado",
+          "score": 2.4224,
+          "evidence": []
+        },
+        {
+          "term": "infección previa",
+          "score": 2.2679,
+          "evidence": []
+        },
+        {
+          "term": "que las",
+          "score": 2.1601,
+          "evidence": []
+        },
+        {
+          "term": "posible que",
+          "score": 2.0683,
+          "evidence": []
+        },
+        {
+          "term": "han presentado",
+          "score": 2.0615,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "una infección",
+          "score": 122.7928,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "personas que",
+          "score": 106.6515,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "presentado una",
+          "score": 56.3824,
+          "evidence": []
+        },
+        {
+          "term": "infección previa",
+          "score": 54.059,
+          "evidence": []
+        },
+        {
+          "term": "haber presentado",
+          "score": 52.5496,
+          "evidence": []
+        },
+        {
+          "term": "que las",
+          "score": 51.3996,
+          "evidence": []
+        },
+        {
+          "term": "posible que",
+          "score": 49.4806,
+          "evidence": []
+        },
+        {
+          "term": "han presentado",
+          "score": 44.4067,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "personas que",
+          "score": 1.6133,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "que las",
+          "score": 1.3721,
+          "evidence": []
+        },
+        {
+          "term": "los datos",
+          "score": 1.0302,
+          "evidence": []
+        },
+        {
+          "term": "una infección",
+          "score": 1.009,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "por",
+          "score": 0.8158,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "posible que",
+          "score": 0.7003,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 0.5815,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 0.5603,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "personas que",
+          "score": 41.6822,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "que las",
+          "score": 33.6973,
+          "evidence": []
+        },
+        {
+          "term": "posible que",
+          "score": 19.4502,
+          "evidence": []
+        },
+        {
+          "term": "los datos",
+          "score": 17.6406,
+          "evidence": []
+        },
+        {
+          "term": "por",
+          "score": 12.336,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "una infección",
+          "score": 11.8981,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del",
+          "score": 10.2981,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 9.8684,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "personas que",
+          "score": 1.6133,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "que las",
+          "score": 1.3721,
+          "evidence": []
+        },
+        {
+          "term": "los datos",
+          "score": 1.0302,
+          "evidence": []
+        },
+        {
+          "term": "una infección",
+          "score": 1.009,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "por",
+          "score": 0.8158,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "posible que",
+          "score": 0.7003,
+          "evidence": []
+        },
+        {
+          "term": "presentado una",
+          "score": 0.4225,
+          "evidence": []
+        },
+        {
+          "term": "vacuna",
+          "score": 0.2403,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 75.5848,
+          "evidence": []
+        },
+        {
+          "term": "还包括区域经济一体化组织",
+          "score": 51.4571,
+          "evidence": []
+        },
+        {
+          "term": "适用时",
+          "score": 51.4571,
+          "evidence": []
+        },
+        {
+          "term": "文件a",
+          "score": 50.2396,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 41.7504,
+          "evidence": []
+        },
+        {
+          "term": "世界医学协会",
+          "score": 39.8398,
+          "evidence": []
+        },
+        {
+          "term": "要求总干事",
+          "score": 38.0038,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 33.2196,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-025-personas-que-al-momento-de-la-aplicación-de-la-v": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "aguda",
+          "score": 1.8686,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "que",
+          "score": 1.1773,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "presentan",
+          "score": 0.9032,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "aguda",
+          "score": 30.088,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "que",
+          "score": 13.9327,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "presentan",
+          "score": 11.1522,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "que",
+          "score": 0.5768,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los",
+          "score": 0.4104,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.3592,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "que",
+          "score": 8.9846,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los",
+          "score": 5.6182,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 4.5571,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "que",
+          "score": 0.5768,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los",
+          "score": 0.4104,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.3592,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "文件a",
+          "score": 53.8453,
+          "evidence": []
+        },
+        {
+          "term": "还包括区域经济一体化组织",
+          "score": 51.7607,
+          "evidence": []
+        },
+        {
+          "term": "适用时",
+          "score": 51.7607,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-026-personas-a-las-que-anteriormente-se-les-administ": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "anticuerpos",
+          "score": 1.8822,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las",
+          "score": 1.5207,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "tratamiento",
+          "score": 1.4038,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "anticuerpos",
+          "score": 30.088,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "tratamiento",
+          "score": 21.1895,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las",
+          "score": 19.8815,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "las",
+          "score": 0.6597,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "que",
+          "score": 0.5799,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "para",
+          "score": 0.509,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "las",
+          "score": 10.6228,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "que",
+          "score": 8.1132,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "para",
+          "score": 4.6345,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "las",
+          "score": 0.6597,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "que",
+          "score": 0.5799,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "para",
+          "score": 0.509,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 89.5529,
+          "evidence": []
+        },
+        {
+          "term": "文件a",
+          "score": 49.0953,
+          "evidence": []
+        },
+        {
+          "term": "还包括区域经济一体化组织",
+          "score": 44.1815,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-027-situaciones-especiales": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "las existencias",
+          "score": 2.0386,
+          "evidence": []
+        },
+        {
+          "term": "oms para",
+          "score": 1.7014,
+          "evidence": []
+        },
+        {
+          "term": "tal como",
+          "score": 1.5105,
+          "evidence": []
+        },
+        {
+          "term": "grupos demográficos",
+          "score": 1.4521,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 1.4517,
+          "evidence": []
+        },
+        {
+          "term": "hoja",
+          "score": 1.1578,
+          "evidence": []
+        },
+        {
+          "term": "ruta",
+          "score": 1.1105,
+          "evidence": []
+        },
+        {
+          "term": "vacunas",
+          "score": 1.1085,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "los",
+          "score": 39.8525,
+          "evidence": []
+        },
+        {
+          "term": "las existencias",
+          "score": 35.3756,
+          "evidence": []
+        },
+        {
+          "term": "oms para",
+          "score": 30.1458,
+          "evidence": []
+        },
+        {
+          "term": "vacunas",
+          "score": 26.8648,
+          "evidence": []
+        },
+        {
+          "term": "tal como",
+          "score": 23.8244,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 23.2212,
+          "evidence": []
+        },
+        {
+          "term": "hoja",
+          "score": 21.8966,
+          "evidence": []
+        },
+        {
+          "term": "grupos demográficos",
+          "score": 21.7898,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "los",
+          "score": 0.984,
+          "evidence": []
+        },
+        {
+          "term": "oms para",
+          "score": 0.9614,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.8645,
+          "evidence": []
+        },
+        {
+          "term": "las existencias",
+          "score": 0.8645,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.7341,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 0.6307,
+          "evidence": []
+        },
+        {
+          "term": "con",
+          "score": 0.5132,
+          "evidence": []
+        },
+        {
+          "term": "salud",
+          "score": 0.4955,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "los",
+          "score": 28.4546,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 20.3827,
+          "evidence": []
+        },
+        {
+          "term": "las existencias",
+          "score": 20.3827,
+          "evidence": []
+        },
+        {
+          "term": "oms para",
+          "score": 19.6561,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 16.2745,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 11.6999,
+          "evidence": []
+        },
+        {
+          "term": "con",
+          "score": 9.5184,
+          "evidence": []
+        },
+        {
+          "term": "por",
+          "score": 7.5313,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "los",
+          "score": 0.984,
+          "evidence": []
+        },
+        {
+          "term": "oms para",
+          "score": 0.9614,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.8645,
+          "evidence": []
+        },
+        {
+          "term": "las existencias",
+          "score": 0.8645,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.7341,
+          "evidence": []
+        },
+        {
+          "term": "con",
+          "score": 0.5132,
+          "evidence": []
+        },
+        {
+          "term": "tal como",
+          "score": 0.399,
+          "evidence": []
+        },
+        {
+          "term": "vacunas",
+          "score": 0.3419,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "感染者",
+          "score": 31.4189,
+          "evidence": []
+        },
+        {
+          "term": "文件a",
+          "score": 24.2707,
+          "evidence": []
+        },
+        {
+          "term": "还包括区域经济一体化组织",
+          "score": 23.7984,
+          "evidence": []
+        },
+        {
+          "term": "适用时",
+          "score": 23.7984,
+          "evidence": []
+        },
+        {
+          "term": "可能性",
+          "score": 18.1467,
+          "evidence": []
+        },
+        {
+          "term": "这两种hpv",
+          "score": 17.9879,
+          "evidence": []
+        },
+        {
+          "term": "levanta",
+          "score": 16.6092,
+          "evidence": []
+        },
+        {
+          "term": "sesi6n",
+          "score": 16.5229,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-029-pruebas-de-detección-del-sars-cov-2": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "las pruebas",
+          "score": 2.4685,
+          "evidence": []
+        },
+        {
+          "term": "las que",
+          "score": 2.4521,
+          "evidence": []
+        },
+        {
+          "term": "contra las",
+          "score": 2.4444,
+          "evidence": []
+        },
+        {
+          "term": "las proteínas",
+          "score": 2.383,
+          "evidence": []
+        },
+        {
+          "term": "las concentraciones",
+          "score": 2.3314,
+          "evidence": []
+        },
+        {
+          "term": "anticuerpos contra",
+          "score": 2.2691,
+          "evidence": []
+        },
+        {
+          "term": "que forman",
+          "score": 2.1685,
+          "evidence": []
+        },
+        {
+          "term": "igg contra",
+          "score": 2.1062,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "las que",
+          "score": 64.3148,
+          "evidence": []
+        },
+        {
+          "term": "contra las",
+          "score": 63.9942,
+          "evidence": []
+        },
+        {
+          "term": "las pruebas",
+          "score": 56.8559,
+          "evidence": []
+        },
+        {
+          "term": "las proteínas",
+          "score": 52.8796,
+          "evidence": []
+        },
+        {
+          "term": "las concentraciones",
+          "score": 52.0687,
+          "evidence": []
+        },
+        {
+          "term": "anticuerpos contra",
+          "score": 50.1108,
+          "evidence": []
+        },
+        {
+          "term": "que forman",
+          "score": 48.3519,
+          "evidence": []
+        },
+        {
+          "term": "igg contra",
+          "score": 46.815,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "las que",
+          "score": 1.2985,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 1.0472,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "contra las",
+          "score": 1.003,
+          "evidence": []
+        },
+        {
+          "term": "las pruebas",
+          "score": 0.8314,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 0.8132,
+          "evidence": []
+        },
+        {
+          "term": "las concentraciones",
+          "score": 0.7196,
+          "evidence": []
+        },
+        {
+          "term": "las proteínas",
+          "score": 0.7196,
+          "evidence": []
+        },
+        {
+          "term": "que forman",
+          "score": 0.5789,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "las que",
+          "score": 35.0056,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 21.0255,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "contra las",
+          "score": 20.5875,
+          "evidence": []
+        },
+        {
+          "term": "las concentraciones",
+          "score": 17.8109,
+          "evidence": []
+        },
+        {
+          "term": "las proteínas",
+          "score": 17.8109,
+          "evidence": []
+        },
+        {
+          "term": "las pruebas",
+          "score": 17.8109,
+          "evidence": []
+        },
+        {
+          "term": "que forman",
+          "score": 17.1947,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 14.0181,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "las que",
+          "score": 1.2985,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 1.0472,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "contra las",
+          "score": 1.003,
+          "evidence": []
+        },
+        {
+          "term": "las pruebas",
+          "score": 0.8314,
+          "evidence": []
+        },
+        {
+          "term": "las concentraciones",
+          "score": 0.7328,
+          "evidence": []
+        },
+        {
+          "term": "las proteínas",
+          "score": 0.7301,
+          "evidence": []
+        },
+        {
+          "term": "que forman",
+          "score": 0.6007,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 0.527,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 107.5885,
+          "evidence": []
+        },
+        {
+          "term": "还包括区域经济一体化组织",
+          "score": 69.3338,
+          "evidence": []
+        },
+        {
+          "term": "适用时",
+          "score": 69.3338,
+          "evidence": []
+        },
+        {
+          "term": "文件a",
+          "score": 66.6464,
+          "evidence": []
+        },
+        {
+          "term": "要求总干事",
+          "score": 51.8954,
+          "evidence": []
+        },
+        {
+          "term": "可能性",
+          "score": 49.0749,
+          "evidence": []
+        },
+        {
+          "term": "显而易见",
+          "score": 46.5931,
+          "evidence": []
+        },
+        {
+          "term": "非同寻常",
+          "score": 45.9199,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-030-función-de-las-vacunas-en-el-marco-de-las-demás": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "las",
+          "score": 2.6304,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las que",
+          "score": 2.2482,
+          "evidence": []
+        },
+        {
+          "term": "las intervenciones",
+          "score": 2.0404,
+          "evidence": []
+        },
+        {
+          "term": "las personas",
+          "score": 1.9186,
+          "evidence": []
+        },
+        {
+          "term": "que aún",
+          "score": 1.748,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "las",
+          "score": 66.2716,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las que",
+          "score": 51.7127,
+          "evidence": []
+        },
+        {
+          "term": "las intervenciones",
+          "score": 42.1635,
+          "evidence": []
+        },
+        {
+          "term": "las personas",
+          "score": 40.5334,
+          "evidence": []
+        },
+        {
+          "term": "que aún",
+          "score": 31.2636,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "las",
+          "score": 0.8378,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las que",
+          "score": 0.7713,
+          "evidence": []
+        },
+        {
+          "term": "las personas",
+          "score": 0.5296,
+          "evidence": []
+        },
+        {
+          "term": "las intervenciones",
+          "score": 0.4892,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 0.4717,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "las",
+          "score": 26.4171,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las que",
+          "score": 23.9492,
+          "evidence": []
+        },
+        {
+          "term": "las intervenciones",
+          "score": 14.5973,
+          "evidence": []
+        },
+        {
+          "term": "las personas",
+          "score": 14.2668,
+          "evidence": []
+        },
+        {
+          "term": "que aún",
+          "score": 10.7406,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "las",
+          "score": 0.8378,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las que",
+          "score": 0.7713,
+          "evidence": []
+        },
+        {
+          "term": "las personas",
+          "score": 0.5296,
+          "evidence": []
+        },
+        {
+          "term": "las intervenciones",
+          "score": 0.4892,
+          "evidence": []
+        },
+        {
+          "term": "que aún",
+          "score": 0.3754,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 54.3643,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 25.3369,
+          "evidence": []
+        },
+        {
+          "term": "显而易见",
+          "score": 21.9902,
+          "evidence": []
+        },
+        {
+          "term": "可能性",
+          "score": 21.5847,
+          "evidence": []
+        },
+        {
+          "term": "文件a",
+          "score": 20.1831,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-031-implicación-comunitaria-comunicación-eficaz-y-le": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "implicación comunitaria",
+          "score": 3.8308,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "comunicación",
+          "score": 1.6952,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vacunación contra",
+          "score": 1.5335,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 1.1405,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 1.0141,
+          "evidence": []
+        },
+        {
+          "term": "deben",
+          "score": 0.9383,
+          "evidence": []
+        },
+        {
+          "term": "afectadas",
+          "score": 0.9346,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "implicación comunitaria",
+          "score": 61.3267,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "comunicación",
+          "score": 27.7897,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vacunación contra",
+          "score": 24.2929,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 23.195,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 16.6052,
+          "evidence": []
+        },
+        {
+          "term": "deben",
+          "score": 15.5842,
+          "evidence": []
+        },
+        {
+          "term": "afectadas",
+          "score": 15.044,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "los",
+          "score": 0.7046,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.6133,
+          "evidence": []
+        },
+        {
+          "term": "salud",
+          "score": 0.4427,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 0.4361,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.4237,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 0.4204,
+          "evidence": []
+        },
+        {
+          "term": "con",
+          "score": 0.3531,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "los",
+          "score": 16.0998,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 13.4624,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 6.7811,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 5.6572,
+          "evidence": []
+        },
+        {
+          "term": "salud",
+          "score": 5.4205,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 4.8854,
+          "evidence": []
+        },
+        {
+          "term": "con",
+          "score": 4.7642,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "los",
+          "score": 0.7046,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.6133,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.4237,
+          "evidence": []
+        },
+        {
+          "term": "con",
+          "score": 0.3531,
+          "evidence": []
+        },
+        {
+          "term": "vacunación contra",
+          "score": 0.3477,
+          "evidence": []
+        },
+        {
+          "term": "información",
+          "score": 0.1796,
+          "evidence": []
+        },
+        {
+          "term": "comunicación",
+          "score": 0.1623,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 37.8474,
+          "evidence": []
+        },
+        {
+          "term": "显而易见",
+          "score": 30.4705,
+          "evidence": []
+        },
+        {
+          "term": "可能性",
+          "score": 28.1238,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 27.1412,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 25.621,
+          "evidence": []
+        },
+        {
+          "term": "的研究中",
+          "score": 22.5131,
+          "evidence": []
+        },
+        {
+          "term": "潜在受试者",
+          "score": 22.0504,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-032-aspectos-organizativos-de-la-vacunación": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "los que",
+          "score": 2.527,
+          "evidence": []
+        },
+        {
+          "term": "los casos",
+          "score": 2.036,
+          "evidence": []
+        },
+        {
+          "term": "los programas",
+          "score": 1.9893,
+          "evidence": []
+        },
+        {
+          "term": "las personas",
+          "score": 1.8086,
+          "evidence": []
+        },
+        {
+          "term": "por ejemplo",
+          "score": 1.3939,
+          "evidence": []
+        },
+        {
+          "term": "personal sanitario",
+          "score": 1.3363,
+          "evidence": []
+        },
+        {
+          "term": "deben",
+          "score": 1.0893,
+          "evidence": []
+        },
+        {
+          "term": "bnt162b",
+          "score": 0.9868,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "los que",
+          "score": 66.719,
+          "evidence": []
+        },
+        {
+          "term": "los casos",
+          "score": 45.9687,
+          "evidence": []
+        },
+        {
+          "term": "los programas",
+          "score": 44.773,
+          "evidence": []
+        },
+        {
+          "term": "las personas",
+          "score": 33.9062,
+          "evidence": []
+        },
+        {
+          "term": "deben",
+          "score": 20.7789,
+          "evidence": []
+        },
+        {
+          "term": "por ejemplo",
+          "score": 19.2055,
+          "evidence": []
+        },
+        {
+          "term": "bnt162b",
+          "score": 18.4071,
+          "evidence": []
+        },
+        {
+          "term": "almacenamiento",
+          "score": 17.4517,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "los que",
+          "score": 1.8396,
+          "evidence": []
+        },
+        {
+          "term": "los programas",
+          "score": 1.3022,
+          "evidence": []
+        },
+        {
+          "term": "los casos",
+          "score": 1.1699,
+          "evidence": []
+        },
+        {
+          "term": "las personas",
+          "score": 1.1654,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 0.6967,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 0.6962,
+          "evidence": []
+        },
+        {
+          "term": "por ejemplo",
+          "score": 0.6838,
+          "evidence": []
+        },
+        {
+          "term": "con",
+          "score": 0.5616,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "los que",
+          "score": 51.2534,
+          "evidence": []
+        },
+        {
+          "term": "los programas",
+          "score": 32.8398,
+          "evidence": []
+        },
+        {
+          "term": "los casos",
+          "score": 31.0279,
+          "evidence": []
+        },
+        {
+          "term": "las personas",
+          "score": 26.5282,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 14.4974,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 13.8044,
+          "evidence": []
+        },
+        {
+          "term": "por ejemplo",
+          "score": 11.4752,
+          "evidence": []
+        },
+        {
+          "term": "con",
+          "score": 9.5475,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "los que",
+          "score": 1.8396,
+          "evidence": []
+        },
+        {
+          "term": "los programas",
+          "score": 1.3022,
+          "evidence": []
+        },
+        {
+          "term": "los casos",
+          "score": 1.1699,
+          "evidence": []
+        },
+        {
+          "term": "las personas",
+          "score": 1.1654,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 0.6967,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 0.6962,
+          "evidence": []
+        },
+        {
+          "term": "por ejemplo",
+          "score": 0.6838,
+          "evidence": []
+        },
+        {
+          "term": "con",
+          "score": 0.5616,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 59.4338,
+          "evidence": []
+        },
+        {
+          "term": "文件a",
+          "score": 27.8079,
+          "evidence": []
+        },
+        {
+          "term": "还包括区域经济一体化组织",
+          "score": 22.5277,
+          "evidence": []
+        },
+        {
+          "term": "适用时",
+          "score": 22.5277,
+          "evidence": []
+        },
+        {
+          "term": "可能性",
+          "score": 22.4677,
+          "evidence": []
+        },
+        {
+          "term": "显而易见",
+          "score": 22.3792,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 21.8631,
+          "evidence": []
+        },
+        {
+          "term": "要求总干事",
+          "score": 19.9245,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-033-recomendaciones-sobre-la-manera-de-subsanar-las": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "las",
+          "score": 3.6154,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las que",
+          "score": 3.2376,
+          "evidence": []
+        },
+        {
+          "term": "los que",
+          "score": 3.1253,
+          "evidence": []
+        },
+        {
+          "term": "las vacunas",
+          "score": 3.1194,
+          "evidence": []
+        },
+        {
+          "term": "las reacciones",
+          "score": 3.0394,
+          "evidence": []
+        },
+        {
+          "term": "analizar las",
+          "score": 2.9509,
+          "evidence": []
+        },
+        {
+          "term": "las personas",
+          "score": 2.9499,
+          "evidence": []
+        },
+        {
+          "term": "embarazadas las",
+          "score": 2.854,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "las",
+          "score": 172.306,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las que",
+          "score": 151.1723,
+          "evidence": []
+        },
+        {
+          "term": "los que",
+          "score": 128.119,
+          "evidence": []
+        },
+        {
+          "term": "las vacunas",
+          "score": 126.4503,
+          "evidence": []
+        },
+        {
+          "term": "las reacciones",
+          "score": 112.5758,
+          "evidence": []
+        },
+        {
+          "term": "las personas",
+          "score": 112.0446,
+          "evidence": []
+        },
+        {
+          "term": "analizar las",
+          "score": 105.6842,
+          "evidence": []
+        },
+        {
+          "term": "embarazadas las",
+          "score": 105.6842,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "las",
+          "score": 2.866,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los que",
+          "score": 2.7703,
+          "evidence": []
+        },
+        {
+          "term": "sobre los",
+          "score": 2.0563,
+          "evidence": []
+        },
+        {
+          "term": "las vacunas",
+          "score": 2.0323,
+          "evidence": []
+        },
+        {
+          "term": "los casos",
+          "score": 1.7773,
+          "evidence": []
+        },
+        {
+          "term": "las personas",
+          "score": 1.7518,
+          "evidence": []
+        },
+        {
+          "term": "los ensayos",
+          "score": 1.6358,
+          "evidence": []
+        },
+        {
+          "term": "analizar las",
+          "score": 1.433,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "las",
+          "score": 115.8286,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los que",
+          "score": 100.4167,
+          "evidence": []
+        },
+        {
+          "term": "sobre los",
+          "score": 71.7185,
+          "evidence": []
+        },
+        {
+          "term": "las vacunas",
+          "score": 71.5236,
+          "evidence": []
+        },
+        {
+          "term": "las personas",
+          "score": 61.7987,
+          "evidence": []
+        },
+        {
+          "term": "los casos",
+          "score": 60.9301,
+          "evidence": []
+        },
+        {
+          "term": "los ensayos",
+          "score": 60.9301,
+          "evidence": []
+        },
+        {
+          "term": "analizar las",
+          "score": 57.9143,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "las",
+          "score": 2.866,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los que",
+          "score": 2.7703,
+          "evidence": []
+        },
+        {
+          "term": "sobre los",
+          "score": 2.0563,
+          "evidence": []
+        },
+        {
+          "term": "las vacunas",
+          "score": 2.0323,
+          "evidence": []
+        },
+        {
+          "term": "los casos",
+          "score": 1.7773,
+          "evidence": []
+        },
+        {
+          "term": "las personas",
+          "score": 1.7518,
+          "evidence": []
+        },
+        {
+          "term": "los ensayos",
+          "score": 1.6985,
+          "evidence": []
+        },
+        {
+          "term": "embarazadas las",
+          "score": 1.5108,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 74.0447,
+          "evidence": []
+        },
+        {
+          "term": "文件a",
+          "score": 46.1489,
+          "evidence": []
+        },
+        {
+          "term": "还包括区域经济一体化组织",
+          "score": 44.4812,
+          "evidence": []
+        },
+        {
+          "term": "适用时",
+          "score": 44.4812,
+          "evidence": []
+        },
+        {
+          "term": "要求总干事",
+          "score": 35.0742,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 30.2276,
+          "evidence": []
+        },
+        {
+          "term": "问题的讨论结束",
+          "score": 30.2276,
+          "evidence": []
+        },
+        {
+          "term": "敦促会员国",
+          "score": 30.2206,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-034-referencias": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "del sage",
+          "score": 2.0092,
+          "evidence": []
+        },
+        {
+          "term": "organización mundial",
+          "score": 1.8993,
+          "evidence": []
+        },
+        {
+          "term": "consultado",
+          "score": 1.3971,
+          "evidence": []
+        },
+        {
+          "term": "enero",
+          "score": 1.2238,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "del sage",
+          "score": 39.2373,
+          "evidence": []
+        },
+        {
+          "term": "organización mundial",
+          "score": 35.9776,
+          "evidence": []
+        },
+        {
+          "term": "consultado",
+          "score": 30.3754,
+          "evidence": []
+        },
+        {
+          "term": "enero",
+          "score": 25.3734,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "los",
+          "score": 0.3361,
+          "evidence": []
+        },
+        {
+          "term": "salud",
+          "score": 0.3197,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.3111,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 0.2863,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "consultado",
+          "score": 11.8732,
+          "evidence": []
+        },
+        {
+          "term": "salud",
+          "score": 9.3493,
+          "evidence": []
+        },
+        {
+          "term": "noviembre",
+          "score": 6.2178,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 5.4386,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "salud",
+          "score": 0.3197,
+          "evidence": []
+        },
+        {
+          "term": "del sage",
+          "score": 0.2902,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 0.2631,
+          "evidence": []
+        },
+        {
+          "term": "organización mundial",
+          "score": 0.241,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "更大利益",
+          "score": 116.1845,
+          "evidence": []
+        },
+        {
+          "term": "显而易见",
+          "score": 87.2706,
+          "evidence": []
+        },
+        {
+          "term": "可能会",
+          "score": 81.8119,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 81.2837,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-035-fuente-de-financiamiento": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "del sage",
+          "score": 2.013,
+          "evidence": []
+        },
+        {
+          "term": "miembros del",
+          "score": 1.529,
+          "evidence": []
+        },
+        {
+          "term": "los miembros",
+          "score": 1.2307,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "del sage",
+          "score": 36.6797,
+          "evidence": []
+        },
+        {
+          "term": "miembros del",
+          "score": 22.0195,
+          "evidence": []
+        },
+        {
+          "term": "los miembros",
+          "score": 15.4369,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "los miembros",
+          "score": 0.4559,
+          "evidence": []
+        },
+        {
+          "term": "miembros del",
+          "score": 0.3557,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.3416,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "los miembros",
+          "score": 6.9545,
+          "evidence": []
+        },
+        {
+          "term": "miembros del",
+          "score": 5.8971,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 5.5734,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "los miembros",
+          "score": 0.4559,
+          "evidence": []
+        },
+        {
+          "term": "miembros del",
+          "score": 0.3557,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.3416,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 66.6221,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 62.5428,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 62.0711,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-036-nota-de-agradecimiento": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "orientaciones provisionales",
+          "score": 1.8084,
+          "evidence": []
+        },
+        {
+          "term": "cualquier cambio",
+          "score": 1.617,
+          "evidence": []
+        },
+        {
+          "term": "presentes orientaciones",
+          "score": 1.5663,
+          "evidence": []
+        },
+        {
+          "term": "las presentes",
+          "score": 1.5384,
+          "evidence": []
+        },
+        {
+          "term": "del grupo",
+          "score": 1.5135,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "orientaciones provisionales",
+          "score": 28.9687,
+          "evidence": []
+        },
+        {
+          "term": "presentes orientaciones",
+          "score": 25.0769,
+          "evidence": []
+        },
+        {
+          "term": "las presentes",
+          "score": 22.4792,
+          "evidence": []
+        },
+        {
+          "term": "cualquier cambio",
+          "score": 22.4253,
+          "evidence": []
+        },
+        {
+          "term": "del grupo",
+          "score": 21.7144,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "los",
+          "score": 0.491,
+          "evidence": []
+        },
+        {
+          "term": "del grupo",
+          "score": 0.4797,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.4469,
+          "evidence": []
+        },
+        {
+          "term": "las presentes",
+          "score": 0.4469,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 0.3726,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "del grupo",
+          "score": 7.3213,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 6.821,
+          "evidence": []
+        },
+        {
+          "term": "las presentes",
+          "score": 6.821,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 6.212,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 4.8102,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "del grupo",
+          "score": 0.4797,
+          "evidence": []
+        },
+        {
+          "term": "las presentes",
+          "score": 0.4497,
+          "evidence": []
+        },
+        {
+          "term": "una",
+          "score": 0.2436,
+          "evidence": []
+        },
+        {
+          "term": "oms",
+          "score": 0.2001,
+          "evidence": []
+        },
+        {
+          "term": "sobre",
+          "score": 0.1773,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 91.1136,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 55.6253,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 49.5323,
+          "evidence": []
+        },
+        {
+          "term": "这些情况下",
+          "score": 40.1512,
+          "evidence": []
+        },
+        {
+          "term": "还包括区域经济一体化组织",
+          "score": 38.6464,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

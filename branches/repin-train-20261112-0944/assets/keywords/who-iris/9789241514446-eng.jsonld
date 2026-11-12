@@ -1,0 +1,5232 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "9789241514446-eng",
+  "instance": "who-iris",
+  "about": "library/9789241514446-eng",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7393,
+    "terms": 71095
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "nhwa data",
+        "score": 26.4886,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hrh data",
+        "score": 25.3864,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "nhwa guide",
+        "score": 23.0434,
+        "evidence": []
+      },
+      {
+        "term": "nhwa framework",
+        "score": 22.8683,
+        "evidence": []
+      },
+      {
+        "term": "nhwa implementation",
+        "score": 22.3793,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "nhwa process",
+        "score": 21.5222,
+        "evidence": []
+      },
+      {
+        "term": "nhwa indicators",
+        "score": 21.493,
+        "evidence": []
+      },
+      {
+        "term": "nhwa platform",
+        "score": 20.0652,
+        "evidence": []
+      },
+      {
+        "term": "hrh information",
+        "score": 19.9391,
+        "evidence": []
+      },
+      {
+        "term": "nhwa through",
+        "score": 19.5126,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "multistakeholder working",
+        "score": 19.3239,
+        "evidence": []
+      },
+      {
+        "term": "nhwa online",
+        "score": 19.1851,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "nhwa data",
+        "score": 719.1536,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hrh data",
+        "score": 635.4316,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "multistakeholder working",
+        "score": 573.3824,
+        "evidence": []
+      },
+      {
+        "term": "nhwa framework",
+        "score": 561.5913,
+        "evidence": []
+      },
+      {
+        "term": "nhwa implementation",
+        "score": 557.3203,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "nhwa guide",
+        "score": 556.9255,
+        "evidence": []
+      },
+      {
+        "term": "nhwa indicators",
+        "score": 539.2896,
+        "evidence": []
+      },
+      {
+        "term": "nhwa process",
+        "score": 535.681,
+        "evidence": []
+      },
+      {
+        "term": "nhwa platform",
+        "score": 512.4713,
+        "evidence": []
+      },
+      {
+        "term": "multistakeholder group",
+        "score": 509.1478,
+        "evidence": []
+      },
+      {
+        "term": "nhwa through",
+        "score": 502.4018,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "nhwa online",
+        "score": 496.2005,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "health data",
+        "score": 12.5194,
+        "evidence": []
+      },
+      {
+        "term": "national health",
+        "score": 12.5091,
+        "evidence": []
+      },
+      {
+        "term": "health workforce",
+        "score": 12.0237,
+        "evidence": []
+      },
+      {
+        "term": "nhwa data",
+        "score": 10.4349,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "national accounts",
+        "score": 8.9379,
+        "evidence": []
+      },
+      {
+        "term": "world health",
+        "score": 8.7667,
+        "evidence": []
+      },
+      {
+        "term": "national level",
+        "score": 8.5843,
+        "evidence": []
+      },
+      {
+        "term": "health labour",
+        "score": 8.5739,
+        "evidence": []
+      },
+      {
+        "term": "nhwa indicators",
+        "score": 8.5044,
+        "evidence": []
+      },
+      {
+        "term": "data monitoring",
+        "score": 8.4419,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "available data",
+        "score": 8.24,
+        "evidence": []
+      },
+      {
+        "term": "health organization",
+        "score": 8.1299,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "nhwa data",
+        "score": 349.3504,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "workforce data",
+        "score": 345.3315,
+        "evidence": []
+      },
+      {
+        "term": "health data",
+        "score": 340.5103,
+        "evidence": []
+      },
+      {
+        "term": "data monitoring",
+        "score": 265.0697,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "available data",
+        "score": 253.7253,
+        "evidence": []
+      },
+      {
+        "term": "data collection",
+        "score": 247.1123,
+        "evidence": []
+      },
+      {
+        "term": "data analysis",
+        "score": 246.6666,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "data sources",
+        "score": 245.7768,
+        "evidence": []
+      },
+      {
+        "term": "hrh data",
+        "score": 242.8257,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "data platform",
+        "score": 242.163,
+        "evidence": []
+      },
+      {
+        "term": "data quality",
+        "score": 242.0734,
+        "evidence": []
+      },
+      {
+        "term": "potential data",
+        "score": 238.173,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "health data",
+        "score": 12.5194,
+        "evidence": []
+      },
+      {
+        "term": "national health",
+        "score": 12.5091,
+        "evidence": []
+      },
+      {
+        "term": "health workforce",
+        "score": 12.0237,
+        "evidence": []
+      },
+      {
+        "term": "nhwa data",
+        "score": 10.4349,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "national accounts",
+        "score": 8.9379,
+        "evidence": []
+      },
+      {
+        "term": "world health",
+        "score": 8.7667,
+        "evidence": []
+      },
+      {
+        "term": "national level",
+        "score": 8.5843,
+        "evidence": []
+      },
+      {
+        "term": "health labour",
+        "score": 8.5739,
+        "evidence": []
+      },
+      {
+        "term": "nhwa indicators",
+        "score": 8.5044,
+        "evidence": []
+      },
+      {
+        "term": "data monitoring",
+        "score": 8.4419,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "available data",
+        "score": 8.24,
+        "evidence": []
+      },
+      {
+        "term": "health organization",
+        "score": 8.1299,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "共享流感病毒以及获得",
+        "score": 1114.5068,
+        "evidence": []
+      },
+      {
+        "term": "在sars",
+        "score": 970.7858,
+        "evidence": []
+      },
+      {
+        "term": "大流行性流感防范框架",
+        "score": 873.6325,
+        "evidence": []
+      },
+      {
+        "term": "教员询问其余学员每个报告人的报告有无遗漏什么内容",
+        "score": 854.4765,
+        "evidence": []
+      },
+      {
+        "term": "重要部分",
+        "score": 830.7725,
+        "evidence": []
+      },
+      {
+        "term": "风险最小化",
+        "score": 813.8232,
+        "evidence": []
+      },
+      {
+        "term": "捐助者",
+        "score": 777.5786,
+        "evidence": []
+      },
+      {
+        "term": "提供hpv",
+        "score": 775.1865,
+        "evidence": []
+      },
+      {
+        "term": "大流行性流感的防范",
+        "score": 689.8788,
+        "evidence": []
+      },
+      {
+        "term": "共享流感病毒以及获得疫苗和其它",
+        "score": 678.8222,
+        "evidence": []
+      },
+      {
+        "term": "引进hpv",
+        "score": 648.1734,
+        "evidence": []
+      },
+      {
+        "term": "世卫组织会员国",
+        "score": 634.7373,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-abbreviations": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "world health",
+          "score": 0.6907,
+          "evidence": []
+        },
+        {
+          "term": "sop",
+          "score": 0.4838,
+          "evidence": []
+        },
+        {
+          "term": "hrh",
+          "score": 0.4084,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "world health",
+          "score": 7.6538,
+          "evidence": []
+        },
+        {
+          "term": "sop",
+          "score": 6.0751,
+          "evidence": []
+        },
+        {
+          "term": "hrh",
+          "score": 4.938,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "world health",
+          "score": 0.2135,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 0.104,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.0757,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "world health",
+          "score": 3.1283,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 1.6342,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 1.2006,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "world health",
+          "score": 0.2135,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 0.104,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.0757,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 121.0263,
+          "evidence": []
+        },
+        {
+          "term": "还包括区域经济一体化组织",
+          "score": 92.0812,
+          "evidence": []
+        },
+        {
+          "term": "适用时",
+          "score": 92.0812,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-001-contributions-and-acknowledgements": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "implementation guide",
+          "score": 0.722,
+          "evidence": []
+        },
+        {
+          "term": "grateful",
+          "score": 0.6695,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 0.5596,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.3279,
+          "evidence": []
+        },
+        {
+          "term": "support",
+          "score": 0.2985,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "grateful",
+          "score": 10.5947,
+          "evidence": []
+        },
+        {
+          "term": "implementation guide",
+          "score": 10.3991,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 8.9601,
+          "evidence": []
+        },
+        {
+          "term": "support",
+          "score": 3.6854,
+          "evidence": []
+        },
+        {
+          "term": "development",
+          "score": 3.6785,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health",
+          "score": 0.192,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 0.1384,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.1289,
+          "evidence": []
+        },
+        {
+          "term": "implementation guide",
+          "score": 0.1165,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 0.1061,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health",
+          "score": 3.1434,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 2.5038,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 2.0013,
+          "evidence": []
+        },
+        {
+          "term": "training",
+          "score": 1.2857,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 1.2843,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health",
+          "score": 0.192,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 0.1384,
+          "evidence": []
+        },
+        {
+          "term": "implementation guide",
+          "score": 0.1165,
+          "evidence": []
+        },
+        {
+          "term": "development",
+          "score": 0.0902,
+          "evidence": []
+        },
+        {
+          "term": "support",
+          "score": 0.0518,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在sars",
+          "score": 380.2345,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 342.8396,
+          "evidence": []
+        },
+        {
+          "term": "在研究开始后",
+          "score": 299.7308,
+          "evidence": []
+        },
+        {
+          "term": "病毒疗法",
+          "score": 299.7308,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 281.4018,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-002-introduction": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hrh data",
+          "score": 1.7724,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 1.7471,
+          "evidence": []
+        },
+        {
+          "term": "health workforce",
+          "score": 1.7069,
+          "evidence": []
+        },
+        {
+          "term": "national health",
+          "score": 1.2707,
+          "evidence": []
+        },
+        {
+          "term": "universal health",
+          "score": 1.1441,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 1.1273,
+          "evidence": []
+        },
+        {
+          "term": "health coverage",
+          "score": 1.0742,
+          "evidence": []
+        },
+        {
+          "term": "member states",
+          "score": 1.0517,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "health workforce",
+          "score": 58.7926,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 50.1622,
+          "evidence": []
+        },
+        {
+          "term": "hrh data",
+          "score": 45.8933,
+          "evidence": []
+        },
+        {
+          "term": "national health",
+          "score": 35.8471,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 30.1922,
+          "evidence": []
+        },
+        {
+          "term": "universal health",
+          "score": 29.7825,
+          "evidence": []
+        },
+        {
+          "term": "health coverage",
+          "score": 28.2229,
+          "evidence": []
+        },
+        {
+          "term": "member states",
+          "score": 17.6235,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health workforce",
+          "score": 1.1778,
+          "evidence": []
+        },
+        {
+          "term": "national health",
+          "score": 1.0924,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 0.8468,
+          "evidence": []
+        },
+        {
+          "term": "health coverage",
+          "score": 0.7526,
+          "evidence": []
+        },
+        {
+          "term": "universal health",
+          "score": 0.7288,
+          "evidence": []
+        },
+        {
+          "term": "hrh data",
+          "score": 0.5752,
+          "evidence": []
+        },
+        {
+          "term": "global strategy",
+          "score": 0.4697,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 0.3977,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health workforce",
+          "score": 31.9746,
+          "evidence": []
+        },
+        {
+          "term": "national health",
+          "score": 23.1994,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 20.105,
+          "evidence": []
+        },
+        {
+          "term": "health coverage",
+          "score": 17.7409,
+          "evidence": []
+        },
+        {
+          "term": "universal health",
+          "score": 17.665,
+          "evidence": []
+        },
+        {
+          "term": "hrh data",
+          "score": 13.8522,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 11.2358,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 10.0262,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health workforce",
+          "score": 1.1778,
+          "evidence": []
+        },
+        {
+          "term": "national health",
+          "score": 1.0924,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 0.8468,
+          "evidence": []
+        },
+        {
+          "term": "health coverage",
+          "score": 0.7526,
+          "evidence": []
+        },
+        {
+          "term": "universal health",
+          "score": 0.7288,
+          "evidence": []
+        },
+        {
+          "term": "hrh data",
+          "score": 0.5752,
+          "evidence": []
+        },
+        {
+          "term": "global strategy",
+          "score": 0.4697,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 0.3977,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 48.8384,
+          "evidence": []
+        },
+        {
+          "term": "重要部分",
+          "score": 41.6912,
+          "evidence": []
+        },
+        {
+          "term": "风险最小化",
+          "score": 39.2181,
+          "evidence": []
+        },
+        {
+          "term": "教员询问其余学员每个报告人的报告有无遗漏什么内容",
+          "score": 37.6984,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 36.6574,
+          "evidence": []
+        },
+        {
+          "term": "大流行性流感防范框架",
+          "score": 36.5712,
+          "evidence": []
+        },
+        {
+          "term": "在sars",
+          "score": 33.1737,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 30.6884,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-003-purpose-of-this-guide": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "gath",
+          "score": 0.6392,
+          "evidence": []
+        },
+        {
+          "term": "ering",
+          "score": 0.6077,
+          "evidence": []
+        },
+        {
+          "term": "proposes",
+          "score": 0.4965,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "gath",
+          "score": 8.2151,
+          "evidence": []
+        },
+        {
+          "term": "ering",
+          "score": 7.8097,
+          "evidence": []
+        },
+        {
+          "term": "proposes",
+          "score": 6.0179,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health",
+          "score": 0.0723,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.0536,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 0.0506,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health",
+          "score": 0.9495,
+          "evidence": []
+        },
+        {
+          "term": "digital",
+          "score": 0.6896,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 0.6872,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health",
+          "score": 0.0723,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 0.0506,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 0.0449,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 41.9891,
+          "evidence": []
+        },
+        {
+          "term": "重要部分",
+          "score": 38.8853,
+          "evidence": []
+        },
+        {
+          "term": "风险最小化",
+          "score": 38.1103,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-004-target-audience": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hrh data",
+          "score": 1.0779,
+          "evidence": []
+        },
+        {
+          "term": "programme managers",
+          "score": 0.7408,
+          "evidence": []
+        },
+        {
+          "term": "delegated",
+          "score": 0.5634,
+          "evidence": []
+        },
+        {
+          "term": "policy-makers",
+          "score": 0.5616,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hrh data",
+          "score": 17.3312,
+          "evidence": []
+        },
+        {
+          "term": "programme managers",
+          "score": 10.1316,
+          "evidence": []
+        },
+        {
+          "term": "organizations",
+          "score": 8.8574,
+          "evidence": []
+        },
+        {
+          "term": "policy-makers",
+          "score": 8.773,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health",
+          "score": 0.1676,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 0.1313,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.1234,
+          "evidence": []
+        },
+        {
+          "term": "hrh data",
+          "score": 0.1232,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health",
+          "score": 2.4562,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 1.8804,
+          "evidence": []
+        },
+        {
+          "term": "hrh data",
+          "score": 1.6246,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 1.6129,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health",
+          "score": 0.1676,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.1234,
+          "evidence": []
+        },
+        {
+          "term": "hrh data",
+          "score": 0.1232,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 0.094,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 46.4858,
+          "evidence": []
+        },
+        {
+          "term": "风险最小化",
+          "score": 41.1937,
+          "evidence": []
+        },
+        {
+          "term": "重要部分",
+          "score": 40.5901,
+          "evidence": []
+        },
+        {
+          "term": "教员询问其余学员每个报告人的报告有无遗漏什么内容",
+          "score": 40.1276,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-005-guiding-principles": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "replace existing",
+          "score": 1.0978,
+          "evidence": []
+        },
+        {
+          "term": "guiding",
+          "score": 0.8925,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nhwa",
+          "score": 0.8725,
+          "evidence": []
+        },
+        {
+          "term": "hrh",
+          "score": 0.8168,
+          "evidence": []
+        },
+        {
+          "term": "phase",
+          "score": 0.6617,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "replace existing",
+          "score": 18.9347,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 17.2527,
+          "evidence": []
+        },
+        {
+          "term": "hrh",
+          "score": 14.814,
+          "evidence": []
+        },
+        {
+          "term": "phase",
+          "score": 10.6269,
+          "evidence": []
+        },
+        {
+          "term": "guiding",
+          "score": 8.8393,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health",
+          "score": 0.1937,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.1804,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.1592,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 0.1377,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 0.1253,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "data",
+          "score": 4.6479,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 2.6447,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 2.3851,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 2.3183,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 1.4863,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health",
+          "score": 0.1937,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.1804,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.1592,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 0.1377,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 0.1253,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 48.2168,
+          "evidence": []
+        },
+        {
+          "term": "重要部分",
+          "score": 41.4371,
+          "evidence": []
+        },
+        {
+          "term": "风险最小化",
+          "score": 38.4001,
+          "evidence": []
+        },
+        {
+          "term": "教员询问其余学员每个报告人的报告有无遗漏什么内容",
+          "score": 37.6414,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 35.7049,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-how-to-use-this-guide": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "member states",
+          "score": 1.0517,
+          "evidence": []
+        },
+        {
+          "term": "guide",
+          "score": 0.946,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nhwa",
+          "score": 0.7515,
+          "evidence": []
+        },
+        {
+          "term": "stream",
+          "score": 0.5396,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "member states",
+          "score": 17.6235,
+          "evidence": []
+        },
+        {
+          "term": "guide",
+          "score": 15.1285,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nhwa",
+          "score": 12.9395,
+          "evidence": []
+        },
+        {
+          "term": "achieved",
+          "score": 7.7427,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health",
+          "score": 0.1658,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.151,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.1392,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 0.1192,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "data",
+          "score": 3.7484,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 2.0202,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 1.901,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 1.8495,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health",
+          "score": 0.1658,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.151,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.1392,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 0.1192,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 37.793,
+          "evidence": []
+        },
+        {
+          "term": "风险最小化",
+          "score": 33.8069,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 33.3524,
+          "evidence": []
+        },
+        {
+          "term": "重要部分",
+          "score": 33.2872,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-007-nhwa-implementation-structure-overview": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "nhwa",
+          "score": 1.745,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "strengthen hrh",
+          "score": 1.2889,
+          "evidence": []
+        },
+        {
+          "term": "hrh data",
+          "score": 1.2792,
+          "evidence": []
+        },
+        {
+          "term": "data monitoring",
+          "score": 0.7966,
+          "evidence": []
+        },
+        {
+          "term": "operationalization",
+          "score": 0.776,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "nhwa",
+          "score": 34.5054,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hrh data",
+          "score": 22.3656,
+          "evidence": []
+        },
+        {
+          "term": "strengthen hrh",
+          "score": 22.0642,
+          "evidence": []
+        },
+        {
+          "term": "operationalization",
+          "score": 12.5385,
+          "evidence": []
+        },
+        {
+          "term": "data monitoring",
+          "score": 11.67,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health workforce",
+          "score": 0.3764,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 0.3075,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "data monitoring",
+          "score": 0.2727,
+          "evidence": []
+        },
+        {
+          "term": "hrh data",
+          "score": 0.2484,
+          "evidence": []
+        },
+        {
+          "term": "implementation",
+          "score": 0.177,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "data monitoring",
+          "score": 7.3294,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 7.2716,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hrh data",
+          "score": 6.7555,
+          "evidence": []
+        },
+        {
+          "term": "health workforce",
+          "score": 5.2424,
+          "evidence": []
+        },
+        {
+          "term": "indicator",
+          "score": 2.2327,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health workforce",
+          "score": 0.3764,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 0.3075,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "data monitoring",
+          "score": 0.2727,
+          "evidence": []
+        },
+        {
+          "term": "hrh data",
+          "score": 0.2484,
+          "evidence": []
+        },
+        {
+          "term": "implementation",
+          "score": 0.177,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 46.9349,
+          "evidence": []
+        },
+        {
+          "term": "重要部分",
+          "score": 43.6215,
+          "evidence": []
+        },
+        {
+          "term": "风险最小化",
+          "score": 42.5646,
+          "evidence": []
+        },
+        {
+          "term": "教员询问其余学员每个报告人的报告有无遗漏什么内容",
+          "score": 37.0352,
+          "evidence": []
+        },
+        {
+          "term": "大流行性流感防范框架",
+          "score": 34.2413,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-008-summary-of-steps": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "steps",
+          "score": 1.7526,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "data compilation",
+          "score": 1.0961,
+          "evidence": []
+        },
+        {
+          "term": "process revision",
+          "score": 1.0555,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 0.9713,
+          "evidence": []
+        },
+        {
+          "term": "legal framework",
+          "score": 0.9429,
+          "evidence": []
+        },
+        {
+          "term": "governance",
+          "score": 0.7221,
+          "evidence": []
+        },
+        {
+          "term": "buy-in",
+          "score": 0.7108,
+          "evidence": []
+        },
+        {
+          "term": "governmental",
+          "score": 0.6986,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "steps",
+          "score": 41.7018,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nhwa",
+          "score": 21.5658,
+          "evidence": []
+        },
+        {
+          "term": "data compilation",
+          "score": 17.0568,
+          "evidence": []
+        },
+        {
+          "term": "process revision",
+          "score": 16.9796,
+          "evidence": []
+        },
+        {
+          "term": "legal framework",
+          "score": 15.2184,
+          "evidence": []
+        },
+        {
+          "term": "governance",
+          "score": 13.0514,
+          "evidence": []
+        },
+        {
+          "term": "buy-in",
+          "score": 11.3004,
+          "evidence": []
+        },
+        {
+          "term": "governmental",
+          "score": 11.082,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "data",
+          "score": 0.2729,
+          "evidence": []
+        },
+        {
+          "term": "data compilation",
+          "score": 0.2729,
+          "evidence": []
+        },
+        {
+          "term": "steps",
+          "score": 0.1862,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "national",
+          "score": 0.184,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.1668,
+          "evidence": []
+        },
+        {
+          "term": "indicators",
+          "score": 0.1541,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 0.1412,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 0.1371,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "data",
+          "score": 8.0125,
+          "evidence": []
+        },
+        {
+          "term": "data compilation",
+          "score": 8.0125,
+          "evidence": []
+        },
+        {
+          "term": "yes",
+          "score": 4.3317,
+          "evidence": []
+        },
+        {
+          "term": "steps",
+          "score": 4.0622,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nhwa",
+          "score": 3.6372,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 2.174,
+          "evidence": []
+        },
+        {
+          "term": "indicators",
+          "score": 2.1666,
+          "evidence": []
+        },
+        {
+          "term": "hwf",
+          "score": 1.9217,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "data compilation",
+          "score": 0.2802,
+          "evidence": []
+        },
+        {
+          "term": "steps",
+          "score": 0.1862,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "national",
+          "score": 0.184,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 0.1412,
+          "evidence": []
+        },
+        {
+          "term": "process revision",
+          "score": 0.1402,
+          "evidence": []
+        },
+        {
+          "term": "stakeholders",
+          "score": 0.1115,
+          "evidence": []
+        },
+        {
+          "term": "processes",
+          "score": 0.0997,
+          "evidence": []
+        },
+        {
+          "term": "validation",
+          "score": 0.0888,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 36.6188,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 36.6188,
+          "evidence": []
+        },
+        {
+          "term": "或一些其他单位",
+          "score": 36.6188,
+          "evidence": []
+        },
+        {
+          "term": "风险最小化",
+          "score": 32.818,
+          "evidence": []
+        },
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 32.7285,
+          "evidence": []
+        },
+        {
+          "term": "必需的",
+          "score": 32.4107,
+          "evidence": []
+        },
+        {
+          "term": "重要部分",
+          "score": 31.2303,
+          "evidence": []
+        },
+        {
+          "term": "这些问题",
+          "score": 28.5236,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-009-schedule-for-implementing-and-reporting-on-nhwa": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "nhwa",
+          "score": 1.1911,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "reporting",
+          "score": 0.4442,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "timing",
+          "score": 0.3315,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "nhwa",
+          "score": 17.2527,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "reporting",
+          "score": 4.4299,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "timing",
+          "score": 3.8977,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "nhwa",
+          "score": 0.1264,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "reporting",
+          "score": 0.0812,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "workforce",
+          "score": 0.0752,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "nhwa",
+          "score": 2.3514,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "data",
+          "score": 1.382,
+          "evidence": []
+        },
+        {
+          "term": "indicator",
+          "score": 1.0071,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "nhwa",
+          "score": 0.1264,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "reporting",
+          "score": 0.0812,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "indicators",
+          "score": 0.075,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "风险最小化",
+          "score": 34.8011,
+          "evidence": []
+        },
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 31.4114,
+          "evidence": []
+        },
+        {
+          "term": "重要部分",
+          "score": 28.5015,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-010-bodies-and-roles": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "multistakeholder group",
+          "score": 2.3401,
+          "evidence": []
+        },
+        {
+          "term": "multistakeholder working",
+          "score": 2.3319,
+          "evidence": []
+        },
+        {
+          "term": "multistakeholder coordination",
+          "score": 2.2376,
+          "evidence": []
+        },
+        {
+          "term": "hrh data",
+          "score": 1.4815,
+          "evidence": []
+        },
+        {
+          "term": "focal point",
+          "score": 1.2868,
+          "evidence": []
+        },
+        {
+          "term": "technical working",
+          "score": 1.1846,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 1.0454,
+          "evidence": []
+        },
+        {
+          "term": "health workforce",
+          "score": 0.9833,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "multistakeholder group",
+          "score": 73.2944,
+          "evidence": []
+        },
+        {
+          "term": "multistakeholder working",
+          "score": 69.3619,
+          "evidence": []
+        },
+        {
+          "term": "multistakeholder coordination",
+          "score": 61.0614,
+          "evidence": []
+        },
+        {
+          "term": "hrh data",
+          "score": 30.983,
+          "evidence": []
+        },
+        {
+          "term": "technical working",
+          "score": 29.0031,
+          "evidence": []
+        },
+        {
+          "term": "ministry",
+          "score": 22.7906,
+          "evidence": []
+        },
+        {
+          "term": "focal point",
+          "score": 22.5804,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 17.2527,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "national health",
+          "score": 0.6482,
+          "evidence": []
+        },
+        {
+          "term": "health workforce",
+          "score": 0.6474,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 0.5085,
+          "evidence": []
+        },
+        {
+          "term": "working group",
+          "score": 0.3425,
+          "evidence": []
+        },
+        {
+          "term": "hrh data",
+          "score": 0.3338,
+          "evidence": []
+        },
+        {
+          "term": "technical working",
+          "score": 0.2994,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 0.256,
+          "evidence": []
+        },
+        {
+          "term": "multistakeholder group",
+          "score": 0.2415,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health workforce",
+          "score": 12.5144,
+          "evidence": []
+        },
+        {
+          "term": "national health",
+          "score": 9.6831,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 8.5733,
+          "evidence": []
+        },
+        {
+          "term": "hrh data",
+          "score": 8.4646,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 5.8528,
+          "evidence": []
+        },
+        {
+          "term": "working group",
+          "score": 5.1846,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 4.3857,
+          "evidence": []
+        },
+        {
+          "term": "multistakeholder group",
+          "score": 4.1479,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "national health",
+          "score": 0.6482,
+          "evidence": []
+        },
+        {
+          "term": "health workforce",
+          "score": 0.6474,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 0.5085,
+          "evidence": []
+        },
+        {
+          "term": "working group",
+          "score": 0.3425,
+          "evidence": []
+        },
+        {
+          "term": "hrh data",
+          "score": 0.3338,
+          "evidence": []
+        },
+        {
+          "term": "technical working",
+          "score": 0.2994,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 0.256,
+          "evidence": []
+        },
+        {
+          "term": "multistakeholder group",
+          "score": 0.2415,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 43.3336,
+          "evidence": []
+        },
+        {
+          "term": "重要部分",
+          "score": 39.5539,
+          "evidence": []
+        },
+        {
+          "term": "教员询问其余学员每个报告人的报告有无遗漏什么内容",
+          "score": 37.5789,
+          "evidence": []
+        },
+        {
+          "term": "风险最小化",
+          "score": 34.7369,
+          "evidence": []
+        },
+        {
+          "term": "在sars",
+          "score": 32.5413,
+          "evidence": []
+        },
+        {
+          "term": "大流行性流感防范框架",
+          "score": 32.104,
+          "evidence": []
+        },
+        {
+          "term": "必需的",
+          "score": 30.136,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 29.9178,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-011-overview-of-nhwa-implementation": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "nhwa implementation",
+          "score": 4.3742,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "multistakeholder working",
+          "score": 2.7995,
+          "evidence": []
+        },
+        {
+          "term": "nhwa data",
+          "score": 2.5079,
+          "evidence": []
+        },
+        {
+          "term": "hrh data",
+          "score": 2.1649,
+          "evidence": []
+        },
+        {
+          "term": "dissemination plan",
+          "score": 2.0761,
+          "evidence": []
+        },
+        {
+          "term": "main outputs",
+          "score": 2.0553,
+          "evidence": []
+        },
+        {
+          "term": "working group",
+          "score": 1.9291,
+          "evidence": []
+        },
+        {
+          "term": "stakeholder working",
+          "score": 1.8971,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "nhwa implementation",
+          "score": 211.2045,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nhwa data",
+          "score": 131.389,
+          "evidence": []
+        },
+        {
+          "term": "multistakeholder working",
+          "score": 114.6765,
+          "evidence": []
+        },
+        {
+          "term": "working group",
+          "score": 87.6295,
+          "evidence": []
+        },
+        {
+          "term": "hrh data",
+          "score": 80.9413,
+          "evidence": []
+        },
+        {
+          "term": "stakeholder working",
+          "score": 64.6583,
+          "evidence": []
+        },
+        {
+          "term": "technical working",
+          "score": 61.2077,
+          "evidence": []
+        },
+        {
+          "term": "coordination working",
+          "score": 59.959,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "nhwa implementation",
+          "score": 1.6287,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nhwa data",
+          "score": 1.0859,
+          "evidence": []
+        },
+        {
+          "term": "health workforce",
+          "score": 0.9899,
+          "evidence": []
+        },
+        {
+          "term": "data quality",
+          "score": 0.8405,
+          "evidence": []
+        },
+        {
+          "term": "hrh data",
+          "score": 0.8155,
+          "evidence": []
+        },
+        {
+          "term": "data breach",
+          "score": 0.6419,
+          "evidence": []
+        },
+        {
+          "term": "data gathering",
+          "score": 0.6419,
+          "evidence": []
+        },
+        {
+          "term": "working group",
+          "score": 0.6233,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "nhwa data",
+          "score": 56.841,
+          "evidence": []
+        },
+        {
+          "term": "nhwa implementation",
+          "score": 51.3721,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hrh data",
+          "score": 39.4672,
+          "evidence": []
+        },
+        {
+          "term": "data quality",
+          "score": 38.7013,
+          "evidence": []
+        },
+        {
+          "term": "data breach",
+          "score": 36.6652,
+          "evidence": []
+        },
+        {
+          "term": "data gathering",
+          "score": 36.6652,
+          "evidence": []
+        },
+        {
+          "term": "health workforce",
+          "score": 24.5383,
+          "evidence": []
+        },
+        {
+          "term": "ehealth",
+          "score": 13.3653,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "nhwa implementation",
+          "score": 1.6287,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nhwa data",
+          "score": 1.0859,
+          "evidence": []
+        },
+        {
+          "term": "health workforce",
+          "score": 0.9899,
+          "evidence": []
+        },
+        {
+          "term": "data quality",
+          "score": 0.8405,
+          "evidence": []
+        },
+        {
+          "term": "hrh data",
+          "score": 0.8155,
+          "evidence": []
+        },
+        {
+          "term": "data gathering",
+          "score": 0.7179,
+          "evidence": []
+        },
+        {
+          "term": "data breach",
+          "score": 0.6601,
+          "evidence": []
+        },
+        {
+          "term": "working group",
+          "score": 0.6233,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重要部分",
+          "score": 37.2039,
+          "evidence": []
+        },
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 35.0874,
+          "evidence": []
+        },
+        {
+          "term": "风险最小化",
+          "score": 34.0243,
+          "evidence": []
+        },
+        {
+          "term": "教员询问其余学员每个报告人的报告有无遗漏什么内容",
+          "score": 33.8357,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 29.62,
+          "evidence": []
+        },
+        {
+          "term": "这些问题",
+          "score": 28.3179,
+          "evidence": []
+        },
+        {
+          "term": "必需的",
+          "score": 28.1084,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 27.8269,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-013-step-1-governmental-buy-in": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "nhwa data",
+          "score": 1.8938,
+          "evidence": []
+        },
+        {
+          "term": "strengthen hrh",
+          "score": 1.8903,
+          "evidence": []
+        },
+        {
+          "term": "hrh unit",
+          "score": 1.8609,
+          "evidence": []
+        },
+        {
+          "term": "nhwa framework",
+          "score": 1.8481,
+          "evidence": []
+        },
+        {
+          "term": "nhwa implementation",
+          "score": 1.8152,
+          "evidence": []
+        },
+        {
+          "term": "focal point",
+          "score": 1.6631,
+          "evidence": []
+        },
+        {
+          "term": "senior decision-makers",
+          "score": 1.4179,
+          "evidence": []
+        },
+        {
+          "term": "relevant departments",
+          "score": 1.2919,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "nhwa data",
+          "score": 66.6773,
+          "evidence": []
+        },
+        {
+          "term": "nhwa implementation",
+          "score": 65.7406,
+          "evidence": []
+        },
+        {
+          "term": "nhwa framework",
+          "score": 65.7282,
+          "evidence": []
+        },
+        {
+          "term": "strengthen hrh",
+          "score": 50.3792,
+          "evidence": []
+        },
+        {
+          "term": "hrh unit",
+          "score": 49.6051,
+          "evidence": []
+        },
+        {
+          "term": "focal point",
+          "score": 37.634,
+          "evidence": []
+        },
+        {
+          "term": "ministry",
+          "score": 35.8138,
+          "evidence": []
+        },
+        {
+          "term": "health workforce",
+          "score": 27.8367,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health workforce",
+          "score": 0.8766,
+          "evidence": []
+        },
+        {
+          "term": "nhwa data",
+          "score": 0.6325,
+          "evidence": []
+        },
+        {
+          "term": "nhwa implementation",
+          "score": 0.589,
+          "evidence": []
+        },
+        {
+          "term": "nhwa framework",
+          "score": 0.489,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.4784,
+          "evidence": []
+        },
+        {
+          "term": "global strategy",
+          "score": 0.4431,
+          "evidence": []
+        },
+        {
+          "term": "hrh data",
+          "score": 0.4176,
+          "evidence": []
+        },
+        {
+          "term": "resources available",
+          "score": 0.3217,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "nhwa data",
+          "score": 23.1525,
+          "evidence": []
+        },
+        {
+          "term": "health workforce",
+          "score": 21.7922,
+          "evidence": []
+        },
+        {
+          "term": "hrh data",
+          "score": 14.3892,
+          "evidence": []
+        },
+        {
+          "term": "nhwa implementation",
+          "score": 12.5404,
+          "evidence": []
+        },
+        {
+          "term": "nhwa framework",
+          "score": 11.4021,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 7.5996,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 7.0242,
+          "evidence": []
+        },
+        {
+          "term": "ehealth",
+          "score": 5.8145,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health workforce",
+          "score": 0.8766,
+          "evidence": []
+        },
+        {
+          "term": "nhwa data",
+          "score": 0.6325,
+          "evidence": []
+        },
+        {
+          "term": "nhwa implementation",
+          "score": 0.589,
+          "evidence": []
+        },
+        {
+          "term": "nhwa framework",
+          "score": 0.489,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.4784,
+          "evidence": []
+        },
+        {
+          "term": "global strategy",
+          "score": 0.4431,
+          "evidence": []
+        },
+        {
+          "term": "hrh data",
+          "score": 0.4176,
+          "evidence": []
+        },
+        {
+          "term": "resources available",
+          "score": 0.3217,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 45.2546,
+          "evidence": []
+        },
+        {
+          "term": "重要部分",
+          "score": 39.9887,
+          "evidence": []
+        },
+        {
+          "term": "教员询问其余学员每个报告人的报告有无遗漏什么内容",
+          "score": 38.8742,
+          "evidence": []
+        },
+        {
+          "term": "风险最小化",
+          "score": 37.4369,
+          "evidence": []
+        },
+        {
+          "term": "在sars",
+          "score": 37.0207,
+          "evidence": []
+        },
+        {
+          "term": "大流行性流感防范框架",
+          "score": 34.2571,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 33.3741,
+          "evidence": []
+        },
+        {
+          "term": "必需的",
+          "score": 30.5748,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-014-step-2-governance": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "multistakeholder working",
+          "score": 2.8371,
+          "evidence": []
+        },
+        {
+          "term": "multistakeholder coordination",
+          "score": 2.2818,
+          "evidence": []
+        },
+        {
+          "term": "working group",
+          "score": 1.8948,
+          "evidence": []
+        },
+        {
+          "term": "nhwa implementation",
+          "score": 1.5036,
+          "evidence": []
+        },
+        {
+          "term": "hrh data",
+          "score": 1.374,
+          "evidence": []
+        },
+        {
+          "term": "technical working",
+          "score": 1.3444,
+          "evidence": []
+        },
+        {
+          "term": "step",
+          "score": 1.2615,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "governance",
+          "score": 1.244,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "multistakeholder working",
+          "score": 117.8313,
+          "evidence": []
+        },
+        {
+          "term": "working group",
+          "score": 82.8723,
+          "evidence": []
+        },
+        {
+          "term": "multistakeholder coordination",
+          "score": 77.8311,
+          "evidence": []
+        },
+        {
+          "term": "technical working",
+          "score": 51.5084,
+          "evidence": []
+        },
+        {
+          "term": "nhwa implementation",
+          "score": 34.8061,
+          "evidence": []
+        },
+        {
+          "term": "hrh data",
+          "score": 26.045,
+          "evidence": []
+        },
+        {
+          "term": "governance",
+          "score": 19.5771,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "step",
+          "score": 19.472,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health workforce",
+          "score": 0.7833,
+          "evidence": []
+        },
+        {
+          "term": "nhwa implementation",
+          "score": 0.5044,
+          "evidence": []
+        },
+        {
+          "term": "working group",
+          "score": 0.4652,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.4085,
+          "evidence": []
+        },
+        {
+          "term": "technical working",
+          "score": 0.3883,
+          "evidence": []
+        },
+        {
+          "term": "hrh data",
+          "score": 0.3624,
+          "evidence": []
+        },
+        {
+          "term": "governance",
+          "score": 0.3106,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "policy questions",
+          "score": 0.2905,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health workforce",
+          "score": 17.3904,
+          "evidence": []
+        },
+        {
+          "term": "nhwa implementation",
+          "score": 10.2464,
+          "evidence": []
+        },
+        {
+          "term": "hrh data",
+          "score": 10.1846,
+          "evidence": []
+        },
+        {
+          "term": "working group",
+          "score": 7.5775,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 6.671,
+          "evidence": []
+        },
+        {
+          "term": "guideline",
+          "score": 5.6935,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 5.2152,
+          "evidence": []
+        },
+        {
+          "term": "training",
+          "score": 4.5989,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health workforce",
+          "score": 0.7833,
+          "evidence": []
+        },
+        {
+          "term": "nhwa implementation",
+          "score": 0.5044,
+          "evidence": []
+        },
+        {
+          "term": "working group",
+          "score": 0.4652,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.4085,
+          "evidence": []
+        },
+        {
+          "term": "technical working",
+          "score": 0.3883,
+          "evidence": []
+        },
+        {
+          "term": "hrh data",
+          "score": 0.3624,
+          "evidence": []
+        },
+        {
+          "term": "governance",
+          "score": 0.3106,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "policy questions",
+          "score": 0.2905,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 43.3483,
+          "evidence": []
+        },
+        {
+          "term": "重要部分",
+          "score": 40.9756,
+          "evidence": []
+        },
+        {
+          "term": "风险最小化",
+          "score": 39.2495,
+          "evidence": []
+        },
+        {
+          "term": "教员询问其余学员每个报告人的报告有无遗漏什么内容",
+          "score": 37.9286,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 34.49,
+          "evidence": []
+        },
+        {
+          "term": "大流行性流感防范框架",
+          "score": 31.0224,
+          "evidence": []
+        },
+        {
+          "term": "在sars",
+          "score": 30.7042,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 28.516,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-015-step-3-scoping-and-planning": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hrh data",
+          "score": 2.2473,
+          "evidence": []
+        },
+        {
+          "term": "catalytic funding",
+          "score": 2.1195,
+          "evidence": []
+        },
+        {
+          "term": "multistakeholder working",
+          "score": 2.1156,
+          "evidence": []
+        },
+        {
+          "term": "business plan",
+          "score": 2.0332,
+          "evidence": []
+        },
+        {
+          "term": "scoping",
+          "score": 2.022,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hrh information",
+          "score": 1.9155,
+          "evidence": []
+        },
+        {
+          "term": "dissemination plan",
+          "score": 1.9129,
+          "evidence": []
+        },
+        {
+          "term": "scoping analysis",
+          "score": 1.6453,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hrh data",
+          "score": 87.0415,
+          "evidence": []
+        },
+        {
+          "term": "hrh information",
+          "score": 62.7811,
+          "evidence": []
+        },
+        {
+          "term": "data sources",
+          "score": 60.6696,
+          "evidence": []
+        },
+        {
+          "term": "multistakeholder working",
+          "score": 57.1396,
+          "evidence": []
+        },
+        {
+          "term": "scoping",
+          "score": 51.758,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "working group",
+          "score": 47.5722,
+          "evidence": []
+        },
+        {
+          "term": "data gathering",
+          "score": 47.3723,
+          "evidence": []
+        },
+        {
+          "term": "dissemination plan",
+          "score": 45.765,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "data sources",
+          "score": 0.689,
+          "evidence": []
+        },
+        {
+          "term": "data collection",
+          "score": 0.6602,
+          "evidence": []
+        },
+        {
+          "term": "hrh data",
+          "score": 0.6484,
+          "evidence": []
+        },
+        {
+          "term": "data gathering",
+          "score": 0.5233,
+          "evidence": []
+        },
+        {
+          "term": "working group",
+          "score": 0.4756,
+          "evidence": []
+        },
+        {
+          "term": "step",
+          "score": 0.4754,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "national",
+          "score": 0.4711,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.4575,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "data collection",
+          "score": 27.764,
+          "evidence": []
+        },
+        {
+          "term": "data sources",
+          "score": 27.5215,
+          "evidence": []
+        },
+        {
+          "term": "hrh data",
+          "score": 26.6961,
+          "evidence": []
+        },
+        {
+          "term": "data gathering",
+          "score": 25.1818,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 10.394,
+          "evidence": []
+        },
+        {
+          "term": "ehealth",
+          "score": 9.8354,
+          "evidence": []
+        },
+        {
+          "term": "indicators",
+          "score": 7.722,
+          "evidence": []
+        },
+        {
+          "term": "working group",
+          "score": 7.4687,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "data sources",
+          "score": 0.689,
+          "evidence": []
+        },
+        {
+          "term": "data collection",
+          "score": 0.6602,
+          "evidence": []
+        },
+        {
+          "term": "hrh data",
+          "score": 0.6484,
+          "evidence": []
+        },
+        {
+          "term": "data gathering",
+          "score": 0.5786,
+          "evidence": []
+        },
+        {
+          "term": "working group",
+          "score": 0.4756,
+          "evidence": []
+        },
+        {
+          "term": "step",
+          "score": 0.4754,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "national",
+          "score": 0.4711,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.4575,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重要部分",
+          "score": 36.1553,
+          "evidence": []
+        },
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 33.9804,
+          "evidence": []
+        },
+        {
+          "term": "风险最小化",
+          "score": 32.9317,
+          "evidence": []
+        },
+        {
+          "term": "教员询问其余学员每个报告人的报告有无遗漏什么内容",
+          "score": 32.1898,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 28.7738,
+          "evidence": []
+        },
+        {
+          "term": "这些问题",
+          "score": 27.9233,
+          "evidence": []
+        },
+        {
+          "term": "必需的",
+          "score": 25.8478,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 25.8042,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-017-step-4-legal-framework": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "legal framework",
+          "score": 3.0418,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "data exchange",
+          "score": 1.7273,
+          "evidence": []
+        },
+        {
+          "term": "legal environment",
+          "score": 1.6394,
+          "evidence": []
+        },
+        {
+          "term": "step",
+          "score": 1.6305,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "anonymization process",
+          "score": 1.5906,
+          "evidence": []
+        },
+        {
+          "term": "multistakeholder working",
+          "score": 1.5501,
+          "evidence": []
+        },
+        {
+          "term": "obtain legal",
+          "score": 1.5376,
+          "evidence": []
+        },
+        {
+          "term": "data gathering",
+          "score": 1.5291,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "legal framework",
+          "score": 95.0279,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "data exchange",
+          "score": 59.4862,
+          "evidence": []
+        },
+        {
+          "term": "legal environment",
+          "score": 49.518,
+          "evidence": []
+        },
+        {
+          "term": "obtain legal",
+          "score": 46.8102,
+          "evidence": []
+        },
+        {
+          "term": "legal aspects",
+          "score": 46.4041,
+          "evidence": []
+        },
+        {
+          "term": "legal requirements",
+          "score": 44.9924,
+          "evidence": []
+        },
+        {
+          "term": "data gathering",
+          "score": 42.3379,
+          "evidence": []
+        },
+        {
+          "term": "hrh data",
+          "score": 37.5651,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "data exchange",
+          "score": 0.5009,
+          "evidence": []
+        },
+        {
+          "term": "during data",
+          "score": 0.5003,
+          "evidence": []
+        },
+        {
+          "term": "hrh data",
+          "score": 0.4971,
+          "evidence": []
+        },
+        {
+          "term": "data gathering",
+          "score": 0.4299,
+          "evidence": []
+        },
+        {
+          "term": "national regulations",
+          "score": 0.4134,
+          "evidence": []
+        },
+        {
+          "term": "legal framework",
+          "score": 0.3451,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health",
+          "score": 0.2941,
+          "evidence": []
+        },
+        {
+          "term": "step",
+          "score": 0.2908,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "during data",
+          "score": 20.1075,
+          "evidence": []
+        },
+        {
+          "term": "data exchange",
+          "score": 19.9409,
+          "evidence": []
+        },
+        {
+          "term": "hrh data",
+          "score": 19.8284,
+          "evidence": []
+        },
+        {
+          "term": "data gathering",
+          "score": 18.9774,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 6.0589,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 4.312,
+          "evidence": []
+        },
+        {
+          "term": "national regulations",
+          "score": 4.312,
+          "evidence": []
+        },
+        {
+          "term": "system",
+          "score": 4.2726,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "data exchange",
+          "score": 0.5009,
+          "evidence": []
+        },
+        {
+          "term": "during data",
+          "score": 0.5003,
+          "evidence": []
+        },
+        {
+          "term": "hrh data",
+          "score": 0.4971,
+          "evidence": []
+        },
+        {
+          "term": "data gathering",
+          "score": 0.4626,
+          "evidence": []
+        },
+        {
+          "term": "national regulations",
+          "score": 0.4134,
+          "evidence": []
+        },
+        {
+          "term": "legal framework",
+          "score": 0.3451,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "step",
+          "score": 0.2908,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "sensitive information",
+          "score": 0.2414,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重要部分",
+          "score": 35.3701,
+          "evidence": []
+        },
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 34.6212,
+          "evidence": []
+        },
+        {
+          "term": "风险最小化",
+          "score": 32.9249,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 32.1411,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 32.1411,
+          "evidence": []
+        },
+        {
+          "term": "或一些其他单位",
+          "score": 32.1411,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 30.0102,
+          "evidence": []
+        },
+        {
+          "term": "这些问题",
+          "score": 29.9705,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-018-step-5-data-compilation-and-analysis": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "nhwa data",
+          "score": 2.188,
+          "evidence": []
+        },
+        {
+          "term": "data sources",
+          "score": 1.7283,
+          "evidence": []
+        },
+        {
+          "term": "data quality",
+          "score": 1.509,
+          "evidence": []
+        },
+        {
+          "term": "data gaps",
+          "score": 1.4554,
+          "evidence": []
+        },
+        {
+          "term": "potential data",
+          "score": 1.3973,
+          "evidence": []
+        },
+        {
+          "term": "data collection",
+          "score": 1.3536,
+          "evidence": []
+        },
+        {
+          "term": "data flow",
+          "score": 1.3354,
+          "evidence": []
+        },
+        {
+          "term": "step",
+          "score": 1.2615,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "data",
+          "score": 103.2049,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nhwa data",
+          "score": 94.7341,
+          "evidence": []
+        },
+        {
+          "term": "data sources",
+          "score": 79.5485,
+          "evidence": []
+        },
+        {
+          "term": "data quality",
+          "score": 67.0133,
+          "evidence": []
+        },
+        {
+          "term": "data gaps",
+          "score": 61.6568,
+          "evidence": []
+        },
+        {
+          "term": "potential data",
+          "score": 60.5072,
+          "evidence": []
+        },
+        {
+          "term": "data collection",
+          "score": 59.6418,
+          "evidence": []
+        },
+        {
+          "term": "data flow",
+          "score": 58.4661,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "data",
+          "score": 1.1455,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nhwa data",
+          "score": 0.8361,
+          "evidence": []
+        },
+        {
+          "term": "data quality",
+          "score": 0.7462,
+          "evidence": []
+        },
+        {
+          "term": "data sources",
+          "score": 0.7249,
+          "evidence": []
+        },
+        {
+          "term": "data collection",
+          "score": 0.7235,
+          "evidence": []
+        },
+        {
+          "term": "potential data",
+          "score": 0.674,
+          "evidence": []
+        },
+        {
+          "term": "data flow",
+          "score": 0.6473,
+          "evidence": []
+        },
+        {
+          "term": "data gaps",
+          "score": 0.6354,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "data",
+          "score": 64.7099,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nhwa data",
+          "score": 44.3955,
+          "evidence": []
+        },
+        {
+          "term": "data quality",
+          "score": 36.0815,
+          "evidence": []
+        },
+        {
+          "term": "data collection",
+          "score": 35.6664,
+          "evidence": []
+        },
+        {
+          "term": "data sources",
+          "score": 34.7885,
+          "evidence": []
+        },
+        {
+          "term": "data flow",
+          "score": 32.355,
+          "evidence": []
+        },
+        {
+          "term": "data gaps",
+          "score": 32.355,
+          "evidence": []
+        },
+        {
+          "term": "potential data",
+          "score": 32.355,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "data",
+          "score": 1.1455,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nhwa data",
+          "score": 0.8361,
+          "evidence": []
+        },
+        {
+          "term": "data quality",
+          "score": 0.7462,
+          "evidence": []
+        },
+        {
+          "term": "data sources",
+          "score": 0.7249,
+          "evidence": []
+        },
+        {
+          "term": "data collection",
+          "score": 0.7235,
+          "evidence": []
+        },
+        {
+          "term": "potential data",
+          "score": 0.674,
+          "evidence": []
+        },
+        {
+          "term": "data flow",
+          "score": 0.6473,
+          "evidence": []
+        },
+        {
+          "term": "data gaps",
+          "score": 0.6354,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重要部分",
+          "score": 29.2304,
+          "evidence": []
+        },
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 27.398,
+          "evidence": []
+        },
+        {
+          "term": "风险最小化",
+          "score": 26.0538,
+          "evidence": []
+        },
+        {
+          "term": "这些问题",
+          "score": 24.0966,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 23.3204,
+          "evidence": []
+        },
+        {
+          "term": "教员询问其余学员每个报告人的报告有无遗漏什么内容",
+          "score": 22.1873,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 20.7706,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 20.7706,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-019-step-6-validation": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "multistakeholder working",
+          "score": 2.3501,
+          "evidence": []
+        },
+        {
+          "term": "hrh data",
+          "score": 1.6255,
+          "evidence": []
+        },
+        {
+          "term": "working group",
+          "score": 1.6152,
+          "evidence": []
+        },
+        {
+          "term": "nhwa process",
+          "score": 1.4117,
+          "evidence": []
+        },
+        {
+          "term": "validation",
+          "score": 1.3568,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "technical working",
+          "score": 1.2862,
+          "evidence": []
+        },
+        {
+          "term": "key messages",
+          "score": 1.042,
+          "evidence": []
+        },
+        {
+          "term": "data collection",
+          "score": 1.0352,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "multistakeholder working",
+          "score": 71.7224,
+          "evidence": []
+        },
+        {
+          "term": "working group",
+          "score": 52.3294,
+          "evidence": []
+        },
+        {
+          "term": "technical working",
+          "score": 37.2762,
+          "evidence": []
+        },
+        {
+          "term": "hrh data",
+          "score": 37.2759,
+          "evidence": []
+        },
+        {
+          "term": "nhwa process",
+          "score": 27.8902,
+          "evidence": []
+        },
+        {
+          "term": "validation",
+          "score": 22.292,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "data collection",
+          "score": 20.6253,
+          "evidence": []
+        },
+        {
+          "term": "academia",
+          "score": 18.4071,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "nhwa process",
+          "score": 0.399,
+          "evidence": []
+        },
+        {
+          "term": "working group",
+          "score": 0.3457,
+          "evidence": []
+        },
+        {
+          "term": "hrh data",
+          "score": 0.3364,
+          "evidence": []
+        },
+        {
+          "term": "data collection",
+          "score": 0.3258,
+          "evidence": []
+        },
+        {
+          "term": "technical working",
+          "score": 0.2747,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.26,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.2559,
+          "evidence": []
+        },
+        {
+          "term": "step",
+          "score": 0.2419,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "data collection",
+          "score": 11.8418,
+          "evidence": []
+        },
+        {
+          "term": "hrh data",
+          "score": 11.5929,
+          "evidence": []
+        },
+        {
+          "term": "nhwa process",
+          "score": 7.3119,
+          "evidence": []
+        },
+        {
+          "term": "working group",
+          "score": 5.3195,
+          "evidence": []
+        },
+        {
+          "term": "guideline",
+          "score": 4.228,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 4.1206,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 3.2532,
+          "evidence": []
+        },
+        {
+          "term": "indicators",
+          "score": 3.0885,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "nhwa process",
+          "score": 0.399,
+          "evidence": []
+        },
+        {
+          "term": "working group",
+          "score": 0.3457,
+          "evidence": []
+        },
+        {
+          "term": "hrh data",
+          "score": 0.3364,
+          "evidence": []
+        },
+        {
+          "term": "data collection",
+          "score": 0.3258,
+          "evidence": []
+        },
+        {
+          "term": "technical working",
+          "score": 0.2747,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.26,
+          "evidence": []
+        },
+        {
+          "term": "step",
+          "score": 0.2419,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "validation",
+          "score": 0.2018,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 36.7649,
+          "evidence": []
+        },
+        {
+          "term": "重要部分",
+          "score": 34.3635,
+          "evidence": []
+        },
+        {
+          "term": "风险最小化",
+          "score": 32.588,
+          "evidence": []
+        },
+        {
+          "term": "教员询问其余学员每个报告人的报告有无遗漏什么内容",
+          "score": 31.5464,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 30.3837,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 27.9519,
+          "evidence": []
+        },
+        {
+          "term": "大流行性流感防范框架",
+          "score": 26.4844,
+          "evidence": []
+        },
+        {
+          "term": "必需的",
+          "score": 26.2685,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-020-step-7-dissemination": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "multistakeholder working",
+          "score": 1.8269,
+          "evidence": []
+        },
+        {
+          "term": "hrh data",
+          "score": 1.8167,
+          "evidence": []
+        },
+        {
+          "term": "dissemination",
+          "score": 1.5611,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "communication team",
+          "score": 1.3445,
+          "evidence": []
+        },
+        {
+          "term": "step",
+          "score": 1.2615,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "different audiences",
+          "score": 1.2286,
+          "evidence": []
+        },
+        {
+          "term": "working group",
+          "score": 1.2191,
+          "evidence": []
+        },
+        {
+          "term": "communication plan",
+          "score": 1.1915,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hrh data",
+          "score": 49.5727,
+          "evidence": []
+        },
+        {
+          "term": "multistakeholder working",
+          "score": 40.1963,
+          "evidence": []
+        },
+        {
+          "term": "dissemination",
+          "score": 32.7688,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "working group",
+          "score": 26.5438,
+          "evidence": []
+        },
+        {
+          "term": "communication team",
+          "score": 26.0079,
+          "evidence": []
+        },
+        {
+          "term": "different audiences",
+          "score": 23.2642,
+          "evidence": []
+        },
+        {
+          "term": "step",
+          "score": 19.472,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "communication plan",
+          "score": 18.7712,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hrh data",
+          "score": 0.3554,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.3273,
+          "evidence": []
+        },
+        {
+          "term": "working group",
+          "score": 0.2954,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.2886,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 0.2715,
+          "evidence": []
+        },
+        {
+          "term": "communication plan",
+          "score": 0.2354,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 0.2211,
+          "evidence": []
+        },
+        {
+          "term": "step",
+          "score": 0.2059,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hrh data",
+          "score": 9.9445,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 4.9808,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 4.7811,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 4.7687,
+          "evidence": []
+        },
+        {
+          "term": "working group",
+          "score": 3.9419,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 3.0824,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 3.0528,
+          "evidence": []
+        },
+        {
+          "term": "indicator",
+          "score": 2.7651,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hrh data",
+          "score": 0.3554,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.3273,
+          "evidence": []
+        },
+        {
+          "term": "working group",
+          "score": 0.2954,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.2886,
+          "evidence": []
+        },
+        {
+          "term": "communication plan",
+          "score": 0.2354,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 0.2211,
+          "evidence": []
+        },
+        {
+          "term": "step",
+          "score": 0.2059,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "multistakeholder working",
+          "score": 0.1762,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 36.3823,
+          "evidence": []
+        },
+        {
+          "term": "重要部分",
+          "score": 35.1211,
+          "evidence": []
+        },
+        {
+          "term": "风险最小化",
+          "score": 31.9936,
+          "evidence": []
+        },
+        {
+          "term": "教员询问其余学员每个报告人的报告有无遗漏什么内容",
+          "score": 29.8743,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 27.7702,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 27.5141,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 27.5141,
+          "evidence": []
+        },
+        {
+          "term": "或一些其他单位",
+          "score": 27.5141,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-022-step-8-process-revision": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "process revision",
+          "score": 2.5118,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "multistakeholder working",
+          "score": 2.0032,
+          "evidence": []
+        },
+        {
+          "term": "nhwa implementation",
+          "score": 1.5942,
+          "evidence": []
+        },
+        {
+          "term": "hrh data",
+          "score": 1.5498,
+          "evidence": []
+        },
+        {
+          "term": "working group",
+          "score": 1.3516,
+          "evidence": []
+        },
+        {
+          "term": "hrh information",
+          "score": 1.3106,
+          "evidence": []
+        },
+        {
+          "term": "core indicators",
+          "score": 1.1831,
+          "evidence": []
+        },
+        {
+          "term": "sustainable funding",
+          "score": 1.1335,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "multistakeholder working",
+          "score": 48.8666,
+          "evidence": []
+        },
+        {
+          "term": "process revision",
+          "score": 46.7225,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nhwa implementation",
+          "score": 41.647,
+          "evidence": []
+        },
+        {
+          "term": "hrh data",
+          "score": 33.5002,
+          "evidence": []
+        },
+        {
+          "term": "working group",
+          "score": 33.3005,
+          "evidence": []
+        },
+        {
+          "term": "hrh information",
+          "score": 27.511,
+          "evidence": []
+        },
+        {
+          "term": "round",
+          "score": 22.7577,
+          "evidence": []
+        },
+        {
+          "term": "core indicators",
+          "score": 19.7854,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health workforce",
+          "score": 0.6509,
+          "evidence": []
+        },
+        {
+          "term": "nhwa implementation",
+          "score": 0.5373,
+          "evidence": []
+        },
+        {
+          "term": "hrh data",
+          "score": 0.5231,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 0.477,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "process revision",
+          "score": 0.477,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "core indicators",
+          "score": 0.3927,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.3645,
+          "evidence": []
+        },
+        {
+          "term": "step",
+          "score": 0.3641,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hrh data",
+          "score": 14.3775,
+          "evidence": []
+        },
+        {
+          "term": "health workforce",
+          "score": 10.061,
+          "evidence": []
+        },
+        {
+          "term": "nhwa implementation",
+          "score": 9.907,
+          "evidence": []
+        },
+        {
+          "term": "working group",
+          "score": 5.3336,
+          "evidence": []
+        },
+        {
+          "term": "ehealth",
+          "score": 5.2055,
+          "evidence": []
+        },
+        {
+          "term": "core indicators",
+          "score": 4.953,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 4.6541,
+          "evidence": []
+        },
+        {
+          "term": "step",
+          "score": 4.1556,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health workforce",
+          "score": 0.6509,
+          "evidence": []
+        },
+        {
+          "term": "process revision",
+          "score": 0.5506,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nhwa implementation",
+          "score": 0.5373,
+          "evidence": []
+        },
+        {
+          "term": "hrh data",
+          "score": 0.5231,
+          "evidence": []
+        },
+        {
+          "term": "core indicators",
+          "score": 0.3927,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.3645,
+          "evidence": []
+        },
+        {
+          "term": "step",
+          "score": 0.3641,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "working group",
+          "score": 0.3565,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 33.2575,
+          "evidence": []
+        },
+        {
+          "term": "重要部分",
+          "score": 31.9205,
+          "evidence": []
+        },
+        {
+          "term": "风险最小化",
+          "score": 31.3849,
+          "evidence": []
+        },
+        {
+          "term": "教员询问其余学员每个报告人的报告有无遗漏什么内容",
+          "score": 27.1598,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 26.7264,
+          "evidence": []
+        },
+        {
+          "term": "这些问题",
+          "score": 25.5089,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 24.5491,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 24.5491,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-023-references": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "united nations",
+          "score": 1.502,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 1.4972,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 1.478,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 1.407,
+          "evidence": []
+        },
+        {
+          "term": "economic growth",
+          "score": 1.3374,
+          "evidence": []
+        },
+        {
+          "term": "latin america",
+          "score": 1.3052,
+          "evidence": []
+        },
+        {
+          "term": "human resources",
+          "score": 1.289,
+          "evidence": []
+        },
+        {
+          "term": "resolution wha",
+          "score": 1.282,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "world health",
+          "score": 45.3311,
+          "evidence": []
+        },
+        {
+          "term": "health workforce",
+          "score": 42.6379,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 41.6362,
+          "evidence": []
+        },
+        {
+          "term": "united nations",
+          "score": 34.162,
+          "evidence": []
+        },
+        {
+          "term": "health employment",
+          "score": 33.5795,
+          "evidence": []
+        },
+        {
+          "term": "national health",
+          "score": 32.777,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 32.2419,
+          "evidence": []
+        },
+        {
+          "term": "human resources",
+          "score": 30.8129,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "world health",
+          "score": 1.0749,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 1.0046,
+          "evidence": []
+        },
+        {
+          "term": "health workforce",
+          "score": 0.8684,
+          "evidence": []
+        },
+        {
+          "term": "national health",
+          "score": 0.8427,
+          "evidence": []
+        },
+        {
+          "term": "health employment",
+          "score": 0.6158,
+          "evidence": []
+        },
+        {
+          "term": "united nations",
+          "score": 0.5637,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 0.5618,
+          "evidence": []
+        },
+        {
+          "term": "accessed",
+          "score": 0.5502,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "world health",
+          "score": 32.5487,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 31.3761,
+          "evidence": []
+        },
+        {
+          "term": "health workforce",
+          "score": 28.3348,
+          "evidence": []
+        },
+        {
+          "term": "national health",
+          "score": 23.0799,
+          "evidence": []
+        },
+        {
+          "term": "health employment",
+          "score": 20.8737,
+          "evidence": []
+        },
+        {
+          "term": "accessed",
+          "score": 17.7147,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 12.4804,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 11.6818,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "world health",
+          "score": 1.0749,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 1.0046,
+          "evidence": []
+        },
+        {
+          "term": "health workforce",
+          "score": 0.8684,
+          "evidence": []
+        },
+        {
+          "term": "national health",
+          "score": 0.8427,
+          "evidence": []
+        },
+        {
+          "term": "health employment",
+          "score": 0.6158,
+          "evidence": []
+        },
+        {
+          "term": "united nations",
+          "score": 0.5637,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 0.5618,
+          "evidence": []
+        },
+        {
+          "term": "global strategy",
+          "score": 0.5054,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在sars",
+          "score": 64.1906,
+          "evidence": []
+        },
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 52.0613,
+          "evidence": []
+        },
+        {
+          "term": "haifa",
+          "score": 50.0565,
+          "evidence": []
+        },
+        {
+          "term": "habana",
+          "score": 50.0361,
+          "evidence": []
+        },
+        {
+          "term": "hannover",
+          "score": 50.0361,
+          "evidence": []
+        },
+        {
+          "term": "hanover",
+          "score": 50.0361,
+          "evidence": []
+        },
+        {
+          "term": "helsingfors",
+          "score": 50.0361,
+          "evidence": []
+        },
+        {
+          "term": "kaiffa",
+          "score": 50.0361,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "workforce accounts",
+          "score": 1.3614,
+          "evidence": []
+        },
+        {
+          "term": "nhwa implementation",
+          "score": 1.2389,
+          "evidence": []
+        },
+        {
+          "term": "creative commons",
+          "score": 1.1578,
+          "evidence": []
+        },
+        {
+          "term": "implementation guide",
+          "score": 1.1513,
+          "evidence": []
+        },
+        {
+          "term": "health workforce",
+          "score": 1.0734,
+          "evidence": []
+        },
+        {
+          "term": "suggested citation",
+          "score": 1.0172,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 1.0115,
+          "evidence": []
+        },
+        {
+          "term": "step",
+          "score": 0.9997,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "workforce accounts",
+          "score": 26.2685,
+          "evidence": []
+        },
+        {
+          "term": "step",
+          "score": 25.9626,
+          "evidence": []
+        },
+        {
+          "term": "implementation guide",
+          "score": 25.841,
+          "evidence": []
+        },
+        {
+          "term": "nhwa implementation",
+          "score": 23.652,
+          "evidence": []
+        },
+        {
+          "term": "work",
+          "score": 21.636,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 21.3678,
+          "evidence": []
+        },
+        {
+          "term": "creative commons",
+          "score": 18.7073,
+          "evidence": []
+        },
+        {
+          "term": "health workforce",
+          "score": 18.1262,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health organization",
+          "score": 1.0282,
+          "evidence": []
+        },
+        {
+          "term": "creative commons",
+          "score": 1.0053,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 1.0051,
+          "evidence": []
+        },
+        {
+          "term": "suggested citation",
+          "score": 0.8939,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 0.856,
+          "evidence": []
+        },
+        {
+          "term": "material",
+          "score": 0.747,
+          "evidence": []
+        },
+        {
+          "term": "igo",
+          "score": 0.6997,
+          "evidence": []
+        },
+        {
+          "term": "lines",
+          "score": 0.6669,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "world health",
+          "score": 13.0923,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 13.001,
+          "evidence": []
+        },
+        {
+          "term": "health workforce",
+          "score": 12.8725,
+          "evidence": []
+        },
+        {
+          "term": "national health",
+          "score": 10.2446,
+          "evidence": []
+        },
+        {
+          "term": "wpv",
+          "score": 8.5828,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 8.3062,
+          "evidence": []
+        },
+        {
+          "term": "nhwa implementation",
+          "score": 6.6193,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 5.8647,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health organization",
+          "score": 1.0282,
+          "evidence": []
+        },
+        {
+          "term": "creative commons",
+          "score": 1.0053,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 1.0051,
+          "evidence": []
+        },
+        {
+          "term": "suggested citation",
+          "score": 0.8939,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 0.856,
+          "evidence": []
+        },
+        {
+          "term": "material",
+          "score": 0.747,
+          "evidence": []
+        },
+        {
+          "term": "igo",
+          "score": 0.6997,
+          "evidence": []
+        },
+        {
+          "term": "lines",
+          "score": 0.6669,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "非同寻常",
+          "score": 52.8178,
+          "evidence": []
+        },
+        {
+          "term": "在sars",
+          "score": 50.2535,
+          "evidence": []
+        },
+        {
+          "term": "更大利益",
+          "score": 48.5644,
+          "evidence": []
+        },
+        {
+          "term": "不良反应",
+          "score": 43.5324,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 42.6434,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 41.7019,
+          "evidence": []
+        },
+        {
+          "term": "风险最小化",
+          "score": 41.3224,
+          "evidence": []
+        },
+        {
+          "term": "可能会",
+          "score": 41.1584,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

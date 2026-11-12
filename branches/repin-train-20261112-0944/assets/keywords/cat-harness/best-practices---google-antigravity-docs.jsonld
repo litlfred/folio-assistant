@@ -1,0 +1,1362 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "best-practices---google-antigravity-docs",
+  "instance": "cat-harness",
+  "about": "library/best-practices---google-antigravity-docs",
+  "corpus": {
+    "library": "cat-harness/library/corpus",
+    "sections": 2232,
+    "terms": 15352
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "google antigravity",
+        "score": 4.1042,
+        "evidence": []
+      },
+      {
+        "term": "antigravity docs",
+        "score": 4.0019,
+        "evidence": []
+      },
+      {
+        "term": "antigravity cli",
+        "score": 3.724,
+        "evidence": []
+      },
+      {
+        "term": "get started",
+        "score": 3.2936,
+        "evidence": []
+      },
+      {
+        "term": "agent execute",
+        "score": 3.1253,
+        "evidence": []
+      },
+      {
+        "term": "keyboard arrow",
+        "score": 2.9976,
+        "evidence": []
+      },
+      {
+        "term": "practices google",
+        "score": 2.8392,
+        "evidence": []
+      },
+      {
+        "term": "content copy",
+        "score": 2.2103,
+        "evidence": []
+      },
+      {
+        "term": "implementation plan",
+        "score": 2.1981,
+        "evidence": []
+      },
+      {
+        "term": "test command",
+        "score": 2.1959,
+        "evidence": []
+      },
+      {
+        "term": "local agents",
+        "score": 2.1879,
+        "evidence": []
+      },
+      {
+        "term": "prompt box",
+        "score": 2.1231,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "agent execute",
+        "score": 50.2937,
+        "evidence": []
+      },
+      {
+        "term": "google antigravity",
+        "score": 48.042,
+        "evidence": []
+      },
+      {
+        "term": "antigravity docs",
+        "score": 47.1044,
+        "evidence": []
+      },
+      {
+        "term": "antigravity cli",
+        "score": 45.723,
+        "evidence": []
+      },
+      {
+        "term": "keyboard arrow",
+        "score": 41.2985,
+        "evidence": []
+      },
+      {
+        "term": "get started",
+        "score": 35.8183,
+        "evidence": []
+      },
+      {
+        "term": "practices google",
+        "score": 33.6546,
+        "evidence": []
+      },
+      {
+        "term": "test command",
+        "score": 30.5001,
+        "evidence": []
+      },
+      {
+        "term": "implementation plan",
+        "score": 29.9975,
+        "evidence": []
+      },
+      {
+        "term": "local agents",
+        "score": 29.1619,
+        "evidence": []
+      },
+      {
+        "term": "prompt box",
+        "score": 26.1914,
+        "evidence": []
+      },
+      {
+        "term": "content copy",
+        "score": 23.7557,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "agent execute",
+        "score": 1.0169,
+        "evidence": []
+      },
+      {
+        "term": "skill",
+        "score": 0.8703,
+        "evidence": []
+      },
+      {
+        "term": "code",
+        "score": 0.8601,
+        "evidence": []
+      },
+      {
+        "term": "local agents",
+        "score": 0.785,
+        "evidence": []
+      },
+      {
+        "term": "claude",
+        "score": 0.6035,
+        "evidence": []
+      },
+      {
+        "term": "file",
+        "score": 0.5131,
+        "evidence": []
+      },
+      {
+        "term": "practices google",
+        "score": 0.4561,
+        "evidence": []
+      },
+      {
+        "term": "antigravity docs",
+        "score": 0.4524,
+        "evidence": []
+      },
+      {
+        "term": "test command",
+        "score": 0.3813,
+        "evidence": []
+      },
+      {
+        "term": "implementation plan",
+        "score": 0.3804,
+        "evidence": []
+      },
+      {
+        "term": "workflows",
+        "score": 0.3716,
+        "evidence": []
+      },
+      {
+        "term": "reference",
+        "score": 0.3549,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "agent",
+        "score": 12.1648,
+        "evidence": []
+      },
+      {
+        "term": "agent execute",
+        "score": 12.1648,
+        "evidence": []
+      },
+      {
+        "term": "skill",
+        "score": 10.3827,
+        "evidence": []
+      },
+      {
+        "term": "local agents",
+        "score": 9.3053,
+        "evidence": []
+      },
+      {
+        "term": "code",
+        "score": 9.3028,
+        "evidence": []
+      },
+      {
+        "term": "claude",
+        "score": 5.7721,
+        "evidence": []
+      },
+      {
+        "term": "prompt",
+        "score": 4.8646,
+        "evidence": []
+      },
+      {
+        "term": "prompt box",
+        "score": 4.8646,
+        "evidence": []
+      },
+      {
+        "term": "implementation plan",
+        "score": 4.3469,
+        "evidence": []
+      },
+      {
+        "term": "file",
+        "score": 4.0481,
+        "evidence": []
+      },
+      {
+        "term": "commit",
+        "score": 3.7147,
+        "evidence": []
+      },
+      {
+        "term": "injection",
+        "score": 3.5908,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "agent execute",
+        "score": 1.0169,
+        "evidence": []
+      },
+      {
+        "term": "code",
+        "score": 0.8601,
+        "evidence": []
+      },
+      {
+        "term": "local agents",
+        "score": 0.785,
+        "evidence": []
+      },
+      {
+        "term": "antigravity docs",
+        "score": 0.5467,
+        "evidence": []
+      },
+      {
+        "term": "file",
+        "score": 0.5131,
+        "evidence": []
+      },
+      {
+        "term": "practices google",
+        "score": 0.4561,
+        "evidence": []
+      },
+      {
+        "term": "test command",
+        "score": 0.3813,
+        "evidence": []
+      },
+      {
+        "term": "implementation plan",
+        "score": 0.3804,
+        "evidence": []
+      },
+      {
+        "term": "prompt box",
+        "score": 0.377,
+        "evidence": []
+      },
+      {
+        "term": "content copy",
+        "score": 0.3539,
+        "evidence": []
+      },
+      {
+        "term": "run",
+        "score": 0.3232,
+        "evidence": []
+      },
+      {
+        "term": "get started",
+        "score": 0.3041,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "keyboard arrow",
+        "score": 258.3944,
+        "evidence": []
+      },
+      {
+        "term": "antigravity docs",
+        "score": 223.2955,
+        "evidence": []
+      },
+      {
+        "term": "plugins",
+        "score": 170.8431,
+        "evidence": []
+      },
+      {
+        "term": "antigravity cli",
+        "score": 138.8226,
+        "evidence": []
+      },
+      {
+        "term": "google antigravity",
+        "score": 138.8226,
+        "evidence": []
+      },
+      {
+        "term": "workstation",
+        "score": 132.6744,
+        "evidence": []
+      },
+      {
+        "term": "subagents",
+        "score": 131.4564,
+        "evidence": []
+      },
+      {
+        "term": "upload",
+        "score": 129.9879,
+        "evidence": []
+      },
+      {
+        "term": "spawn",
+        "score": 119.1119,
+        "evidence": []
+      },
+      {
+        "term": "safer",
+        "score": 115.2531,
+        "evidence": []
+      },
+      {
+        "term": "checkout",
+        "score": 108.1482,
+        "evidence": []
+      },
+      {
+        "term": "dependabot",
+        "score": 106.1883,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "page-001": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "implementation plan",
+          "score": 1.2756,
+          "evidence": []
+        },
+        {
+          "term": "get started",
+          "score": 1.1386,
+          "evidence": []
+        },
+        {
+          "term": "antigravity",
+          "score": 0.8307,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 0.7716,
+          "evidence": []
+        },
+        {
+          "term": "autonomous",
+          "score": 0.7231,
+          "evidence": []
+        },
+        {
+          "term": "local",
+          "score": 0.7076,
+          "evidence": []
+        },
+        {
+          "term": "command",
+          "score": 0.6616,
+          "evidence": []
+        },
+        {
+          "term": "test",
+          "score": 0.6297,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "implementation plan",
+          "score": 20.5001,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 19.4546,
+          "evidence": []
+        },
+        {
+          "term": "get started",
+          "score": 14.3273,
+          "evidence": []
+        },
+        {
+          "term": "local",
+          "score": 12.8434,
+          "evidence": []
+        },
+        {
+          "term": "test",
+          "score": 12.4786,
+          "evidence": []
+        },
+        {
+          "term": "antigravity",
+          "score": 11.0269,
+          "evidence": []
+        },
+        {
+          "term": "autonomous",
+          "score": 9.4298,
+          "evidence": []
+        },
+        {
+          "term": "practices",
+          "score": 9.3466,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "agent",
+          "score": 0.3132,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 0.3105,
+          "evidence": []
+        },
+        {
+          "term": "skill",
+          "score": 0.2615,
+          "evidence": []
+        },
+        {
+          "term": "claude",
+          "score": 0.1805,
+          "evidence": []
+        },
+        {
+          "term": "file",
+          "score": 0.1674,
+          "evidence": []
+        },
+        {
+          "term": "implementation plan",
+          "score": 0.1571,
+          "evidence": []
+        },
+        {
+          "term": "workflows",
+          "score": 0.1491,
+          "evidence": []
+        },
+        {
+          "term": "docs",
+          "score": 0.1377,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "agent",
+          "score": 5.6392,
+          "evidence": []
+        },
+        {
+          "term": "skill",
+          "score": 3.7744,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 3.6675,
+          "evidence": []
+        },
+        {
+          "term": "implementation plan",
+          "score": 2.2737,
+          "evidence": []
+        },
+        {
+          "term": "claude",
+          "score": 1.9164,
+          "evidence": []
+        },
+        {
+          "term": "reward",
+          "score": 1.8993,
+          "evidence": []
+        },
+        {
+          "term": "element",
+          "score": 1.8101,
+          "evidence": []
+        },
+        {
+          "term": "localization",
+          "score": 1.6952,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "agent",
+          "score": 0.3132,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 0.3105,
+          "evidence": []
+        },
+        {
+          "term": "implementation plan",
+          "score": 0.1571,
+          "evidence": []
+        },
+        {
+          "term": "run",
+          "score": 0.1148,
+          "evidence": []
+        },
+        {
+          "term": "practices",
+          "score": 0.1058,
+          "evidence": []
+        },
+        {
+          "term": "execution",
+          "score": 0.1049,
+          "evidence": []
+        },
+        {
+          "term": "get started",
+          "score": 0.0927,
+          "evidence": []
+        },
+        {
+          "term": "changes",
+          "score": 0.0829,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "plugins",
+          "score": 26.0878,
+          "evidence": []
+        },
+        {
+          "term": "keyboard",
+          "score": 24.8011,
+          "evidence": []
+        },
+        {
+          "term": "antigravity",
+          "score": 23.2275,
+          "evidence": []
+        },
+        {
+          "term": "h1n",
+          "score": 23.1295,
+          "evidence": []
+        },
+        {
+          "term": "upload",
+          "score": 22.3513,
+          "evidence": []
+        },
+        {
+          "term": "workstation",
+          "score": 21.9087,
+          "evidence": []
+        },
+        {
+          "term": "subagents",
+          "score": 21.0355,
+          "evidence": []
+        },
+        {
+          "term": "preparedness",
+          "score": 19.5459,
+          "evidence": []
+        }
+      ]
+    },
+    "page-002": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "prompt box",
+          "score": 1.2169,
+          "evidence": []
+        },
+        {
+          "term": "workspace",
+          "score": 0.898,
+          "evidence": []
+        },
+        {
+          "term": "file",
+          "score": 0.7139,
+          "evidence": []
+        },
+        {
+          "term": "write",
+          "score": 0.6668,
+          "evidence": []
+        },
+        {
+          "term": "path",
+          "score": 0.6635,
+          "evidence": []
+        },
+        {
+          "term": "boundaries",
+          "score": 0.645,
+          "evidence": []
+        },
+        {
+          "term": "visual",
+          "score": 0.6361,
+          "evidence": []
+        },
+        {
+          "term": "rules",
+          "score": 0.5666,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "prompt box",
+          "score": 16.8684,
+          "evidence": []
+        },
+        {
+          "term": "workspace",
+          "score": 14.2986,
+          "evidence": []
+        },
+        {
+          "term": "file",
+          "score": 12.7868,
+          "evidence": []
+        },
+        {
+          "term": "write",
+          "score": 10.8993,
+          "evidence": []
+        },
+        {
+          "term": "path",
+          "score": 10.4296,
+          "evidence": []
+        },
+        {
+          "term": "boundaries",
+          "score": 8.9836,
+          "evidence": []
+        },
+        {
+          "term": "visual",
+          "score": 7.8989,
+          "evidence": []
+        },
+        {
+          "term": "gemini",
+          "score": 7.1035,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "code",
+          "score": 0.2421,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 0.2121,
+          "evidence": []
+        },
+        {
+          "term": "skill",
+          "score": 0.2101,
+          "evidence": []
+        },
+        {
+          "term": "claude",
+          "score": 0.169,
+          "evidence": []
+        },
+        {
+          "term": "file",
+          "score": 0.1601,
+          "evidence": []
+        },
+        {
+          "term": "prompt",
+          "score": 0.1225,
+          "evidence": []
+        },
+        {
+          "term": "prompt box",
+          "score": 0.1225,
+          "evidence": []
+        },
+        {
+          "term": "security",
+          "score": 0.1213,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "agent",
+          "score": 2.6984,
+          "evidence": []
+        },
+        {
+          "term": "skills",
+          "score": 2.3277,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 2.0197,
+          "evidence": []
+        },
+        {
+          "term": "prompt",
+          "score": 1.8967,
+          "evidence": []
+        },
+        {
+          "term": "prompt box",
+          "score": 1.8967,
+          "evidence": []
+        },
+        {
+          "term": "claude",
+          "score": 1.8298,
+          "evidence": []
+        },
+        {
+          "term": "file",
+          "score": 1.5916,
+          "evidence": []
+        },
+        {
+          "term": "camel",
+          "score": 1.4968,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "agent",
+          "score": 0.2121,
+          "evidence": []
+        },
+        {
+          "term": "file",
+          "score": 0.1601,
+          "evidence": []
+        },
+        {
+          "term": "prompt box",
+          "score": 0.1377,
+          "evidence": []
+        },
+        {
+          "term": "rules",
+          "score": 0.0721,
+          "evidence": []
+        },
+        {
+          "term": "page",
+          "score": 0.0608,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "gemini",
+          "score": 0.0525,
+          "evidence": []
+        },
+        {
+          "term": "write",
+          "score": 0.0514,
+          "evidence": []
+        },
+        {
+          "term": "path",
+          "score": 0.045,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "𝑤𝐶",
+          "score": 25.7454,
+          "evidence": []
+        },
+        {
+          "term": "upload",
+          "score": 23.0523,
+          "evidence": []
+        },
+        {
+          "term": "plugins",
+          "score": 22.7483,
+          "evidence": []
+        },
+        {
+          "term": "keyboard",
+          "score": 22.3918,
+          "evidence": []
+        },
+        {
+          "term": "workstation",
+          "score": 22.197,
+          "evidence": []
+        },
+        {
+          "term": "antigravity",
+          "score": 21.1027,
+          "evidence": []
+        },
+        {
+          "term": "𝑀𝐶",
+          "score": 20.5833,
+          "evidence": []
+        },
+        {
+          "term": "one-half",
+          "score": 20.5833,
+          "evidence": []
+        }
+      ]
+    },
+    "page-003": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "thread",
+          "score": 1.0079,
+          "evidence": []
+        },
+        {
+          "term": "session",
+          "score": 0.996,
+          "evidence": []
+        },
+        {
+          "term": "fork",
+          "score": 0.8778,
+          "evidence": []
+        },
+        {
+          "term": "branch",
+          "score": 0.8762,
+          "evidence": []
+        },
+        {
+          "term": "stable",
+          "score": 0.7021,
+          "evidence": []
+        },
+        {
+          "term": "commands",
+          "score": 0.6214,
+          "evidence": []
+        },
+        {
+          "term": "back",
+          "score": 0.588,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "session",
+          "score": 18.1304,
+          "evidence": []
+        },
+        {
+          "term": "thread",
+          "score": 14.035,
+          "evidence": []
+        },
+        {
+          "term": "branch",
+          "score": 12.2024,
+          "evidence": []
+        },
+        {
+          "term": "fork",
+          "score": 12.2024,
+          "evidence": []
+        },
+        {
+          "term": "stable",
+          "score": 11.0559,
+          "evidence": []
+        },
+        {
+          "term": "commands",
+          "score": 8.5533,
+          "evidence": []
+        },
+        {
+          "term": "execute",
+          "score": 7.6377,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "code",
+          "score": 0.1845,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 0.1743,
+          "evidence": []
+        },
+        {
+          "term": "skill",
+          "score": 0.1618,
+          "evidence": []
+        },
+        {
+          "term": "claude",
+          "score": 0.1002,
+          "evidence": []
+        },
+        {
+          "term": "docs",
+          "score": 0.094,
+          "evidence": []
+        },
+        {
+          "term": "prompt",
+          "score": 0.0899,
+          "evidence": []
+        },
+        {
+          "term": "run",
+          "score": 0.0886,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "code",
+          "score": 2.4008,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 2.3329,
+          "evidence": []
+        },
+        {
+          "term": "skill",
+          "score": 1.802,
+          "evidence": []
+        },
+        {
+          "term": "prompt",
+          "score": 1.2199,
+          "evidence": []
+        },
+        {
+          "term": "hotel",
+          "score": 1.1004,
+          "evidence": []
+        },
+        {
+          "term": "reward",
+          "score": 0.9398,
+          "evidence": []
+        },
+        {
+          "term": "true",
+          "score": 0.8867,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "code",
+          "score": 0.1845,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 0.1743,
+          "evidence": []
+        },
+        {
+          "term": "prompt",
+          "score": 0.0899,
+          "evidence": []
+        },
+        {
+          "term": "page",
+          "score": 0.0565,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "stable",
+          "score": 0.0443,
+          "evidence": []
+        },
+        {
+          "term": "back",
+          "score": 0.0384,
+          "evidence": []
+        },
+        {
+          "term": "commands",
+          "score": 0.0352,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "safer",
+          "score": 42.071,
+          "evidence": []
+        },
+        {
+          "term": "dependabot",
+          "score": 38.9788,
+          "evidence": []
+        },
+        {
+          "term": "plugins",
+          "score": 38.3601,
+          "evidence": []
+        },
+        {
+          "term": "checkout",
+          "score": 38.0364,
+          "evidence": []
+        },
+        {
+          "term": "keyboard",
+          "score": 32.9555,
+          "evidence": []
+        },
+        {
+          "term": "scorecards",
+          "score": 32.0562,
+          "evidence": []
+        },
+        {
+          "term": "hardening",
+          "score": 31.4298,
+          "evidence": []
+        }
+      ]
+    },
+    "page-004": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "keyboard arrow",
+          "score": 1.9277,
+          "evidence": []
+        },
+        {
+          "term": "subagents",
+          "score": 0.9505,
+          "evidence": []
+        },
+        {
+          "term": "antigravity",
+          "score": 0.8307,
+          "evidence": []
+        },
+        {
+          "term": "git",
+          "score": 0.7635,
+          "evidence": []
+        },
+        {
+          "term": "automate",
+          "score": 0.7367,
+          "evidence": []
+        },
+        {
+          "term": "commands",
+          "score": 0.6214,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "keyboard arrow",
+          "score": 29.5661,
+          "evidence": []
+        },
+        {
+          "term": "subagents",
+          "score": 13.2241,
+          "evidence": []
+        },
+        {
+          "term": "antigravity",
+          "score": 11.0269,
+          "evidence": []
+        },
+        {
+          "term": "git",
+          "score": 10.6255,
+          "evidence": []
+        },
+        {
+          "term": "automate",
+          "score": 10.2914,
+          "evidence": []
+        },
+        {
+          "term": "background",
+          "score": 8.5533,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "skill",
+          "score": 0.2368,
+          "evidence": []
+        },
+        {
+          "term": "claude",
+          "score": 0.1537,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 0.1424,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 0.1231,
+          "evidence": []
+        },
+        {
+          "term": "docs",
+          "score": 0.1092,
+          "evidence": []
+        },
+        {
+          "term": "file",
+          "score": 0.103,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "skill",
+          "score": 2.6283,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 1.4944,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 1.2149,
+          "evidence": []
+        },
+        {
+          "term": "claude",
+          "score": 1.1586,
+          "evidence": []
+        },
+        {
+          "term": "commit",
+          "score": 0.8407,
+          "evidence": []
+        },
+        {
+          "term": "args",
+          "score": 0.7597,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "agent",
+          "score": 0.1424,
+          "evidence": []
+        },
+        {
+          "term": "settings",
+          "score": 0.0608,
+          "evidence": []
+        },
+        {
+          "term": "customize",
+          "score": 0.0594,
+          "evidence": []
+        },
+        {
+          "term": "page",
+          "score": 0.0538,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "commands",
+          "score": 0.0337,
+          "evidence": []
+        },
+        {
+          "term": "features",
+          "score": 0.0314,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "keyboard arrow",
+          "score": 125.1492,
+          "evidence": []
+        },
+        {
+          "term": "plugins",
+          "score": 83.647,
+          "evidence": []
+        },
+        {
+          "term": "antigravity",
+          "score": 64.4099,
+          "evidence": []
+        },
+        {
+          "term": "subagents",
+          "score": 63.2581,
+          "evidence": []
+        },
+        {
+          "term": "spawn",
+          "score": 62.2741,
+          "evidence": []
+        },
+        {
+          "term": "upload",
+          "score": 61.8869,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

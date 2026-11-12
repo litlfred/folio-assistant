@@ -1,0 +1,3168 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "nlm-mesh-indexing-policy-2026",
+  "instance": "folio-assistant-core",
+  "about": "library/nlm-mesh-indexing-policy-2026",
+  "corpus": {
+    "library": "folio-assistant-core/library/corpus",
+    "sections": 1052,
+    "terms": 3815
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "mesh terms",
+        "score": 25.4511,
+        "evidence": []
+      },
+      {
+        "term": "mesh indexing",
+        "score": 24.8704,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "mesh descriptors",
+        "score": 22.4547,
+        "evidence": []
+      },
+      {
+        "term": "mesh vocabulary",
+        "score": 19.4492,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "mesh tree",
+        "score": 18.9289,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "mesh record",
+        "score": 18.7023,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "mesh browser",
+        "score": 18.4002,
+        "evidence": []
+      },
+      {
+        "term": "xml mesh",
+        "score": 18.3551,
+        "evidence": []
+      },
+      {
+        "term": "mesh data",
+        "score": 17.5658,
+        "evidence": []
+      },
+      {
+        "term": "identify mesh",
+        "score": 16.6785,
+        "evidence": []
+      },
+      {
+        "term": "medline indexing",
+        "score": 15.8409,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "subject headings",
+        "score": 15.4144,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "work consisting",
+        "score": 723.9889,
+        "evidence": []
+      },
+      {
+        "term": "mesh indexing",
+        "score": 703.7887,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "mesh terms",
+        "score": 690.6817,
+        "evidence": []
+      },
+      {
+        "term": "mesh descriptors",
+        "score": 622.0939,
+        "evidence": []
+      },
+      {
+        "term": "mesh tree",
+        "score": 532.7337,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "mesh record",
+        "score": 521.1721,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "mesh vocabulary",
+        "score": 520.0306,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "xml mesh",
+        "score": 502.1501,
+        "evidence": []
+      },
+      {
+        "term": "publication work",
+        "score": 500.0283,
+        "evidence": []
+      },
+      {
+        "term": "mesh data",
+        "score": 495.9558,
+        "evidence": []
+      },
+      {
+        "term": "mesh browser",
+        "score": 495.8161,
+        "evidence": []
+      },
+      {
+        "term": "subject headings",
+        "score": 479.2158,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "mesh terms",
+        "score": 24.3278,
+        "evidence": []
+      },
+      {
+        "term": "mesh indexing",
+        "score": 23.6166,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "mesh descriptors",
+        "score": 21.5452,
+        "evidence": []
+      },
+      {
+        "term": "mesh vocabulary",
+        "score": 18.5909,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "mesh tree",
+        "score": 18.3161,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "mesh record",
+        "score": 17.7751,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "mesh browser",
+        "score": 17.3801,
+        "evidence": []
+      },
+      {
+        "term": "xml mesh",
+        "score": 17.3084,
+        "evidence": []
+      },
+      {
+        "term": "mesh data",
+        "score": 16.9386,
+        "evidence": []
+      },
+      {
+        "term": "subject headings",
+        "score": 15.5865,
+        "evidence": []
+      },
+      {
+        "term": "medline indexing",
+        "score": 15.5742,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "indexed terms",
+        "score": 14.7904,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "work consisting",
+        "score": 722.034,
+        "evidence": []
+      },
+      {
+        "term": "mesh indexing",
+        "score": 703.069,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "mesh terms",
+        "score": 677.0357,
+        "evidence": []
+      },
+      {
+        "term": "mesh descriptors",
+        "score": 617.3292,
+        "evidence": []
+      },
+      {
+        "term": "mesh tree",
+        "score": 532.8887,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "mesh record",
+        "score": 519.4025,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "mesh vocabulary",
+        "score": 518.7744,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "xml mesh",
+        "score": 498.5297,
+        "evidence": []
+      },
+      {
+        "term": "publication work",
+        "score": 497.4119,
+        "evidence": []
+      },
+      {
+        "term": "mesh browser",
+        "score": 496.4181,
+        "evidence": []
+      },
+      {
+        "term": "mesh data",
+        "score": 496.3168,
+        "evidence": []
+      },
+      {
+        "term": "subject headings",
+        "score": 484.4807,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "mesh terms",
+        "score": 24.3278,
+        "evidence": []
+      },
+      {
+        "term": "mesh indexing",
+        "score": 23.6166,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "mesh descriptors",
+        "score": 21.5452,
+        "evidence": []
+      },
+      {
+        "term": "mesh vocabulary",
+        "score": 18.5909,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "mesh tree",
+        "score": 18.3161,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "mesh record",
+        "score": 17.7751,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "mesh browser",
+        "score": 17.3801,
+        "evidence": []
+      },
+      {
+        "term": "xml mesh",
+        "score": 17.3084,
+        "evidence": []
+      },
+      {
+        "term": "mesh data",
+        "score": 16.9386,
+        "evidence": []
+      },
+      {
+        "term": "identify mesh",
+        "score": 15.7658,
+        "evidence": []
+      },
+      {
+        "term": "subject headings",
+        "score": 15.5865,
+        "evidence": []
+      },
+      {
+        "term": "medline indexing",
+        "score": 15.5742,
+        "evidence": [
+          "heading"
+        ]
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "deficiency syndrome",
+        "score": 665.2607,
+        "evidence": []
+      },
+      {
+        "term": "mtix learns",
+        "score": 632.7946,
+        "evidence": []
+      },
+      {
+        "term": "mesh descriptors",
+        "score": 621.9996,
+        "evidence": []
+      },
+      {
+        "term": "synonymous terms",
+        "score": 592.4252,
+        "evidence": []
+      },
+      {
+        "term": "medline citations",
+        "score": 576.1445,
+        "evidence": []
+      },
+      {
+        "term": "strict synonymy",
+        "score": 575.9618,
+        "evidence": []
+      },
+      {
+        "term": "preferred term",
+        "score": 569.8205,
+        "evidence": []
+      },
+      {
+        "term": "class descriptors",
+        "score": 546.056,
+        "evidence": []
+      },
+      {
+        "term": "medline pubmed",
+        "score": 521.6696,
+        "evidence": []
+      },
+      {
+        "term": "mesh indexing",
+        "score": 521.2634,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "indexed citations",
+        "score": 506.5587,
+        "evidence": []
+      },
+      {
+        "term": "preferred concept",
+        "score": 503.2302,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "s001-nlm-mesh-indexing-policy-and-vocabulary-structur": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "nlm",
+          "score": 2.4258,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "indexing",
+          "score": 0.9959,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mesh",
+          "score": 0.972,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "nlm",
+          "score": 40.1003,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mesh",
+          "score": 9.3117,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "selected",
+          "score": 9.1211,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "mesh",
+          "score": 0.4254,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "indexing",
+          "score": 0.3147,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vocabulary",
+          "score": 0.2908,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "mesh",
+          "score": 7.9286,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "indexing",
+          "score": 6.5025,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "policy",
+          "score": 5.07,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "mesh",
+          "score": 0.4254,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "indexing",
+          "score": 0.3147,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vocabulary",
+          "score": 0.2908,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "reproduce",
+          "score": 95.3232,
+          "evidence": []
+        },
+        {
+          "term": "nlm",
+          "score": 85.6269,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "gov",
+          "score": 62.295,
+          "evidence": []
+        }
+      ]
+    },
+    "s002-use-of-mesh-in-indexing": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "indexing",
+          "score": 3.3083,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "medline indexing",
+          "score": 3.2502,
+          "evidence": []
+        },
+        {
+          "term": "mesh",
+          "score": 2.7289,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "automated indexing",
+          "score": 2.6409,
+          "evidence": []
+        },
+        {
+          "term": "mesh descriptors",
+          "score": 2.4656,
+          "evidence": []
+        },
+        {
+          "term": "bulletin article",
+          "score": 2.2248,
+          "evidence": []
+        },
+        {
+          "term": "nlm technical",
+          "score": 1.6148,
+          "evidence": []
+        },
+        {
+          "term": "mtix",
+          "score": 1.6133,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "indexing",
+          "score": 74.2542,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "medline indexing",
+          "score": 69.2212,
+          "evidence": []
+        },
+        {
+          "term": "mesh",
+          "score": 55.8704,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "automated indexing",
+          "score": 48.2714,
+          "evidence": []
+        },
+        {
+          "term": "mesh descriptors",
+          "score": 43.9822,
+          "evidence": []
+        },
+        {
+          "term": "mtix",
+          "score": 31.3265,
+          "evidence": []
+        },
+        {
+          "term": "bulletin article",
+          "score": 31.2357,
+          "evidence": []
+        },
+        {
+          "term": "injuries",
+          "score": 25.0612,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "mesh",
+          "score": 2.9338,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "indexing",
+          "score": 2.704,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "medline indexing",
+          "score": 2.4479,
+          "evidence": []
+        },
+        {
+          "term": "automated indexing",
+          "score": 2.3522,
+          "evidence": []
+        },
+        {
+          "term": "mesh descriptors",
+          "score": 2.1635,
+          "evidence": []
+        },
+        {
+          "term": "bulletin article",
+          "score": 1.3745,
+          "evidence": []
+        },
+        {
+          "term": "nlm technical",
+          "score": 1.1146,
+          "evidence": []
+        },
+        {
+          "term": "citations",
+          "score": 0.9378,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "indexing",
+          "score": 74.5195,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mesh",
+          "score": 72.3395,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "automated indexing",
+          "score": 58.9765,
+          "evidence": []
+        },
+        {
+          "term": "medline indexing",
+          "score": 55.7393,
+          "evidence": []
+        },
+        {
+          "term": "mesh descriptors",
+          "score": 43.7687,
+          "evidence": []
+        },
+        {
+          "term": "indexed",
+          "score": 15.9823,
+          "evidence": []
+        },
+        {
+          "term": "bulletin article",
+          "score": 14.2867,
+          "evidence": []
+        },
+        {
+          "term": "citations",
+          "score": 13.7062,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "mesh",
+          "score": 2.9338,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "indexing",
+          "score": 2.704,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "medline indexing",
+          "score": 2.4479,
+          "evidence": []
+        },
+        {
+          "term": "automated indexing",
+          "score": 2.3522,
+          "evidence": []
+        },
+        {
+          "term": "mesh descriptors",
+          "score": 2.1635,
+          "evidence": []
+        },
+        {
+          "term": "bulletin article",
+          "score": 1.3745,
+          "evidence": []
+        },
+        {
+          "term": "nlm technical",
+          "score": 1.1146,
+          "evidence": []
+        },
+        {
+          "term": "citations",
+          "score": 0.9378,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "automated indexing",
+          "score": 199.927,
+          "evidence": []
+        },
+        {
+          "term": "medline indexing",
+          "score": 189.5842,
+          "evidence": []
+        },
+        {
+          "term": "bulletin article",
+          "score": 148.5628,
+          "evidence": []
+        },
+        {
+          "term": "asked",
+          "score": 139.8519,
+          "evidence": []
+        },
+        {
+          "term": "automation",
+          "score": 139.8519,
+          "evidence": []
+        },
+        {
+          "term": "learns",
+          "score": 139.8519,
+          "evidence": []
+        },
+        {
+          "term": "millions",
+          "score": 139.8519,
+          "evidence": []
+        },
+        {
+          "term": "mtix",
+          "score": 139.8519,
+          "evidence": []
+        }
+      ]
+    },
+    "s003-frequently-asked-questions-about-indexing-for-me": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "medline indexing",
+          "score": 9.3158,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "automated indexing",
+          "score": 5.0989,
+          "evidence": []
+        },
+        {
+          "term": "mesh indexing",
+          "score": 4.6547,
+          "evidence": []
+        },
+        {
+          "term": "indexed citations",
+          "score": 3.9815,
+          "evidence": []
+        },
+        {
+          "term": "indexing accomplished",
+          "score": 3.4063,
+          "evidence": []
+        },
+        {
+          "term": "mesh terms",
+          "score": 3.3107,
+          "evidence": []
+        },
+        {
+          "term": "indexing based",
+          "score": 3.2091,
+          "evidence": []
+        },
+        {
+          "term": "mesh vocabulary",
+          "score": 3.1401,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "medline indexing",
+          "score": 408.8922,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "automated indexing",
+          "score": 229.4125,
+          "evidence": []
+        },
+        {
+          "term": "mesh indexing",
+          "score": 228.7194,
+          "evidence": []
+        },
+        {
+          "term": "indexing based",
+          "score": 151.1554,
+          "evidence": []
+        },
+        {
+          "term": "indexing accomplished",
+          "score": 150.956,
+          "evidence": []
+        },
+        {
+          "term": "mesh terms",
+          "score": 110.4371,
+          "evidence": []
+        },
+        {
+          "term": "indexed citations",
+          "score": 110.1414,
+          "evidence": []
+        },
+        {
+          "term": "mesh vocabulary",
+          "score": 105.463,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "medline indexing",
+          "score": 9.918,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "automated indexing",
+          "score": 5.2049,
+          "evidence": []
+        },
+        {
+          "term": "mesh indexing",
+          "score": 4.7569,
+          "evidence": []
+        },
+        {
+          "term": "indexed citations",
+          "score": 4.1675,
+          "evidence": []
+        },
+        {
+          "term": "indexing accomplished",
+          "score": 3.4575,
+          "evidence": []
+        },
+        {
+          "term": "indexing based",
+          "score": 3.3408,
+          "evidence": []
+        },
+        {
+          "term": "mesh terms",
+          "score": 3.2659,
+          "evidence": []
+        },
+        {
+          "term": "mesh vocabulary",
+          "score": 3.1326,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "medline indexing",
+          "score": 415.0667,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mesh indexing",
+          "score": 226.9385,
+          "evidence": []
+        },
+        {
+          "term": "automated indexing",
+          "score": 226.2577,
+          "evidence": []
+        },
+        {
+          "term": "indexing based",
+          "score": 151.0131,
+          "evidence": []
+        },
+        {
+          "term": "indexing accomplished",
+          "score": 150.2061,
+          "evidence": []
+        },
+        {
+          "term": "indexed citations",
+          "score": 111.5443,
+          "evidence": []
+        },
+        {
+          "term": "mesh terms",
+          "score": 109.1289,
+          "evidence": []
+        },
+        {
+          "term": "mesh vocabulary",
+          "score": 103.7677,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "medline indexing",
+          "score": 9.918,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "automated indexing",
+          "score": 5.2049,
+          "evidence": []
+        },
+        {
+          "term": "mesh indexing",
+          "score": 4.7569,
+          "evidence": []
+        },
+        {
+          "term": "indexed citations",
+          "score": 4.1675,
+          "evidence": []
+        },
+        {
+          "term": "indexing accomplished",
+          "score": 3.4575,
+          "evidence": []
+        },
+        {
+          "term": "indexing based",
+          "score": 3.3408,
+          "evidence": []
+        },
+        {
+          "term": "mesh terms",
+          "score": 3.2659,
+          "evidence": []
+        },
+        {
+          "term": "mesh vocabulary",
+          "score": 3.1326,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "medline indexing",
+          "score": 332.2809,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "asked",
+          "score": 243.6057,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "indexed citations",
+          "score": 181.1155,
+          "evidence": []
+        },
+        {
+          "term": "automated indexing",
+          "score": 180.6345,
+          "evidence": []
+        },
+        {
+          "term": "indexer-next generation",
+          "score": 138.9381,
+          "evidence": []
+        },
+        {
+          "term": "text indexer-next",
+          "score": 125.9466,
+          "evidence": []
+        },
+        {
+          "term": "human indexers",
+          "score": 122.8859,
+          "evidence": []
+        },
+        {
+          "term": "automation",
+          "score": 121.8028,
+          "evidence": []
+        }
+      ]
+    },
+    "s004-preface": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "subject headings",
+          "score": 5.4754,
+          "evidence": []
+        },
+        {
+          "term": "medical subject",
+          "score": 4.6462,
+          "evidence": []
+        },
+        {
+          "term": "medical literature",
+          "score": 4.2972,
+          "evidence": []
+        },
+        {
+          "term": "subject cataloging",
+          "score": 4.1539,
+          "evidence": []
+        },
+        {
+          "term": "subject authority",
+          "score": 3.7602,
+          "evidence": []
+        },
+        {
+          "term": "national library",
+          "score": 3.6572,
+          "evidence": []
+        },
+        {
+          "term": "mesh vocabulary",
+          "score": 3.3215,
+          "evidence": []
+        },
+        {
+          "term": "periodical indexing",
+          "score": 3.1071,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "subject headings",
+          "score": 293.2106,
+          "evidence": []
+        },
+        {
+          "term": "medical subject",
+          "score": 194.3759,
+          "evidence": []
+        },
+        {
+          "term": "subject cataloging",
+          "score": 159.4854,
+          "evidence": []
+        },
+        {
+          "term": "subject authority",
+          "score": 152.9815,
+          "evidence": []
+        },
+        {
+          "term": "single subject",
+          "score": 135.6084,
+          "evidence": []
+        },
+        {
+          "term": "medical literature",
+          "score": 130.932,
+          "evidence": []
+        },
+        {
+          "term": "mesh vocabulary",
+          "score": 109.3079,
+          "evidence": []
+        },
+        {
+          "term": "national library",
+          "score": 90.9332,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "subject headings",
+          "score": 5.4683,
+          "evidence": []
+        },
+        {
+          "term": "medical subject",
+          "score": 4.6329,
+          "evidence": []
+        },
+        {
+          "term": "medical literature",
+          "score": 4.2641,
+          "evidence": []
+        },
+        {
+          "term": "subject cataloging",
+          "score": 4.1381,
+          "evidence": []
+        },
+        {
+          "term": "subject authority",
+          "score": 3.7821,
+          "evidence": []
+        },
+        {
+          "term": "national library",
+          "score": 3.6648,
+          "evidence": []
+        },
+        {
+          "term": "mesh vocabulary",
+          "score": 3.3488,
+          "evidence": []
+        },
+        {
+          "term": "periodical indexing",
+          "score": 3.1121,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "subject headings",
+          "score": 293.094,
+          "evidence": []
+        },
+        {
+          "term": "medical subject",
+          "score": 194.277,
+          "evidence": []
+        },
+        {
+          "term": "subject cataloging",
+          "score": 159.4622,
+          "evidence": []
+        },
+        {
+          "term": "subject authority",
+          "score": 153.0143,
+          "evidence": []
+        },
+        {
+          "term": "single subject",
+          "score": 135.698,
+          "evidence": []
+        },
+        {
+          "term": "medical literature",
+          "score": 130.6601,
+          "evidence": []
+        },
+        {
+          "term": "mesh vocabulary",
+          "score": 109.4087,
+          "evidence": []
+        },
+        {
+          "term": "national library",
+          "score": 90.9448,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "subject headings",
+          "score": 5.4683,
+          "evidence": []
+        },
+        {
+          "term": "medical subject",
+          "score": 4.6329,
+          "evidence": []
+        },
+        {
+          "term": "medical literature",
+          "score": 4.2641,
+          "evidence": []
+        },
+        {
+          "term": "subject cataloging",
+          "score": 4.1381,
+          "evidence": []
+        },
+        {
+          "term": "subject authority",
+          "score": 3.7821,
+          "evidence": []
+        },
+        {
+          "term": "national library",
+          "score": 3.6648,
+          "evidence": []
+        },
+        {
+          "term": "mesh vocabulary",
+          "score": 3.3488,
+          "evidence": []
+        },
+        {
+          "term": "periodical indexing",
+          "score": 3.1121,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "subject headings",
+          "score": 76.7364,
+          "evidence": []
+        },
+        {
+          "term": "traditional practice",
+          "score": 75.0919,
+          "evidence": []
+        },
+        {
+          "term": "national library",
+          "score": 74.9359,
+          "evidence": []
+        },
+        {
+          "term": "medical literature",
+          "score": 65.2805,
+          "evidence": []
+        },
+        {
+          "term": "online databases",
+          "score": 65.0046,
+          "evidence": []
+        },
+        {
+          "term": "subject cataloging",
+          "score": 62.6226,
+          "evidence": []
+        },
+        {
+          "term": "edition",
+          "score": 54.3428,
+          "evidence": []
+        },
+        {
+          "term": "problem",
+          "score": 54.3428,
+          "evidence": []
+        }
+      ]
+    },
+    "s005-mesh-record-types": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "class descriptors",
+          "score": 4.0468,
+          "evidence": []
+        },
+        {
+          "term": "tree descriptors",
+          "score": 3.6479,
+          "evidence": []
+        },
+        {
+          "term": "mesh",
+          "score": 3.4847,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "class supplementary",
+          "score": 3.4628,
+          "evidence": []
+        },
+        {
+          "term": "supplementary records",
+          "score": 3.1842,
+          "evidence": []
+        },
+        {
+          "term": "heading mapped",
+          "score": 3.1437,
+          "evidence": []
+        },
+        {
+          "term": "tree hierarchy",
+          "score": 2.4313,
+          "evidence": []
+        },
+        {
+          "term": "tree structures",
+          "score": 2.0831,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "class descriptors",
+          "score": 125.0115,
+          "evidence": []
+        },
+        {
+          "term": "tree descriptors",
+          "score": 116.9386,
+          "evidence": []
+        },
+        {
+          "term": "mesh",
+          "score": 102.429,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "supplementary records",
+          "score": 91.9897,
+          "evidence": []
+        },
+        {
+          "term": "heading mapped",
+          "score": 66.0879,
+          "evidence": []
+        },
+        {
+          "term": "tree hierarchy",
+          "score": 53.7722,
+          "evidence": []
+        },
+        {
+          "term": "tree structures",
+          "score": 49.305,
+          "evidence": []
+        },
+        {
+          "term": "qualifiers",
+          "score": 43.8571,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "class descriptors",
+          "score": 3.9721,
+          "evidence": []
+        },
+        {
+          "term": "tree descriptors",
+          "score": 3.6618,
+          "evidence": []
+        },
+        {
+          "term": "mesh",
+          "score": 3.535,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "class supplementary",
+          "score": 3.2781,
+          "evidence": []
+        },
+        {
+          "term": "supplementary records",
+          "score": 3.1561,
+          "evidence": []
+        },
+        {
+          "term": "heading mapped",
+          "score": 3.1041,
+          "evidence": []
+        },
+        {
+          "term": "tree hierarchy",
+          "score": 2.3732,
+          "evidence": []
+        },
+        {
+          "term": "tree structures",
+          "score": 2.1427,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "class descriptors",
+          "score": 123.7044,
+          "evidence": []
+        },
+        {
+          "term": "tree descriptors",
+          "score": 117.1282,
+          "evidence": []
+        },
+        {
+          "term": "mesh",
+          "score": 102.782,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "supplementary records",
+          "score": 92.594,
+          "evidence": []
+        },
+        {
+          "term": "heading mapped",
+          "score": 66.379,
+          "evidence": []
+        },
+        {
+          "term": "tree hierarchy",
+          "score": 53.8859,
+          "evidence": []
+        },
+        {
+          "term": "tree structures",
+          "score": 49.889,
+          "evidence": []
+        },
+        {
+          "term": "qualifiers",
+          "score": 42.7376,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "class descriptors",
+          "score": 3.9721,
+          "evidence": []
+        },
+        {
+          "term": "tree descriptors",
+          "score": 3.6618,
+          "evidence": []
+        },
+        {
+          "term": "mesh",
+          "score": 3.535,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "class supplementary",
+          "score": 3.2781,
+          "evidence": []
+        },
+        {
+          "term": "supplementary records",
+          "score": 3.1561,
+          "evidence": []
+        },
+        {
+          "term": "heading mapped",
+          "score": 3.1041,
+          "evidence": []
+        },
+        {
+          "term": "tree hierarchy",
+          "score": 2.3732,
+          "evidence": []
+        },
+        {
+          "term": "tree structures",
+          "score": 2.1427,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "class descriptors",
+          "score": 290.3377,
+          "evidence": []
+        },
+        {
+          "term": "class supplementary",
+          "score": 263.9876,
+          "evidence": []
+        },
+        {
+          "term": "protocols",
+          "score": 216.6661,
+          "evidence": []
+        },
+        {
+          "term": "qualifiers",
+          "score": 207.2575,
+          "evidence": []
+        },
+        {
+          "term": "tree hierarchy",
+          "score": 193.8232,
+          "evidence": []
+        },
+        {
+          "term": "heading mapped",
+          "score": 184.3867,
+          "evidence": []
+        },
+        {
+          "term": "supplementary records",
+          "score": 179.7816,
+          "evidence": []
+        },
+        {
+          "term": "searchable",
+          "score": 160.9573,
+          "evidence": []
+        }
+      ]
+    },
+    "s007-1-entry-terms": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "entry terms",
+          "score": 4.95,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "preferred term",
+          "score": 2.5596,
+          "evidence": []
+        },
+        {
+          "term": "xml mesh",
+          "score": 2.3317,
+          "evidence": []
+        },
+        {
+          "term": "heart",
+          "score": 1.2482,
+          "evidence": []
+        },
+        {
+          "term": "synonyms",
+          "score": 0.9321,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "entry terms",
+          "score": 112.0216,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "xml mesh",
+          "score": 43.227,
+          "evidence": []
+        },
+        {
+          "term": "preferred term",
+          "score": 39.3037,
+          "evidence": []
+        },
+        {
+          "term": "heart",
+          "score": 18.7959,
+          "evidence": []
+        },
+        {
+          "term": "synonyms",
+          "score": 11.7197,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "entry terms",
+          "score": 2.5166,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "preferred term",
+          "score": 1.6678,
+          "evidence": []
+        },
+        {
+          "term": "xml mesh",
+          "score": 1.2238,
+          "evidence": []
+        },
+        {
+          "term": "concept",
+          "score": 0.7341,
+          "evidence": []
+        },
+        {
+          "term": "narrower",
+          "score": 0.6173,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "entry terms",
+          "score": 47.3788,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "preferred term",
+          "score": 30.6353,
+          "evidence": []
+        },
+        {
+          "term": "xml mesh",
+          "score": 26.8112,
+          "evidence": []
+        },
+        {
+          "term": "concept",
+          "score": 15.1429,
+          "evidence": []
+        },
+        {
+          "term": "descriptor",
+          "score": 11.557,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "entry terms",
+          "score": 2.5166,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "preferred term",
+          "score": 1.6678,
+          "evidence": []
+        },
+        {
+          "term": "xml mesh",
+          "score": 1.2238,
+          "evidence": []
+        },
+        {
+          "term": "concept",
+          "score": 0.7341,
+          "evidence": []
+        },
+        {
+          "term": "record",
+          "score": 0.5667,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "preferred term",
+          "score": 208.9383,
+          "evidence": []
+        },
+        {
+          "term": "synonymous",
+          "score": 155.3078,
+          "evidence": []
+        },
+        {
+          "term": "heart",
+          "score": 154.8207,
+          "evidence": []
+        },
+        {
+          "term": "synonymy",
+          "score": 154.8207,
+          "evidence": []
+        },
+        {
+          "term": "narrower",
+          "score": 145.7921,
+          "evidence": []
+        }
+      ]
+    },
+    "s008-2-other-cross-references": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "mesh browser",
+          "score": 2.9906,
+          "evidence": []
+        },
+        {
+          "term": "xml mesh",
+          "score": 2.9113,
+          "evidence": []
+        },
+        {
+          "term": "mesh tree",
+          "score": 2.7792,
+          "evidence": []
+        },
+        {
+          "term": "tree structures",
+          "score": 1.5749,
+          "evidence": []
+        },
+        {
+          "term": "descriptor",
+          "score": 1.5669,
+          "evidence": []
+        },
+        {
+          "term": "trees data",
+          "score": 1.4814,
+          "evidence": []
+        },
+        {
+          "term": "entry combination",
+          "score": 1.3305,
+          "evidence": []
+        },
+        {
+          "term": "consider",
+          "score": 1.2693,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "mesh browser",
+          "score": 87.4119,
+          "evidence": []
+        },
+        {
+          "term": "xml mesh",
+          "score": 85.1298,
+          "evidence": []
+        },
+        {
+          "term": "mesh tree",
+          "score": 81.3068,
+          "evidence": []
+        },
+        {
+          "term": "descriptor",
+          "score": 35.0878,
+          "evidence": []
+        },
+        {
+          "term": "related",
+          "score": 23.6089,
+          "evidence": []
+        },
+        {
+          "term": "tree structures",
+          "score": 22.3476,
+          "evidence": []
+        },
+        {
+          "term": "consider",
+          "score": 21.396,
+          "evidence": []
+        },
+        {
+          "term": "trees data",
+          "score": 20.968,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "mesh tree",
+          "score": 2.472,
+          "evidence": []
+        },
+        {
+          "term": "xml mesh",
+          "score": 2.371,
+          "evidence": []
+        },
+        {
+          "term": "mesh browser",
+          "score": 2.37,
+          "evidence": []
+        },
+        {
+          "term": "trees data",
+          "score": 1.4168,
+          "evidence": []
+        },
+        {
+          "term": "descriptor",
+          "score": 1.3817,
+          "evidence": []
+        },
+        {
+          "term": "tree structures",
+          "score": 1.3536,
+          "evidence": []
+        },
+        {
+          "term": "entry combination",
+          "score": 0.9057,
+          "evidence": []
+        },
+        {
+          "term": "related",
+          "score": 0.7291,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "mesh browser",
+          "score": 78.9518,
+          "evidence": []
+        },
+        {
+          "term": "xml mesh",
+          "score": 78.7604,
+          "evidence": []
+        },
+        {
+          "term": "mesh tree",
+          "score": 77.8166,
+          "evidence": []
+        },
+        {
+          "term": "descriptor",
+          "score": 35.7021,
+          "evidence": []
+        },
+        {
+          "term": "tree structures",
+          "score": 23.2886,
+          "evidence": []
+        },
+        {
+          "term": "trees data",
+          "score": 22.8757,
+          "evidence": []
+        },
+        {
+          "term": "related",
+          "score": 19.6129,
+          "evidence": []
+        },
+        {
+          "term": "entry combination",
+          "score": 16.3353,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "mesh tree",
+          "score": 2.472,
+          "evidence": []
+        },
+        {
+          "term": "xml mesh",
+          "score": 2.371,
+          "evidence": []
+        },
+        {
+          "term": "mesh browser",
+          "score": 2.37,
+          "evidence": []
+        },
+        {
+          "term": "trees data",
+          "score": 1.4168,
+          "evidence": []
+        },
+        {
+          "term": "descriptor",
+          "score": 1.3817,
+          "evidence": []
+        },
+        {
+          "term": "tree structures",
+          "score": 1.3536,
+          "evidence": []
+        },
+        {
+          "term": "entry combination",
+          "score": 0.9057,
+          "evidence": []
+        },
+        {
+          "term": "related",
+          "score": 0.7291,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "cross-references",
+          "score": 139.7066,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hierarchies",
+          "score": 79.6014,
+          "evidence": []
+        },
+        {
+          "term": "mesh browser",
+          "score": 68.4274,
+          "evidence": []
+        },
+        {
+          "term": "thesauri",
+          "score": 63.5026,
+          "evidence": []
+        },
+        {
+          "term": "xml mesh",
+          "score": 60.6881,
+          "evidence": []
+        },
+        {
+          "term": "mesh tree",
+          "score": 58.102,
+          "evidence": []
+        },
+        {
+          "term": "descriptors",
+          "score": 55.8817,
+          "evidence": []
+        },
+        {
+          "term": "qualifiers",
+          "score": 55.7732,
+          "evidence": []
+        }
+      ]
+    },
+    "s009-mesh-tree-structures": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "mesh",
+          "score": 2.7289,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mesh descriptor",
+          "score": 2.5772,
+          "evidence": []
+        },
+        {
+          "term": "tree",
+          "score": 2.1587,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "abnormalities",
+          "score": 1.5511,
+          "evidence": []
+        },
+        {
+          "term": "numbers",
+          "score": 1.0522,
+          "evidence": []
+        },
+        {
+          "term": "syndrome",
+          "score": 0.9892,
+          "evidence": []
+        },
+        {
+          "term": "category",
+          "score": 0.9878,
+          "evidence": []
+        },
+        {
+          "term": "headings",
+          "score": 0.95,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "mesh",
+          "score": 55.8704,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mesh descriptor",
+          "score": 47.9853,
+          "evidence": []
+        },
+        {
+          "term": "tree",
+          "score": 38.2295,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "abnormalities",
+          "score": 29.2992,
+          "evidence": []
+        },
+        {
+          "term": "numbers",
+          "score": 15.5001,
+          "evidence": []
+        },
+        {
+          "term": "category",
+          "score": 14.2837,
+          "evidence": []
+        },
+        {
+          "term": "syndrome",
+          "score": 12.5306,
+          "evidence": []
+        },
+        {
+          "term": "headings",
+          "score": 10.698,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "mesh",
+          "score": 2.8563,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mesh descriptor",
+          "score": 2.7249,
+          "evidence": []
+        },
+        {
+          "term": "tree",
+          "score": 2.0562,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "structures",
+          "score": 1.0126,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "abnormalities",
+          "score": 0.8036,
+          "evidence": []
+        },
+        {
+          "term": "subject",
+          "score": 0.713,
+          "evidence": []
+        },
+        {
+          "term": "vocabulary",
+          "score": 0.689,
+          "evidence": []
+        },
+        {
+          "term": "hierarchical",
+          "score": 0.6198,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "mesh",
+          "score": 65.6599,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mesh descriptor",
+          "score": 50.5718,
+          "evidence": []
+        },
+        {
+          "term": "tree",
+          "score": 26.9776,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "structures",
+          "score": 9.7631,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "related",
+          "score": 8.248,
+          "evidence": []
+        },
+        {
+          "term": "browser",
+          "score": 6.5506,
+          "evidence": []
+        },
+        {
+          "term": "consider",
+          "score": 6.5331,
+          "evidence": []
+        },
+        {
+          "term": "headings",
+          "score": 6.4242,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "mesh",
+          "score": 2.8563,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mesh descriptor",
+          "score": 2.7249,
+          "evidence": []
+        },
+        {
+          "term": "tree",
+          "score": 2.0562,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "structures",
+          "score": 1.0126,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "abnormalities",
+          "score": 0.8036,
+          "evidence": []
+        },
+        {
+          "term": "subject",
+          "score": 0.713,
+          "evidence": []
+        },
+        {
+          "term": "vocabulary",
+          "score": 0.689,
+          "evidence": []
+        },
+        {
+          "term": "hierarchical",
+          "score": 0.6198,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "hierarchies",
+          "score": 92.9243,
+          "evidence": []
+        },
+        {
+          "term": "mesh descriptor",
+          "score": 77.9474,
+          "evidence": []
+        },
+        {
+          "term": "syndrome",
+          "score": 70.9733,
+          "evidence": []
+        },
+        {
+          "term": "smaller",
+          "score": 69.4502,
+          "evidence": []
+        },
+        {
+          "term": "subcategories",
+          "score": 68.1703,
+          "evidence": []
+        },
+        {
+          "term": "thirteen",
+          "score": 68.1703,
+          "evidence": []
+        },
+        {
+          "term": "trees",
+          "score": 65.6439,
+          "evidence": []
+        },
+        {
+          "term": "induced",
+          "score": 61.6529,
+          "evidence": []
+        }
+      ]
+    },
+    "s010-concept-structure-in-mesh": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "concept structure",
+          "score": 6.9485,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "preferred term",
+          "score": 4.96,
+          "evidence": []
+        },
+        {
+          "term": "mesh",
+          "score": 3.7977,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "synonymous terms",
+          "score": 3.3999,
+          "evidence": []
+        },
+        {
+          "term": "mesh record",
+          "score": 3.273,
+          "evidence": []
+        },
+        {
+          "term": "descriptor structure",
+          "score": 2.7501,
+          "evidence": []
+        },
+        {
+          "term": "narrower",
+          "score": 2.2929,
+          "evidence": []
+        },
+        {
+          "term": "record consists",
+          "score": 2.187,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "concept structure",
+          "score": 302.0716,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "preferred term",
+          "score": 232.5676,
+          "evidence": []
+        },
+        {
+          "term": "mesh",
+          "score": 130.3642,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mesh record",
+          "score": 104.1206,
+          "evidence": []
+        },
+        {
+          "term": "synonymous terms",
+          "score": 86.2657,
+          "evidence": []
+        },
+        {
+          "term": "descriptor structure",
+          "score": 75.0508,
+          "evidence": []
+        },
+        {
+          "term": "narrower",
+          "score": 62.653,
+          "evidence": []
+        },
+        {
+          "term": "record consists",
+          "score": 50.9805,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "concept structure",
+          "score": 6.8808,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "preferred term",
+          "score": 5.1764,
+          "evidence": []
+        },
+        {
+          "term": "mesh",
+          "score": 4.1526,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mesh record",
+          "score": 3.6119,
+          "evidence": []
+        },
+        {
+          "term": "synonymous terms",
+          "score": 3.5344,
+          "evidence": []
+        },
+        {
+          "term": "descriptor structure",
+          "score": 2.6641,
+          "evidence": []
+        },
+        {
+          "term": "record consists",
+          "score": 2.2839,
+          "evidence": []
+        },
+        {
+          "term": "narrower",
+          "score": 2.0113,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "concept structure",
+          "score": 299.8216,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "preferred term",
+          "score": 233.6159,
+          "evidence": []
+        },
+        {
+          "term": "mesh",
+          "score": 131.8807,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mesh record",
+          "score": 105.3207,
+          "evidence": []
+        },
+        {
+          "term": "synonymous terms",
+          "score": 89.0744,
+          "evidence": []
+        },
+        {
+          "term": "descriptor structure",
+          "score": 74.1106,
+          "evidence": []
+        },
+        {
+          "term": "narrower",
+          "score": 61.3682,
+          "evidence": []
+        },
+        {
+          "term": "record consists",
+          "score": 51.2534,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "concept structure",
+          "score": 6.8808,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "preferred term",
+          "score": 5.1764,
+          "evidence": []
+        },
+        {
+          "term": "mesh",
+          "score": 4.1526,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mesh record",
+          "score": 3.6119,
+          "evidence": []
+        },
+        {
+          "term": "synonymous terms",
+          "score": 3.5344,
+          "evidence": []
+        },
+        {
+          "term": "descriptor structure",
+          "score": 2.6641,
+          "evidence": []
+        },
+        {
+          "term": "record consists",
+          "score": 2.2839,
+          "evidence": []
+        },
+        {
+          "term": "narrower",
+          "score": 2.0113,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "concept structure",
+          "score": 280.78,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "preferred term",
+          "score": 272.7986,
+          "evidence": []
+        },
+        {
+          "term": "synonymous terms",
+          "score": 259.973,
+          "evidence": []
+        },
+        {
+          "term": "deficiency syndrome",
+          "score": 233.4643,
+          "evidence": []
+        },
+        {
+          "term": "narrower",
+          "score": 196.8971,
+          "evidence": []
+        },
+        {
+          "term": "aids",
+          "score": 185.6198,
+          "evidence": []
+        },
+        {
+          "term": "heart",
+          "score": 184.2942,
+          "evidence": []
+        },
+        {
+          "term": "synonymy",
+          "score": 184.2942,
+          "evidence": []
+        }
+      ]
+    },
+    "s011-mesh-qualifiers-with-scope-notes": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "disease headings",
+          "score": 4.9597,
+          "evidence": []
+        },
+        {
+          "term": "veterinary diseases",
+          "score": 4.4304,
+          "evidence": []
+        },
+        {
+          "term": "living organisms",
+          "score": 4.1587,
+          "evidence": []
+        },
+        {
+          "term": "disease states",
+          "score": 4.138,
+          "evidence": []
+        },
+        {
+          "term": "chemical analysis",
+          "score": 3.8025,
+          "evidence": []
+        },
+        {
+          "term": "drug therapy",
+          "score": 3.7484,
+          "evidence": []
+        },
+        {
+          "term": "therapeutic procedures",
+          "score": 3.5843,
+          "evidence": []
+        },
+        {
+          "term": "cause disease",
+          "score": 3.5838,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "disease headings",
+          "score": 181.6496,
+          "evidence": []
+        },
+        {
+          "term": "veterinary diseases",
+          "score": 159.7028,
+          "evidence": []
+        },
+        {
+          "term": "disease states",
+          "score": 150.9623,
+          "evidence": []
+        },
+        {
+          "term": "cause disease",
+          "score": 136.9465,
+          "evidence": []
+        },
+        {
+          "term": "organs",
+          "score": 119.0407,
+          "evidence": []
+        },
+        {
+          "term": "living organisms",
+          "score": 113.3642,
+          "evidence": []
+        },
+        {
+          "term": "chemical analysis",
+          "score": 105.3977,
+          "evidence": []
+        },
+        {
+          "term": "drug therapy",
+          "score": 90.1816,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "disease headings",
+          "score": 4.9531,
+          "evidence": []
+        },
+        {
+          "term": "veterinary diseases",
+          "score": 4.4213,
+          "evidence": []
+        },
+        {
+          "term": "living organisms",
+          "score": 4.1507,
+          "evidence": []
+        },
+        {
+          "term": "disease states",
+          "score": 4.1331,
+          "evidence": []
+        },
+        {
+          "term": "chemical analysis",
+          "score": 3.7946,
+          "evidence": []
+        },
+        {
+          "term": "drug therapy",
+          "score": 3.7414,
+          "evidence": []
+        },
+        {
+          "term": "therapeutic procedures",
+          "score": 3.5815,
+          "evidence": []
+        },
+        {
+          "term": "cause disease",
+          "score": 3.5756,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "disease headings",
+          "score": 181.5662,
+          "evidence": []
+        },
+        {
+          "term": "veterinary diseases",
+          "score": 159.6126,
+          "evidence": []
+        },
+        {
+          "term": "disease states",
+          "score": 150.8431,
+          "evidence": []
+        },
+        {
+          "term": "cause disease",
+          "score": 136.8094,
+          "evidence": []
+        },
+        {
+          "term": "organs",
+          "score": 118.9405,
+          "evidence": []
+        },
+        {
+          "term": "living organisms",
+          "score": 113.3058,
+          "evidence": []
+        },
+        {
+          "term": "chemical analysis",
+          "score": 105.35,
+          "evidence": []
+        },
+        {
+          "term": "drug therapy",
+          "score": 90.1299,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "disease headings",
+          "score": 4.9531,
+          "evidence": []
+        },
+        {
+          "term": "veterinary diseases",
+          "score": 4.4213,
+          "evidence": []
+        },
+        {
+          "term": "living organisms",
+          "score": 4.1507,
+          "evidence": []
+        },
+        {
+          "term": "disease states",
+          "score": 4.1331,
+          "evidence": []
+        },
+        {
+          "term": "chemical analysis",
+          "score": 3.7946,
+          "evidence": []
+        },
+        {
+          "term": "drug therapy",
+          "score": 3.7414,
+          "evidence": []
+        },
+        {
+          "term": "therapeutic procedures",
+          "score": 3.5815,
+          "evidence": []
+        },
+        {
+          "term": "cause disease",
+          "score": 3.5756,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "living organisms",
+          "score": 141.6201,
+          "evidence": []
+        },
+        {
+          "term": "adverse effects",
+          "score": 123.5944,
+          "evidence": []
+        },
+        {
+          "term": "higher plants",
+          "score": 118.0029,
+          "evidence": []
+        },
+        {
+          "term": "social factors",
+          "score": 102.5672,
+          "evidence": []
+        },
+        {
+          "term": "veterinary diseases",
+          "score": 99.3233,
+          "evidence": []
+        },
+        {
+          "term": "drug therapy",
+          "score": 97.7989,
+          "evidence": []
+        },
+        {
+          "term": "disease states",
+          "score": 92.3636,
+          "evidence": []
+        },
+        {
+          "term": "disease headings",
+          "score": 88.889,
+          "evidence": []
+        }
+      ]
+    },
+    "s012-publication-characteristics-publication-types-wi": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "work consisting",
+          "score": 7.6987,
+          "evidence": []
+        },
+        {
+          "term": "publication work",
+          "score": 6.2776,
+          "evidence": []
+        },
+        {
+          "term": "clinical studies",
+          "score": 6.0707,
+          "evidence": []
+        },
+        {
+          "term": "clinical trials",
+          "score": 6.0413,
+          "evidence": []
+        },
+        {
+          "term": "clinical conference",
+          "score": 5.8232,
+          "evidence": []
+        },
+        {
+          "term": "review work",
+          "score": 5.5978,
+          "evidence": []
+        },
+        {
+          "term": "veterinary work",
+          "score": 5.5529,
+          "evidence": []
+        },
+        {
+          "term": "work written",
+          "score": 5.3358,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "work consisting",
+          "score": 709.0306,
+          "evidence": []
+        },
+        {
+          "term": "publication work",
+          "score": 464.4438,
+          "evidence": []
+        },
+        {
+          "term": "review work",
+          "score": 394.7176,
+          "evidence": []
+        },
+        {
+          "term": "work written",
+          "score": 386.8378,
+          "evidence": []
+        },
+        {
+          "term": "veterinary work",
+          "score": 380.4186,
+          "evidence": []
+        },
+        {
+          "term": "work containing",
+          "score": 366.1993,
+          "evidence": []
+        },
+        {
+          "term": "clinical studies",
+          "score": 350.8569,
+          "evidence": []
+        },
+        {
+          "term": "drawing work",
+          "score": 349.0921,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "work consisting",
+          "score": 7.7227,
+          "evidence": []
+        },
+        {
+          "term": "publication work",
+          "score": 6.2945,
+          "evidence": []
+        },
+        {
+          "term": "clinical studies",
+          "score": 6.0573,
+          "evidence": []
+        },
+        {
+          "term": "clinical trials",
+          "score": 6.0275,
+          "evidence": []
+        },
+        {
+          "term": "clinical conference",
+          "score": 5.8081,
+          "evidence": []
+        },
+        {
+          "term": "review work",
+          "score": 5.602,
+          "evidence": []
+        },
+        {
+          "term": "veterinary work",
+          "score": 5.5563,
+          "evidence": []
+        },
+        {
+          "term": "work written",
+          "score": 5.3501,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "work consisting",
+          "score": 709.0652,
+          "evidence": []
+        },
+        {
+          "term": "publication work",
+          "score": 464.5,
+          "evidence": []
+        },
+        {
+          "term": "review work",
+          "score": 394.7209,
+          "evidence": []
+        },
+        {
+          "term": "work written",
+          "score": 386.8634,
+          "evidence": []
+        },
+        {
+          "term": "veterinary work",
+          "score": 380.4214,
+          "evidence": []
+        },
+        {
+          "term": "work containing",
+          "score": 366.2504,
+          "evidence": []
+        },
+        {
+          "term": "clinical studies",
+          "score": 350.7354,
+          "evidence": []
+        },
+        {
+          "term": "drawing work",
+          "score": 349.104,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "work consisting",
+          "score": 7.7227,
+          "evidence": []
+        },
+        {
+          "term": "publication work",
+          "score": 6.2945,
+          "evidence": []
+        },
+        {
+          "term": "clinical studies",
+          "score": 6.0573,
+          "evidence": []
+        },
+        {
+          "term": "clinical trials",
+          "score": 6.0275,
+          "evidence": []
+        },
+        {
+          "term": "clinical conference",
+          "score": 5.8081,
+          "evidence": []
+        },
+        {
+          "term": "review work",
+          "score": 5.602,
+          "evidence": []
+        },
+        {
+          "term": "veterinary work",
+          "score": 5.5563,
+          "evidence": []
+        },
+        {
+          "term": "work written",
+          "score": 5.3501,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "clinical trials",
+          "score": 56.5512,
+          "evidence": []
+        },
+        {
+          "term": "random house",
+          "score": 51.9055,
+          "evidence": []
+        },
+        {
+          "term": "work consisting",
+          "score": 49.6974,
+          "evidence": []
+        },
+        {
+          "term": "clinical studies",
+          "score": 47.9614,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 47.4063,
+          "evidence": []
+        },
+        {
+          "term": "rare book",
+          "score": 45.1969,
+          "evidence": []
+        },
+        {
+          "term": "clinical conference",
+          "score": 42.156,
+          "evidence": []
+        },
+        {
+          "term": "publication work",
+          "score": 41.5979,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

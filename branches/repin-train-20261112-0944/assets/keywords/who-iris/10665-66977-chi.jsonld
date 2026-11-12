@@ -1,0 +1,675 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-66977-chi",
+  "instance": "who-iris",
+  "about": "library/10665-66977-chi",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7393,
+    "terms": 71095
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "hepb",
+        "score": 2.2731,
+        "evidence": []
+      },
+      {
+        "term": "dtp",
+        "score": 1.6141,
+        "evidence": []
+      },
+      {
+        "term": "dtp-hepb",
+        "score": 1.6033,
+        "evidence": []
+      },
+      {
+        "term": "疫苗和生物制品司",
+        "score": 1.519,
+        "evidence": []
+      },
+      {
+        "term": "hib",
+        "score": 1.4652,
+        "evidence": []
+      },
+      {
+        "term": "opv",
+        "score": 1.4417,
+        "evidence": []
+      },
+      {
+        "term": "的信息",
+        "score": 1.359,
+        "evidence": []
+      },
+      {
+        "term": "unijecttm",
+        "score": 0.9704,
+        "evidence": []
+      },
+      {
+        "term": "bcg",
+        "score": 0.7656,
+        "evidence": []
+      },
+      {
+        "term": "vaccines",
+        "score": 0.5314,
+        "evidence": []
+      },
+      {
+        "term": "int",
+        "score": 0.4332,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "hepb",
+        "score": 112.3386,
+        "evidence": []
+      },
+      {
+        "term": "dtp",
+        "score": 50.1848,
+        "evidence": []
+      },
+      {
+        "term": "dtp-hepb",
+        "score": 39.0484,
+        "evidence": []
+      },
+      {
+        "term": "hib",
+        "score": 36.8142,
+        "evidence": []
+      },
+      {
+        "term": "opv",
+        "score": 35.1826,
+        "evidence": []
+      },
+      {
+        "term": "疫苗和生物制品司",
+        "score": 32.8606,
+        "evidence": []
+      },
+      {
+        "term": "的信息",
+        "score": 29.1954,
+        "evidence": []
+      },
+      {
+        "term": "unijecttm",
+        "score": 15.6194,
+        "evidence": []
+      },
+      {
+        "term": "bcg",
+        "score": 12.6234,
+        "evidence": []
+      },
+      {
+        "term": "vaccines",
+        "score": 6.8805,
+        "evidence": []
+      },
+      {
+        "term": "int",
+        "score": 6.0555,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "vaccine",
+        "score": 0.2039,
+        "evidence": []
+      },
+      {
+        "term": "immunization",
+        "score": 0.1554,
+        "evidence": []
+      },
+      {
+        "term": "doses",
+        "score": 0.1349,
+        "evidence": []
+      },
+      {
+        "term": "vaccination",
+        "score": 0.1306,
+        "evidence": []
+      },
+      {
+        "term": "world",
+        "score": 0.1243,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "organization",
+        "score": 0.1168,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "geneva",
+        "score": 0.1112,
+        "evidence": []
+      },
+      {
+        "term": "dtp",
+        "score": 0.1072,
+        "evidence": []
+      },
+      {
+        "term": "bcg",
+        "score": 0.0922,
+        "evidence": []
+      },
+      {
+        "term": "hepatitis",
+        "score": 0.0918,
+        "evidence": []
+      },
+      {
+        "term": "health",
+        "score": 0.0889,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "schedule",
+        "score": 0.0884,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "anti-hepb",
+        "score": 15.9827,
+        "evidence": []
+      },
+      {
+        "term": "vacuna",
+        "score": 15.3621,
+        "evidence": []
+      },
+      {
+        "term": "dosis",
+        "score": 11.4556,
+        "evidence": []
+      },
+      {
+        "term": "inmunización",
+        "score": 10.6169,
+        "evidence": []
+      },
+      {
+        "term": "hepb",
+        "score": 10.5021,
+        "evidence": []
+      },
+      {
+        "term": "dtp",
+        "score": 8.2372,
+        "evidence": []
+      },
+      {
+        "term": "vaccine",
+        "score": 8.0745,
+        "evidence": []
+      },
+      {
+        "term": "vhb",
+        "score": 6.751,
+        "evidence": []
+      },
+      {
+        "term": "immunization",
+        "score": 6.6723,
+        "evidence": []
+      },
+      {
+        "term": "opv",
+        "score": 6.1543,
+        "evidence": []
+      },
+      {
+        "term": "vaccination",
+        "score": 5.8186,
+        "evidence": []
+      },
+      {
+        "term": "lactantes",
+        "score": 5.2038,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "vaccines",
+        "score": 0.1358,
+        "evidence": []
+      },
+      {
+        "term": "dtp",
+        "score": 0.1072,
+        "evidence": []
+      },
+      {
+        "term": "bcg",
+        "score": 0.0922,
+        "evidence": []
+      },
+      {
+        "term": "int",
+        "score": 0.0798,
+        "evidence": []
+      },
+      {
+        "term": "opv",
+        "score": 0.0779,
+        "evidence": []
+      },
+      {
+        "term": "hib",
+        "score": 0.0742,
+        "evidence": []
+      },
+      {
+        "term": "hepb",
+        "score": 0.0671,
+        "evidence": []
+      },
+      {
+        "term": "dtp-hepb",
+        "score": 0.0174,
+        "evidence": []
+      },
+      {
+        "term": "unijecttm",
+        "score": 0.003,
+        "evidence": []
+      },
+      {
+        "term": "疫苗和生物制品司",
+        "score": 0.0029,
+        "evidence": []
+      },
+      {
+        "term": "的信息",
+        "score": 0.0023,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "提供hpv",
+        "score": 1606.5283,
+        "evidence": []
+      },
+      {
+        "term": "疫苗接种",
+        "score": 1362.795,
+        "evidence": []
+      },
+      {
+        "term": "引进hpv",
+        "score": 1270.7626,
+        "evidence": []
+      },
+      {
+        "term": "感染和宫颈癌",
+        "score": 1213.2062,
+        "evidence": []
+      },
+      {
+        "term": "疫苗的",
+        "score": 1032.7433,
+        "evidence": []
+      },
+      {
+        "term": "的服务",
+        "score": 1022.2364,
+        "evidence": []
+      },
+      {
+        "term": "在其他情况下",
+        "score": 928.6029,
+        "evidence": []
+      },
+      {
+        "term": "人口约",
+        "score": 846.7431,
+        "evidence": []
+      },
+      {
+        "term": "宫颈癌",
+        "score": 833.1654,
+        "evidence": []
+      },
+      {
+        "term": "个部分",
+        "score": 818.1353,
+        "evidence": []
+      },
+      {
+        "term": "监督机制",
+        "score": 731.9164,
+        "evidence": []
+      },
+      {
+        "term": "h5参考实验室和必要的管制实验室",
+        "score": 714.3791,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-将乙型肝炎疫苗纳入国家免疫规划": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hepb",
+          "score": 2.2731,
+          "evidence": []
+        },
+        {
+          "term": "dtp",
+          "score": 1.6141,
+          "evidence": []
+        },
+        {
+          "term": "dtp-hepb",
+          "score": 1.6033,
+          "evidence": []
+        },
+        {
+          "term": "疫苗和生物制品司",
+          "score": 1.519,
+          "evidence": []
+        },
+        {
+          "term": "hib",
+          "score": 1.4652,
+          "evidence": []
+        },
+        {
+          "term": "opv",
+          "score": 1.4417,
+          "evidence": []
+        },
+        {
+          "term": "的信息",
+          "score": 1.359,
+          "evidence": []
+        },
+        {
+          "term": "unijecttm",
+          "score": 0.9704,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hepb",
+          "score": 112.3386,
+          "evidence": []
+        },
+        {
+          "term": "dtp",
+          "score": 50.1848,
+          "evidence": []
+        },
+        {
+          "term": "dtp-hepb",
+          "score": 39.0484,
+          "evidence": []
+        },
+        {
+          "term": "hib",
+          "score": 36.8142,
+          "evidence": []
+        },
+        {
+          "term": "opv",
+          "score": 35.1826,
+          "evidence": []
+        },
+        {
+          "term": "疫苗和生物制品司",
+          "score": 32.8606,
+          "evidence": []
+        },
+        {
+          "term": "的信息",
+          "score": 29.1954,
+          "evidence": []
+        },
+        {
+          "term": "unijecttm",
+          "score": 15.6194,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "vaccine",
+          "score": 0.2039,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.1554,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 0.1349,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.1306,
+          "evidence": []
+        },
+        {
+          "term": "world",
+          "score": 0.1243,
+          "evidence": []
+        },
+        {
+          "term": "organization",
+          "score": 0.1168,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 0.1112,
+          "evidence": []
+        },
+        {
+          "term": "dtp",
+          "score": 0.1072,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "anti-hepb",
+          "score": 15.9827,
+          "evidence": []
+        },
+        {
+          "term": "vacuna",
+          "score": 15.3621,
+          "evidence": []
+        },
+        {
+          "term": "dosis",
+          "score": 11.4556,
+          "evidence": []
+        },
+        {
+          "term": "inmunización",
+          "score": 10.6169,
+          "evidence": []
+        },
+        {
+          "term": "hepb",
+          "score": 10.5021,
+          "evidence": []
+        },
+        {
+          "term": "dtp",
+          "score": 8.2372,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 8.0745,
+          "evidence": []
+        },
+        {
+          "term": "vhb",
+          "score": 6.751,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "vaccines",
+          "score": 0.1358,
+          "evidence": []
+        },
+        {
+          "term": "dtp",
+          "score": 0.1072,
+          "evidence": []
+        },
+        {
+          "term": "bcg",
+          "score": 0.0922,
+          "evidence": []
+        },
+        {
+          "term": "int",
+          "score": 0.0798,
+          "evidence": []
+        },
+        {
+          "term": "opv",
+          "score": 0.0779,
+          "evidence": []
+        },
+        {
+          "term": "hib",
+          "score": 0.0742,
+          "evidence": []
+        },
+        {
+          "term": "hepb",
+          "score": 0.0671,
+          "evidence": []
+        },
+        {
+          "term": "dtp-hepb",
+          "score": 0.0174,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 1606.5283,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 1362.795,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 1270.7626,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 1213.2062,
+          "evidence": []
+        },
+        {
+          "term": "疫苗的",
+          "score": 1032.7433,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 1022.2364,
+          "evidence": []
+        },
+        {
+          "term": "在其他情况下",
+          "score": 928.6029,
+          "evidence": []
+        },
+        {
+          "term": "人口约",
+          "score": 846.7431,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,4336 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "arxiv-2507.07974v2",
+  "instance": "cat-harness",
+  "about": "library/arxiv-2507.07974v2",
+  "corpus": {
+    "library": "cat-harness/library/corpus",
+    "sections": 2232,
+    "terms": 15352
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "injection defense",
+        "score": 22.4573,
+        "evidence": []
+      },
+      {
+        "term": "training-time defense",
+        "score": 21.0976,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "prompt injection",
+        "score": 19.9447,
+        "evidence": []
+      },
+      {
+        "term": "test-time defense",
+        "score": 19.8423,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "injection attacks",
+        "score": 15.9395,
+        "evidence": []
+      },
+      {
+        "term": "utility loss",
+        "score": 15.7034,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "few defensivetokens",
+        "score": 15.4824,
+        "evidence": []
+      },
+      {
+        "term": "sandwich defense",
+        "score": 15.1399,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "defensive tokens",
+        "score": 14.8006,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "alpacafarm security",
+        "score": 14.7623,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "system-level defense",
+        "score": 14.4893,
+        "evidence": []
+      },
+      {
+        "term": "defense baselines",
+        "score": 14.4345,
+        "evidence": [
+          "heading"
+        ]
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "injection defense",
+        "score": 500.5016,
+        "evidence": []
+      },
+      {
+        "term": "prompt injection",
+        "score": 447.8231,
+        "evidence": []
+      },
+      {
+        "term": "training-time defense",
+        "score": 423.8805,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "test-time defense",
+        "score": 409.1127,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "injection attacks",
+        "score": 325.3714,
+        "evidence": []
+      },
+      {
+        "term": "sandwich defense",
+        "score": 323.7108,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "system-level defense",
+        "score": 302.6092,
+        "evidence": []
+      },
+      {
+        "term": "alpacafarm security",
+        "score": 301.9316,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "defense baselines",
+        "score": 300.1165,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "utility loss",
+        "score": 300.0193,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "prompt optimization",
+        "score": 299.672,
+        "evidence": []
+      },
+      {
+        "term": "prompt tuning",
+        "score": 289.225,
+        "evidence": [
+          "heading"
+        ]
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "injection defense",
+        "score": 20.6568,
+        "evidence": []
+      },
+      {
+        "term": "prompt injection",
+        "score": 18.5975,
+        "evidence": []
+      },
+      {
+        "term": "training-time defense",
+        "score": 17.2205,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "test-time defense",
+        "score": 16.5263,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "injection attacks",
+        "score": 15.5303,
+        "evidence": []
+      },
+      {
+        "term": "sandwich defense",
+        "score": 15.1999,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "alpacafarm security",
+        "score": 14.6168,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "system-level defense",
+        "score": 13.3911,
+        "evidence": []
+      },
+      {
+        "term": "utility loss",
+        "score": 13.2616,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "prompt optimization",
+        "score": 13.179,
+        "evidence": []
+      },
+      {
+        "term": "defense baselines",
+        "score": 12.9695,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "gcg asr",
+        "score": 12.6241,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "injection defense",
+        "score": 448.6469,
+        "evidence": []
+      },
+      {
+        "term": "prompt injection",
+        "score": 407.0912,
+        "evidence": []
+      },
+      {
+        "term": "test-time defense",
+        "score": 334.1415,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "training-time defense",
+        "score": 324.8723,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "average asr",
+        "score": 322.5058,
+        "evidence": []
+      },
+      {
+        "term": "sandwich defense",
+        "score": 318.5697,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "injection attacks",
+        "score": 314.0755,
+        "evidence": []
+      },
+      {
+        "term": "gcg asr",
+        "score": 313.0353,
+        "evidence": []
+      },
+      {
+        "term": "alpacafarm security",
+        "score": 309.053,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "system-level defense",
+        "score": 274.7194,
+        "evidence": []
+      },
+      {
+        "term": "ideal defense",
+        "score": 259.8165,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "utility loss",
+        "score": 259.1343,
+        "evidence": [
+          "heading"
+        ]
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "injection defense",
+        "score": 20.6568,
+        "evidence": []
+      },
+      {
+        "term": "prompt injection",
+        "score": 18.5975,
+        "evidence": []
+      },
+      {
+        "term": "training-time defense",
+        "score": 17.2205,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "test-time defense",
+        "score": 16.5263,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "injection attacks",
+        "score": 15.5303,
+        "evidence": []
+      },
+      {
+        "term": "sandwich defense",
+        "score": 15.1999,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "alpacafarm security",
+        "score": 14.6168,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "system-level defense",
+        "score": 13.3911,
+        "evidence": []
+      },
+      {
+        "term": "utility loss",
+        "score": 13.2616,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "prompt optimization",
+        "score": 13.179,
+        "evidence": []
+      },
+      {
+        "term": "defense baselines",
+        "score": 12.9695,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "gcg asr",
+        "score": 12.6241,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "berkeley",
+        "score": 4779.9257,
+        "evidence": []
+      },
+      {
+        "term": "google deepmind",
+        "score": 4118.5013,
+        "evidence": []
+      },
+      {
+        "term": "yizhu",
+        "score": 3024.6686,
+        "evidence": []
+      },
+      {
+        "term": "yizhu wang",
+        "score": 3024.6686,
+        "evidence": []
+      },
+      {
+        "term": "chawin sitawarin",
+        "score": 2801.072,
+        "evidence": []
+      },
+      {
+        "term": "defensiveto kens",
+        "score": 2440.6927,
+        "evidence": []
+      },
+      {
+        "term": "nicholas carlini",
+        "score": 2368.4158,
+        "evidence": []
+      },
+      {
+        "term": "defensiveto ken",
+        "score": 2091.0488,
+        "evidence": []
+      },
+      {
+        "term": "gcg asr",
+        "score": 1871.5752,
+        "evidence": []
+      },
+      {
+        "term": "test-time defense",
+        "score": 1822.7737,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "training-time defense",
+        "score": 1817.4557,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "sizhe",
+        "score": 1685.709,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-abstract": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "prompt injection",
+          "score": 1.4271,
+          "evidence": []
+        },
+        {
+          "term": "system developers",
+          "score": 1.1699,
+          "evidence": []
+        },
+        {
+          "term": "defensivetokens",
+          "score": 1.1035,
+          "evidence": []
+        },
+        {
+          "term": "security",
+          "score": 0.7977,
+          "evidence": []
+        },
+        {
+          "term": "test-time",
+          "score": 0.7926,
+          "evidence": []
+        },
+        {
+          "term": "defense",
+          "score": 0.7922,
+          "evidence": []
+        },
+        {
+          "term": "aisec",
+          "score": 0.7844,
+          "evidence": []
+        },
+        {
+          "term": "training-time",
+          "score": 0.779,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "prompt injection",
+          "score": 23.4681,
+          "evidence": []
+        },
+        {
+          "term": "defensivetokens",
+          "score": 20.2864,
+          "evidence": []
+        },
+        {
+          "term": "security",
+          "score": 19.9954,
+          "evidence": []
+        },
+        {
+          "term": "system developers",
+          "score": 19.3877,
+          "evidence": []
+        },
+        {
+          "term": "defense",
+          "score": 12.1413,
+          "evidence": []
+        },
+        {
+          "term": "aisec",
+          "score": 10.8161,
+          "evidence": []
+        },
+        {
+          "term": "taipei",
+          "score": 10.6255,
+          "evidence": []
+        },
+        {
+          "term": "taiwan",
+          "score": 10.4515,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "prompt injection",
+          "score": 0.9455,
+          "evidence": []
+        },
+        {
+          "term": "defense",
+          "score": 0.5369,
+          "evidence": []
+        },
+        {
+          "term": "utility",
+          "score": 0.4414,
+          "evidence": []
+        },
+        {
+          "term": "defensivetoken",
+          "score": 0.4147,
+          "evidence": []
+        },
+        {
+          "term": "asr",
+          "score": 0.4017,
+          "evidence": []
+        },
+        {
+          "term": "security",
+          "score": 0.395,
+          "evidence": []
+        },
+        {
+          "term": "llm",
+          "score": 0.3479,
+          "evidence": []
+        },
+        {
+          "term": "alpacafarm",
+          "score": 0.3458,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "prompt injection",
+          "score": 19.3986,
+          "evidence": []
+        },
+        {
+          "term": "defense",
+          "score": 8.7762,
+          "evidence": []
+        },
+        {
+          "term": "security",
+          "score": 7.5166,
+          "evidence": []
+        },
+        {
+          "term": "asr",
+          "score": 6.6327,
+          "evidence": []
+        },
+        {
+          "term": "utility",
+          "score": 5.9967,
+          "evidence": []
+        },
+        {
+          "term": "defensivetoken",
+          "score": 5.6282,
+          "evidence": []
+        },
+        {
+          "term": "llm",
+          "score": 5.4591,
+          "evidence": []
+        },
+        {
+          "term": "alpacafarm",
+          "score": 5.1449,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "prompt injection",
+          "score": 0.9455,
+          "evidence": []
+        },
+        {
+          "term": "defense",
+          "score": 0.5369,
+          "evidence": []
+        },
+        {
+          "term": "utility",
+          "score": 0.4414,
+          "evidence": []
+        },
+        {
+          "term": "defensivetokens",
+          "score": 0.4064,
+          "evidence": []
+        },
+        {
+          "term": "security",
+          "score": 0.395,
+          "evidence": []
+        },
+        {
+          "term": "llm",
+          "score": 0.3479,
+          "evidence": []
+        },
+        {
+          "term": "training-time",
+          "score": 0.34,
+          "evidence": []
+        },
+        {
+          "term": "system developers",
+          "score": 0.3317,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "berkeley",
+          "score": 203.1182,
+          "evidence": []
+        },
+        {
+          "term": "deepmind",
+          "score": 161.7139,
+          "evidence": []
+        },
+        {
+          "term": "yizhu",
+          "score": 132.0555,
+          "evidence": []
+        },
+        {
+          "term": "sizhe",
+          "score": 76.8429,
+          "evidence": []
+        },
+        {
+          "term": "struq-full",
+          "score": 74.5981,
+          "evidence": []
+        },
+        {
+          "term": "secalign-lora",
+          "score": 73.6875,
+          "evidence": []
+        },
+        {
+          "term": "struq-lora",
+          "score": 73.6875,
+          "evidence": []
+        },
+        {
+          "term": "chawin",
+          "score": 73.3732,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-001-1-introduction": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "prompt injection",
+          "score": 1.7741,
+          "evidence": []
+        },
+        {
+          "term": "injection attacks",
+          "score": 1.5724,
+          "evidence": []
+        },
+        {
+          "term": "llm system",
+          "score": 1.5344,
+          "evidence": []
+        },
+        {
+          "term": "defensive",
+          "score": 1.2119,
+          "evidence": []
+        },
+        {
+          "term": "llm-integrated applications",
+          "score": 1.1921,
+          "evidence": []
+        },
+        {
+          "term": "developer",
+          "score": 1.0793,
+          "evidence": []
+        },
+        {
+          "term": "provider",
+          "score": 0.9672,
+          "evidence": []
+        },
+        {
+          "term": "defensivetokens",
+          "score": 0.9505,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "llm system",
+          "score": 47.5323,
+          "evidence": []
+        },
+        {
+          "term": "prompt injection",
+          "score": 37.5329,
+          "evidence": []
+        },
+        {
+          "term": "injection attacks",
+          "score": 28.0308,
+          "evidence": []
+        },
+        {
+          "term": "defensive",
+          "score": 25.013,
+          "evidence": []
+        },
+        {
+          "term": "developer",
+          "score": 24.7628,
+          "evidence": []
+        },
+        {
+          "term": "tokens",
+          "score": 20.0472,
+          "evidence": []
+        },
+        {
+          "term": "provider",
+          "score": 19.9854,
+          "evidence": []
+        },
+        {
+          "term": "llm-integrated applications",
+          "score": 16.273,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "prompt injection",
+          "score": 1.2271,
+          "evidence": []
+        },
+        {
+          "term": "injection attacks",
+          "score": 1.0025,
+          "evidence": []
+        },
+        {
+          "term": "llm system",
+          "score": 0.7541,
+          "evidence": []
+        },
+        {
+          "term": "defense",
+          "score": 0.6453,
+          "evidence": []
+        },
+        {
+          "term": "utility",
+          "score": 0.5745,
+          "evidence": []
+        },
+        {
+          "term": "security",
+          "score": 0.5171,
+          "evidence": []
+        },
+        {
+          "term": "asr",
+          "score": 0.49,
+          "evidence": []
+        },
+        {
+          "term": "defensivetoken",
+          "score": 0.475,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "prompt injection",
+          "score": 27.9754,
+          "evidence": []
+        },
+        {
+          "term": "injection attacks",
+          "score": 20.337,
+          "evidence": []
+        },
+        {
+          "term": "llm system",
+          "score": 14.5894,
+          "evidence": []
+        },
+        {
+          "term": "defense",
+          "score": 11.22,
+          "evidence": []
+        },
+        {
+          "term": "security",
+          "score": 10.0646,
+          "evidence": []
+        },
+        {
+          "term": "asr",
+          "score": 7.8535,
+          "evidence": []
+        },
+        {
+          "term": "utility",
+          "score": 7.5562,
+          "evidence": []
+        },
+        {
+          "term": "defensivetoken",
+          "score": 6.4094,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "prompt injection",
+          "score": 1.2271,
+          "evidence": []
+        },
+        {
+          "term": "injection attacks",
+          "score": 1.0025,
+          "evidence": []
+        },
+        {
+          "term": "llm system",
+          "score": 0.7541,
+          "evidence": []
+        },
+        {
+          "term": "defense",
+          "score": 0.6453,
+          "evidence": []
+        },
+        {
+          "term": "utility",
+          "score": 0.5745,
+          "evidence": []
+        },
+        {
+          "term": "security",
+          "score": 0.5171,
+          "evidence": []
+        },
+        {
+          "term": "defensivetokens",
+          "score": 0.4608,
+          "evidence": []
+        },
+        {
+          "term": "training-time",
+          "score": 0.3935,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "struq-full",
+          "score": 67.1078,
+          "evidence": []
+        },
+        {
+          "term": "secalign-lora",
+          "score": 66.1594,
+          "evidence": []
+        },
+        {
+          "term": "struq-lora",
+          "score": 66.1594,
+          "evidence": []
+        },
+        {
+          "term": "textgrad",
+          "score": 65.9386,
+          "evidence": []
+        },
+        {
+          "term": "defensiveto",
+          "score": 64.2052,
+          "evidence": []
+        },
+        {
+          "term": "sub-figure",
+          "score": 63.2662,
+          "evidence": []
+        },
+        {
+          "term": "winrate",
+          "score": 60.5406,
+          "evidence": []
+        },
+        {
+          "term": "falcon3-7b-instruct",
+          "score": 55.8464,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-002-3-defensivetoken": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "defensivetoken",
+          "score": 2.7784,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "training-time defenses",
+          "score": 2.2731,
+          "evidence": []
+        },
+        {
+          "term": "utility loss",
+          "score": 2.2534,
+          "evidence": []
+        },
+        {
+          "term": "existing defenses",
+          "score": 1.6041,
+          "evidence": []
+        },
+        {
+          "term": "test-time baseline",
+          "score": 1.5483,
+          "evidence": []
+        },
+        {
+          "term": "prompt injection",
+          "score": 1.1604,
+          "evidence": []
+        },
+        {
+          "term": "asr",
+          "score": 1.1589,
+          "evidence": []
+        },
+        {
+          "term": "test time",
+          "score": 1.0155,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "defensivetoken",
+          "score": 61.7484,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "utility loss",
+          "score": 57.9636,
+          "evidence": []
+        },
+        {
+          "term": "training-time defenses",
+          "score": 45.6658,
+          "evidence": []
+        },
+        {
+          "term": "existing defenses",
+          "score": 32.25,
+          "evidence": []
+        },
+        {
+          "term": "test-time baseline",
+          "score": 22.0828,
+          "evidence": []
+        },
+        {
+          "term": "asr",
+          "score": 20.0104,
+          "evidence": []
+        },
+        {
+          "term": "prompt injections",
+          "score": 16.4581,
+          "evidence": []
+        },
+        {
+          "term": "test time",
+          "score": 15.8667,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "defensivetoken",
+          "score": 1.1529,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prompt injection",
+          "score": 1.1284,
+          "evidence": []
+        },
+        {
+          "term": "training-time defenses",
+          "score": 1.0756,
+          "evidence": []
+        },
+        {
+          "term": "utility loss",
+          "score": 1.0094,
+          "evidence": []
+        },
+        {
+          "term": "existing defenses",
+          "score": 0.7448,
+          "evidence": []
+        },
+        {
+          "term": "asr",
+          "score": 0.7201,
+          "evidence": []
+        },
+        {
+          "term": "attack",
+          "score": 0.5376,
+          "evidence": []
+        },
+        {
+          "term": "test-time baseline",
+          "score": 0.5331,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "defensivetoken",
+          "score": 25.4628,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "asr",
+          "score": 22.6697,
+          "evidence": []
+        },
+        {
+          "term": "utility loss",
+          "score": 20.4326,
+          "evidence": []
+        },
+        {
+          "term": "prompt injection",
+          "score": 17.9815,
+          "evidence": []
+        },
+        {
+          "term": "training-time defenses",
+          "score": 16.6556,
+          "evidence": []
+        },
+        {
+          "term": "existing defenses",
+          "score": 11.8813,
+          "evidence": []
+        },
+        {
+          "term": "alpacafarm",
+          "score": 10.7456,
+          "evidence": []
+        },
+        {
+          "term": "tokens",
+          "score": 9.7621,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "defensivetoken",
+          "score": 1.1529,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prompt injection",
+          "score": 1.1284,
+          "evidence": []
+        },
+        {
+          "term": "training-time defenses",
+          "score": 1.0756,
+          "evidence": []
+        },
+        {
+          "term": "utility loss",
+          "score": 1.0094,
+          "evidence": []
+        },
+        {
+          "term": "existing defenses",
+          "score": 0.7448,
+          "evidence": []
+        },
+        {
+          "term": "asr",
+          "score": 0.7201,
+          "evidence": []
+        },
+        {
+          "term": "attack",
+          "score": 0.5376,
+          "evidence": []
+        },
+        {
+          "term": "test-time baseline",
+          "score": 0.5331,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "defensivetoken",
+          "score": 194.0635,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "training-time defenses",
+          "score": 125.4515,
+          "evidence": []
+        },
+        {
+          "term": "struq-full",
+          "score": 122.6556,
+          "evidence": []
+        },
+        {
+          "term": "secalign-lora",
+          "score": 120.7315,
+          "evidence": []
+        },
+        {
+          "term": "struq-lora",
+          "score": 120.7315,
+          "evidence": []
+        },
+        {
+          "term": "textgrad",
+          "score": 119.7608,
+          "evidence": []
+        },
+        {
+          "term": "defensiveto",
+          "score": 114.3019,
+          "evidence": []
+        },
+        {
+          "term": "sub-figure",
+          "score": 111.4185,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-003-2-related-work": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "prevention-based defenses",
+          "score": 2.4825,
+          "evidence": []
+        },
+        {
+          "term": "detection-based defenses",
+          "score": 2.3085,
+          "evidence": []
+        },
+        {
+          "term": "prompt injection",
+          "score": 2.1581,
+          "evidence": []
+        },
+        {
+          "term": "prompt optimization",
+          "score": 2.1285,
+          "evidence": []
+        },
+        {
+          "term": "soft prompt",
+          "score": 1.9766,
+          "evidence": []
+        },
+        {
+          "term": "prompt tuning",
+          "score": 1.7821,
+          "evidence": []
+        },
+        {
+          "term": "system-level defense",
+          "score": 1.7737,
+          "evidence": []
+        },
+        {
+          "term": "against prompt",
+          "score": 1.4846,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "prompt optimization",
+          "score": 66.9273,
+          "evidence": []
+        },
+        {
+          "term": "prompt injection",
+          "score": 63.2515,
+          "evidence": []
+        },
+        {
+          "term": "prevention-based defenses",
+          "score": 52.8532,
+          "evidence": []
+        },
+        {
+          "term": "soft prompt",
+          "score": 50.6386,
+          "evidence": []
+        },
+        {
+          "term": "detection-based defenses",
+          "score": 49.9107,
+          "evidence": []
+        },
+        {
+          "term": "prompt tuning",
+          "score": 47.4273,
+          "evidence": []
+        },
+        {
+          "term": "against prompt",
+          "score": 42.1983,
+          "evidence": []
+        },
+        {
+          "term": "llm system",
+          "score": 35.762,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "prompt injection",
+          "score": 1.4425,
+          "evidence": []
+        },
+        {
+          "term": "system-level defense",
+          "score": 1.0311,
+          "evidence": []
+        },
+        {
+          "term": "prompt optimization",
+          "score": 0.9649,
+          "evidence": []
+        },
+        {
+          "term": "against prompt",
+          "score": 0.9642,
+          "evidence": []
+        },
+        {
+          "term": "prompt tuning",
+          "score": 0.8932,
+          "evidence": []
+        },
+        {
+          "term": "soft prompt",
+          "score": 0.7929,
+          "evidence": []
+        },
+        {
+          "term": "detection-based defenses",
+          "score": 0.7748,
+          "evidence": []
+        },
+        {
+          "term": "llm system",
+          "score": 0.7615,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "prompt injection",
+          "score": 42.5966,
+          "evidence": []
+        },
+        {
+          "term": "against prompt",
+          "score": 27.6844,
+          "evidence": []
+        },
+        {
+          "term": "prompt optimization",
+          "score": 24.8191,
+          "evidence": []
+        },
+        {
+          "term": "prompt tuning",
+          "score": 23.9209,
+          "evidence": []
+        },
+        {
+          "term": "soft prompt",
+          "score": 21.5812,
+          "evidence": []
+        },
+        {
+          "term": "system-level defense",
+          "score": 19.0268,
+          "evidence": []
+        },
+        {
+          "term": "llm system",
+          "score": 15.1629,
+          "evidence": []
+        },
+        {
+          "term": "detection-based defenses",
+          "score": 13.8461,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "prompt injection",
+          "score": 1.4425,
+          "evidence": []
+        },
+        {
+          "term": "system-level defense",
+          "score": 1.0311,
+          "evidence": []
+        },
+        {
+          "term": "prompt optimization",
+          "score": 0.9649,
+          "evidence": []
+        },
+        {
+          "term": "against prompt",
+          "score": 0.9642,
+          "evidence": []
+        },
+        {
+          "term": "prompt tuning",
+          "score": 0.8932,
+          "evidence": []
+        },
+        {
+          "term": "soft prompt",
+          "score": 0.7929,
+          "evidence": []
+        },
+        {
+          "term": "detection-based defenses",
+          "score": 0.7748,
+          "evidence": []
+        },
+        {
+          "term": "llm system",
+          "score": 0.7615,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "struq-full",
+          "score": 63.0805,
+          "evidence": []
+        },
+        {
+          "term": "textgrad",
+          "score": 62.1675,
+          "evidence": []
+        },
+        {
+          "term": "secalign-lora",
+          "score": 61.9947,
+          "evidence": []
+        },
+        {
+          "term": "struq-lora",
+          "score": 61.9947,
+          "evidence": []
+        },
+        {
+          "term": "defensiveto",
+          "score": 60.7041,
+          "evidence": []
+        },
+        {
+          "term": "sub-figure",
+          "score": 60.0723,
+          "evidence": []
+        },
+        {
+          "term": "prevention-based defenses",
+          "score": 59.883,
+          "evidence": []
+        },
+        {
+          "term": "system-level defense",
+          "score": 58.8578,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-004-31-preliminaries": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "prompt injection",
+          "score": 1.4936,
+          "evidence": []
+        },
+        {
+          "term": "resp",
+          "score": 1.1647,
+          "evidence": []
+        },
+        {
+          "term": "inst",
+          "score": 1.0935,
+          "evidence": []
+        },
+        {
+          "term": "please write",
+          "score": 1.0789,
+          "evidence": []
+        },
+        {
+          "term": "write clear",
+          "score": 0.9786,
+          "evidence": []
+        },
+        {
+          "term": "efficient algorithm",
+          "score": 0.9388,
+          "evidence": []
+        },
+        {
+          "term": "instruction",
+          "score": 0.8567,
+          "evidence": []
+        },
+        {
+          "term": "attacker",
+          "score": 0.7962,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "prompt injection",
+          "score": 25.7988,
+          "evidence": []
+        },
+        {
+          "term": "resp",
+          "score": 18.9731,
+          "evidence": []
+        },
+        {
+          "term": "inst",
+          "score": 17.2942,
+          "evidence": []
+        },
+        {
+          "term": "instruction",
+          "score": 16.6431,
+          "evidence": []
+        },
+        {
+          "term": "please write",
+          "score": 14.3082,
+          "evidence": []
+        },
+        {
+          "term": "write clear",
+          "score": 13.3988,
+          "evidence": []
+        },
+        {
+          "term": "attacker",
+          "score": 12.2992,
+          "evidence": []
+        },
+        {
+          "term": "efficient algorithm",
+          "score": 11.9788,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "prompt injection",
+          "score": 0.6912,
+          "evidence": []
+        },
+        {
+          "term": "llm",
+          "score": 0.2854,
+          "evidence": []
+        },
+        {
+          "term": "attack",
+          "score": 0.2792,
+          "evidence": []
+        },
+        {
+          "term": "instruction",
+          "score": 0.2589,
+          "evidence": []
+        },
+        {
+          "term": "defense",
+          "score": 0.2538,
+          "evidence": []
+        },
+        {
+          "term": "utility",
+          "score": 0.2271,
+          "evidence": []
+        },
+        {
+          "term": "security",
+          "score": 0.2151,
+          "evidence": []
+        },
+        {
+          "term": "asr",
+          "score": 0.1978,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "prompt injection",
+          "score": 14.3949,
+          "evidence": []
+        },
+        {
+          "term": "llm",
+          "score": 5.3772,
+          "evidence": []
+        },
+        {
+          "term": "security",
+          "score": 3.7925,
+          "evidence": []
+        },
+        {
+          "term": "attack",
+          "score": 3.7832,
+          "evidence": []
+        },
+        {
+          "term": "defense",
+          "score": 3.6999,
+          "evidence": []
+        },
+        {
+          "term": "instruction",
+          "score": 3.4926,
+          "evidence": []
+        },
+        {
+          "term": "user",
+          "score": 2.8183,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 2.7194,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "prompt injection",
+          "score": 0.6912,
+          "evidence": []
+        },
+        {
+          "term": "llm",
+          "score": 0.2854,
+          "evidence": []
+        },
+        {
+          "term": "instruction",
+          "score": 0.2589,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.1901,
+          "evidence": []
+        },
+        {
+          "term": "user",
+          "score": 0.1878,
+          "evidence": []
+        },
+        {
+          "term": "input",
+          "score": 0.1707,
+          "evidence": []
+        },
+        {
+          "term": "following problem",
+          "score": 0.1438,
+          "evidence": []
+        },
+        {
+          "term": "efficient algorithm",
+          "score": 0.1421,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "sub-figure",
+          "score": 25.0093,
+          "evidence": []
+        },
+        {
+          "term": "defensiveto",
+          "score": 24.4473,
+          "evidence": []
+        },
+        {
+          "term": "textgrad",
+          "score": 23.935,
+          "evidence": []
+        },
+        {
+          "term": "struq-full",
+          "score": 23.6551,
+          "evidence": []
+        },
+        {
+          "term": "secalign-lora",
+          "score": 23.1202,
+          "evidence": []
+        },
+        {
+          "term": "struq-lora",
+          "score": 23.1202,
+          "evidence": []
+        },
+        {
+          "term": "human-designed",
+          "score": 22.4844,
+          "evidence": []
+        },
+        {
+          "term": "winrate",
+          "score": 22.2954,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-005-32-motivation": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "training-time defenses",
+          "score": 2.4193,
+          "evidence": []
+        },
+        {
+          "term": "defenses cannot",
+          "score": 1.6858,
+          "evidence": []
+        },
+        {
+          "term": "utility loss",
+          "score": 1.6704,
+          "evidence": []
+        },
+        {
+          "term": "llm system",
+          "score": 1.6003,
+          "evidence": []
+        },
+        {
+          "term": "system developers",
+          "score": 1.4857,
+          "evidence": []
+        },
+        {
+          "term": "defensivetokens",
+          "score": 1.2285,
+          "evidence": []
+        },
+        {
+          "term": "defen",
+          "score": 0.9505,
+          "evidence": []
+        },
+        {
+          "term": "inserted",
+          "score": 0.906,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "training-time defenses",
+          "score": 53.9201,
+          "evidence": []
+        },
+        {
+          "term": "llm system",
+          "score": 47.9833,
+          "evidence": []
+        },
+        {
+          "term": "defenses cannot",
+          "score": 38.5551,
+          "evidence": []
+        },
+        {
+          "term": "system developers",
+          "score": 34.6212,
+          "evidence": []
+        },
+        {
+          "term": "utility loss",
+          "score": 32.42,
+          "evidence": []
+        },
+        {
+          "term": "defensivetokens",
+          "score": 25.358,
+          "evidence": []
+        },
+        {
+          "term": "security",
+          "score": 15.552,
+          "evidence": []
+        },
+        {
+          "term": "defen",
+          "score": 13.2241,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "training-time defenses",
+          "score": 0.8348,
+          "evidence": []
+        },
+        {
+          "term": "utility loss",
+          "score": 0.7915,
+          "evidence": []
+        },
+        {
+          "term": "llm system",
+          "score": 0.5764,
+          "evidence": []
+        },
+        {
+          "term": "injection",
+          "score": 0.4968,
+          "evidence": []
+        },
+        {
+          "term": "defenses cannot",
+          "score": 0.4717,
+          "evidence": []
+        },
+        {
+          "term": "asr",
+          "score": 0.4697,
+          "evidence": []
+        },
+        {
+          "term": "prompt",
+          "score": 0.4612,
+          "evidence": []
+        },
+        {
+          "term": "defensivetoken",
+          "score": 0.4392,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "utility loss",
+          "score": 14.0637,
+          "evidence": []
+        },
+        {
+          "term": "training-time defenses",
+          "score": 13.6972,
+          "evidence": []
+        },
+        {
+          "term": "asr",
+          "score": 12.1368,
+          "evidence": []
+        },
+        {
+          "term": "llm system",
+          "score": 11.442,
+          "evidence": []
+        },
+        {
+          "term": "prompt",
+          "score": 11.2129,
+          "evidence": []
+        },
+        {
+          "term": "injection",
+          "score": 11.1261,
+          "evidence": []
+        },
+        {
+          "term": "defenses cannot",
+          "score": 9.441,
+          "evidence": []
+        },
+        {
+          "term": "security",
+          "score": 9.084,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "training-time defenses",
+          "score": 0.8348,
+          "evidence": []
+        },
+        {
+          "term": "utility loss",
+          "score": 0.7915,
+          "evidence": []
+        },
+        {
+          "term": "llm system",
+          "score": 0.5764,
+          "evidence": []
+        },
+        {
+          "term": "defenses cannot",
+          "score": 0.5241,
+          "evidence": []
+        },
+        {
+          "term": "prompt",
+          "score": 0.4612,
+          "evidence": []
+        },
+        {
+          "term": "security",
+          "score": 0.4251,
+          "evidence": []
+        },
+        {
+          "term": "defensivetokens",
+          "score": 0.4134,
+          "evidence": []
+        },
+        {
+          "term": "system developers",
+          "score": 0.3417,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "training-time defenses",
+          "score": 95.8095,
+          "evidence": []
+        },
+        {
+          "term": "struq-full",
+          "score": 89.0966,
+          "evidence": []
+        },
+        {
+          "term": "secalign-lora",
+          "score": 87.6192,
+          "evidence": []
+        },
+        {
+          "term": "struq-lora",
+          "score": 87.6192,
+          "evidence": []
+        },
+        {
+          "term": "textgrad",
+          "score": 87.3137,
+          "evidence": []
+        },
+        {
+          "term": "defensiveto",
+          "score": 84.2901,
+          "evidence": []
+        },
+        {
+          "term": "sub-figure",
+          "score": 82.7441,
+          "evidence": []
+        },
+        {
+          "term": "winrate",
+          "score": 80.1856,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-33-methodology": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "defensive instruction",
+          "score": 1.8747,
+          "evidence": []
+        },
+        {
+          "term": "defensive training",
+          "score": 1.7632,
+          "evidence": []
+        },
+        {
+          "term": "instruction tuning",
+          "score": 1.4337,
+          "evidence": []
+        },
+        {
+          "term": "tuning dataset",
+          "score": 1.4175,
+          "evidence": []
+        },
+        {
+          "term": "struq",
+          "score": 0.8482,
+          "evidence": []
+        },
+        {
+          "term": "trick",
+          "score": 0.8176,
+          "evidence": []
+        },
+        {
+          "term": "embeddings",
+          "score": 0.785,
+          "evidence": []
+        },
+        {
+          "term": "loss",
+          "score": 0.7447,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "defensive instruction",
+          "score": 34.9989,
+          "evidence": []
+        },
+        {
+          "term": "defensive training",
+          "score": 33.6124,
+          "evidence": []
+        },
+        {
+          "term": "tuning dataset",
+          "score": 24.6542,
+          "evidence": []
+        },
+        {
+          "term": "llm",
+          "score": 11.7703,
+          "evidence": []
+        },
+        {
+          "term": "embeddings",
+          "score": 11.5815,
+          "evidence": []
+        },
+        {
+          "term": "loss",
+          "score": 11.3365,
+          "evidence": []
+        },
+        {
+          "term": "trick",
+          "score": 11.2624,
+          "evidence": []
+        },
+        {
+          "term": "struq",
+          "score": 11.0269,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "defensive instruction",
+          "score": 0.4998,
+          "evidence": []
+        },
+        {
+          "term": "defensive training",
+          "score": 0.4668,
+          "evidence": []
+        },
+        {
+          "term": "instruction tuning",
+          "score": 0.4202,
+          "evidence": []
+        },
+        {
+          "term": "defense",
+          "score": 0.3875,
+          "evidence": []
+        },
+        {
+          "term": "injection",
+          "score": 0.3818,
+          "evidence": []
+        },
+        {
+          "term": "tuning dataset",
+          "score": 0.3733,
+          "evidence": []
+        },
+        {
+          "term": "defensivetoken",
+          "score": 0.3576,
+          "evidence": []
+        },
+        {
+          "term": "prompt",
+          "score": 0.3435,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "asr",
+          "score": 6.0701,
+          "evidence": []
+        },
+        {
+          "term": "defense",
+          "score": 5.4977,
+          "evidence": []
+        },
+        {
+          "term": "defensivetoken",
+          "score": 5.073,
+          "evidence": []
+        },
+        {
+          "term": "alpacafarm",
+          "score": 4.6885,
+          "evidence": []
+        },
+        {
+          "term": "injection",
+          "score": 4.5419,
+          "evidence": []
+        },
+        {
+          "term": "utility",
+          "score": 4.5107,
+          "evidence": []
+        },
+        {
+          "term": "llm",
+          "score": 4.3173,
+          "evidence": []
+        },
+        {
+          "term": "defensive training",
+          "score": 4.3033,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "defensive instruction",
+          "score": 0.4998,
+          "evidence": []
+        },
+        {
+          "term": "defensive training",
+          "score": 0.4668,
+          "evidence": []
+        },
+        {
+          "term": "instruction tuning",
+          "score": 0.4202,
+          "evidence": []
+        },
+        {
+          "term": "defense",
+          "score": 0.3875,
+          "evidence": []
+        },
+        {
+          "term": "tuning dataset",
+          "score": 0.3733,
+          "evidence": []
+        },
+        {
+          "term": "utility",
+          "score": 0.3365,
+          "evidence": []
+        },
+        {
+          "term": "llm",
+          "score": 0.3127,
+          "evidence": []
+        },
+        {
+          "term": "embeddings",
+          "score": 0.2926,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "struq-full",
+          "score": 83.283,
+          "evidence": []
+        },
+        {
+          "term": "secalign-lora",
+          "score": 82.6133,
+          "evidence": []
+        },
+        {
+          "term": "struq-lora",
+          "score": 82.6133,
+          "evidence": []
+        },
+        {
+          "term": "textgrad",
+          "score": 81.2103,
+          "evidence": []
+        },
+        {
+          "term": "defensiveto",
+          "score": 77.9397,
+          "evidence": []
+        },
+        {
+          "term": "sub-figure",
+          "score": 75.8047,
+          "evidence": []
+        },
+        {
+          "term": "winrate",
+          "score": 75.1402,
+          "evidence": []
+        },
+        {
+          "term": "falcon3-7b-instruct",
+          "score": 68.6317,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-007-34-connection-to-prompt-tuning": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "prompt tuning",
+          "score": 3.4122,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "trainable embeddings",
+          "score": 1.9193,
+          "evidence": []
+        },
+        {
+          "term": "across samples",
+          "score": 1.1869,
+          "evidence": []
+        },
+        {
+          "term": "task instruction",
+          "score": 1.1407,
+          "evidence": []
+        },
+        {
+          "term": "resp",
+          "score": 0.923,
+          "evidence": []
+        },
+        {
+          "term": "inst",
+          "score": 0.8666,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "prompt tuning",
+          "score": 69.5221,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "trainable embeddings",
+          "score": 29.477,
+          "evidence": []
+        },
+        {
+          "term": "across samples",
+          "score": 21.0895,
+          "evidence": []
+        },
+        {
+          "term": "task instruction",
+          "score": 17.8693,
+          "evidence": []
+        },
+        {
+          "term": "different across",
+          "score": 14.819,
+          "evidence": []
+        },
+        {
+          "term": "utility",
+          "score": 14.2071,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "prompt tuning",
+          "score": 0.8201,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "task instruction",
+          "score": 0.3349,
+          "evidence": []
+        },
+        {
+          "term": "injection",
+          "score": 0.2878,
+          "evidence": []
+        },
+        {
+          "term": "defense",
+          "score": 0.2835,
+          "evidence": []
+        },
+        {
+          "term": "utility",
+          "score": 0.2652,
+          "evidence": []
+        },
+        {
+          "term": "asr",
+          "score": 0.2487,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "prompt tuning",
+          "score": 13.2673,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "injection",
+          "score": 5.3541,
+          "evidence": []
+        },
+        {
+          "term": "defense",
+          "score": 5.1703,
+          "evidence": []
+        },
+        {
+          "term": "asr",
+          "score": 4.5603,
+          "evidence": []
+        },
+        {
+          "term": "task instruction",
+          "score": 4.1752,
+          "evidence": []
+        },
+        {
+          "term": "utility",
+          "score": 4.157,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "prompt tuning",
+          "score": 0.8201,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "task instruction",
+          "score": 0.3349,
+          "evidence": []
+        },
+        {
+          "term": "utility",
+          "score": 0.2652,
+          "evidence": []
+        },
+        {
+          "term": "defensivetoken",
+          "score": 0.2327,
+          "evidence": []
+        },
+        {
+          "term": "trainable embeddings",
+          "score": 0.213,
+          "evidence": []
+        },
+        {
+          "term": "tokens",
+          "score": 0.1923,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "struq-full",
+          "score": 72.1883,
+          "evidence": []
+        },
+        {
+          "term": "secalign-lora",
+          "score": 71.2242,
+          "evidence": []
+        },
+        {
+          "term": "struq-lora",
+          "score": 71.2242,
+          "evidence": []
+        },
+        {
+          "term": "textgrad",
+          "score": 70.7203,
+          "evidence": []
+        },
+        {
+          "term": "defensiveto",
+          "score": 68.0253,
+          "evidence": []
+        },
+        {
+          "term": "sub-figure",
+          "score": 66.5829,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-009-41-setup": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "year ago",
+          "score": 2.8404,
+          "evidence": []
+        },
+        {
+          "term": "alpacafarm security",
+          "score": 2.7074,
+          "evidence": []
+        },
+        {
+          "term": "ignore attack",
+          "score": 2.6076,
+          "evidence": []
+        },
+        {
+          "term": "huge affect",
+          "score": 2.5295,
+          "evidence": []
+        },
+        {
+          "term": "huge effect",
+          "score": 2.1854,
+          "evidence": []
+        },
+        {
+          "term": "attack succeeds",
+          "score": 2.1683,
+          "evidence": []
+        },
+        {
+          "term": "prompt injection",
+          "score": 2.157,
+          "evidence": []
+        },
+        {
+          "term": "attack variants",
+          "score": 2.0383,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "ignore attack",
+          "score": 85.1362,
+          "evidence": []
+        },
+        {
+          "term": "alpacafarm security",
+          "score": 76.3076,
+          "evidence": []
+        },
+        {
+          "term": "prompt injection",
+          "score": 67.0285,
+          "evidence": []
+        },
+        {
+          "term": "year ago",
+          "score": 64.2168,
+          "evidence": []
+        },
+        {
+          "term": "attack succeeds",
+          "score": 63.2149,
+          "evidence": []
+        },
+        {
+          "term": "attack variants",
+          "score": 61.3463,
+          "evidence": []
+        },
+        {
+          "term": "attack success",
+          "score": 59.1491,
+          "evidence": []
+        },
+        {
+          "term": "huge affect",
+          "score": 53.9345,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "prompt injection",
+          "score": 2.2714,
+          "evidence": []
+        },
+        {
+          "term": "alpacafarm security",
+          "score": 1.9608,
+          "evidence": []
+        },
+        {
+          "term": "ignore attack",
+          "score": 1.5318,
+          "evidence": []
+        },
+        {
+          "term": "llm judge",
+          "score": 1.4306,
+          "evidence": []
+        },
+        {
+          "term": "attack success",
+          "score": 1.3657,
+          "evidence": []
+        },
+        {
+          "term": "attack succeeds",
+          "score": 1.2746,
+          "evidence": []
+        },
+        {
+          "term": "asr",
+          "score": 1.2165,
+          "evidence": []
+        },
+        {
+          "term": "security evaluation",
+          "score": 1.2138,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "prompt injection",
+          "score": 48.9156,
+          "evidence": []
+        },
+        {
+          "term": "ignore attack",
+          "score": 37.6098,
+          "evidence": []
+        },
+        {
+          "term": "alpacafarm security",
+          "score": 35.9956,
+          "evidence": []
+        },
+        {
+          "term": "asr",
+          "score": 29.8599,
+          "evidence": []
+        },
+        {
+          "term": "attack success",
+          "score": 28.0222,
+          "evidence": []
+        },
+        {
+          "term": "attack succeeds",
+          "score": 27.2341,
+          "evidence": []
+        },
+        {
+          "term": "llm judge",
+          "score": 26.0698,
+          "evidence": []
+        },
+        {
+          "term": "security evaluation",
+          "score": 24.7897,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "prompt injection",
+          "score": 2.2714,
+          "evidence": []
+        },
+        {
+          "term": "alpacafarm security",
+          "score": 1.9608,
+          "evidence": []
+        },
+        {
+          "term": "ignore attack",
+          "score": 1.5318,
+          "evidence": []
+        },
+        {
+          "term": "llm judge",
+          "score": 1.4306,
+          "evidence": []
+        },
+        {
+          "term": "attack success",
+          "score": 1.3657,
+          "evidence": []
+        },
+        {
+          "term": "attack succeeds",
+          "score": 1.2746,
+          "evidence": []
+        },
+        {
+          "term": "asr",
+          "score": 1.2165,
+          "evidence": []
+        },
+        {
+          "term": "security evaluation",
+          "score": 1.2138,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "struq-full",
+          "score": 68.8516,
+          "evidence": []
+        },
+        {
+          "term": "secalign-lora",
+          "score": 68.0469,
+          "evidence": []
+        },
+        {
+          "term": "struq-lora",
+          "score": 68.0469,
+          "evidence": []
+        },
+        {
+          "term": "textgrad",
+          "score": 67.4582,
+          "evidence": []
+        },
+        {
+          "term": "defensiveto",
+          "score": 64.9039,
+          "evidence": []
+        },
+        {
+          "term": "sub-figure",
+          "score": 63.4918,
+          "evidence": []
+        },
+        {
+          "term": "winrate",
+          "score": 63.4086,
+          "evidence": []
+        },
+        {
+          "term": "falcon3-7b-instruct",
+          "score": 58.9519,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-010-42-defensivetoken-a-sota-test-time-defense": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "test-time defense",
+          "score": 7.341,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "training-time defense",
+          "score": 3.241,
+          "evidence": []
+        },
+        {
+          "term": "defensivetoken",
+          "score": 2.969,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "average asr",
+          "score": 2.7929,
+          "evidence": []
+        },
+        {
+          "term": "system-level defense",
+          "score": 2.5162,
+          "evidence": []
+        },
+        {
+          "term": "existing test-time",
+          "score": 2.4523,
+          "evidence": []
+        },
+        {
+          "term": "optimization-based gcg",
+          "score": 2.1506,
+          "evidence": []
+        },
+        {
+          "term": "defensiveto kens",
+          "score": 1.9584,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "test-time defense",
+          "score": 301.8393,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "training-time defense",
+          "score": 121.5692,
+          "evidence": []
+        },
+        {
+          "term": "system-level defense",
+          "score": 95.1321,
+          "evidence": []
+        },
+        {
+          "term": "average asr",
+          "score": 90.5572,
+          "evidence": []
+        },
+        {
+          "term": "existing test-time",
+          "score": 75.9136,
+          "evidence": []
+        },
+        {
+          "term": "defensivetoken",
+          "score": 72.0399,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "optimization-based gcg",
+          "score": 35.9343,
+          "evidence": []
+        },
+        {
+          "term": "defensiveto kens",
+          "score": 27.2591,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "test-time defense",
+          "score": 4.2324,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "defensivetoken",
+          "score": 2.2817,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "training-time defense",
+          "score": 2.173,
+          "evidence": []
+        },
+        {
+          "term": "average asr",
+          "score": 1.7633,
+          "evidence": []
+        },
+        {
+          "term": "system-level defense",
+          "score": 1.6269,
+          "evidence": []
+        },
+        {
+          "term": "prompt optimization",
+          "score": 1.3123,
+          "evidence": []
+        },
+        {
+          "term": "against prompt",
+          "score": 1.1531,
+          "evidence": []
+        },
+        {
+          "term": "utility",
+          "score": 1.1475,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "test-time defense",
+          "score": 102.5115,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "average asr",
+          "score": 65.8438,
+          "evidence": []
+        },
+        {
+          "term": "defensivetoken",
+          "score": 60.9559,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "training-time defense",
+          "score": 48.46,
+          "evidence": []
+        },
+        {
+          "term": "system-level defense",
+          "score": 38.56,
+          "evidence": []
+        },
+        {
+          "term": "utility",
+          "score": 30.7316,
+          "evidence": []
+        },
+        {
+          "term": "alpacafarm",
+          "score": 25.5646,
+          "evidence": []
+        },
+        {
+          "term": "tokens",
+          "score": 22.3876,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "test-time defense",
+          "score": 4.2324,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "defensivetoken",
+          "score": 2.2817,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "training-time defense",
+          "score": 2.173,
+          "evidence": []
+        },
+        {
+          "term": "average asr",
+          "score": 1.7633,
+          "evidence": []
+        },
+        {
+          "term": "system-level defense",
+          "score": 1.6269,
+          "evidence": []
+        },
+        {
+          "term": "prompt optimization",
+          "score": 1.3123,
+          "evidence": []
+        },
+        {
+          "term": "against prompt",
+          "score": 1.1531,
+          "evidence": []
+        },
+        {
+          "term": "existing test-time",
+          "score": 1.0241,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "test-time defense",
+          "score": 357.7181,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "defensivetoken",
+          "score": 262.683,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "defensiveto kens",
+          "score": 260.8018,
+          "evidence": []
+        },
+        {
+          "term": "training-time defense",
+          "score": 176.391,
+          "evidence": []
+        },
+        {
+          "term": "optimization-based gcg",
+          "score": 169.6432,
+          "evidence": []
+        },
+        {
+          "term": "struq-full",
+          "score": 169.6401,
+          "evidence": []
+        },
+        {
+          "term": "secalign-lora",
+          "score": 167.8139,
+          "evidence": []
+        },
+        {
+          "term": "struq-lora",
+          "score": 167.8139,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-011-43-defensivetoken-vs-training-time-defenses": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "training-time defenses",
+          "score": 4.6255,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "defensivetoken",
+          "score": 1.5686,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lora",
+          "score": 1.3023,
+          "evidence": []
+        },
+        {
+          "term": "prompt injections",
+          "score": 1.0535,
+          "evidence": []
+        },
+        {
+          "term": "against prompt",
+          "score": 0.8807,
+          "evidence": []
+        },
+        {
+          "term": "optimization-free",
+          "score": 0.8514,
+          "evidence": []
+        },
+        {
+          "term": "struq",
+          "score": 0.8482,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "training-time defenses",
+          "score": 93.5288,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lora",
+          "score": 27.0403,
+          "evidence": []
+        },
+        {
+          "term": "defensivetoken",
+          "score": 20.5828,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prompt injections",
+          "score": 14.1273,
+          "evidence": []
+        },
+        {
+          "term": "optimization-free",
+          "score": 11.8378,
+          "evidence": []
+        },
+        {
+          "term": "against prompt",
+          "score": 11.8169,
+          "evidence": []
+        },
+        {
+          "term": "struq",
+          "score": 11.0269,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "training-time defenses",
+          "score": 1.5215,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "defensivetoken",
+          "score": 0.8997,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prompt injections",
+          "score": 0.5699,
+          "evidence": []
+        },
+        {
+          "term": "against prompt",
+          "score": 0.5381,
+          "evidence": []
+        },
+        {
+          "term": "asr",
+          "score": 0.5043,
+          "evidence": []
+        },
+        {
+          "term": "utility",
+          "score": 0.4657,
+          "evidence": []
+        },
+        {
+          "term": "alpacafarm",
+          "score": 0.3811,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "training-time defenses",
+          "score": 16.5994,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "defensivetoken",
+          "score": 12.2476,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "asr",
+          "score": 9.816,
+          "evidence": []
+        },
+        {
+          "term": "against prompt",
+          "score": 7.7387,
+          "evidence": []
+        },
+        {
+          "term": "prompt injections",
+          "score": 7.5291,
+          "evidence": []
+        },
+        {
+          "term": "utility",
+          "score": 6.8165,
+          "evidence": []
+        },
+        {
+          "term": "alpacafarm",
+          "score": 5.3333,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "training-time defenses",
+          "score": 1.5215,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "defensivetoken",
+          "score": 0.8997,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prompt injections",
+          "score": 0.5699,
+          "evidence": []
+        },
+        {
+          "term": "against prompt",
+          "score": 0.5381,
+          "evidence": []
+        },
+        {
+          "term": "security",
+          "score": 0.3314,
+          "evidence": []
+        },
+        {
+          "term": "test-time",
+          "score": 0.3269,
+          "evidence": []
+        },
+        {
+          "term": "struq",
+          "score": 0.2513,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "training-time defenses",
+          "score": 341.683,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "defensivetoken",
+          "score": 276.2543,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "struq-full",
+          "score": 178.0724,
+          "evidence": []
+        },
+        {
+          "term": "secalign-lora",
+          "score": 176.3443,
+          "evidence": []
+        },
+        {
+          "term": "struq-lora",
+          "score": 176.3443,
+          "evidence": []
+        },
+        {
+          "term": "textgrad",
+          "score": 173.4336,
+          "evidence": []
+        },
+        {
+          "term": "defensiveto",
+          "score": 166.09,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-012-44-analyzing-the-utility-security-trade-off": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "utility-security trade-off",
+          "score": 3.127,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "slight utility",
+          "score": 2.0974,
+          "evidence": []
+        },
+        {
+          "term": "utility loss",
+          "score": 1.6011,
+          "evidence": []
+        },
+        {
+          "term": "defensivetoken",
+          "score": 1.149,
+          "evidence": []
+        },
+        {
+          "term": "defense",
+          "score": 1.0239,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "utility-security trade-off",
+          "score": 43.0694,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "slight utility",
+          "score": 39.0673,
+          "evidence": []
+        },
+        {
+          "term": "utility loss",
+          "score": 28.8683,
+          "evidence": []
+        },
+        {
+          "term": "defensivetoken",
+          "score": 20.5828,
+          "evidence": []
+        },
+        {
+          "term": "defense",
+          "score": 20.2355,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "utility loss",
+          "score": 0.5511,
+          "evidence": []
+        },
+        {
+          "term": "utility-security trade-off",
+          "score": 0.4449,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "defense",
+          "score": 0.406,
+          "evidence": []
+        },
+        {
+          "term": "asr",
+          "score": 0.4054,
+          "evidence": []
+        },
+        {
+          "term": "slight utility",
+          "score": 0.3836,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "asr",
+          "score": 11.3691,
+          "evidence": []
+        },
+        {
+          "term": "utility loss",
+          "score": 10.0727,
+          "evidence": []
+        },
+        {
+          "term": "defense",
+          "score": 7.9127,
+          "evidence": []
+        },
+        {
+          "term": "slight utility",
+          "score": 7.5602,
+          "evidence": []
+        },
+        {
+          "term": "defensivetoken",
+          "score": 6.5592,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "utility loss",
+          "score": 0.5511,
+          "evidence": []
+        },
+        {
+          "term": "utility-security trade-off",
+          "score": 0.4449,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "slight utility",
+          "score": 0.4098,
+          "evidence": []
+        },
+        {
+          "term": "defense",
+          "score": 0.406,
+          "evidence": []
+        },
+        {
+          "term": "asr",
+          "score": 0.4054,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "utility-security trade-off",
+          "score": 346.3729,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "struq-full",
+          "score": 208.4272,
+          "evidence": []
+        },
+        {
+          "term": "secalign-lora",
+          "score": 204.2376,
+          "evidence": []
+        },
+        {
+          "term": "struq-lora",
+          "score": 204.2376,
+          "evidence": []
+        },
+        {
+          "term": "textgrad",
+          "score": 202.2427,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-013-45-ablation-study": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "ablation study",
+          "score": 3.975,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "average winrate",
+          "score": 3.0106,
+          "evidence": []
+        },
+        {
+          "term": "average asr",
+          "score": 2.981,
+          "evidence": []
+        },
+        {
+          "term": "secalign token",
+          "score": 2.8253,
+          "evidence": []
+        },
+        {
+          "term": "struq token",
+          "score": 2.8088,
+          "evidence": []
+        },
+        {
+          "term": "defensive tokens",
+          "score": 2.4282,
+          "evidence": []
+        },
+        {
+          "term": "ideal defense",
+          "score": 1.9132,
+          "evidence": []
+        },
+        {
+          "term": "alpacafarm",
+          "score": 1.9097,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "average asr",
+          "score": 117.6412,
+          "evidence": []
+        },
+        {
+          "term": "ablation study",
+          "score": 88.6323,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "average winrate",
+          "score": 83.7096,
+          "evidence": []
+        },
+        {
+          "term": "struq token",
+          "score": 78.0318,
+          "evidence": []
+        },
+        {
+          "term": "secalign token",
+          "score": 75.7621,
+          "evidence": []
+        },
+        {
+          "term": "defensive tokens",
+          "score": 70.1285,
+          "evidence": []
+        },
+        {
+          "term": "defensivetoken",
+          "score": 61.7484,
+          "evidence": []
+        },
+        {
+          "term": "alpacafarm",
+          "score": 56.3121,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "average asr",
+          "score": 2.2147,
+          "evidence": []
+        },
+        {
+          "term": "defensive tokens",
+          "score": 2.1775,
+          "evidence": []
+        },
+        {
+          "term": "ideal defense",
+          "score": 1.8584,
+          "evidence": []
+        },
+        {
+          "term": "defensivetoken",
+          "score": 1.5327,
+          "evidence": []
+        },
+        {
+          "term": "ablation study",
+          "score": 1.4879,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "struq token",
+          "score": 1.476,
+          "evidence": []
+        },
+        {
+          "term": "average winrate",
+          "score": 1.4561,
+          "evidence": []
+        },
+        {
+          "term": "prompt tuning",
+          "score": 1.3792,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "average asr",
+          "score": 113.2168,
+          "evidence": []
+        },
+        {
+          "term": "defensive tokens",
+          "score": 65.9455,
+          "evidence": []
+        },
+        {
+          "term": "average winrate",
+          "score": 60.8809,
+          "evidence": []
+        },
+        {
+          "term": "ablation study",
+          "score": 59.9067,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ideal defense",
+          "score": 58.3472,
+          "evidence": []
+        },
+        {
+          "term": "defensivetoken",
+          "score": 57.9926,
+          "evidence": []
+        },
+        {
+          "term": "struq token",
+          "score": 57.8731,
+          "evidence": []
+        },
+        {
+          "term": "secalign token",
+          "score": 52.7694,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "average asr",
+          "score": 2.2147,
+          "evidence": []
+        },
+        {
+          "term": "defensive tokens",
+          "score": 2.1775,
+          "evidence": []
+        },
+        {
+          "term": "ideal defense",
+          "score": 1.8584,
+          "evidence": []
+        },
+        {
+          "term": "defensivetoken",
+          "score": 1.5327,
+          "evidence": []
+        },
+        {
+          "term": "ablation study",
+          "score": 1.4879,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "struq token",
+          "score": 1.476,
+          "evidence": []
+        },
+        {
+          "term": "average winrate",
+          "score": 1.4561,
+          "evidence": []
+        },
+        {
+          "term": "prompt tuning",
+          "score": 1.3792,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "struq-full",
+          "score": 199.7468,
+          "evidence": []
+        },
+        {
+          "term": "secalign-lora",
+          "score": 198.2103,
+          "evidence": []
+        },
+        {
+          "term": "struq-lora",
+          "score": 198.2103,
+          "evidence": []
+        },
+        {
+          "term": "textgrad",
+          "score": 193.4511,
+          "evidence": []
+        },
+        {
+          "term": "defensiveto",
+          "score": 181.6438,
+          "evidence": []
+        },
+        {
+          "term": "average winrate",
+          "score": 180.2888,
+          "evidence": []
+        },
+        {
+          "term": "sub-figure",
+          "score": 174.3354,
+          "evidence": []
+        },
+        {
+          "term": "falcon3-7b-instruct",
+          "score": 161.9236,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-014-5-conclusion": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "defensivetoken",
+          "score": 1.149,
+          "evidence": []
+        },
+        {
+          "term": "utility",
+          "score": 0.8361,
+          "evidence": []
+        },
+        {
+          "term": "defenses",
+          "score": 0.8064,
+          "evidence": []
+        },
+        {
+          "term": "flexibility",
+          "score": 0.6648,
+          "evidence": []
+        },
+        {
+          "term": "fering",
+          "score": 0.6308,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "defensivetoken",
+          "score": 20.5828,
+          "evidence": []
+        },
+        {
+          "term": "utility",
+          "score": 14.2071,
+          "evidence": []
+        },
+        {
+          "term": "defenses",
+          "score": 12.3814,
+          "evidence": []
+        },
+        {
+          "term": "flexibility",
+          "score": 9.2392,
+          "evidence": []
+        },
+        {
+          "term": "malicious",
+          "score": 7.946,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "defense",
+          "score": 0.3814,
+          "evidence": []
+        },
+        {
+          "term": "utility",
+          "score": 0.3495,
+          "evidence": []
+        },
+        {
+          "term": "injection",
+          "score": 0.3357,
+          "evidence": []
+        },
+        {
+          "term": "asr",
+          "score": 0.332,
+          "evidence": []
+        },
+        {
+          "term": "prompt",
+          "score": 0.2885,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "asr",
+          "score": 7.1366,
+          "evidence": []
+        },
+        {
+          "term": "defense",
+          "score": 6.2225,
+          "evidence": []
+        },
+        {
+          "term": "utility",
+          "score": 5.5186,
+          "evidence": []
+        },
+        {
+          "term": "injection",
+          "score": 4.8253,
+          "evidence": []
+        },
+        {
+          "term": "prompt",
+          "score": 4.6091,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "utility",
+          "score": 0.3495,
+          "evidence": []
+        },
+        {
+          "term": "injection",
+          "score": 0.3357,
+          "evidence": []
+        },
+        {
+          "term": "defenses",
+          "score": 0.327,
+          "evidence": []
+        },
+        {
+          "term": "prompt",
+          "score": 0.2885,
+          "evidence": []
+        },
+        {
+          "term": "attack",
+          "score": 0.2879,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "struq-full",
+          "score": 122.5262,
+          "evidence": []
+        },
+        {
+          "term": "secalign-lora",
+          "score": 120.7183,
+          "evidence": []
+        },
+        {
+          "term": "struq-lora",
+          "score": 120.7183,
+          "evidence": []
+        },
+        {
+          "term": "textgrad",
+          "score": 119.652,
+          "evidence": []
+        },
+        {
+          "term": "defensiveto",
+          "score": 114.1991,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-015-acknowledgments": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "grateful",
+          "score": 0.6658,
+          "evidence": []
+        },
+        {
+          "term": "homeland",
+          "score": 0.6077,
+          "evidence": []
+        },
+        {
+          "term": "insightful",
+          "score": 0.5685,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "grateful",
+          "score": 7.0175,
+          "evidence": []
+        },
+        {
+          "term": "homeland",
+          "score": 6.612,
+          "evidence": []
+        },
+        {
+          "term": "insightful",
+          "score": 6.3244,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "defense",
+          "score": 0.0505,
+          "evidence": []
+        },
+        {
+          "term": "defensivetokens",
+          "score": 0.0496,
+          "evidence": []
+        },
+        {
+          "term": "security",
+          "score": 0.0483,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "zta",
+          "score": 0.7016,
+          "evidence": []
+        },
+        {
+          "term": "thank",
+          "score": 0.6071,
+          "evidence": []
+        },
+        {
+          "term": "phd",
+          "score": 0.5495,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "security",
+          "score": 0.0483,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.0408,
+          "evidence": []
+        },
+        {
+          "term": "chen",
+          "score": 0.0395,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "berkeley",
+          "score": 280.1435,
+          "evidence": []
+        },
+        {
+          "term": "deepmind",
+          "score": 219.536,
+          "evidence": []
+        },
+        {
+          "term": "yizhu",
+          "score": 169.6471,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-016-references": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "injection attacks",
+          "score": 2.8083,
+          "evidence": []
+        },
+        {
+          "term": "prompt injection",
+          "score": 2.7368,
+          "evidence": []
+        },
+        {
+          "term": "international conference",
+          "score": 2.5555,
+          "evidence": []
+        },
+        {
+          "term": "percy liang",
+          "score": 2.528,
+          "evidence": []
+        },
+        {
+          "term": "indirect prompt",
+          "score": 2.4479,
+          "evidence": []
+        },
+        {
+          "term": "sizhe chen",
+          "score": 2.3718,
+          "evidence": []
+        },
+        {
+          "term": "prompt hacking",
+          "score": 2.3457,
+          "evidence": []
+        },
+        {
+          "term": "carlos guestrin",
+          "score": 2.2934,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "prompt injection",
+          "score": 125.3777,
+          "evidence": []
+        },
+        {
+          "term": "injection attacks",
+          "score": 100.9956,
+          "evidence": []
+        },
+        {
+          "term": "indirect prompt",
+          "score": 89.9515,
+          "evidence": []
+        },
+        {
+          "term": "against prompt",
+          "score": 89.3845,
+          "evidence": []
+        },
+        {
+          "term": "prompt hacking",
+          "score": 83.5648,
+          "evidence": []
+        },
+        {
+          "term": "prompt optimization",
+          "score": 75.9165,
+          "evidence": []
+        },
+        {
+          "term": "detecting prompt",
+          "score": 74.5934,
+          "evidence": []
+        },
+        {
+          "term": "international conference",
+          "score": 65.3835,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "prompt injection",
+          "score": 2.7455,
+          "evidence": []
+        },
+        {
+          "term": "injection attacks",
+          "score": 2.6213,
+          "evidence": []
+        },
+        {
+          "term": "international conference",
+          "score": 2.6193,
+          "evidence": []
+        },
+        {
+          "term": "indirect prompt",
+          "score": 2.4418,
+          "evidence": []
+        },
+        {
+          "term": "sizhe chen",
+          "score": 2.2906,
+          "evidence": []
+        },
+        {
+          "term": "percy liang",
+          "score": 2.251,
+          "evidence": []
+        },
+        {
+          "term": "prompt hacking",
+          "score": 2.22,
+          "evidence": []
+        },
+        {
+          "term": "defending against",
+          "score": 2.2104,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "prompt injection",
+          "score": 124.7687,
+          "evidence": []
+        },
+        {
+          "term": "injection attacks",
+          "score": 96.6858,
+          "evidence": []
+        },
+        {
+          "term": "indirect prompt",
+          "score": 85.3698,
+          "evidence": []
+        },
+        {
+          "term": "against prompt",
+          "score": 83.2332,
+          "evidence": []
+        },
+        {
+          "term": "prompt hacking",
+          "score": 73.1857,
+          "evidence": []
+        },
+        {
+          "term": "prompt optimization",
+          "score": 70.6309,
+          "evidence": []
+        },
+        {
+          "term": "detecting prompt",
+          "score": 67.8887,
+          "evidence": []
+        },
+        {
+          "term": "international conference",
+          "score": 57.6478,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "prompt injection",
+          "score": 2.7455,
+          "evidence": []
+        },
+        {
+          "term": "injection attacks",
+          "score": 2.6213,
+          "evidence": []
+        },
+        {
+          "term": "international conference",
+          "score": 2.6193,
+          "evidence": []
+        },
+        {
+          "term": "indirect prompt",
+          "score": 2.4418,
+          "evidence": []
+        },
+        {
+          "term": "sizhe chen",
+          "score": 2.2906,
+          "evidence": []
+        },
+        {
+          "term": "percy liang",
+          "score": 2.251,
+          "evidence": []
+        },
+        {
+          "term": "prompt hacking",
+          "score": 2.22,
+          "evidence": []
+        },
+        {
+          "term": "defending against",
+          "score": 2.2104,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "prateek mittal",
+          "score": 150.9378,
+          "evidence": []
+        },
+        {
+          "term": "ilia shumailov",
+          "score": 144.8,
+          "evidence": []
+        },
+        {
+          "term": "chawin sitawarin",
+          "score": 142.9091,
+          "evidence": []
+        },
+        {
+          "term": "arman zharmagambetov",
+          "score": 132.8668,
+          "evidence": []
+        },
+        {
+          "term": "johann rehberger",
+          "score": 132.1292,
+          "evidence": []
+        },
+        {
+          "term": "milad nasr",
+          "score": 125.0432,
+          "evidence": []
+        },
+        {
+          "term": "jamie hayes",
+          "score": 125.0102,
+          "evidence": []
+        },
+        {
+          "term": "rohan taori",
+          "score": 123.8896,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "berkeley",
+          "score": 1.9363,
+          "evidence": []
+        },
+        {
+          "term": "google deepmind",
+          "score": 1.6478,
+          "evidence": []
+        },
+        {
+          "term": "nicholas carlini",
+          "score": 1.5754,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "berkeley",
+          "score": 53.27,
+          "evidence": []
+        },
+        {
+          "term": "google deepmind",
+          "score": 24.4452,
+          "evidence": []
+        },
+        {
+          "term": "nicholas carlini",
+          "score": 21.6323,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "injection",
+          "score": 0.1225,
+          "evidence": []
+        },
+        {
+          "term": "prompt",
+          "score": 0.1049,
+          "evidence": []
+        },
+        {
+          "term": "defense",
+          "score": 0.0938,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "doi",
+          "score": 2.735,
+          "evidence": []
+        },
+        {
+          "term": "prompt",
+          "score": 2.6989,
+          "evidence": []
+        },
+        {
+          "term": "injection",
+          "score": 2.6606,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "injection",
+          "score": 0.1225,
+          "evidence": []
+        },
+        {
+          "term": "prompt",
+          "score": 0.1049,
+          "evidence": []
+        },
+        {
+          "term": "chen",
+          "score": 0.0777,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "berkeley",
+          "score": 4162.1261,
+          "evidence": []
+        },
+        {
+          "term": "google deepmind",
+          "score": 3585.305,
+          "evidence": []
+        },
+        {
+          "term": "yizhu",
+          "score": 2343.1254,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

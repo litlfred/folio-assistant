@@ -1,0 +1,39 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-0944/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-0944/cat-harness/process/Process_TestPlanExecution/node/Call_BeanClose.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-0944/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261112-0944",
+    "sha": "b80b34e466ce7864b7854cbba67b870740353603",
+    "pr": "repin-train/20261112-0944",
+    "run": "43194386196"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-0944/cat-harness/process/Process_TestPlanExecution/node/Call_BeanClose",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Close the bean",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-0944/cat-harness/process/Process_TestPlanExecution",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-0944/cat-harness/role/attestation-service",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-0944/cat-harness/process/Process_TestPlanExecution/lane/Lane_Attestation",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-0944/cat-harness/skill/todo-manager"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-0944/cat-harness/process/Process_BeanClose",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-0944/cat-harness/process/Process_TestPlanExecution#flow/F09",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-0944/cat-harness/process/Process_TestPlanExecution#flow/F10",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-0944/cat-harness/process/Process_TestPlanExecution#flow/F12"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-0944/cat-harness/process/Process_TestPlanExecution#flow/Flow_GW_BeanClosedHow"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-0944/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/Call_BeanClose"
+    }
+  ]
+}

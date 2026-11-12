@@ -1,0 +1,35 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-0944/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-0944/smart-base/schema/dth-step-table.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-0944/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/schema/dth-step-table.jsonld",
+  "staging": {
+    "branch": "repin-train/20261112-0944",
+    "sha": "b80b34e466ce7864b7854cbba67b870740353603",
+    "pr": "repin-train/20261112-0944",
+    "run": "43194386196"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/schema/dth-step-table",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "dth-step-table",
+      "title": "dth-step-table",
+      "summary": "Shared DTH step-table schema (`INPUTS | STEPS | RESOURCES | OUTPUTS | RISKS | MITIGATION`),",
+      "module": "schemas/dth-step-table.ts",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-schemas",
+      "jsonSchema": [
+        "http://smart.who.int/base/schema/zod/dth-step-table/DthDakOutputKindSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/dth-step-table/DthRiskMitigationRowSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/dth-step-table/DthRoleIdSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/dth-step-table/DthStepEntrySchema.schema.json",
+        "http://smart.who.int/base/schema/zod/dth-step-table/DthStepGroupSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/dth-step-table/DthStepInputSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/dth-step-table/DthStepOutputSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/dth-step-table/DthStepResourceSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/dth-step-table/DthStepTableSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/dth-step-table/DthStepTableSourceSchema.schema.json"
+      ]
+    }
+  ]
+}

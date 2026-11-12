@@ -1,0 +1,2752 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-351406",
+  "instance": "who-iris",
+  "about": "library/10665-351406",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7393,
+    "terms": 71095
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "cost-effective health",
+        "score": 14.3021,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "cost-effective interventions",
+        "score": 13.0241,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "health costs",
+        "score": 12.4005,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "public health",
+        "score": 12.1948,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "cost billion",
+        "score": 12.101,
+        "evidence": []
+      },
+      {
+        "term": "mental health",
+        "score": 11.9846,
+        "evidence": []
+      },
+      {
+        "term": "cost-effective approaches",
+        "score": 11.5553,
+        "evidence": []
+      },
+      {
+        "term": "economic returns",
+        "score": 10.9585,
+        "evidence": []
+      },
+      {
+        "term": "environmental health",
+        "score": 10.9216,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "health inequalities",
+        "score": 10.6826,
+        "evidence": []
+      },
+      {
+        "term": "traffic costs",
+        "score": 10.5713,
+        "evidence": []
+      },
+      {
+        "term": "disease health",
+        "score": 10.3443,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "cost-effective health",
+        "score": 681.5402,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "cost billion",
+        "score": 657.5335,
+        "evidence": []
+      },
+      {
+        "term": "cost savings",
+        "score": 621.9668,
+        "evidence": []
+      },
+      {
+        "term": "economic cost",
+        "score": 585.3725,
+        "evidence": []
+      },
+      {
+        "term": "year cost",
+        "score": 573.1933,
+        "evidence": []
+      },
+      {
+        "term": "public health",
+        "score": 566.5005,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "health interventions",
+        "score": 527.1255,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "cost effectiveness",
+        "score": 514.9568,
+        "evidence": []
+      },
+      {
+        "term": "mental health",
+        "score": 501.8244,
+        "evidence": []
+      },
+      {
+        "term": "study timescale",
+        "score": 498.3253,
+        "evidence": []
+      },
+      {
+        "term": "environmental health",
+        "score": 482.4798,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "health inequalities",
+        "score": 470.6578,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "economic cost",
+        "score": 11.788,
+        "evidence": []
+      },
+      {
+        "term": "health costs",
+        "score": 11.5735,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "cost billion",
+        "score": 11.5523,
+        "evidence": []
+      },
+      {
+        "term": "year cost",
+        "score": 11.3776,
+        "evidence": []
+      },
+      {
+        "term": "cost effectiveness",
+        "score": 11.0143,
+        "evidence": []
+      },
+      {
+        "term": "cost savings",
+        "score": 10.7074,
+        "evidence": []
+      },
+      {
+        "term": "cost-effective health",
+        "score": 10.3,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "cost-effective interventions",
+        "score": 10.2374,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "care costs",
+        "score": 10.2273,
+        "evidence": []
+      },
+      {
+        "term": "social costs",
+        "score": 10.0799,
+        "evidence": []
+      },
+      {
+        "term": "traffic costs",
+        "score": 9.6417,
+        "evidence": []
+      },
+      {
+        "term": "population cost",
+        "score": 9.1357,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "cost savings",
+        "score": 696.14,
+        "evidence": []
+      },
+      {
+        "term": "study timescale",
+        "score": 666.8528,
+        "evidence": []
+      },
+      {
+        "term": "analysis timescale",
+        "score": 614.1324,
+        "evidence": []
+      },
+      {
+        "term": "trial timescale",
+        "score": 594.7612,
+        "evidence": []
+      },
+      {
+        "term": "year cost",
+        "score": 584.0281,
+        "evidence": []
+      },
+      {
+        "term": "cost billion",
+        "score": 552.4001,
+        "evidence": []
+      },
+      {
+        "term": "cost effectiveness",
+        "score": 517.1248,
+        "evidence": []
+      },
+      {
+        "term": "health costs",
+        "score": 511.632,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "cost-effective health",
+        "score": 510.0718,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "economic cost",
+        "score": 496.7495,
+        "evidence": []
+      },
+      {
+        "term": "months cost",
+        "score": 445.0384,
+        "evidence": []
+      },
+      {
+        "term": "cost eﬀective",
+        "score": 435.3266,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "economic cost",
+        "score": 11.788,
+        "evidence": []
+      },
+      {
+        "term": "health costs",
+        "score": 11.5735,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "cost billion",
+        "score": 11.5523,
+        "evidence": []
+      },
+      {
+        "term": "year cost",
+        "score": 11.3776,
+        "evidence": []
+      },
+      {
+        "term": "cost effectiveness",
+        "score": 11.0143,
+        "evidence": []
+      },
+      {
+        "term": "cost savings",
+        "score": 10.7074,
+        "evidence": []
+      },
+      {
+        "term": "cost-effective health",
+        "score": 10.3,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "cost-effective interventions",
+        "score": 10.2374,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "care costs",
+        "score": 10.2273,
+        "evidence": []
+      },
+      {
+        "term": "social costs",
+        "score": 10.0799,
+        "evidence": []
+      },
+      {
+        "term": "traffic costs",
+        "score": 9.6417,
+        "evidence": []
+      },
+      {
+        "term": "population cost",
+        "score": 9.1357,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "在sars",
+        "score": 287.3546,
+        "evidence": []
+      },
+      {
+        "term": "捐助者",
+        "score": 247.4752,
+        "evidence": []
+      },
+      {
+        "term": "必要的",
+        "score": 211.0269,
+        "evidence": []
+      },
+      {
+        "term": "教员询问其余学员每个报告人的报告有无遗漏什么内容",
+        "score": 190.3612,
+        "evidence": []
+      },
+      {
+        "term": "共享流感病毒以及获得",
+        "score": 182.5283,
+        "evidence": []
+      },
+      {
+        "term": "这些情况下",
+        "score": 157.9165,
+        "evidence": []
+      },
+      {
+        "term": "大流行性流感防范框架",
+        "score": 157.2605,
+        "evidence": []
+      },
+      {
+        "term": "尤其在发展中国家",
+        "score": 153.1029,
+        "evidence": []
+      },
+      {
+        "term": "岁的儿童",
+        "score": 141.3812,
+        "evidence": []
+      },
+      {
+        "term": "重要部分",
+        "score": 140.1372,
+        "evidence": []
+      },
+      {
+        "term": "在这些活动中",
+        "score": 135.7089,
+        "evidence": []
+      },
+      {
+        "term": "必需的",
+        "score": 134.5892,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-abstract": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "returns",
+          "score": 0.983,
+          "evidence": []
+        },
+        {
+          "term": "health sector",
+          "score": 0.8931,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 0.7804,
+          "evidence": []
+        },
+        {
+          "term": "cost-effective",
+          "score": 0.7428,
+          "evidence": []
+        },
+        {
+          "term": "investment",
+          "score": 0.5645,
+          "evidence": []
+        },
+        {
+          "term": "interventions",
+          "score": 0.5148,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "returns",
+          "score": 17.7377,
+          "evidence": []
+        },
+        {
+          "term": "health sector",
+          "score": 13.009,
+          "evidence": []
+        },
+        {
+          "term": "cost-effective",
+          "score": 12.7064,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 10.9906,
+          "evidence": []
+        },
+        {
+          "term": "investment",
+          "score": 9.6741,
+          "evidence": []
+        },
+        {
+          "term": "interventions",
+          "score": 7.9505,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "public health",
+          "score": 0.2437,
+          "evidence": []
+        },
+        {
+          "term": "health sector",
+          "score": 0.2309,
+          "evidence": []
+        },
+        {
+          "term": "cost",
+          "score": 0.1656,
+          "evidence": []
+        },
+        {
+          "term": "interventions",
+          "score": 0.1303,
+          "evidence": []
+        },
+        {
+          "term": "cost-effective",
+          "score": 0.117,
+          "evidence": []
+        },
+        {
+          "term": "digital",
+          "score": 0.1137,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "public health",
+          "score": 6.0739,
+          "evidence": []
+        },
+        {
+          "term": "health sector",
+          "score": 4.9587,
+          "evidence": []
+        },
+        {
+          "term": "timescale",
+          "score": 4.8045,
+          "evidence": []
+        },
+        {
+          "term": "cost",
+          "score": 3.5191,
+          "evidence": []
+        },
+        {
+          "term": "savings",
+          "score": 2.6158,
+          "evidence": []
+        },
+        {
+          "term": "digital",
+          "score": 2.0625,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "public health",
+          "score": 0.2437,
+          "evidence": []
+        },
+        {
+          "term": "health sector",
+          "score": 0.2309,
+          "evidence": []
+        },
+        {
+          "term": "costs",
+          "score": 0.1591,
+          "evidence": []
+        },
+        {
+          "term": "interventions",
+          "score": 0.1303,
+          "evidence": []
+        },
+        {
+          "term": "cost-effective",
+          "score": 0.117,
+          "evidence": []
+        },
+        {
+          "term": "investment",
+          "score": 0.1015,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重要部分",
+          "score": 21.0177,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 19.5708,
+          "evidence": []
+        },
+        {
+          "term": "风险最小化",
+          "score": 17.8481,
+          "evidence": []
+        },
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 17.6671,
+          "evidence": []
+        },
+        {
+          "term": "教员询问其余学员每个报告人的报告有无遗漏什么内容",
+          "score": 17.0927,
+          "evidence": []
+        },
+        {
+          "term": "不喜欢使用卫生设施",
+          "score": 15.3086,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-001-keywords": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "health care",
+          "score": 0.7701,
+          "evidence": []
+        },
+        {
+          "term": "istock",
+          "score": 0.6392,
+          "evidence": []
+        },
+        {
+          "term": "phoenix",
+          "score": 0.5679,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "health care",
+          "score": 9.9777,
+          "evidence": []
+        },
+        {
+          "term": "istock",
+          "score": 8.2151,
+          "evidence": []
+        },
+        {
+          "term": "phoenix",
+          "score": 7.2989,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health care",
+          "score": 0.1949,
+          "evidence": []
+        },
+        {
+          "term": "world",
+          "score": 0.0788,
+          "evidence": []
+        },
+        {
+          "term": "organization",
+          "score": 0.0779,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health care",
+          "score": 3.2363,
+          "evidence": []
+        },
+        {
+          "term": "digital",
+          "score": 1.0739,
+          "evidence": []
+        },
+        {
+          "term": "accessed",
+          "score": 0.9576,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health care",
+          "score": 0.1949,
+          "evidence": []
+        },
+        {
+          "term": "world",
+          "score": 0.0788,
+          "evidence": []
+        },
+        {
+          "term": "organization",
+          "score": 0.0779,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 38.822,
+          "evidence": []
+        },
+        {
+          "term": "在sars",
+          "score": 38.3118,
+          "evidence": []
+        },
+        {
+          "term": "教员询问其余学员每个报告人的报告有无遗漏什么内容",
+          "score": 27.8715,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-002-contents": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "inequalities",
+          "score": 0.4273,
+          "evidence": []
+        },
+        {
+          "term": "preparedness",
+          "score": 0.3774,
+          "evidence": []
+        },
+        {
+          "term": "action",
+          "score": 0.3611,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "inequalities",
+          "score": 4.8829,
+          "evidence": []
+        },
+        {
+          "term": "preparedness",
+          "score": 4.4424,
+          "evidence": []
+        },
+        {
+          "term": "conclusions",
+          "score": 4.2448,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "costs",
+          "score": 0.0672,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.0495,
+          "evidence": []
+        },
+        {
+          "term": "effectiveness",
+          "score": 0.0411,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "timescale",
+          "score": 1.0026,
+          "evidence": []
+        },
+        {
+          "term": "cost",
+          "score": 0.799,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.5794,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "costs",
+          "score": 0.0672,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.0495,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 0.0404,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "教员询问其余学员每个报告人的报告有无遗漏什么内容",
+          "score": 13.3309,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 12.6733,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 12.6733,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-003-acknowledgements": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "london school",
+          "score": 1.3503,
+          "evidence": []
+        },
+        {
+          "term": "regional office",
+          "score": 1.3498,
+          "evidence": []
+        },
+        {
+          "term": "country office",
+          "score": 1.188,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 1.1816,
+          "evidence": []
+        },
+        {
+          "term": "health systems",
+          "score": 1.0995,
+          "evidence": []
+        },
+        {
+          "term": "division",
+          "score": 0.9294,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 0.8464,
+          "evidence": []
+        },
+        {
+          "term": "co-operation",
+          "score": 0.7719,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "regional office",
+          "score": 28.6362,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 26.1082,
+          "evidence": []
+        },
+        {
+          "term": "country office",
+          "score": 24.3189,
+          "evidence": []
+        },
+        {
+          "term": "health systems",
+          "score": 24.3142,
+          "evidence": []
+        },
+        {
+          "term": "london school",
+          "score": 23.6326,
+          "evidence": []
+        },
+        {
+          "term": "division",
+          "score": 21.7721,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 15.6417,
+          "evidence": []
+        },
+        {
+          "term": "economic",
+          "score": 12.7914,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "public health",
+          "score": 0.3513,
+          "evidence": []
+        },
+        {
+          "term": "health systems",
+          "score": 0.3012,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 0.2909,
+          "evidence": []
+        },
+        {
+          "term": "regional office",
+          "score": 0.2865,
+          "evidence": []
+        },
+        {
+          "term": "london school",
+          "score": 0.2346,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.2307,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 0.2125,
+          "evidence": []
+        },
+        {
+          "term": "country office",
+          "score": 0.2093,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "public health",
+          "score": 9.7524,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 8.8146,
+          "evidence": []
+        },
+        {
+          "term": "health systems",
+          "score": 8.3628,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 5.9961,
+          "evidence": []
+        },
+        {
+          "term": "united",
+          "score": 5.0978,
+          "evidence": []
+        },
+        {
+          "term": "regional office",
+          "score": 4.1072,
+          "evidence": []
+        },
+        {
+          "term": "usa",
+          "score": 3.9477,
+          "evidence": []
+        },
+        {
+          "term": "london school",
+          "score": 3.5947,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "public health",
+          "score": 0.3513,
+          "evidence": []
+        },
+        {
+          "term": "health systems",
+          "score": 0.3012,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 0.2909,
+          "evidence": []
+        },
+        {
+          "term": "regional office",
+          "score": 0.2865,
+          "evidence": []
+        },
+        {
+          "term": "london school",
+          "score": 0.2346,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 0.2125,
+          "evidence": []
+        },
+        {
+          "term": "country office",
+          "score": 0.2093,
+          "evidence": []
+        },
+        {
+          "term": "development",
+          "score": 0.1023,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在sars",
+          "score": 108.0626,
+          "evidence": []
+        },
+        {
+          "term": "必要的",
+          "score": 90.4996,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 88.3674,
+          "evidence": []
+        },
+        {
+          "term": "在研究开始后",
+          "score": 86.836,
+          "evidence": []
+        },
+        {
+          "term": "病毒疗法",
+          "score": 86.836,
+          "evidence": []
+        },
+        {
+          "term": "这些情况下",
+          "score": 84.5014,
+          "evidence": []
+        },
+        {
+          "term": "增强和迭代",
+          "score": 82.4981,
+          "evidence": []
+        },
+        {
+          "term": "行动框架",
+          "score": 82.4981,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-004-about-this-report": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "cost-effective health",
+          "score": 2.0693,
+          "evidence": []
+        },
+        {
+          "term": "road traffic",
+          "score": 1.8122,
+          "evidence": []
+        },
+        {
+          "term": "mental health",
+          "score": 1.5679,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 1.5613,
+          "evidence": []
+        },
+        {
+          "term": "returns",
+          "score": 1.558,
+          "evidence": []
+        },
+        {
+          "term": "environmental benefits",
+          "score": 1.5414,
+          "evidence": []
+        },
+        {
+          "term": "billion",
+          "score": 1.5053,
+          "evidence": []
+        },
+        {
+          "term": "economic crisis",
+          "score": 1.486,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "cost-effective health",
+          "score": 82.9621,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 64.178,
+          "evidence": []
+        },
+        {
+          "term": "mental health",
+          "score": 53.547,
+          "evidence": []
+        },
+        {
+          "term": "health behaviours",
+          "score": 53.1769,
+          "evidence": []
+        },
+        {
+          "term": "health inequalities",
+          "score": 50.3734,
+          "evidence": []
+        },
+        {
+          "term": "health outcomes",
+          "score": 49.6035,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 48.4093,
+          "evidence": []
+        },
+        {
+          "term": "health promotion",
+          "score": 48.0161,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "cost-effective health",
+          "score": 1.0663,
+          "evidence": []
+        },
+        {
+          "term": "care costs",
+          "score": 0.9791,
+          "evidence": []
+        },
+        {
+          "term": "mental health",
+          "score": 0.9421,
+          "evidence": []
+        },
+        {
+          "term": "health outcomes",
+          "score": 0.8898,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 0.8887,
+          "evidence": []
+        },
+        {
+          "term": "health sector",
+          "score": 0.8424,
+          "evidence": []
+        },
+        {
+          "term": "health inequalities",
+          "score": 0.8117,
+          "evidence": []
+        },
+        {
+          "term": "health promotion",
+          "score": 0.8112,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "cost-effective health",
+          "score": 37.6835,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 34.9656,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 34.2913,
+          "evidence": []
+        },
+        {
+          "term": "mental health",
+          "score": 30.7406,
+          "evidence": []
+        },
+        {
+          "term": "timescale",
+          "score": 29.8683,
+          "evidence": []
+        },
+        {
+          "term": "health outcomes",
+          "score": 29.4806,
+          "evidence": []
+        },
+        {
+          "term": "health systems",
+          "score": 29.3671,
+          "evidence": []
+        },
+        {
+          "term": "health sector",
+          "score": 28.5905,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "cost-effective health",
+          "score": 1.0663,
+          "evidence": []
+        },
+        {
+          "term": "care costs",
+          "score": 0.9791,
+          "evidence": []
+        },
+        {
+          "term": "mental health",
+          "score": 0.9421,
+          "evidence": []
+        },
+        {
+          "term": "health outcomes",
+          "score": 0.8898,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 0.8887,
+          "evidence": []
+        },
+        {
+          "term": "health sector",
+          "score": 0.8424,
+          "evidence": []
+        },
+        {
+          "term": "health inequalities",
+          "score": 0.8117,
+          "evidence": []
+        },
+        {
+          "term": "health promotion",
+          "score": 0.8112,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 19.4899,
+          "evidence": []
+        },
+        {
+          "term": "教员询问其余学员每个报告人的报告有无遗漏什么内容",
+          "score": 17.8117,
+          "evidence": []
+        },
+        {
+          "term": "重要部分",
+          "score": 17.6742,
+          "evidence": []
+        },
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 16.3836,
+          "evidence": []
+        },
+        {
+          "term": "风险最小化",
+          "score": 15.5903,
+          "evidence": []
+        },
+        {
+          "term": "在sars",
+          "score": 15.2191,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 14.4738,
+          "evidence": []
+        },
+        {
+          "term": "岁的儿童",
+          "score": 14.2731,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-005-overview": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "longer-term gains",
+          "score": 1.8033,
+          "evidence": []
+        },
+        {
+          "term": "health budgets",
+          "score": 1.6472,
+          "evidence": []
+        },
+        {
+          "term": "violence prevention",
+          "score": 1.6035,
+          "evidence": []
+        },
+        {
+          "term": "upward pressure",
+          "score": 1.5789,
+          "evidence": []
+        },
+        {
+          "term": "maternal nutrition",
+          "score": 1.5708,
+          "evidence": []
+        },
+        {
+          "term": "cost-effective",
+          "score": 1.5488,
+          "evidence": []
+        },
+        {
+          "term": "quick wins",
+          "score": 1.5,
+          "evidence": []
+        },
+        {
+          "term": "tobacco control",
+          "score": 1.4827,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "cost-effective",
+          "score": 72.0028,
+          "evidence": []
+        },
+        {
+          "term": "violence prevention",
+          "score": 42.0555,
+          "evidence": []
+        },
+        {
+          "term": "health budgets",
+          "score": 41.8315,
+          "evidence": []
+        },
+        {
+          "term": "disease prevention",
+          "score": 35.6892,
+          "evidence": []
+        },
+        {
+          "term": "longer-term gains",
+          "score": 34.1995,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 34.0532,
+          "evidence": []
+        },
+        {
+          "term": "health costs",
+          "score": 33.8936,
+          "evidence": []
+        },
+        {
+          "term": "mental health",
+          "score": 33.2433,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health costs",
+          "score": 0.971,
+          "evidence": []
+        },
+        {
+          "term": "mental health",
+          "score": 0.8396,
+          "evidence": []
+        },
+        {
+          "term": "violence prevention",
+          "score": 0.7851,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 0.7432,
+          "evidence": []
+        },
+        {
+          "term": "disease prevention",
+          "score": 0.6582,
+          "evidence": []
+        },
+        {
+          "term": "cancer screening",
+          "score": 0.6519,
+          "evidence": []
+        },
+        {
+          "term": "ill health",
+          "score": 0.6008,
+          "evidence": []
+        },
+        {
+          "term": "health budgets",
+          "score": 0.5978,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health costs",
+          "score": 26.2392,
+          "evidence": []
+        },
+        {
+          "term": "timescale",
+          "score": 25.7189,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 22.373,
+          "evidence": []
+        },
+        {
+          "term": "mental health",
+          "score": 20.3255,
+          "evidence": []
+        },
+        {
+          "term": "health budgets",
+          "score": 16.0992,
+          "evidence": []
+        },
+        {
+          "term": "ill health",
+          "score": 16.0992,
+          "evidence": []
+        },
+        {
+          "term": "cancer screening",
+          "score": 14.6464,
+          "evidence": []
+        },
+        {
+          "term": "savings",
+          "score": 13.9299,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health costs",
+          "score": 0.971,
+          "evidence": []
+        },
+        {
+          "term": "mental health",
+          "score": 0.8396,
+          "evidence": []
+        },
+        {
+          "term": "violence prevention",
+          "score": 0.7851,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 0.7432,
+          "evidence": []
+        },
+        {
+          "term": "disease prevention",
+          "score": 0.6582,
+          "evidence": []
+        },
+        {
+          "term": "cancer screening",
+          "score": 0.6519,
+          "evidence": []
+        },
+        {
+          "term": "ill health",
+          "score": 0.6008,
+          "evidence": []
+        },
+        {
+          "term": "health budgets",
+          "score": 0.5978,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 9.768,
+          "evidence": []
+        },
+        {
+          "term": "提出了以下政策选择和行动",
+          "score": 9.614,
+          "evidence": []
+        },
+        {
+          "term": "风险最小化",
+          "score": 9.4784,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 8.8507,
+          "evidence": []
+        },
+        {
+          "term": "设想了以下产出",
+          "score": 8.7389,
+          "evidence": []
+        },
+        {
+          "term": "中所讨论的一样",
+          "score": 8.5213,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 7.7241,
+          "evidence": []
+        },
+        {
+          "term": "招募了",
+          "score": 7.4871,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-background": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "coronary heart",
+          "score": 2.7967,
+          "evidence": []
+        },
+        {
+          "term": "north karelia",
+          "score": 2.5768,
+          "evidence": []
+        },
+        {
+          "term": "karelia project",
+          "score": 2.0336,
+          "evidence": []
+        },
+        {
+          "term": "heart disease",
+          "score": 2.0016,
+          "evidence": []
+        },
+        {
+          "term": "disease mortality",
+          "score": 1.5374,
+          "evidence": []
+        },
+        {
+          "term": "blood pressure",
+          "score": 1.1811,
+          "evidence": []
+        },
+        {
+          "term": "finland",
+          "score": 1.1352,
+          "evidence": []
+        },
+        {
+          "term": "risk factors",
+          "score": 1.0228,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "coronary heart",
+          "score": 65.3313,
+          "evidence": []
+        },
+        {
+          "term": "north karelia",
+          "score": 53.0931,
+          "evidence": []
+        },
+        {
+          "term": "heart disease",
+          "score": 51.3243,
+          "evidence": []
+        },
+        {
+          "term": "karelia project",
+          "score": 41.8693,
+          "evidence": []
+        },
+        {
+          "term": "disease mortality",
+          "score": 39.395,
+          "evidence": []
+        },
+        {
+          "term": "finland",
+          "score": 27.3715,
+          "evidence": []
+        },
+        {
+          "term": "impact",
+          "score": 22.0143,
+          "evidence": []
+        },
+        {
+          "term": "decline",
+          "score": 20.4065,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "disease mortality",
+          "score": 0.3358,
+          "evidence": []
+        },
+        {
+          "term": "heart disease",
+          "score": 0.2538,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.1991,
+          "evidence": []
+        },
+        {
+          "term": "years",
+          "score": 0.1962,
+          "evidence": []
+        },
+        {
+          "term": "cost",
+          "score": 0.1916,
+          "evidence": []
+        },
+        {
+          "term": "risk factors",
+          "score": 0.1861,
+          "evidence": []
+        },
+        {
+          "term": "interventions",
+          "score": 0.169,
+          "evidence": []
+        },
+        {
+          "term": "cost-effective",
+          "score": 0.1601,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "timescale",
+          "score": 5.1344,
+          "evidence": []
+        },
+        {
+          "term": "cost",
+          "score": 3.9621,
+          "evidence": []
+        },
+        {
+          "term": "disease mortality",
+          "score": 3.531,
+          "evidence": []
+        },
+        {
+          "term": "treatment",
+          "score": 3.0804,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 2.9221,
+          "evidence": []
+        },
+        {
+          "term": "savings",
+          "score": 2.747,
+          "evidence": []
+        },
+        {
+          "term": "years",
+          "score": 2.7004,
+          "evidence": []
+        },
+        {
+          "term": "united",
+          "score": 2.6222,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "disease mortality",
+          "score": 0.3358,
+          "evidence": []
+        },
+        {
+          "term": "heart disease",
+          "score": 0.2538,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.1991,
+          "evidence": []
+        },
+        {
+          "term": "year",
+          "score": 0.1944,
+          "evidence": []
+        },
+        {
+          "term": "risk factors",
+          "score": 0.1861,
+          "evidence": []
+        },
+        {
+          "term": "interventions",
+          "score": 0.169,
+          "evidence": []
+        },
+        {
+          "term": "population",
+          "score": 0.1458,
+          "evidence": []
+        },
+        {
+          "term": "fig",
+          "score": 0.1383,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在正常情况下",
+          "score": 14.4323,
+          "evidence": []
+        },
+        {
+          "term": "在sars",
+          "score": 14.3629,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 12.8686,
+          "evidence": []
+        },
+        {
+          "term": "必要的",
+          "score": 11.7324,
+          "evidence": []
+        },
+        {
+          "term": "在研究开始后",
+          "score": 10.7158,
+          "evidence": []
+        },
+        {
+          "term": "病毒疗法",
+          "score": 10.7158,
+          "evidence": []
+        },
+        {
+          "term": "乌干达",
+          "score": 9.88,
+          "evidence": []
+        },
+        {
+          "term": "反过来",
+          "score": 9.5657,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-007-the-economic-case-for-prevention": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "noise pollution",
+          "score": 2.6726,
+          "evidence": []
+        },
+        {
+          "term": "united kingdom",
+          "score": 2.6299,
+          "evidence": []
+        },
+        {
+          "term": "billion",
+          "score": 2.5496,
+          "evidence": []
+        },
+        {
+          "term": "traffic costs",
+          "score": 2.5484,
+          "evidence": []
+        },
+        {
+          "term": "air pollution",
+          "score": 2.4871,
+          "evidence": []
+        },
+        {
+          "term": "dalys lost",
+          "score": 2.3808,
+          "evidence": []
+        },
+        {
+          "term": "road traffic",
+          "score": 2.3422,
+          "evidence": []
+        },
+        {
+          "term": "health inequalities",
+          "score": 2.2762,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "billion",
+          "score": 156.4658,
+          "evidence": []
+        },
+        {
+          "term": "traffic costs",
+          "score": 132.8458,
+          "evidence": []
+        },
+        {
+          "term": "care costs",
+          "score": 125.1278,
+          "evidence": []
+        },
+        {
+          "term": "united kingdom",
+          "score": 122.5795,
+          "evidence": []
+        },
+        {
+          "term": "health inequalities",
+          "score": 102.2094,
+          "evidence": []
+        },
+        {
+          "term": "health spending",
+          "score": 101.8034,
+          "evidence": []
+        },
+        {
+          "term": "cost containment",
+          "score": 86.3143,
+          "evidence": []
+        },
+        {
+          "term": "cost effective",
+          "score": 84.4999,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "cost effectiveness",
+          "score": 1.9005,
+          "evidence": []
+        },
+        {
+          "term": "care costs",
+          "score": 1.7595,
+          "evidence": []
+        },
+        {
+          "term": "traffic costs",
+          "score": 1.7394,
+          "evidence": []
+        },
+        {
+          "term": "economic",
+          "score": 1.6498,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cost effective",
+          "score": 1.5954,
+          "evidence": []
+        },
+        {
+          "term": "mental health",
+          "score": 1.2757,
+          "evidence": []
+        },
+        {
+          "term": "cost containment",
+          "score": 1.2391,
+          "evidence": []
+        },
+        {
+          "term": "cost pressure",
+          "score": 1.2391,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "timescale",
+          "score": 79.7447,
+          "evidence": []
+        },
+        {
+          "term": "cost effectiveness",
+          "score": 74.5481,
+          "evidence": []
+        },
+        {
+          "term": "united kingdom",
+          "score": 67.9799,
+          "evidence": []
+        },
+        {
+          "term": "cost effective",
+          "score": 60.2457,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 58.8941,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 58.8601,
+          "evidence": []
+        },
+        {
+          "term": "cost containment",
+          "score": 56.6884,
+          "evidence": []
+        },
+        {
+          "term": "cost pressure",
+          "score": 56.6884,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "cost effectiveness",
+          "score": 1.9005,
+          "evidence": []
+        },
+        {
+          "term": "care costs",
+          "score": 1.7595,
+          "evidence": []
+        },
+        {
+          "term": "traffic costs",
+          "score": 1.7394,
+          "evidence": []
+        },
+        {
+          "term": "economic",
+          "score": 1.6498,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cost effective",
+          "score": 1.5954,
+          "evidence": []
+        },
+        {
+          "term": "cost pressure",
+          "score": 1.4756,
+          "evidence": []
+        },
+        {
+          "term": "cost containment",
+          "score": 1.3234,
+          "evidence": []
+        },
+        {
+          "term": "mental health",
+          "score": 1.2757,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在sars",
+          "score": 17.1505,
+          "evidence": []
+        },
+        {
+          "term": "必要的",
+          "score": 13.5202,
+          "evidence": []
+        },
+        {
+          "term": "疫苗储备",
+          "score": 11.5708,
+          "evidence": []
+        },
+        {
+          "term": "尤其在发展中国家",
+          "score": 11.3874,
+          "evidence": []
+        },
+        {
+          "term": "教员询问其余学员每个报告人的报告有无遗漏什么内容",
+          "score": 11.3706,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 10.7261,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 10.7261,
+          "evidence": []
+        },
+        {
+          "term": "这些情况下",
+          "score": 9.4226,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-008-the-benefits-of-action": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "study timescale",
+          "score": 5.1333,
+          "evidence": []
+        },
+        {
+          "term": "trial timescale",
+          "score": 4.4486,
+          "evidence": []
+        },
+        {
+          "term": "analysis timescale",
+          "score": 4.4222,
+          "evidence": []
+        },
+        {
+          "term": "cost savings",
+          "score": 4.1099,
+          "evidence": []
+        },
+        {
+          "term": "year savings",
+          "score": 4.1099,
+          "evidence": []
+        },
+        {
+          "term": "net savings",
+          "score": 3.9648,
+          "evidence": []
+        },
+        {
+          "term": "person savings",
+          "score": 3.7392,
+          "evidence": []
+        },
+        {
+          "term": "dalys averted",
+          "score": 3.7147,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "study timescale",
+          "score": 488.7121,
+          "evidence": []
+        },
+        {
+          "term": "analysis timescale",
+          "score": 437.7447,
+          "evidence": []
+        },
+        {
+          "term": "trial timescale",
+          "score": 433.5633,
+          "evidence": []
+        },
+        {
+          "term": "cost savings",
+          "score": 405.6889,
+          "evidence": []
+        },
+        {
+          "term": "year savings",
+          "score": 325.0125,
+          "evidence": []
+        },
+        {
+          "term": "net savings",
+          "score": 266.4568,
+          "evidence": []
+        },
+        {
+          "term": "person savings",
+          "score": 263.5134,
+          "evidence": []
+        },
+        {
+          "term": "cost effectiveness",
+          "score": 235.7532,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "year cost",
+          "score": 3.1778,
+          "evidence": []
+        },
+        {
+          "term": "cost effectiveness",
+          "score": 3.143,
+          "evidence": []
+        },
+        {
+          "term": "cost savings",
+          "score": 3.0459,
+          "evidence": []
+        },
+        {
+          "term": "cost-effective interventions",
+          "score": 2.8294,
+          "evidence": []
+        },
+        {
+          "term": "care costs",
+          "score": 2.6327,
+          "evidence": []
+        },
+        {
+          "term": "treatment costs",
+          "score": 2.5999,
+          "evidence": []
+        },
+        {
+          "term": "months cost",
+          "score": 2.4933,
+          "evidence": []
+        },
+        {
+          "term": "cost effective",
+          "score": 2.4321,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "cost savings",
+          "score": 387.8536,
+          "evidence": []
+        },
+        {
+          "term": "study timescale",
+          "score": 385.4276,
+          "evidence": []
+        },
+        {
+          "term": "analysis timescale",
+          "score": 348.7171,
+          "evidence": []
+        },
+        {
+          "term": "trial timescale",
+          "score": 336.3104,
+          "evidence": []
+        },
+        {
+          "term": "year cost",
+          "score": 319.2592,
+          "evidence": []
+        },
+        {
+          "term": "cost effectiveness",
+          "score": 277.4281,
+          "evidence": []
+        },
+        {
+          "term": "months cost",
+          "score": 250.6872,
+          "evidence": []
+        },
+        {
+          "term": "cost eﬀective",
+          "score": 238.4652,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "year cost",
+          "score": 3.1778,
+          "evidence": []
+        },
+        {
+          "term": "cost effectiveness",
+          "score": 3.143,
+          "evidence": []
+        },
+        {
+          "term": "cost savings",
+          "score": 3.0459,
+          "evidence": []
+        },
+        {
+          "term": "cost-effective interventions",
+          "score": 2.8294,
+          "evidence": []
+        },
+        {
+          "term": "care costs",
+          "score": 2.6327,
+          "evidence": []
+        },
+        {
+          "term": "treatment costs",
+          "score": 2.5999,
+          "evidence": []
+        },
+        {
+          "term": "months cost",
+          "score": 2.4933,
+          "evidence": []
+        },
+        {
+          "term": "cost effective",
+          "score": 2.4321,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "这些情况下",
+          "score": 14.6058,
+          "evidence": []
+        },
+        {
+          "term": "尤其在发展中国家",
+          "score": 13.097,
+          "evidence": []
+        },
+        {
+          "term": "见下面第",
+          "score": 12.6318,
+          "evidence": []
+        },
+        {
+          "term": "怀疑可能暴露到开始调查的管理延误期",
+          "score": 12.5456,
+          "evidence": []
+        },
+        {
+          "term": "月严重急性呼吸综合征",
+          "score": 12.5456,
+          "evidence": []
+        },
+        {
+          "term": "检测不会直接使没有发病的非病例的无症状个体受益",
+          "score": 12.5456,
+          "evidence": []
+        },
+        {
+          "term": "潜在病例",
+          "score": 12.5456,
+          "evidence": []
+        },
+        {
+          "term": "病例及其密切接触者中发生的这些病例",
+          "score": 12.5456,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-009-conclusions": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "accessed september",
+          "score": 3.9562,
+          "evidence": []
+        },
+        {
+          "term": "economic returns",
+          "score": 2.6814,
+          "evidence": []
+        },
+        {
+          "term": "economic cost",
+          "score": 2.6681,
+          "evidence": []
+        },
+        {
+          "term": "perspect public",
+          "score": 2.5919,
+          "evidence": []
+        },
+        {
+          "term": "mental health",
+          "score": 2.5122,
+          "evidence": []
+        },
+        {
+          "term": "cost effectiveness",
+          "score": 2.4781,
+          "evidence": []
+        },
+        {
+          "term": "economic crisis",
+          "score": 2.4776,
+          "evidence": []
+        },
+        {
+          "term": "health inequalities",
+          "score": 2.417,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "accessed september",
+          "score": 330.8199,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 259.7575,
+          "evidence": []
+        },
+        {
+          "term": "mental health",
+          "score": 213.3054,
+          "evidence": []
+        },
+        {
+          "term": "economic cost",
+          "score": 206.8871,
+          "evidence": []
+        },
+        {
+          "term": "health inequalities",
+          "score": 200.6109,
+          "evidence": []
+        },
+        {
+          "term": "health interventions",
+          "score": 197.3245,
+          "evidence": []
+        },
+        {
+          "term": "environmental health",
+          "score": 194.9034,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 187.8108,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "economic cost",
+          "score": 3.5866,
+          "evidence": []
+        },
+        {
+          "term": "cost effectiveness",
+          "score": 3.3128,
+          "evidence": []
+        },
+        {
+          "term": "accessed september",
+          "score": 2.9596,
+          "evidence": []
+        },
+        {
+          "term": "mental health",
+          "score": 2.7129,
+          "evidence": []
+        },
+        {
+          "term": "united kingdom",
+          "score": 2.6931,
+          "evidence": []
+        },
+        {
+          "term": "cost effective",
+          "score": 2.6596,
+          "evidence": []
+        },
+        {
+          "term": "health interventions",
+          "score": 2.65,
+          "evidence": []
+        },
+        {
+          "term": "cost benefit",
+          "score": 2.5941,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "accessed september",
+          "score": 191.7305,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 163.0869,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 160.929,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 154.6937,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 153.9352,
+          "evidence": []
+        },
+        {
+          "term": "health interventions",
+          "score": 152.4659,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 142.404,
+          "evidence": []
+        },
+        {
+          "term": "mental health",
+          "score": 133.5541,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "economic cost",
+          "score": 3.5866,
+          "evidence": []
+        },
+        {
+          "term": "cost effectiveness",
+          "score": 3.3128,
+          "evidence": []
+        },
+        {
+          "term": "accessed september",
+          "score": 2.9596,
+          "evidence": []
+        },
+        {
+          "term": "mental health",
+          "score": 2.7129,
+          "evidence": []
+        },
+        {
+          "term": "united kingdom",
+          "score": 2.6931,
+          "evidence": []
+        },
+        {
+          "term": "cost effective",
+          "score": 2.6596,
+          "evidence": []
+        },
+        {
+          "term": "health interventions",
+          "score": 2.65,
+          "evidence": []
+        },
+        {
+          "term": "cost benefit",
+          "score": 2.5941,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在sars",
+          "score": 34.8625,
+          "evidence": []
+        },
+        {
+          "term": "必要的",
+          "score": 29.565,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 27.0318,
+          "evidence": []
+        },
+        {
+          "term": "在研究开始后",
+          "score": 24.9235,
+          "evidence": []
+        },
+        {
+          "term": "病毒疗法",
+          "score": 24.9235,
+          "evidence": []
+        },
+        {
+          "term": "这些情况下",
+          "score": 24.2272,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 23.0778,
+          "evidence": []
+        },
+        {
+          "term": "在正常情况下",
+          "score": 22.6393,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "epho",
+          "score": 1.0201,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 0.9664,
+          "evidence": []
+        },
+        {
+          "term": "health summary",
+          "score": 0.7739,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "epho",
+          "score": 16.4303,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 16.0004,
+          "evidence": []
+        },
+        {
+          "term": "health summary",
+          "score": 11.3761,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "public health",
+          "score": 0.1791,
+          "evidence": []
+        },
+        {
+          "term": "health summary",
+          "score": 0.1319,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.0531,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "public health",
+          "score": 4.0868,
+          "evidence": []
+        },
+        {
+          "term": "health summary",
+          "score": 2.9469,
+          "evidence": []
+        },
+        {
+          "term": "digital",
+          "score": 1.4101,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "public health",
+          "score": 0.1791,
+          "evidence": []
+        },
+        {
+          "term": "health summary",
+          "score": 0.1319,
+          "evidence": []
+        },
+        {
+          "term": "services",
+          "score": 0.0494,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 37.056,
+          "evidence": []
+        },
+        {
+          "term": "必需的",
+          "score": 35.1101,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 33.8288,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

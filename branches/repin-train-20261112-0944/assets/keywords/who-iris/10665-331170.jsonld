@@ -1,0 +1,3986 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-331170",
+  "instance": "who-iris",
+  "about": "library/10665-331170",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7393,
+    "terms": 71095
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "preventive treatment",
+        "score": 24.5558,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "isoniazid preventive",
+        "score": 23.519,
+        "evidence": []
+      },
+      {
+        "term": "tuberculosis preventive",
+        "score": 21.3606,
+        "evidence": []
+      },
+      {
+        "term": "mdr-tb preventive",
+        "score": 17.7529,
+        "evidence": []
+      },
+      {
+        "term": "offered preventive",
+        "score": 17.5654,
+        "evidence": []
+      },
+      {
+        "term": "preventive therapy",
+        "score": 16.8075,
+        "evidence": []
+      },
+      {
+        "term": "ltbi regimens",
+        "score": 16.2881,
+        "evidence": []
+      },
+      {
+        "term": "initiating preventive",
+        "score": 16.1411,
+        "evidence": []
+      },
+      {
+        "term": "ltbi testing",
+        "score": 15.4797,
+        "evidence": []
+      },
+      {
+        "term": "different preventive",
+        "score": 15.439,
+        "evidence": []
+      },
+      {
+        "term": "ltbi regardless",
+        "score": 15.3888,
+        "evidence": []
+      },
+      {
+        "term": "active tuberculosis",
+        "score": 15.3394,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "preventive treatment",
+        "score": 1162.8541,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "isoniazid preventive",
+        "score": 1019.436,
+        "evidence": []
+      },
+      {
+        "term": "tuberculosis preventive",
+        "score": 960.6128,
+        "evidence": []
+      },
+      {
+        "term": "offered preventive",
+        "score": 774.8237,
+        "evidence": []
+      },
+      {
+        "term": "mdr-tb preventive",
+        "score": 768.8404,
+        "evidence": []
+      },
+      {
+        "term": "preventive therapy",
+        "score": 754.0363,
+        "evidence": []
+      },
+      {
+        "term": "initiating preventive",
+        "score": 717.2623,
+        "evidence": []
+      },
+      {
+        "term": "different preventive",
+        "score": 705.4233,
+        "evidence": []
+      },
+      {
+        "term": "preventive actions",
+        "score": 688.1546,
+        "evidence": []
+      },
+      {
+        "term": "ltbi regardless",
+        "score": 609.8935,
+        "evidence": []
+      },
+      {
+        "term": "ltbi testing",
+        "score": 599.0518,
+        "evidence": []
+      },
+      {
+        "term": "ltbi regimens",
+        "score": 596.0144,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "tuberculosis preventive",
+        "score": 13.4072,
+        "evidence": []
+      },
+      {
+        "term": "preventive treatment",
+        "score": 13.1907,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "tuberculosis disease",
+        "score": 12.7915,
+        "evidence": []
+      },
+      {
+        "term": "isoniazid preventive",
+        "score": 12.4524,
+        "evidence": []
+      },
+      {
+        "term": "tuberculosis infection",
+        "score": 12.4027,
+        "evidence": []
+      },
+      {
+        "term": "tuberculosis screening",
+        "score": 11.7841,
+        "evidence": []
+      },
+      {
+        "term": "active tuberculosis",
+        "score": 11.4271,
+        "evidence": []
+      },
+      {
+        "term": "household contacts",
+        "score": 11.3178,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hiv infection",
+        "score": 10.7374,
+        "evidence": []
+      },
+      {
+        "term": "treatment among",
+        "score": 10.593,
+        "evidence": []
+      },
+      {
+        "term": "people living",
+        "score": 10.5885,
+        "evidence": []
+      },
+      {
+        "term": "children living",
+        "score": 10.1978,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "preventive treatment",
+        "score": 683.4516,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "tuberculosis preventive",
+        "score": 655.2013,
+        "evidence": []
+      },
+      {
+        "term": "isoniazid preventive",
+        "score": 543.8371,
+        "evidence": []
+      },
+      {
+        "term": "active tuberculosis",
+        "score": 506.3491,
+        "evidence": []
+      },
+      {
+        "term": "tuberculosis disease",
+        "score": 494.3482,
+        "evidence": []
+      },
+      {
+        "term": "tuberculosis infection",
+        "score": 484.2652,
+        "evidence": []
+      },
+      {
+        "term": "tuberculosis screening",
+        "score": 444.6752,
+        "evidence": []
+      },
+      {
+        "term": "treatment among",
+        "score": 443.7232,
+        "evidence": []
+      },
+      {
+        "term": "treatment regimens",
+        "score": 424.5953,
+        "evidence": []
+      },
+      {
+        "term": "latent tuberculosis",
+        "score": 418.4691,
+        "evidence": []
+      },
+      {
+        "term": "receiving treatment",
+        "score": 410.128,
+        "evidence": []
+      },
+      {
+        "term": "preventive therapy",
+        "score": 402.883,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "tuberculosis preventive",
+        "score": 13.4072,
+        "evidence": []
+      },
+      {
+        "term": "preventive treatment",
+        "score": 13.1907,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "tuberculosis disease",
+        "score": 12.7915,
+        "evidence": []
+      },
+      {
+        "term": "isoniazid preventive",
+        "score": 12.4524,
+        "evidence": []
+      },
+      {
+        "term": "tuberculosis infection",
+        "score": 12.4027,
+        "evidence": []
+      },
+      {
+        "term": "tuberculosis screening",
+        "score": 11.7841,
+        "evidence": []
+      },
+      {
+        "term": "active tuberculosis",
+        "score": 11.4271,
+        "evidence": []
+      },
+      {
+        "term": "household contacts",
+        "score": 11.3178,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hiv infection",
+        "score": 10.7374,
+        "evidence": []
+      },
+      {
+        "term": "treatment among",
+        "score": 10.593,
+        "evidence": []
+      },
+      {
+        "term": "people living",
+        "score": 10.5885,
+        "evidence": []
+      },
+      {
+        "term": "children living",
+        "score": 10.1978,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "很重要",
+        "score": 244.0091,
+        "evidence": []
+      },
+      {
+        "term": "的材料",
+        "score": 233.803,
+        "evidence": []
+      },
+      {
+        "term": "相一致",
+        "score": 228.2653,
+        "evidence": []
+      },
+      {
+        "term": "疫苗有关的",
+        "score": 211.7233,
+        "evidence": []
+      },
+      {
+        "term": "挑战性",
+        "score": 195.3512,
+        "evidence": []
+      },
+      {
+        "term": "的妇女",
+        "score": 192.0155,
+        "evidence": []
+      },
+      {
+        "term": "十分重要",
+        "score": 186.5964,
+        "evidence": []
+      },
+      {
+        "term": "疫苗工作",
+        "score": 176.5918,
+        "evidence": []
+      },
+      {
+        "term": "咨询小组将由18名成员组成",
+        "score": 172.2681,
+        "evidence": []
+      },
+      {
+        "term": "汇集在流感领域中国际公认的决策者",
+        "score": 172.2681,
+        "evidence": []
+      },
+      {
+        "term": "重点人群",
+        "score": 170.6265,
+        "evidence": []
+      },
+      {
+        "term": "和其他",
+        "score": 143.8841,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-table-of-contents": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "panels",
+          "score": 0.4742,
+          "evidence": []
+        },
+        {
+          "term": "tables",
+          "score": 0.4715,
+          "evidence": []
+        },
+        {
+          "term": "grade",
+          "score": 0.4497,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "annex",
+          "score": 7.2391,
+          "evidence": []
+        },
+        {
+          "term": "tables",
+          "score": 6.8974,
+          "evidence": []
+        },
+        {
+          "term": "grade",
+          "score": 6.3434,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "evidence",
+          "score": 0.0881,
+          "evidence": []
+        },
+        {
+          "term": "guideline",
+          "score": 0.0781,
+          "evidence": []
+        },
+        {
+          "term": "recommendations",
+          "score": 0.0705,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "evidence",
+          "score": 1.0833,
+          "evidence": []
+        },
+        {
+          "term": "guideline",
+          "score": 1.0469,
+          "evidence": []
+        },
+        {
+          "term": "recommendation",
+          "score": 0.9185,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "evidence",
+          "score": 0.0881,
+          "evidence": []
+        },
+        {
+          "term": "recommendations",
+          "score": 0.0705,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.0664,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 53.0363,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 53.0363,
+          "evidence": []
+        },
+        {
+          "term": "对捐赠资金和非财政捐助的使用",
+          "score": 50.0609,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-001-acknowledgements": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "nandi siegfried",
+          "score": 2.0185,
+          "evidence": []
+        },
+        {
+          "term": "lindiwe mvusi",
+          "score": 1.895,
+          "evidence": []
+        },
+        {
+          "term": "avinash kanchar",
+          "score": 1.7271,
+          "evidence": []
+        },
+        {
+          "term": "carmen figueroa",
+          "score": 1.7048,
+          "evidence": []
+        },
+        {
+          "term": "matteo zignol",
+          "score": 1.6863,
+          "evidence": []
+        },
+        {
+          "term": "hopkins university",
+          "score": 1.6832,
+          "evidence": []
+        },
+        {
+          "term": "yohhei hamada",
+          "score": 1.6424,
+          "evidence": []
+        },
+        {
+          "term": "research council",
+          "score": 1.5135,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hopkins university",
+          "score": 37.2205,
+          "evidence": []
+        },
+        {
+          "term": "nandi siegfried",
+          "score": 35.4848,
+          "evidence": []
+        },
+        {
+          "term": "lindiwe mvusi",
+          "score": 30.6633,
+          "evidence": []
+        },
+        {
+          "term": "south africa",
+          "score": 28.8712,
+          "evidence": []
+        },
+        {
+          "term": "avinash kanchar",
+          "score": 27.8495,
+          "evidence": []
+        },
+        {
+          "term": "carmen figueroa",
+          "score": 27.4445,
+          "evidence": []
+        },
+        {
+          "term": "matteo zignol",
+          "score": 27.1362,
+          "evidence": []
+        },
+        {
+          "term": "communicable diseases",
+          "score": 26.6323,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hopkins university",
+          "score": 1.2362,
+          "evidence": []
+        },
+        {
+          "term": "medical research",
+          "score": 1.2138,
+          "evidence": []
+        },
+        {
+          "term": "research council",
+          "score": 1.0175,
+          "evidence": []
+        },
+        {
+          "term": "national institute",
+          "score": 1.0043,
+          "evidence": []
+        },
+        {
+          "term": "guideline development",
+          "score": 0.969,
+          "evidence": []
+        },
+        {
+          "term": "development group",
+          "score": 0.943,
+          "evidence": []
+        },
+        {
+          "term": "south africa",
+          "score": 0.9131,
+          "evidence": []
+        },
+        {
+          "term": "guideline steering",
+          "score": 0.8096,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hopkins university",
+          "score": 30.7583,
+          "evidence": []
+        },
+        {
+          "term": "south africa",
+          "score": 18.9814,
+          "evidence": []
+        },
+        {
+          "term": "united",
+          "score": 18.8263,
+          "evidence": []
+        },
+        {
+          "term": "usa",
+          "score": 17.8643,
+          "evidence": []
+        },
+        {
+          "term": "guideline development",
+          "score": 16.9523,
+          "evidence": []
+        },
+        {
+          "term": "guideline steering",
+          "score": 15.3416,
+          "evidence": []
+        },
+        {
+          "term": "development group",
+          "score": 14.3231,
+          "evidence": []
+        },
+        {
+          "term": "national institute",
+          "score": 14.0901,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hopkins university",
+          "score": 1.2362,
+          "evidence": []
+        },
+        {
+          "term": "medical research",
+          "score": 1.2138,
+          "evidence": []
+        },
+        {
+          "term": "research council",
+          "score": 1.0175,
+          "evidence": []
+        },
+        {
+          "term": "national institute",
+          "score": 1.0043,
+          "evidence": []
+        },
+        {
+          "term": "guideline development",
+          "score": 0.969,
+          "evidence": []
+        },
+        {
+          "term": "development group",
+          "score": 0.943,
+          "evidence": []
+        },
+        {
+          "term": "south africa",
+          "score": 0.9131,
+          "evidence": []
+        },
+        {
+          "term": "guideline steering",
+          "score": 0.8096,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在研究开始后",
+          "score": 103.6595,
+          "evidence": []
+        },
+        {
+          "term": "病毒疗法",
+          "score": 103.6595,
+          "evidence": []
+        },
+        {
+          "term": "在sars",
+          "score": 100.7725,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 97.5579,
+          "evidence": []
+        },
+        {
+          "term": "必要的",
+          "score": 83.8101,
+          "evidence": []
+        },
+        {
+          "term": "如果疫苗证明有效",
+          "score": 68.2733,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 65.3115,
+          "evidence": []
+        },
+        {
+          "term": "其它技术术语",
+          "score": 65.1383,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-002-abbreviations-acronyms": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "isoniazid monotherapy",
+          "score": 2.254,
+          "evidence": []
+        },
+        {
+          "term": "plus isoniazid",
+          "score": 1.5288,
+          "evidence": []
+        },
+        {
+          "term": "rifapentine plus",
+          "score": 1.2731,
+          "evidence": []
+        },
+        {
+          "term": "preventive treatment",
+          "score": 0.9534,
+          "evidence": []
+        },
+        {
+          "term": "months",
+          "score": 0.6842,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis",
+          "score": 0.6086,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "isoniazid monotherapy",
+          "score": 49.409,
+          "evidence": []
+        },
+        {
+          "term": "plus isoniazid",
+          "score": 30.8571,
+          "evidence": []
+        },
+        {
+          "term": "rifapentine plus",
+          "score": 19.0562,
+          "evidence": []
+        },
+        {
+          "term": "months",
+          "score": 14.1303,
+          "evidence": []
+        },
+        {
+          "term": "preventive treatment",
+          "score": 12.3548,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis",
+          "score": 11.5557,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "preventive treatment",
+          "score": 0.366,
+          "evidence": []
+        },
+        {
+          "term": "plus isoniazid",
+          "score": 0.2974,
+          "evidence": []
+        },
+        {
+          "term": "isoniazid monotherapy",
+          "score": 0.2593,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis",
+          "score": 0.2384,
+          "evidence": []
+        },
+        {
+          "term": "rifapentine plus",
+          "score": 0.2285,
+          "evidence": []
+        },
+        {
+          "term": "tpt",
+          "score": 0.189,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "preventive treatment",
+          "score": 11.5385,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis",
+          "score": 9.1949,
+          "evidence": []
+        },
+        {
+          "term": "plus isoniazid",
+          "score": 7.5889,
+          "evidence": []
+        },
+        {
+          "term": "isoniazid monotherapy",
+          "score": 7.4705,
+          "evidence": []
+        },
+        {
+          "term": "tpt",
+          "score": 4.9781,
+          "evidence": []
+        },
+        {
+          "term": "rifapentine plus",
+          "score": 4.3576,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "preventive treatment",
+          "score": 0.366,
+          "evidence": []
+        },
+        {
+          "term": "plus isoniazid",
+          "score": 0.2974,
+          "evidence": []
+        },
+        {
+          "term": "isoniazid monotherapy",
+          "score": 0.2593,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis",
+          "score": 0.2384,
+          "evidence": []
+        },
+        {
+          "term": "rifapentine plus",
+          "score": 0.2285,
+          "evidence": []
+        },
+        {
+          "term": "rifampicin",
+          "score": 0.1427,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "的材料",
+          "score": 63.7274,
+          "evidence": []
+        },
+        {
+          "term": "很重要",
+          "score": 55.4765,
+          "evidence": []
+        },
+        {
+          "term": "疫苗有关的",
+          "score": 51.9595,
+          "evidence": []
+        },
+        {
+          "term": "挑战性",
+          "score": 51.5322,
+          "evidence": []
+        },
+        {
+          "term": "的妇女",
+          "score": 47.9902,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 45.4965,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-003-definitions": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "contact investigation",
+          "score": 1.5641,
+          "evidence": []
+        },
+        {
+          "term": "preventive treatment",
+          "score": 1.5353,
+          "evidence": []
+        },
+        {
+          "term": "index case",
+          "score": 1.4416,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis infection",
+          "score": 1.3204,
+          "evidence": []
+        },
+        {
+          "term": "definitions",
+          "score": 0.9356,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "person",
+          "score": 0.881,
+          "evidence": []
+        },
+        {
+          "term": "ltbi",
+          "score": 0.8366,
+          "evidence": []
+        },
+        {
+          "term": "undiagnosed",
+          "score": 0.682,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "preventive treatment",
+          "score": 31.7762,
+          "evidence": []
+        },
+        {
+          "term": "index case",
+          "score": 28.8001,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis infection",
+          "score": 27.3215,
+          "evidence": []
+        },
+        {
+          "term": "contact investigation",
+          "score": 27.1823,
+          "evidence": []
+        },
+        {
+          "term": "person",
+          "score": 24.7056,
+          "evidence": []
+        },
+        {
+          "term": "definitions",
+          "score": 14.5412,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ltbi",
+          "score": 13.9794,
+          "evidence": []
+        },
+        {
+          "term": "active",
+          "score": 11.341,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "tuberculosis infection",
+          "score": 0.715,
+          "evidence": []
+        },
+        {
+          "term": "preventive treatment",
+          "score": 0.6436,
+          "evidence": []
+        },
+        {
+          "term": "contact investigation",
+          "score": 0.5222,
+          "evidence": []
+        },
+        {
+          "term": "tpt",
+          "score": 0.4105,
+          "evidence": []
+        },
+        {
+          "term": "disease",
+          "score": 0.3957,
+          "evidence": []
+        },
+        {
+          "term": "index case",
+          "score": 0.3507,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.3458,
+          "evidence": []
+        },
+        {
+          "term": "people",
+          "score": 0.3119,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "contact investigation",
+          "score": 17.8338,
+          "evidence": []
+        },
+        {
+          "term": "preventive treatment",
+          "score": 16.4486,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis infection",
+          "score": 16.2076,
+          "evidence": []
+        },
+        {
+          "term": "tpt",
+          "score": 8.6974,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 7.5886,
+          "evidence": []
+        },
+        {
+          "term": "household",
+          "score": 6.5656,
+          "evidence": []
+        },
+        {
+          "term": "people",
+          "score": 6.2734,
+          "evidence": []
+        },
+        {
+          "term": "disease",
+          "score": 6.2372,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "tuberculosis infection",
+          "score": 0.715,
+          "evidence": []
+        },
+        {
+          "term": "preventive treatment",
+          "score": 0.6436,
+          "evidence": []
+        },
+        {
+          "term": "contact investigation",
+          "score": 0.5222,
+          "evidence": []
+        },
+        {
+          "term": "disease",
+          "score": 0.3957,
+          "evidence": []
+        },
+        {
+          "term": "index case",
+          "score": 0.3507,
+          "evidence": []
+        },
+        {
+          "term": "people",
+          "score": 0.3119,
+          "evidence": []
+        },
+        {
+          "term": "household",
+          "score": 0.294,
+          "evidence": []
+        },
+        {
+          "term": "years",
+          "score": 0.2532,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "很重要",
+          "score": 25.9937,
+          "evidence": []
+        },
+        {
+          "term": "疫苗有关的",
+          "score": 25.3817,
+          "evidence": []
+        },
+        {
+          "term": "挑战性",
+          "score": 25.0703,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 23.8273,
+          "evidence": []
+        },
+        {
+          "term": "的妇女",
+          "score": 23.3386,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 21.9839,
+          "evidence": []
+        },
+        {
+          "term": "问题的讨论结束",
+          "score": 21.9839,
+          "evidence": []
+        },
+        {
+          "term": "世界医学协会",
+          "score": 19.6243,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-004-executive-summary": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "isoniazid preventive",
+          "score": 2.8341,
+          "evidence": []
+        },
+        {
+          "term": "preventive treatment",
+          "score": 2.7892,
+          "evidence": []
+        },
+        {
+          "term": "offered preventive",
+          "score": 2.5402,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis preventive",
+          "score": 2.5054,
+          "evidence": []
+        },
+        {
+          "term": "ltbi testing",
+          "score": 2.4714,
+          "evidence": []
+        },
+        {
+          "term": "household contacts",
+          "score": 2.2983,
+          "evidence": []
+        },
+        {
+          "term": "systematic ltbi",
+          "score": 2.2119,
+          "evidence": []
+        },
+        {
+          "term": "treatment options",
+          "score": 2.0548,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "preventive treatment",
+          "score": 176.3851,
+          "evidence": []
+        },
+        {
+          "term": "isoniazid preventive",
+          "score": 142.6611,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis preventive",
+          "score": 134.2365,
+          "evidence": []
+        },
+        {
+          "term": "offered preventive",
+          "score": 130.4737,
+          "evidence": []
+        },
+        {
+          "term": "ltbi testing",
+          "score": 104.5378,
+          "evidence": []
+        },
+        {
+          "term": "systematic ltbi",
+          "score": 90.8676,
+          "evidence": []
+        },
+        {
+          "term": "treatment options",
+          "score": 87.2986,
+          "evidence": []
+        },
+        {
+          "term": "out active",
+          "score": 66.4936,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "household contacts",
+          "score": 1.8298,
+          "evidence": []
+        },
+        {
+          "term": "preventive treatment",
+          "score": 1.7379,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis preventive",
+          "score": 1.6505,
+          "evidence": []
+        },
+        {
+          "term": "isoniazid preventive",
+          "score": 1.6298,
+          "evidence": []
+        },
+        {
+          "term": "people living",
+          "score": 1.6225,
+          "evidence": []
+        },
+        {
+          "term": "children living",
+          "score": 1.5459,
+          "evidence": []
+        },
+        {
+          "term": "offered preventive",
+          "score": 1.4129,
+          "evidence": []
+        },
+        {
+          "term": "adolescents living",
+          "score": 1.3878,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "preventive treatment",
+          "score": 93.5962,
+          "evidence": []
+        },
+        {
+          "term": "isoniazid preventive",
+          "score": 72.6684,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis preventive",
+          "score": 70.9382,
+          "evidence": []
+        },
+        {
+          "term": "offered preventive",
+          "score": 56.4919,
+          "evidence": []
+        },
+        {
+          "term": "treatment options",
+          "score": 52.5646,
+          "evidence": []
+        },
+        {
+          "term": "children living",
+          "score": 47.7248,
+          "evidence": []
+        },
+        {
+          "term": "people living",
+          "score": 46.8874,
+          "evidence": []
+        },
+        {
+          "term": "ltbi testing",
+          "score": 43.609,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "household contacts",
+          "score": 1.8298,
+          "evidence": []
+        },
+        {
+          "term": "preventive treatment",
+          "score": 1.7379,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis preventive",
+          "score": 1.6505,
+          "evidence": []
+        },
+        {
+          "term": "isoniazid preventive",
+          "score": 1.6298,
+          "evidence": []
+        },
+        {
+          "term": "people living",
+          "score": 1.6225,
+          "evidence": []
+        },
+        {
+          "term": "children living",
+          "score": 1.5459,
+          "evidence": []
+        },
+        {
+          "term": "offered preventive",
+          "score": 1.4129,
+          "evidence": []
+        },
+        {
+          "term": "adolescents living",
+          "score": 1.3878,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "很重要",
+          "score": 24.5482,
+          "evidence": []
+        },
+        {
+          "term": "挑战性",
+          "score": 23.5892,
+          "evidence": []
+        },
+        {
+          "term": "疫苗有关的",
+          "score": 23.507,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 22.167,
+          "evidence": []
+        },
+        {
+          "term": "的妇女",
+          "score": 22.0013,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 21.5505,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 21.4993,
+          "evidence": []
+        },
+        {
+          "term": "问题的讨论结束",
+          "score": 21.4993,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-1-background": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "preventive treatment",
+          "score": 1.6417,
+          "evidence": []
+        },
+        {
+          "term": "million people",
+          "score": 1.3044,
+          "evidence": []
+        },
+        {
+          "term": "household contacts",
+          "score": 1.1222,
+          "evidence": []
+        },
+        {
+          "term": "adverse events",
+          "score": 1.0577,
+          "evidence": []
+        },
+        {
+          "term": "active",
+          "score": 0.7934,
+          "evidence": []
+        },
+        {
+          "term": "pmtpt",
+          "score": 0.7791,
+          "evidence": []
+        },
+        {
+          "term": "ltbi",
+          "score": 0.663,
+          "evidence": []
+        },
+        {
+          "term": "infection",
+          "score": 0.6141,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "preventive treatment",
+          "score": 37.0645,
+          "evidence": []
+        },
+        {
+          "term": "million people",
+          "score": 21.7937,
+          "evidence": []
+        },
+        {
+          "term": "active",
+          "score": 19.8467,
+          "evidence": []
+        },
+        {
+          "term": "adverse events",
+          "score": 16.3456,
+          "evidence": []
+        },
+        {
+          "term": "household contacts",
+          "score": 15.364,
+          "evidence": []
+        },
+        {
+          "term": "disease",
+          "score": 12.5691,
+          "evidence": []
+        },
+        {
+          "term": "pmtpt",
+          "score": 11.7275,
+          "evidence": []
+        },
+        {
+          "term": "infection",
+          "score": 11.1434,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "preventive treatment",
+          "score": 0.553,
+          "evidence": []
+        },
+        {
+          "term": "household contacts",
+          "score": 0.4625,
+          "evidence": []
+        },
+        {
+          "term": "million people",
+          "score": 0.4279,
+          "evidence": []
+        },
+        {
+          "term": "disease",
+          "score": 0.333,
+          "evidence": []
+        },
+        {
+          "term": "tpt",
+          "score": 0.3207,
+          "evidence": []
+        },
+        {
+          "term": "infection",
+          "score": 0.2993,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.254,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis",
+          "score": 0.2341,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "preventive treatment",
+          "score": 17.192,
+          "evidence": []
+        },
+        {
+          "term": "household contacts",
+          "score": 7.2365,
+          "evidence": []
+        },
+        {
+          "term": "million people",
+          "score": 7.1131,
+          "evidence": []
+        },
+        {
+          "term": "tpt",
+          "score": 5.9188,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis",
+          "score": 5.5146,
+          "evidence": []
+        },
+        {
+          "term": "ltbi",
+          "score": 5.4613,
+          "evidence": []
+        },
+        {
+          "term": "infection",
+          "score": 5.1912,
+          "evidence": []
+        },
+        {
+          "term": "disease",
+          "score": 4.9461,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "preventive treatment",
+          "score": 0.553,
+          "evidence": []
+        },
+        {
+          "term": "household contacts",
+          "score": 0.4625,
+          "evidence": []
+        },
+        {
+          "term": "million people",
+          "score": 0.4279,
+          "evidence": []
+        },
+        {
+          "term": "disease",
+          "score": 0.333,
+          "evidence": []
+        },
+        {
+          "term": "infection",
+          "score": 0.2993,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.254,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis",
+          "score": 0.2341,
+          "evidence": []
+        },
+        {
+          "term": "active",
+          "score": 0.2249,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "很重要",
+          "score": 18.9685,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 18.599,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 17.9254,
+          "evidence": []
+        },
+        {
+          "term": "挑战性",
+          "score": 17.6716,
+          "evidence": []
+        },
+        {
+          "term": "疫苗有关的",
+          "score": 17.3819,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 16.8373,
+          "evidence": []
+        },
+        {
+          "term": "问题的讨论结束",
+          "score": 16.8373,
+          "evidence": []
+        },
+        {
+          "term": "的妇女",
+          "score": 16.3121,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-007-2-rationale": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "risk groups",
+          "score": 0.7418,
+          "evidence": []
+        },
+        {
+          "term": "ltbi",
+          "score": 0.663,
+          "evidence": []
+        },
+        {
+          "term": "latent",
+          "score": 0.6626,
+          "evidence": []
+        },
+        {
+          "term": "guidelines",
+          "score": 0.5837,
+          "evidence": []
+        },
+        {
+          "term": "contacts",
+          "score": 0.5611,
+          "evidence": []
+        },
+        {
+          "term": "condition",
+          "score": 0.5555,
+          "evidence": []
+        },
+        {
+          "term": "infection",
+          "score": 0.4751,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "guidelines",
+          "score": 13.3493,
+          "evidence": []
+        },
+        {
+          "term": "risk groups",
+          "score": 10.795,
+          "evidence": []
+        },
+        {
+          "term": "ltbi",
+          "score": 9.3196,
+          "evidence": []
+        },
+        {
+          "term": "latent",
+          "score": 9.2632,
+          "evidence": []
+        },
+        {
+          "term": "condition",
+          "score": 7.8222,
+          "evidence": []
+        },
+        {
+          "term": "contacts",
+          "score": 7.4307,
+          "evidence": []
+        },
+        {
+          "term": "still",
+          "score": 6.8059,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "risk groups",
+          "score": 0.1668,
+          "evidence": []
+        },
+        {
+          "term": "disease",
+          "score": 0.1468,
+          "evidence": []
+        },
+        {
+          "term": "people",
+          "score": 0.1421,
+          "evidence": []
+        },
+        {
+          "term": "infection",
+          "score": 0.1373,
+          "evidence": []
+        },
+        {
+          "term": "contacts",
+          "score": 0.1355,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.1297,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.1278,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "preventive",
+          "score": 2.9887,
+          "evidence": []
+        },
+        {
+          "term": "contacts",
+          "score": 2.988,
+          "evidence": []
+        },
+        {
+          "term": "treatment",
+          "score": 2.7366,
+          "evidence": []
+        },
+        {
+          "term": "recommendation",
+          "score": 2.5006,
+          "evidence": []
+        },
+        {
+          "term": "ltbi",
+          "score": 2.1573,
+          "evidence": []
+        },
+        {
+          "term": "risk groups",
+          "score": 2.1382,
+          "evidence": []
+        },
+        {
+          "term": "people",
+          "score": 2.0946,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "risk groups",
+          "score": 0.1668,
+          "evidence": []
+        },
+        {
+          "term": "disease",
+          "score": 0.1468,
+          "evidence": []
+        },
+        {
+          "term": "people",
+          "score": 0.1421,
+          "evidence": []
+        },
+        {
+          "term": "infection",
+          "score": 0.1373,
+          "evidence": []
+        },
+        {
+          "term": "contacts",
+          "score": 0.1355,
+          "evidence": []
+        },
+        {
+          "term": "recommendations",
+          "score": 0.1158,
+          "evidence": []
+        },
+        {
+          "term": "active",
+          "score": 0.1082,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 12.7581,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 10.6474,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 9.8592,
+          "evidence": []
+        },
+        {
+          "term": "世界医学协会",
+          "score": 8.9869,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 8.7105,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 8.0292,
+          "evidence": []
+        },
+        {
+          "term": "问题的讨论结束",
+          "score": 8.0292,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-008-3-scope-of-the-current-update": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "current update",
+          "score": 1.5866,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "preventive treatment",
+          "score": 1.4105,
+          "evidence": []
+        },
+        {
+          "term": "treatment regimens",
+          "score": 1.3845,
+          "evidence": []
+        },
+        {
+          "term": "disease compared",
+          "score": 0.7502,
+          "evidence": []
+        },
+        {
+          "term": "pico",
+          "score": 0.7287,
+          "evidence": []
+        },
+        {
+          "term": "wording",
+          "score": 0.7256,
+          "evidence": []
+        },
+        {
+          "term": "ages",
+          "score": 0.605,
+          "evidence": []
+        },
+        {
+          "term": "isoniazid",
+          "score": 0.5595,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "preventive treatment",
+          "score": 26.4416,
+          "evidence": []
+        },
+        {
+          "term": "treatment regimens",
+          "score": 24.3504,
+          "evidence": []
+        },
+        {
+          "term": "current update",
+          "score": 22.5813,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pico",
+          "score": 14.6032,
+          "evidence": []
+        },
+        {
+          "term": "wording",
+          "score": 11.6345,
+          "evidence": []
+        },
+        {
+          "term": "disease compared",
+          "score": 9.7525,
+          "evidence": []
+        },
+        {
+          "term": "ages",
+          "score": 9.4373,
+          "evidence": []
+        },
+        {
+          "term": "threshold",
+          "score": 8.7088,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "preventive treatment",
+          "score": 0.357,
+          "evidence": []
+        },
+        {
+          "term": "treatment regimens",
+          "score": 0.3331,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 0.2485,
+          "evidence": []
+        },
+        {
+          "term": "recommendation",
+          "score": 0.247,
+          "evidence": []
+        },
+        {
+          "term": "current update",
+          "score": 0.2178,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "guideline",
+          "score": 0.1952,
+          "evidence": []
+        },
+        {
+          "term": "disease compared",
+          "score": 0.175,
+          "evidence": []
+        },
+        {
+          "term": "recommended",
+          "score": 0.1703,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "preventive treatment",
+          "score": 11.0367,
+          "evidence": []
+        },
+        {
+          "term": "treatment regimens",
+          "score": 8.578,
+          "evidence": []
+        },
+        {
+          "term": "isoniazid",
+          "score": 4.463,
+          "evidence": []
+        },
+        {
+          "term": "recommendation",
+          "score": 4.1027,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis",
+          "score": 4.0908,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 3.91,
+          "evidence": []
+        },
+        {
+          "term": "tpt",
+          "score": 3.6782,
+          "evidence": []
+        },
+        {
+          "term": "current update",
+          "score": 3.0309,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "preventive treatment",
+          "score": 0.357,
+          "evidence": []
+        },
+        {
+          "term": "treatment regimens",
+          "score": 0.3331,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 0.2485,
+          "evidence": []
+        },
+        {
+          "term": "current update",
+          "score": 0.2178,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "recommendations",
+          "score": 0.2098,
+          "evidence": []
+        },
+        {
+          "term": "disease compared",
+          "score": 0.175,
+          "evidence": []
+        },
+        {
+          "term": "recommended",
+          "score": 0.1703,
+          "evidence": []
+        },
+        {
+          "term": "isoniazid",
+          "score": 0.1552,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "感染者",
+          "score": 21.0003,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 20.0996,
+          "evidence": []
+        },
+        {
+          "term": "问题的讨论结束",
+          "score": 20.0996,
+          "evidence": []
+        },
+        {
+          "term": "挑战性",
+          "score": 19.7199,
+          "evidence": []
+        },
+        {
+          "term": "很重要",
+          "score": 19.2952,
+          "evidence": []
+        },
+        {
+          "term": "疫苗有关的",
+          "score": 19.228,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 18.7322,
+          "evidence": []
+        },
+        {
+          "term": "的妇女",
+          "score": 18.0873,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-009-4-target-audience": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "infectious diseases",
+          "score": 0.9888,
+          "evidence": []
+        },
+        {
+          "term": "picos",
+          "score": 0.8656,
+          "evidence": []
+        },
+        {
+          "term": "preventive treatment",
+          "score": 0.8649,
+          "evidence": []
+        },
+        {
+          "term": "child health",
+          "score": 0.8456,
+          "evidence": []
+        },
+        {
+          "term": "ministries",
+          "score": 0.5394,
+          "evidence": []
+        },
+        {
+          "term": "guidelines",
+          "score": 0.5029,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "infectious diseases",
+          "score": 15.1156,
+          "evidence": []
+        },
+        {
+          "term": "picos",
+          "score": 13.9248,
+          "evidence": []
+        },
+        {
+          "term": "child health",
+          "score": 11.1958,
+          "evidence": []
+        },
+        {
+          "term": "preventive treatment",
+          "score": 10.5766,
+          "evidence": []
+        },
+        {
+          "term": "guidelines",
+          "score": 9.5352,
+          "evidence": []
+        },
+        {
+          "term": "ministries",
+          "score": 8.3975,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "child health",
+          "score": 0.2529,
+          "evidence": []
+        },
+        {
+          "term": "preventive treatment",
+          "score": 0.2256,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.1499,
+          "evidence": []
+        },
+        {
+          "term": "care",
+          "score": 0.1334,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis",
+          "score": 0.1222,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.1178,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "preventive treatment",
+          "score": 4.1783,
+          "evidence": []
+        },
+        {
+          "term": "child health",
+          "score": 3.0797,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis",
+          "score": 2.7138,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 2.6608,
+          "evidence": []
+        },
+        {
+          "term": "recommendation",
+          "score": 1.8196,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 1.6224,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "child health",
+          "score": 0.2529,
+          "evidence": []
+        },
+        {
+          "term": "preventive treatment",
+          "score": 0.2256,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.1499,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis",
+          "score": 0.1222,
+          "evidence": []
+        },
+        {
+          "term": "services",
+          "score": 0.1129,
+          "evidence": []
+        },
+        {
+          "term": "guidelines",
+          "score": 0.0945,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 12.7781,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 12.1655,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 10.8265,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 10.4553,
+          "evidence": []
+        },
+        {
+          "term": "疫苗的",
+          "score": 9.1905,
+          "evidence": []
+        },
+        {
+          "term": "宫颈癌",
+          "score": 8.9724,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-010-1-recommendations": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "isoniazid preventive",
+          "score": 3.3982,
+          "evidence": []
+        },
+        {
+          "term": "preventive treatment",
+          "score": 3.3782,
+          "evidence": []
+        },
+        {
+          "term": "mdr-tb preventive",
+          "score": 3.199,
+          "evidence": []
+        },
+        {
+          "term": "ltbi status",
+          "score": 3.116,
+          "evidence": []
+        },
+        {
+          "term": "systematic ltbi",
+          "score": 3.1111,
+          "evidence": []
+        },
+        {
+          "term": "ltbi testing",
+          "score": 3.0783,
+          "evidence": []
+        },
+        {
+          "term": "baseline ltbi",
+          "score": 2.9272,
+          "evidence": []
+        },
+        {
+          "term": "offered preventive",
+          "score": 2.9253,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "preventive treatment",
+          "score": 379.4431,
+          "evidence": []
+        },
+        {
+          "term": "isoniazid preventive",
+          "score": 274.0397,
+          "evidence": []
+        },
+        {
+          "term": "mdr-tb preventive",
+          "score": 263.4761,
+          "evidence": []
+        },
+        {
+          "term": "offered preventive",
+          "score": 242.8976,
+          "evidence": []
+        },
+        {
+          "term": "initiating preventive",
+          "score": 237.7933,
+          "evidence": []
+        },
+        {
+          "term": "ltbi testing",
+          "score": 222.0797,
+          "evidence": []
+        },
+        {
+          "term": "systematic ltbi",
+          "score": 221.3482,
+          "evidence": []
+        },
+        {
+          "term": "ltbi status",
+          "score": 212.6561,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "household contacts",
+          "score": 3.0244,
+          "evidence": []
+        },
+        {
+          "term": "contacts aged",
+          "score": 2.7722,
+          "evidence": []
+        },
+        {
+          "term": "preventive treatment",
+          "score": 2.7642,
+          "evidence": []
+        },
+        {
+          "term": "isoniazid preventive",
+          "score": 2.7517,
+          "evidence": []
+        },
+        {
+          "term": "people living",
+          "score": 2.5659,
+          "evidence": []
+        },
+        {
+          "term": "active disease",
+          "score": 2.5106,
+          "evidence": []
+        },
+        {
+          "term": "among household",
+          "score": 2.5012,
+          "evidence": []
+        },
+        {
+          "term": "children living",
+          "score": 2.4316,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "preventive treatment",
+          "score": 225.7894,
+          "evidence": []
+        },
+        {
+          "term": "isoniazid preventive",
+          "score": 169.4196,
+          "evidence": []
+        },
+        {
+          "term": "treatment among",
+          "score": 146.5757,
+          "evidence": []
+        },
+        {
+          "term": "treatment regimens",
+          "score": 140.2388,
+          "evidence": []
+        },
+        {
+          "term": "offered preventive",
+          "score": 137.4972,
+          "evidence": []
+        },
+        {
+          "term": "mdr-tb preventive",
+          "score": 133.412,
+          "evidence": []
+        },
+        {
+          "term": "initiating preventive",
+          "score": 125.6876,
+          "evidence": []
+        },
+        {
+          "term": "people living",
+          "score": 124.7567,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "household contacts",
+          "score": 3.0244,
+          "evidence": []
+        },
+        {
+          "term": "contacts aged",
+          "score": 2.7722,
+          "evidence": []
+        },
+        {
+          "term": "preventive treatment",
+          "score": 2.7642,
+          "evidence": []
+        },
+        {
+          "term": "isoniazid preventive",
+          "score": 2.7517,
+          "evidence": []
+        },
+        {
+          "term": "people living",
+          "score": 2.5659,
+          "evidence": []
+        },
+        {
+          "term": "active disease",
+          "score": 2.5106,
+          "evidence": []
+        },
+        {
+          "term": "among household",
+          "score": 2.5012,
+          "evidence": []
+        },
+        {
+          "term": "children living",
+          "score": 2.4316,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "感染者",
+          "score": 34.499,
+          "evidence": []
+        },
+        {
+          "term": "很重要",
+          "score": 29.0146,
+          "evidence": []
+        },
+        {
+          "term": "挑战性",
+          "score": 28.8949,
+          "evidence": []
+        },
+        {
+          "term": "疫苗有关的",
+          "score": 28.1105,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 26.7548,
+          "evidence": []
+        },
+        {
+          "term": "的妇女",
+          "score": 26.2403,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 26.119,
+          "evidence": []
+        },
+        {
+          "term": "问题的讨论结束",
+          "score": 26.119,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-011-2-monitoring-and-evaluation": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "preventive treatment",
+          "score": 2.3075,
+          "evidence": []
+        },
+        {
+          "term": "mdr-tb preventive",
+          "score": 2.0902,
+          "evidence": []
+        },
+        {
+          "term": "adverse reactions",
+          "score": 1.8144,
+          "evidence": []
+        },
+        {
+          "term": "liver disease",
+          "score": 1.7414,
+          "evidence": []
+        },
+        {
+          "term": "liver function",
+          "score": 1.7291,
+          "evidence": []
+        },
+        {
+          "term": "ltbi care",
+          "score": 1.5478,
+          "evidence": []
+        },
+        {
+          "term": "monitoring",
+          "score": 1.459,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "adverse events",
+          "score": 1.2345,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "preventive treatment",
+          "score": 93.5503,
+          "evidence": []
+        },
+        {
+          "term": "mdr-tb preventive",
+          "score": 67.9347,
+          "evidence": []
+        },
+        {
+          "term": "adverse reactions",
+          "score": 42.4842,
+          "evidence": []
+        },
+        {
+          "term": "monitoring",
+          "score": 41.1845,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "liver disease",
+          "score": 36.2097,
+          "evidence": []
+        },
+        {
+          "term": "liver function",
+          "score": 33.977,
+          "evidence": []
+        },
+        {
+          "term": "ltbi care",
+          "score": 32.6398,
+          "evidence": []
+        },
+        {
+          "term": "close monitoring",
+          "score": 28.0792,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "preventive treatment",
+          "score": 0.8234,
+          "evidence": []
+        },
+        {
+          "term": "monitoring",
+          "score": 0.6481,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "tpt",
+          "score": 0.6404,
+          "evidence": []
+        },
+        {
+          "term": "adverse events",
+          "score": 0.6007,
+          "evidence": []
+        },
+        {
+          "term": "adverse reactions",
+          "score": 0.567,
+          "evidence": []
+        },
+        {
+          "term": "mdr-tb preventive",
+          "score": 0.5654,
+          "evidence": []
+        },
+        {
+          "term": "liver disease",
+          "score": 0.5184,
+          "evidence": []
+        },
+        {
+          "term": "drug resistance",
+          "score": 0.4962,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "preventive treatment",
+          "score": 33.2245,
+          "evidence": []
+        },
+        {
+          "term": "mdr-tb preventive",
+          "score": 16.8799,
+          "evidence": []
+        },
+        {
+          "term": "tpt",
+          "score": 14.7083,
+          "evidence": []
+        },
+        {
+          "term": "ltbi care",
+          "score": 13.7127,
+          "evidence": []
+        },
+        {
+          "term": "isoniazid",
+          "score": 9.8264,
+          "evidence": []
+        },
+        {
+          "term": "people",
+          "score": 9.4669,
+          "evidence": []
+        },
+        {
+          "term": "liver disease",
+          "score": 8.0908,
+          "evidence": []
+        },
+        {
+          "term": "active",
+          "score": 7.4848,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "preventive treatment",
+          "score": 0.8234,
+          "evidence": []
+        },
+        {
+          "term": "monitoring",
+          "score": 0.6481,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "adverse events",
+          "score": 0.6007,
+          "evidence": []
+        },
+        {
+          "term": "adverse reactions",
+          "score": 0.567,
+          "evidence": []
+        },
+        {
+          "term": "mdr-tb preventive",
+          "score": 0.5654,
+          "evidence": []
+        },
+        {
+          "term": "liver disease",
+          "score": 0.5184,
+          "evidence": []
+        },
+        {
+          "term": "drug resistance",
+          "score": 0.4962,
+          "evidence": []
+        },
+        {
+          "term": "ltbi care",
+          "score": 0.4544,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "到辩护",
+          "score": 17.5703,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 16.5967,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 15.9942,
+          "evidence": []
+        },
+        {
+          "term": "世界医学协会",
+          "score": 15.3996,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 15.1944,
+          "evidence": []
+        },
+        {
+          "term": "问题的讨论结束",
+          "score": 15.1944,
+          "evidence": []
+        },
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 12.7832,
+          "evidence": []
+        },
+        {
+          "term": "招募了",
+          "score": 12.6559,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-012-3-research-gaps": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "research gaps",
+          "score": 3.0849,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ltbi regimens",
+          "score": 2.4021,
+          "evidence": []
+        },
+        {
+          "term": "preventive treatment",
+          "score": 2.3372,
+          "evidence": []
+        },
+        {
+          "term": "different ltbi",
+          "score": 1.9233,
+          "evidence": []
+        },
+        {
+          "term": "ltbi tests",
+          "score": 1.7879,
+          "evidence": []
+        },
+        {
+          "term": "at-risk populations",
+          "score": 1.5934,
+          "evidence": []
+        },
+        {
+          "term": "adverse events",
+          "score": 1.2736,
+          "evidence": []
+        },
+        {
+          "term": "clinical studies",
+          "score": 1.2211,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "preventive treatment",
+          "score": 97.0141,
+          "evidence": []
+        },
+        {
+          "term": "treatment regimens",
+          "score": 64.396,
+          "evidence": []
+        },
+        {
+          "term": "ltbi regimens",
+          "score": 64.3324,
+          "evidence": []
+        },
+        {
+          "term": "different ltbi",
+          "score": 53.5842,
+          "evidence": []
+        },
+        {
+          "term": "research gaps",
+          "score": 52.0534,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ltbi tests",
+          "score": 46.0355,
+          "evidence": []
+        },
+        {
+          "term": "at-risk populations",
+          "score": 32.8832,
+          "evidence": []
+        },
+        {
+          "term": "clinical studies",
+          "score": 28.0725,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "research",
+          "score": 0.9008,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "research gaps",
+          "score": 0.9008,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "preventive treatment",
+          "score": 0.8975,
+          "evidence": []
+        },
+        {
+          "term": "treatment regimens",
+          "score": 0.8107,
+          "evidence": []
+        },
+        {
+          "term": "risk groups",
+          "score": 0.6169,
+          "evidence": []
+        },
+        {
+          "term": "clinical studies",
+          "score": 0.6131,
+          "evidence": []
+        },
+        {
+          "term": "tpt",
+          "score": 0.592,
+          "evidence": []
+        },
+        {
+          "term": "ltbi regimens",
+          "score": 0.5771,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "preventive treatment",
+          "score": 40.0152,
+          "evidence": []
+        },
+        {
+          "term": "treatment regimens",
+          "score": 28.9463,
+          "evidence": []
+        },
+        {
+          "term": "ltbi regimens",
+          "score": 19.8301,
+          "evidence": []
+        },
+        {
+          "term": "ltbi tests",
+          "score": 16.0161,
+          "evidence": []
+        },
+        {
+          "term": "different ltbi",
+          "score": 15.0524,
+          "evidence": []
+        },
+        {
+          "term": "tpt",
+          "score": 13.7538,
+          "evidence": []
+        },
+        {
+          "term": "risk groups",
+          "score": 12.1531,
+          "evidence": []
+        },
+        {
+          "term": "clinical studies",
+          "score": 11.7421,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "research gaps",
+          "score": 1.0287,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "preventive treatment",
+          "score": 0.8975,
+          "evidence": []
+        },
+        {
+          "term": "treatment regimens",
+          "score": 0.8107,
+          "evidence": []
+        },
+        {
+          "term": "risk groups",
+          "score": 0.6169,
+          "evidence": []
+        },
+        {
+          "term": "clinical studies",
+          "score": 0.6131,
+          "evidence": []
+        },
+        {
+          "term": "ltbi regimens",
+          "score": 0.5771,
+          "evidence": []
+        },
+        {
+          "term": "adverse events",
+          "score": 0.536,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.4785,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "感染者",
+          "score": 24.3634,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 18.9112,
+          "evidence": []
+        },
+        {
+          "term": "这两种hpv",
+          "score": 17.2315,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 17.0578,
+          "evidence": []
+        },
+        {
+          "term": "世界医学协会",
+          "score": 14.4362,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 14.3881,
+          "evidence": []
+        },
+        {
+          "term": "问题的讨论结束",
+          "score": 14.3881,
+          "evidence": []
+        },
+        {
+          "term": "挑战性",
+          "score": 13.7088,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-013-4-references": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "latent tuberculosis",
+          "score": 3.4223,
+          "evidence": []
+        },
+        {
+          "term": "infect dis",
+          "score": 3.3532,
+          "evidence": []
+        },
+        {
+          "term": "lung dis",
+          "score": 3.1624,
+          "evidence": []
+        },
+        {
+          "term": "isoniazid preventive",
+          "score": 3.0758,
+          "evidence": []
+        },
+        {
+          "term": "cited aug",
+          "score": 3.0231,
+          "evidence": []
+        },
+        {
+          "term": "tuberc lung",
+          "score": 3.0106,
+          "evidence": []
+        },
+        {
+          "term": "latent tuberculous",
+          "score": 2.8025,
+          "evidence": []
+        },
+        {
+          "term": "engl med",
+          "score": 2.7792,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "latent tuberculosis",
+          "score": 282.1929,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis infection",
+          "score": 224.3482,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis screening",
+          "score": 187.2184,
+          "evidence": []
+        },
+        {
+          "term": "pediatric tuberculosis",
+          "score": 184.4577,
+          "evidence": []
+        },
+        {
+          "term": "prevent tuberculosis",
+          "score": 182.0865,
+          "evidence": []
+        },
+        {
+          "term": "preventing tuberculosis",
+          "score": 180.7046,
+          "evidence": []
+        },
+        {
+          "term": "active tuberculosis",
+          "score": 180.5785,
+          "evidence": []
+        },
+        {
+          "term": "multidrug-resistant tuberculosis",
+          "score": 179.8347,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "infect dis",
+          "score": 3.96,
+          "evidence": []
+        },
+        {
+          "term": "lung dis",
+          "score": 3.2998,
+          "evidence": []
+        },
+        {
+          "term": "clin infect",
+          "score": 3.2203,
+          "evidence": []
+        },
+        {
+          "term": "latent tuberculosis",
+          "score": 3.1967,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis infection",
+          "score": 3.1248,
+          "evidence": []
+        },
+        {
+          "term": "lancet infect",
+          "score": 3.0287,
+          "evidence": []
+        },
+        {
+          "term": "active tuberculosis",
+          "score": 2.7821,
+          "evidence": []
+        },
+        {
+          "term": "mycobacterium tuberculosis",
+          "score": 2.7469,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "latent tuberculosis",
+          "score": 227.3698,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis infection",
+          "score": 225.8025,
+          "evidence": []
+        },
+        {
+          "term": "active tuberculosis",
+          "score": 213.2082,
+          "evidence": []
+        },
+        {
+          "term": "multidrug-resistant tuberculosis",
+          "score": 205.4205,
+          "evidence": []
+        },
+        {
+          "term": "mycobacterium tuberculosis",
+          "score": 205.368,
+          "evidence": []
+        },
+        {
+          "term": "pulmonary tuberculosis",
+          "score": 203.93,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis screening",
+          "score": 203.4818,
+          "evidence": []
+        },
+        {
+          "term": "pediatric tuberculosis",
+          "score": 198.985,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "infect dis",
+          "score": 3.96,
+          "evidence": []
+        },
+        {
+          "term": "lung dis",
+          "score": 3.2998,
+          "evidence": []
+        },
+        {
+          "term": "clin infect",
+          "score": 3.2203,
+          "evidence": []
+        },
+        {
+          "term": "latent tuberculosis",
+          "score": 3.1967,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis infection",
+          "score": 3.1248,
+          "evidence": []
+        },
+        {
+          "term": "lancet infect",
+          "score": 3.0287,
+          "evidence": []
+        },
+        {
+          "term": "active tuberculosis",
+          "score": 2.7821,
+          "evidence": []
+        },
+        {
+          "term": "mycobacterium tuberculosis",
+          "score": 2.7469,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在正常情况下",
+          "score": 85.9319,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 84.346,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 70.0746,
+          "evidence": []
+        },
+        {
+          "term": "平等主义",
+          "score": 69.6802,
+          "evidence": []
+        },
+        {
+          "term": "在研究开始后",
+          "score": 58.3241,
+          "evidence": []
+        },
+        {
+          "term": "病毒疗法",
+          "score": 58.3241,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 54.6272,
+          "evidence": []
+        },
+        {
+          "term": "反过来",
+          "score": 51.2885,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-014-supplementary-table": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "isoniazid preventive",
+          "score": 3.1182,
+          "evidence": []
+        },
+        {
+          "term": "preventive treatment",
+          "score": 2.8379,
+          "evidence": []
+        },
+        {
+          "term": "offered preventive",
+          "score": 2.8046,
+          "evidence": []
+        },
+        {
+          "term": "isoniazid monotherapy",
+          "score": 2.7349,
+          "evidence": []
+        },
+        {
+          "term": "ltbi testing",
+          "score": 2.7038,
+          "evidence": []
+        },
+        {
+          "term": "language editing",
+          "score": 2.6211,
+          "evidence": []
+        },
+        {
+          "term": "household contacts",
+          "score": 2.6201,
+          "evidence": []
+        },
+        {
+          "term": "contacts aged",
+          "score": 2.5868,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "preventive treatment",
+          "score": 188.8787,
+          "evidence": []
+        },
+        {
+          "term": "isoniazid preventive",
+          "score": 169.2373,
+          "evidence": []
+        },
+        {
+          "term": "offered preventive",
+          "score": 148.6234,
+          "evidence": []
+        },
+        {
+          "term": "ltbi testing",
+          "score": 140.9129,
+          "evidence": []
+        },
+        {
+          "term": "ltbi test",
+          "score": 131.0006,
+          "evidence": []
+        },
+        {
+          "term": "systematic ltbi",
+          "score": 125.8166,
+          "evidence": []
+        },
+        {
+          "term": "months living",
+          "score": 116.2729,
+          "evidence": []
+        },
+        {
+          "term": "aged months",
+          "score": 104.6174,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "household contacts",
+          "score": 2.0073,
+          "evidence": []
+        },
+        {
+          "term": "preventive treatment",
+          "score": 1.8183,
+          "evidence": []
+        },
+        {
+          "term": "people living",
+          "score": 1.7957,
+          "evidence": []
+        },
+        {
+          "term": "children living",
+          "score": 1.7894,
+          "evidence": []
+        },
+        {
+          "term": "contacts aged",
+          "score": 1.7816,
+          "evidence": []
+        },
+        {
+          "term": "isoniazid preventive",
+          "score": 1.7257,
+          "evidence": []
+        },
+        {
+          "term": "adolescents living",
+          "score": 1.5751,
+          "evidence": []
+        },
+        {
+          "term": "offered preventive",
+          "score": 1.5266,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "preventive treatment",
+          "score": 121.5679,
+          "evidence": []
+        },
+        {
+          "term": "isoniazid preventive",
+          "score": 87.0166,
+          "evidence": []
+        },
+        {
+          "term": "children living",
+          "score": 81.0361,
+          "evidence": []
+        },
+        {
+          "term": "people living",
+          "score": 72.6244,
+          "evidence": []
+        },
+        {
+          "term": "offered preventive",
+          "score": 72.0871,
+          "evidence": []
+        },
+        {
+          "term": "antiretroviral treatment",
+          "score": 68.52,
+          "evidence": []
+        },
+        {
+          "term": "adolescents living",
+          "score": 68.2243,
+          "evidence": []
+        },
+        {
+          "term": "treatment options",
+          "score": 68.0695,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "household contacts",
+          "score": 2.0073,
+          "evidence": []
+        },
+        {
+          "term": "preventive treatment",
+          "score": 1.8183,
+          "evidence": []
+        },
+        {
+          "term": "people living",
+          "score": 1.7957,
+          "evidence": []
+        },
+        {
+          "term": "children living",
+          "score": 1.7894,
+          "evidence": []
+        },
+        {
+          "term": "contacts aged",
+          "score": 1.7816,
+          "evidence": []
+        },
+        {
+          "term": "isoniazid preventive",
+          "score": 1.7257,
+          "evidence": []
+        },
+        {
+          "term": "adolescents living",
+          "score": 1.5751,
+          "evidence": []
+        },
+        {
+          "term": "offered preventive",
+          "score": 1.5266,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "很重要",
+          "score": 37.4568,
+          "evidence": []
+        },
+        {
+          "term": "疫苗有关的",
+          "score": 35.9935,
+          "evidence": []
+        },
+        {
+          "term": "挑战性",
+          "score": 35.736,
+          "evidence": []
+        },
+        {
+          "term": "的妇女",
+          "score": 33.3372,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 32.4973,
+          "evidence": []
+        },
+        {
+          "term": "问题的讨论结束",
+          "score": 32.4973,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 30.4817,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 29.4142,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "tuberculosis preventive",
+          "score": 1.5178,
+          "evidence": []
+        },
+        {
+          "term": "preventive treatment",
+          "score": 1.267,
+          "evidence": []
+        },
+        {
+          "term": "prevention tuberculosis",
+          "score": 1.2621,
+          "evidence": []
+        },
+        {
+          "term": "creative commons",
+          "score": 1.1578,
+          "evidence": []
+        },
+        {
+          "term": "consolidated guidelines",
+          "score": 1.0903,
+          "evidence": []
+        },
+        {
+          "term": "suggested citation",
+          "score": 1.0172,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 0.9578,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.8703,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "tuberculosis preventive",
+          "score": 32.5297,
+          "evidence": []
+        },
+        {
+          "term": "prevention tuberculosis",
+          "score": 27.5367,
+          "evidence": []
+        },
+        {
+          "term": "work",
+          "score": 21.636,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 21.3678,
+          "evidence": []
+        },
+        {
+          "term": "preventive treatment",
+          "score": 21.1533,
+          "evidence": []
+        },
+        {
+          "term": "consolidated guidelines",
+          "score": 20.3022,
+          "evidence": []
+        },
+        {
+          "term": "creative commons",
+          "score": 18.7073,
+          "evidence": []
+        },
+        {
+          "term": "suggested citation",
+          "score": 15.6107,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "creative commons",
+          "score": 1.015,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.9246,
+          "evidence": []
+        },
+        {
+          "term": "suggested citation",
+          "score": 0.898,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.8757,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 0.8631,
+          "evidence": []
+        },
+        {
+          "term": "material",
+          "score": 0.7481,
+          "evidence": []
+        },
+        {
+          "term": "igo",
+          "score": 0.7068,
+          "evidence": []
+        },
+        {
+          "term": "lines",
+          "score": 0.6757,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "tuberculosis preventive",
+          "score": 13.27,
+          "evidence": []
+        },
+        {
+          "term": "prevention tuberculosis",
+          "score": 11.4557,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 9.9422,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 9.9418,
+          "evidence": []
+        },
+        {
+          "term": "wpv",
+          "score": 8.7716,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 5.1713,
+          "evidence": []
+        },
+        {
+          "term": "material",
+          "score": 5.0547,
+          "evidence": []
+        },
+        {
+          "term": "poliovirus",
+          "score": 4.6187,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "creative commons",
+          "score": 1.015,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.9246,
+          "evidence": []
+        },
+        {
+          "term": "suggested citation",
+          "score": 0.898,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.8757,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 0.8631,
+          "evidence": []
+        },
+        {
+          "term": "material",
+          "score": 0.7481,
+          "evidence": []
+        },
+        {
+          "term": "igo",
+          "score": 0.7068,
+          "evidence": []
+        },
+        {
+          "term": "lines",
+          "score": 0.6757,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "非同寻常",
+          "score": 57.5288,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 53.2862,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 51.4732,
+          "evidence": []
+        },
+        {
+          "term": "更大利益",
+          "score": 48.6785,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 44.9863,
+          "evidence": []
+        },
+        {
+          "term": "在sars",
+          "score": 44.4933,
+          "evidence": []
+        },
+        {
+          "term": "可能会",
+          "score": 43.6895,
+          "evidence": []
+        },
+        {
+          "term": "不良反应",
+          "score": 40.2803,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

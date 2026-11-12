@@ -1,0 +1,24 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/review/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/review",
+      "@type": "bootstrap:Skill",
+      "name": "review",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e8e5fcc32db9c6aec4e74bca7d30bc23ff573b7a331611191c74404448724054",
+        "bytes": 2968,
+        "sha256": "e8e5fcc32db9c6aec4e74bca7d30bc23ff573b7a331611191c74404448724054"
+      },
+      "title": "Review: a pointer to the review skills"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills/review",
+  "path": "skills/review/"
+}

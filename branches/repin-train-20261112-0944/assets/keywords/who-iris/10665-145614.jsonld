@@ -1,0 +1,8252 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-145614",
+  "instance": "who-iris",
+  "about": "library/10665-145614",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7393,
+    "terms": 71095
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "del consejo",
+        "score": 77.0102,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "consejo las",
+        "score": 64.3791,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "del presidente",
+        "score": 63.6694,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "consejo que",
+        "score": 63.3025,
+        "evidence": []
+      },
+      {
+        "term": "del punto",
+        "score": 59.2553,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "propuesta del",
+        "score": 59.1179,
+        "evidence": []
+      },
+      {
+        "term": "del documento",
+        "score": 58.9777,
+        "evidence": []
+      },
+      {
+        "term": "del orden",
+        "score": 58.8918,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "los que",
+        "score": 58.0057,
+        "evidence": []
+      },
+      {
+        "term": "del director",
+        "score": 57.7969,
+        "evidence": []
+      },
+      {
+        "term": "del día",
+        "score": 57.3991,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "del párrafo",
+        "score": 56.4435,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "del consejo",
+        "score": 2281.334,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "consejo que",
+        "score": 2216.3914,
+        "evidence": []
+      },
+      {
+        "term": "las que",
+        "score": 2129.0408,
+        "evidence": []
+      },
+      {
+        "term": "los que",
+        "score": 1888.6124,
+        "evidence": []
+      },
+      {
+        "term": "para que",
+        "score": 1717.6079,
+        "evidence": []
+      },
+      {
+        "term": "resolución que",
+        "score": 1712.6547,
+        "evidence": []
+      },
+      {
+        "term": "del presidente",
+        "score": 1686.8675,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "del director",
+        "score": 1669.6423,
+        "evidence": []
+      },
+      {
+        "term": "asamblea que",
+        "score": 1659.2992,
+        "evidence": []
+      },
+      {
+        "term": "del comité",
+        "score": 1649.5317,
+        "evidence": []
+      },
+      {
+        "term": "salud que",
+        "score": 1644.8631,
+        "evidence": []
+      },
+      {
+        "term": "del tema",
+        "score": 1585.2598,
+        "evidence": [
+          "heading"
+        ]
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "del consejo",
+        "score": 57.4705,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "las que",
+        "score": 56.1548,
+        "evidence": []
+      },
+      {
+        "term": "los que",
+        "score": 55.393,
+        "evidence": []
+      },
+      {
+        "term": "para las",
+        "score": 50.7877,
+        "evidence": []
+      },
+      {
+        "term": "del director",
+        "score": 48.1911,
+        "evidence": []
+      },
+      {
+        "term": "salud que",
+        "score": 47.2464,
+        "evidence": []
+      },
+      {
+        "term": "del presidente",
+        "score": 46.0968,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "del párrafo",
+        "score": 45.1953,
+        "evidence": []
+      },
+      {
+        "term": "del documento",
+        "score": 45.1719,
+        "evidence": []
+      },
+      {
+        "term": "con las",
+        "score": 45.162,
+        "evidence": []
+      },
+      {
+        "term": "del punto",
+        "score": 44.2804,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "resolución que",
+        "score": 44.2043,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "las que",
+        "score": 2185.5955,
+        "evidence": []
+      },
+      {
+        "term": "los que",
+        "score": 1932.6703,
+        "evidence": []
+      },
+      {
+        "term": "consejo que",
+        "score": 1899.4554,
+        "evidence": []
+      },
+      {
+        "term": "para que",
+        "score": 1839.7126,
+        "evidence": []
+      },
+      {
+        "term": "salud que",
+        "score": 1704.9559,
+        "evidence": []
+      },
+      {
+        "term": "asamblea que",
+        "score": 1627.2509,
+        "evidence": []
+      },
+      {
+        "term": "del consejo",
+        "score": 1600.5576,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "tema que",
+        "score": 1598.9084,
+        "evidence": []
+      },
+      {
+        "term": "resolución que",
+        "score": 1572.2129,
+        "evidence": []
+      },
+      {
+        "term": "técnicas que",
+        "score": 1506.0856,
+        "evidence": []
+      },
+      {
+        "term": "general que",
+        "score": 1498.69,
+        "evidence": []
+      },
+      {
+        "term": "reunión que",
+        "score": 1460.345,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "del consejo",
+        "score": 57.4705,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "las que",
+        "score": 56.1548,
+        "evidence": []
+      },
+      {
+        "term": "los que",
+        "score": 55.393,
+        "evidence": []
+      },
+      {
+        "term": "para las",
+        "score": 50.7877,
+        "evidence": []
+      },
+      {
+        "term": "del director",
+        "score": 48.1911,
+        "evidence": []
+      },
+      {
+        "term": "salud que",
+        "score": 47.2464,
+        "evidence": []
+      },
+      {
+        "term": "del presidente",
+        "score": 46.0968,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "del párrafo",
+        "score": 45.1953,
+        "evidence": []
+      },
+      {
+        "term": "del documento",
+        "score": 45.1719,
+        "evidence": []
+      },
+      {
+        "term": "con las",
+        "score": 45.162,
+        "evidence": []
+      },
+      {
+        "term": "del punto",
+        "score": 44.2804,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "resolución que",
+        "score": 44.2043,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "巴西登革热",
+        "score": 15496.6032,
+        "evidence": []
+      },
+      {
+        "term": "如果没有",
+        "score": 15293.4001,
+        "evidence": []
+      },
+      {
+        "term": "潜在的利益冲突",
+        "score": 13490.3699,
+        "evidence": []
+      },
+      {
+        "term": "更大利益",
+        "score": 11339.4172,
+        "evidence": []
+      },
+      {
+        "term": "到辩护",
+        "score": 11248.1234,
+        "evidence": []
+      },
+      {
+        "term": "如个人",
+        "score": 10802.0822,
+        "evidence": []
+      },
+      {
+        "term": "的研究中",
+        "score": 10783.5674,
+        "evidence": []
+      },
+      {
+        "term": "显而易见",
+        "score": 9756.4343,
+        "evidence": []
+      },
+      {
+        "term": "在每次增加背景信息",
+        "score": 9310.8877,
+        "evidence": []
+      },
+      {
+        "term": "实际的和",
+        "score": 9310.8877,
+        "evidence": []
+      },
+      {
+        "term": "新的背景信息要素怎样影响你对第",
+        "score": 9310.8877,
+        "evidence": []
+      },
+      {
+        "term": "部分的分析",
+        "score": 9310.8877,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-página": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "las discusiones",
+          "score": 1.9197,
+          "evidence": []
+        },
+        {
+          "term": "discusiones técnicas",
+          "score": 1.6905,
+          "evidence": []
+        },
+        {
+          "term": "fecha lugar",
+          "score": 1.6087,
+          "evidence": []
+        },
+        {
+          "term": "asamblea mundial",
+          "score": 1.6027,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "las discusiones",
+          "score": 30.8009,
+          "evidence": []
+        },
+        {
+          "term": "asamblea mundial",
+          "score": 27.6264,
+          "evidence": []
+        },
+        {
+          "term": "discusiones técnicas",
+          "score": 25.1817,
+          "evidence": []
+        },
+        {
+          "term": "fecha lugar",
+          "score": 22.217,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "las discusiones",
+          "score": 0.5539,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 0.5012,
+          "evidence": []
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 0.4564,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 0.4454,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "las discusiones",
+          "score": 13.8822,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 9.8768,
+          "evidence": []
+        },
+        {
+          "term": "salud",
+          "score": 9.032,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 8.8885,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "las discusiones",
+          "score": 0.5539,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 0.5012,
+          "evidence": []
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 0.4564,
+          "evidence": []
+        },
+        {
+          "term": "asamblea mundial",
+          "score": 0.429,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 355.3215,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 262.1758,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 255.3699,
+          "evidence": []
+        },
+        {
+          "term": "更大利益",
+          "score": 252.8173,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-001-lunes-16-de-unio-de-1958-д-las-9-horas": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "suplente del",
+          "score": 1.7195,
+          "evidence": []
+        },
+        {
+          "term": "relator",
+          "score": 0.8865,
+          "evidence": []
+        },
+        {
+          "term": "vicepresidente",
+          "score": 0.8849,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "suplente del",
+          "score": 26.0714,
+          "evidence": []
+        },
+        {
+          "term": "relator",
+          "score": 14.2331,
+          "evidence": []
+        },
+        {
+          "term": "vicepresidente",
+          "score": 14.2331,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "las",
+          "score": 0.2476,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "suplente del",
+          "score": 0.1956,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.123,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "suplente del",
+          "score": 4.2898,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 3.5489,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 2.3841,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "las",
+          "score": 0.2476,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "suplente del",
+          "score": 0.1956,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.123,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 1079.6055,
+          "evidence": []
+        },
+        {
+          "term": "潜在的利益冲突",
+          "score": 1003.985,
+          "evidence": []
+        },
+        {
+          "term": "如个人",
+          "score": 787.088,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-dr-h-m-penido": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "arabe",
+          "score": 0.5853,
+          "evidence": []
+        },
+        {
+          "term": "secretario",
+          "score": 0.5717,
+          "evidence": []
+        },
+        {
+          "term": "repúblicas",
+          "score": 0.5679,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "arabe",
+          "score": 7.522,
+          "evidence": []
+        },
+        {
+          "term": "repúblicas",
+          "score": 7.2989,
+          "evidence": []
+        },
+        {
+          "term": "secretario",
+          "score": 7.2989,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "los",
+          "score": 0.1247,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 0.1245,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.1241,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "las",
+          "score": 2.1053,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 1.8163,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 1.2649,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "los",
+          "score": 0.1247,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.1241,
+          "evidence": []
+        },
+        {
+          "term": "director",
+          "score": 0.0487,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 408.8115,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 400.4764,
+          "evidence": []
+        },
+        {
+          "term": "潜在的利益冲突",
+          "score": 301.3613,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-009-1-apertura-de-iâ-hecjnxon": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "del consejo",
+          "score": 2.7941,
+          "evidence": []
+        },
+        {
+          "term": "designado por",
+          "score": 2.4819,
+          "evidence": []
+        },
+        {
+          "term": "suplente del",
+          "score": 2.2658,
+          "evidence": []
+        },
+        {
+          "term": "apertura",
+          "score": 1.0356,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "tambiln",
+          "score": 1.0201,
+          "evidence": []
+        },
+        {
+          "term": "diba",
+          "score": 0.9343,
+          "evidence": []
+        },
+        {
+          "term": "presidente",
+          "score": 0.8985,
+          "evidence": []
+        },
+        {
+          "term": "shoib",
+          "score": 0.8849,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "del consejo",
+          "score": 75.5427,
+          "evidence": []
+        },
+        {
+          "term": "designado por",
+          "score": 61.1729,
+          "evidence": []
+        },
+        {
+          "term": "suplente del",
+          "score": 52.5208,
+          "evidence": []
+        },
+        {
+          "term": "tambiln",
+          "score": 16.4303,
+          "evidence": []
+        },
+        {
+          "term": "presidente",
+          "score": 16.2353,
+          "evidence": []
+        },
+        {
+          "term": "diba",
+          "score": 15.044,
+          "evidence": []
+        },
+        {
+          "term": "shoib",
+          "score": 14.2331,
+          "evidence": []
+        },
+        {
+          "term": "apertura",
+          "score": 13.2114,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "del consejo",
+          "score": 0.9797,
+          "evidence": []
+        },
+        {
+          "term": "suplente del",
+          "score": 0.6717,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 0.5011,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.4999,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.4803,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 0.4032,
+          "evidence": []
+        },
+        {
+          "term": "salud",
+          "score": 0.3537,
+          "evidence": []
+        },
+        {
+          "term": "con",
+          "score": 0.2911,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "del consejo",
+          "score": 26.739,
+          "evidence": []
+        },
+        {
+          "term": "suplente del",
+          "score": 18.1088,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 16.8124,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 9.2536,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 7.8679,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 6.3506,
+          "evidence": []
+        },
+        {
+          "term": "designado por",
+          "score": 6.3445,
+          "evidence": []
+        },
+        {
+          "term": "asamblea",
+          "score": 5.06,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "del consejo",
+          "score": 0.9797,
+          "evidence": []
+        },
+        {
+          "term": "suplente del",
+          "score": 0.6717,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 0.5011,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.4803,
+          "evidence": []
+        },
+        {
+          "term": "designado por",
+          "score": 0.2882,
+          "evidence": []
+        },
+        {
+          "term": "presidente",
+          "score": 0.2034,
+          "evidence": []
+        },
+        {
+          "term": "documento",
+          "score": 0.1825,
+          "evidence": []
+        },
+        {
+          "term": "miembros",
+          "score": 0.1732,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 661.1499,
+          "evidence": []
+        },
+        {
+          "term": "潜在的利益冲突",
+          "score": 618.8903,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 593.93,
+          "evidence": []
+        },
+        {
+          "term": "如个人",
+          "score": 519.6564,
+          "evidence": []
+        },
+        {
+          "term": "在每次增加背景信息",
+          "score": 441.7938,
+          "evidence": []
+        },
+        {
+          "term": "实际的和",
+          "score": 441.7938,
+          "evidence": []
+        },
+        {
+          "term": "新的背景信息要素怎样影响你对第",
+          "score": 441.7938,
+          "evidence": []
+        },
+        {
+          "term": "部分的分析",
+          "score": 441.7938,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-010-eb22klna-revl": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "presenten candidaturas",
+          "score": 2.2879,
+          "evidence": []
+        },
+        {
+          "term": "presidente declara",
+          "score": 2.2272,
+          "evidence": []
+        },
+        {
+          "term": "candidaturas para",
+          "score": 2.09,
+          "evidence": []
+        },
+        {
+          "term": "declara elegidos",
+          "score": 2.079,
+          "evidence": []
+        },
+        {
+          "term": "mis candidaturas",
+          "score": 1.973,
+          "evidence": []
+        },
+        {
+          "term": "las gracias",
+          "score": 1.8901,
+          "evidence": []
+        },
+        {
+          "term": "invita ocupar",
+          "score": 1.8721,
+          "evidence": []
+        },
+        {
+          "term": "para los",
+          "score": 1.8674,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "presidente declara",
+          "score": 47.1921,
+          "evidence": []
+        },
+        {
+          "term": "presenten candidaturas",
+          "score": 44.321,
+          "evidence": []
+        },
+        {
+          "term": "candidaturas para",
+          "score": 39.3172,
+          "evidence": []
+        },
+        {
+          "term": "mis candidaturas",
+          "score": 38.7968,
+          "evidence": []
+        },
+        {
+          "term": "declara elegidos",
+          "score": 36.5635,
+          "evidence": []
+        },
+        {
+          "term": "las gracias",
+          "score": 35.1227,
+          "evidence": []
+        },
+        {
+          "term": "para los",
+          "score": 32.4765,
+          "evidence": []
+        },
+        {
+          "term": "del consejo",
+          "score": 30.4149,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "para los",
+          "score": 1.3665,
+          "evidence": []
+        },
+        {
+          "term": "del consejo",
+          "score": 1.1887,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.7435,
+          "evidence": []
+        },
+        {
+          "term": "las gracias",
+          "score": 0.7435,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.7271,
+          "evidence": []
+        },
+        {
+          "term": "candidaturas para",
+          "score": 0.5972,
+          "evidence": []
+        },
+        {
+          "term": "salud",
+          "score": 0.4946,
+          "evidence": []
+        },
+        {
+          "term": "con",
+          "score": 0.4247,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "para los",
+          "score": 26.282,
+          "evidence": []
+        },
+        {
+          "term": "del consejo",
+          "score": 19.7989,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 18.6847,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 16.8594,
+          "evidence": []
+        },
+        {
+          "term": "las gracias",
+          "score": 16.8594,
+          "evidence": []
+        },
+        {
+          "term": "candidaturas para",
+          "score": 9.4378,
+          "evidence": []
+        },
+        {
+          "term": "por",
+          "score": 6.3431,
+          "evidence": []
+        },
+        {
+          "term": "con",
+          "score": 6.1073,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "para los",
+          "score": 1.3665,
+          "evidence": []
+        },
+        {
+          "term": "del consejo",
+          "score": 1.1887,
+          "evidence": []
+        },
+        {
+          "term": "las gracias",
+          "score": 0.7618,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.7271,
+          "evidence": []
+        },
+        {
+          "term": "candidaturas para",
+          "score": 0.6237,
+          "evidence": []
+        },
+        {
+          "term": "con",
+          "score": 0.4247,
+          "evidence": []
+        },
+        {
+          "term": "por",
+          "score": 0.403,
+          "evidence": []
+        },
+        {
+          "term": "presidente declara",
+          "score": 0.2969,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 1216.6852,
+          "evidence": []
+        },
+        {
+          "term": "潜在的利益冲突",
+          "score": 827.2027,
+          "evidence": []
+        },
+        {
+          "term": "如个人",
+          "score": 735.0548,
+          "evidence": []
+        },
+        {
+          "term": "显而易见",
+          "score": 656.7838,
+          "evidence": []
+        },
+        {
+          "term": "更大利益",
+          "score": 652.4988,
+          "evidence": []
+        },
+        {
+          "term": "在每次增加背景信息",
+          "score": 618.9225,
+          "evidence": []
+        },
+        {
+          "term": "实际的和",
+          "score": 618.9225,
+          "evidence": []
+        },
+        {
+          "term": "新的背景信息要素怎样影响你对第",
+          "score": 618.9225,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-011-4-programa-de-trabajo-comunicacion-acerca-del-pu": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "del orden",
+          "score": 6.302,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "punto del",
+          "score": 6.1649,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del dia",
+          "score": 5.3752,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del día",
+          "score": 2.981,
+          "evidence": []
+        },
+        {
+          "term": "del reglamento",
+          "score": 2.5566,
+          "evidence": []
+        },
+        {
+          "term": "día provisional",
+          "score": 2.162,
+          "evidence": []
+        },
+        {
+          "term": "punto relativo",
+          "score": 2.1241,
+          "evidence": []
+        },
+        {
+          "term": "día suplementario",
+          "score": 2.0236,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "del orden",
+          "score": 224.0555,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "punto del",
+          "score": 215.6178,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del dia",
+          "score": 165.7034,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del día",
+          "score": 100.8979,
+          "evidence": []
+        },
+        {
+          "term": "del reglamento",
+          "score": 82.1163,
+          "evidence": []
+        },
+        {
+          "term": "punto relativo",
+          "score": 51.2261,
+          "evidence": []
+        },
+        {
+          "term": "día provisional",
+          "score": 49.5221,
+          "evidence": []
+        },
+        {
+          "term": "día suplementario",
+          "score": 44.4892,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "punto del",
+          "score": 2.0427,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del orden",
+          "score": 2.0166,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del dia",
+          "score": 1.6286,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del día",
+          "score": 0.9942,
+          "evidence": []
+        },
+        {
+          "term": "del reglamento",
+          "score": 0.8143,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 0.7826,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.7612,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.6834,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "punto del",
+          "score": 57.3167,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del orden",
+          "score": 56.4245,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del dia",
+          "score": 52.9045,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del día",
+          "score": 28.066,
+          "evidence": []
+        },
+        {
+          "term": "del reglamento",
+          "score": 26.4522,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 22.6504,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 17.0177,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 15.195,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "punto del",
+          "score": 2.0427,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del orden",
+          "score": 2.0166,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del dia",
+          "score": 1.665,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del día",
+          "score": 0.9942,
+          "evidence": []
+        },
+        {
+          "term": "del reglamento",
+          "score": 0.8469,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 0.7826,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.6834,
+          "evidence": []
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 0.646,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 293.8971,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 287.5077,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 245.6057,
+          "evidence": []
+        },
+        {
+          "term": "潜在的利益冲突",
+          "score": 222.7388,
+          "evidence": []
+        },
+        {
+          "term": "招募了",
+          "score": 193.4444,
+          "evidence": []
+        },
+        {
+          "term": "如个人",
+          "score": 187.3853,
+          "evidence": []
+        },
+        {
+          "term": "显而易见",
+          "score": 186.0553,
+          "evidence": []
+        },
+        {
+          "term": "的研究中",
+          "score": 184.7127,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-012-comite-para-la-erradicacion-del-paludismo-sustit": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "del paludismo",
+          "score": 6.1133,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "erradicación del",
+          "score": 2.8972,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 2.3538,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "comité especial",
+          "score": 2.2081,
+          "evidence": []
+        },
+        {
+          "term": "cuenta especial",
+          "score": 2.128,
+          "evidence": []
+        },
+        {
+          "term": "comité para",
+          "score": 2.0201,
+          "evidence": []
+        },
+        {
+          "term": "los fondos",
+          "score": 1.9985,
+          "evidence": []
+        },
+        {
+          "term": "los dos",
+          "score": 1.9158,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "del paludismo",
+          "score": 171.8412,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "erradicación del",
+          "score": 78.8383,
+          "evidence": []
+        },
+        {
+          "term": "comité especial",
+          "score": 53.1223,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 46.4946,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cuenta especial",
+          "score": 46.4179,
+          "evidence": []
+        },
+        {
+          "term": "comité para",
+          "score": 42.7689,
+          "evidence": []
+        },
+        {
+          "term": "que figuran",
+          "score": 38.7547,
+          "evidence": []
+        },
+        {
+          "term": "los fondos",
+          "score": 36.4587,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "del paludismo",
+          "score": 2.1697,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los",
+          "score": 1.8271,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "para",
+          "score": 1.4367,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "erradicación del",
+          "score": 1.1587,
+          "evidence": []
+        },
+        {
+          "term": "los dos",
+          "score": 1.1194,
+          "evidence": []
+        },
+        {
+          "term": "comité para",
+          "score": 0.992,
+          "evidence": []
+        },
+        {
+          "term": "los fondos",
+          "score": 0.9135,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.9133,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "del",
+          "score": 51.1851,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del paludismo",
+          "score": 51.1851,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los",
+          "score": 38.9706,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "para",
+          "score": 31.2318,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "que",
+          "score": 30.1918,
+          "evidence": []
+        },
+        {
+          "term": "que figuran",
+          "score": 30.1918,
+          "evidence": []
+        },
+        {
+          "term": "erradicación del",
+          "score": 26.8908,
+          "evidence": []
+        },
+        {
+          "term": "los dos",
+          "score": 22.2857,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "del paludismo",
+          "score": 2.1697,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los",
+          "score": 1.8271,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "para",
+          "score": 1.4367,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "erradicación del",
+          "score": 1.1587,
+          "evidence": []
+        },
+        {
+          "term": "los dos",
+          "score": 1.1194,
+          "evidence": []
+        },
+        {
+          "term": "comité para",
+          "score": 0.992,
+          "evidence": []
+        },
+        {
+          "term": "los fondos",
+          "score": 0.9389,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.9133,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 297.1233,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 267.5368,
+          "evidence": []
+        },
+        {
+          "term": "潜在的利益冲突",
+          "score": 233.2634,
+          "evidence": []
+        },
+        {
+          "term": "的研究中",
+          "score": 214.0106,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 195.122,
+          "evidence": []
+        },
+        {
+          "term": "如个人",
+          "score": 193.739,
+          "evidence": []
+        },
+        {
+          "term": "更大利益",
+          "score": 188.3773,
+          "evidence": []
+        },
+        {
+          "term": "世卫组织协调大流行性流感的防范和应对",
+          "score": 177.9382,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-014-7-establecimiento-de-un-comite-consultivo-sobre": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "del comité",
+          "score": 3.5762,
+          "evidence": []
+        },
+        {
+          "term": "del consejo",
+          "score": 3.4779,
+          "evidence": []
+        },
+        {
+          "term": "miembros del",
+          "score": 3.2175,
+          "evidence": []
+        },
+        {
+          "term": "del director",
+          "score": 3.1788,
+          "evidence": []
+        },
+        {
+          "term": "composición del",
+          "score": 3.1339,
+          "evidence": []
+        },
+        {
+          "term": "las negociaciones",
+          "score": 3.0738,
+          "evidence": []
+        },
+        {
+          "term": "negociaciones con",
+          "score": 3.003,
+          "evidence": []
+        },
+        {
+          "term": "consejo para",
+          "score": 2.7321,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "del comité",
+          "score": 166.0733,
+          "evidence": []
+        },
+        {
+          "term": "del consejo",
+          "score": 140.8373,
+          "evidence": []
+        },
+        {
+          "term": "del director",
+          "score": 131.7783,
+          "evidence": []
+        },
+        {
+          "term": "miembros del",
+          "score": 127.7198,
+          "evidence": []
+        },
+        {
+          "term": "composición del",
+          "score": 107.1976,
+          "evidence": []
+        },
+        {
+          "term": "dice que",
+          "score": 98.3426,
+          "evidence": []
+        },
+        {
+          "term": "juicio del",
+          "score": 91.3839,
+          "evidence": []
+        },
+        {
+          "term": "las negociaciones",
+          "score": 89.5115,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "del consejo",
+          "score": 2.8407,
+          "evidence": []
+        },
+        {
+          "term": "del director",
+          "score": 2.3918,
+          "evidence": []
+        },
+        {
+          "term": "consejo para",
+          "score": 2.2463,
+          "evidence": []
+        },
+        {
+          "term": "miembros del",
+          "score": 2.1696,
+          "evidence": []
+        },
+        {
+          "term": "del comité",
+          "score": 2.1574,
+          "evidence": []
+        },
+        {
+          "term": "con los",
+          "score": 2.0336,
+          "evidence": []
+        },
+        {
+          "term": "juicio del",
+          "score": 1.9294,
+          "evidence": []
+        },
+        {
+          "term": "propone que",
+          "score": 1.9068,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "del consejo",
+          "score": 90.4505,
+          "evidence": []
+        },
+        {
+          "term": "propone que",
+          "score": 78.9442,
+          "evidence": []
+        },
+        {
+          "term": "dice que",
+          "score": 78.4867,
+          "evidence": []
+        },
+        {
+          "term": "indica que",
+          "score": 74.8014,
+          "evidence": []
+        },
+        {
+          "term": "funciones que",
+          "score": 73.702,
+          "evidence": []
+        },
+        {
+          "term": "del director",
+          "score": 73.4171,
+          "evidence": []
+        },
+        {
+          "term": "reducido que",
+          "score": 71.1081,
+          "evidence": []
+        },
+        {
+          "term": "del comité",
+          "score": 68.1172,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "del consejo",
+          "score": 2.8407,
+          "evidence": []
+        },
+        {
+          "term": "del director",
+          "score": 2.3918,
+          "evidence": []
+        },
+        {
+          "term": "consejo para",
+          "score": 2.2463,
+          "evidence": []
+        },
+        {
+          "term": "miembros del",
+          "score": 2.1696,
+          "evidence": []
+        },
+        {
+          "term": "del comité",
+          "score": 2.1574,
+          "evidence": []
+        },
+        {
+          "term": "con los",
+          "score": 2.0336,
+          "evidence": []
+        },
+        {
+          "term": "juicio del",
+          "score": 1.9294,
+          "evidence": []
+        },
+        {
+          "term": "propone que",
+          "score": 1.9068,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 301.6056,
+          "evidence": []
+        },
+        {
+          "term": "潜在的利益冲突",
+          "score": 251.5576,
+          "evidence": []
+        },
+        {
+          "term": "的研究中",
+          "score": 239.8231,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 216.6367,
+          "evidence": []
+        },
+        {
+          "term": "更大利益",
+          "score": 204.2156,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 202.9215,
+          "evidence": []
+        },
+        {
+          "term": "如个人",
+          "score": 195.3704,
+          "evidence": []
+        },
+        {
+          "term": "显而易见",
+          "score": 192.7927,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-016-8-inporfc-sobre-los-nombramientos-para-los-cuadr": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "los nombramientos",
+          "score": 3.691,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los cuadros",
+          "score": 3.3992,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nombramientos para",
+          "score": 2.9637,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "los nombramientos",
+          "score": 56.6563,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los cuadros",
+          "score": 51.9417,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nombramientos para",
+          "score": 42.3936,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "para los",
+          "score": 1.1957,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "sobre los",
+          "score": 0.9923,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los cuadros",
+          "score": 0.6673,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "para los",
+          "score": 21.1587,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "sobre los",
+          "score": 16.6526,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los cuadros",
+          "score": 13.88,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "para los",
+          "score": 1.1957,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "sobre los",
+          "score": 0.9923,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los cuadros",
+          "score": 0.6958,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 400.222,
+          "evidence": []
+        },
+        {
+          "term": "潜在的利益冲突",
+          "score": 308.7244,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 295.3997,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-018-asamblea": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "del presidente",
+          "score": 2.5366,
+          "evidence": []
+        },
+        {
+          "term": "asamblea",
+          "score": 2.2189,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del consejo",
+          "score": 2.2164,
+          "evidence": []
+        },
+        {
+          "term": "asamblea mundial",
+          "score": 2.0714,
+          "evidence": []
+        },
+        {
+          "term": "discusiones técnicas",
+          "score": 1.9358,
+          "evidence": []
+        },
+        {
+          "term": "consejo que",
+          "score": 1.9106,
+          "evidence": []
+        },
+        {
+          "term": "presidente general",
+          "score": 1.7952,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "del presidente",
+          "score": 61.0257,
+          "evidence": []
+        },
+        {
+          "term": "asamblea",
+          "score": 50.7965,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "asamblea mundial",
+          "score": 46.0441,
+          "evidence": []
+        },
+        {
+          "term": "presidente general",
+          "score": 44.8241,
+          "evidence": []
+        },
+        {
+          "term": "del consejo",
+          "score": 43.6396,
+          "evidence": []
+        },
+        {
+          "term": "consejo que",
+          "score": 36.7512,
+          "evidence": []
+        },
+        {
+          "term": "discusiones técnicas",
+          "score": 32.2982,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "del consejo",
+          "score": 1.1791,
+          "evidence": []
+        },
+        {
+          "term": "consejo que",
+          "score": 1.0294,
+          "evidence": []
+        },
+        {
+          "term": "del presidente",
+          "score": 0.9392,
+          "evidence": []
+        },
+        {
+          "term": "las discusiones",
+          "score": 0.7298,
+          "evidence": []
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 0.6953,
+          "evidence": []
+        },
+        {
+          "term": "asamblea",
+          "score": 0.63,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "asamblea mundial",
+          "score": 0.5988,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "consejo que",
+          "score": 30.5732,
+          "evidence": []
+        },
+        {
+          "term": "del consejo",
+          "score": 27.2671,
+          "evidence": []
+        },
+        {
+          "term": "del presidente",
+          "score": 18.5071,
+          "evidence": []
+        },
+        {
+          "term": "las discusiones",
+          "score": 18.4652,
+          "evidence": []
+        },
+        {
+          "term": "salud",
+          "score": 14.1109,
+          "evidence": []
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 13.8009,
+          "evidence": []
+        },
+        {
+          "term": "asamblea",
+          "score": 12.8822,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "del consejo",
+          "score": 1.1791,
+          "evidence": []
+        },
+        {
+          "term": "consejo que",
+          "score": 1.0294,
+          "evidence": []
+        },
+        {
+          "term": "del presidente",
+          "score": 0.9392,
+          "evidence": []
+        },
+        {
+          "term": "las discusiones",
+          "score": 0.7298,
+          "evidence": []
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 0.6953,
+          "evidence": []
+        },
+        {
+          "term": "asamblea",
+          "score": 0.63,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "asamblea mundial",
+          "score": 0.5988,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 446.4609,
+          "evidence": []
+        },
+        {
+          "term": "更大利益",
+          "score": 361.3596,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 358.0678,
+          "evidence": []
+        },
+        {
+          "term": "潜在的利益冲突",
+          "score": 357.3809,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 331.7594,
+          "evidence": []
+        },
+        {
+          "term": "招募了",
+          "score": 300.6162,
+          "evidence": []
+        },
+        {
+          "term": "世卫组织协调大流行性流感的防范和应对",
+          "score": 299.7741,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-019-ев22лйпд-revl": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "propuesta",
+          "score": 0.76,
+          "evidence": []
+        },
+        {
+          "term": "resolución",
+          "score": 0.6815,
+          "evidence": []
+        },
+        {
+          "term": "mudaliar",
+          "score": 0.6145,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "propuesta",
+          "score": 11.3004,
+          "evidence": []
+        },
+        {
+          "term": "resolución",
+          "score": 10.4388,
+          "evidence": []
+        },
+        {
+          "term": "mudaliar",
+          "score": 7.8097,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "del",
+          "score": 0.1146,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.1004,
+          "evidence": []
+        },
+        {
+          "term": "consejo",
+          "score": 0.0998,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "que",
+          "score": 2.4136,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 1.5073,
+          "evidence": []
+        },
+        {
+          "term": "consejo",
+          "score": 1.368,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "que",
+          "score": 0.1004,
+          "evidence": []
+        },
+        {
+          "term": "resolución",
+          "score": 0.0711,
+          "evidence": []
+        },
+        {
+          "term": "director",
+          "score": 0.064,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 493.5355,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 413.8299,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 413.0093,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-020-10-eieccion-del-tema-de-las-discüsiohes-тесжсаэ": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "tema",
+          "score": 4.6025,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las discusiones",
+          "score": 4.5916,
+          "evidence": []
+        },
+        {
+          "term": "discusiones técnicas",
+          "score": 4.4982,
+          "evidence": []
+        },
+        {
+          "term": "tema que",
+          "score": 3.9361,
+          "evidence": []
+        },
+        {
+          "term": "esas discusiones",
+          "score": 3.5619,
+          "evidence": []
+        },
+        {
+          "term": "tema elegido",
+          "score": 3.4922,
+          "evidence": []
+        },
+        {
+          "term": "tema relativo",
+          "score": 3.3218,
+          "evidence": []
+        },
+        {
+          "term": "salud mental",
+          "score": 3.2581,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "las discusiones",
+          "score": 264.933,
+          "evidence": []
+        },
+        {
+          "term": "discusiones técnicas",
+          "score": 224.4451,
+          "evidence": []
+        },
+        {
+          "term": "tema que",
+          "score": 203.1681,
+          "evidence": []
+        },
+        {
+          "term": "esas discusiones",
+          "score": 163.0131,
+          "evidence": []
+        },
+        {
+          "term": "las enfermedades",
+          "score": 156.1843,
+          "evidence": []
+        },
+        {
+          "term": "para las",
+          "score": 153.3664,
+          "evidence": []
+        },
+        {
+          "term": "contra las",
+          "score": 150.1472,
+          "evidence": []
+        },
+        {
+          "term": "salud mental",
+          "score": 134.395,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "del",
+          "score": 4.1121,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las",
+          "score": 3.72,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "para las",
+          "score": 3.2162,
+          "evidence": []
+        },
+        {
+          "term": "sobre los",
+          "score": 2.7067,
+          "evidence": []
+        },
+        {
+          "term": "propone que",
+          "score": 2.4871,
+          "evidence": []
+        },
+        {
+          "term": "las discusiones",
+          "score": 2.4393,
+          "evidence": []
+        },
+        {
+          "term": "tema que",
+          "score": 2.3575,
+          "evidence": []
+        },
+        {
+          "term": "contra las",
+          "score": 2.3533,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "las",
+          "score": 188.126,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del",
+          "score": 140.1631,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "para las",
+          "score": 138.947,
+          "evidence": []
+        },
+        {
+          "term": "tema que",
+          "score": 137.8113,
+          "evidence": []
+        },
+        {
+          "term": "técnicas que",
+          "score": 129.9342,
+          "evidence": []
+        },
+        {
+          "term": "las discusiones",
+          "score": 127.9882,
+          "evidence": []
+        },
+        {
+          "term": "propone que",
+          "score": 120.6441,
+          "evidence": []
+        },
+        {
+          "term": "que antes",
+          "score": 117.3146,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "del",
+          "score": 4.1121,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las",
+          "score": 3.72,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "para las",
+          "score": 3.2162,
+          "evidence": []
+        },
+        {
+          "term": "sobre los",
+          "score": 2.7067,
+          "evidence": []
+        },
+        {
+          "term": "propone que",
+          "score": 2.4871,
+          "evidence": []
+        },
+        {
+          "term": "las discusiones",
+          "score": 2.4393,
+          "evidence": []
+        },
+        {
+          "term": "tema que",
+          "score": 2.3575,
+          "evidence": []
+        },
+        {
+          "term": "contra las",
+          "score": 2.3533,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 281.8484,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 235.7809,
+          "evidence": []
+        },
+        {
+          "term": "更大利益",
+          "score": 219.1577,
+          "evidence": []
+        },
+        {
+          "term": "世卫组织协调大流行性流感的防范和应对",
+          "score": 196.9767,
+          "evidence": []
+        },
+        {
+          "term": "招募了",
+          "score": 186.1074,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 178.2202,
+          "evidence": []
+        },
+        {
+          "term": "的研究中",
+          "score": 175.7638,
+          "evidence": []
+        },
+        {
+          "term": "对照组",
+          "score": 173.2891,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-021-11-pecha-y-iugar-de-la-12": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "asamblea mundial",
+          "score": 2.0714,
+          "evidence": []
+        },
+        {
+          "term": "dice que",
+          "score": 1.55,
+          "evidence": []
+        },
+        {
+          "term": "vistas las",
+          "score": 1.5372,
+          "evidence": []
+        },
+        {
+          "term": "resolución wha",
+          "score": 1.406,
+          "evidence": []
+        },
+        {
+          "term": "las disposiciones",
+          "score": 1.398,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "asamblea mundial",
+          "score": 46.0441,
+          "evidence": []
+        },
+        {
+          "term": "dice que",
+          "score": 24.0111,
+          "evidence": []
+        },
+        {
+          "term": "resolución wha",
+          "score": 23.7864,
+          "evidence": []
+        },
+        {
+          "term": "vistas las",
+          "score": 21.6711,
+          "evidence": []
+        },
+        {
+          "term": "las disposiciones",
+          "score": 19.3138,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "dice que",
+          "score": 0.617,
+          "evidence": []
+        },
+        {
+          "term": "las disposiciones",
+          "score": 0.5715,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 0.5629,
+          "evidence": []
+        },
+        {
+          "term": "vistas las",
+          "score": 0.4996,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 0.4954,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "dice que",
+          "score": 12.6684,
+          "evidence": []
+        },
+        {
+          "term": "salud",
+          "score": 10.9941,
+          "evidence": []
+        },
+        {
+          "term": "las disposiciones",
+          "score": 9.814,
+          "evidence": []
+        },
+        {
+          "term": "vistas las",
+          "score": 9.2729,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 8.8331,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "dice que",
+          "score": 0.617,
+          "evidence": []
+        },
+        {
+          "term": "las disposiciones",
+          "score": 0.5715,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 0.5629,
+          "evidence": []
+        },
+        {
+          "term": "vistas las",
+          "score": 0.5285,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 0.4954,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 411.4044,
+          "evidence": []
+        },
+        {
+          "term": "更大利益",
+          "score": 296.8447,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 296.4578,
+          "evidence": []
+        },
+        {
+          "term": "潜在的利益冲突",
+          "score": 292.2613,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 275.2339,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-022-kesuel邓": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "resolución",
+          "score": 0.6815,
+          "evidence": []
+        },
+        {
+          "term": "asamblea",
+          "score": 0.6803,
+          "evidence": []
+        },
+        {
+          "term": "martes",
+          "score": 0.6003,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "resolución",
+          "score": 10.4388,
+          "evidence": []
+        },
+        {
+          "term": "asamblea",
+          "score": 10.1593,
+          "evidence": []
+        },
+        {
+          "term": "celebre",
+          "score": 7.522,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "del",
+          "score": 0.177,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.1728,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.1589,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "que",
+          "score": 4.1474,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 2.8983,
+          "evidence": []
+        },
+        {
+          "term": "consejo",
+          "score": 2.22,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "que",
+          "score": 0.1728,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.1589,
+          "evidence": []
+        },
+        {
+          "term": "salud",
+          "score": 0.1369,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 350.771,
+          "evidence": []
+        },
+        {
+          "term": "更大利益",
+          "score": 265.1233,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 244.5755,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-023-12-pecha-у-lugar-de-la-2": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "del consejo",
+          "score": 4.2925,
+          "evidence": []
+        },
+        {
+          "term": "reunión del",
+          "score": 3.5659,
+          "evidence": []
+        },
+        {
+          "term": "del martes",
+          "score": 3.4734,
+          "evidence": []
+        },
+        {
+          "term": "del comité",
+          "score": 3.4691,
+          "evidence": []
+        },
+        {
+          "term": "sesión del",
+          "score": 3.3646,
+          "evidence": []
+        },
+        {
+          "term": "comité permanente",
+          "score": 3.3463,
+          "evidence": []
+        },
+        {
+          "term": "del director",
+          "score": 3.34,
+          "evidence": []
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 3.309,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "del consejo",
+          "score": 281.1754,
+          "evidence": []
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 185.3339,
+          "evidence": []
+        },
+        {
+          "term": "reunión del",
+          "score": 171.0343,
+          "evidence": []
+        },
+        {
+          "term": "del comité",
+          "score": 167.9731,
+          "evidence": []
+        },
+        {
+          "term": "del director",
+          "score": 166.6923,
+          "evidence": []
+        },
+        {
+          "term": "dice que",
+          "score": 163.3619,
+          "evidence": []
+        },
+        {
+          "term": "propone que",
+          "score": 161.6795,
+          "evidence": []
+        },
+        {
+          "term": "salud que",
+          "score": 160.4417,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "del consejo",
+          "score": 4.9257,
+          "evidence": []
+        },
+        {
+          "term": "del director",
+          "score": 3.9605,
+          "evidence": []
+        },
+        {
+          "term": "del párrafo",
+          "score": 3.6781,
+          "evidence": []
+        },
+        {
+          "term": "del comité",
+          "score": 3.6107,
+          "evidence": []
+        },
+        {
+          "term": "reunión del",
+          "score": 3.5766,
+          "evidence": []
+        },
+        {
+          "term": "punto del",
+          "score": 3.5593,
+          "evidence": []
+        },
+        {
+          "term": "del orden",
+          "score": 3.504,
+          "evidence": []
+        },
+        {
+          "term": "del día",
+          "score": 3.4404,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "del consejo",
+          "score": 166.1203,
+          "evidence": []
+        },
+        {
+          "term": "salud que",
+          "score": 157.0702,
+          "evidence": []
+        },
+        {
+          "term": "propone que",
+          "score": 148.3257,
+          "evidence": []
+        },
+        {
+          "term": "dice que",
+          "score": 147.3332,
+          "evidence": []
+        },
+        {
+          "term": "estima que",
+          "score": 143.8756,
+          "evidence": []
+        },
+        {
+          "term": "que acaba",
+          "score": 136.8652,
+          "evidence": []
+        },
+        {
+          "term": "del director",
+          "score": 128.4506,
+          "evidence": []
+        },
+        {
+          "term": "del comité",
+          "score": 120.24,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "del consejo",
+          "score": 4.9257,
+          "evidence": []
+        },
+        {
+          "term": "del director",
+          "score": 3.9605,
+          "evidence": []
+        },
+        {
+          "term": "del párrafo",
+          "score": 3.6781,
+          "evidence": []
+        },
+        {
+          "term": "del comité",
+          "score": 3.6107,
+          "evidence": []
+        },
+        {
+          "term": "reunión del",
+          "score": 3.5766,
+          "evidence": []
+        },
+        {
+          "term": "punto del",
+          "score": 3.5593,
+          "evidence": []
+        },
+        {
+          "term": "del orden",
+          "score": 3.504,
+          "evidence": []
+        },
+        {
+          "term": "del día",
+          "score": 3.4404,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 353.7054,
+          "evidence": []
+        },
+        {
+          "term": "更大利益",
+          "score": 244.4894,
+          "evidence": []
+        },
+        {
+          "term": "潜在的利益冲突",
+          "score": 242.5848,
+          "evidence": []
+        },
+        {
+          "term": "的研究中",
+          "score": 240.6257,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 221.5971,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 216.9501,
+          "evidence": []
+        },
+        {
+          "term": "世卫组织协调大流行性流感的防范和应对",
+          "score": 198.6754,
+          "evidence": []
+        },
+        {
+          "term": "显而易见",
+          "score": 184.4344,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-024-orden-del-día-documerrto-eb2217": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "del anexo",
+          "score": 2.1897,
+          "evidence": []
+        },
+        {
+          "term": "viajes transportes",
+          "score": 2.1117,
+          "evidence": []
+        },
+        {
+          "term": "otros gastos",
+          "score": 1.8263,
+          "evidence": []
+        },
+        {
+          "term": "los gastos",
+          "score": 1.8257,
+          "evidence": []
+        },
+        {
+          "term": "que figura",
+          "score": 1.6013,
+          "evidence": []
+        },
+        {
+          "term": "profesor canaperia",
+          "score": 1.5421,
+          "evidence": []
+        },
+        {
+          "term": "servicios técnicos",
+          "score": 1.3751,
+          "evidence": []
+        },
+        {
+          "term": "comprende",
+          "score": 1.3483,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "del anexo",
+          "score": 40.5179,
+          "evidence": []
+        },
+        {
+          "term": "viajes transportes",
+          "score": 37.5159,
+          "evidence": []
+        },
+        {
+          "term": "otros gastos",
+          "score": 36.2708,
+          "evidence": []
+        },
+        {
+          "term": "los gastos",
+          "score": 34.7043,
+          "evidence": []
+        },
+        {
+          "term": "que figura",
+          "score": 30.6295,
+          "evidence": []
+        },
+        {
+          "term": "comprende",
+          "score": 29.1954,
+          "evidence": []
+        },
+        {
+          "term": "profesor canaperia",
+          "score": 24.4142,
+          "evidence": []
+        },
+        {
+          "term": "partida",
+          "score": 24.3003,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "del",
+          "score": 1.7277,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del anexo",
+          "score": 0.9618,
+          "evidence": []
+        },
+        {
+          "term": "los gastos",
+          "score": 0.9034,
+          "evidence": []
+        },
+        {
+          "term": "que figura",
+          "score": 0.7947,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.7431,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 0.5936,
+          "evidence": []
+        },
+        {
+          "term": "consejo",
+          "score": 0.5573,
+          "evidence": []
+        },
+        {
+          "term": "salud",
+          "score": 0.5152,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "del",
+          "score": 29.6941,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "que",
+          "score": 19.1893,
+          "evidence": []
+        },
+        {
+          "term": "que figura",
+          "score": 19.1893,
+          "evidence": []
+        },
+        {
+          "term": "del anexo",
+          "score": 16.1391,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 13.2998,
+          "evidence": []
+        },
+        {
+          "term": "los gastos",
+          "score": 12.4227,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 9.949,
+          "evidence": []
+        },
+        {
+          "term": "consejo",
+          "score": 7.8143,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "del",
+          "score": 1.7277,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del anexo",
+          "score": 0.9618,
+          "evidence": []
+        },
+        {
+          "term": "los gastos",
+          "score": 0.9034,
+          "evidence": []
+        },
+        {
+          "term": "que figura",
+          "score": 0.7947,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.7431,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 0.5936,
+          "evidence": []
+        },
+        {
+          "term": "orden",
+          "score": 0.4572,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "día",
+          "score": 0.4467,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 291.6151,
+          "evidence": []
+        },
+        {
+          "term": "的研究中",
+          "score": 218.7476,
+          "evidence": []
+        },
+        {
+          "term": "更大利益",
+          "score": 215.7799,
+          "evidence": []
+        },
+        {
+          "term": "潜在的利益冲突",
+          "score": 212.7404,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 197.9423,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 195.903,
+          "evidence": []
+        },
+        {
+          "term": "显而易见",
+          "score": 180.4,
+          "evidence": []
+        },
+        {
+          "term": "世卫组织协调大流行性流感的防范和应对",
+          "score": 165.847,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-025-16-transferencias-entre-las-secciones-de-lfi-bes": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "del consejo",
+          "score": 2.8908,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 2.7259,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del documento",
+          "score": 2.3882,
+          "evidence": []
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 2.3183,
+          "evidence": []
+        },
+        {
+          "term": "los servicios",
+          "score": 2.2576,
+          "evidence": []
+        },
+        {
+          "term": "del orden",
+          "score": 2.1125,
+          "evidence": []
+        },
+        {
+          "term": "las naciones",
+          "score": 2.0911,
+          "evidence": []
+        },
+        {
+          "term": "punto del",
+          "score": 2.0783,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "del consejo",
+          "score": 82.4848,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 72.8987,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 62.009,
+          "evidence": []
+        },
+        {
+          "term": "del documento",
+          "score": 56.0451,
+          "evidence": []
+        },
+        {
+          "term": "explica que",
+          "score": 54.8189,
+          "evidence": []
+        },
+        {
+          "term": "las naciones",
+          "score": 47.7497,
+          "evidence": []
+        },
+        {
+          "term": "del orden",
+          "score": 47.0174,
+          "evidence": []
+        },
+        {
+          "term": "los servicios",
+          "score": 46.2955,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "las",
+          "score": 2.1603,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del consejo",
+          "score": 2.0531,
+          "evidence": []
+        },
+        {
+          "term": "del documento",
+          "score": 1.6482,
+          "evidence": []
+        },
+        {
+          "term": "punto del",
+          "score": 1.6035,
+          "evidence": []
+        },
+        {
+          "term": "del orden",
+          "score": 1.5886,
+          "evidence": []
+        },
+        {
+          "term": "los servicios",
+          "score": 1.2853,
+          "evidence": []
+        },
+        {
+          "term": "los gastos",
+          "score": 1.2762,
+          "evidence": []
+        },
+        {
+          "term": "las naciones",
+          "score": 1.1947,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "las",
+          "score": 58.576,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del consejo",
+          "score": 48.7818,
+          "evidence": []
+        },
+        {
+          "term": "explica que",
+          "score": 40.0812,
+          "evidence": []
+        },
+        {
+          "term": "del documento",
+          "score": 35.2386,
+          "evidence": []
+        },
+        {
+          "term": "punto del",
+          "score": 33.5891,
+          "evidence": []
+        },
+        {
+          "term": "del orden",
+          "score": 33.4863,
+          "evidence": []
+        },
+        {
+          "term": "las naciones",
+          "score": 30.7473,
+          "evidence": []
+        },
+        {
+          "term": "los servicios",
+          "score": 26.2068,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "las",
+          "score": 2.1603,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del consejo",
+          "score": 2.0531,
+          "evidence": []
+        },
+        {
+          "term": "del documento",
+          "score": 1.6482,
+          "evidence": []
+        },
+        {
+          "term": "punto del",
+          "score": 1.6035,
+          "evidence": []
+        },
+        {
+          "term": "del orden",
+          "score": 1.5886,
+          "evidence": []
+        },
+        {
+          "term": "los servicios",
+          "score": 1.2853,
+          "evidence": []
+        },
+        {
+          "term": "los gastos",
+          "score": 1.2762,
+          "evidence": []
+        },
+        {
+          "term": "las naciones",
+          "score": 1.1947,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 319.6104,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 305.3825,
+          "evidence": []
+        },
+        {
+          "term": "潜在的利益冲突",
+          "score": 273.9201,
+          "evidence": []
+        },
+        {
+          "term": "更大利益",
+          "score": 257.8936,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 251.764,
+          "evidence": []
+        },
+        {
+          "term": "的研究中",
+          "score": 244.9054,
+          "evidence": []
+        },
+        {
+          "term": "显而易见",
+          "score": 234.9322,
+          "evidence": []
+        },
+        {
+          "term": "如个人",
+          "score": 213.6998,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-026-18-donativos-de-vacuna-antivabiolica": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "los que",
+          "score": 3.2292,
+          "evidence": []
+        },
+        {
+          "term": "vacuna que",
+          "score": 3.1929,
+          "evidence": []
+        },
+        {
+          "term": "párrafo del",
+          "score": 3.0134,
+          "evidence": []
+        },
+        {
+          "term": "las palabras",
+          "score": 2.9254,
+          "evidence": []
+        },
+        {
+          "term": "las condiciones",
+          "score": 2.749,
+          "evidence": []
+        },
+        {
+          "term": "propone que",
+          "score": 2.7096,
+          "evidence": []
+        },
+        {
+          "term": "declara que",
+          "score": 2.6916,
+          "evidence": []
+        },
+        {
+          "term": "del consejo",
+          "score": 2.68,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "vacuna que",
+          "score": 161.4881,
+          "evidence": []
+        },
+        {
+          "term": "los que",
+          "score": 157.6319,
+          "evidence": []
+        },
+        {
+          "term": "propone que",
+          "score": 127.9503,
+          "evidence": []
+        },
+        {
+          "term": "declara que",
+          "score": 124.6285,
+          "evidence": []
+        },
+        {
+          "term": "contesta que",
+          "score": 120.1146,
+          "evidence": []
+        },
+        {
+          "term": "cree que",
+          "score": 117.342,
+          "evidence": []
+        },
+        {
+          "term": "las palabras",
+          "score": 93.0142,
+          "evidence": []
+        },
+        {
+          "term": "párrafo del",
+          "score": 92.6553,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "los que",
+          "score": 3.2727,
+          "evidence": []
+        },
+        {
+          "term": "del consejo",
+          "score": 3.1007,
+          "evidence": []
+        },
+        {
+          "term": "del documento",
+          "score": 2.4856,
+          "evidence": []
+        },
+        {
+          "term": "párrafo del",
+          "score": 2.4814,
+          "evidence": []
+        },
+        {
+          "term": "del proyecto",
+          "score": 2.4174,
+          "evidence": []
+        },
+        {
+          "term": "propone que",
+          "score": 2.2241,
+          "evidence": []
+        },
+        {
+          "term": "del mundo",
+          "score": 2.0558,
+          "evidence": []
+        },
+        {
+          "term": "las vacunas",
+          "score": 2.019,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "los que",
+          "score": 130.1132,
+          "evidence": []
+        },
+        {
+          "term": "vacuna que",
+          "score": 93.8234,
+          "evidence": []
+        },
+        {
+          "term": "del consejo",
+          "score": 83.6532,
+          "evidence": []
+        },
+        {
+          "term": "propone que",
+          "score": 83.2353,
+          "evidence": []
+        },
+        {
+          "term": "cree que",
+          "score": 80.1934,
+          "evidence": []
+        },
+        {
+          "term": "contesta que",
+          "score": 76.7217,
+          "evidence": []
+        },
+        {
+          "term": "declara que",
+          "score": 76.7217,
+          "evidence": []
+        },
+        {
+          "term": "las vacunas",
+          "score": 70.4891,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "los que",
+          "score": 3.2727,
+          "evidence": []
+        },
+        {
+          "term": "del consejo",
+          "score": 3.1007,
+          "evidence": []
+        },
+        {
+          "term": "del documento",
+          "score": 2.4856,
+          "evidence": []
+        },
+        {
+          "term": "párrafo del",
+          "score": 2.4814,
+          "evidence": []
+        },
+        {
+          "term": "del proyecto",
+          "score": 2.4174,
+          "evidence": []
+        },
+        {
+          "term": "propone que",
+          "score": 2.2241,
+          "evidence": []
+        },
+        {
+          "term": "del mundo",
+          "score": 2.0558,
+          "evidence": []
+        },
+        {
+          "term": "las vacunas",
+          "score": 2.019,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 249.9416,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 217.1862,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 168.5421,
+          "evidence": []
+        },
+        {
+          "term": "更大利益",
+          "score": 167.187,
+          "evidence": []
+        },
+        {
+          "term": "的研究中",
+          "score": 154.2319,
+          "evidence": []
+        },
+        {
+          "term": "潜在的利益冲突",
+          "score": 149.2853,
+          "evidence": []
+        },
+        {
+          "term": "世卫组织协调大流行性流感的防范和应对",
+          "score": 143.2102,
+          "evidence": []
+        },
+        {
+          "term": "招募了",
+          "score": 130.0952,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-027-19-posibilidad-de-qgje-ы-oms-patrocine-ia-adopci": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "resolución",
+          "score": 0.8599,
+          "evidence": []
+        },
+        {
+          "term": "documento",
+          "score": 0.6604,
+          "evidence": []
+        },
+        {
+          "term": "levanta",
+          "score": 0.6392,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "resolución",
+          "score": 15.6582,
+          "evidence": []
+        },
+        {
+          "term": "documento",
+          "score": 9.8386,
+          "evidence": []
+        },
+        {
+          "term": "levanta",
+          "score": 8.2151,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "del",
+          "score": 0.1854,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.1589,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 0.1539,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "del",
+          "score": 3.0146,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 2.8362,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 2.7696,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "del",
+          "score": 0.1854,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.1589,
+          "evidence": []
+        },
+        {
+          "term": "resolución",
+          "score": 0.0898,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 598.1323,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 531.285,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 410.6481,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-031-dtoice": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "del paludismo",
+          "score": 2.168,
+          "evidence": []
+        },
+        {
+          "term": "erradicación del",
+          "score": 2.1435,
+          "evidence": []
+        },
+        {
+          "term": "del orden",
+          "score": 2.0083,
+          "evidence": []
+        },
+        {
+          "term": "del día",
+          "score": 2.0017,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 1.0141,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "del paludismo",
+          "score": 42.9669,
+          "evidence": []
+        },
+        {
+          "term": "erradicación del",
+          "score": 42.7763,
+          "evidence": []
+        },
+        {
+          "term": "del orden",
+          "score": 40.4051,
+          "evidence": []
+        },
+        {
+          "term": "del día",
+          "score": 40.245,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 16.6052,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "del orden",
+          "score": 0.6515,
+          "evidence": []
+        },
+        {
+          "term": "del día",
+          "score": 0.6402,
+          "evidence": []
+        },
+        {
+          "term": "erradicación del",
+          "score": 0.5995,
+          "evidence": []
+        },
+        {
+          "term": "del paludismo",
+          "score": 0.5705,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 0.5395,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "del orden",
+          "score": 12.8819,
+          "evidence": []
+        },
+        {
+          "term": "del día",
+          "score": 12.8329,
+          "evidence": []
+        },
+        {
+          "term": "del paludismo",
+          "score": 12.2425,
+          "evidence": []
+        },
+        {
+          "term": "erradicación del",
+          "score": 12.2425,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 11.6123,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "del orden",
+          "score": 0.6515,
+          "evidence": []
+        },
+        {
+          "term": "del día",
+          "score": 0.6402,
+          "evidence": []
+        },
+        {
+          "term": "erradicación del",
+          "score": 0.5995,
+          "evidence": []
+        },
+        {
+          "term": "del paludismo",
+          "score": 0.5705,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 0.5395,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 291.4123,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 260.9677,
+          "evidence": []
+        },
+        {
+          "term": "潜在的利益冲突",
+          "score": 249.2898,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 204.2253,
+          "evidence": []
+        },
+        {
+          "term": "如个人",
+          "score": 204.1137,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-032-pagina": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "las discusiones",
+          "score": 2.0042,
+          "evidence": []
+        },
+        {
+          "term": "del consejo",
+          "score": 1.7258,
+          "evidence": []
+        },
+        {
+          "term": "discusiones técnicas",
+          "score": 1.6905,
+          "evidence": []
+        },
+        {
+          "term": "fecha lugar",
+          "score": 1.6087,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "las discusiones",
+          "score": 34.1145,
+          "evidence": []
+        },
+        {
+          "term": "asamblea mundial",
+          "score": 27.6264,
+          "evidence": []
+        },
+        {
+          "term": "del consejo",
+          "score": 26.779,
+          "evidence": []
+        },
+        {
+          "term": "discusiones técnicas",
+          "score": 25.1817,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "del consejo",
+          "score": 0.8395,
+          "evidence": []
+        },
+        {
+          "term": "las discusiones",
+          "score": 0.5657,
+          "evidence": []
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 0.4618,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 0.4588,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "del consejo",
+          "score": 16.0852,
+          "evidence": []
+        },
+        {
+          "term": "las discusiones",
+          "score": 14.9384,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 10.1452,
+          "evidence": []
+        },
+        {
+          "term": "salud",
+          "score": 9.3875,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "del consejo",
+          "score": 0.8395,
+          "evidence": []
+        },
+        {
+          "term": "las discusiones",
+          "score": 0.5657,
+          "evidence": []
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 0.4618,
+          "evidence": []
+        },
+        {
+          "term": "asamblea mundial",
+          "score": 0.4433,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 355.2416,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 263.5969,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 252.4024,
+          "evidence": []
+        },
+        {
+          "term": "更大利益",
+          "score": 251.7649,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-033-primera-ееsion": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "suplente del",
+          "score": 1.592,
+          "evidence": []
+        },
+        {
+          "term": "relator",
+          "score": 0.8865,
+          "evidence": []
+        },
+        {
+          "term": "vicepresidente",
+          "score": 0.8849,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "suplente del",
+          "score": 22.7653,
+          "evidence": []
+        },
+        {
+          "term": "relator",
+          "score": 14.2331,
+          "evidence": []
+        },
+        {
+          "term": "vicepresidente",
+          "score": 14.2331,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "suplente del",
+          "score": 0.2076,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 0.1584,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.1574,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "suplente del",
+          "score": 3.646,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 3.3838,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 1.9308,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "suplente del",
+          "score": 0.2076,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.1574,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.1461,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 1196.8969,
+          "evidence": []
+        },
+        {
+          "term": "潜在的利益冲突",
+          "score": 1073.1203,
+          "evidence": []
+        },
+        {
+          "term": "如个人",
+          "score": 877.9121,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-042-1-apertura-de-la-reunion": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "del consejo",
+          "score": 2.7193,
+          "evidence": []
+        },
+        {
+          "term": "designado por",
+          "score": 2.4819,
+          "evidence": []
+        },
+        {
+          "term": "suplente del",
+          "score": 2.1158,
+          "evidence": []
+        },
+        {
+          "term": "reunion",
+          "score": 1.0783,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "apertura",
+          "score": 1.0356,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "documento",
+          "score": 0.6604,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "del consejo",
+          "score": 70.7483,
+          "evidence": []
+        },
+        {
+          "term": "designado por",
+          "score": 61.1729,
+          "evidence": []
+        },
+        {
+          "term": "suplente del",
+          "score": 42.6023,
+          "evidence": []
+        },
+        {
+          "term": "reunion",
+          "score": 13.6577,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "apertura",
+          "score": 13.2114,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "documento",
+          "score": 9.8386,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "del consejo",
+          "score": 0.8176,
+          "evidence": []
+        },
+        {
+          "term": "suplente del",
+          "score": 0.5605,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 0.4181,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.4177,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.404,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 0.3422,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "del consejo",
+          "score": 22.2074,
+          "evidence": []
+        },
+        {
+          "term": "suplente del",
+          "score": 14.5548,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 13.9012,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 6.837,
+          "evidence": []
+        },
+        {
+          "term": "designado por",
+          "score": 5.2639,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 4.6853,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "del consejo",
+          "score": 0.8176,
+          "evidence": []
+        },
+        {
+          "term": "suplente del",
+          "score": 0.5605,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.404,
+          "evidence": []
+        },
+        {
+          "term": "designado por",
+          "score": 0.2484,
+          "evidence": []
+        },
+        {
+          "term": "reunion",
+          "score": 0.1636,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "documento",
+          "score": 0.1536,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 542.8124,
+          "evidence": []
+        },
+        {
+          "term": "潜在的利益冲突",
+          "score": 536.1509,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 529.3567,
+          "evidence": []
+        },
+        {
+          "term": "如个人",
+          "score": 444.6494,
+          "evidence": []
+        },
+        {
+          "term": "在每次增加背景信息",
+          "score": 379.1592,
+          "evidence": []
+        },
+        {
+          "term": "实际的和",
+          "score": 379.1592,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-043-eieccion-del-presidente-de-los-vicepresidentes-y": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "presidente",
+          "score": 2.6956,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "presenten candidaturas",
+          "score": 2.679,
+          "evidence": []
+        },
+        {
+          "term": "presidente declara",
+          "score": 2.4136,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 2.3538,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "canaperia secunda",
+          "score": 2.2853,
+          "evidence": []
+        },
+        {
+          "term": "habla francesa",
+          "score": 2.2819,
+          "evidence": []
+        },
+        {
+          "term": "candidaturas para",
+          "score": 2.2485,
+          "evidence": []
+        },
+        {
+          "term": "sus puestos",
+          "score": 2.145,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "presidente",
+          "score": 75.7649,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "presenten candidaturas",
+          "score": 58.9596,
+          "evidence": []
+        },
+        {
+          "term": "presidente declara",
+          "score": 58.0157,
+          "evidence": []
+        },
+        {
+          "term": "candidaturas para",
+          "score": 46.8392,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 46.4946,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "habla francesa",
+          "score": 44.0855,
+          "evidence": []
+        },
+        {
+          "term": "canaperia secunda",
+          "score": 43.6754,
+          "evidence": []
+        },
+        {
+          "term": "sus puestos",
+          "score": 41.93,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "del",
+          "score": 1.5673,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los",
+          "score": 1.4832,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "para los",
+          "score": 1.3455,
+          "evidence": []
+        },
+        {
+          "term": "del consejo",
+          "score": 1.2576,
+          "evidence": []
+        },
+        {
+          "term": "pide que",
+          "score": 0.7358,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.7284,
+          "evidence": []
+        },
+        {
+          "term": "candidaturas para",
+          "score": 0.6038,
+          "evidence": []
+        },
+        {
+          "term": "presidente",
+          "score": 0.4962,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "del",
+          "score": 29.3116,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los",
+          "score": 28.7815,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "para los",
+          "score": 24.1157,
+          "evidence": []
+        },
+        {
+          "term": "del consejo",
+          "score": 22.6424,
+          "evidence": []
+        },
+        {
+          "term": "pide que",
+          "score": 20.4648,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 13.1991,
+          "evidence": []
+        },
+        {
+          "term": "candidaturas para",
+          "score": 9.7249,
+          "evidence": []
+        },
+        {
+          "term": "elegidos por",
+          "score": 6.2639,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "del",
+          "score": 1.5673,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los",
+          "score": 1.4832,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "para los",
+          "score": 1.3455,
+          "evidence": []
+        },
+        {
+          "term": "del consejo",
+          "score": 1.2576,
+          "evidence": []
+        },
+        {
+          "term": "pide que",
+          "score": 0.7827,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.7284,
+          "evidence": []
+        },
+        {
+          "term": "candidaturas para",
+          "score": 0.6322,
+          "evidence": []
+        },
+        {
+          "term": "presidente",
+          "score": 0.4962,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 1281.3532,
+          "evidence": []
+        },
+        {
+          "term": "潜在的利益冲突",
+          "score": 880.4762,
+          "evidence": []
+        },
+        {
+          "term": "如个人",
+          "score": 778.9689,
+          "evidence": []
+        },
+        {
+          "term": "显而易见",
+          "score": 698.884,
+          "evidence": []
+        },
+        {
+          "term": "更大利益",
+          "score": 687.6092,
+          "evidence": []
+        },
+        {
+          "term": "在每次增加背景信息",
+          "score": 656.4079,
+          "evidence": []
+        },
+        {
+          "term": "实际的和",
+          "score": 656.4079,
+          "evidence": []
+        },
+        {
+          "term": "新的背景信息要素怎样影响你对第",
+          "score": 656.4079,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-044-3-horario-de-trabajo": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "horario",
+          "score": 1.1358,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "horas",
+          "score": 1.0003,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.9828,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "horas",
+          "score": 18.6007,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 16.5679,
+          "evidence": []
+        },
+        {
+          "term": "horario",
+          "score": 14.5977,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "los",
+          "score": 0.2078,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.196,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 0.1834,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "las",
+          "score": 5.4179,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 3.4987,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 2.9561,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "las",
+          "score": 0.196,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 0.1834,
+          "evidence": []
+        },
+        {
+          "term": "con",
+          "score": 0.1078,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 449.9551,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 339.8797,
+          "evidence": []
+        },
+        {
+          "term": "潜在的利益冲突",
+          "score": 319.0655,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-045-comunicacion-acerca-del-punto-19-del-orden-del-d": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "del orden",
+          "score": 6.2488,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "punto del",
+          "score": 5.9707,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del día",
+          "score": 3.0377,
+          "evidence": []
+        },
+        {
+          "term": "del reglamento",
+          "score": 2.53,
+          "evidence": []
+        },
+        {
+          "term": "día suplementario",
+          "score": 2.1069,
+          "evidence": []
+        },
+        {
+          "term": "punto relativo",
+          "score": 2.0536,
+          "evidence": []
+        },
+        {
+          "term": "día provisional",
+          "score": 2.0485,
+          "evidence": []
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 1.5572,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "del orden",
+          "score": 217.4431,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "punto del",
+          "score": 199.4106,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del día",
+          "score": 102.8365,
+          "evidence": []
+        },
+        {
+          "term": "del reglamento",
+          "score": 78.8101,
+          "evidence": []
+        },
+        {
+          "term": "día suplementario",
+          "score": 49.7339,
+          "evidence": []
+        },
+        {
+          "term": "día provisional",
+          "score": 48.7489,
+          "evidence": []
+        },
+        {
+          "term": "punto relativo",
+          "score": 46.4287,
+          "evidence": []
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 25.967,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "punto del",
+          "score": 2.0122,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del orden",
+          "score": 1.9874,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del día",
+          "score": 0.9799,
+          "evidence": []
+        },
+        {
+          "term": "del reglamento",
+          "score": 0.8026,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 0.7721,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.7511,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.6761,
+          "evidence": []
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 0.6374,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "punto del",
+          "score": 55.225,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del orden",
+          "score": 54.3934,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del día",
+          "score": 27.0501,
+          "evidence": []
+        },
+        {
+          "term": "del reglamento",
+          "score": 25.4764,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 22.1409,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 16.6856,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 15.0095,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 12.5699,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "punto del",
+          "score": 2.0122,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del orden",
+          "score": 1.9874,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del día",
+          "score": 0.9799,
+          "evidence": []
+        },
+        {
+          "term": "del reglamento",
+          "score": 0.8346,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 0.7721,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.6761,
+          "evidence": []
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 0.6374,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 0.6118,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 310.4206,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 295.3493,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 254.3522,
+          "evidence": []
+        },
+        {
+          "term": "潜在的利益冲突",
+          "score": 230.081,
+          "evidence": []
+        },
+        {
+          "term": "招募了",
+          "score": 200.2772,
+          "evidence": []
+        },
+        {
+          "term": "的研究中",
+          "score": 197.3593,
+          "evidence": []
+        },
+        {
+          "term": "显而易见",
+          "score": 195.7497,
+          "evidence": []
+        },
+        {
+          "term": "如个人",
+          "score": 193.0099,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-046-comite-para-la-erradicacion-del-paludismo-sustit": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "del paludismo",
+          "score": 6.1133,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "erradicación del",
+          "score": 3.0132,
+          "evidence": []
+        },
+        {
+          "term": "del consejo",
+          "score": 2.6922,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 2.3538,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "comité especial",
+          "score": 2.2081,
+          "evidence": []
+        },
+        {
+          "term": "cuenta especial",
+          "score": 2.128,
+          "evidence": []
+        },
+        {
+          "term": "comité para",
+          "score": 2.0201,
+          "evidence": []
+        },
+        {
+          "term": "los fondos",
+          "score": 1.9985,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "del paludismo",
+          "score": 171.8412,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "erradicación del",
+          "score": 85.3487,
+          "evidence": []
+        },
+        {
+          "term": "del consejo",
+          "score": 71.9069,
+          "evidence": []
+        },
+        {
+          "term": "comité especial",
+          "score": 53.1223,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 46.4946,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cuenta especial",
+          "score": 46.4179,
+          "evidence": []
+        },
+        {
+          "term": "comité para",
+          "score": 42.7689,
+          "evidence": []
+        },
+        {
+          "term": "que figuran",
+          "score": 38.7547,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "del paludismo",
+          "score": 2.1533,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los",
+          "score": 1.788,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del consejo",
+          "score": 1.6263,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 1.4188,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "erradicación del",
+          "score": 1.1496,
+          "evidence": []
+        },
+        {
+          "term": "comité para",
+          "score": 0.9863,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.899,
+          "evidence": []
+        },
+        {
+          "term": "los fondos",
+          "score": 0.894,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "del",
+          "score": 51.2388,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del paludismo",
+          "score": 51.2388,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del consejo",
+          "score": 38.8226,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 37.7952,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "para",
+          "score": 30.5302,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "que",
+          "score": 30.294,
+          "evidence": []
+        },
+        {
+          "term": "que figuran",
+          "score": 30.294,
+          "evidence": []
+        },
+        {
+          "term": "erradicación del",
+          "score": 26.9331,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "del paludismo",
+          "score": 2.1533,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los",
+          "score": 1.788,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del consejo",
+          "score": 1.6263,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 1.4188,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "erradicación del",
+          "score": 1.1496,
+          "evidence": []
+        },
+        {
+          "term": "comité para",
+          "score": 0.9863,
+          "evidence": []
+        },
+        {
+          "term": "los fondos",
+          "score": 0.9186,
+          "evidence": []
+        },
+        {
+          "term": "que figuran",
+          "score": 0.9115,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 294.0414,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 266.3396,
+          "evidence": []
+        },
+        {
+          "term": "潜在的利益冲突",
+          "score": 229.872,
+          "evidence": []
+        },
+        {
+          "term": "的研究中",
+          "score": 210.0006,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 190.551,
+          "evidence": []
+        },
+        {
+          "term": "如个人",
+          "score": 190.5387,
+          "evidence": []
+        },
+        {
+          "term": "更大利益",
+          "score": 186.6893,
+          "evidence": []
+        },
+        {
+          "term": "世卫组织协调大流行性流感的防范和应对",
+          "score": 173.4822,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-047-7-establecimiento-de-ш-comite-consultivo-para-el": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "del comité",
+          "score": 3.5762,
+          "evidence": []
+        },
+        {
+          "term": "del consejo",
+          "score": 3.4268,
+          "evidence": []
+        },
+        {
+          "term": "miembros del",
+          "score": 3.2175,
+          "evidence": []
+        },
+        {
+          "term": "del director",
+          "score": 3.2138,
+          "evidence": []
+        },
+        {
+          "term": "composición del",
+          "score": 3.1339,
+          "evidence": []
+        },
+        {
+          "term": "las negociaciones",
+          "score": 2.9191,
+          "evidence": []
+        },
+        {
+          "term": "negociaciones con",
+          "score": 2.7617,
+          "evidence": []
+        },
+        {
+          "term": "consejo para",
+          "score": 2.7335,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "del comité",
+          "score": 166.0733,
+          "evidence": []
+        },
+        {
+          "term": "del director",
+          "score": 135.8114,
+          "evidence": []
+        },
+        {
+          "term": "del consejo",
+          "score": 135.7132,
+          "evidence": []
+        },
+        {
+          "term": "miembros del",
+          "score": 127.7198,
+          "evidence": []
+        },
+        {
+          "term": "composición del",
+          "score": 107.1976,
+          "evidence": []
+        },
+        {
+          "term": "dice que",
+          "score": 98.3426,
+          "evidence": []
+        },
+        {
+          "term": "opinión del",
+          "score": 92.3689,
+          "evidence": []
+        },
+        {
+          "term": "juicio del",
+          "score": 91.3839,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "del consejo",
+          "score": 2.7783,
+          "evidence": []
+        },
+        {
+          "term": "del director",
+          "score": 2.348,
+          "evidence": []
+        },
+        {
+          "term": "consejo para",
+          "score": 2.1998,
+          "evidence": []
+        },
+        {
+          "term": "miembros del",
+          "score": 2.1378,
+          "evidence": []
+        },
+        {
+          "term": "del comité",
+          "score": 2.1116,
+          "evidence": []
+        },
+        {
+          "term": "con los",
+          "score": 2.0421,
+          "evidence": []
+        },
+        {
+          "term": "sobre las",
+          "score": 2.0281,
+          "evidence": []
+        },
+        {
+          "term": "juicio del",
+          "score": 1.8969,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "del consejo",
+          "score": 89.3883,
+          "evidence": []
+        },
+        {
+          "term": "propone que",
+          "score": 78.1263,
+          "evidence": []
+        },
+        {
+          "term": "dice que",
+          "score": 77.6764,
+          "evidence": []
+        },
+        {
+          "term": "indica que",
+          "score": 74.054,
+          "evidence": []
+        },
+        {
+          "term": "funciones que",
+          "score": 72.9549,
+          "evidence": []
+        },
+        {
+          "term": "del director",
+          "score": 72.689,
+          "evidence": []
+        },
+        {
+          "term": "reducido que",
+          "score": 70.4151,
+          "evidence": []
+        },
+        {
+          "term": "del comité",
+          "score": 67.3969,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "del consejo",
+          "score": 2.7783,
+          "evidence": []
+        },
+        {
+          "term": "del director",
+          "score": 2.348,
+          "evidence": []
+        },
+        {
+          "term": "consejo para",
+          "score": 2.1998,
+          "evidence": []
+        },
+        {
+          "term": "miembros del",
+          "score": 2.1378,
+          "evidence": []
+        },
+        {
+          "term": "del comité",
+          "score": 2.1116,
+          "evidence": []
+        },
+        {
+          "term": "con los",
+          "score": 2.0421,
+          "evidence": []
+        },
+        {
+          "term": "sobre las",
+          "score": 2.0281,
+          "evidence": []
+        },
+        {
+          "term": "juicio del",
+          "score": 1.8969,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 297.0936,
+          "evidence": []
+        },
+        {
+          "term": "潜在的利益冲突",
+          "score": 248.0389,
+          "evidence": []
+        },
+        {
+          "term": "的研究中",
+          "score": 233.8395,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 217.1345,
+          "evidence": []
+        },
+        {
+          "term": "更大利益",
+          "score": 201.851,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 200.5934,
+          "evidence": []
+        },
+        {
+          "term": "如个人",
+          "score": 193.0789,
+          "evidence": []
+        },
+        {
+          "term": "显而易见",
+          "score": 190.3896,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-048-8-informe-sobre-los-nombramientos-para-los-cuadr": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "los nombramientos",
+          "score": 3.691,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los cuadros",
+          "score": 3.3992,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nombramientos para",
+          "score": 2.9637,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "los nombramientos",
+          "score": 56.6563,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los cuadros",
+          "score": 51.9417,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nombramientos para",
+          "score": 42.3936,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "para los",
+          "score": 1.1937,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "sobre los",
+          "score": 0.9865,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los cuadros",
+          "score": 0.6675,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "para los",
+          "score": 21.2324,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "sobre los",
+          "score": 16.6681,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los cuadros",
+          "score": 13.962,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "para los",
+          "score": 1.1937,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "sobre los",
+          "score": 0.9865,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los cuadros",
+          "score": 0.6945,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 391.1519,
+          "evidence": []
+        },
+        {
+          "term": "潜在的利益冲突",
+          "score": 303.0324,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 294.3662,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-049-9-ncmbramiemto-del-presidente-general-de-las-dis": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "del presidente",
+          "score": 5.3606,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las discusiones",
+          "score": 4.2659,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "presidente general",
+          "score": 4.0048,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "asamblea",
+          "score": 2.5752,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del consejo",
+          "score": 2.2838,
+          "evidence": []
+        },
+        {
+          "term": "asamblea mundial",
+          "score": 2.2495,
+          "evidence": []
+        },
+        {
+          "term": "discusiones técnicas",
+          "score": 2.1261,
+          "evidence": []
+        },
+        {
+          "term": "consejo que",
+          "score": 1.9606,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "del presidente",
+          "score": 139.4872,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "presidente general",
+          "score": 109.7273,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las discusiones",
+          "score": 76.8137,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "asamblea",
+          "score": 71.1151,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "asamblea mundial",
+          "score": 56.2034,
+          "evidence": []
+        },
+        {
+          "term": "del consejo",
+          "score": 46.9458,
+          "evidence": []
+        },
+        {
+          "term": "discusiones técnicas",
+          "score": 39.4147,
+          "evidence": []
+        },
+        {
+          "term": "consejo que",
+          "score": 39.0733,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "del presidente",
+          "score": 2.1994,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las discusiones",
+          "score": 1.7021,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del consejo",
+          "score": 1.3843,
+          "evidence": []
+        },
+        {
+          "term": "consejo que",
+          "score": 1.208,
+          "evidence": []
+        },
+        {
+          "term": "presidente general",
+          "score": 1.1248,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 0.826,
+          "evidence": []
+        },
+        {
+          "term": "asamblea",
+          "score": 0.7522,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "asamblea mundial",
+          "score": 0.7082,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "las discusiones",
+          "score": 45.575,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del presidente",
+          "score": 45.0101,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "consejo que",
+          "score": 37.6731,
+          "evidence": []
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 16.987,
+          "evidence": []
+        },
+        {
+          "term": "presidente general",
+          "score": 16.6028,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "asamblea",
+          "score": 15.9147,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "asamblea mundial",
+          "score": 15.0562,
+          "evidence": []
+        },
+        {
+          "term": "salud",
+          "score": 14.5039,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "del presidente",
+          "score": 2.1994,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las discusiones",
+          "score": 1.7021,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del consejo",
+          "score": 1.3843,
+          "evidence": []
+        },
+        {
+          "term": "consejo que",
+          "score": 1.208,
+          "evidence": []
+        },
+        {
+          "term": "presidente general",
+          "score": 1.1248,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 0.826,
+          "evidence": []
+        },
+        {
+          "term": "asamblea",
+          "score": 0.7522,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "asamblea mundial",
+          "score": 0.7082,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 462.5825,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 375.1693,
+          "evidence": []
+        },
+        {
+          "term": "更大利益",
+          "score": 373.4698,
+          "evidence": []
+        },
+        {
+          "term": "潜在的利益冲突",
+          "score": 365.0862,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 357.9685,
+          "evidence": []
+        },
+        {
+          "term": "招募了",
+          "score": 313.2805,
+          "evidence": []
+        },
+        {
+          "term": "世卫组织协调大流行性流感的防范和应对",
+          "score": 306.8592,
+          "evidence": []
+        },
+        {
+          "term": "的研究中",
+          "score": 302.9487,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-050-10-eleccion-del-теш-de-las-discusiohes-tecmicas": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "las discusiones",
+          "score": 5.0057,
+          "evidence": []
+        },
+        {
+          "term": "discusiones técnicas",
+          "score": 4.8334,
+          "evidence": []
+        },
+        {
+          "term": "tema que",
+          "score": 4.6068,
+          "evidence": []
+        },
+        {
+          "term": "del tema",
+          "score": 4.5758,
+          "evidence": []
+        },
+        {
+          "term": "enfermedades transmisibles",
+          "score": 4.012,
+          "evidence": []
+        },
+        {
+          "term": "tema elegido",
+          "score": 3.9265,
+          "evidence": []
+        },
+        {
+          "term": "tema relativo",
+          "score": 3.9204,
+          "evidence": []
+        },
+        {
+          "term": "lucha contra",
+          "score": 3.8827,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "las",
+          "score": 377.7478,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "que las",
+          "score": 376.9654,
+          "evidence": []
+        },
+        {
+          "term": "las discusiones",
+          "score": 366.7872,
+          "evidence": []
+        },
+        {
+          "term": "tema que",
+          "score": 355.0994,
+          "evidence": []
+        },
+        {
+          "term": "técnicas que",
+          "score": 292.1032,
+          "evidence": []
+        },
+        {
+          "term": "que los",
+          "score": 291.0437,
+          "evidence": []
+        },
+        {
+          "term": "contra las",
+          "score": 271.5083,
+          "evidence": []
+        },
+        {
+          "term": "las enfermedades",
+          "score": 265.6326,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "del",
+          "score": 5.3189,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las",
+          "score": 4.8668,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "que las",
+          "score": 4.7234,
+          "evidence": []
+        },
+        {
+          "term": "que los",
+          "score": 4.6428,
+          "evidence": []
+        },
+        {
+          "term": "para las",
+          "score": 4.1495,
+          "evidence": []
+        },
+        {
+          "term": "sobre los",
+          "score": 3.5227,
+          "evidence": []
+        },
+        {
+          "term": "del tema",
+          "score": 3.4727,
+          "evidence": []
+        },
+        {
+          "term": "propone que",
+          "score": 3.2652,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "que las",
+          "score": 334.1812,
+          "evidence": []
+        },
+        {
+          "term": "que los",
+          "score": 284.5593,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 231.0342,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "tema que",
+          "score": 229.787,
+          "evidence": []
+        },
+        {
+          "term": "para las",
+          "score": 225.5988,
+          "evidence": []
+        },
+        {
+          "term": "técnicas que",
+          "score": 216.6583,
+          "evidence": []
+        },
+        {
+          "term": "general que",
+          "score": 210.3942,
+          "evidence": []
+        },
+        {
+          "term": "las discusiones",
+          "score": 208.0691,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "del",
+          "score": 5.3189,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las",
+          "score": 4.8668,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "que las",
+          "score": 4.7234,
+          "evidence": []
+        },
+        {
+          "term": "que los",
+          "score": 4.6428,
+          "evidence": []
+        },
+        {
+          "term": "para las",
+          "score": 4.1495,
+          "evidence": []
+        },
+        {
+          "term": "sobre los",
+          "score": 3.5227,
+          "evidence": []
+        },
+        {
+          "term": "del tema",
+          "score": 3.4727,
+          "evidence": []
+        },
+        {
+          "term": "propone que",
+          "score": 3.2652,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 257.3199,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 210.1288,
+          "evidence": []
+        },
+        {
+          "term": "更大利益",
+          "score": 197.8973,
+          "evidence": []
+        },
+        {
+          "term": "世卫组织协调大流行性流感的防范和应对",
+          "score": 174.9053,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 172.6003,
+          "evidence": []
+        },
+        {
+          "term": "招募了",
+          "score": 166.3853,
+          "evidence": []
+        },
+        {
+          "term": "的研究中",
+          "score": 163.87,
+          "evidence": []
+        },
+        {
+          "term": "对照组",
+          "score": 154.9133,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-051-11-fecha-y-lugar-de-la-12": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "asamblea mundial",
+          "score": 2.0714,
+          "evidence": []
+        },
+        {
+          "term": "fecha",
+          "score": 1.8509,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "dice que",
+          "score": 1.55,
+          "evidence": []
+        },
+        {
+          "term": "vistas las",
+          "score": 1.5372,
+          "evidence": []
+        },
+        {
+          "term": "resolución wha",
+          "score": 1.406,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "asamblea mundial",
+          "score": 46.0441,
+          "evidence": []
+        },
+        {
+          "term": "dice que",
+          "score": 24.0111,
+          "evidence": []
+        },
+        {
+          "term": "resolución wha",
+          "score": 23.7864,
+          "evidence": []
+        },
+        {
+          "term": "fecha",
+          "score": 23.4551,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vistas las",
+          "score": 21.6711,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "dice que",
+          "score": 0.638,
+          "evidence": []
+        },
+        {
+          "term": "las disposiciones",
+          "score": 0.5833,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 0.5791,
+          "evidence": []
+        },
+        {
+          "term": "vistas las",
+          "score": 0.508,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 0.5005,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "dice que",
+          "score": 13.5918,
+          "evidence": []
+        },
+        {
+          "term": "las disposiciones",
+          "score": 9.7929,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 9.6536,
+          "evidence": []
+        },
+        {
+          "term": "salud",
+          "score": 9.3166,
+          "evidence": []
+        },
+        {
+          "term": "vistas las",
+          "score": 9.1978,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "dice que",
+          "score": 0.638,
+          "evidence": []
+        },
+        {
+          "term": "las disposiciones",
+          "score": 0.5833,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 0.5791,
+          "evidence": []
+        },
+        {
+          "term": "vistas las",
+          "score": 0.5385,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 0.5005,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 378.4576,
+          "evidence": []
+        },
+        {
+          "term": "潜在的利益冲突",
+          "score": 279.7476,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 279.4368,
+          "evidence": []
+        },
+        {
+          "term": "更大利益",
+          "score": 275.8379,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 267.3678,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-052-resuelve": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "asamblea",
+          "score": 0.6803,
+          "evidence": []
+        },
+        {
+          "term": "martes",
+          "score": 0.6003,
+          "evidence": []
+        },
+        {
+          "term": "empiece",
+          "score": 0.5918,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "asamblea",
+          "score": 10.1593,
+          "evidence": []
+        },
+        {
+          "term": "celebre",
+          "score": 7.522,
+          "evidence": []
+        },
+        {
+          "term": "martes",
+          "score": 7.522,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "que",
+          "score": 0.1791,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 0.1788,
+          "evidence": []
+        },
+        {
+          "term": "del",
+          "score": 0.1788,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "que",
+          "score": 3.8525,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 2.9297,
+          "evidence": []
+        },
+        {
+          "term": "salud",
+          "score": 2.1113,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "que",
+          "score": 0.1791,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.1778,
+          "evidence": []
+        },
+        {
+          "term": "salud",
+          "score": 0.1495,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 336.1663,
+          "evidence": []
+        },
+        {
+          "term": "更大利益",
+          "score": 226.7163,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 221.8533,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-053-12-fecha-y-lugar-de-la": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "del consejo",
+          "score": 4.4213,
+          "evidence": []
+        },
+        {
+          "term": "reunión del",
+          "score": 3.7367,
+          "evidence": []
+        },
+        {
+          "term": "del martes",
+          "score": 3.5826,
+          "evidence": []
+        },
+        {
+          "term": "del comité",
+          "score": 3.5784,
+          "evidence": []
+        },
+        {
+          "term": "del director",
+          "score": 3.4898,
+          "evidence": []
+        },
+        {
+          "term": "sesión del",
+          "score": 3.4738,
+          "evidence": []
+        },
+        {
+          "term": "comité permanente",
+          "score": 3.3463,
+          "evidence": []
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 3.3286,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "del consejo",
+          "score": 312.7488,
+          "evidence": []
+        },
+        {
+          "term": "reunión del",
+          "score": 202.8955,
+          "evidence": []
+        },
+        {
+          "term": "estima que",
+          "score": 198.9091,
+          "evidence": []
+        },
+        {
+          "term": "del director",
+          "score": 197.1748,
+          "evidence": []
+        },
+        {
+          "term": "del comité",
+          "score": 194.4225,
+          "evidence": []
+        },
+        {
+          "term": "dice que",
+          "score": 191.9934,
+          "evidence": []
+        },
+        {
+          "term": "salud que",
+          "score": 191.7633,
+          "evidence": []
+        },
+        {
+          "term": "propone que",
+          "score": 190.6475,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "del consejo",
+          "score": 5.6373,
+          "evidence": []
+        },
+        {
+          "term": "del director",
+          "score": 4.5257,
+          "evidence": []
+        },
+        {
+          "term": "del párrafo",
+          "score": 4.2204,
+          "evidence": []
+        },
+        {
+          "term": "del comité",
+          "score": 4.1352,
+          "evidence": []
+        },
+        {
+          "term": "reunión del",
+          "score": 4.0999,
+          "evidence": []
+        },
+        {
+          "term": "punto del",
+          "score": 4.0979,
+          "evidence": []
+        },
+        {
+          "term": "del orden",
+          "score": 4.0123,
+          "evidence": []
+        },
+        {
+          "term": "del día",
+          "score": 3.9475,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "del consejo",
+          "score": 197.7888,
+          "evidence": []
+        },
+        {
+          "term": "salud que",
+          "score": 185.4937,
+          "evidence": []
+        },
+        {
+          "term": "propone que",
+          "score": 178.6269,
+          "evidence": []
+        },
+        {
+          "term": "dice que",
+          "score": 177.469,
+          "evidence": []
+        },
+        {
+          "term": "estima que",
+          "score": 173.4451,
+          "evidence": []
+        },
+        {
+          "term": "que acaba",
+          "score": 165.289,
+          "evidence": []
+        },
+        {
+          "term": "que figura",
+          "score": 160.0724,
+          "evidence": []
+        },
+        {
+          "term": "del director",
+          "score": 154.1213,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "del consejo",
+          "score": 5.6373,
+          "evidence": []
+        },
+        {
+          "term": "del director",
+          "score": 4.5257,
+          "evidence": []
+        },
+        {
+          "term": "del párrafo",
+          "score": 4.2204,
+          "evidence": []
+        },
+        {
+          "term": "del comité",
+          "score": 4.1352,
+          "evidence": []
+        },
+        {
+          "term": "reunión del",
+          "score": 4.0999,
+          "evidence": []
+        },
+        {
+          "term": "punto del",
+          "score": 4.0979,
+          "evidence": []
+        },
+        {
+          "term": "del orden",
+          "score": 4.0123,
+          "evidence": []
+        },
+        {
+          "term": "del día",
+          "score": 3.9475,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 349.4054,
+          "evidence": []
+        },
+        {
+          "term": "潜在的利益冲突",
+          "score": 245.7824,
+          "evidence": []
+        },
+        {
+          "term": "更大利益",
+          "score": 244.5843,
+          "evidence": []
+        },
+        {
+          "term": "的研究中",
+          "score": 244.4383,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 225.8969,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 222.0988,
+          "evidence": []
+        },
+        {
+          "term": "世卫组织协调大流行性流感的防范和应对",
+          "score": 197.9521,
+          "evidence": []
+        },
+        {
+          "term": "显而易见",
+          "score": 191.8683,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-054-16-traibeerencias-entre-las-sesiones-de-la-resol": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "las",
+          "score": 2.4103,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los servicios",
+          "score": 2.0281,
+          "evidence": []
+        },
+        {
+          "term": "del documento",
+          "score": 2.0222,
+          "evidence": []
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 1.9921,
+          "evidence": []
+        },
+        {
+          "term": "las organizaciones",
+          "score": 1.945,
+          "evidence": []
+        },
+        {
+          "term": "explica que",
+          "score": 1.8638,
+          "evidence": []
+        },
+        {
+          "term": "los gastos",
+          "score": 1.7523,
+          "evidence": []
+        },
+        {
+          "term": "naciones unidas",
+          "score": 1.4328,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "las",
+          "score": 53.0172,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 41.5126,
+          "evidence": []
+        },
+        {
+          "term": "explica que",
+          "score": 38.5641,
+          "evidence": []
+        },
+        {
+          "term": "del documento",
+          "score": 37.9011,
+          "evidence": []
+        },
+        {
+          "term": "las organizaciones",
+          "score": 37.4572,
+          "evidence": []
+        },
+        {
+          "term": "los servicios",
+          "score": 36.3324,
+          "evidence": []
+        },
+        {
+          "term": "los gastos",
+          "score": 27.8301,
+          "evidence": []
+        },
+        {
+          "term": "párrafo",
+          "score": 24.3003,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "las",
+          "score": 1.7934,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del documento",
+          "score": 1.2225,
+          "evidence": []
+        },
+        {
+          "term": "los servicios",
+          "score": 1.1432,
+          "evidence": []
+        },
+        {
+          "term": "los gastos",
+          "score": 1.0585,
+          "evidence": []
+        },
+        {
+          "term": "las organizaciones",
+          "score": 0.8967,
+          "evidence": []
+        },
+        {
+          "term": "explica que",
+          "score": 0.8543,
+          "evidence": []
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 0.757,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 0.6838,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "las",
+          "score": 39.4011,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "explica que",
+          "score": 24.5828,
+          "evidence": []
+        },
+        {
+          "term": "del documento",
+          "score": 21.9241,
+          "evidence": []
+        },
+        {
+          "term": "las organizaciones",
+          "score": 19.7006,
+          "evidence": []
+        },
+        {
+          "term": "los servicios",
+          "score": 19.3827,
+          "evidence": []
+        },
+        {
+          "term": "los gastos",
+          "score": 18.8816,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 12.4078,
+          "evidence": []
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 12.2534,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "las",
+          "score": 1.7934,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del documento",
+          "score": 1.2225,
+          "evidence": []
+        },
+        {
+          "term": "los servicios",
+          "score": 1.1432,
+          "evidence": []
+        },
+        {
+          "term": "los gastos",
+          "score": 1.0585,
+          "evidence": []
+        },
+        {
+          "term": "las organizaciones",
+          "score": 0.9423,
+          "evidence": []
+        },
+        {
+          "term": "explica que",
+          "score": 0.8543,
+          "evidence": []
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 0.757,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 0.6838,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 285.1393,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 274.4488,
+          "evidence": []
+        },
+        {
+          "term": "潜在的利益冲突",
+          "score": 255.6048,
+          "evidence": []
+        },
+        {
+          "term": "更大利益",
+          "score": 243.0136,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 231.4048,
+          "evidence": []
+        },
+        {
+          "term": "的研究中",
+          "score": 230.5163,
+          "evidence": []
+        },
+        {
+          "term": "显而易见",
+          "score": 228.486,
+          "evidence": []
+        },
+        {
+          "term": "如个人",
+          "score": 198.7011,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-055-17-empleo-del-ruso-en-las-reuni0ke3-del-consejo": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "del consejo",
+          "score": 5.9102,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los que",
+          "score": 3.2826,
+          "evidence": []
+        },
+        {
+          "term": "vacuna que",
+          "score": 3.1543,
+          "evidence": []
+        },
+        {
+          "term": "las que",
+          "score": 3.1078,
+          "evidence": []
+        },
+        {
+          "term": "declara que",
+          "score": 2.8245,
+          "evidence": []
+        },
+        {
+          "term": "los datos",
+          "score": 2.7637,
+          "evidence": []
+        },
+        {
+          "term": "encargado del",
+          "score": 2.5681,
+          "evidence": []
+        },
+        {
+          "term": "reunion del",
+          "score": 2.5672,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "del consejo",
+          "score": 187.1237,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "los que",
+          "score": 158.3066,
+          "evidence": []
+        },
+        {
+          "term": "vacuna que",
+          "score": 152.1997,
+          "evidence": []
+        },
+        {
+          "term": "las que",
+          "score": 144.9105,
+          "evidence": []
+        },
+        {
+          "term": "declara que",
+          "score": 122.0511,
+          "evidence": []
+        },
+        {
+          "term": "los datos",
+          "score": 78.9379,
+          "evidence": []
+        },
+        {
+          "term": "del documento",
+          "score": 77.5751,
+          "evidence": []
+        },
+        {
+          "term": "encargado del",
+          "score": 76.4749,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "del consejo",
+          "score": 6.263,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las",
+          "score": 3.3272,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las que",
+          "score": 3.274,
+          "evidence": []
+        },
+        {
+          "term": "los que",
+          "score": 3.2721,
+          "evidence": []
+        },
+        {
+          "term": "del documento",
+          "score": 2.5053,
+          "evidence": []
+        },
+        {
+          "term": "punto del",
+          "score": 2.4602,
+          "evidence": []
+        },
+        {
+          "term": "del orden",
+          "score": 2.4088,
+          "evidence": []
+        },
+        {
+          "term": "del día",
+          "score": 2.3988,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "del consejo",
+          "score": 165.1409,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las que",
+          "score": 128.102,
+          "evidence": []
+        },
+        {
+          "term": "los que",
+          "score": 126.6407,
+          "evidence": []
+        },
+        {
+          "term": "vacuna que",
+          "score": 89.6661,
+          "evidence": []
+        },
+        {
+          "term": "declara que",
+          "score": 73.5207,
+          "evidence": []
+        },
+        {
+          "term": "del documento",
+          "score": 63.0768,
+          "evidence": []
+        },
+        {
+          "term": "punto del",
+          "score": 60.5973,
+          "evidence": []
+        },
+        {
+          "term": "del orden",
+          "score": 59.9282,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "del consejo",
+          "score": 6.263,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las",
+          "score": 3.3272,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "las que",
+          "score": 3.274,
+          "evidence": []
+        },
+        {
+          "term": "los que",
+          "score": 3.2721,
+          "evidence": []
+        },
+        {
+          "term": "del documento",
+          "score": 2.5053,
+          "evidence": []
+        },
+        {
+          "term": "punto del",
+          "score": 2.4602,
+          "evidence": []
+        },
+        {
+          "term": "del orden",
+          "score": 2.4088,
+          "evidence": []
+        },
+        {
+          "term": "del día",
+          "score": 2.3988,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 267.4784,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 244.5707,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 185.6529,
+          "evidence": []
+        },
+        {
+          "term": "更大利益",
+          "score": 184.5071,
+          "evidence": []
+        },
+        {
+          "term": "潜在的利益冲突",
+          "score": 173.5482,
+          "evidence": []
+        },
+        {
+          "term": "的研究中",
+          "score": 170.3349,
+          "evidence": []
+        },
+        {
+          "term": "世卫组织协调大流行性流感的防范和应对",
+          "score": 148.4139,
+          "evidence": []
+        },
+        {
+          "term": "显而易见",
+          "score": 144.3933,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-056-бв22м1пд-pagina-32": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "las palabras",
+          "score": 2.3706,
+          "evidence": []
+        },
+        {
+          "term": "las condiciones",
+          "score": 1.8597,
+          "evidence": []
+        },
+        {
+          "term": "párrafo del",
+          "score": 1.5977,
+          "evidence": []
+        },
+        {
+          "term": "calidad aceptable",
+          "score": 1.5806,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "las palabras",
+          "score": 46.6241,
+          "evidence": []
+        },
+        {
+          "term": "las condiciones",
+          "score": 33.8446,
+          "evidence": []
+        },
+        {
+          "term": "propone que",
+          "score": 25.6602,
+          "evidence": []
+        },
+        {
+          "term": "párrafo del",
+          "score": 24.8376,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "párrafo del",
+          "score": 0.549,
+          "evidence": []
+        },
+        {
+          "term": "propone que",
+          "score": 0.4923,
+          "evidence": []
+        },
+        {
+          "term": "las condiciones",
+          "score": 0.4388,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 0.3841,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "propone que",
+          "score": 12.0457,
+          "evidence": []
+        },
+        {
+          "term": "las condiciones",
+          "score": 10.847,
+          "evidence": []
+        },
+        {
+          "term": "las palabras",
+          "score": 10.1762,
+          "evidence": []
+        },
+        {
+          "term": "párrafo del",
+          "score": 8.6682,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "párrafo del",
+          "score": 0.549,
+          "evidence": []
+        },
+        {
+          "term": "propone que",
+          "score": 0.4923,
+          "evidence": []
+        },
+        {
+          "term": "las condiciones",
+          "score": 0.4388,
+          "evidence": []
+        },
+        {
+          "term": "las palabras",
+          "score": 0.3969,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 290.1174,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 229.6221,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 199.0251,
+          "evidence": []
+        },
+        {
+          "term": "更大利益",
+          "score": 196.5416,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-057-19-posibilidad-de-que-u-oms-patrociné-ia-adopcio": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "resolución",
+          "score": 0.6815,
+          "evidence": []
+        },
+        {
+          "term": "documento",
+          "score": 0.6604,
+          "evidence": []
+        },
+        {
+          "term": "levanta",
+          "score": 0.6392,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "resolución",
+          "score": 10.4388,
+          "evidence": []
+        },
+        {
+          "term": "documento",
+          "score": 9.8386,
+          "evidence": []
+        },
+        {
+          "term": "levanta",
+          "score": 8.2151,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "que",
+          "score": 0.2135,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del",
+          "score": 0.1595,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.1267,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "que",
+          "score": 4.7159,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del",
+          "score": 2.6842,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 1.7339,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "que",
+          "score": 0.2135,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "del",
+          "score": 0.1595,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.1267,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 503.9063,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 473.7115,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 347.4128,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "del paludismo",
+          "score": 2.1078,
+          "evidence": []
+        },
+        {
+          "term": "erradicación del",
+          "score": 2.0833,
+          "evidence": []
+        },
+        {
+          "term": "del orden",
+          "score": 1.9481,
+          "evidence": []
+        },
+        {
+          "term": "del día",
+          "score": 1.9414,
+          "evidence": []
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 1.3736,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "del paludismo",
+          "score": 39.6608,
+          "evidence": []
+        },
+        {
+          "term": "erradicación del",
+          "score": 39.4701,
+          "evidence": []
+        },
+        {
+          "term": "del orden",
+          "score": 37.0989,
+          "evidence": []
+        },
+        {
+          "term": "del día",
+          "score": 36.9388,
+          "evidence": []
+        },
+        {
+          "term": "consejo ejecutivo",
+          "score": 20.8429,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "del orden",
+          "score": 0.6403,
+          "evidence": []
+        },
+        {
+          "term": "del día",
+          "score": 0.6288,
+          "evidence": []
+        },
+        {
+          "term": "erradicación del",
+          "score": 0.5843,
+          "evidence": []
+        },
+        {
+          "term": "del paludismo",
+          "score": 0.5515,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 0.4557,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "del orden",
+          "score": 12.4387,
+          "evidence": []
+        },
+        {
+          "term": "del día",
+          "score": 12.3687,
+          "evidence": []
+        },
+        {
+          "term": "erradicación del",
+          "score": 12.1328,
+          "evidence": []
+        },
+        {
+          "term": "del paludismo",
+          "score": 11.7109,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 10.1941,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "del orden",
+          "score": 0.6403,
+          "evidence": []
+        },
+        {
+          "term": "del día",
+          "score": 0.6288,
+          "evidence": []
+        },
+        {
+          "term": "erradicación del",
+          "score": 0.5843,
+          "evidence": []
+        },
+        {
+          "term": "del paludismo",
+          "score": 0.5515,
+          "evidence": []
+        },
+        {
+          "term": "los",
+          "score": 0.4557,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 310.5964,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 308.926,
+          "evidence": []
+        },
+        {
+          "term": "潜在的利益冲突",
+          "score": 288.5347,
+          "evidence": []
+        },
+        {
+          "term": "如个人",
+          "score": 235.6862,
+          "evidence": []
+        },
+        {
+          "term": "的研究中",
+          "score": 218.453,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/who-iris/library/10665-211583/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/who-iris/source/10665-211583",
+      "@type": "cat-harness:SourceDocument",
+      "path": "library/10665-211583/manifest.jsonld",
+      "title": "YELLOW FEVER : DESIGNATED VACCINATING CENTRES = FIÈVRE JAUNE : CENTRES DE VACCINATION HABILITÉS"
+    }
+  ],
+  "hasSubgraph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/who-iris/library/10665-211583/blocks/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio/library/10665-211583/blocks/prose-sec-000",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/10665-211583/blocks/prose-sec-000.jsonld",
+          "title": "Centre médical"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/10665-211583/blocks/prose-sec-001",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/10665-211583/blocks/prose-sec-001.jsonld",
+          "title": "FIÈVRE JAUNE — YELLOW FEVER"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/10665-211583/blocks/prose-sec-002",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/10665-211583/blocks/prose-sec-002.jsonld",
+          "title": "Tukuyu"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/10665-211583/blocks/prose-sec-003",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/10665-211583/blocks/prose-sec-003.jsonld",
+          "title": "Kerguelen Nouvelle-Amsterdam Terre Adélie"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "name": "library/10665-211583/blocks",
+      "path": "library/10665-211583/blocks/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/who-iris/library/10665-211583/sections/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio/library/10665-211583/sections/sec-000",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/10665-211583/sections/sec-000.jsonld",
+          "title": "Centre médical"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/10665-211583/sections/sec-001",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/10665-211583/sections/sec-001.jsonld",
+          "title": "FIÈVRE JAUNE — YELLOW FEVER"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/10665-211583/sections/sec-002",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/10665-211583/sections/sec-002.jsonld",
+          "title": "Tukuyu"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/10665-211583/sections/sec-003",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/10665-211583/sections/sec-003.jsonld",
+          "title": "Kerguelen Nouvelle-Amsterdam Terre Adélie"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "name": "library/10665-211583/sections",
+      "path": "library/10665-211583/sections/"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/library"
+  ],
+  "name": "library/10665-211583",
+  "path": "library/10665-211583/"
+}

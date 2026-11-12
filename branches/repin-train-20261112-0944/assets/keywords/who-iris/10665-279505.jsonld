@@ -1,0 +1,1192 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-279505",
+  "instance": "who-iris",
+  "about": "library/10665-279505",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7393,
+    "terms": 71095
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "digital technologies",
+        "score": 4.5453,
+        "evidence": []
+      },
+      {
+        "term": "digital health",
+        "score": 4.5083,
+        "evidence": []
+      },
+      {
+        "term": "existing health",
+        "score": 2.9634,
+        "evidence": []
+      },
+      {
+        "term": "health promotion",
+        "score": 2.8796,
+        "evidence": []
+      },
+      {
+        "term": "health services",
+        "score": 2.6661,
+        "evidence": []
+      },
+      {
+        "term": "health systems",
+        "score": 2.5971,
+        "evidence": []
+      },
+      {
+        "term": "health data",
+        "score": 2.562,
+        "evidence": []
+      },
+      {
+        "term": "health solutions",
+        "score": 2.4173,
+        "evidence": []
+      },
+      {
+        "term": "member states",
+        "score": 2.4109,
+        "evidence": []
+      },
+      {
+        "term": "public health",
+        "score": 2.3836,
+        "evidence": []
+      },
+      {
+        "term": "health strategies",
+        "score": 2.1931,
+        "evidence": []
+      },
+      {
+        "term": "world health",
+        "score": 2.1166,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "digital health",
+        "score": 120.6871,
+        "evidence": []
+      },
+      {
+        "term": "digital technologies",
+        "score": 108.758,
+        "evidence": []
+      },
+      {
+        "term": "existing health",
+        "score": 64.7857,
+        "evidence": []
+      },
+      {
+        "term": "health promotion",
+        "score": 59.8385,
+        "evidence": []
+      },
+      {
+        "term": "health systems",
+        "score": 56.9768,
+        "evidence": []
+      },
+      {
+        "term": "health services",
+        "score": 56.5116,
+        "evidence": []
+      },
+      {
+        "term": "health data",
+        "score": 53.8316,
+        "evidence": []
+      },
+      {
+        "term": "public health",
+        "score": 52.8782,
+        "evidence": []
+      },
+      {
+        "term": "health solutions",
+        "score": 52.3973,
+        "evidence": []
+      },
+      {
+        "term": "health strategies",
+        "score": 50.0743,
+        "evidence": []
+      },
+      {
+        "term": "world health",
+        "score": 49.1441,
+        "evidence": []
+      },
+      {
+        "term": "member states",
+        "score": 41.1216,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "digital health",
+        "score": 2.8913,
+        "evidence": []
+      },
+      {
+        "term": "health services",
+        "score": 2.0358,
+        "evidence": []
+      },
+      {
+        "term": "health systems",
+        "score": 2.0351,
+        "evidence": []
+      },
+      {
+        "term": "health data",
+        "score": 2.0098,
+        "evidence": []
+      },
+      {
+        "term": "digital technologies",
+        "score": 1.8499,
+        "evidence": []
+      },
+      {
+        "term": "public health",
+        "score": 1.8317,
+        "evidence": []
+      },
+      {
+        "term": "existing health",
+        "score": 1.7576,
+        "evidence": []
+      },
+      {
+        "term": "world health",
+        "score": 1.6916,
+        "evidence": []
+      },
+      {
+        "term": "health strategies",
+        "score": 1.6602,
+        "evidence": []
+      },
+      {
+        "term": "health solutions",
+        "score": 1.624,
+        "evidence": []
+      },
+      {
+        "term": "health promotion",
+        "score": 1.4375,
+        "evidence": []
+      },
+      {
+        "term": "ehealth",
+        "score": 0.8687,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "digital health",
+        "score": 106.589,
+        "evidence": []
+      },
+      {
+        "term": "digital technologies",
+        "score": 72.9761,
+        "evidence": []
+      },
+      {
+        "term": "health systems",
+        "score": 54.4593,
+        "evidence": []
+      },
+      {
+        "term": "health data",
+        "score": 51.7401,
+        "evidence": []
+      },
+      {
+        "term": "health services",
+        "score": 50.2842,
+        "evidence": []
+      },
+      {
+        "term": "public health",
+        "score": 47.9704,
+        "evidence": []
+      },
+      {
+        "term": "health solutions",
+        "score": 47.2606,
+        "evidence": []
+      },
+      {
+        "term": "world health",
+        "score": 46.0688,
+        "evidence": []
+      },
+      {
+        "term": "existing health",
+        "score": 45.4657,
+        "evidence": []
+      },
+      {
+        "term": "health strategies",
+        "score": 44.5985,
+        "evidence": []
+      },
+      {
+        "term": "health promotion",
+        "score": 42.4656,
+        "evidence": []
+      },
+      {
+        "term": "support",
+        "score": 11.4568,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "digital health",
+        "score": 2.8913,
+        "evidence": []
+      },
+      {
+        "term": "health services",
+        "score": 2.0358,
+        "evidence": []
+      },
+      {
+        "term": "health systems",
+        "score": 2.0351,
+        "evidence": []
+      },
+      {
+        "term": "health data",
+        "score": 2.0098,
+        "evidence": []
+      },
+      {
+        "term": "digital technologies",
+        "score": 1.8499,
+        "evidence": []
+      },
+      {
+        "term": "public health",
+        "score": 1.8317,
+        "evidence": []
+      },
+      {
+        "term": "existing health",
+        "score": 1.7576,
+        "evidence": []
+      },
+      {
+        "term": "world health",
+        "score": 1.6916,
+        "evidence": []
+      },
+      {
+        "term": "health strategies",
+        "score": 1.6602,
+        "evidence": []
+      },
+      {
+        "term": "health solutions",
+        "score": 1.624,
+        "evidence": []
+      },
+      {
+        "term": "health promotion",
+        "score": 1.5401,
+        "evidence": []
+      },
+      {
+        "term": "ehealth",
+        "score": 0.8687,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "共享流感病毒以及获得",
+        "score": 139.2263,
+        "evidence": []
+      },
+      {
+        "term": "捐助者",
+        "score": 114.9526,
+        "evidence": []
+      },
+      {
+        "term": "重要部分",
+        "score": 111.2793,
+        "evidence": []
+      },
+      {
+        "term": "大流行性流感防范框架",
+        "score": 98.0367,
+        "evidence": []
+      },
+      {
+        "term": "教员询问其余学员每个报告人的报告有无遗漏什么内容",
+        "score": 92.4332,
+        "evidence": []
+      },
+      {
+        "term": "必需的",
+        "score": 87.9202,
+        "evidence": []
+      },
+      {
+        "term": "大流行性流感的防范",
+        "score": 87.6617,
+        "evidence": []
+      },
+      {
+        "term": "提供hpv",
+        "score": 86.3784,
+        "evidence": []
+      },
+      {
+        "term": "同行评议者或杂志编辑",
+        "score": 83.8853,
+        "evidence": []
+      },
+      {
+        "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+        "score": 83.8853,
+        "evidence": []
+      },
+      {
+        "term": "或一些其他单位",
+        "score": 83.8853,
+        "evidence": []
+      },
+      {
+        "term": "风险最小化",
+        "score": 81.2407,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "page-001": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "digital health",
+          "score": 1.3858,
+          "evidence": []
+        },
+        {
+          "term": "digital technologies",
+          "score": 1.2525,
+          "evidence": []
+        },
+        {
+          "term": "seventy-first world",
+          "score": 1.1946,
+          "evidence": []
+        },
+        {
+          "term": "sustainable development",
+          "score": 1.0437,
+          "evidence": []
+        },
+        {
+          "term": "ehealth",
+          "score": 0.9934,
+          "evidence": []
+        },
+        {
+          "term": "who-itu",
+          "score": 0.9346,
+          "evidence": []
+        },
+        {
+          "term": "health service",
+          "score": 0.9161,
+          "evidence": []
+        },
+        {
+          "term": "acknowledging",
+          "score": 0.7407,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "digital health",
+          "score": 31.4194,
+          "evidence": []
+        },
+        {
+          "term": "digital technologies",
+          "score": 23.3118,
+          "evidence": []
+        },
+        {
+          "term": "sustainable development",
+          "score": 19.7132,
+          "evidence": []
+        },
+        {
+          "term": "health service",
+          "score": 18.3451,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 18.2471,
+          "evidence": []
+        },
+        {
+          "term": "seventy-first world",
+          "score": 17.5448,
+          "evidence": []
+        },
+        {
+          "term": "who-itu",
+          "score": 15.044,
+          "evidence": []
+        },
+        {
+          "term": "ehealth",
+          "score": 13.951,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "digital health",
+          "score": 0.8462,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 0.6069,
+          "evidence": []
+        },
+        {
+          "term": "digital technologies",
+          "score": 0.5533,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.5424,
+          "evidence": []
+        },
+        {
+          "term": "ehealth",
+          "score": 0.406,
+          "evidence": []
+        },
+        {
+          "term": "sustainable development",
+          "score": 0.2695,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.2497,
+          "evidence": []
+        },
+        {
+          "term": "strategy",
+          "score": 0.1898,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "digital health",
+          "score": 26.4535,
+          "evidence": []
+        },
+        {
+          "term": "digital technologies",
+          "score": 17.5207,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 13.1628,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 12.9768,
+          "evidence": []
+        },
+        {
+          "term": "ehealth",
+          "score": 7.3686,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 3.0714,
+          "evidence": []
+        },
+        {
+          "term": "support",
+          "score": 2.99,
+          "evidence": []
+        },
+        {
+          "term": "sustainable development",
+          "score": 2.9297,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "digital health",
+          "score": 0.8462,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 0.6069,
+          "evidence": []
+        },
+        {
+          "term": "digital technologies",
+          "score": 0.5533,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.5424,
+          "evidence": []
+        },
+        {
+          "term": "ehealth",
+          "score": 0.406,
+          "evidence": []
+        },
+        {
+          "term": "sustainable development",
+          "score": 0.2695,
+          "evidence": []
+        },
+        {
+          "term": "global",
+          "score": 0.1858,
+          "evidence": []
+        },
+        {
+          "term": "implementation",
+          "score": 0.1826,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 56.9936,
+          "evidence": []
+        },
+        {
+          "term": "大流行性流感防范框架",
+          "score": 40.5375,
+          "evidence": []
+        },
+        {
+          "term": "重要部分",
+          "score": 39.7475,
+          "evidence": []
+        },
+        {
+          "term": "大流行性流感的防范",
+          "score": 37.8627,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 37.0431,
+          "evidence": []
+        },
+        {
+          "term": "共享流感病毒以及获得疫苗和其它",
+          "score": 31.4686,
+          "evidence": []
+        },
+        {
+          "term": "教员询问其余学员每个报告人的报告有无遗漏什么内容",
+          "score": 30.8446,
+          "evidence": []
+        },
+        {
+          "term": "予以实施",
+          "score": 30.593,
+          "evidence": []
+        }
+      ]
+    },
+    "page-002": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "digital technologies",
+          "score": 1.8501,
+          "evidence": []
+        },
+        {
+          "term": "digital health",
+          "score": 1.7024,
+          "evidence": []
+        },
+        {
+          "term": "health systems",
+          "score": 1.0919,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 1.0705,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 1.0587,
+          "evidence": []
+        },
+        {
+          "term": "technical assistance",
+          "score": 0.855,
+          "evidence": []
+        },
+        {
+          "term": "build",
+          "score": 0.6313,
+          "evidence": []
+        },
+        {
+          "term": "affordable",
+          "score": 0.6162,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "digital health",
+          "score": 56.1729,
+          "evidence": []
+        },
+        {
+          "term": "digital technologies",
+          "score": 54.8023,
+          "evidence": []
+        },
+        {
+          "term": "health systems",
+          "score": 27.3913,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 25.9868,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 25.3136,
+          "evidence": []
+        },
+        {
+          "term": "appropriate",
+          "score": 13.3496,
+          "evidence": []
+        },
+        {
+          "term": "technical assistance",
+          "score": 12.7718,
+          "evidence": []
+        },
+        {
+          "term": "build",
+          "score": 11.5182,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "digital health",
+          "score": 1.1789,
+          "evidence": []
+        },
+        {
+          "term": "health systems",
+          "score": 0.8284,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 0.8224,
+          "evidence": []
+        },
+        {
+          "term": "digital technologies",
+          "score": 0.7534,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 0.7344,
+          "evidence": []
+        },
+        {
+          "term": "interventions",
+          "score": 0.2816,
+          "evidence": []
+        },
+        {
+          "term": "implementation",
+          "score": 0.2577,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.2571,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "digital health",
+          "score": 49.3717,
+          "evidence": []
+        },
+        {
+          "term": "digital technologies",
+          "score": 34.1063,
+          "evidence": []
+        },
+        {
+          "term": "health systems",
+          "score": 25.031,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 23.1811,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 22.1294,
+          "evidence": []
+        },
+        {
+          "term": "support",
+          "score": 5.1526,
+          "evidence": []
+        },
+        {
+          "term": "interventions",
+          "score": 4.4756,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 4.2101,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "digital health",
+          "score": 1.1789,
+          "evidence": []
+        },
+        {
+          "term": "health systems",
+          "score": 0.8284,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 0.8224,
+          "evidence": []
+        },
+        {
+          "term": "digital technologies",
+          "score": 0.7534,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 0.7344,
+          "evidence": []
+        },
+        {
+          "term": "implementation",
+          "score": 0.2577,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.2571,
+          "evidence": []
+        },
+        {
+          "term": "support",
+          "score": 0.2539,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 37.9501,
+          "evidence": []
+        },
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 37.8648,
+          "evidence": []
+        },
+        {
+          "term": "重要部分",
+          "score": 34.9474,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 29.4959,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 29.4959,
+          "evidence": []
+        },
+        {
+          "term": "或一些其他单位",
+          "score": 29.4959,
+          "evidence": []
+        },
+        {
+          "term": "教员询问其余学员每个报告人的报告有无遗漏什么内容",
+          "score": 29.3787,
+          "evidence": []
+        },
+        {
+          "term": "必需的",
+          "score": 29.2475,
+          "evidence": []
+        }
+      ]
+    },
+    "page-003": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "digital technologies",
+          "score": 1.4427,
+          "evidence": []
+        },
+        {
+          "term": "digital health",
+          "score": 1.4201,
+          "evidence": []
+        },
+        {
+          "term": "member states",
+          "score": 1.3592,
+          "evidence": []
+        },
+        {
+          "term": "voluntary basis",
+          "score": 1.143,
+          "evidence": []
+        },
+        {
+          "term": "relevant stakeholders",
+          "score": 0.9456,
+          "evidence": []
+        },
+        {
+          "term": "existing resources",
+          "score": 0.9334,
+          "evidence": []
+        },
+        {
+          "term": "data protection",
+          "score": 0.8235,
+          "evidence": []
+        },
+        {
+          "term": "capabilities",
+          "score": 0.584,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "digital health",
+          "score": 33.0948,
+          "evidence": []
+        },
+        {
+          "term": "digital technologies",
+          "score": 30.6439,
+          "evidence": []
+        },
+        {
+          "term": "member states",
+          "score": 29.3725,
+          "evidence": []
+        },
+        {
+          "term": "voluntary basis",
+          "score": 18.2364,
+          "evidence": []
+        },
+        {
+          "term": "existing resources",
+          "score": 16.2981,
+          "evidence": []
+        },
+        {
+          "term": "relevant stakeholders",
+          "score": 14.8781,
+          "evidence": []
+        },
+        {
+          "term": "data protection",
+          "score": 11.199,
+          "evidence": []
+        },
+        {
+          "term": "capabilities",
+          "score": 9.0777,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "digital health",
+          "score": 0.8661,
+          "evidence": []
+        },
+        {
+          "term": "digital technologies",
+          "score": 0.5431,
+          "evidence": []
+        },
+        {
+          "term": "data protection",
+          "score": 0.2817,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.2686,
+          "evidence": []
+        },
+        {
+          "term": "ehealth",
+          "score": 0.237,
+          "evidence": []
+        },
+        {
+          "term": "existing resources",
+          "score": 0.2347,
+          "evidence": []
+        },
+        {
+          "term": "member states",
+          "score": 0.2312,
+          "evidence": []
+        },
+        {
+          "term": "relevant stakeholders",
+          "score": 0.2091,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "digital health",
+          "score": 30.7638,
+          "evidence": []
+        },
+        {
+          "term": "digital technologies",
+          "score": 21.3491,
+          "evidence": []
+        },
+        {
+          "term": "data protection",
+          "score": 4.663,
+          "evidence": []
+        },
+        {
+          "term": "systems",
+          "score": 3.6597,
+          "evidence": []
+        },
+        {
+          "term": "support",
+          "score": 3.3142,
+          "evidence": []
+        },
+        {
+          "term": "member states",
+          "score": 3.0618,
+          "evidence": []
+        },
+        {
+          "term": "interventions",
+          "score": 2.7693,
+          "evidence": []
+        },
+        {
+          "term": "standards",
+          "score": 2.7137,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "digital health",
+          "score": 0.8661,
+          "evidence": []
+        },
+        {
+          "term": "digital technologies",
+          "score": 0.5431,
+          "evidence": []
+        },
+        {
+          "term": "data protection",
+          "score": 0.2817,
+          "evidence": []
+        },
+        {
+          "term": "existing resources",
+          "score": 0.2347,
+          "evidence": []
+        },
+        {
+          "term": "member states",
+          "score": 0.2312,
+          "evidence": []
+        },
+        {
+          "term": "relevant stakeholders",
+          "score": 0.2091,
+          "evidence": []
+        },
+        {
+          "term": "implementation",
+          "score": 0.2081,
+          "evidence": []
+        },
+        {
+          "term": "global",
+          "score": 0.1854,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 44.368,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 39.9594,
+          "evidence": []
+        },
+        {
+          "term": "重要部分",
+          "score": 36.5844,
+          "evidence": []
+        },
+        {
+          "term": "教员询问其余学员每个报告人的报告有无遗漏什么内容",
+          "score": 32.2098,
+          "evidence": []
+        },
+        {
+          "term": "大流行性流感防范框架",
+          "score": 31.5845,
+          "evidence": []
+        },
+        {
+          "term": "必需的",
+          "score": 30.9434,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 29.2665,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 29.2665,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

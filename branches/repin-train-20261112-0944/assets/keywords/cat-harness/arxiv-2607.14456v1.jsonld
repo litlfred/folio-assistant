@@ -1,0 +1,4726 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "arxiv-2607.14456v1",
+  "instance": "cat-harness",
+  "about": "library/arxiv-2607.14456v1",
+  "corpus": {
+    "library": "cat-harness/library/corpus",
+    "sections": 2232,
+    "terms": 15352
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "agentic workflow",
+        "score": 17.547,
+        "evidence": []
+      },
+      {
+        "term": "workflow agent",
+        "score": 17.095,
+        "evidence": []
+      },
+      {
+        "term": "scale icml",
+        "score": 16.8826,
+        "evidence": []
+      },
+      {
+        "term": "workflow generation",
+        "score": 16.8009,
+        "evidence": []
+      },
+      {
+        "term": "workflow execution",
+        "score": 16.2505,
+        "evidence": []
+      },
+      {
+        "term": "workshop paper",
+        "score": 15.5885,
+        "evidence": []
+      },
+      {
+        "term": "bpmn workflows",
+        "score": 15.2035,
+        "evidence": []
+      },
+      {
+        "term": "workflow logic",
+        "score": 14.4151,
+        "evidence": []
+      },
+      {
+        "term": "promotion workflow",
+        "score": 14.3031,
+        "evidence": []
+      },
+      {
+        "term": "specialist workflows",
+        "score": 13.4566,
+        "evidence": []
+      },
+      {
+        "term": "workflow structure",
+        "score": 13.1879,
+        "evidence": []
+      },
+      {
+        "term": "classification workflow",
+        "score": 13.169,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "workflow agent",
+        "score": 307.5284,
+        "evidence": []
+      },
+      {
+        "term": "bpmn workflows",
+        "score": 294.9592,
+        "evidence": []
+      },
+      {
+        "term": "agentic workflow",
+        "score": 287.2139,
+        "evidence": []
+      },
+      {
+        "term": "specialist workflows",
+        "score": 274.9937,
+        "evidence": []
+      },
+      {
+        "term": "workflow execution",
+        "score": 271.6662,
+        "evidence": []
+      },
+      {
+        "term": "workflow generation",
+        "score": 262.9565,
+        "evidence": []
+      },
+      {
+        "term": "promotion workflow",
+        "score": 234.925,
+        "evidence": []
+      },
+      {
+        "term": "workflow logic",
+        "score": 232.5714,
+        "evidence": []
+      },
+      {
+        "term": "specialist systems",
+        "score": 222.8874,
+        "evidence": []
+      },
+      {
+        "term": "workflow structure",
+        "score": 214.8378,
+        "evidence": []
+      },
+      {
+        "term": "classification workflow",
+        "score": 214.4426,
+        "evidence": []
+      },
+      {
+        "term": "scale icml",
+        "score": 193.8166,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "bpmn workflows",
+        "score": 14.1382,
+        "evidence": []
+      },
+      {
+        "term": "business process",
+        "score": 13.3398,
+        "evidence": []
+      },
+      {
+        "term": "specialist workflows",
+        "score": 13.0793,
+        "evidence": []
+      },
+      {
+        "term": "generation process",
+        "score": 12.7869,
+        "evidence": []
+      },
+      {
+        "term": "workflow agent",
+        "score": 12.6395,
+        "evidence": []
+      },
+      {
+        "term": "agentic workflow",
+        "score": 12.6067,
+        "evidence": []
+      },
+      {
+        "term": "workflow execution",
+        "score": 12.4621,
+        "evidence": []
+      },
+      {
+        "term": "specialist systems",
+        "score": 11.3464,
+        "evidence": []
+      },
+      {
+        "term": "process management",
+        "score": 11.0605,
+        "evidence": []
+      },
+      {
+        "term": "process automation",
+        "score": 10.7538,
+        "evidence": []
+      },
+      {
+        "term": "process model",
+        "score": 10.631,
+        "evidence": []
+      },
+      {
+        "term": "workflow logic",
+        "score": 9.9641,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "business process",
+        "score": 150.0713,
+        "evidence": []
+      },
+      {
+        "term": "process models",
+        "score": 125.5065,
+        "evidence": []
+      },
+      {
+        "term": "process management",
+        "score": 123.1839,
+        "evidence": []
+      },
+      {
+        "term": "generation process",
+        "score": 111.3723,
+        "evidence": []
+      },
+      {
+        "term": "process modeling",
+        "score": 108.4237,
+        "evidence": []
+      },
+      {
+        "term": "workflow agent",
+        "score": 104.6134,
+        "evidence": []
+      },
+      {
+        "term": "process automation",
+        "score": 102.2944,
+        "evidence": []
+      },
+      {
+        "term": "process adherence",
+        "score": 91.9703,
+        "evidence": []
+      },
+      {
+        "term": "process mining",
+        "score": 91.9703,
+        "evidence": []
+      },
+      {
+        "term": "process structure",
+        "score": 91.9703,
+        "evidence": []
+      },
+      {
+        "term": "robotic process",
+        "score": 91.9703,
+        "evidence": []
+      },
+      {
+        "term": "international conference",
+        "score": 90.9326,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "bpmn workflows",
+        "score": 14.1382,
+        "evidence": []
+      },
+      {
+        "term": "business process",
+        "score": 13.3398,
+        "evidence": []
+      },
+      {
+        "term": "specialist workflows",
+        "score": 13.0793,
+        "evidence": []
+      },
+      {
+        "term": "generation process",
+        "score": 12.7869,
+        "evidence": []
+      },
+      {
+        "term": "workflow agent",
+        "score": 12.6395,
+        "evidence": []
+      },
+      {
+        "term": "agentic workflow",
+        "score": 12.6067,
+        "evidence": []
+      },
+      {
+        "term": "workflow execution",
+        "score": 12.4621,
+        "evidence": []
+      },
+      {
+        "term": "specialist systems",
+        "score": 11.3464,
+        "evidence": []
+      },
+      {
+        "term": "process management",
+        "score": 11.0605,
+        "evidence": []
+      },
+      {
+        "term": "process automation",
+        "score": 10.7538,
+        "evidence": []
+      },
+      {
+        "term": "process model",
+        "score": 10.631,
+        "evidence": []
+      },
+      {
+        "term": "workflow logic",
+        "score": 9.9641,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "urgency",
+        "score": 6716.3716,
+        "evidence": []
+      },
+      {
+        "term": "customer promotion",
+        "score": 5736.7383,
+        "evidence": []
+      },
+      {
+        "term": "refund",
+        "score": 5686.7899,
+        "evidence": []
+      },
+      {
+        "term": "eligibility",
+        "score": 5224.5239,
+        "evidence": []
+      },
+      {
+        "term": "promotion workflow",
+        "score": 5142.2283,
+        "evidence": []
+      },
+      {
+        "term": "tiers",
+        "score": 4731.8238,
+        "evidence": []
+      },
+      {
+        "term": "discounts",
+        "score": 4459.0404,
+        "evidence": []
+      },
+      {
+        "term": "reorder",
+        "score": 3948.1931,
+        "evidence": []
+      },
+      {
+        "term": "tournament",
+        "score": 3862.3417,
+        "evidence": []
+      },
+      {
+        "term": "routes",
+        "score": 3846.6794,
+        "evidence": []
+      },
+      {
+        "term": "fetches",
+        "score": 3438.322,
+        "evidence": []
+      },
+      {
+        "term": "loyalty",
+        "score": 3408.8704,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "page-001": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "generalist agents",
+          "score": 2.27,
+          "evidence": []
+        },
+        {
+          "term": "ide extensions",
+          "score": 1.9311,
+          "evidence": []
+        },
+        {
+          "term": "sapkota",
+          "score": 1.2653,
+          "evidence": []
+        },
+        {
+          "term": "specialist",
+          "score": 1.22,
+          "evidence": []
+        },
+        {
+          "term": "roo",
+          "score": 1.1075,
+          "evidence": []
+        },
+        {
+          "term": "cline",
+          "score": 1.0801,
+          "evidence": []
+        },
+        {
+          "term": "business process",
+          "score": 1.0461,
+          "evidence": []
+        },
+        {
+          "term": "wide range",
+          "score": 0.9163,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "generalist agents",
+          "score": 51.7825,
+          "evidence": []
+        },
+        {
+          "term": "ide extensions",
+          "score": 30.892,
+          "evidence": []
+        },
+        {
+          "term": "specialist",
+          "score": 22.0537,
+          "evidence": []
+        },
+        {
+          "term": "sapkota",
+          "score": 21.0525,
+          "evidence": []
+        },
+        {
+          "term": "roo",
+          "score": 17.7567,
+          "evidence": []
+        },
+        {
+          "term": "cline",
+          "score": 17.2942,
+          "evidence": []
+        },
+        {
+          "term": "systems",
+          "score": 15.4658,
+          "evidence": []
+        },
+        {
+          "term": "workflow",
+          "score": 12.979,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "business process",
+          "score": 1.0953,
+          "evidence": []
+        },
+        {
+          "term": "generalist agents",
+          "score": 0.928,
+          "evidence": []
+        },
+        {
+          "term": "process model",
+          "score": 0.8941,
+          "evidence": []
+        },
+        {
+          "term": "workflow",
+          "score": 0.6841,
+          "evidence": []
+        },
+        {
+          "term": "bpmn",
+          "score": 0.6197,
+          "evidence": []
+        },
+        {
+          "term": "specialist",
+          "score": 0.5772,
+          "evidence": []
+        },
+        {
+          "term": "cline",
+          "score": 0.5619,
+          "evidence": []
+        },
+        {
+          "term": "roo",
+          "score": 0.5283,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "generalist agents",
+          "score": 12.9024,
+          "evidence": []
+        },
+        {
+          "term": "business process",
+          "score": 7.6541,
+          "evidence": []
+        },
+        {
+          "term": "process model",
+          "score": 6.7208,
+          "evidence": []
+        },
+        {
+          "term": "lma",
+          "score": 6.5051,
+          "evidence": []
+        },
+        {
+          "term": "systems",
+          "score": 6.382,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 5.2443,
+          "evidence": []
+        },
+        {
+          "term": "llm-based",
+          "score": 4.5079,
+          "evidence": []
+        },
+        {
+          "term": "roles",
+          "score": 4.4682,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "business process",
+          "score": 1.0953,
+          "evidence": []
+        },
+        {
+          "term": "generalist agents",
+          "score": 0.928,
+          "evidence": []
+        },
+        {
+          "term": "process model",
+          "score": 0.8941,
+          "evidence": []
+        },
+        {
+          "term": "workflow",
+          "score": 0.6841,
+          "evidence": []
+        },
+        {
+          "term": "bpmn",
+          "score": 0.6197,
+          "evidence": []
+        },
+        {
+          "term": "specialist",
+          "score": 0.5772,
+          "evidence": []
+        },
+        {
+          "term": "cline",
+          "score": 0.5619,
+          "evidence": []
+        },
+        {
+          "term": "roo",
+          "score": 0.5283,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "neville",
+          "score": 103.7674,
+          "evidence": []
+        },
+        {
+          "term": "tobias",
+          "score": 59.1612,
+          "evidence": []
+        },
+        {
+          "term": "schnabel",
+          "score": 40.5094,
+          "evidence": []
+        },
+        {
+          "term": "refund",
+          "score": 38.3251,
+          "evidence": []
+        },
+        {
+          "term": "urgency",
+          "score": 36.5216,
+          "evidence": []
+        },
+        {
+          "term": "tool-call",
+          "score": 32.0649,
+          "evidence": []
+        },
+        {
+          "term": "eligibility",
+          "score": 30.7376,
+          "evidence": []
+        },
+        {
+          "term": "penalty-adjusted",
+          "score": 30.1841,
+          "evidence": []
+        }
+      ]
+    },
+    "page-002": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "specialist workflows",
+          "score": 2.3717,
+          "evidence": []
+        },
+        {
+          "term": "generalist agentic",
+          "score": 2.0079,
+          "evidence": []
+        },
+        {
+          "term": "generalist systems",
+          "score": 1.9524,
+          "evidence": []
+        },
+        {
+          "term": "business process",
+          "score": 1.6518,
+          "evidence": []
+        },
+        {
+          "term": "context management",
+          "score": 1.5797,
+          "evidence": []
+        },
+        {
+          "term": "bpmn",
+          "score": 1.483,
+          "evidence": []
+        },
+        {
+          "term": "business processes",
+          "score": 1.4589,
+          "evidence": []
+        },
+        {
+          "term": "process model",
+          "score": 1.1512,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "specialist workflows",
+          "score": 53.2539,
+          "evidence": []
+        },
+        {
+          "term": "bpmn",
+          "score": 41.9952,
+          "evidence": []
+        },
+        {
+          "term": "generalist systems",
+          "score": 39.3074,
+          "evidence": []
+        },
+        {
+          "term": "context management",
+          "score": 38.8528,
+          "evidence": []
+        },
+        {
+          "term": "generalist agentic",
+          "score": 36.0314,
+          "evidence": []
+        },
+        {
+          "term": "business process",
+          "score": 29.9685,
+          "evidence": []
+        },
+        {
+          "term": "business processes",
+          "score": 26.9301,
+          "evidence": []
+        },
+        {
+          "term": "maintaining performance",
+          "score": 18.4914,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "business process",
+          "score": 1.6891,
+          "evidence": []
+        },
+        {
+          "term": "specialist workflows",
+          "score": 1.4697,
+          "evidence": []
+        },
+        {
+          "term": "process model",
+          "score": 1.2175,
+          "evidence": []
+        },
+        {
+          "term": "agentic systems",
+          "score": 1.0877,
+          "evidence": []
+        },
+        {
+          "term": "generalist systems",
+          "score": 1.0381,
+          "evidence": []
+        },
+        {
+          "term": "business processes",
+          "score": 1.0242,
+          "evidence": []
+        },
+        {
+          "term": "bpmn",
+          "score": 0.7863,
+          "evidence": []
+        },
+        {
+          "term": "context management",
+          "score": 0.6665,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "business process",
+          "score": 20.7272,
+          "evidence": []
+        },
+        {
+          "term": "process model",
+          "score": 13.6712,
+          "evidence": []
+        },
+        {
+          "term": "business processes",
+          "score": 11.8162,
+          "evidence": []
+        },
+        {
+          "term": "agentic systems",
+          "score": 10.7804,
+          "evidence": []
+        },
+        {
+          "term": "context management",
+          "score": 10.4667,
+          "evidence": []
+        },
+        {
+          "term": "generalist systems",
+          "score": 8.6249,
+          "evidence": []
+        },
+        {
+          "term": "specialist workflows",
+          "score": 8.1975,
+          "evidence": []
+        },
+        {
+          "term": "reasoning",
+          "score": 6.2809,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "business process",
+          "score": 1.6891,
+          "evidence": []
+        },
+        {
+          "term": "specialist workflows",
+          "score": 1.4697,
+          "evidence": []
+        },
+        {
+          "term": "process model",
+          "score": 1.2175,
+          "evidence": []
+        },
+        {
+          "term": "agentic systems",
+          "score": 1.0877,
+          "evidence": []
+        },
+        {
+          "term": "generalist systems",
+          "score": 1.0381,
+          "evidence": []
+        },
+        {
+          "term": "business processes",
+          "score": 1.0242,
+          "evidence": []
+        },
+        {
+          "term": "bpmn",
+          "score": 0.7863,
+          "evidence": []
+        },
+        {
+          "term": "context management",
+          "score": 0.6665,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "neville",
+          "score": 76.6622,
+          "evidence": []
+        },
+        {
+          "term": "urgency",
+          "score": 45.5986,
+          "evidence": []
+        },
+        {
+          "term": "refund",
+          "score": 43.4678,
+          "evidence": []
+        },
+        {
+          "term": "tobias",
+          "score": 41.051,
+          "evidence": []
+        },
+        {
+          "term": "eligibility",
+          "score": 37.7983,
+          "evidence": []
+        },
+        {
+          "term": "discounts",
+          "score": 30.3717,
+          "evidence": []
+        },
+        {
+          "term": "tournament",
+          "score": 30.3146,
+          "evidence": []
+        },
+        {
+          "term": "tiers",
+          "score": 30.3041,
+          "evidence": []
+        }
+      ]
+    },
+    "page-003": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "agentic workflows",
+          "score": 2.2247,
+          "evidence": []
+        },
+        {
+          "term": "automation tasks",
+          "score": 1.6485,
+          "evidence": []
+        },
+        {
+          "term": "executable agentic",
+          "score": 1.6385,
+          "evidence": []
+        },
+        {
+          "term": "der aalst",
+          "score": 1.5622,
+          "evidence": []
+        },
+        {
+          "term": "bpmn",
+          "score": 1.5443,
+          "evidence": []
+        },
+        {
+          "term": "business process",
+          "score": 1.4968,
+          "evidence": []
+        },
+        {
+          "term": "structural complexity",
+          "score": 1.4784,
+          "evidence": []
+        },
+        {
+          "term": "van der",
+          "score": 1.371,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "agentic workflows",
+          "score": 63.3396,
+          "evidence": []
+        },
+        {
+          "term": "bpmn",
+          "score": 46.6613,
+          "evidence": []
+        },
+        {
+          "term": "automation tasks",
+          "score": 31.9622,
+          "evidence": []
+        },
+        {
+          "term": "executable agentic",
+          "score": 30.2854,
+          "evidence": []
+        },
+        {
+          "term": "business process",
+          "score": 24.9524,
+          "evidence": []
+        },
+        {
+          "term": "structural complexity",
+          "score": 24.9019,
+          "evidence": []
+        },
+        {
+          "term": "der aalst",
+          "score": 20.9881,
+          "evidence": []
+        },
+        {
+          "term": "llm integration",
+          "score": 20.5059,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "business process",
+          "score": 1.7558,
+          "evidence": []
+        },
+        {
+          "term": "agentic workflows",
+          "score": 1.417,
+          "evidence": []
+        },
+        {
+          "term": "bpmn",
+          "score": 0.869,
+          "evidence": []
+        },
+        {
+          "term": "executable agentic",
+          "score": 0.8659,
+          "evidence": []
+        },
+        {
+          "term": "automation tasks",
+          "score": 0.8004,
+          "evidence": []
+        },
+        {
+          "term": "tasks across",
+          "score": 0.7665,
+          "evidence": []
+        },
+        {
+          "term": "specialist",
+          "score": 0.6954,
+          "evidence": []
+        },
+        {
+          "term": "llm integration",
+          "score": 0.6924,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "business process",
+          "score": 23.3748,
+          "evidence": []
+        },
+        {
+          "term": "agentic workflows",
+          "score": 11.122,
+          "evidence": []
+        },
+        {
+          "term": "reasoning",
+          "score": 8.6749,
+          "evidence": []
+        },
+        {
+          "term": "agents",
+          "score": 8.2315,
+          "evidence": []
+        },
+        {
+          "term": "systems",
+          "score": 7.004,
+          "evidence": []
+        },
+        {
+          "term": "tasks across",
+          "score": 6.9985,
+          "evidence": []
+        },
+        {
+          "term": "automation tasks",
+          "score": 6.1929,
+          "evidence": []
+        },
+        {
+          "term": "optt",
+          "score": 6.1235,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "business process",
+          "score": 1.7558,
+          "evidence": []
+        },
+        {
+          "term": "agentic workflows",
+          "score": 1.417,
+          "evidence": []
+        },
+        {
+          "term": "bpmn",
+          "score": 0.869,
+          "evidence": []
+        },
+        {
+          "term": "executable agentic",
+          "score": 0.8659,
+          "evidence": []
+        },
+        {
+          "term": "automation tasks",
+          "score": 0.8004,
+          "evidence": []
+        },
+        {
+          "term": "tasks across",
+          "score": 0.7665,
+          "evidence": []
+        },
+        {
+          "term": "specialist",
+          "score": 0.6954,
+          "evidence": []
+        },
+        {
+          "term": "llm integration",
+          "score": 0.6924,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "neville",
+          "score": 75.522,
+          "evidence": []
+        },
+        {
+          "term": "urgency",
+          "score": 45.9684,
+          "evidence": []
+        },
+        {
+          "term": "refund",
+          "score": 45.0679,
+          "evidence": []
+        },
+        {
+          "term": "tobias",
+          "score": 39.2383,
+          "evidence": []
+        },
+        {
+          "term": "eligibility",
+          "score": 38.6083,
+          "evidence": []
+        },
+        {
+          "term": "reorder",
+          "score": 31.3355,
+          "evidence": []
+        },
+        {
+          "term": "tournament",
+          "score": 31.0786,
+          "evidence": []
+        },
+        {
+          "term": "tiers",
+          "score": 30.7836,
+          "evidence": []
+        }
+      ]
+    },
+    "page-004": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "workflow logic",
+          "score": 1.8243,
+          "evidence": []
+        },
+        {
+          "term": "react agent",
+          "score": 1.7562,
+          "evidence": []
+        },
+        {
+          "term": "api service",
+          "score": 1.6816,
+          "evidence": []
+        },
+        {
+          "term": "api specifications",
+          "score": 1.5312,
+          "evidence": []
+        },
+        {
+          "term": "system generates",
+          "score": 1.407,
+          "evidence": []
+        },
+        {
+          "term": "proposed system",
+          "score": 1.1799,
+          "evidence": []
+        },
+        {
+          "term": "roo",
+          "score": 1.1075,
+          "evidence": []
+        },
+        {
+          "term": "cline",
+          "score": 1.0801,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "workflow logic",
+          "score": 41.268,
+          "evidence": []
+        },
+        {
+          "term": "react agent",
+          "score": 35.9876,
+          "evidence": []
+        },
+        {
+          "term": "api service",
+          "score": 35.0232,
+          "evidence": []
+        },
+        {
+          "term": "system generates",
+          "score": 32.9606,
+          "evidence": []
+        },
+        {
+          "term": "api specifications",
+          "score": 29.3428,
+          "evidence": []
+        },
+        {
+          "term": "proposed system",
+          "score": 27.5901,
+          "evidence": []
+        },
+        {
+          "term": "execution",
+          "score": 18.3402,
+          "evidence": []
+        },
+        {
+          "term": "roo",
+          "score": 17.7567,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "react agent",
+          "score": 0.9937,
+          "evidence": []
+        },
+        {
+          "term": "workflow logic",
+          "score": 0.9882,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 0.6315,
+          "evidence": []
+        },
+        {
+          "term": "bpmn",
+          "score": 0.5963,
+          "evidence": []
+        },
+        {
+          "term": "cline",
+          "score": 0.5781,
+          "evidence": []
+        },
+        {
+          "term": "specialist",
+          "score": 0.5675,
+          "evidence": []
+        },
+        {
+          "term": "roo",
+          "score": 0.5492,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 0.5445,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "react agent",
+          "score": 10.5803,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 7.6516,
+          "evidence": []
+        },
+        {
+          "term": "tool",
+          "score": 6.9286,
+          "evidence": []
+        },
+        {
+          "term": "camel",
+          "score": 6.0109,
+          "evidence": []
+        },
+        {
+          "term": "optt",
+          "score": 5.6634,
+          "evidence": []
+        },
+        {
+          "term": "skill",
+          "score": 5.3887,
+          "evidence": []
+        },
+        {
+          "term": "language model",
+          "score": 5.3422,
+          "evidence": []
+        },
+        {
+          "term": "reasoning",
+          "score": 5.0644,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "react agent",
+          "score": 0.9937,
+          "evidence": []
+        },
+        {
+          "term": "workflow logic",
+          "score": 0.9882,
+          "evidence": []
+        },
+        {
+          "term": "bpmn",
+          "score": 0.5963,
+          "evidence": []
+        },
+        {
+          "term": "cline",
+          "score": 0.5781,
+          "evidence": []
+        },
+        {
+          "term": "roo",
+          "score": 0.5492,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 0.5445,
+          "evidence": []
+        },
+        {
+          "term": "language model",
+          "score": 0.5427,
+          "evidence": []
+        },
+        {
+          "term": "system generates",
+          "score": 0.5344,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "neville",
+          "score": 77.5418,
+          "evidence": []
+        },
+        {
+          "term": "urgency",
+          "score": 49.3728,
+          "evidence": []
+        },
+        {
+          "term": "refund",
+          "score": 45.8745,
+          "evidence": []
+        },
+        {
+          "term": "tobias",
+          "score": 43.3291,
+          "evidence": []
+        },
+        {
+          "term": "eligibility",
+          "score": 40.2069,
+          "evidence": []
+        },
+        {
+          "term": "tiers",
+          "score": 33.8339,
+          "evidence": []
+        },
+        {
+          "term": "discounts",
+          "score": 33.423,
+          "evidence": []
+        },
+        {
+          "term": "promotion",
+          "score": 32.1317,
+          "evidence": []
+        }
+      ]
+    },
+    "page-005": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "repair iterations",
+          "score": 1.8949,
+          "evidence": []
+        },
+        {
+          "term": "successful agents",
+          "score": 1.8087,
+          "evidence": []
+        },
+        {
+          "term": "agent generation",
+          "score": 1.5836,
+          "evidence": []
+        },
+        {
+          "term": "fastapi service",
+          "score": 1.4605,
+          "evidence": []
+        },
+        {
+          "term": "roo",
+          "score": 1.4314,
+          "evidence": []
+        },
+        {
+          "term": "cline",
+          "score": 1.3961,
+          "evidence": []
+        },
+        {
+          "term": "generation process",
+          "score": 1.2456,
+          "evidence": []
+        },
+        {
+          "term": "success rate",
+          "score": 1.0947,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "successful agents",
+          "score": 38.402,
+          "evidence": []
+        },
+        {
+          "term": "agent generation",
+          "score": 35.4194,
+          "evidence": []
+        },
+        {
+          "term": "repair iterations",
+          "score": 32.9446,
+          "evidence": []
+        },
+        {
+          "term": "roo",
+          "score": 29.5945,
+          "evidence": []
+        },
+        {
+          "term": "cline",
+          "score": 28.8237,
+          "evidence": []
+        },
+        {
+          "term": "fastapi service",
+          "score": 20.0373,
+          "evidence": []
+        },
+        {
+          "term": "generation process",
+          "score": 19.952,
+          "evidence": []
+        },
+        {
+          "term": "attempts",
+          "score": 19.0649,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "agent generation",
+          "score": 0.9476,
+          "evidence": []
+        },
+        {
+          "term": "generation process",
+          "score": 0.9142,
+          "evidence": []
+        },
+        {
+          "term": "successful agents",
+          "score": 0.6046,
+          "evidence": []
+        },
+        {
+          "term": "workflow",
+          "score": 0.5997,
+          "evidence": []
+        },
+        {
+          "term": "repair iterations",
+          "score": 0.523,
+          "evidence": []
+        },
+        {
+          "term": "cline",
+          "score": 0.4936,
+          "evidence": []
+        },
+        {
+          "term": "bpmn",
+          "score": 0.4757,
+          "evidence": []
+        },
+        {
+          "term": "specialist",
+          "score": 0.4733,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "agent generation",
+          "score": 11.1399,
+          "evidence": []
+        },
+        {
+          "term": "successful agents",
+          "score": 11.082,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 5.2658,
+          "evidence": []
+        },
+        {
+          "term": "generation process",
+          "score": 5.0895,
+          "evidence": []
+        },
+        {
+          "term": "lma",
+          "score": 4.5601,
+          "evidence": []
+        },
+        {
+          "term": "skills",
+          "score": 3.9143,
+          "evidence": []
+        },
+        {
+          "term": "score",
+          "score": 3.7597,
+          "evidence": []
+        },
+        {
+          "term": "tool",
+          "score": 3.7583,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "agent generation",
+          "score": 0.9476,
+          "evidence": []
+        },
+        {
+          "term": "generation process",
+          "score": 0.9142,
+          "evidence": []
+        },
+        {
+          "term": "successful agents",
+          "score": 0.6046,
+          "evidence": []
+        },
+        {
+          "term": "workflow",
+          "score": 0.5997,
+          "evidence": []
+        },
+        {
+          "term": "repair iterations",
+          "score": 0.523,
+          "evidence": []
+        },
+        {
+          "term": "cline",
+          "score": 0.4936,
+          "evidence": []
+        },
+        {
+          "term": "roo",
+          "score": 0.4713,
+          "evidence": []
+        },
+        {
+          "term": "token usage",
+          "score": 0.4601,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "urgency",
+          "score": 67.3574,
+          "evidence": []
+        },
+        {
+          "term": "neville",
+          "score": 64.2892,
+          "evidence": []
+        },
+        {
+          "term": "refund",
+          "score": 64.0152,
+          "evidence": []
+        },
+        {
+          "term": "eligibility",
+          "score": 54.4371,
+          "evidence": []
+        },
+        {
+          "term": "tiers",
+          "score": 46.4137,
+          "evidence": []
+        },
+        {
+          "term": "discounts",
+          "score": 45.8473,
+          "evidence": []
+        },
+        {
+          "term": "promotion",
+          "score": 44.1256,
+          "evidence": []
+        },
+        {
+          "term": "reorder",
+          "score": 44.0286,
+          "evidence": []
+        }
+      ]
+    },
+    "page-006": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "specialist system",
+          "score": 2.4232,
+          "evidence": []
+        },
+        {
+          "term": "penalty-adjusted latency",
+          "score": 2.3451,
+          "evidence": []
+        },
+        {
+          "term": "roo",
+          "score": 1.9156,
+          "evidence": []
+        },
+        {
+          "term": "cline",
+          "score": 1.8683,
+          "evidence": []
+        },
+        {
+          "term": "tool calls",
+          "score": 1.7646,
+          "evidence": []
+        },
+        {
+          "term": "repair iterations",
+          "score": 1.758,
+          "evidence": []
+        },
+        {
+          "term": "tool-call errors",
+          "score": 1.7364,
+          "evidence": []
+        },
+        {
+          "term": "tool-use exactness",
+          "score": 1.7033,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "specialist system",
+          "score": 69.9352,
+          "evidence": []
+        },
+        {
+          "term": "roo",
+          "score": 59.1889,
+          "evidence": []
+        },
+        {
+          "term": "cline",
+          "score": 57.6474,
+          "evidence": []
+        },
+        {
+          "term": "penalty-adjusted latency",
+          "score": 47.0395,
+          "evidence": []
+        },
+        {
+          "term": "tool calls",
+          "score": 39.6765,
+          "evidence": []
+        },
+        {
+          "term": "repair iterations",
+          "score": 28.412,
+          "evidence": []
+        },
+        {
+          "term": "agent run",
+          "score": 27.8048,
+          "evidence": []
+        },
+        {
+          "term": "tool-call errors",
+          "score": 27.7426,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "agent generation",
+          "score": 1.0896,
+          "evidence": []
+        },
+        {
+          "term": "specialist system",
+          "score": 1.0229,
+          "evidence": []
+        },
+        {
+          "term": "agent run",
+          "score": 0.9481,
+          "evidence": []
+        },
+        {
+          "term": "process adherence",
+          "score": 0.8099,
+          "evidence": []
+        },
+        {
+          "term": "workflow",
+          "score": 0.783,
+          "evidence": []
+        },
+        {
+          "term": "tool calls",
+          "score": 0.772,
+          "evidence": []
+        },
+        {
+          "term": "cline",
+          "score": 0.6701,
+          "evidence": []
+        },
+        {
+          "term": "repair iterations",
+          "score": 0.6551,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "agent run",
+          "score": 13.3548,
+          "evidence": []
+        },
+        {
+          "term": "agent generation",
+          "score": 13.104,
+          "evidence": []
+        },
+        {
+          "term": "tool calls",
+          "score": 10.6411,
+          "evidence": []
+        },
+        {
+          "term": "score",
+          "score": 9.5092,
+          "evidence": []
+        },
+        {
+          "term": "true",
+          "score": 8.2791,
+          "evidence": []
+        },
+        {
+          "term": "reasoning",
+          "score": 7.8673,
+          "evidence": []
+        },
+        {
+          "term": "specialist system",
+          "score": 7.8337,
+          "evidence": []
+        },
+        {
+          "term": "optt",
+          "score": 6.6638,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "agent generation",
+          "score": 1.0896,
+          "evidence": []
+        },
+        {
+          "term": "specialist system",
+          "score": 1.0229,
+          "evidence": []
+        },
+        {
+          "term": "agent run",
+          "score": 0.9481,
+          "evidence": []
+        },
+        {
+          "term": "process adherence",
+          "score": 0.8099,
+          "evidence": []
+        },
+        {
+          "term": "workflow",
+          "score": 0.783,
+          "evidence": []
+        },
+        {
+          "term": "tool calls",
+          "score": 0.772,
+          "evidence": []
+        },
+        {
+          "term": "cline",
+          "score": 0.6701,
+          "evidence": []
+        },
+        {
+          "term": "repair iterations",
+          "score": 0.6551,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "neville",
+          "score": 147.9037,
+          "evidence": []
+        },
+        {
+          "term": "tool-use exactness",
+          "score": 96.5193,
+          "evidence": []
+        },
+        {
+          "term": "tobias",
+          "score": 84.9039,
+          "evidence": []
+        },
+        {
+          "term": "urgency",
+          "score": 83.6634,
+          "evidence": []
+        },
+        {
+          "term": "penalty-adjusted latency",
+          "score": 80.1312,
+          "evidence": []
+        },
+        {
+          "term": "refund",
+          "score": 79.4696,
+          "evidence": []
+        },
+        {
+          "term": "eligibility",
+          "score": 68.5742,
+          "evidence": []
+        },
+        {
+          "term": "tool-call",
+          "score": 58.9888,
+          "evidence": []
+        }
+      ]
+    },
+    "page-007": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "specialist system",
+          "score": 1.5846,
+          "evidence": []
+        },
+        {
+          "term": "repair iterations",
+          "score": 1.3932,
+          "evidence": []
+        },
+        {
+          "term": "targeted context",
+          "score": 1.0738,
+          "evidence": []
+        },
+        {
+          "term": "generalist",
+          "score": 1.0117,
+          "evidence": []
+        },
+        {
+          "term": "roo",
+          "score": 0.8776,
+          "evidence": []
+        },
+        {
+          "term": "context management",
+          "score": 0.8637,
+          "evidence": []
+        },
+        {
+          "term": "cline",
+          "score": 0.856,
+          "evidence": []
+        },
+        {
+          "term": "assistants",
+          "score": 0.8214,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "specialist system",
+          "score": 26.9874,
+          "evidence": []
+        },
+        {
+          "term": "repair iterations",
+          "score": 18.9413,
+          "evidence": []
+        },
+        {
+          "term": "generalist",
+          "score": 16.2242,
+          "evidence": []
+        },
+        {
+          "term": "targeted context",
+          "score": 14.4041,
+          "evidence": []
+        },
+        {
+          "term": "roo",
+          "score": 11.8378,
+          "evidence": []
+        },
+        {
+          "term": "cline",
+          "score": 11.5295,
+          "evidence": []
+        },
+        {
+          "term": "assistants",
+          "score": 11.2624,
+          "evidence": []
+        },
+        {
+          "term": "contributes",
+          "score": 10.8161,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "specialist system",
+          "score": 0.698,
+          "evidence": []
+        },
+        {
+          "term": "workflow",
+          "score": 0.5356,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 0.4394,
+          "evidence": []
+        },
+        {
+          "term": "bpmn",
+          "score": 0.4267,
+          "evidence": []
+        },
+        {
+          "term": "cline",
+          "score": 0.4177,
+          "evidence": []
+        },
+        {
+          "term": "repair iterations",
+          "score": 0.4115,
+          "evidence": []
+        },
+        {
+          "term": "roo",
+          "score": 0.399,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 0.3458,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "reasoning",
+          "score": 3.6974,
+          "evidence": []
+        },
+        {
+          "term": "specialist system",
+          "score": 3.2813,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 3.1522,
+          "evidence": []
+        },
+        {
+          "term": "context management",
+          "score": 3.0073,
+          "evidence": []
+        },
+        {
+          "term": "tool",
+          "score": 2.7952,
+          "evidence": []
+        },
+        {
+          "term": "optt",
+          "score": 2.6929,
+          "evidence": []
+        },
+        {
+          "term": "workflows",
+          "score": 2.626,
+          "evidence": []
+        },
+        {
+          "term": "input",
+          "score": 2.1271,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "specialist system",
+          "score": 0.698,
+          "evidence": []
+        },
+        {
+          "term": "workflow",
+          "score": 0.5356,
+          "evidence": []
+        },
+        {
+          "term": "cline",
+          "score": 0.4177,
+          "evidence": []
+        },
+        {
+          "term": "repair iterations",
+          "score": 0.4115,
+          "evidence": []
+        },
+        {
+          "term": "roo",
+          "score": 0.399,
+          "evidence": []
+        },
+        {
+          "term": "execution",
+          "score": 0.3269,
+          "evidence": []
+        },
+        {
+          "term": "agentic",
+          "score": 0.3032,
+          "evidence": []
+        },
+        {
+          "term": "generalist",
+          "score": 0.2905,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "neville",
+          "score": 117.0189,
+          "evidence": []
+        },
+        {
+          "term": "urgency",
+          "score": 69.571,
+          "evidence": []
+        },
+        {
+          "term": "refund",
+          "score": 66.278,
+          "evidence": []
+        },
+        {
+          "term": "tobias",
+          "score": 66.086,
+          "evidence": []
+        },
+        {
+          "term": "eligibility",
+          "score": 57.0773,
+          "evidence": []
+        },
+        {
+          "term": "tiers",
+          "score": 48.5541,
+          "evidence": []
+        },
+        {
+          "term": "discounts",
+          "score": 47.6695,
+          "evidence": []
+        },
+        {
+          "term": "schnabel",
+          "score": 47.2283,
+          "evidence": []
+        }
+      ]
+    },
+    "page-008": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "url org",
+          "score": 2.2287,
+          "evidence": []
+        },
+        {
+          "term": "url https",
+          "score": 2.2092,
+          "evidence": []
+        },
+        {
+          "term": "org abs",
+          "score": 1.9351,
+          "evidence": []
+        },
+        {
+          "term": "international confer",
+          "score": 1.8864,
+          "evidence": []
+        },
+        {
+          "term": "international conference",
+          "score": 1.8525,
+          "evidence": []
+        },
+        {
+          "term": "confer ence",
+          "score": 1.5817,
+          "evidence": []
+        },
+        {
+          "term": "business process",
+          "score": 1.499,
+          "evidence": []
+        },
+        {
+          "term": "net forum",
+          "score": 1.4351,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "url org",
+          "score": 56.8788,
+          "evidence": []
+        },
+        {
+          "term": "url https",
+          "score": 54.7036,
+          "evidence": []
+        },
+        {
+          "term": "org abs",
+          "score": 34.9932,
+          "evidence": []
+        },
+        {
+          "term": "international confer",
+          "score": 32.6555,
+          "evidence": []
+        },
+        {
+          "term": "international conference",
+          "score": 32.236,
+          "evidence": []
+        },
+        {
+          "term": "doi",
+          "score": 24.3872,
+          "evidence": []
+        },
+        {
+          "term": "business process",
+          "score": 23.9662,
+          "evidence": []
+        },
+        {
+          "term": "systems engineering",
+          "score": 23.2358,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "international conference",
+          "score": 1.3988,
+          "evidence": []
+        },
+        {
+          "term": "business process",
+          "score": 1.1241,
+          "evidence": []
+        },
+        {
+          "term": "systems engineering",
+          "score": 1.0517,
+          "evidence": []
+        },
+        {
+          "term": "url org",
+          "score": 0.9319,
+          "evidence": []
+        },
+        {
+          "term": "arxiv",
+          "score": 0.8683,
+          "evidence": []
+        },
+        {
+          "term": "url https",
+          "score": 0.8641,
+          "evidence": []
+        },
+        {
+          "term": "international confer",
+          "score": 0.8137,
+          "evidence": []
+        },
+        {
+          "term": "org abs",
+          "score": 0.7691,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "international conference",
+          "score": 27.2798,
+          "evidence": []
+        },
+        {
+          "term": "url org",
+          "score": 22.8975,
+          "evidence": []
+        },
+        {
+          "term": "url https",
+          "score": 21.8626,
+          "evidence": []
+        },
+        {
+          "term": "business process",
+          "score": 19.2357,
+          "evidence": []
+        },
+        {
+          "term": "arxiv",
+          "score": 15.8635,
+          "evidence": []
+        },
+        {
+          "term": "machine learning",
+          "score": 13.9979,
+          "evidence": []
+        },
+        {
+          "term": "systems engineering",
+          "score": 13.4769,
+          "evidence": []
+        },
+        {
+          "term": "doi",
+          "score": 12.9763,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "international conference",
+          "score": 1.3988,
+          "evidence": []
+        },
+        {
+          "term": "business process",
+          "score": 1.1241,
+          "evidence": []
+        },
+        {
+          "term": "systems engineering",
+          "score": 1.0517,
+          "evidence": []
+        },
+        {
+          "term": "url org",
+          "score": 0.9319,
+          "evidence": []
+        },
+        {
+          "term": "arxiv",
+          "score": 0.8683,
+          "evidence": []
+        },
+        {
+          "term": "url https",
+          "score": 0.8641,
+          "evidence": []
+        },
+        {
+          "term": "international confer",
+          "score": 0.8137,
+          "evidence": []
+        },
+        {
+          "term": "org abs",
+          "score": 0.7691,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "neville",
+          "score": 97.8803,
+          "evidence": []
+        },
+        {
+          "term": "tobias",
+          "score": 52.5431,
+          "evidence": []
+        },
+        {
+          "term": "urgency",
+          "score": 50.5679,
+          "evidence": []
+        },
+        {
+          "term": "refund",
+          "score": 44.9425,
+          "evidence": []
+        },
+        {
+          "term": "ceur",
+          "score": 41.8614,
+          "evidence": []
+        },
+        {
+          "term": "ceur-ws",
+          "score": 41.8614,
+          "evidence": []
+        },
+        {
+          "term": "eligibility",
+          "score": 40.2511,
+          "evidence": []
+        },
+        {
+          "term": "ciccio",
+          "score": 38.3637,
+          "evidence": []
+        }
+      ]
+    },
+    "page-009": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "url org",
+          "score": 2.1374,
+          "evidence": []
+        },
+        {
+          "term": "arxiv preprint",
+          "score": 2.0948,
+          "evidence": []
+        },
+        {
+          "term": "org abs",
+          "score": 1.9351,
+          "evidence": []
+        },
+        {
+          "term": "business process",
+          "score": 1.8645,
+          "evidence": []
+        },
+        {
+          "term": "der aalst",
+          "score": 1.7874,
+          "evidence": []
+        },
+        {
+          "term": "process modeling",
+          "score": 1.7015,
+          "evidence": []
+        },
+        {
+          "term": "international conference",
+          "score": 1.6697,
+          "evidence": []
+        },
+        {
+          "term": "process mining",
+          "score": 1.6233,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "url org",
+          "score": 50.1709,
+          "evidence": []
+        },
+        {
+          "term": "business process",
+          "score": 39.9366,
+          "evidence": []
+        },
+        {
+          "term": "arxiv preprint",
+          "score": 36.4801,
+          "evidence": []
+        },
+        {
+          "term": "org abs",
+          "score": 34.9932,
+          "evidence": []
+        },
+        {
+          "term": "process modeling",
+          "score": 32.4478,
+          "evidence": []
+        },
+        {
+          "term": "process mining",
+          "score": 30.4197,
+          "evidence": []
+        },
+        {
+          "term": "doi",
+          "score": 29.2646,
+          "evidence": []
+        },
+        {
+          "term": "der aalst",
+          "score": 26.907,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "arxiv preprint",
+          "score": 1.3875,
+          "evidence": []
+        },
+        {
+          "term": "business process",
+          "score": 1.2853,
+          "evidence": []
+        },
+        {
+          "term": "international conference",
+          "score": 1.2236,
+          "evidence": []
+        },
+        {
+          "term": "process modeling",
+          "score": 1.0188,
+          "evidence": []
+        },
+        {
+          "term": "process mining",
+          "score": 0.9906,
+          "evidence": []
+        },
+        {
+          "term": "information systems",
+          "score": 0.9232,
+          "evidence": []
+        },
+        {
+          "term": "url org",
+          "score": 0.8957,
+          "evidence": []
+        },
+        {
+          "term": "language models",
+          "score": 0.829,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "arxiv preprint",
+          "score": 33.0972,
+          "evidence": []
+        },
+        {
+          "term": "business process",
+          "score": 30.1031,
+          "evidence": []
+        },
+        {
+          "term": "international conference",
+          "score": 22.5267,
+          "evidence": []
+        },
+        {
+          "term": "process modeling",
+          "score": 22.1951,
+          "evidence": []
+        },
+        {
+          "term": "process mining",
+          "score": 20.0815,
+          "evidence": []
+        },
+        {
+          "term": "url org",
+          "score": 19.846,
+          "evidence": []
+        },
+        {
+          "term": "language models",
+          "score": 13.5759,
+          "evidence": []
+        },
+        {
+          "term": "information systems",
+          "score": 13.2779,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "arxiv preprint",
+          "score": 1.3875,
+          "evidence": []
+        },
+        {
+          "term": "business process",
+          "score": 1.2853,
+          "evidence": []
+        },
+        {
+          "term": "international conference",
+          "score": 1.2236,
+          "evidence": []
+        },
+        {
+          "term": "process modeling",
+          "score": 1.0188,
+          "evidence": []
+        },
+        {
+          "term": "process mining",
+          "score": 0.9906,
+          "evidence": []
+        },
+        {
+          "term": "information systems",
+          "score": 0.9232,
+          "evidence": []
+        },
+        {
+          "term": "url org",
+          "score": 0.8957,
+          "evidence": []
+        },
+        {
+          "term": "language models",
+          "score": 0.829,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "neville",
+          "score": 337.6511,
+          "evidence": []
+        },
+        {
+          "term": "tobias",
+          "score": 191.1279,
+          "evidence": []
+        },
+        {
+          "term": "schnabel",
+          "score": 135.0336,
+          "evidence": []
+        },
+        {
+          "term": "microsoft",
+          "score": 79.3947,
+          "evidence": []
+        },
+        {
+          "term": "hang",
+          "score": 79.0039,
+          "evidence": []
+        },
+        {
+          "term": "urgency",
+          "score": 61.955,
+          "evidence": []
+        },
+        {
+          "term": "ceur",
+          "score": 58.2412,
+          "evidence": []
+        },
+        {
+          "term": "ceur-ws",
+          "score": 58.2412,
+          "evidence": []
+        }
+      ]
+    },
+    "page-010": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "international conference",
+          "score": 1.9909,
+          "evidence": []
+        },
+        {
+          "term": "url https",
+          "score": 1.8117,
+          "evidence": []
+        },
+        {
+          "term": "arxiv preprint",
+          "score": 1.7797,
+          "evidence": []
+        },
+        {
+          "term": "process automation",
+          "score": 1.6144,
+          "evidence": []
+        },
+        {
+          "term": "net forum",
+          "score": 1.6043,
+          "evidence": []
+        },
+        {
+          "term": "der aalst",
+          "score": 1.5622,
+          "evidence": []
+        },
+        {
+          "term": "business process",
+          "score": 1.3976,
+          "evidence": []
+        },
+        {
+          "term": "van der",
+          "score": 1.371,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "url https",
+          "score": 39.0906,
+          "evidence": []
+        },
+        {
+          "term": "international conference",
+          "score": 36.3039,
+          "evidence": []
+        },
+        {
+          "term": "arxiv preprint",
+          "score": 26.4909,
+          "evidence": []
+        },
+        {
+          "term": "process automation",
+          "score": 25.6872,
+          "evidence": []
+        },
+        {
+          "term": "language models",
+          "score": 23.7631,
+          "evidence": []
+        },
+        {
+          "term": "net forum",
+          "score": 23.7609,
+          "evidence": []
+        },
+        {
+          "term": "wang",
+          "score": 22.2199,
+          "evidence": []
+        },
+        {
+          "term": "der aalst",
+          "score": 20.9881,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "arxiv preprint",
+          "score": 1.8227,
+          "evidence": []
+        },
+        {
+          "term": "international conference",
+          "score": 1.3994,
+          "evidence": []
+        },
+        {
+          "term": "language models",
+          "score": 1.0393,
+          "evidence": []
+        },
+        {
+          "term": "business process",
+          "score": 0.9158,
+          "evidence": []
+        },
+        {
+          "term": "url https",
+          "score": 0.8623,
+          "evidence": []
+        },
+        {
+          "term": "processing systems",
+          "score": 0.8471,
+          "evidence": []
+        },
+        {
+          "term": "zhang",
+          "score": 0.7793,
+          "evidence": []
+        },
+        {
+          "term": "learning representations",
+          "score": 0.7744,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "arxiv preprint",
+          "score": 34.4878,
+          "evidence": []
+        },
+        {
+          "term": "international conference",
+          "score": 28.9095,
+          "evidence": []
+        },
+        {
+          "term": "url https",
+          "score": 20.4328,
+          "evidence": []
+        },
+        {
+          "term": "language models",
+          "score": 17.265,
+          "evidence": []
+        },
+        {
+          "term": "business process",
+          "score": 16.5487,
+          "evidence": []
+        },
+        {
+          "term": "zhang",
+          "score": 14.8069,
+          "evidence": []
+        },
+        {
+          "term": "wang",
+          "score": 14.5991,
+          "evidence": []
+        },
+        {
+          "term": "proceedings",
+          "score": 11.8289,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "arxiv preprint",
+          "score": 1.8227,
+          "evidence": []
+        },
+        {
+          "term": "international conference",
+          "score": 1.3994,
+          "evidence": []
+        },
+        {
+          "term": "language models",
+          "score": 1.0393,
+          "evidence": []
+        },
+        {
+          "term": "business process",
+          "score": 0.9158,
+          "evidence": []
+        },
+        {
+          "term": "url https",
+          "score": 0.8623,
+          "evidence": []
+        },
+        {
+          "term": "processing systems",
+          "score": 0.8471,
+          "evidence": []
+        },
+        {
+          "term": "zhang",
+          "score": 0.7793,
+          "evidence": []
+        },
+        {
+          "term": "learning representations",
+          "score": 0.7744,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "neville",
+          "score": 62.1763,
+          "evidence": []
+        },
+        {
+          "term": "ceur",
+          "score": 34.8193,
+          "evidence": []
+        },
+        {
+          "term": "ceur-ws",
+          "score": 34.8193,
+          "evidence": []
+        },
+        {
+          "term": "tobias",
+          "score": 34.2757,
+          "evidence": []
+        },
+        {
+          "term": "ciccio",
+          "score": 32.2967,
+          "evidence": []
+        },
+        {
+          "term": "vluyul-x",
+          "score": 29.5082,
+          "evidence": []
+        },
+        {
+          "term": "milani",
+          "score": 28.9629,
+          "evidence": []
+        },
+        {
+          "term": "gerstein",
+          "score": 28.5273,
+          "evidence": []
+        }
+      ]
+    },
+    "page-011": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "workflow agent",
+          "score": 0.8625,
+          "evidence": []
+        },
+        {
+          "term": "tool-call",
+          "score": 0.5815,
+          "evidence": []
+        },
+        {
+          "term": "exactness",
+          "score": 0.5528,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "workflow agent",
+          "score": 10.3804,
+          "evidence": []
+        },
+        {
+          "term": "tool-call",
+          "score": 6.3244,
+          "evidence": []
+        },
+        {
+          "term": "exactness",
+          "score": 6.1012,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "workflow agent",
+          "score": 0.2298,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 0.1216,
+          "evidence": []
+        },
+        {
+          "term": "bpmn",
+          "score": 0.1011,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "workflow agent",
+          "score": 1.5223,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 1.1858,
+          "evidence": []
+        },
+        {
+          "term": "optt",
+          "score": 0.7044,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "workflow agent",
+          "score": 0.2298,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 0.1216,
+          "evidence": []
+        },
+        {
+          "term": "specialist",
+          "score": 0.0967,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "urgency",
+          "score": 238.4401,
+          "evidence": []
+        },
+        {
+          "term": "neville",
+          "score": 222.8974,
+          "evidence": []
+        },
+        {
+          "term": "refund",
+          "score": 215.1793,
+          "evidence": []
+        }
+      ]
+    },
+    "page-012": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "fetches",
+          "score": 1.3201,
+          "evidence": []
+        },
+        {
+          "term": "eligibility",
+          "score": 1.2154,
+          "evidence": []
+        },
+        {
+          "term": "validates",
+          "score": 1.2141,
+          "evidence": []
+        },
+        {
+          "term": "social media",
+          "score": 1.1101,
+          "evidence": []
+        },
+        {
+          "term": "filters",
+          "score": 1.0097,
+          "evidence": []
+        },
+        {
+          "term": "fraud",
+          "score": 1.0079,
+          "evidence": []
+        },
+        {
+          "term": "tournament",
+          "score": 1.0079,
+          "evidence": []
+        },
+        {
+          "term": "weather",
+          "score": 0.9274,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "fetches",
+          "score": 24.4049,
+          "evidence": []
+        },
+        {
+          "term": "validates",
+          "score": 22.5248,
+          "evidence": []
+        },
+        {
+          "term": "eligibility",
+          "score": 19.8361,
+          "evidence": []
+        },
+        {
+          "term": "workflow",
+          "score": 19.4685,
+          "evidence": []
+        },
+        {
+          "term": "filters",
+          "score": 16.5403,
+          "evidence": []
+        },
+        {
+          "term": "checks",
+          "score": 15.7059,
+          "evidence": []
+        },
+        {
+          "term": "weather",
+          "score": 14.8142,
+          "evidence": []
+        },
+        {
+          "term": "social media",
+          "score": 14.3884,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "process",
+          "score": 0.2522,
+          "evidence": []
+        },
+        {
+          "term": "workflow",
+          "score": 0.2364,
+          "evidence": []
+        },
+        {
+          "term": "business",
+          "score": 0.1724,
+          "evidence": []
+        },
+        {
+          "term": "bpmn",
+          "score": 0.1682,
+          "evidence": []
+        },
+        {
+          "term": "specialist",
+          "score": 0.1418,
+          "evidence": []
+        },
+        {
+          "term": "cline",
+          "score": 0.1373,
+          "evidence": []
+        },
+        {
+          "term": "roo",
+          "score": 0.1298,
+          "evidence": []
+        },
+        {
+          "term": "subject",
+          "score": 0.1282,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "process",
+          "score": 2.6001,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 2.1524,
+          "evidence": []
+        },
+        {
+          "term": "rent",
+          "score": 1.7244,
+          "evidence": []
+        },
+        {
+          "term": "classification",
+          "score": 1.6175,
+          "evidence": []
+        },
+        {
+          "term": "workflow",
+          "score": 1.5155,
+          "evidence": []
+        },
+        {
+          "term": "raci",
+          "score": 1.4984,
+          "evidence": []
+        },
+        {
+          "term": "skills",
+          "score": 1.3397,
+          "evidence": []
+        },
+        {
+          "term": "llm",
+          "score": 1.3213,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "process",
+          "score": 0.2522,
+          "evidence": []
+        },
+        {
+          "term": "workflow",
+          "score": 0.2364,
+          "evidence": []
+        },
+        {
+          "term": "social media",
+          "score": 0.0915,
+          "evidence": []
+        },
+        {
+          "term": "risk",
+          "score": 0.0915,
+          "evidence": []
+        },
+        {
+          "term": "classification",
+          "score": 0.089,
+          "evidence": []
+        },
+        {
+          "term": "cost",
+          "score": 0.085,
+          "evidence": []
+        },
+        {
+          "term": "user",
+          "score": 0.0739,
+          "evidence": []
+        },
+        {
+          "term": "payment",
+          "score": 0.0709,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "urgency",
+          "score": 698.0742,
+          "evidence": []
+        },
+        {
+          "term": "refund",
+          "score": 574.916,
+          "evidence": []
+        },
+        {
+          "term": "eligibility",
+          "score": 536.4114,
+          "evidence": []
+        },
+        {
+          "term": "tiers",
+          "score": 489.2657,
+          "evidence": []
+        },
+        {
+          "term": "promotion",
+          "score": 468.6423,
+          "evidence": []
+        },
+        {
+          "term": "discounts",
+          "score": 461.8426,
+          "evidence": []
+        },
+        {
+          "term": "reorder",
+          "score": 400.1385,
+          "evidence": []
+        },
+        {
+          "term": "routes",
+          "score": 391.4432,
+          "evidence": []
+        }
+      ]
+    },
+    "page-013": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "key metrics",
+          "score": 1.1479,
+          "evidence": []
+        },
+        {
+          "term": "icml",
+          "score": 0.3913,
+          "evidence": []
+        },
+        {
+          "term": "workshop",
+          "score": 0.3682,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "key metrics",
+          "score": 16.5769,
+          "evidence": []
+        },
+        {
+          "term": "approach",
+          "score": 4.4517,
+          "evidence": []
+        },
+        {
+          "term": "icml",
+          "score": 4.2767,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "key metrics",
+          "score": 0.067,
+          "evidence": []
+        },
+        {
+          "term": "evaluation",
+          "score": 0.0639,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 0.0482,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "axe",
+          "score": 0.9049,
+          "evidence": []
+        },
+        {
+          "term": "key metrics",
+          "score": 0.8787,
+          "evidence": []
+        },
+        {
+          "term": "evaluation",
+          "score": 0.6673,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "key metrics",
+          "score": 0.067,
+          "evidence": []
+        },
+        {
+          "term": "evaluation",
+          "score": 0.0639,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 0.0482,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "urgency",
+          "score": 128.1409,
+          "evidence": []
+        },
+        {
+          "term": "refund",
+          "score": 110.9892,
+          "evidence": []
+        },
+        {
+          "term": "eligibility",
+          "score": 100.6663,
+          "evidence": []
+        }
+      ]
+    },
+    "page-014": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "genai powered",
+          "score": 2.2044,
+          "evidence": []
+        },
+        {
+          "term": "powered react",
+          "score": 2.0041,
+          "evidence": []
+        },
+        {
+          "term": "react agent",
+          "score": 1.927,
+          "evidence": []
+        },
+        {
+          "term": "accepts conversation",
+          "score": 1.7537,
+          "evidence": []
+        },
+        {
+          "term": "openai api",
+          "score": 1.6052,
+          "evidence": []
+        },
+        {
+          "term": "openai base",
+          "score": 1.5229,
+          "evidence": []
+        },
+        {
+          "term": "agent generation",
+          "score": 1.3702,
+          "evidence": []
+        },
+        {
+          "term": "tool calls",
+          "score": 1.3258,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "react agent",
+          "score": 49.6058,
+          "evidence": []
+        },
+        {
+          "term": "agent generation",
+          "score": 36.449,
+          "evidence": []
+        },
+        {
+          "term": "genai powered",
+          "score": 36.0603,
+          "evidence": []
+        },
+        {
+          "term": "openai api",
+          "score": 29.5535,
+          "evidence": []
+        },
+        {
+          "term": "accepts conversation",
+          "score": 28.5092,
+          "evidence": []
+        },
+        {
+          "term": "openai base",
+          "score": 26.7322,
+          "evidence": []
+        },
+        {
+          "term": "base prompt",
+          "score": 21.7852,
+          "evidence": []
+        },
+        {
+          "term": "tool calls",
+          "score": 21.4114,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "agent generation",
+          "score": 0.4952,
+          "evidence": []
+        },
+        {
+          "term": "react agent",
+          "score": 0.4394,
+          "evidence": []
+        },
+        {
+          "term": "tool calls",
+          "score": 0.3779,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 0.2765,
+          "evidence": []
+        },
+        {
+          "term": "workflow",
+          "score": 0.2716,
+          "evidence": []
+        },
+        {
+          "term": "base prompt",
+          "score": 0.2661,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 0.2043,
+          "evidence": []
+        },
+        {
+          "term": "cline",
+          "score": 0.1992,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "agent generation",
+          "score": 9.3946,
+          "evidence": []
+        },
+        {
+          "term": "react agent",
+          "score": 8.6914,
+          "evidence": []
+        },
+        {
+          "term": "tool calls",
+          "score": 4.631,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 3.9353,
+          "evidence": []
+        },
+        {
+          "term": "skill",
+          "score": 3.8236,
+          "evidence": []
+        },
+        {
+          "term": "reward",
+          "score": 3.5612,
+          "evidence": []
+        },
+        {
+          "term": "camel",
+          "score": 3.5158,
+          "evidence": []
+        },
+        {
+          "term": "base prompt",
+          "score": 3.0868,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "agent generation",
+          "score": 0.4952,
+          "evidence": []
+        },
+        {
+          "term": "react agent",
+          "score": 0.4394,
+          "evidence": []
+        },
+        {
+          "term": "tool calls",
+          "score": 0.3779,
+          "evidence": []
+        },
+        {
+          "term": "workflow",
+          "score": 0.2716,
+          "evidence": []
+        },
+        {
+          "term": "base prompt",
+          "score": 0.2661,
+          "evidence": []
+        },
+        {
+          "term": "bpmn",
+          "score": 0.1947,
+          "evidence": []
+        },
+        {
+          "term": "base url",
+          "score": 0.1838,
+          "evidence": []
+        },
+        {
+          "term": "api key",
+          "score": 0.1771,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "urgency",
+          "score": 44.0464,
+          "evidence": []
+        },
+        {
+          "term": "neville",
+          "score": 43.7016,
+          "evidence": []
+        },
+        {
+          "term": "refund",
+          "score": 40.8185,
+          "evidence": []
+        },
+        {
+          "term": "eligibility",
+          "score": 35.4488,
+          "evidence": []
+        },
+        {
+          "term": "tiers",
+          "score": 33.3202,
+          "evidence": []
+        },
+        {
+          "term": "discounts",
+          "score": 29.0114,
+          "evidence": []
+        },
+        {
+          "term": "promotion",
+          "score": 28.7422,
+          "evidence": []
+        },
+        {
+          "term": "routes",
+          "score": 28.0149,
+          "evidence": []
+        }
+      ]
+    },
+    "page-015": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "cart",
+          "score": 0.9104,
+          "evidence": []
+        },
+        {
+          "term": "shipping",
+          "score": 0.8517,
+          "evidence": []
+        },
+        {
+          "term": "fulfillment",
+          "score": 0.8496,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "cart",
+          "score": 12.6487,
+          "evidence": []
+        },
+        {
+          "term": "fulfillment",
+          "score": 11.8378,
+          "evidence": []
+        },
+        {
+          "term": "shipping",
+          "score": 11.8378,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "process",
+          "score": 0.1252,
+          "evidence": []
+        },
+        {
+          "term": "workflow",
+          "score": 0.1053,
+          "evidence": []
+        },
+        {
+          "term": "bpmn",
+          "score": 0.0876,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "rent",
+          "score": 1.7882,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 1.1288,
+          "evidence": []
+        },
+        {
+          "term": "iban",
+          "score": 0.5936,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "process",
+          "score": 0.1252,
+          "evidence": []
+        },
+        {
+          "term": "workflow",
+          "score": 0.1053,
+          "evidence": []
+        },
+        {
+          "term": "bpmn",
+          "score": 0.0876,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "urgency",
+          "score": 1025.9468,
+          "evidence": []
+        },
+        {
+          "term": "refund",
+          "score": 926.4407,
+          "evidence": []
+        },
+        {
+          "term": "eligibility",
+          "score": 799.2843,
+          "evidence": []
+        }
+      ]
+    },
+    "page-016": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "costing",
+          "score": 0.5944,
+          "evidence": []
+        },
+        {
+          "term": "price",
+          "score": 0.5633,
+          "evidence": []
+        },
+        {
+          "term": "gateways",
+          "score": 0.458,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "costing",
+          "score": 6.612,
+          "evidence": []
+        },
+        {
+          "term": "cost",
+          "score": 5.9314,
+          "evidence": []
+        },
+        {
+          "term": "price",
+          "score": 5.4081,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "workflow",
+          "score": 0.0663,
+          "evidence": []
+        },
+        {
+          "term": "bpmn",
+          "score": 0.0527,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 0.0519,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hotel",
+          "score": 0.6546,
+          "evidence": []
+        },
+        {
+          "term": "routing",
+          "score": 0.3408,
+          "evidence": []
+        },
+        {
+          "term": "dmn",
+          "score": 0.3281,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "workflow",
+          "score": 0.0663,
+          "evidence": []
+        },
+        {
+          "term": "output",
+          "score": 0.0386,
+          "evidence": []
+        },
+        {
+          "term": "cost",
+          "score": 0.0381,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "urgency",
+          "score": 181.7009,
+          "evidence": []
+        },
+        {
+          "term": "refund",
+          "score": 157.9563,
+          "evidence": []
+        },
+        {
+          "term": "eligibility",
+          "score": 142.5905,
+          "evidence": []
+        }
+      ]
+    },
+    "page-017": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "deal",
+          "score": 0.693,
+          "evidence": []
+        },
+        {
+          "term": "checks",
+          "score": 0.6076,
+          "evidence": []
+        },
+        {
+          "term": "escalate",
+          "score": 0.5485,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "deal",
+          "score": 9.6406,
+          "evidence": []
+        },
+        {
+          "term": "checks",
+          "score": 7.8529,
+          "evidence": []
+        },
+        {
+          "term": "workflow",
+          "score": 6.4895,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "workflow",
+          "score": 0.0727,
+          "evidence": []
+        },
+        {
+          "term": "bpmn",
+          "score": 0.044,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 0.0436,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "optt",
+          "score": 0.4968,
+          "evidence": []
+        },
+        {
+          "term": "skills",
+          "score": 0.4821,
+          "evidence": []
+        },
+        {
+          "term": "decision",
+          "score": 0.3662,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "workflow",
+          "score": 0.0727,
+          "evidence": []
+        },
+        {
+          "term": "decision",
+          "score": 0.0403,
+          "evidence": []
+        },
+        {
+          "term": "paper",
+          "score": 0.0336,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "urgency",
+          "score": 280.3109,
+          "evidence": []
+        },
+        {
+          "term": "refund",
+          "score": 231.685,
+          "evidence": []
+        },
+        {
+          "term": "eligibility",
+          "score": 219.1219,
+          "evidence": []
+        }
+      ]
+    },
+    "page-018": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "labelling",
+          "score": 0.9088,
+          "evidence": []
+        },
+        {
+          "term": "terminating",
+          "score": 0.5944,
+          "evidence": []
+        },
+        {
+          "term": "exclude",
+          "score": 0.4648,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "labelling",
+          "score": 12.6487,
+          "evidence": []
+        },
+        {
+          "term": "terminating",
+          "score": 6.612,
+          "evidence": []
+        },
+        {
+          "term": "exclude",
+          "score": 5.1457,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "workflow",
+          "score": 0.0634,
+          "evidence": []
+        },
+        {
+          "term": "labels",
+          "score": 0.0427,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 0.0419,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "dmn",
+          "score": 0.6497,
+          "evidence": []
+        },
+        {
+          "term": "rules",
+          "score": 0.5816,
+          "evidence": []
+        },
+        {
+          "term": "labels",
+          "score": 0.5234,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "workflow",
+          "score": 0.0634,
+          "evidence": []
+        },
+        {
+          "term": "labels",
+          "score": 0.0427,
+          "evidence": []
+        },
+        {
+          "term": "workshop",
+          "score": 0.0356,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "urgency",
+          "score": 377.2368,
+          "evidence": []
+        },
+        {
+          "term": "refund",
+          "score": 309.3332,
+          "evidence": []
+        },
+        {
+          "term": "eligibility",
+          "score": 293.1319,
+          "evidence": []
+        }
+      ]
+    },
+    "page-019": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "eligibility",
+          "score": 0.6077,
+          "evidence": []
+        },
+        {
+          "term": "categorisation",
+          "score": 0.5944,
+          "evidence": []
+        },
+        {
+          "term": "enrichment",
+          "score": 0.5944,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "categorisation",
+          "score": 6.612,
+          "evidence": []
+        },
+        {
+          "term": "eligibility",
+          "score": 6.612,
+          "evidence": []
+        },
+        {
+          "term": "enrichment",
+          "score": 6.612,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "process",
+          "score": 0.101,
+          "evidence": []
+        },
+        {
+          "term": "workflow",
+          "score": 0.0696,
+          "evidence": []
+        },
+        {
+          "term": "bpmn",
+          "score": 0.0564,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "process",
+          "score": 1.2275,
+          "evidence": []
+        },
+        {
+          "term": "comprehension",
+          "score": 0.5489,
+          "evidence": []
+        },
+        {
+          "term": "quality",
+          "score": 0.5005,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "process",
+          "score": 0.101,
+          "evidence": []
+        },
+        {
+          "term": "workflow",
+          "score": 0.0696,
+          "evidence": []
+        },
+        {
+          "term": "workshop",
+          "score": 0.04,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "urgency",
+          "score": 560.4675,
+          "evidence": []
+        },
+        {
+          "term": "refund",
+          "score": 465.3862,
+          "evidence": []
+        },
+        {
+          "term": "eligibility",
+          "score": 434.6556,
+          "evidence": []
+        }
+      ]
+    },
+    "page-020": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "risk opportunity",
+          "score": 1.5006,
+          "evidence": []
+        },
+        {
+          "term": "neutral",
+          "score": 0.5485,
+          "evidence": []
+        },
+        {
+          "term": "derives",
+          "score": 0.5321,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "risk opportunity",
+          "score": 24.1665,
+          "evidence": []
+        },
+        {
+          "term": "workflow",
+          "score": 6.4895,
+          "evidence": []
+        },
+        {
+          "term": "neutral",
+          "score": 6.1012,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "workflow",
+          "score": 0.0729,
+          "evidence": []
+        },
+        {
+          "term": "business",
+          "score": 0.0456,
+          "evidence": []
+        },
+        {
+          "term": "bpmn",
+          "score": 0.0448,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "raci",
+          "score": 0.558,
+          "evidence": []
+        },
+        {
+          "term": "decision",
+          "score": 0.4287,
+          "evidence": []
+        },
+        {
+          "term": "dmn",
+          "score": 0.4111,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "workflow",
+          "score": 0.0729,
+          "evidence": []
+        },
+        {
+          "term": "decision",
+          "score": 0.0409,
+          "evidence": []
+        },
+        {
+          "term": "risk opportunity",
+          "score": 0.0375,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "urgency",
+          "score": 344.8116,
+          "evidence": []
+        },
+        {
+          "term": "refund",
+          "score": 288.5997,
+          "evidence": []
+        },
+        {
+          "term": "eligibility",
+          "score": 267.3765,
+          "evidence": []
+        }
+      ]
+    },
+    "page-021": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "escalate",
+          "score": 0.5485,
+          "evidence": []
+        },
+        {
+          "term": "ending",
+          "score": 0.536,
+          "evidence": []
+        },
+        {
+          "term": "multi-step",
+          "score": 0.5002,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "escalate",
+          "score": 6.1012,
+          "evidence": []
+        },
+        {
+          "term": "ending",
+          "score": 5.9189,
+          "evidence": []
+        },
+        {
+          "term": "multi-step",
+          "score": 5.5134,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "workflow",
+          "score": 0.0733,
+          "evidence": []
+        },
+        {
+          "term": "action",
+          "score": 0.0537,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 0.048,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "action",
+          "score": 1.0272,
+          "evidence": []
+        },
+        {
+          "term": "subsidy",
+          "score": 0.5878,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 0.44,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "workflow",
+          "score": 0.0733,
+          "evidence": []
+        },
+        {
+          "term": "action",
+          "score": 0.0537,
+          "evidence": []
+        },
+        {
+          "term": "decision",
+          "score": 0.0383,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "urgency",
+          "score": 226.0113,
+          "evidence": []
+        },
+        {
+          "term": "refund",
+          "score": 193.204,
+          "evidence": []
+        },
+        {
+          "term": "eligibility",
+          "score": 177.2588,
+          "evidence": []
+        }
+      ]
+    },
+    "page-022": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "promotion",
+          "score": 1.1177,
+          "evidence": []
+        },
+        {
+          "term": "customer",
+          "score": 0.7014,
+          "evidence": []
+        },
+        {
+          "term": "tiers",
+          "score": 0.6308,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "promotion",
+          "score": 18.3036,
+          "evidence": []
+        },
+        {
+          "term": "customer",
+          "score": 9.7549,
+          "evidence": []
+        },
+        {
+          "term": "tiers",
+          "score": 7.0175,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "process",
+          "score": 0.0905,
+          "evidence": []
+        },
+        {
+          "term": "workflow",
+          "score": 0.0674,
+          "evidence": []
+        },
+        {
+          "term": "bpmn",
+          "score": 0.0516,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "process",
+          "score": 0.9927,
+          "evidence": []
+        },
+        {
+          "term": "comprehension",
+          "score": 0.3857,
+          "evidence": []
+        },
+        {
+          "term": "optt",
+          "score": 0.3333,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "process",
+          "score": 0.0905,
+          "evidence": []
+        },
+        {
+          "term": "workflow",
+          "score": 0.0674,
+          "evidence": []
+        },
+        {
+          "term": "workshop",
+          "score": 0.0365,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "urgency",
+          "score": 1457.267,
+          "evidence": []
+        },
+        {
+          "term": "refund",
+          "score": 1149.105,
+          "evidence": []
+        },
+        {
+          "term": "eligibility",
+          "score": 1108.3715,
+          "evidence": []
+        }
+      ]
+    },
+    "page-023": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "tournament",
+          "score": 0.6359,
+          "evidence": []
+        },
+        {
+          "term": "advancement",
+          "score": 0.5944,
+          "evidence": []
+        },
+        {
+          "term": "staged",
+          "score": 0.5374,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "tournament",
+          "score": 7.0175,
+          "evidence": []
+        },
+        {
+          "term": "advancement",
+          "score": 6.612,
+          "evidence": []
+        },
+        {
+          "term": "workflow",
+          "score": 6.4895,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "workflow",
+          "score": 0.0733,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 0.0721,
+          "evidence": []
+        },
+        {
+          "term": "bpmn",
+          "score": 0.0519,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "lunch",
+          "score": 0.4434,
+          "evidence": []
+        },
+        {
+          "term": "participants",
+          "score": 0.3809,
+          "evidence": []
+        },
+        {
+          "term": "wireframes",
+          "score": 0.3597,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "workflow",
+          "score": 0.0733,
+          "evidence": []
+        },
+        {
+          "term": "workshop",
+          "score": 0.0404,
+          "evidence": []
+        },
+        {
+          "term": "paper",
+          "score": 0.0331,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "urgency",
+          "score": 377.6458,
+          "evidence": []
+        },
+        {
+          "term": "refund",
+          "score": 312.387,
+          "evidence": []
+        },
+        {
+          "term": "eligibility",
+          "score": 292.65,
+          "evidence": []
+        }
+      ]
+    },
+    "page-024": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "forecast",
+          "score": 0.6469,
+          "evidence": []
+        },
+        {
+          "term": "branches",
+          "score": 0.4889,
+          "evidence": []
+        },
+        {
+          "term": "weather",
+          "score": 0.4637,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "forecast",
+          "score": 6.3244,
+          "evidence": []
+        },
+        {
+          "term": "branches",
+          "score": 5.4081,
+          "evidence": []
+        },
+        {
+          "term": "weather",
+          "score": 4.9381,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "workflow",
+          "score": 0.0692,
+          "evidence": []
+        },
+        {
+          "term": "bpmn",
+          "score": 0.0511,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 0.0485,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "prefix",
+          "score": 0.6888,
+          "evidence": []
+        },
+        {
+          "term": "entity",
+          "score": 0.5607,
+          "evidence": []
+        },
+        {
+          "term": "forecast",
+          "score": 0.5581,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "workflow",
+          "score": 0.0692,
+          "evidence": []
+        },
+        {
+          "term": "workshop",
+          "score": 0.0395,
+          "evidence": []
+        },
+        {
+          "term": "paper",
+          "score": 0.0341,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "urgency",
+          "score": 239.0832,
+          "evidence": []
+        },
+        {
+          "term": "refund",
+          "score": 205.7076,
+          "evidence": []
+        },
+        {
+          "term": "eligibility",
+          "score": 187.4176,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

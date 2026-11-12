@@ -1,0 +1,848 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-249224",
+  "instance": "who-iris",
+  "about": "library/10665-249224",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7393,
+    "terms": 71095
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "les objectifs",
+        "score": 3.4757,
+        "evidence": []
+      },
+      {
+        "term": "pour les",
+        "score": 3.3432,
+        "evidence": []
+      },
+      {
+        "term": "les vaccins",
+        "score": 3.3116,
+        "evidence": []
+      },
+      {
+        "term": "atteindre les",
+        "score": 3.0119,
+        "evidence": []
+      },
+      {
+        "term": "comité régional",
+        "score": 2.7385,
+        "evidence": []
+      },
+      {
+        "term": "régional d'application",
+        "score": 2.6878,
+        "evidence": []
+      },
+      {
+        "term": "les efforts",
+        "score": 2.6727,
+        "evidence": []
+      },
+      {
+        "term": "mondial pour",
+        "score": 2.545,
+        "evidence": []
+      },
+      {
+        "term": "cadre régional",
+        "score": 2.5297,
+        "evidence": []
+      },
+      {
+        "term": "les pays",
+        "score": 2.5261,
+        "evidence": []
+      },
+      {
+        "term": "les états",
+        "score": 2.5041,
+        "evidence": []
+      },
+      {
+        "term": "pacifique occidental",
+        "score": 2.0628,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "les vaccins",
+        "score": 69.2299,
+        "evidence": []
+      },
+      {
+        "term": "les objectifs",
+        "score": 68.9559,
+        "evidence": []
+      },
+      {
+        "term": "pour les",
+        "score": 67.7785,
+        "evidence": []
+      },
+      {
+        "term": "atteindre les",
+        "score": 60.3941,
+        "evidence": []
+      },
+      {
+        "term": "les efforts",
+        "score": 57.3892,
+        "evidence": []
+      },
+      {
+        "term": "les états",
+        "score": 54.3994,
+        "evidence": []
+      },
+      {
+        "term": "régional d'application",
+        "score": 53.2481,
+        "evidence": []
+      },
+      {
+        "term": "cadre régional",
+        "score": 52.9115,
+        "evidence": []
+      },
+      {
+        "term": "les pays",
+        "score": 52.4718,
+        "evidence": []
+      },
+      {
+        "term": "comité régional",
+        "score": 51.3222,
+        "evidence": []
+      },
+      {
+        "term": "mondial pour",
+        "score": 39.5924,
+        "evidence": []
+      },
+      {
+        "term": "vaccins dans",
+        "score": 34.3537,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "pour les",
+        "score": 2.1398,
+        "evidence": []
+      },
+      {
+        "term": "les pays",
+        "score": 1.7166,
+        "evidence": []
+      },
+      {
+        "term": "les états",
+        "score": 1.433,
+        "evidence": []
+      },
+      {
+        "term": "les objectifs",
+        "score": 1.3852,
+        "evidence": []
+      },
+      {
+        "term": "les vaccins",
+        "score": 1.3819,
+        "evidence": []
+      },
+      {
+        "term": "atteindre les",
+        "score": 1.3314,
+        "evidence": []
+      },
+      {
+        "term": "les efforts",
+        "score": 1.32,
+        "evidence": []
+      },
+      {
+        "term": "des ressources",
+        "score": 1.3072,
+        "evidence": []
+      },
+      {
+        "term": "mondial pour",
+        "score": 1.0988,
+        "evidence": []
+      },
+      {
+        "term": "vaccins dans",
+        "score": 0.8547,
+        "evidence": []
+      },
+      {
+        "term": "santé",
+        "score": 0.6567,
+        "evidence": []
+      },
+      {
+        "term": "sur",
+        "score": 0.5416,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "pour les",
+        "score": 48.0665,
+        "evidence": []
+      },
+      {
+        "term": "les pays",
+        "score": 39.5418,
+        "evidence": []
+      },
+      {
+        "term": "les vaccins",
+        "score": 37.0641,
+        "evidence": []
+      },
+      {
+        "term": "les états",
+        "score": 35.8018,
+        "evidence": []
+      },
+      {
+        "term": "les objectifs",
+        "score": 35.1421,
+        "evidence": []
+      },
+      {
+        "term": "les efforts",
+        "score": 34.6461,
+        "evidence": []
+      },
+      {
+        "term": "atteindre les",
+        "score": 33.8792,
+        "evidence": []
+      },
+      {
+        "term": "des ressources",
+        "score": 21.174,
+        "evidence": []
+      },
+      {
+        "term": "mondial pour",
+        "score": 16.102,
+        "evidence": []
+      },
+      {
+        "term": "vaccins dans",
+        "score": 13.4575,
+        "evidence": []
+      },
+      {
+        "term": "une",
+        "score": 8.7918,
+        "evidence": []
+      },
+      {
+        "term": "par",
+        "score": 7.8652,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "pour les",
+        "score": 2.1398,
+        "evidence": []
+      },
+      {
+        "term": "les pays",
+        "score": 1.7166,
+        "evidence": []
+      },
+      {
+        "term": "les états",
+        "score": 1.433,
+        "evidence": []
+      },
+      {
+        "term": "les objectifs",
+        "score": 1.3852,
+        "evidence": []
+      },
+      {
+        "term": "les vaccins",
+        "score": 1.3819,
+        "evidence": []
+      },
+      {
+        "term": "atteindre les",
+        "score": 1.3314,
+        "evidence": []
+      },
+      {
+        "term": "les efforts",
+        "score": 1.32,
+        "evidence": []
+      },
+      {
+        "term": "des ressources",
+        "score": 1.3072,
+        "evidence": []
+      },
+      {
+        "term": "mondial pour",
+        "score": 1.0988,
+        "evidence": []
+      },
+      {
+        "term": "vaccins dans",
+        "score": 0.8547,
+        "evidence": []
+      },
+      {
+        "term": "santé",
+        "score": 0.6567,
+        "evidence": []
+      },
+      {
+        "term": "plan action",
+        "score": 0.5002,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "重点人群",
+        "score": 74.7917,
+        "evidence": []
+      },
+      {
+        "term": "在大流行间期提供疫苗供发展中国家使用",
+        "score": 39.2667,
+        "evidence": []
+      },
+      {
+        "term": "提供大流行性流感疫苗",
+        "score": 39.2667,
+        "evidence": []
+      },
+      {
+        "term": "将继续寻求专家的指导建议",
+        "score": 36.5969,
+        "evidence": []
+      },
+      {
+        "term": "巴西登革热",
+        "score": 36.4232,
+        "evidence": []
+      },
+      {
+        "term": "见下面第",
+        "score": 36.037,
+        "evidence": []
+      },
+      {
+        "term": "疫苗储备",
+        "score": 30.07,
+        "evidence": []
+      },
+      {
+        "term": "很重要",
+        "score": 29.7733,
+        "evidence": []
+      },
+      {
+        "term": "如个人",
+        "score": 29.5883,
+        "evidence": []
+      },
+      {
+        "term": "疫苗有关的",
+        "score": 24.2601,
+        "evidence": []
+      },
+      {
+        "term": "在每次增加背景信息",
+        "score": 23.5269,
+        "evidence": []
+      },
+      {
+        "term": "实际的和",
+        "score": 23.5269,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "page-001": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "nouveaux vaccins",
+          "score": 1.3472,
+          "evidence": []
+        },
+        {
+          "term": "comité régional",
+          "score": 1.2501,
+          "evidence": []
+        },
+        {
+          "term": "pour les",
+          "score": 1.2296,
+          "evidence": []
+        },
+        {
+          "term": "élimination",
+          "score": 0.9491,
+          "evidence": []
+        },
+        {
+          "term": "reconnaissant",
+          "score": 0.777,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.6489,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "nouveaux vaccins",
+          "score": 21.0818,
+          "evidence": []
+        },
+        {
+          "term": "comité régional",
+          "score": 18.5362,
+          "evidence": []
+        },
+        {
+          "term": "élimination",
+          "score": 18.0538,
+          "evidence": []
+        },
+        {
+          "term": "pour les",
+          "score": 15.6668,
+          "evidence": []
+        },
+        {
+          "term": "reconnaissant",
+          "score": 12.4005,
+          "evidence": []
+        },
+        {
+          "term": "est",
+          "score": 9.1001,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pour les",
+          "score": 0.9696,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.5332,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.3269,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.2707,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.2562,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.2394,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "pour les",
+          "score": 13.2083,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 5.9747,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 3.8004,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 3.4643,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 3.4388,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 2.9578,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pour les",
+          "score": 0.9696,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.2707,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.2391,
+          "evidence": []
+        },
+        {
+          "term": "mondiale",
+          "score": 0.2008,
+          "evidence": []
+        },
+        {
+          "term": "est",
+          "score": 0.1825,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.167,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 64.8469,
+          "evidence": []
+        },
+        {
+          "term": "行动要点",
+          "score": 24.1462,
+          "evidence": []
+        },
+        {
+          "term": "很重要",
+          "score": 23.7411,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 23.3605,
+          "evidence": []
+        },
+        {
+          "term": "非同寻常",
+          "score": 22.697,
+          "evidence": []
+        },
+        {
+          "term": "如个人",
+          "score": 19.8407,
+          "evidence": []
+        }
+      ]
+    },
+    "page-002": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "les objectifs",
+          "score": 2.29,
+          "evidence": []
+        },
+        {
+          "term": "pour les",
+          "score": 2.1136,
+          "evidence": []
+        },
+        {
+          "term": "régional d'application",
+          "score": 2.0743,
+          "evidence": []
+        },
+        {
+          "term": "cadre régional",
+          "score": 1.9162,
+          "evidence": []
+        },
+        {
+          "term": "les vaccins",
+          "score": 1.9031,
+          "evidence": []
+        },
+        {
+          "term": "atteindre les",
+          "score": 1.8741,
+          "evidence": []
+        },
+        {
+          "term": "les états",
+          "score": 1.7796,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "les objectifs",
+          "score": 54.1424,
+          "evidence": []
+        },
+        {
+          "term": "pour les",
+          "score": 52.1117,
+          "evidence": []
+        },
+        {
+          "term": "les vaccins",
+          "score": 47.3932,
+          "evidence": []
+        },
+        {
+          "term": "atteindre les",
+          "score": 45.3741,
+          "evidence": []
+        },
+        {
+          "term": "les efforts",
+          "score": 44.3197,
+          "evidence": []
+        },
+        {
+          "term": "les états",
+          "score": 44.1768,
+          "evidence": []
+        },
+        {
+          "term": "régional d'application",
+          "score": 43.8409,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pour les",
+          "score": 1.1702,
+          "evidence": []
+        },
+        {
+          "term": "les états",
+          "score": 0.8039,
+          "evidence": []
+        },
+        {
+          "term": "les objectifs",
+          "score": 0.7713,
+          "evidence": []
+        },
+        {
+          "term": "les vaccins",
+          "score": 0.7424,
+          "evidence": []
+        },
+        {
+          "term": "atteindre les",
+          "score": 0.7308,
+          "evidence": []
+        },
+        {
+          "term": "les efforts",
+          "score": 0.7227,
+          "evidence": []
+        },
+        {
+          "term": "des ressources",
+          "score": 0.719,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "pour les",
+          "score": 34.8581,
+          "evidence": []
+        },
+        {
+          "term": "les vaccins",
+          "score": 26.7376,
+          "evidence": []
+        },
+        {
+          "term": "les états",
+          "score": 26.5876,
+          "evidence": []
+        },
+        {
+          "term": "les objectifs",
+          "score": 26.1321,
+          "evidence": []
+        },
+        {
+          "term": "atteindre les",
+          "score": 25.1851,
+          "evidence": []
+        },
+        {
+          "term": "les efforts",
+          "score": 25.1851,
+          "evidence": []
+        },
+        {
+          "term": "des ressources",
+          "score": 15.0127,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pour les",
+          "score": 1.1702,
+          "evidence": []
+        },
+        {
+          "term": "les états",
+          "score": 0.8039,
+          "evidence": []
+        },
+        {
+          "term": "les objectifs",
+          "score": 0.7713,
+          "evidence": []
+        },
+        {
+          "term": "les vaccins",
+          "score": 0.7424,
+          "evidence": []
+        },
+        {
+          "term": "atteindre les",
+          "score": 0.7308,
+          "evidence": []
+        },
+        {
+          "term": "les efforts",
+          "score": 0.7227,
+          "evidence": []
+        },
+        {
+          "term": "des ressources",
+          "score": 0.719,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 34.9471,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 26.6707,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 26.6707,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 25.1049,
+          "evidence": []
+        },
+        {
+          "term": "见下面第",
+          "score": 22.6242,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 20.3501,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 19.6091,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

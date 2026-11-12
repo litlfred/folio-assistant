@@ -1,0 +1,378 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-trust-phw/library/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/smart-trust-phw/directory/library",
+      "@type": "bootstrap:Subgraph",
+      "contentSource": {
+        "declaredIn": "default",
+        "kind": "directory"
+      },
+      "description": "L1 normative specification snapshots materialized for smart-trust-phw: IHE ITI Privacy Consent on FHIR (PCF) 1.1.0 (`ihe-iti-pcf-1-1-0`, CC BY 4.0) and IHE ITI Verifiable Health Links (VHL) 1.0.0-comment (`ihe-iti-vhl-1-0-0-comment`, CC BY 4.0). Every knowledge-graph reference to these IHE specifications resolves through here, and `check:materialized-fixity` verifies their SHA-256 digests against `catalogue/`.",
+      "fileCount": 0,
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/smart-trust-phw/directory/library",
+      "name": "library",
+      "path": "library/",
+      "readmePath": "library/README.md"
+    }
+  ],
+  "hasSubgraph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-trust-phw/library/ihe-iti-pcf-1-1-0/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/smart-trust-phw/source/ihe-iti-pcf-1-1-0",
+          "@type": "cat-harness:SourceDocument",
+          "path": "library/ihe-iti-pcf-1-1-0/manifest.jsonld",
+          "title": "IHE IT Infrastructure Technical Framework Supplement — Privacy Consent on FHIR (PCF)"
+        }
+      ],
+      "hasSubgraph": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-trust-phw/library/ihe-iti-pcf-1-1-0/blocks/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio/library/ihe-iti-pcf-1-1-0/blocks/prose-s001-ihe-it-infrastructure-technical-framework-supple",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+              "path": "library/ihe-iti-pcf-1-1-0/blocks/prose-s001-ihe-it-infrastructure-technical-framework-supple.jsonld",
+              "title": "IHE IT Infrastructure Technical Framework Supplement — Privacy Consent on FHIR (PCF)"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/ihe-iti-pcf-1-1-0/blocks/prose-s002-overview-and-bibliographic-identity",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+              "path": "library/ihe-iti-pcf-1-1-0/blocks/prose-s002-overview-and-bibliographic-identity.jsonld",
+              "title": "Overview and Bibliographic Identity"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/ihe-iti-pcf-1-1-0/blocks/prose-s003-volume-1-profiles-privacy-consent-on-fhir-pcf-1-",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+              "path": "library/ihe-iti-pcf-1-1-0/blocks/prose-s003-volume-1-profiles-privacy-consent-on-fhir-pcf-1-.jsonld",
+              "title": "Volume 1 — Profiles: Privacy Consent on FHIR (PCF) (§1:53)"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/ihe-iti-pcf-1-1-0/blocks/prose-s004-actors-and-transactions-1-53-1",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+              "path": "library/ihe-iti-pcf-1-1-0/blocks/prose-s004-actors-and-transactions-1-53-1.jsonld",
+              "title": "Actors and Transactions (§1:53.1)"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/ihe-iti-pcf-1-1-0/blocks/prose-s005-actor-options-1-53-2",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+              "path": "library/ihe-iti-pcf-1-1-0/blocks/prose-s005-actor-options-1-53-2.jsonld",
+              "title": "Actor Options (§1:53.2)"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/ihe-iti-pcf-1-1-0/blocks/prose-s006-implicit-base-policy-sets-1-53-2-1",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+              "path": "library/ihe-iti-pcf-1-1-0/blocks/prose-s006-implicit-base-policy-sets-1-53-2-1.jsonld",
+              "title": "Implicit Base Policy Sets (§1:53.2.1)"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/ihe-iti-pcf-1-1-0/blocks/prose-s007-volume-2-transactions-access-consent-iti-108-2-3",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+              "path": "library/ihe-iti-pcf-1-1-0/blocks/prose-s007-volume-2-transactions-access-consent-iti-108-2-3.jsonld",
+              "title": "Volume 2 — Transactions: Access Consent [ITI-108] (§2:3.108)"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/ihe-iti-pcf-1-1-0/blocks/prose-s008-scope-and-interaction-model",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+              "path": "library/ihe-iti-pcf-1-1-0/blocks/prose-s008-scope-and-interaction-model.jsonld",
+              "title": "Scope and Interaction Model"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/ihe-iti-pcf-1-1-0/blocks/prose-s009-message-semantics-2-3-108-4",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+              "path": "library/ihe-iti-pcf-1-1-0/blocks/prose-s009-message-semantics-2-3-108-4.jsonld",
+              "title": "Message Semantics (§2:3.108.4)"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/ihe-iti-pcf-1-1-0/blocks/prose-s010-volume-3-content-profiles-and-terminology-3-5-8",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+              "path": "library/ihe-iti-pcf-1-1-0/blocks/prose-s010-volume-3-content-profiles-and-terminology-3-5-8.jsonld",
+              "title": "Volume 3 — Content Profiles and Terminology (§3:5.8)"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/ihe-iti-pcf-1-1-0/blocks/prose-s011-required-elements-on-pcf-consent-profiles",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+              "path": "library/ihe-iti-pcf-1-1-0/blocks/prose-s011-required-elements-on-pcf-consent-profiles.jsonld",
+              "title": "Required Elements on PCF Consent Profiles"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/ihe-iti-pcf-1-1-0/blocks/prose-s012-conformance-artefact-inventory-in-ihe-iti-pcf-1-",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+              "path": "library/ihe-iti-pcf-1-1-0/blocks/prose-s012-conformance-artefact-inventory-in-ihe-iti-pcf-1-.jsonld",
+              "title": "Conformance Artefact Inventory in `ihe.iti.pcf@1.1.0`"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/library"
+          ],
+          "name": "library/ihe-iti-pcf-1-1-0/blocks",
+          "path": "library/ihe-iti-pcf-1-1-0/blocks/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-trust-phw/library/ihe-iti-pcf-1-1-0/sections/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio/library/ihe-iti-pcf-1-1-0/sections/s001-ihe-it-infrastructure-technical-framework-supple",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/ihe-iti-pcf-1-1-0/sections/s001-ihe-it-infrastructure-technical-framework-supple.jsonld",
+              "title": "IHE IT Infrastructure Technical Framework Supplement — Privacy Consent on FHIR (PCF)"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/ihe-iti-pcf-1-1-0/sections/s002-overview-and-bibliographic-identity",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/ihe-iti-pcf-1-1-0/sections/s002-overview-and-bibliographic-identity.jsonld",
+              "title": "Overview and Bibliographic Identity"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/ihe-iti-pcf-1-1-0/sections/s003-volume-1-profiles-privacy-consent-on-fhir-pcf-1-",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/ihe-iti-pcf-1-1-0/sections/s003-volume-1-profiles-privacy-consent-on-fhir-pcf-1-.jsonld",
+              "title": "Volume 1 — Profiles: Privacy Consent on FHIR (PCF) (§1:53)"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/ihe-iti-pcf-1-1-0/sections/s004-actors-and-transactions-1-53-1",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/ihe-iti-pcf-1-1-0/sections/s004-actors-and-transactions-1-53-1.jsonld",
+              "title": "Actors and Transactions (§1:53.1)"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/ihe-iti-pcf-1-1-0/sections/s005-actor-options-1-53-2",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/ihe-iti-pcf-1-1-0/sections/s005-actor-options-1-53-2.jsonld",
+              "title": "Actor Options (§1:53.2)"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/ihe-iti-pcf-1-1-0/sections/s006-implicit-base-policy-sets-1-53-2-1",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/ihe-iti-pcf-1-1-0/sections/s006-implicit-base-policy-sets-1-53-2-1.jsonld",
+              "title": "Implicit Base Policy Sets (§1:53.2.1)"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/ihe-iti-pcf-1-1-0/sections/s007-volume-2-transactions-access-consent-iti-108-2-3",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/ihe-iti-pcf-1-1-0/sections/s007-volume-2-transactions-access-consent-iti-108-2-3.jsonld",
+              "title": "Volume 2 — Transactions: Access Consent [ITI-108] (§2:3.108)"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/ihe-iti-pcf-1-1-0/sections/s008-scope-and-interaction-model",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/ihe-iti-pcf-1-1-0/sections/s008-scope-and-interaction-model.jsonld",
+              "title": "Scope and Interaction Model"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/ihe-iti-pcf-1-1-0/sections/s009-message-semantics-2-3-108-4",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/ihe-iti-pcf-1-1-0/sections/s009-message-semantics-2-3-108-4.jsonld",
+              "title": "Message Semantics (§2:3.108.4)"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/ihe-iti-pcf-1-1-0/sections/s010-volume-3-content-profiles-and-terminology-3-5-8",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/ihe-iti-pcf-1-1-0/sections/s010-volume-3-content-profiles-and-terminology-3-5-8.jsonld",
+              "title": "Volume 3 — Content Profiles and Terminology (§3:5.8)"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/ihe-iti-pcf-1-1-0/sections/s011-required-elements-on-pcf-consent-profiles",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/ihe-iti-pcf-1-1-0/sections/s011-required-elements-on-pcf-consent-profiles.jsonld",
+              "title": "Required Elements on PCF Consent Profiles"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/ihe-iti-pcf-1-1-0/sections/s012-conformance-artefact-inventory-in-ihe-iti-pcf-1-",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/ihe-iti-pcf-1-1-0/sections/s012-conformance-artefact-inventory-in-ihe-iti-pcf-1-.jsonld",
+              "title": "Conformance Artefact Inventory in `ihe.iti.pcf@1.1.0`"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/library"
+          ],
+          "name": "library/ihe-iti-pcf-1-1-0/sections",
+          "path": "library/ihe-iti-pcf-1-1-0/sections/"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "name": "library/ihe-iti-pcf-1-1-0",
+      "path": "library/ihe-iti-pcf-1-1-0/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-trust-phw/library/ihe-iti-vhl-1-0-0-comment/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/smart-trust-phw/source/ihe-iti-vhl-1-0-0-comment",
+          "@type": "cat-harness:SourceDocument",
+          "path": "library/ihe-iti-vhl-1-0-0-comment/manifest.jsonld",
+          "title": "IHE IT Infrastructure Technical Framework Supplement — Verifiable Health Links (VHL)"
+        }
+      ],
+      "hasSubgraph": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-trust-phw/library/ihe-iti-vhl-1-0-0-comment/blocks/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio/library/ihe-iti-vhl-1-0-0-comment/blocks/prose-s001-ihe-it-infrastructure-technical-framework-supple",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+              "path": "library/ihe-iti-vhl-1-0-0-comment/blocks/prose-s001-ihe-it-infrastructure-technical-framework-supple.jsonld",
+              "title": "IHE IT Infrastructure Technical Framework Supplement — Verifiable Health Links (VHL)"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/ihe-iti-vhl-1-0-0-comment/blocks/prose-s002-overview-and-bibliographic-identity",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+              "path": "library/ihe-iti-vhl-1-0-0-comment/blocks/prose-s002-overview-and-bibliographic-identity.jsonld",
+              "title": "Overview and Bibliographic Identity"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/ihe-iti-vhl-1-0-0-comment/blocks/prose-s003-volume-1-verifiable-health-links-vhl-actors-tran",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+              "path": "library/ihe-iti-vhl-1-0-0-comment/blocks/prose-s003-volume-1-verifiable-health-links-vhl-actors-tran.jsonld",
+              "title": "Volume 1 — Verifiable Health Links (VHL) Actors, Transactions, and Trust-Anchor Neutrality"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/ihe-iti-vhl-1-0-0-comment/blocks/prose-s004-actors-and-responsibilities",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+              "path": "library/ihe-iti-vhl-1-0-0-comment/blocks/prose-s004-actors-and-responsibilities.jsonld",
+              "title": "Actors and Responsibilities"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/ihe-iti-vhl-1-0-0-comment/blocks/prose-s005-trust-anchor-neutrality",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+              "path": "library/ihe-iti-vhl-1-0-0-comment/blocks/prose-s005-trust-anchor-neutrality.jsonld",
+              "title": "Trust-Anchor Neutrality"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/ihe-iti-vhl-1-0-0-comment/blocks/prose-s006-composite-grouping-with-ihe-pcf-privacy-consent-",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+              "path": "library/ihe-iti-vhl-1-0-0-comment/blocks/prose-s006-composite-grouping-with-ihe-pcf-privacy-consent-.jsonld",
+              "title": "Composite Grouping with IHE PCF (Privacy Consent on FHIR)"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/ihe-iti-vhl-1-0-0-comment/blocks/prose-s007-volume-2-vhl-transactions-iti-yy1-through-iti-yy",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+              "path": "library/ihe-iti-vhl-1-0-0-comment/blocks/prose-s007-volume-2-vhl-transactions-iti-yy1-through-iti-yy.jsonld",
+              "title": "Volume 2 — VHL Transactions ([ITI-YY1] through [ITI-YY5])"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/ihe-iti-vhl-1-0-0-comment/blocks/prose-s008-summary-of-vhl-transactions",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+              "path": "library/ihe-iti-vhl-1-0-0-comment/blocks/prose-s008-summary-of-vhl-transactions.jsonld",
+              "title": "Summary of VHL Transactions"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/ihe-iti-vhl-1-0-0-comment/blocks/prose-s009-operationdefinition-generate-vhl-generate-vhl-it",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+              "path": "library/ihe-iti-vhl-1-0-0-comment/blocks/prose-s009-operationdefinition-generate-vhl-generate-vhl-it.jsonld",
+              "title": "OperationDefinition: Generate VHL (`$generate-vhl`, `[ITI-YY3]`)"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/ihe-iti-vhl-1-0-0-comment/blocks/prose-s010-volume-3-conformance-artefacts-in-ihe-iti-vhl-1-",
+              "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+              "path": "library/ihe-iti-vhl-1-0-0-comment/blocks/prose-s010-volume-3-conformance-artefacts-in-ihe-iti-vhl-1-.jsonld",
+              "title": "Volume 3 — Conformance Artefacts in `ihe.iti.vhl@1.0.0-comment`"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/library"
+          ],
+          "name": "library/ihe-iti-vhl-1-0-0-comment/blocks",
+          "path": "library/ihe-iti-vhl-1-0-0-comment/blocks/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-trust-phw/library/ihe-iti-vhl-1-0-0-comment/sections/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio/library/ihe-iti-vhl-1-0-0-comment/sections/s001-ihe-it-infrastructure-technical-framework-supple",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/ihe-iti-vhl-1-0-0-comment/sections/s001-ihe-it-infrastructure-technical-framework-supple.jsonld",
+              "title": "IHE IT Infrastructure Technical Framework Supplement — Verifiable Health Links (VHL)"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/ihe-iti-vhl-1-0-0-comment/sections/s002-overview-and-bibliographic-identity",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/ihe-iti-vhl-1-0-0-comment/sections/s002-overview-and-bibliographic-identity.jsonld",
+              "title": "Overview and Bibliographic Identity"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/ihe-iti-vhl-1-0-0-comment/sections/s003-volume-1-verifiable-health-links-vhl-actors-tran",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/ihe-iti-vhl-1-0-0-comment/sections/s003-volume-1-verifiable-health-links-vhl-actors-tran.jsonld",
+              "title": "Volume 1 — Verifiable Health Links (VHL) Actors, Transactions, and Trust-Anchor Neutrality"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/ihe-iti-vhl-1-0-0-comment/sections/s004-actors-and-responsibilities",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/ihe-iti-vhl-1-0-0-comment/sections/s004-actors-and-responsibilities.jsonld",
+              "title": "Actors and Responsibilities"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/ihe-iti-vhl-1-0-0-comment/sections/s005-trust-anchor-neutrality",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/ihe-iti-vhl-1-0-0-comment/sections/s005-trust-anchor-neutrality.jsonld",
+              "title": "Trust-Anchor Neutrality"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/ihe-iti-vhl-1-0-0-comment/sections/s006-composite-grouping-with-ihe-pcf-privacy-consent-",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/ihe-iti-vhl-1-0-0-comment/sections/s006-composite-grouping-with-ihe-pcf-privacy-consent-.jsonld",
+              "title": "Composite Grouping with IHE PCF (Privacy Consent on FHIR)"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/ihe-iti-vhl-1-0-0-comment/sections/s007-volume-2-vhl-transactions-iti-yy1-through-iti-yy",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/ihe-iti-vhl-1-0-0-comment/sections/s007-volume-2-vhl-transactions-iti-yy1-through-iti-yy.jsonld",
+              "title": "Volume 2 — VHL Transactions ([ITI-YY1] through [ITI-YY5])"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/ihe-iti-vhl-1-0-0-comment/sections/s008-summary-of-vhl-transactions",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/ihe-iti-vhl-1-0-0-comment/sections/s008-summary-of-vhl-transactions.jsonld",
+              "title": "Summary of VHL Transactions"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/ihe-iti-vhl-1-0-0-comment/sections/s009-operationdefinition-generate-vhl-generate-vhl-it",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/ihe-iti-vhl-1-0-0-comment/sections/s009-operationdefinition-generate-vhl-generate-vhl-it.jsonld",
+              "title": "OperationDefinition: Generate VHL (`$generate-vhl`, `[ITI-YY3]`)"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio/library/ihe-iti-vhl-1-0-0-comment/sections/s010-volume-3-conformance-artefacts-in-ihe-iti-vhl-1-",
+              "@type": "http://purl.org/spar/doco/Section",
+              "path": "library/ihe-iti-vhl-1-0-0-comment/sections/s010-volume-3-conformance-artefacts-in-ihe-iti-vhl-1-.jsonld",
+              "title": "Volume 3 — Conformance Artefacts in `ihe.iti.vhl@1.0.0-comment`"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/library"
+          ],
+          "name": "library/ihe-iti-vhl-1-0-0-comment/sections",
+          "path": "library/ihe-iti-vhl-1-0-0-comment/sections/"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "name": "library/ihe-iti-vhl-1-0-0-comment",
+      "path": "library/ihe-iti-vhl-1-0-0-comment/"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/library"
+  ],
+  "name": "library",
+  "path": "library/"
+}

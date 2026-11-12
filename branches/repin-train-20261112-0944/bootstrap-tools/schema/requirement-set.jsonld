@@ -1,0 +1,33 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-0944/bootstrap-tools/bootstrap-tools.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-0944/bootstrap-tools/schema/requirement-set.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-0944/bootstrap-tools/bootstrap-tools.jsonld",
+  "staging": {
+    "branch": "repin-train/20261112-0944",
+    "sha": "b80b34e466ce7864b7854cbba67b870740353603",
+    "pr": "repin-train/20261112-0944",
+    "run": "43194386196"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-0944/bootstrap-tools/schema/requirement-set",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "requirement-set",
+      "title": "requirement-set",
+      "summary": "A REQUIREMENT SET — the requirements document: a set of requirement",
+      "module": "schemas/requirement-set.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-0944/bootstrap-tools/directory/bootstrap-tools-schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/requirement-set",
+      "jsonSchema": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-0944/bootstrap-tools/schema/zod/requirement-set/MemberDecisionSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-0944/bootstrap-tools/schema/zod/requirement-set/RequirementSetIdSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-0944/bootstrap-tools/schema/zod/requirement-set/RequirementSetMemberSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-0944/bootstrap-tools/schema/zod/requirement-set/RequirementSetSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-0944/bootstrap-tools/schema/zod/requirement-set/RequirementSetStageSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-0944/bootstrap-tools/schema/zod/requirement-set/SignOffOutcomeSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-0944/bootstrap-tools/schema/zod/requirement-set/SignOffSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-0944/bootstrap-tools/schema/zod/requirement-set/SignerKindSchema.schema.json"
+      ]
+    }
+  ]
+}

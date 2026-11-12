@@ -1,0 +1,5836 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "arxiv-2402.02172v5",
+  "instance": "cat-harness",
+  "about": "library/arxiv-2402.02172v5",
+  "corpus": {
+    "library": "cat-harness/library/corpus",
+    "sections": 2232,
+    "terms": 15352
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "codeagent across",
+        "score": 31.1602,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "codeagent effective",
+        "score": 29.4572,
+        "evidence": []
+      },
+      {
+        "term": "codeagent collaborating",
+        "score": 28.9221,
+        "evidence": []
+      },
+      {
+        "term": "codeagent outperforms",
+        "score": 28.8374,
+        "evidence": []
+      },
+      {
+        "term": "codeagent pipeline",
+        "score": 28.7059,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "demonstrate codeagent",
+        "score": 28.4224,
+        "evidence": []
+      },
+      {
+        "term": "codeagent demonstrated",
+        "score": 27.948,
+        "evidence": []
+      },
+      {
+        "term": "code review",
+        "score": 27.5946,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "code vulnerabilities",
+        "score": 25.2027,
+        "evidence": []
+      },
+      {
+        "term": "code consistency",
+        "score": 23.2647,
+        "evidence": []
+      },
+      {
+        "term": "code revision",
+        "score": 21.5056,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "code quality",
+        "score": 20.4711,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "codeagent across",
+        "score": 994.6233,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "codeagent collaborating",
+        "score": 961.3822,
+        "evidence": []
+      },
+      {
+        "term": "codeagent effective",
+        "score": 960.9095,
+        "evidence": []
+      },
+      {
+        "term": "codeagent outperforms",
+        "score": 955.8892,
+        "evidence": []
+      },
+      {
+        "term": "codeagent pipeline",
+        "score": 954.5368,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "demonstrate codeagent",
+        "score": 948.5015,
+        "evidence": []
+      },
+      {
+        "term": "codeagent demonstrated",
+        "score": 941.4804,
+        "evidence": []
+      },
+      {
+        "term": "code review",
+        "score": 901.4262,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "code vulnerabilities",
+        "score": 823.9523,
+        "evidence": []
+      },
+      {
+        "term": "code consistency",
+        "score": 770.3344,
+        "evidence": []
+      },
+      {
+        "term": "code changes",
+        "score": 736.0345,
+        "evidence": []
+      },
+      {
+        "term": "code original",
+        "score": 731.1217,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "codeagent across",
+        "score": 27.6216,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "code review",
+        "score": 26.7838,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "codeagent effective",
+        "score": 25.1169,
+        "evidence": []
+      },
+      {
+        "term": "codeagent pipeline",
+        "score": 24.9264,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "code vulnerabilities",
+        "score": 24.5735,
+        "evidence": []
+      },
+      {
+        "term": "codeagent collaborating",
+        "score": 22.9604,
+        "evidence": []
+      },
+      {
+        "term": "codeagent demonstrated",
+        "score": 22.9604,
+        "evidence": []
+      },
+      {
+        "term": "codeagent outperforms",
+        "score": 22.9604,
+        "evidence": []
+      },
+      {
+        "term": "demonstrate codeagent",
+        "score": 22.9604,
+        "evidence": []
+      },
+      {
+        "term": "code consistency",
+        "score": 22.6955,
+        "evidence": []
+      },
+      {
+        "term": "code revision",
+        "score": 20.4309,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "code alignment",
+        "score": 20.3251,
+        "evidence": [
+          "heading"
+        ]
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "code review",
+        "score": 924.7941,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "codeagent across",
+        "score": 887.8007,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "codeagent pipeline",
+        "score": 852.2994,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "codeagent collaborating",
+        "score": 825.9832,
+        "evidence": []
+      },
+      {
+        "term": "codeagent demonstrated",
+        "score": 825.9832,
+        "evidence": []
+      },
+      {
+        "term": "codeagent effective",
+        "score": 825.9832,
+        "evidence": []
+      },
+      {
+        "term": "codeagent outperforms",
+        "score": 825.9832,
+        "evidence": []
+      },
+      {
+        "term": "demonstrate codeagent",
+        "score": 825.9832,
+        "evidence": []
+      },
+      {
+        "term": "code vulnerabilities",
+        "score": 804.5067,
+        "evidence": []
+      },
+      {
+        "term": "code consistency",
+        "score": 792.2625,
+        "evidence": []
+      },
+      {
+        "term": "code changes",
+        "score": 759.2672,
+        "evidence": []
+      },
+      {
+        "term": "code style",
+        "score": 759.1259,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "codeagent across",
+        "score": 27.6216,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "code review",
+        "score": 26.7838,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "codeagent effective",
+        "score": 25.1169,
+        "evidence": []
+      },
+      {
+        "term": "codeagent pipeline",
+        "score": 24.9264,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "codeagent collaborating",
+        "score": 24.6738,
+        "evidence": []
+      },
+      {
+        "term": "codeagent outperforms",
+        "score": 24.6111,
+        "evidence": []
+      },
+      {
+        "term": "code vulnerabilities",
+        "score": 24.5735,
+        "evidence": []
+      },
+      {
+        "term": "demonstrate codeagent",
+        "score": 24.274,
+        "evidence": []
+      },
+      {
+        "term": "codeagent demonstrated",
+        "score": 23.628,
+        "evidence": []
+      },
+      {
+        "term": "code consistency",
+        "score": 22.6955,
+        "evidence": []
+      },
+      {
+        "term": "code revision",
+        "score": 20.4309,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "code alignment",
+        "score": 20.3251,
+        "evidence": [
+          "heading"
+        ]
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "confirmed vulnerabili",
+        "score": 2089.6124,
+        "evidence": []
+      },
+      {
+        "term": "ruby merged",
+        "score": 2020.8687,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "vulnerabili ties",
+        "score": 1852.2798,
+        "evidence": []
+      },
+      {
+        "term": "merged closed",
+        "score": 1664.1882,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "codebert",
+        "score": 1582.909,
+        "evidence": []
+      },
+      {
+        "term": "closed commits",
+        "score": 1550.5133,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "codeagent collaborating",
+        "score": 1508.6757,
+        "evidence": []
+      },
+      {
+        "term": "chain-of",
+        "score": 1438.0799,
+        "evidence": []
+      },
+      {
+        "term": "closed prs",
+        "score": 1420.7124,
+        "evidence": []
+      },
+      {
+        "term": "rateavg",
+        "score": 1394.3046,
+        "evidence": []
+      },
+      {
+        "term": "rateclose",
+        "score": 1394.3046,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "ratemerge",
+        "score": 1394.3046,
+        "evidence": [
+          "heading"
+        ]
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-codeagent": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "codeagent",
+          "score": 1.4809,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "code review",
+          "score": 1.35,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 0.889,
+          "evidence": []
+        },
+        {
+          "term": "tegawendé",
+          "score": 0.6426,
+          "evidence": []
+        },
+        {
+          "term": "xunzhu",
+          "score": 0.6426,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "code review",
+          "score": 21.3827,
+          "evidence": []
+        },
+        {
+          "term": "codeagent",
+          "score": 18.6645,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "university",
+          "score": 17.3108,
+          "evidence": []
+        },
+        {
+          "term": "bissyandé",
+          "score": 7.0175,
+          "evidence": []
+        },
+        {
+          "term": "nerstone",
+          "score": 7.0175,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "codeagent",
+          "score": 0.5165,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "code review",
+          "score": 0.4941,
+          "evidence": []
+        },
+        {
+          "term": "software",
+          "score": 0.1548,
+          "evidence": []
+        },
+        {
+          "term": "agents",
+          "score": 0.1457,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 0.1457,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "code review",
+          "score": 11.9841,
+          "evidence": []
+        },
+        {
+          "term": "codeagent",
+          "score": 11.5418,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pages",
+          "score": 3.1637,
+          "evidence": []
+        },
+        {
+          "term": "software",
+          "score": 2.5553,
+          "evidence": []
+        },
+        {
+          "term": "coder",
+          "score": 2.4057,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "codeagent",
+          "score": 0.5165,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "code review",
+          "score": 0.4941,
+          "evidence": []
+        },
+        {
+          "term": "software",
+          "score": 0.1548,
+          "evidence": []
+        },
+        {
+          "term": "agents",
+          "score": 0.1457,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 0.1457,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "belhajjame",
+          "score": 58.382,
+          "evidence": []
+        },
+        {
+          "term": "corsar",
+          "score": 58.382,
+          "evidence": []
+        },
+        {
+          "term": "edinburgh",
+          "score": 58.382,
+          "evidence": []
+        },
+        {
+          "term": "madrid",
+          "score": 58.382,
+          "evidence": []
+        },
+        {
+          "term": "politécnica",
+          "score": 58.382,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-002-introduction": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "codeagent outperforms",
+          "score": 2.7357,
+          "evidence": []
+        },
+        {
+          "term": "code review",
+          "score": 2.4103,
+          "evidence": []
+        },
+        {
+          "term": "code revision",
+          "score": 2.3135,
+          "evidence": []
+        },
+        {
+          "term": "review automation",
+          "score": 1.7485,
+          "evidence": []
+        },
+        {
+          "term": "review process",
+          "score": 1.6249,
+          "evidence": []
+        },
+        {
+          "term": "detecting vulnerabilities",
+          "score": 1.456,
+          "evidence": []
+        },
+        {
+          "term": "multi-agent systems",
+          "score": 1.4511,
+          "evidence": []
+        },
+        {
+          "term": "perfor mance",
+          "score": 1.4484,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "code review",
+          "score": 95.2331,
+          "evidence": []
+        },
+        {
+          "term": "codeagent outperforms",
+          "score": 88.2559,
+          "evidence": []
+        },
+        {
+          "term": "code revision",
+          "score": 78.5682,
+          "evidence": []
+        },
+        {
+          "term": "review automation",
+          "score": 45.4476,
+          "evidence": []
+        },
+        {
+          "term": "review process",
+          "score": 42.2781,
+          "evidence": []
+        },
+        {
+          "term": "multi-agent systems",
+          "score": 23.9529,
+          "evidence": []
+        },
+        {
+          "term": "detecting vulnerabilities",
+          "score": 20.7282,
+          "evidence": []
+        },
+        {
+          "term": "perfor mance",
+          "score": 20.0193,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "code review",
+          "score": 2.1294,
+          "evidence": []
+        },
+        {
+          "term": "codeagent outperforms",
+          "score": 1.7028,
+          "evidence": []
+        },
+        {
+          "term": "code revision",
+          "score": 1.6921,
+          "evidence": []
+        },
+        {
+          "term": "review process",
+          "score": 1.286,
+          "evidence": []
+        },
+        {
+          "term": "review automation",
+          "score": 1.0508,
+          "evidence": []
+        },
+        {
+          "term": "multi-agent systems",
+          "score": 0.9137,
+          "evidence": []
+        },
+        {
+          "term": "qa-checker",
+          "score": 0.8555,
+          "evidence": []
+        },
+        {
+          "term": "detecting vulnerabilities",
+          "score": 0.7619,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "code review",
+          "score": 73.2887,
+          "evidence": []
+        },
+        {
+          "term": "code revision",
+          "score": 54.0094,
+          "evidence": []
+        },
+        {
+          "term": "codeagent outperforms",
+          "score": 47.454,
+          "evidence": []
+        },
+        {
+          "term": "review process",
+          "score": 29.6224,
+          "evidence": []
+        },
+        {
+          "term": "review automation",
+          "score": 28.1477,
+          "evidence": []
+        },
+        {
+          "term": "chatgpt",
+          "score": 17.9796,
+          "evidence": []
+        },
+        {
+          "term": "coder",
+          "score": 15.7637,
+          "evidence": []
+        },
+        {
+          "term": "codebert",
+          "score": 15.45,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "code review",
+          "score": 2.1294,
+          "evidence": []
+        },
+        {
+          "term": "codeagent outperforms",
+          "score": 1.7028,
+          "evidence": []
+        },
+        {
+          "term": "code revision",
+          "score": 1.6921,
+          "evidence": []
+        },
+        {
+          "term": "review process",
+          "score": 1.286,
+          "evidence": []
+        },
+        {
+          "term": "review automation",
+          "score": 1.0508,
+          "evidence": []
+        },
+        {
+          "term": "multi-agent systems",
+          "score": 0.9137,
+          "evidence": []
+        },
+        {
+          "term": "detecting vulnerabilities",
+          "score": 0.7619,
+          "evidence": []
+        },
+        {
+          "term": "agents",
+          "score": 0.6677,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "codebert",
+          "score": 34.2151,
+          "evidence": []
+        },
+        {
+          "term": "chain-of",
+          "score": 33.1385,
+          "evidence": []
+        },
+        {
+          "term": "vulnerabili",
+          "score": 31.9698,
+          "evidence": []
+        },
+        {
+          "term": "rateavg",
+          "score": 29.0984,
+          "evidence": []
+        },
+        {
+          "term": "rateclose",
+          "score": 29.0984,
+          "evidence": []
+        },
+        {
+          "term": "ratemerge",
+          "score": 29.0984,
+          "evidence": []
+        },
+        {
+          "term": "cooperates",
+          "score": 27.4578,
+          "evidence": []
+        },
+        {
+          "term": "ruby",
+          "score": 27.0467,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-003-pipeline": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "info sync",
+          "score": 3.354,
+          "evidence": []
+        },
+        {
+          "term": "code alignment",
+          "score": 2.8697,
+          "evidence": []
+        },
+        {
+          "term": "code review",
+          "score": 2.8301,
+          "evidence": []
+        },
+        {
+          "term": "commit message",
+          "score": 2.6484,
+          "evidence": []
+        },
+        {
+          "term": "basic info",
+          "score": 2.542,
+          "evidence": []
+        },
+        {
+          "term": "code doc",
+          "score": 2.5228,
+          "evidence": []
+        },
+        {
+          "term": "code revision",
+          "score": 2.4811,
+          "evidence": []
+        },
+        {
+          "term": "code original",
+          "score": 2.319,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "code review",
+          "score": 172.3175,
+          "evidence": []
+        },
+        {
+          "term": "code alignment",
+          "score": 151.346,
+          "evidence": []
+        },
+        {
+          "term": "code revision",
+          "score": 133.5775,
+          "evidence": []
+        },
+        {
+          "term": "code doc",
+          "score": 132.504,
+          "evidence": []
+        },
+        {
+          "term": "code original",
+          "score": 131.2402,
+          "evidence": []
+        },
+        {
+          "term": "code change",
+          "score": 129.3062,
+          "evidence": []
+        },
+        {
+          "term": "code snippet",
+          "score": 126.8552,
+          "evidence": []
+        },
+        {
+          "term": "actual code",
+          "score": 124.8836,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "code review",
+          "score": 3.207,
+          "evidence": []
+        },
+        {
+          "term": "code alignment",
+          "score": 2.8377,
+          "evidence": []
+        },
+        {
+          "term": "code revision",
+          "score": 2.6423,
+          "evidence": []
+        },
+        {
+          "term": "code original",
+          "score": 2.5573,
+          "evidence": []
+        },
+        {
+          "term": "code doc",
+          "score": 2.5461,
+          "evidence": []
+        },
+        {
+          "term": "code change",
+          "score": 2.4575,
+          "evidence": []
+        },
+        {
+          "term": "code snippet",
+          "score": 2.4036,
+          "evidence": []
+        },
+        {
+          "term": "codeagent pipeline",
+          "score": 2.2292,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "code review",
+          "score": 181.0742,
+          "evidence": []
+        },
+        {
+          "term": "code alignment",
+          "score": 149.6681,
+          "evidence": []
+        },
+        {
+          "term": "code revision",
+          "score": 138.1097,
+          "evidence": []
+        },
+        {
+          "term": "code original",
+          "score": 132.8199,
+          "evidence": []
+        },
+        {
+          "term": "code doc",
+          "score": 132.0836,
+          "evidence": []
+        },
+        {
+          "term": "code change",
+          "score": 131.2559,
+          "evidence": []
+        },
+        {
+          "term": "code snippet",
+          "score": 129.0285,
+          "evidence": []
+        },
+        {
+          "term": "actual code",
+          "score": 126.4667,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "code review",
+          "score": 3.207,
+          "evidence": []
+        },
+        {
+          "term": "code alignment",
+          "score": 2.8377,
+          "evidence": []
+        },
+        {
+          "term": "code revision",
+          "score": 2.6423,
+          "evidence": []
+        },
+        {
+          "term": "code original",
+          "score": 2.5573,
+          "evidence": []
+        },
+        {
+          "term": "code doc",
+          "score": 2.5461,
+          "evidence": []
+        },
+        {
+          "term": "code change",
+          "score": 2.4575,
+          "evidence": []
+        },
+        {
+          "term": "code snippet",
+          "score": 2.4036,
+          "evidence": []
+        },
+        {
+          "term": "codeagent pipeline",
+          "score": 2.2292,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "cooperates",
+          "score": 95.5816,
+          "evidence": []
+        },
+        {
+          "term": "cpo",
+          "score": 84.1284,
+          "evidence": []
+        },
+        {
+          "term": "cto",
+          "score": 82.3953,
+          "evidence": []
+        },
+        {
+          "term": "ceo",
+          "score": 77.2476,
+          "evidence": []
+        },
+        {
+          "term": "chief",
+          "score": 76.0391,
+          "evidence": []
+        },
+        {
+          "term": "coder",
+          "score": 73.7437,
+          "evidence": []
+        },
+        {
+          "term": "modality",
+          "score": 70.9122,
+          "evidence": []
+        },
+        {
+          "term": "assistor",
+          "score": 66.5261,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-004-role-card-definition": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "coder",
+          "score": 1.4341,
+          "evidence": []
+        },
+        {
+          "term": "reviewer",
+          "score": 1.3105,
+          "evidence": []
+        },
+        {
+          "term": "role",
+          "score": 1.1229,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "code review",
+          "score": 0.9858,
+          "evidence": []
+        },
+        {
+          "term": "card",
+          "score": 0.9784,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "coder",
+          "score": 28.1561,
+          "evidence": []
+        },
+        {
+          "term": "reviewer",
+          "score": 25.7285,
+          "evidence": []
+        },
+        {
+          "term": "role",
+          "score": 16.788,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cto",
+          "score": 12.6487,
+          "evidence": []
+        },
+        {
+          "term": "ceo",
+          "score": 12.2024,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "code review",
+          "score": 0.6293,
+          "evidence": []
+        },
+        {
+          "term": "codeagent",
+          "score": 0.3514,
+          "evidence": []
+        },
+        {
+          "term": "role",
+          "score": 0.2616,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "qa-checker",
+          "score": 0.2527,
+          "evidence": []
+        },
+        {
+          "term": "coder",
+          "score": 0.223,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "code review",
+          "score": 19.3048,
+          "evidence": []
+        },
+        {
+          "term": "coder",
+          "score": 6.3875,
+          "evidence": []
+        },
+        {
+          "term": "codeagent",
+          "score": 6.2271,
+          "evidence": []
+        },
+        {
+          "term": "reviewer",
+          "score": 4.7027,
+          "evidence": []
+        },
+        {
+          "term": "ceo",
+          "score": 4.6396,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "code review",
+          "score": 0.6293,
+          "evidence": []
+        },
+        {
+          "term": "codeagent",
+          "score": 0.3514,
+          "evidence": []
+        },
+        {
+          "term": "role",
+          "score": 0.2616,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "coder",
+          "score": 0.223,
+          "evidence": []
+        },
+        {
+          "term": "reviewer",
+          "score": 0.202,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "cooperates",
+          "score": 129.9843,
+          "evidence": []
+        },
+        {
+          "term": "cpo",
+          "score": 110.6173,
+          "evidence": []
+        },
+        {
+          "term": "cto",
+          "score": 110.1869,
+          "evidence": []
+        },
+        {
+          "term": "ceo",
+          "score": 102.4416,
+          "evidence": []
+        },
+        {
+          "term": "chief",
+          "score": 99.0658,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-005-self-improving-cot-with-qa-checker": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "checker",
+          "score": 2.5137,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "aai",
+          "score": 1.638,
+          "evidence": []
+        },
+        {
+          "term": "qa-checker",
+          "score": 1.2237,
+          "evidence": []
+        },
+        {
+          "term": "task instruction",
+          "score": 1.1828,
+          "evidence": []
+        },
+        {
+          "term": "cot",
+          "score": 0.9142,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "question",
+          "score": 0.8699,
+          "evidence": []
+        },
+        {
+          "term": "answer",
+          "score": 0.8175,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "checker",
+          "score": 52.2575,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "aai",
+          "score": 35.0875,
+          "evidence": []
+        },
+        {
+          "term": "qa-checker",
+          "score": 25.013,
+          "evidence": []
+        },
+        {
+          "term": "task instruction",
+          "score": 20.5849,
+          "evidence": []
+        },
+        {
+          "term": "question",
+          "score": 16.34,
+          "evidence": []
+        },
+        {
+          "term": "answer",
+          "score": 13.4158,
+          "evidence": []
+        },
+        {
+          "term": "conversation",
+          "score": 12.7348,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "codeagent",
+          "score": 0.2783,
+          "evidence": []
+        },
+        {
+          "term": "answer",
+          "score": 0.2384,
+          "evidence": []
+        },
+        {
+          "term": "qa-checker",
+          "score": 0.224,
+          "evidence": []
+        },
+        {
+          "term": "task instruction",
+          "score": 0.2145,
+          "evidence": []
+        },
+        {
+          "term": "question",
+          "score": 0.2126,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 0.2054,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 0.1732,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "answer",
+          "score": 6.5865,
+          "evidence": []
+        },
+        {
+          "term": "question",
+          "score": 5.9713,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 5.0017,
+          "evidence": []
+        },
+        {
+          "term": "task instruction",
+          "score": 3.5716,
+          "evidence": []
+        },
+        {
+          "term": "review",
+          "score": 3.4862,
+          "evidence": []
+        },
+        {
+          "term": "incorrect",
+          "score": 3.169,
+          "evidence": []
+        },
+        {
+          "term": "correct",
+          "score": 3.1284,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "answer",
+          "score": 0.2384,
+          "evidence": []
+        },
+        {
+          "term": "qa-checker",
+          "score": 0.224,
+          "evidence": []
+        },
+        {
+          "term": "task instruction",
+          "score": 0.2145,
+          "evidence": []
+        },
+        {
+          "term": "question",
+          "score": 0.2126,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 0.1732,
+          "evidence": []
+        },
+        {
+          "term": "conversation",
+          "score": 0.1268,
+          "evidence": []
+        },
+        {
+          "term": "checker",
+          "score": 0.1249,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "cooperates",
+          "score": 59.2357,
+          "evidence": []
+        },
+        {
+          "term": "assistor",
+          "score": 55.5854,
+          "evidence": []
+        },
+        {
+          "term": "checker",
+          "score": 55.1719,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cto",
+          "score": 50.8163,
+          "evidence": []
+        },
+        {
+          "term": "cpo",
+          "score": 50.7688,
+          "evidence": []
+        },
+        {
+          "term": "ceo",
+          "score": 46.2284,
+          "evidence": []
+        },
+        {
+          "term": "coder",
+          "score": 46.1819,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-008-datasets": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "merged closed",
+          "score": 1.8795,
+          "evidence": []
+        },
+        {
+          "term": "hit rate",
+          "score": 1.5689,
+          "evidence": []
+        },
+        {
+          "term": "pull requests",
+          "score": 1.0196,
+          "evidence": []
+        },
+        {
+          "term": "datasets",
+          "score": 0.9572,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "positives",
+          "score": 0.8327,
+          "evidence": []
+        },
+        {
+          "term": "recall",
+          "score": 0.7181,
+          "evidence": []
+        },
+        {
+          "term": "edit",
+          "score": 0.698,
+          "evidence": []
+        },
+        {
+          "term": "zhou",
+          "score": 0.6449,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "merged closed",
+          "score": 26.8889,
+          "evidence": []
+        },
+        {
+          "term": "hit rate",
+          "score": 22.687,
+          "evidence": []
+        },
+        {
+          "term": "pull requests",
+          "score": 13.484,
+          "evidence": []
+        },
+        {
+          "term": "datasets",
+          "score": 12.2268,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "positives",
+          "score": 11.2624,
+          "evidence": []
+        },
+        {
+          "term": "recall",
+          "score": 9.9118,
+          "evidence": []
+        },
+        {
+          "term": "samples",
+          "score": 9.8754,
+          "evidence": []
+        },
+        {
+          "term": "edit",
+          "score": 9.6406,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "merged closed",
+          "score": 0.92,
+          "evidence": []
+        },
+        {
+          "term": "codeagent",
+          "score": 0.6797,
+          "evidence": []
+        },
+        {
+          "term": "codebert",
+          "score": 0.4658,
+          "evidence": []
+        },
+        {
+          "term": "languages",
+          "score": 0.3558,
+          "evidence": []
+        },
+        {
+          "term": "qa-checker",
+          "score": 0.3372,
+          "evidence": []
+        },
+        {
+          "term": "recall",
+          "score": 0.3269,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 0.3007,
+          "evidence": []
+        },
+        {
+          "term": "datasets",
+          "score": 0.2957,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "merged closed",
+          "score": 25.8043,
+          "evidence": []
+        },
+        {
+          "term": "count",
+          "score": 7.0317,
+          "evidence": []
+        },
+        {
+          "term": "codeagent",
+          "score": 5.5616,
+          "evidence": []
+        },
+        {
+          "term": "sample",
+          "score": 5.2061,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 4.1864,
+          "evidence": []
+        },
+        {
+          "term": "languages",
+          "score": 4.0122,
+          "evidence": []
+        },
+        {
+          "term": "dataset",
+          "score": 3.9653,
+          "evidence": []
+        },
+        {
+          "term": "java",
+          "score": 3.2199,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "merged closed",
+          "score": 0.92,
+          "evidence": []
+        },
+        {
+          "term": "languages",
+          "score": 0.3558,
+          "evidence": []
+        },
+        {
+          "term": "recall",
+          "score": 0.3269,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 0.3007,
+          "evidence": []
+        },
+        {
+          "term": "datasets",
+          "score": 0.2957,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "table",
+          "score": 0.2709,
+          "evidence": []
+        },
+        {
+          "term": "task",
+          "score": 0.1963,
+          "evidence": []
+        },
+        {
+          "term": "hit rate",
+          "score": 0.1764,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "merged closed",
+          "score": 88.7929,
+          "evidence": []
+        },
+        {
+          "term": "codebert",
+          "score": 65.483,
+          "evidence": []
+        },
+        {
+          "term": "vulnerabili",
+          "score": 61.8302,
+          "evidence": []
+        },
+        {
+          "term": "rateavg",
+          "score": 54.6818,
+          "evidence": []
+        },
+        {
+          "term": "rateclose",
+          "score": 54.6818,
+          "evidence": []
+        },
+        {
+          "term": "ratemerge",
+          "score": 54.6818,
+          "evidence": []
+        },
+        {
+          "term": "ruby",
+          "score": 54.2031,
+          "evidence": []
+        },
+        {
+          "term": "autotransformdata",
+          "score": 53.612,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-009-state-of-the-art-tools-and-models": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "confirmed number",
+          "score": 1.4978,
+          "evidence": []
+        },
+        {
+          "term": "code revision",
+          "score": 1.3715,
+          "evidence": []
+        },
+        {
+          "term": "number divided",
+          "score": 1.215,
+          "evidence": []
+        },
+        {
+          "term": "codeagent",
+          "score": 1.0847,
+          "evidence": []
+        },
+        {
+          "term": "ratecr",
+          "score": 1.0027,
+          "evidence": []
+        },
+        {
+          "term": "rateca",
+          "score": 0.9999,
+          "evidence": []
+        },
+        {
+          "term": "cot",
+          "score": 0.9142,
+          "evidence": []
+        },
+        {
+          "term": "codebert",
+          "score": 0.9054,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "confirmed number",
+          "score": 26.5627,
+          "evidence": []
+        },
+        {
+          "term": "number divided",
+          "score": 20.732,
+          "evidence": []
+        },
+        {
+          "term": "code revision",
+          "score": 20.482,
+          "evidence": []
+        },
+        {
+          "term": "codeagent",
+          "score": 18.6645,
+          "evidence": []
+        },
+        {
+          "term": "cot",
+          "score": 14.6323,
+          "evidence": []
+        },
+        {
+          "term": "rateca",
+          "score": 14.035,
+          "evidence": []
+        },
+        {
+          "term": "ratecr",
+          "score": 14.035,
+          "evidence": []
+        },
+        {
+          "term": "react",
+          "score": 13.8588,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "codeagent",
+          "score": 0.655,
+          "evidence": []
+        },
+        {
+          "term": "code revision",
+          "score": 0.539,
+          "evidence": []
+        },
+        {
+          "term": "models",
+          "score": 0.4681,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "codebert",
+          "score": 0.3981,
+          "evidence": []
+        },
+        {
+          "term": "closed",
+          "score": 0.3439,
+          "evidence": []
+        },
+        {
+          "term": "merged",
+          "score": 0.3347,
+          "evidence": []
+        },
+        {
+          "term": "confirmed number",
+          "score": 0.3259,
+          "evidence": []
+        },
+        {
+          "term": "qa-checker",
+          "score": 0.3222,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "codeagent",
+          "score": 13.8939,
+          "evidence": []
+        },
+        {
+          "term": "code revision",
+          "score": 10.1708,
+          "evidence": []
+        },
+        {
+          "term": "chatgpt",
+          "score": 8.5608,
+          "evidence": []
+        },
+        {
+          "term": "codebert",
+          "score": 6.8151,
+          "evidence": []
+        },
+        {
+          "term": "models",
+          "score": 4.8723,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "review",
+          "score": 4.5687,
+          "evidence": []
+        },
+        {
+          "term": "recall",
+          "score": 3.5099,
+          "evidence": []
+        },
+        {
+          "term": "gpt",
+          "score": 3.4464,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "codeagent",
+          "score": 0.655,
+          "evidence": []
+        },
+        {
+          "term": "code revision",
+          "score": 0.539,
+          "evidence": []
+        },
+        {
+          "term": "models",
+          "score": 0.4681,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "codebert",
+          "score": 0.3981,
+          "evidence": []
+        },
+        {
+          "term": "confirmed number",
+          "score": 0.3259,
+          "evidence": []
+        },
+        {
+          "term": "gpt",
+          "score": 0.2788,
+          "evidence": []
+        },
+        {
+          "term": "number divided",
+          "score": 0.2112,
+          "evidence": []
+        },
+        {
+          "term": "vulnerabilities",
+          "score": 0.2078,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "codebert",
+          "score": 74.8994,
+          "evidence": []
+        },
+        {
+          "term": "vulnerabili",
+          "score": 72.1507,
+          "evidence": []
+        },
+        {
+          "term": "rateavg",
+          "score": 62.4847,
+          "evidence": []
+        },
+        {
+          "term": "rateclose",
+          "score": 62.4847,
+          "evidence": []
+        },
+        {
+          "term": "ratemerge",
+          "score": 62.4847,
+          "evidence": []
+        },
+        {
+          "term": "chain-of",
+          "score": 61.2761,
+          "evidence": []
+        },
+        {
+          "term": "chatgpt",
+          "score": 57.6303,
+          "evidence": []
+        },
+        {
+          "term": "ruby",
+          "score": 52.3779,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-010-experimental-result-analysis": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "codeagent",
+          "score": 0.9343,
+          "evidence": []
+        },
+        {
+          "term": "discusses",
+          "score": 0.4751,
+          "evidence": []
+        },
+        {
+          "term": "analysis",
+          "score": 0.4636,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "codeagent",
+          "score": 13.9984,
+          "evidence": []
+        },
+        {
+          "term": "discusses",
+          "score": 5.2257,
+          "evidence": []
+        },
+        {
+          "term": "analyses",
+          "score": 4.3434,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "codeagent",
+          "score": 0.1628,
+          "evidence": []
+        },
+        {
+          "term": "codebert",
+          "score": 0.0936,
+          "evidence": []
+        },
+        {
+          "term": "qa-checker",
+          "score": 0.0857,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "codeagent",
+          "score": 5.1971,
+          "evidence": []
+        },
+        {
+          "term": "chatgpt",
+          "score": 4.1533,
+          "evidence": []
+        },
+        {
+          "term": "codebert",
+          "score": 3.0648,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "codeagent",
+          "score": 0.1628,
+          "evidence": []
+        },
+        {
+          "term": "languages",
+          "score": 0.0769,
+          "evidence": []
+        },
+        {
+          "term": "analysis",
+          "score": 0.0758,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "codebert",
+          "score": 76.1269,
+          "evidence": []
+        },
+        {
+          "term": "vulnerabili",
+          "score": 75.6347,
+          "evidence": []
+        },
+        {
+          "term": "rateavg",
+          "score": 65.3323,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-011-vulnerability-analysis": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "confirmed vulnerabilities",
+          "score": 2.7697,
+          "evidence": []
+        },
+        {
+          "term": "codebert",
+          "score": 2.0479,
+          "evidence": []
+        },
+        {
+          "term": "codeagent",
+          "score": 1.9096,
+          "evidence": []
+        },
+        {
+          "term": "gpt",
+          "score": 1.4742,
+          "evidence": []
+        },
+        {
+          "term": "ablation study",
+          "score": 1.4159,
+          "evidence": []
+        },
+        {
+          "term": "vulnerability detection",
+          "score": 1.4151,
+          "evidence": []
+        },
+        {
+          "term": "qa-checker",
+          "score": 1.329,
+          "evidence": []
+        },
+        {
+          "term": "ratecr",
+          "score": 1.2653,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "confirmed vulnerabilities",
+          "score": 76.3514,
+          "evidence": []
+        },
+        {
+          "term": "codeagent",
+          "score": 74.6581,
+          "evidence": []
+        },
+        {
+          "term": "gpt",
+          "score": 71.896,
+          "evidence": []
+        },
+        {
+          "term": "codebert",
+          "score": 60.6477,
+          "evidence": []
+        },
+        {
+          "term": "qa-checker",
+          "score": 30.0156,
+          "evidence": []
+        },
+        {
+          "term": "vulnerability detection",
+          "score": 22.2841,
+          "evidence": []
+        },
+        {
+          "term": "ablation study",
+          "score": 22.1581,
+          "evidence": []
+        },
+        {
+          "term": "ratecr",
+          "score": 21.0525,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "codeagent",
+          "score": 1.2656,
+          "evidence": []
+        },
+        {
+          "term": "confirmed vulnerabilities",
+          "score": 0.9167,
+          "evidence": []
+        },
+        {
+          "term": "codebert",
+          "score": 0.8535,
+          "evidence": []
+        },
+        {
+          "term": "vulnerability",
+          "score": 0.7748,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "merged",
+          "score": 0.773,
+          "evidence": []
+        },
+        {
+          "term": "closed",
+          "score": 0.7638,
+          "evidence": []
+        },
+        {
+          "term": "vulnerability detection",
+          "score": 0.6925,
+          "evidence": []
+        },
+        {
+          "term": "qa-checker",
+          "score": 0.6554,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "codeagent",
+          "score": 53.6885,
+          "evidence": []
+        },
+        {
+          "term": "chatgpt",
+          "score": 43.4707,
+          "evidence": []
+        },
+        {
+          "term": "codebert",
+          "score": 32.9526,
+          "evidence": []
+        },
+        {
+          "term": "recall",
+          "score": 17.8432,
+          "evidence": []
+        },
+        {
+          "term": "confirmed vulnerabilities",
+          "score": 15.4471,
+          "evidence": []
+        },
+        {
+          "term": "scores",
+          "score": 15.435,
+          "evidence": []
+        },
+        {
+          "term": "gpt",
+          "score": 15.1467,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 14.4614,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "codeagent",
+          "score": 1.2656,
+          "evidence": []
+        },
+        {
+          "term": "confirmed vulnerabilities",
+          "score": 0.9167,
+          "evidence": []
+        },
+        {
+          "term": "codebert",
+          "score": 0.8535,
+          "evidence": []
+        },
+        {
+          "term": "vulnerability",
+          "score": 0.7748,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vulnerability detection",
+          "score": 0.6925,
+          "evidence": []
+        },
+        {
+          "term": "qa-checker",
+          "score": 0.6554,
+          "evidence": []
+        },
+        {
+          "term": "languages",
+          "score": 0.5766,
+          "evidence": []
+        },
+        {
+          "term": "analysis",
+          "score": 0.5758,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "codebert",
+          "score": 114.7053,
+          "evidence": []
+        },
+        {
+          "term": "vulnerabili",
+          "score": 113.7241,
+          "evidence": []
+        },
+        {
+          "term": "rateavg",
+          "score": 98.8052,
+          "evidence": []
+        },
+        {
+          "term": "rateclose",
+          "score": 98.8052,
+          "evidence": []
+        },
+        {
+          "term": "ratemerge",
+          "score": 98.8052,
+          "evidence": []
+        },
+        {
+          "term": "chain-of",
+          "score": 93.0399,
+          "evidence": []
+        },
+        {
+          "term": "chatgpt",
+          "score": 89.9392,
+          "evidence": []
+        },
+        {
+          "term": "viding",
+          "score": 79.1956,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-012-consistency-and-format-detection": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "closed commits",
+          "score": 3.0504,
+          "evidence": []
+        },
+        {
+          "term": "format consistency",
+          "score": 2.678,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "codeagent",
+          "score": 1.9845,
+          "evidence": []
+        },
+        {
+          "term": "commits across",
+          "score": 1.8385,
+          "evidence": []
+        },
+        {
+          "term": "codebert",
+          "score": 1.8108,
+          "evidence": []
+        },
+        {
+          "term": "average improvement",
+          "score": 1.7984,
+          "evidence": []
+        },
+        {
+          "term": "f1-score",
+          "score": 1.6464,
+          "evidence": []
+        },
+        {
+          "term": "meth ods",
+          "score": 1.5806,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "codeagent",
+          "score": 83.9904,
+          "evidence": []
+        },
+        {
+          "term": "closed commits",
+          "score": 77.0777,
+          "evidence": []
+        },
+        {
+          "term": "gpt",
+          "score": 49.02,
+          "evidence": []
+        },
+        {
+          "term": "codebert",
+          "score": 44.1074,
+          "evidence": []
+        },
+        {
+          "term": "f1-score",
+          "score": 44.1074,
+          "evidence": []
+        },
+        {
+          "term": "recall",
+          "score": 42.9511,
+          "evidence": []
+        },
+        {
+          "term": "format consistency",
+          "score": 42.4549,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "average improvement",
+          "score": 42.422,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "codeagent",
+          "score": 1.2683,
+          "evidence": []
+        },
+        {
+          "term": "closed commits",
+          "score": 1.1753,
+          "evidence": []
+        },
+        {
+          "term": "codebert",
+          "score": 0.8985,
+          "evidence": []
+        },
+        {
+          "term": "merged",
+          "score": 0.8475,
+          "evidence": []
+        },
+        {
+          "term": "format consistency",
+          "score": 0.8363,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "different languages",
+          "score": 0.7542,
+          "evidence": []
+        },
+        {
+          "term": "commits across",
+          "score": 0.7297,
+          "evidence": []
+        },
+        {
+          "term": "recall",
+          "score": 0.654,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "codeagent",
+          "score": 54.331,
+          "evidence": []
+        },
+        {
+          "term": "chatgpt",
+          "score": 41.1736,
+          "evidence": []
+        },
+        {
+          "term": "codebert",
+          "score": 33.8206,
+          "evidence": []
+        },
+        {
+          "term": "closed commits",
+          "score": 33.5476,
+          "evidence": []
+        },
+        {
+          "term": "merged",
+          "score": 29.1388,
+          "evidence": []
+        },
+        {
+          "term": "recall",
+          "score": 20.5941,
+          "evidence": []
+        },
+        {
+          "term": "scores",
+          "score": 15.0394,
+          "evidence": []
+        },
+        {
+          "term": "gpt",
+          "score": 13.5779,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "codeagent",
+          "score": 1.2683,
+          "evidence": []
+        },
+        {
+          "term": "closed commits",
+          "score": 1.1753,
+          "evidence": []
+        },
+        {
+          "term": "codebert",
+          "score": 0.8985,
+          "evidence": []
+        },
+        {
+          "term": "merged",
+          "score": 0.8475,
+          "evidence": []
+        },
+        {
+          "term": "format consistency",
+          "score": 0.8363,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "different languages",
+          "score": 0.7542,
+          "evidence": []
+        },
+        {
+          "term": "commits across",
+          "score": 0.7297,
+          "evidence": []
+        },
+        {
+          "term": "recall",
+          "score": 0.654,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "codebert",
+          "score": 173.2315,
+          "evidence": []
+        },
+        {
+          "term": "vulnerabili",
+          "score": 170.5459,
+          "evidence": []
+        },
+        {
+          "term": "rateavg",
+          "score": 147.497,
+          "evidence": []
+        },
+        {
+          "term": "rateclose",
+          "score": 147.497,
+          "evidence": []
+        },
+        {
+          "term": "ratemerge",
+          "score": 147.497,
+          "evidence": []
+        },
+        {
+          "term": "closed commits",
+          "score": 146.8885,
+          "evidence": []
+        },
+        {
+          "term": "chain-of",
+          "score": 135.8985,
+          "evidence": []
+        },
+        {
+          "term": "chatgpt",
+          "score": 134.5895,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-013-code-revision": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "code revision",
+          "score": 2.3874,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "codeagent",
+          "score": 1.0847,
+          "evidence": []
+        },
+        {
+          "term": "t5-review",
+          "score": 0.9505,
+          "evidence": []
+        },
+        {
+          "term": "bustness",
+          "score": 0.6308,
+          "evidence": []
+        },
+        {
+          "term": "sig",
+          "score": 0.6308,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "code revision",
+          "score": 31.9782,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "codeagent",
+          "score": 18.6645,
+          "evidence": []
+        },
+        {
+          "term": "t5-review",
+          "score": 13.2241,
+          "evidence": []
+        },
+        {
+          "term": "bustness",
+          "score": 7.0175,
+          "evidence": []
+        },
+        {
+          "term": "sig",
+          "score": 7.0175,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "code revision",
+          "score": 0.6299,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "codeagent",
+          "score": 0.3966,
+          "evidence": []
+        },
+        {
+          "term": "codebert",
+          "score": 0.226,
+          "evidence": []
+        },
+        {
+          "term": "closed",
+          "score": 0.2002,
+          "evidence": []
+        },
+        {
+          "term": "qa-checker",
+          "score": 0.1988,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "code revision",
+          "score": 11.9474,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "codeagent",
+          "score": 9.402,
+          "evidence": []
+        },
+        {
+          "term": "chatgpt",
+          "score": 6.1022,
+          "evidence": []
+        },
+        {
+          "term": "codebert",
+          "score": 4.7646,
+          "evidence": []
+        },
+        {
+          "term": "review",
+          "score": 2.9908,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "code revision",
+          "score": 0.6299,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "codeagent",
+          "score": 0.3966,
+          "evidence": []
+        },
+        {
+          "term": "codebert",
+          "score": 0.226,
+          "evidence": []
+        },
+        {
+          "term": "review",
+          "score": 0.1741,
+          "evidence": []
+        },
+        {
+          "term": "table",
+          "score": 0.134,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "codebert",
+          "score": 75.9722,
+          "evidence": []
+        },
+        {
+          "term": "vulnerabili",
+          "score": 71.7115,
+          "evidence": []
+        },
+        {
+          "term": "rateavg",
+          "score": 62.6589,
+          "evidence": []
+        },
+        {
+          "term": "rateclose",
+          "score": 62.6589,
+          "evidence": []
+        },
+        {
+          "term": "ratemerge",
+          "score": 62.6589,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-014-related-work": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "automating code",
+          "score": 1.6529,
+          "evidence": []
+        },
+        {
+          "term": "code review",
+          "score": 1.5517,
+          "evidence": []
+        },
+        {
+          "term": "review activities",
+          "score": 1.2591,
+          "evidence": []
+        },
+        {
+          "term": "akata",
+          "score": 0.9483,
+          "evidence": []
+        },
+        {
+          "term": "siow",
+          "score": 0.9483,
+          "evidence": []
+        },
+        {
+          "term": "hellendoorn",
+          "score": 0.9088,
+          "evidence": []
+        },
+        {
+          "term": "tufano",
+          "score": 0.8544,
+          "evidence": []
+        },
+        {
+          "term": "related",
+          "score": 0.7811,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "code review",
+          "score": 29.3143,
+          "evidence": []
+        },
+        {
+          "term": "automating code",
+          "score": 29.0869,
+          "evidence": []
+        },
+        {
+          "term": "review activities",
+          "score": 18.2236,
+          "evidence": []
+        },
+        {
+          "term": "akata",
+          "score": 13.2241,
+          "evidence": []
+        },
+        {
+          "term": "siow",
+          "score": 13.2241,
+          "evidence": []
+        },
+        {
+          "term": "hellendoorn",
+          "score": 12.6487,
+          "evidence": []
+        },
+        {
+          "term": "tufano",
+          "score": 11.8378,
+          "evidence": []
+        },
+        {
+          "term": "cai",
+          "score": 10.4515,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "code review",
+          "score": 0.7986,
+          "evidence": []
+        },
+        {
+          "term": "automating code",
+          "score": 0.5564,
+          "evidence": []
+        },
+        {
+          "term": "codeagent",
+          "score": 0.5365,
+          "evidence": []
+        },
+        {
+          "term": "review activities",
+          "score": 0.4074,
+          "evidence": []
+        },
+        {
+          "term": "qa-checker",
+          "score": 0.3189,
+          "evidence": []
+        },
+        {
+          "term": "work",
+          "score": 0.2298,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "codebert",
+          "score": 0.2034,
+          "evidence": []
+        },
+        {
+          "term": "software",
+          "score": 0.1977,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "code review",
+          "score": 18.3311,
+          "evidence": []
+        },
+        {
+          "term": "automating code",
+          "score": 12.7105,
+          "evidence": []
+        },
+        {
+          "term": "codeagent",
+          "score": 8.6765,
+          "evidence": []
+        },
+        {
+          "term": "review activities",
+          "score": 7.1886,
+          "evidence": []
+        },
+        {
+          "term": "coder",
+          "score": 3.6934,
+          "evidence": []
+        },
+        {
+          "term": "software",
+          "score": 3.1311,
+          "evidence": []
+        },
+        {
+          "term": "qa-checker",
+          "score": 3.0992,
+          "evidence": []
+        },
+        {
+          "term": "work",
+          "score": 2.9207,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "code review",
+          "score": 0.7986,
+          "evidence": []
+        },
+        {
+          "term": "automating code",
+          "score": 0.5564,
+          "evidence": []
+        },
+        {
+          "term": "codeagent",
+          "score": 0.5365,
+          "evidence": []
+        },
+        {
+          "term": "review activities",
+          "score": 0.4074,
+          "evidence": []
+        },
+        {
+          "term": "work",
+          "score": 0.2298,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "tufano",
+          "score": 0.1897,
+          "evidence": []
+        },
+        {
+          "term": "multi-agent",
+          "score": 0.1731,
+          "evidence": []
+        },
+        {
+          "term": "qian",
+          "score": 0.1456,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "t5-review",
+          "score": 49.9595,
+          "evidence": []
+        },
+        {
+          "term": "autotransformdata",
+          "score": 49.4113,
+          "evidence": []
+        },
+        {
+          "term": "t5-reviewdata",
+          "score": 49.3343,
+          "evidence": []
+        },
+        {
+          "term": "trans-reviewdata",
+          "score": 49.3343,
+          "evidence": []
+        },
+        {
+          "term": "trans-review",
+          "score": 48.948,
+          "evidence": []
+        },
+        {
+          "term": "t5cr",
+          "score": 45.6503,
+          "evidence": []
+        },
+        {
+          "term": "revi",
+          "score": 45.6239,
+          "evidence": []
+        },
+        {
+          "term": "mentfinder",
+          "score": 44.5803,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-015-conclusion": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "arxiv preprint",
+          "score": 4.1198,
+          "evidence": []
+        },
+        {
+          "term": "haoye tian",
+          "score": 2.9083,
+          "evidence": []
+        },
+        {
+          "term": "international conference",
+          "score": 2.8217,
+          "evidence": []
+        },
+        {
+          "term": "jacques klein",
+          "score": 2.7399,
+          "evidence": []
+        },
+        {
+          "term": "ming zhou",
+          "score": 2.589,
+          "evidence": []
+        },
+        {
+          "term": "international symposium",
+          "score": 2.537,
+          "evidence": []
+        },
+        {
+          "term": "code review",
+          "score": 2.5044,
+          "evidence": []
+        },
+        {
+          "term": "xunzhu tang",
+          "score": 2.4277,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "arxiv preprint",
+          "score": 229.9709,
+          "evidence": []
+        },
+        {
+          "term": "code review",
+          "score": 105.6037,
+          "evidence": []
+        },
+        {
+          "term": "software engineering",
+          "score": 90.9006,
+          "evidence": []
+        },
+        {
+          "term": "international conference",
+          "score": 83.1708,
+          "evidence": []
+        },
+        {
+          "term": "pages",
+          "score": 81.2567,
+          "evidence": []
+        },
+        {
+          "term": "automating code",
+          "score": 79.2222,
+          "evidence": []
+        },
+        {
+          "term": "modern code",
+          "score": 71.155,
+          "evidence": []
+        },
+        {
+          "term": "software engi",
+          "score": 66.1718,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "arxiv preprint",
+          "score": 4.163,
+          "evidence": []
+        },
+        {
+          "term": "international conference",
+          "score": 2.9276,
+          "evidence": []
+        },
+        {
+          "term": "haoye tian",
+          "score": 2.8894,
+          "evidence": []
+        },
+        {
+          "term": "code review",
+          "score": 2.746,
+          "evidence": []
+        },
+        {
+          "term": "jacques klein",
+          "score": 2.6617,
+          "evidence": []
+        },
+        {
+          "term": "software engineering",
+          "score": 2.5962,
+          "evidence": []
+        },
+        {
+          "term": "automating code",
+          "score": 2.5908,
+          "evidence": []
+        },
+        {
+          "term": "international symposium",
+          "score": 2.5372,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "arxiv preprint",
+          "score": 231.8731,
+          "evidence": []
+        },
+        {
+          "term": "code review",
+          "score": 108.2211,
+          "evidence": []
+        },
+        {
+          "term": "international conference",
+          "score": 82.7555,
+          "evidence": []
+        },
+        {
+          "term": "software engineering",
+          "score": 77.1026,
+          "evidence": []
+        },
+        {
+          "term": "automating code",
+          "score": 75.5586,
+          "evidence": []
+        },
+        {
+          "term": "modern code",
+          "score": 71.614,
+          "evidence": []
+        },
+        {
+          "term": "code changes",
+          "score": 63.7673,
+          "evidence": []
+        },
+        {
+          "term": "source code",
+          "score": 63.7673,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "arxiv preprint",
+          "score": 4.163,
+          "evidence": []
+        },
+        {
+          "term": "international conference",
+          "score": 2.9276,
+          "evidence": []
+        },
+        {
+          "term": "haoye tian",
+          "score": 2.8894,
+          "evidence": []
+        },
+        {
+          "term": "code review",
+          "score": 2.746,
+          "evidence": []
+        },
+        {
+          "term": "jacques klein",
+          "score": 2.6617,
+          "evidence": []
+        },
+        {
+          "term": "software engineering",
+          "score": 2.5962,
+          "evidence": []
+        },
+        {
+          "term": "automating code",
+          "score": 2.5908,
+          "evidence": []
+        },
+        {
+          "term": "international symposium",
+          "score": 2.5372,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "chakkrit tantithamthavorn",
+          "score": 71.541,
+          "evidence": []
+        },
+        {
+          "term": "jacques klein",
+          "score": 62.9884,
+          "evidence": []
+        },
+        {
+          "term": "wenxiang",
+          "score": 35.2954,
+          "evidence": []
+        },
+        {
+          "term": "agentverse",
+          "score": 35.2954,
+          "evidence": []
+        },
+        {
+          "term": "enyu",
+          "score": 35.2954,
+          "evidence": []
+        },
+        {
+          "term": "junzhe",
+          "score": 35.2954,
+          "evidence": []
+        },
+        {
+          "term": "juyuan",
+          "score": 35.2954,
+          "evidence": []
+        },
+        {
+          "term": "lichao",
+          "score": 35.2954,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-017-complete-related-work": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "question-answer pair",
+          "score": 2.6687,
+          "evidence": []
+        },
+        {
+          "term": "optimal question-answer",
+          "score": 2.3646,
+          "evidence": []
+        },
+        {
+          "term": "iteration moves",
+          "score": 2.019,
+          "evidence": []
+        },
+        {
+          "term": "implying convergence",
+          "score": 1.9077,
+          "evidence": []
+        },
+        {
+          "term": "qa-checker",
+          "score": 1.7518,
+          "evidence": []
+        },
+        {
+          "term": "remainder term",
+          "score": 1.6982,
+          "evidence": []
+        },
+        {
+          "term": "code review",
+          "score": 1.6964,
+          "evidence": []
+        },
+        {
+          "term": "convergence relies",
+          "score": 1.6468,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "question-answer pair",
+          "score": 60.1661,
+          "evidence": []
+        },
+        {
+          "term": "qa-checker",
+          "score": 60.0312,
+          "evidence": []
+        },
+        {
+          "term": "optimal question-answer",
+          "score": 49.3195,
+          "evidence": []
+        },
+        {
+          "term": "iteration moves",
+          "score": 40.4742,
+          "evidence": []
+        },
+        {
+          "term": "code review",
+          "score": 36.1167,
+          "evidence": []
+        },
+        {
+          "term": "improved quality",
+          "score": 32.5813,
+          "evidence": []
+        },
+        {
+          "term": "quality assessment",
+          "score": 31.8859,
+          "evidence": []
+        },
+        {
+          "term": "implying convergence",
+          "score": 31.3132,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "code review",
+          "score": 2.1299,
+          "evidence": []
+        },
+        {
+          "term": "source code",
+          "score": 1.4086,
+          "evidence": []
+        },
+        {
+          "term": "codeagent",
+          "score": 1.3536,
+          "evidence": []
+        },
+        {
+          "term": "qa-checker",
+          "score": 1.0797,
+          "evidence": []
+        },
+        {
+          "term": "remainder term",
+          "score": 0.9013,
+          "evidence": []
+        },
+        {
+          "term": "quality assessment",
+          "score": 0.8319,
+          "evidence": []
+        },
+        {
+          "term": "answer",
+          "score": 0.8109,
+          "evidence": []
+        },
+        {
+          "term": "question-answer pair",
+          "score": 0.7839,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "code review",
+          "score": 44.2181,
+          "evidence": []
+        },
+        {
+          "term": "source code",
+          "score": 29.7313,
+          "evidence": []
+        },
+        {
+          "term": "codeagent",
+          "score": 19.9154,
+          "evidence": []
+        },
+        {
+          "term": "answer",
+          "score": 17.721,
+          "evidence": []
+        },
+        {
+          "term": "question",
+          "score": 16.3455,
+          "evidence": []
+        },
+        {
+          "term": "qa-checker",
+          "score": 11.5297,
+          "evidence": []
+        },
+        {
+          "term": "matrix",
+          "score": 10.6351,
+          "evidence": []
+        },
+        {
+          "term": "coder",
+          "score": 10.5875,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "code review",
+          "score": 2.1299,
+          "evidence": []
+        },
+        {
+          "term": "source code",
+          "score": 1.4086,
+          "evidence": []
+        },
+        {
+          "term": "codeagent",
+          "score": 1.3536,
+          "evidence": []
+        },
+        {
+          "term": "qa-checker",
+          "score": 1.0797,
+          "evidence": []
+        },
+        {
+          "term": "remainder term",
+          "score": 0.9013,
+          "evidence": []
+        },
+        {
+          "term": "quality assessment",
+          "score": 0.8319,
+          "evidence": []
+        },
+        {
+          "term": "answer",
+          "score": 0.8109,
+          "evidence": []
+        },
+        {
+          "term": "question-answer pair",
+          "score": 0.7839,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "t5cr",
+          "score": 20.8537,
+          "evidence": []
+        },
+        {
+          "term": "t5-review",
+          "score": 20.6603,
+          "evidence": []
+        },
+        {
+          "term": "cooperates",
+          "score": 20.1678,
+          "evidence": []
+        },
+        {
+          "term": "trans-review",
+          "score": 20.1395,
+          "evidence": []
+        },
+        {
+          "term": "t5-reviewdata",
+          "score": 20.0542,
+          "evidence": []
+        },
+        {
+          "term": "trans-reviewdata",
+          "score": 20.0542,
+          "evidence": []
+        },
+        {
+          "term": "autotransformdata",
+          "score": 20.0512,
+          "evidence": []
+        },
+        {
+          "term": "revi",
+          "score": 19.743,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-019-role-definition": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "code reviews",
+          "score": 2.1868,
+          "evidence": []
+        },
+        {
+          "term": "codeagent",
+          "score": 1.4809,
+          "evidence": []
+        },
+        {
+          "term": "suggesting improvements",
+          "score": 1.2347,
+          "evidence": []
+        },
+        {
+          "term": "collaborating",
+          "score": 1.2141,
+          "evidence": []
+        },
+        {
+          "term": "role involves",
+          "score": 1.1509,
+          "evidence": []
+        },
+        {
+          "term": "programming languages",
+          "score": 1.1151,
+          "evidence": []
+        },
+        {
+          "term": "coder",
+          "score": 1.1095,
+          "evidence": []
+        },
+        {
+          "term": "commit",
+          "score": 1.0074,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "code reviews",
+          "score": 52.1814,
+          "evidence": []
+        },
+        {
+          "term": "codeagent",
+          "score": 37.329,
+          "evidence": []
+        },
+        {
+          "term": "collaborating",
+          "score": 22.5248,
+          "evidence": []
+        },
+        {
+          "term": "suggesting improvements",
+          "score": 17.1297,
+          "evidence": []
+        },
+        {
+          "term": "coder",
+          "score": 16.8936,
+          "evidence": []
+        },
+        {
+          "term": "role",
+          "score": 16.788,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "role involves",
+          "score": 16.2469,
+          "evidence": []
+        },
+        {
+          "term": "programming languages",
+          "score": 14.3456,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "code review",
+          "score": 1.5614,
+          "evidence": []
+        },
+        {
+          "term": "codeagent",
+          "score": 1.0363,
+          "evidence": []
+        },
+        {
+          "term": "qa-checker",
+          "score": 0.6646,
+          "evidence": []
+        },
+        {
+          "term": "role",
+          "score": 0.5967,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "commit",
+          "score": 0.5728,
+          "evidence": []
+        },
+        {
+          "term": "programming languages",
+          "score": 0.5431,
+          "evidence": []
+        },
+        {
+          "term": "coder",
+          "score": 0.4846,
+          "evidence": []
+        },
+        {
+          "term": "conversations",
+          "score": 0.4155,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "code review",
+          "score": 47.8615,
+          "evidence": []
+        },
+        {
+          "term": "codeagent",
+          "score": 24.7716,
+          "evidence": []
+        },
+        {
+          "term": "coder",
+          "score": 12.4009,
+          "evidence": []
+        },
+        {
+          "term": "ceo",
+          "score": 8.9997,
+          "evidence": []
+        },
+        {
+          "term": "conversations",
+          "score": 8.9106,
+          "evidence": []
+        },
+        {
+          "term": "reviewer",
+          "score": 8.7051,
+          "evidence": []
+        },
+        {
+          "term": "qa-checker",
+          "score": 8.2298,
+          "evidence": []
+        },
+        {
+          "term": "role",
+          "score": 8.1165,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "code review",
+          "score": 1.5614,
+          "evidence": []
+        },
+        {
+          "term": "codeagent",
+          "score": 1.0363,
+          "evidence": []
+        },
+        {
+          "term": "qa-checker",
+          "score": 0.6646,
+          "evidence": []
+        },
+        {
+          "term": "role",
+          "score": 0.5967,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "commit",
+          "score": 0.5728,
+          "evidence": []
+        },
+        {
+          "term": "programming languages",
+          "score": 0.5431,
+          "evidence": []
+        },
+        {
+          "term": "coder",
+          "score": 0.4846,
+          "evidence": []
+        },
+        {
+          "term": "reviewer",
+          "score": 0.4121,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "cooperates",
+          "score": 75.5087,
+          "evidence": []
+        },
+        {
+          "term": "cpo",
+          "score": 66.7299,
+          "evidence": []
+        },
+        {
+          "term": "cto",
+          "score": 66.0465,
+          "evidence": []
+        },
+        {
+          "term": "chief",
+          "score": 62.0516,
+          "evidence": []
+        },
+        {
+          "term": "ceo",
+          "score": 61.7158,
+          "evidence": []
+        },
+        {
+          "term": "coder",
+          "score": 58.8252,
+          "evidence": []
+        },
+        {
+          "term": "conversa",
+          "score": 55.7826,
+          "evidence": []
+        },
+        {
+          "term": "modality",
+          "score": 55.4582,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-020-execute-time-across-languages": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "merged prs",
+          "score": 2.8006,
+          "evidence": []
+        },
+        {
+          "term": "closed prs",
+          "score": 2.7401,
+          "evidence": []
+        },
+        {
+          "term": "execution time",
+          "score": 1.5088,
+          "evidence": []
+        },
+        {
+          "term": "average execution",
+          "score": 1.4864,
+          "evidence": []
+        },
+        {
+          "term": "languages",
+          "score": 1.0544,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "codeagent across",
+          "score": 1.0508,
+          "evidence": []
+        },
+        {
+          "term": "qa-checker",
+          "score": 0.9468,
+          "evidence": []
+        },
+        {
+          "term": "self-improvement",
+          "score": 0.8857,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "merged prs",
+          "score": 58.3241,
+          "evidence": []
+        },
+        {
+          "term": "closed prs",
+          "score": 55.0857,
+          "evidence": []
+        },
+        {
+          "term": "execution time",
+          "score": 32.069,
+          "evidence": []
+        },
+        {
+          "term": "average execution",
+          "score": 30.0663,
+          "evidence": []
+        },
+        {
+          "term": "qa-checker",
+          "score": 15.0078,
+          "evidence": []
+        },
+        {
+          "term": "languages",
+          "score": 13.4158,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "codeagent across",
+          "score": 13.2934,
+          "evidence": []
+        },
+        {
+          "term": "self-improvement",
+          "score": 12.2024,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "codeagent across",
+          "score": 1.0161,
+          "evidence": []
+        },
+        {
+          "term": "languages",
+          "score": 0.7638,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "merged prs",
+          "score": 0.5836,
+          "evidence": []
+        },
+        {
+          "term": "closed prs",
+          "score": 0.5814,
+          "evidence": []
+        },
+        {
+          "term": "codebert",
+          "score": 0.5317,
+          "evidence": []
+        },
+        {
+          "term": "qa-checker",
+          "score": 0.4302,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 0.3447,
+          "evidence": []
+        },
+        {
+          "term": "ruby",
+          "score": 0.3358,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "closed prs",
+          "score": 15.998,
+          "evidence": []
+        },
+        {
+          "term": "merged prs",
+          "score": 15.2617,
+          "evidence": []
+        },
+        {
+          "term": "codeagent across",
+          "score": 11.2033,
+          "evidence": []
+        },
+        {
+          "term": "languages",
+          "score": 9.7267,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "count",
+          "score": 8.205,
+          "evidence": []
+        },
+        {
+          "term": "sample",
+          "score": 5.5892,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 5.117,
+          "evidence": []
+        },
+        {
+          "term": "review",
+          "score": 4.167,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "codeagent across",
+          "score": 1.0161,
+          "evidence": []
+        },
+        {
+          "term": "languages",
+          "score": 0.7638,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "merged prs",
+          "score": 0.5836,
+          "evidence": []
+        },
+        {
+          "term": "closed prs",
+          "score": 0.5814,
+          "evidence": []
+        },
+        {
+          "term": "qa-checker",
+          "score": 0.4302,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 0.3447,
+          "evidence": []
+        },
+        {
+          "term": "ruby",
+          "score": 0.3358,
+          "evidence": []
+        },
+        {
+          "term": "java",
+          "score": 0.3304,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "closed prs",
+          "score": 104.2043,
+          "evidence": []
+        },
+        {
+          "term": "merged prs",
+          "score": 97.6634,
+          "evidence": []
+        },
+        {
+          "term": "codebert",
+          "score": 95.8414,
+          "evidence": []
+        },
+        {
+          "term": "vulnerabili",
+          "score": 93.0986,
+          "evidence": []
+        },
+        {
+          "term": "rateavg",
+          "score": 82.504,
+          "evidence": []
+        },
+        {
+          "term": "rateclose",
+          "score": 82.504,
+          "evidence": []
+        },
+        {
+          "term": "ratemerge",
+          "score": 82.504,
+          "evidence": []
+        },
+        {
+          "term": "chain-of",
+          "score": 79.823,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-022-differences-and-implications": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "qa-checker",
+          "score": 0.9468,
+          "evidence": []
+        },
+        {
+          "term": "conversational",
+          "score": 0.7574,
+          "evidence": []
+        },
+        {
+          "term": "conversations",
+          "score": 0.7459,
+          "evidence": []
+        },
+        {
+          "term": "responses",
+          "score": 0.7213,
+          "evidence": []
+        },
+        {
+          "term": "differences",
+          "score": 0.6787,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "specialized",
+          "score": 0.5927,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "qa-checker",
+          "score": 15.0078,
+          "evidence": []
+        },
+        {
+          "term": "responses",
+          "score": 13.2157,
+          "evidence": []
+        },
+        {
+          "term": "conversational",
+          "score": 10.4515,
+          "evidence": []
+        },
+        {
+          "term": "conversations",
+          "score": 9.5324,
+          "evidence": []
+        },
+        {
+          "term": "role",
+          "score": 8.394,
+          "evidence": []
+        },
+        {
+          "term": "efficiency",
+          "score": 7.8529,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "codeagent",
+          "score": 0.1777,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 0.1333,
+          "evidence": []
+        },
+        {
+          "term": "qa-checker",
+          "score": 0.1304,
+          "evidence": []
+        },
+        {
+          "term": "review",
+          "score": 0.1128,
+          "evidence": []
+        },
+        {
+          "term": "agents",
+          "score": 0.1026,
+          "evidence": []
+        },
+        {
+          "term": "quality",
+          "score": 0.0967,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "code",
+          "score": 2.3818,
+          "evidence": []
+        },
+        {
+          "term": "agents",
+          "score": 2.113,
+          "evidence": []
+        },
+        {
+          "term": "review",
+          "score": 1.7464,
+          "evidence": []
+        },
+        {
+          "term": "lma",
+          "score": 1.6749,
+          "evidence": []
+        },
+        {
+          "term": "roles",
+          "score": 1.4585,
+          "evidence": []
+        },
+        {
+          "term": "codeagent",
+          "score": 1.3274,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "qa-checker",
+          "score": 0.1304,
+          "evidence": []
+        },
+        {
+          "term": "systems",
+          "score": 0.094,
+          "evidence": []
+        },
+        {
+          "term": "conversations",
+          "score": 0.0798,
+          "evidence": []
+        },
+        {
+          "term": "role",
+          "score": 0.0675,
+          "evidence": []
+        },
+        {
+          "term": "efficiency",
+          "score": 0.0568,
+          "evidence": []
+        },
+        {
+          "term": "tion",
+          "score": 0.054,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "positiveinteger",
+          "score": 63.8453,
+          "evidence": []
+        },
+        {
+          "term": "adept",
+          "score": 63.1896,
+          "evidence": []
+        },
+        {
+          "term": "cific",
+          "score": 59.1512,
+          "evidence": []
+        },
+        {
+          "term": "italian",
+          "score": 57.4117,
+          "evidence": []
+        },
+        {
+          "term": "indonesian",
+          "score": 56.2785,
+          "evidence": []
+        },
+        {
+          "term": "cooperates",
+          "score": 55.9588,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-023-conclusion": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "code review",
+          "score": 1.1003,
+          "evidence": []
+        },
+        {
+          "term": "codeagent",
+          "score": 1.0847,
+          "evidence": []
+        },
+        {
+          "term": "review tasks",
+          "score": 1.026,
+          "evidence": []
+        },
+        {
+          "term": "qa-checker",
+          "score": 0.7503,
+          "evidence": []
+        },
+        {
+          "term": "munication",
+          "score": 0.6308,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "codeagent",
+          "score": 18.6645,
+          "evidence": []
+        },
+        {
+          "term": "review tasks",
+          "score": 14.6088,
+          "evidence": []
+        },
+        {
+          "term": "code review",
+          "score": 14.0925,
+          "evidence": []
+        },
+        {
+          "term": "qa-checker",
+          "score": 10.0052,
+          "evidence": []
+        },
+        {
+          "term": "analysis",
+          "score": 7.9614,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "code review",
+          "score": 0.5423,
+          "evidence": []
+        },
+        {
+          "term": "codeagent",
+          "score": 0.4132,
+          "evidence": []
+        },
+        {
+          "term": "review tasks",
+          "score": 0.3411,
+          "evidence": []
+        },
+        {
+          "term": "qa-checker",
+          "score": 0.2438,
+          "evidence": []
+        },
+        {
+          "term": "codebert",
+          "score": 0.1819,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "code review",
+          "score": 11.8247,
+          "evidence": []
+        },
+        {
+          "term": "codeagent",
+          "score": 8.9921,
+          "evidence": []
+        },
+        {
+          "term": "review tasks",
+          "score": 5.1709,
+          "evidence": []
+        },
+        {
+          "term": "chatgpt",
+          "score": 4.3653,
+          "evidence": []
+        },
+        {
+          "term": "codebert",
+          "score": 3.5989,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "code review",
+          "score": 0.5423,
+          "evidence": []
+        },
+        {
+          "term": "codeagent",
+          "score": 0.4132,
+          "evidence": []
+        },
+        {
+          "term": "review tasks",
+          "score": 0.3411,
+          "evidence": []
+        },
+        {
+          "term": "qa-checker",
+          "score": 0.2438,
+          "evidence": []
+        },
+        {
+          "term": "consistency",
+          "score": 0.1387,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "codebert",
+          "score": 45.6616,
+          "evidence": []
+        },
+        {
+          "term": "chain-of",
+          "score": 44.7413,
+          "evidence": []
+        },
+        {
+          "term": "vulnerabili",
+          "score": 43.7116,
+          "evidence": []
+        },
+        {
+          "term": "rateavg",
+          "score": 39.7273,
+          "evidence": []
+        },
+        {
+          "term": "rateclose",
+          "score": 39.7273,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-024-dataset": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "closed com",
+          "score": 3.1707,
+          "evidence": []
+        },
+        {
+          "term": "sample count",
+          "score": 3.0775,
+          "evidence": []
+        },
+        {
+          "term": "both merged",
+          "score": 2.6237,
+          "evidence": []
+        },
+        {
+          "term": "recursive self-improvement",
+          "score": 2.0142,
+          "evidence": []
+        },
+        {
+          "term": "programming languages",
+          "score": 1.9662,
+          "evidence": []
+        },
+        {
+          "term": "neg ative",
+          "score": 1.9584,
+          "evidence": []
+        },
+        {
+          "term": "com mits",
+          "score": 1.8335,
+          "evidence": []
+        },
+        {
+          "term": "dataset",
+          "score": 1.6617,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "closed com",
+          "score": 141.5004,
+          "evidence": []
+        },
+        {
+          "term": "sample count",
+          "score": 129.7475,
+          "evidence": []
+        },
+        {
+          "term": "both merged",
+          "score": 128.5108,
+          "evidence": []
+        },
+        {
+          "term": "programming languages",
+          "score": 45.4608,
+          "evidence": []
+        },
+        {
+          "term": "dataset",
+          "score": 43.8778,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "across languages",
+          "score": 42.0688,
+          "evidence": []
+        },
+        {
+          "term": "recursive self-improvement",
+          "score": 32.7645,
+          "evidence": []
+        },
+        {
+          "term": "java",
+          "score": 31.8765,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "codeagent",
+          "score": 2.0519,
+          "evidence": []
+        },
+        {
+          "term": "closed com",
+          "score": 1.8555,
+          "evidence": []
+        },
+        {
+          "term": "across languages",
+          "score": 1.6705,
+          "evidence": []
+        },
+        {
+          "term": "both merged",
+          "score": 1.6406,
+          "evidence": []
+        },
+        {
+          "term": "programming languages",
+          "score": 1.535,
+          "evidence": []
+        },
+        {
+          "term": "dataset",
+          "score": 1.4529,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "codebert",
+          "score": 1.3949,
+          "evidence": []
+        },
+        {
+          "term": "code revision",
+          "score": 1.3057,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "closed com",
+          "score": 137.8756,
+          "evidence": []
+        },
+        {
+          "term": "both merged",
+          "score": 125.6776,
+          "evidence": []
+        },
+        {
+          "term": "sample count",
+          "score": 118.1519,
+          "evidence": []
+        },
+        {
+          "term": "dataset",
+          "score": 57.1748,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "programming languages",
+          "score": 49.1832,
+          "evidence": []
+        },
+        {
+          "term": "across languages",
+          "score": 46.7586,
+          "evidence": []
+        },
+        {
+          "term": "recursive self-improvement",
+          "score": 31.5027,
+          "evidence": []
+        },
+        {
+          "term": "java",
+          "score": 29.3066,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "codeagent",
+          "score": 2.0519,
+          "evidence": []
+        },
+        {
+          "term": "closed com",
+          "score": 1.8555,
+          "evidence": []
+        },
+        {
+          "term": "across languages",
+          "score": 1.6705,
+          "evidence": []
+        },
+        {
+          "term": "both merged",
+          "score": 1.6406,
+          "evidence": []
+        },
+        {
+          "term": "programming languages",
+          "score": 1.535,
+          "evidence": []
+        },
+        {
+          "term": "dataset",
+          "score": 1.4529,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "codebert",
+          "score": 1.3949,
+          "evidence": []
+        },
+        {
+          "term": "code revision",
+          "score": 1.3057,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "neg ative",
+          "score": 121.2345,
+          "evidence": []
+        },
+        {
+          "term": "codebert",
+          "score": 95.54,
+          "evidence": []
+        },
+        {
+          "term": "vulnerabili",
+          "score": 90.465,
+          "evidence": []
+        },
+        {
+          "term": "autotransformdata",
+          "score": 82.2211,
+          "evidence": []
+        },
+        {
+          "term": "recursive self-improvement",
+          "score": 82.1993,
+          "evidence": []
+        },
+        {
+          "term": "ruby",
+          "score": 80.7277,
+          "evidence": []
+        },
+        {
+          "term": "rateavg",
+          "score": 79.7313,
+          "evidence": []
+        },
+        {
+          "term": "rateclose",
+          "score": 79.7313,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-025-key-factors-leading-to-vulnerabilities": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "factors",
+          "score": 0.9764,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vulnerabilities",
+          "score": 0.7646,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "outlines",
+          "score": 0.4956,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "factors",
+          "score": 12.6694,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vulnerabilities",
+          "score": 7.5973,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "outlines",
+          "score": 5.5134,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "vulnerabilities",
+          "score": 0.0585,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "security",
+          "score": 0.0423,
+          "evidence": []
+        },
+        {
+          "term": "software",
+          "score": 0.0383,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "software",
+          "score": 0.5031,
+          "evidence": []
+        },
+        {
+          "term": "key",
+          "score": 0.4134,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "factors",
+          "score": 0.3659,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "vulnerabilities",
+          "score": 0.0585,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "security",
+          "score": 0.0423,
+          "evidence": []
+        },
+        {
+          "term": "software",
+          "score": 0.0383,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "h1n",
+          "score": 32.5732,
+          "evidence": []
+        },
+        {
+          "term": "preparedness",
+          "score": 26.6866,
+          "evidence": []
+        },
+        {
+          "term": "phii",
+          "score": 18.1093,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-026-data-leakage-statement": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "code review",
+          "score": 1.9716,
+          "evidence": []
+        },
+        {
+          "term": "codeagent pipeline",
+          "score": 1.9273,
+          "evidence": []
+        },
+        {
+          "term": "memory leaks",
+          "score": 1.8639,
+          "evidence": []
+        },
+        {
+          "term": "refined code",
+          "score": 1.832,
+          "evidence": []
+        },
+        {
+          "term": "allow unauthorized",
+          "score": 1.5477,
+          "evidence": []
+        },
+        {
+          "term": "detailed experimental",
+          "score": 1.4804,
+          "evidence": []
+        },
+        {
+          "term": "vulnerabilities",
+          "score": 1.4556,
+          "evidence": []
+        },
+        {
+          "term": "sensitive data",
+          "score": 1.4495,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "code review",
+          "score": 52.314,
+          "evidence": []
+        },
+        {
+          "term": "vulnerabilities",
+          "score": 49.3822,
+          "evidence": []
+        },
+        {
+          "term": "refined code",
+          "score": 41.716,
+          "evidence": []
+        },
+        {
+          "term": "codeagent pipeline",
+          "score": 39.7665,
+          "evidence": []
+        },
+        {
+          "term": "sensitive data",
+          "score": 30.7029,
+          "evidence": []
+        },
+        {
+          "term": "memory leaks",
+          "score": 30.2949,
+          "evidence": []
+        },
+        {
+          "term": "languages",
+          "score": 30.1855,
+          "evidence": []
+        },
+        {
+          "term": "qa-checker",
+          "score": 30.0156,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "codeagent pipeline",
+          "score": 1.9865,
+          "evidence": []
+        },
+        {
+          "term": "code review",
+          "score": 1.7813,
+          "evidence": []
+        },
+        {
+          "term": "refined code",
+          "score": 1.289,
+          "evidence": []
+        },
+        {
+          "term": "closed",
+          "score": 1.1177,
+          "evidence": []
+        },
+        {
+          "term": "merged",
+          "score": 1.0829,
+          "evidence": []
+        },
+        {
+          "term": "qa-checker",
+          "score": 1.0331,
+          "evidence": []
+        },
+        {
+          "term": "codebert",
+          "score": 0.9944,
+          "evidence": []
+        },
+        {
+          "term": "vulnerabilities",
+          "score": 0.9692,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "code review",
+          "score": 47.9719,
+          "evidence": []
+        },
+        {
+          "term": "codeagent pipeline",
+          "score": 32.8867,
+          "evidence": []
+        },
+        {
+          "term": "refined code",
+          "score": 31.6835,
+          "evidence": []
+        },
+        {
+          "term": "review document",
+          "score": 20.7447,
+          "evidence": []
+        },
+        {
+          "term": "closed",
+          "score": 18.7524,
+          "evidence": []
+        },
+        {
+          "term": "merged",
+          "score": 18.0432,
+          "evidence": []
+        },
+        {
+          "term": "commit",
+          "score": 12.6172,
+          "evidence": []
+        },
+        {
+          "term": "qa-checker",
+          "score": 11.1508,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "codeagent pipeline",
+          "score": 1.9865,
+          "evidence": []
+        },
+        {
+          "term": "code review",
+          "score": 1.7813,
+          "evidence": []
+        },
+        {
+          "term": "refined code",
+          "score": 1.289,
+          "evidence": []
+        },
+        {
+          "term": "closed",
+          "score": 1.1177,
+          "evidence": []
+        },
+        {
+          "term": "merged",
+          "score": 1.0829,
+          "evidence": []
+        },
+        {
+          "term": "qa-checker",
+          "score": 1.0331,
+          "evidence": []
+        },
+        {
+          "term": "vulnerabilities",
+          "score": 0.9692,
+          "evidence": []
+        },
+        {
+          "term": "review document",
+          "score": 0.9447,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "vulnerabili",
+          "score": 46.9667,
+          "evidence": []
+        },
+        {
+          "term": "codebert",
+          "score": 44.7944,
+          "evidence": []
+        },
+        {
+          "term": "rateavg",
+          "score": 43.7882,
+          "evidence": []
+        },
+        {
+          "term": "rateclose",
+          "score": 43.7882,
+          "evidence": []
+        },
+        {
+          "term": "ratemerge",
+          "score": 43.7882,
+          "evidence": []
+        },
+        {
+          "term": "ssrf",
+          "score": 42.2395,
+          "evidence": []
+        },
+        {
+          "term": "chain-of",
+          "score": 40.6154,
+          "evidence": []
+        },
+        {
+          "term": "forgery",
+          "score": 36.8662,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-028-performance-on-9-languages": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "codeagent",
+          "score": 1.5519,
+          "evidence": []
+        },
+        {
+          "term": "commit",
+          "score": 0.7984,
+          "evidence": []
+        },
+        {
+          "term": "diffs",
+          "score": 0.6308,
+          "evidence": []
+        },
+        {
+          "term": "planation",
+          "score": 0.6308,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "codeagent",
+          "score": 41.9952,
+          "evidence": []
+        },
+        {
+          "term": "commit",
+          "score": 8.7569,
+          "evidence": []
+        },
+        {
+          "term": "lines",
+          "score": 7.8989,
+          "evidence": []
+        },
+        {
+          "term": "difference",
+          "score": 7.5188,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "codeagent",
+          "score": 0.4701,
+          "evidence": []
+        },
+        {
+          "term": "languages",
+          "score": 0.3594,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "code",
+          "score": 0.2585,
+          "evidence": []
+        },
+        {
+          "term": "codebert",
+          "score": 0.2431,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "codeagent",
+          "score": 17.1055,
+          "evidence": []
+        },
+        {
+          "term": "chatgpt",
+          "score": 12.4535,
+          "evidence": []
+        },
+        {
+          "term": "codebert",
+          "score": 9.3334,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 7.4871,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "codeagent",
+          "score": 0.4701,
+          "evidence": []
+        },
+        {
+          "term": "languages",
+          "score": 0.3594,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "code",
+          "score": 0.2585,
+          "evidence": []
+        },
+        {
+          "term": "commit",
+          "score": 0.2039,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "vulnerabili",
+          "score": 134.903,
+          "evidence": []
+        },
+        {
+          "term": "codebert",
+          "score": 133.8206,
+          "evidence": []
+        },
+        {
+          "term": "rateavg",
+          "score": 120.6265,
+          "evidence": []
+        },
+        {
+          "term": "rateclose",
+          "score": 120.6265,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-029-ablation-study": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "chatgpt",
+          "score": 3.1524,
+          "evidence": []
+        },
+        {
+          "term": "codebert",
+          "score": 2.9979,
+          "evidence": []
+        },
+        {
+          "term": "codeagent",
+          "score": 2.7367,
+          "evidence": []
+        },
+        {
+          "term": "confirmed divided",
+          "score": 2.2986,
+          "evidence": []
+        },
+        {
+          "term": "merged data",
+          "score": 1.9029,
+          "evidence": []
+        },
+        {
+          "term": "recall",
+          "score": 1.8704,
+          "evidence": []
+        },
+        {
+          "term": "closed data",
+          "score": 1.852,
+          "evidence": []
+        },
+        {
+          "term": "vulnerabili ties",
+          "score": 1.7537,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "chatgpt",
+          "score": 317.8668,
+          "evidence": []
+        },
+        {
+          "term": "codeagent",
+          "score": 265.9695,
+          "evidence": []
+        },
+        {
+          "term": "codebert",
+          "score": 203.9969,
+          "evidence": []
+        },
+        {
+          "term": "recall",
+          "score": 118.9416,
+          "evidence": []
+        },
+        {
+          "term": "scores",
+          "score": 112.5247,
+          "evidence": []
+        },
+        {
+          "term": "confirmed divided",
+          "score": 52.9798,
+          "evidence": []
+        },
+        {
+          "term": "merged data",
+          "score": 47.6751,
+          "evidence": []
+        },
+        {
+          "term": "ruby",
+          "score": 44.1074,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "codeagent",
+          "score": 2.0232,
+          "evidence": []
+        },
+        {
+          "term": "merged data",
+          "score": 1.7982,
+          "evidence": []
+        },
+        {
+          "term": "closed data",
+          "score": 1.7908,
+          "evidence": []
+        },
+        {
+          "term": "across languages",
+          "score": 1.5966,
+          "evidence": []
+        },
+        {
+          "term": "codebert",
+          "score": 1.5213,
+          "evidence": []
+        },
+        {
+          "term": "recall",
+          "score": 1.0628,
+          "evidence": []
+        },
+        {
+          "term": "confirmed divided",
+          "score": 1.0176,
+          "evidence": []
+        },
+        {
+          "term": "chatgpt",
+          "score": 1.0071,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "chatgpt",
+          "score": 302.8394,
+          "evidence": []
+        },
+        {
+          "term": "codeagent",
+          "score": 277.1302,
+          "evidence": []
+        },
+        {
+          "term": "codebert",
+          "score": 206.9402,
+          "evidence": []
+        },
+        {
+          "term": "recall",
+          "score": 121.6599,
+          "evidence": []
+        },
+        {
+          "term": "scores",
+          "score": 108.2956,
+          "evidence": []
+        },
+        {
+          "term": "confirmed divided",
+          "score": 55.1218,
+          "evidence": []
+        },
+        {
+          "term": "merged data",
+          "score": 47.0927,
+          "evidence": []
+        },
+        {
+          "term": "across languages",
+          "score": 45.7068,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "codeagent",
+          "score": 2.0232,
+          "evidence": []
+        },
+        {
+          "term": "merged data",
+          "score": 1.7982,
+          "evidence": []
+        },
+        {
+          "term": "closed data",
+          "score": 1.7908,
+          "evidence": []
+        },
+        {
+          "term": "across languages",
+          "score": 1.5966,
+          "evidence": []
+        },
+        {
+          "term": "codebert",
+          "score": 1.5213,
+          "evidence": []
+        },
+        {
+          "term": "recall",
+          "score": 1.0628,
+          "evidence": []
+        },
+        {
+          "term": "confirmed divided",
+          "score": 1.0176,
+          "evidence": []
+        },
+        {
+          "term": "chatgpt",
+          "score": 1.0071,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "vulnerabili ties",
+          "score": 482.1179,
+          "evidence": []
+        },
+        {
+          "term": "codebert",
+          "score": 396.6623,
+          "evidence": []
+        },
+        {
+          "term": "rateavg",
+          "score": 342.5267,
+          "evidence": []
+        },
+        {
+          "term": "rateclose",
+          "score": 342.5267,
+          "evidence": []
+        },
+        {
+          "term": "ratemerge",
+          "score": 342.5267,
+          "evidence": []
+        },
+        {
+          "term": "chatgpt",
+          "score": 320.7864,
+          "evidence": []
+        },
+        {
+          "term": "chain-of",
+          "score": 306.6387,
+          "evidence": []
+        },
+        {
+          "term": "viding",
+          "score": 285.3954,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-030-cost-statement": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "parsed args",
+          "score": 5.9314,
+          "evidence": []
+        },
+        {
+          "term": "args null",
+          "score": 5.0002,
+          "evidence": []
+        },
+        {
+          "term": "commit message",
+          "score": 4.9255,
+          "evidence": []
+        },
+        {
+          "term": "meta args",
+          "score": 4.8572,
+          "evidence": []
+        },
+        {
+          "term": "get posts",
+          "score": 4.7014,
+          "evidence": []
+        },
+        {
+          "term": "parse args",
+          "score": 4.2901,
+          "evidence": []
+        },
+        {
+          "term": "posts query",
+          "score": 4.2458,
+          "evidence": []
+        },
+        {
+          "term": "info self",
+          "score": 4.2139,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "commit message",
+          "score": 412.9853,
+          "evidence": []
+        },
+        {
+          "term": "parsed args",
+          "score": 403.5991,
+          "evidence": []
+        },
+        {
+          "term": "meta args",
+          "score": 344.3505,
+          "evidence": []
+        },
+        {
+          "term": "args null",
+          "score": 328.4833,
+          "evidence": []
+        },
+        {
+          "term": "get post",
+          "score": 327.4344,
+          "evidence": []
+        },
+        {
+          "term": "parse args",
+          "score": 294.0696,
+          "evidence": []
+        },
+        {
+          "term": "code changes",
+          "score": 293.4721,
+          "evidence": []
+        },
+        {
+          "term": "code formatting",
+          "score": 280.2445,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "parsed args",
+          "score": 5.7888,
+          "evidence": []
+        },
+        {
+          "term": "commit message",
+          "score": 4.966,
+          "evidence": []
+        },
+        {
+          "term": "args null",
+          "score": 4.9142,
+          "evidence": []
+        },
+        {
+          "term": "meta args",
+          "score": 4.7779,
+          "evidence": []
+        },
+        {
+          "term": "get posts",
+          "score": 4.6499,
+          "evidence": []
+        },
+        {
+          "term": "info self",
+          "score": 4.2949,
+          "evidence": []
+        },
+        {
+          "term": "parse args",
+          "score": 4.222,
+          "evidence": []
+        },
+        {
+          "term": "posts query",
+          "score": 4.1042,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "commit message",
+          "score": 413.5297,
+          "evidence": []
+        },
+        {
+          "term": "parsed args",
+          "score": 401.9503,
+          "evidence": []
+        },
+        {
+          "term": "meta args",
+          "score": 343.1478,
+          "evidence": []
+        },
+        {
+          "term": "get post",
+          "score": 328.5958,
+          "evidence": []
+        },
+        {
+          "term": "args null",
+          "score": 327.1879,
+          "evidence": []
+        },
+        {
+          "term": "code changes",
+          "score": 293.9461,
+          "evidence": []
+        },
+        {
+          "term": "parse args",
+          "score": 292.971,
+          "evidence": []
+        },
+        {
+          "term": "code formatting",
+          "score": 280.3289,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "parsed args",
+          "score": 5.7888,
+          "evidence": []
+        },
+        {
+          "term": "commit message",
+          "score": 4.966,
+          "evidence": []
+        },
+        {
+          "term": "args null",
+          "score": 4.9142,
+          "evidence": []
+        },
+        {
+          "term": "meta args",
+          "score": 4.7779,
+          "evidence": []
+        },
+        {
+          "term": "get posts",
+          "score": 4.6499,
+          "evidence": []
+        },
+        {
+          "term": "info self",
+          "score": 4.2949,
+          "evidence": []
+        },
+        {
+          "term": "parse args",
+          "score": 4.222,
+          "evidence": []
+        },
+        {
+          "term": "posts query",
+          "score": 4.1042,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "parsed args",
+          "score": 117.65,
+          "evidence": []
+        },
+        {
+          "term": "formatting inconsistencies",
+          "score": 97.2576,
+          "evidence": []
+        },
+        {
+          "term": "code leakages",
+          "score": 81.6961,
+          "evidence": []
+        },
+        {
+          "term": "spacing",
+          "score": 78.2372,
+          "evidence": []
+        },
+        {
+          "term": "spacing throughout",
+          "score": 78.2372,
+          "evidence": []
+        },
+        {
+          "term": "xss",
+          "score": 78.015,
+          "evidence": []
+        },
+        {
+          "term": "get posts",
+          "score": 77.8541,
+          "evidence": []
+        },
+        {
+          "term": "attachment parsed",
+          "score": 77.5683,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}
