@@ -1,0 +1,28 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2023/bootstrap-tools/bootstrap-tools.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2023/bootstrap-tools/schema/model-registry.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2023/bootstrap-tools/bootstrap-tools.jsonld",
+  "staging": {
+    "branch": "repin-train/20261112-2023",
+    "sha": "032a72f7a0857229153b7b1e08350f021bfd6c1b",
+    "pr": "repin-train/20261112-2023",
+    "run": "43300207068"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2023/bootstrap-tools/schema/model-registry",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "model-registry",
+      "title": "model-registry",
+      "summary": "Which languages a MODEL is good at, and whether anybody checked.",
+      "module": "schemas/model-registry.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2023/bootstrap-tools/directory/bootstrap-tools-schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/model-registry",
+      "jsonSchema": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2023/bootstrap-tools/schema/zod/model-registry/ModelEntrySchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2023/bootstrap-tools/schema/zod/model-registry/ModelIdSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2023/bootstrap-tools/schema/zod/model-registry/ModelRegistrySchema.schema.json"
+      ]
+    }
+  ]
+}

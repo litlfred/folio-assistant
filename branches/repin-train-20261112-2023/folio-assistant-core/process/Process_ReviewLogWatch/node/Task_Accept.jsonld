@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2023/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2023/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_Accept.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2023/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "repin-train/20261112-2023",
+    "sha": "032a72f7a0857229153b7b1e08350f021bfd6c1b",
+    "pr": "repin-train/20261112-2023",
+    "run": "43300207068"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2023/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_Accept",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Accept the new state",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2023/folio-assistant-core/process/Process_ReviewLogWatch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2023/folio-assistant-core/process/Process_ReviewLogWatch/lane/Lane_Watcher",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2023/folio-assistant-core/skill/review-log-watch"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2023/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF10"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2023/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF08"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-2023/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_Accept"
+    }
+  ]
+}

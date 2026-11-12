@@ -1,0 +1,3183 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Tools — folio-assistant-core",
+    "version": "0.1.0",
+    "description": "The call contracts of the harness's Tools, one operation per Tool, generated from the Tool nodes (`schemas/tools/tool.ts`) so standard API tooling can read them. **No HTTP server serves these paths**: each Tool is reached as its `x-invoke` says — a command line, an MCP tool, or an in-process call. Tags are the skills each Tool satisfies."
+  },
+  "servers": [],
+  "tags": [
+    {
+      "name": "block-actions"
+    },
+    {
+      "name": "diff"
+    },
+    {
+      "name": "document-intake"
+    },
+    {
+      "name": "dsa-catalogue-status"
+    },
+    {
+      "name": "dsa-checksum"
+    },
+    {
+      "name": "dsa-dcat-record"
+    },
+    {
+      "name": "dsa-odrl-source"
+    },
+    {
+      "name": "dublin-core-renderings"
+    },
+    {
+      "name": "figure-rebuild"
+    },
+    {
+      "name": "filing-dublin-core"
+    },
+    {
+      "name": "glossary-terms"
+    },
+    {
+      "name": "graph-rendering"
+    },
+    {
+      "name": "l1-coverage"
+    },
+    {
+      "name": "l1-document-ingestion"
+    },
+    {
+      "name": "mesh-subject-indexing"
+    },
+    {
+      "name": "ontologist"
+    },
+    {
+      "name": "public-comment"
+    },
+    {
+      "name": "publish-extracted-statements"
+    },
+    {
+      "name": "review-comments"
+    },
+    {
+      "name": "review-heatmap"
+    },
+    {
+      "name": "review-log-watch"
+    },
+    {
+      "name": "review-sheet-script"
+    },
+    {
+      "name": "staging-review"
+    },
+    {
+      "name": "tabular-metadata"
+    },
+    {
+      "name": "visual-diff"
+    }
+  ],
+  "paths": {
+    "/tools/archimate-from-glossary": {
+      "post": {
+        "operationId": "archimate-from-glossary",
+        "summary": "ArchiMate model from the glossary",
+        "description": "Make an ArchiMate model agree with the instance's folio-glossary/v1 terms whose `focus` is an ArchiMate element: elements matched by their `skosConcept` property (never by name) take the term's prefLabel and definition, a term with no element gets one on no view, and the relationships the terms list are added. A type that disagrees is reported, never changed. A relationship between two linked elements that no term lists is reported, and removed with `--prune` along with the lines that draw it. No box or line is moved. Without `--write` it only reports; `--check` fails when anything would change. `--seed` goes the other way once, and only from an ingested model held under `library/` (`--from`): an authored model is never a source of the glossary.",
+        "tags": [
+          "graph-rendering"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "archimate-from-glossary/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "instance": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The instance root holding `glossary/*.glossary.json` and `archimate/cat-archimate.config.json`."
+                  },
+                  "model": {
+                    "$ref": "#/components/schemas/ArchimateModelId",
+                    "description": "The model's id in the ArchiMate config. Required except with `--seed --from`."
+                  },
+                  "write": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Write the changes into the model file."
+                  },
+                  "prune": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Also remove relationships between linked elements that no term lists."
+                  },
+                  "seed": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Once: give linked terms without a focus the element type and relationships of an INGESTED model (under `library/`). Refused for an authored model."
+                  },
+                  "from": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "With `--seed`: the ingested model file, under the instance's `library/`."
+                  },
+                  "check": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Fail if the model and the graph disagree."
+                  }
+                },
+                "required": [
+                  "instance"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "model": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "The model file, rewritten in place with `--write`."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/archimate-from-glossary.jsonld",
+        "x-invoke": {
+          "shell": "bun run cat archimate:from-glossary"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "graph-rendering"
+        ]
+      }
+    },
+    "/tools/bibliography-page": {
+      "post": {
+        "operationId": "bibliography-page",
+        "summary": "Bibliography page",
+        "description": "Render every reference in the checkout (each declared `references` directory's folio-reference/v1 nodes and each `catalogue` directory's Dublin Core records) as the bibliography page and one page per sub-graph, each with its BibTeX, CSL-JSON, RIS and Dublin Core JSON-LD exports and a per-reference export, at the route of the visualiser core declares for it.",
+        "tags": [
+          "graph-rendering"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "bibliography-page/"
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "check": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Fail if a page or export is stale, instead of writing."
+                  },
+                  "site": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "A site being built: write the pages at their declared route under it instead of under cat-harness's docs, as a repository's own site build does (`visualiser-writers.ts`)."
+                  },
+                  "scope": {
+                    "$ref": "#/components/schemas/IdList",
+                    "description": "A scoped site build: the comma-separated instances whose pages this writer writes (the IG and the layer it lands on); every other instance's pages are linked on that layer's own site. Passed by the tools layer's `visualiser-writers.ts` (owner, 2026-11-08, Q-SZ-2 \"B\"). Absent: every instance."
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "pages": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "The bibliography pages and their exports, under the published site directory."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/bibliography-page.jsonld",
+        "x-invoke": {
+          "shell": "bun run cat bibliography:page"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "graph-rendering"
+        ]
+      }
+    },
+    "/tools/block-actions": {
+      "post": {
+        "operationId": "block-actions",
+        "summary": "Block edit and feedback links",
+        "description": "Each labelled block's links back to where it can be changed: [edit] opens the block's Markdown source in GitHub's editor on `main`, and [feedback] opens a new GitHub issue about the block, from the folio's `.github/ISSUE_TEMPLATE/block-feedback.yml` when it has one (prefilling only the fields it declares: block, section, source, page, url) or as a plain issue whose body carries the same facts. The document build draws these on every block; this Tool prints them as JSON for one block or all. Governed by the `block-actions` skill.",
+        "tags": [
+          "block-actions"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "block-actions/"
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "repo": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The folio's repository root. Default: the working directory."
+                  },
+                  "block": {
+                    "$ref": "#/components/schemas/NodeId",
+                    "description": "One block's label. Absent: every block of every document. A label no block has exits 1."
+                  },
+                  "github": {
+                    "$ref": "#/components/schemas/RepoFullName",
+                    "description": "`owner/name` on GitHub. Default `GITHUB_REPOSITORY`, else the checkout's `origin`. None at all exits 2: no links rather than broken ones."
+                  },
+                  "edit-branch": {
+                    "$ref": "#/components/schemas/Branch",
+                    "description": "The branch [edit] opens. Default `main`."
+                  },
+                  "issue-template": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The issue form's file name under `.github/ISSUE_TEMPLATE/`. Default `block-feedback.yml`, used only if the folio has it."
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "links": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "JSON on stdout: one `{ label, source, section, edit, feedback }` per block. A one-line summary goes to stderr."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/block-actions.jsonld",
+        "x-invoke": {
+          "shell": "bun run folio-assistant-core/scripts/block-actions.ts"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "block-actions"
+        ],
+        "x-selection": {
+          "when": "A reader, reviewer or agent wants to propose a change to, or give feedback on, one block of a document folio, and needs the link that lands on that block rather than on the repository.",
+          "limits": "Builds URLs; it writes nothing to GitHub. Only labelled blocks get links. The issue form's fields are read by a line scan for `id:`, so a form must declare its ids plainly.",
+          "cost": "Milliseconds: one walk of the document manifests. No network."
+        }
+      }
+    },
+    "/tools/c-value-terms": {
+      "post": {
+        "operationId": "c-value-terms",
+        "summary": "Rank candidate glossary terms in prose by C-value",
+        "description": "The scoring step of the `automatic-term-extraction` method: count the word n-grams of one or more Markdown or text files (not across punctuation, front matter or code), and rank them by C-value as Frantzi & Ananiadou 1996 define it, so nested multi-word terms are not swamped by the longer phrases that contain them. Tested against the paper's own worked example (Table 2). Every row is a candidate; it writes nothing and promotes nothing.",
+        "tags": [
+          "glossary-terms",
+          "ontologist"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "c-value-terms/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "files": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "One or more Markdown or text files whose prose is read."
+                  },
+                  "maxLength": {
+                    "$ref": "#/components/schemas/Count",
+                    "description": "Longest n-gram, in words; 1 or more. Default 5."
+                  },
+                  "minFreq": {
+                    "$ref": "#/components/schemas/Count",
+                    "description": "Fewest occurrences an n-gram needs to be scored. Default 3, the paper's cut-off; 1 or more."
+                  },
+                  "top": {
+                    "$ref": "#/components/schemas/Count",
+                    "description": "How many candidates to print; 1 or more. Default 50."
+                  },
+                  "edgeStopwords": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Drop n-grams that begin or end with a common English function word. Off by default, because the 1996 method has no such filter."
+                  },
+                  "json": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Print the candidates as JSON, each with its frequency, nesting counts and C-value."
+                  }
+                },
+                "required": [
+                  "files"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "candidates": {
+                      "$ref": "#/components/schemas/Text",
+                      "description": "A ranked table, or JSON with `status: candidate`, of n-grams with a C-value above 0."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/c-value-terms.jsonld",
+        "x-invoke": {
+          "shell": "bun run folio-assistant-core/scripts/c-value.ts"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "glossary-terms",
+          "ontologist"
+        ],
+        "x-selection": {
+          "when": "A person or agent wants candidate glossary terms from a body of prose, ranked, to review before writing any definitions.",
+          "limits": "Statistics only, as the 1996 paper: no part-of-speech filter (the later C-value papers that add one are not held), English word splitting, and no reference corpus. On ordinary prose without --edge-stopwords the top rows are function phrases. A person decides what is a term.",
+          "cost": "Milliseconds for a chapter; linear in words times --max-length. No network."
+        }
+      }
+    },
+    "/tools/catalogue-from-references": {
+      "post": {
+        "operationId": "catalogue-from-references",
+        "summary": "Catalogue a library from its bibliography",
+        "description": "Write one `folio-dublin-core/v1` record and one `folio-catalogue-node/v1` item per library entry that the source ledger joins to a CSL-JSON reference, into the folio's declared `catalogue` directory, so `gen-library-jsonld` reads the title from the catalogue's `dc.title` instead of falling to the PDF or the slug. The join is exact: a ledger row naming the entry's `structure.json` source file, one reference id, and the same sha256 where both record one. Unjoined entries are reported and left alone. Never touches a node it did not write.",
+        "tags": [
+          "filing-dublin-core"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "catalogue-from-references/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "instance": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The folio instance's root. It must declare a `catalogue` and a `library` directory."
+                  },
+                  "apply": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Write the records and nodes, and remove this tool's stale ones. Without it the run is a dry run."
+                  },
+                  "check": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Write nothing. Exit 1 if any record or node on disk differs from what the bibliography gives."
+                  },
+                  "json": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Print the plan as JSON."
+                  },
+                  "baseUrl": {
+                    "$ref": "#/components/schemas/Url",
+                    "description": "Where the bibliography is published. With `--apply`, writes `catalogue.json` when the catalogue directory has none; without it such a run is refused."
+                  }
+                },
+                "required": [
+                  "instance"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "catalogue": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "`<catalogue>/records/<slug>.dc.json` and `<catalogue>/nodes/item-<slug>.json` per joined entry; `catalogue.json` when absent and `--base-url` is given. A summary of joined and left-alone entries goes to stdout."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/catalogue-from-references.jsonld",
+        "x-invoke": {
+          "shell": "bun run folio-assistant-core/scripts/catalogue-from-references.ts"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "filing-dublin-core"
+        ],
+        "x-selection": {
+          "when": "A folio keeps its bibliography as CSL-JSON and a source ledger, has no catalogue, and its library titles fall to `slug` or the PDF.",
+          "limits": "Bibliographic layer only. Every publication gate is written `unknown`: it records what the bibliography says and decides no licence. Entries the ledger does not join to exactly one reference are left alone, never guessed.",
+          "cost": "Milliseconds per entry. Reads the bibliography, the ledger and each entry's structure.json; no network."
+        }
+      }
+    },
+    "/tools/check-dsa-hash": {
+      "post": {
+        "operationId": "check-dsa-hash",
+        "summary": "Verify Data Sharing Agreement hash, citation, and vocabulary terms",
+        "description": "Verify a Data Sharing Agreement (DSA) directory or single version: checks that every JSON-LD term in `agreement.jsonld` and `dcat.jsonld` is defined in the SHA-256-pinned official W3C ODRL 2.2, W3C DCAT 3 (with SPDX 2.2.2 and ADMS), or DCMI Metadata Terms contexts; checks that the ODRL 2.2 Agreement's `uid` is the version's fixed-version URL and its `dcterms:source` cites the DCAT 3 `dcat:Distribution` whose `spdx:checksum` is checked; verifies that the SHA-256 digest of `agreement.md` matches `spdx:checksumValue`; and checks `dcat:previousVersion` and hash distinctness across versions.",
+        "tags": [
+          "dsa-checksum",
+          "dsa-odrl-source",
+          "dsa-dcat-record",
+          "dsa-catalogue-status"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "check-dsa-hash/"
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "dir": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Path to a versioned DSA directory (holding `v1/`, `v2/`, ...) or a single version directory holding `agreement.md`, `dcat.jsonld`, and `agreement.jsonld`. Defaults to `folio-assistant-core/scripts/test-fixtures/dsa`."
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "verdict": {
+                      "$ref": "#/components/schemas/Text",
+                      "description": "Per-version verification line (`dcat:version`, `dcat:downloadURL`, `sha256`) on stdout when valid; diagnostic findings on stderr with exit code 1 when any check fails."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/check-dsa-hash.jsonld",
+        "x-invoke": {
+          "shell": "bun run folio-assistant-core/scripts/check-dsa-hash.ts"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "dsa-checksum",
+          "dsa-odrl-source",
+          "dsa-dcat-record",
+          "dsa-catalogue-status"
+        ],
+        "x-selection": {
+          "when": "Verifying a Data Sharing Agreement's checksum, ODRL citation, DCAT 3 record and `dcat:previousVersion` chain, or `adms:status`.",
+          "limits": "Checks structural, cryptographic, and vocabulary conformance of `agreement.md`, `dcat.jsonld`, and `agreement.jsonld`; does not evaluate legal prose semantics or sign Verifiable Credentials.",
+          "cost": "Local file reads and SHA-256 hashing; runs in milliseconds with no network access."
+        }
+      }
+    },
+    "/tools/diig-phases-svg": {
+      "post": {
+        "operationId": "diig-phases-svg",
+        "summary": "DIIG phases, steps and resources chart",
+        "description": "Draw a DIIG \"phases, steps and resources\" chart as SVG from `diig-phases-figure/v1` data on a who-iris library entry (DIIG Fig. 1.1.1, or a handbook's republished version such as the product catalogue handbook's Fig. 4), or from a folio's `diig-phases-adaptation/v1` file that adds its own tiles and marks itself \"(this document)\". Every label comes from the data; tiles link to their library entry or glossary concept.",
+        "tags": [
+          "figure-rebuild"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "diig-phases-svg/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "figure-or-adaptation": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "A diig-phases-figure/v1 file, or a diig-phases-adaptation/v1 file whose `adapts` is a repository-root path to one."
+                  },
+                  "out": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Where to write the SVG; stdout when absent."
+                  }
+                },
+                "required": [
+                  "figure-or-adaptation"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "svg": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "The chart, with text as SVG text, one `<g id=\"tile-<resource>\">` per tile."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/diig-phases-svg.jsonld",
+        "x-invoke": {
+          "shell": "bun run folio-assistant-core/scripts/diig-phases-svg.ts"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "figure-rebuild"
+        ],
+        "x-selection": {
+          "when": "A folio shows the DIIG phases chart (every Digital Transformation Handbook does) and should draw it from the one transcription instead of a picture or a hand-kept copy.",
+          "limits": "Draws the seven-row DIIG layout only. Whether the transcription matches the published figure is a person's review of the data.",
+          "cost": "Reads one or two JSON files; no network."
+        }
+      }
+    },
+    "/tools/dublin-core-render": {
+      "post": {
+        "operationId": "dublin-core-render",
+        "summary": "Dublin Core renderings",
+        "description": "Render every `folio-dublin-core/v1` record a catalogue item names as Dublin Core XML (qualified DC, per DCMI's XML guidelines) and as JSON-LD bound to DCMI Metadata Terms. Both are written into the instance's published root (`<instanceRoot>/dublin-core/<stem>.dc.xml` and `.dc.jsonld`), so the site mount publishes them beside the item pages. Deterministic. `--check` fails on a missing, stale or orphaned rendering. Governed by the `dublin-core-renderings` skill.",
+        "tags": [
+          "dublin-core-renderings"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "dublin-core-render/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "instance": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The catalogue instance's root, e.g. an IRIS mirror's directory. It must hold `catalogue/catalogue.json` and declare a directory with `instanceRoot: true`."
+                  },
+                  "check": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Write nothing. Exit 1 if any rendering is missing, stale or orphaned."
+                  }
+                },
+                "required": [
+                  "instance"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "renderings": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "`<published root>/dublin-core/`: one `.dc.xml` and one `.dc.jsonld` per record. A one-line summary goes to stdout."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/dublin-core-render.jsonld",
+        "x-invoke": {
+          "shell": "bun run folio-assistant-core/scripts/dc-render.ts"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "dublin-core-renderings"
+        ],
+        "x-selection": {
+          "when": "A catalogue record changed, a catalogue item was added or removed, or the DCMI mapping changed. The renderings must then be regenerated before the gate passes.",
+          "limits": "Renders only records a catalogue item names. Fields with no DCMI term keep a minted predicate in JSON-LD and are reduced to their DC element in XML. A non-`dc` schema field cannot appear in XML at all, and is listed in a header comment. Not OAI-PMH `oai_dc`.",
+          "cost": "Milliseconds per record. Reads the catalogue nodes and records; no network."
+        }
+      }
+    },
+    "/tools/figure-coverage": {
+      "post": {
+        "operationId": "figure-coverage",
+        "summary": "Figure coverage and computability",
+        "description": "For every figure a source publication declares, report whether the folio built from it has a block and how computable it is: missing, excluded (signed off), picture (a PNG crop), linked (a picture linked to a model view), computable (a diagram, a table or a figure rebuilt by ArchiMate, BPMN, DMN, Mermaid, a class diagram or a generator), or cited (a picture kept on purpose, signed off). Exits non-zero when any declared figure is missing; `--require-computable` also fails on pictures, linked or not.",
+        "tags": [
+          "figure-rebuild"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "figure-coverage/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "entry": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The L1 library entry directory; its `sections/*.md` give the declared figures, read with cat-harness-tools `declaredFigureCaptions`."
+                  },
+                  "folio": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The folio's document directory; every figure, diagram and table block naming a figure is read."
+                  },
+                  "exclusions": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "JSON `[{figure, scope: block|rebuild, reason, signedOffBy?, signedOffAt?}]`. Without `signedOffBy` an exclusion is a proposal and does not count."
+                  },
+                  "out": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Where to write the report; stdout when absent."
+                  }
+                },
+                "required": [
+                  "entry",
+                  "folio"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "report": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "A `figure-coverage-report/v1` JSON report: declared count, counts per state, one row per figure with its blocks, blocks naming undeclared figures, and problems. A per-figure table goes to stderr."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/figure-coverage.jsonld",
+        "x-invoke": {
+          "shell": "bun run folio-assistant-core/scripts/figure-coverage.ts"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "figure-rebuild"
+        ],
+        "x-selection": {
+          "when": "A folio has been seeded from an L1 library entry (for example a Digital Transformation Handbook), and somebody needs to know that every figure the publication declares has a block, and which are still only pictures.",
+          "limits": "Figure numbers come from block captions and the first line of each block's Markdown. Whether a rebuild is faithful is a person's review, not this check.",
+          "cost": "Reads an entry's sections and a folio's blocks; no network."
+        }
+      }
+    },
+    "/tools/folio-block-qa-summary": {
+      "post": {
+        "operationId": "folio-block-qa-summary",
+        "summary": "Folio block QA summary",
+        "description": "Summarise a folio's committed per-block QA verdicts into one `block-qa.json` a staging preview publishes: each block is failing (a FRESH verdict failed, with the worst severity), stale (a verdict predates the block's current files), passing, or unaudited. Freshness is the QA sweep's own rule, including the uses-graph hash for graph-scoped criteria. Runs no checker and writes no verdict.",
+        "tags": [
+          "review-heatmap"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "folio-block-qa-summary/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "folio": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The folio's `folio` graph directory."
+                  },
+                  "out": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Where to write `block-qa.json`."
+                  },
+                  "repo": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The folio's instance root, where verdicts are anchored. Default: found from `folio` exactly as the QA sweep finds it."
+                  }
+                },
+                "required": [
+                  "folio",
+                  "out"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "block-qa": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "A `folio-block-qa-summary/v1` file keyed by block label. Its counts go to stderr."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/folio-block-qa-summary.jsonld",
+        "x-invoke": {
+          "shell": "bun run cat block-qa:publish"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "review-heatmap"
+        ],
+        "x-selection": {
+          "when": "A staging preview is being built and its review page's heat map should show QA per section, from what the folio's QA sweep last recorded.",
+          "limits": "Reports the LAST sweep: in a staging build, the sweep the job ran just before it; otherwise the committed verdicts. A folio never swept reads unaudited throughout. Verdicts are read at the instance root, so a folio in a subfolder is read at its own root, then in the folio directory.",
+          "cost": "One text walk of the folio and one read per sidecar. No network."
+        }
+      }
+    },
+    "/tools/folio-block-screenshots": {
+      "post": {
+        "operationId": "folio-block-screenshots",
+        "summary": "Folio block screenshots",
+        "description": "Picture each changed figure, diagram, table, equation or simulator block on the published main site and on a staging build, and compare the two pictures pixel by pixel in Chromium's canvas. Writes `visual-diff.json` (`folio-visual-diff/v1`: per block, the share of pixels changed beyond anti-aliasing, and the before, after and diff pictures) and `visual/*.png`, which the review page's visual renderer shows. A side that cannot be pictured (page or anchor missing) is recorded as missing, never drawn blank. Drives Chromium through Playwright.",
+        "tags": [
+          "visual-diff"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "folio-block-screenshots/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "changeset": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The preview's `changeset.json`: which blocks changed, and their kind on each side."
+                  },
+                  "base": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The published main site, as a directory (the publish branch's root)."
+                  },
+                  "head": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The staging build's site directory."
+                  },
+                  "out": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Where to write `visual-diff.json` and `visual/`: the site root, so the review page finds them."
+                  },
+                  "count": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Print how many changed blocks would be pictured, and stop, so a caller installs a browser only when there is work."
+                  }
+                },
+                "required": [
+                  "changeset"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "visual-diff": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "`<out>/visual-diff.json` and `<out>/visual/*.png`. A per-block summary goes to stderr."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/folio-block-screenshots.jsonld",
+        "x-invoke": {
+          "shell": "bun run cat block:screenshots"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun",
+            "chromium"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "visual-diff"
+        ],
+        "x-selection": {
+          "when": "A staging build changed a figure, diagram, table, equation or simulator, whose markup diff says little, and the reviewer needs to see before and after.",
+          "limits": "The number is how MUCH changed, never whether the change is right. A block's picture is its anchor down to the next anchor, so a page whose anchors are missing or misplaced pictures the wrong region. Pictures are of the light theme.",
+          "cost": "A Chromium launch and two page loads, one screenshot and one canvas compare per visual block. Nothing when no visual block changed."
+        }
+      }
+    },
+    "/tools/folio-changeset": {
+      "post": {
+        "operationId": "folio-changeset",
+        "summary": "Folio ChangeSet",
+        "description": "What changed in a folio between two git refs, block by block: each block added, removed, or changed — and for a changed block, every aspect that applies (renamed, prose, manifest, moved). Keyed on the block label, which the `id-unique` / `id-stable` QA criteria guard, not on file paths.",
+        "tags": [
+          "diff",
+          "staging-review"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "folio-changeset/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "folio": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The folio's `folio` graph directory, relative to the repository — what `<slug>.json` declares for it, usually `folio/`."
+                  },
+                  "base": {
+                    "$ref": "#/components/schemas/Branch",
+                    "description": "The ref compared against. Default `origin/main`. An unresolvable base is an ERROR, never an empty ChangeSet."
+                  },
+                  "head": {
+                    "$ref": "#/components/schemas/Branch",
+                    "description": "The ref under review, or `worktree` (the default) for the files on disk, uncommitted edits included."
+                  },
+                  "out": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Where to write the JSON. Absent: stdout."
+                  },
+                  "text-out": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Also write `changeset-text.json`: the prose, source and rendered, of every block the ChangeSet lists, on each side that has it. The review page's diff renderers read it."
+                  }
+                },
+                "required": [
+                  "folio"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "changeset": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "A `folio-changeset/v1` document. Its one-line summary goes to stderr."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/folio-changeset.jsonld",
+        "x-invoke": {
+          "shell": "bun run folio-assistant-core/schemas/changeset.ts"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun",
+            "git",
+            "tar"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "diff",
+          "staging-review"
+        ],
+        "x-skill-contracts": {
+          "staging-review.input": {
+            "$ref": "#/components/schemas/skill.staging-review.input"
+          },
+          "staging-review.output": {
+            "$ref": "#/components/schemas/skill.staging-review.output"
+          }
+        },
+        "x-selection": {
+          "when": "A reviewer, or the review page, needs to know which BLOCKS a branch changed — not which files. Use it before building a before/after table, a change heat map, or a per-block diff report.",
+          "limits": "Reads manifests as text and never executes the base ref, so a section whose blocks are computed rather than listed is invisible to it. An unlabelled block is identified by its slug, so renaming its file reads as removed plus added. Rendered assets (SVGs) are not compared.",
+          "cost": "Seconds for a few thousand blocks: one `git archive` per committed ref, then a text walk. No network."
+        }
+      }
+    },
+    "/tools/folio-review-comment-move": {
+      "post": {
+        "operationId": "folio-review-comment-move",
+        "summary": "Move a review comment's status",
+        "description": "A review-process task moves one `review-comment/1.0.0` todo's status (address, send back, resolve, adjudicate, withdraw) through `transition()`, which refuses any move the named BPMN task may not make. The comment is written to the folio's todos graph (its declared `todo-feedback` directory) and, with `--commit`, committed to the edit-set's FEATURE branch. Refused on the base branch and on a detached HEAD.",
+        "tags": [
+          "review-comments"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "folio-review-comment-move/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "$ref": "#/components/schemas/NodeId",
+                    "description": "The review comment's id, `review-pr<N>-c<commentId>`."
+                  },
+                  "to": {
+                    "$ref": "#/components/schemas/NodeId",
+                    "description": "The status to move it to: open, addressed, resolved, adjudicated or withdrawn, checked by the script against that closed list."
+                  },
+                  "process": {
+                    "$ref": "#/components/schemas/ProcessId",
+                    "description": "The BPMN process whose task is making the move."
+                  },
+                  "task": {
+                    "$ref": "#/components/schemas/NodeId",
+                    "description": "The task, in that process, making the move."
+                  },
+                  "decision": {
+                    "$ref": "#/components/schemas/NodeId",
+                    "description": "The Decision that closes it. Required to resolve or adjudicate."
+                  },
+                  "todos": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The folio's todos graph root. Default `todos`."
+                  },
+                  "published": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The published `review-comments.json`, for a comment not committed yet."
+                  },
+                  "commit": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Commit the file to the current feature branch."
+                  },
+                  "base": {
+                    "$ref": "#/components/schemas/Branch",
+                    "description": "The base branch a status may NOT be committed to. Default `main`."
+                  }
+                },
+                "required": [
+                  "id",
+                  "to",
+                  "process",
+                  "task"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "comment": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "`<todo-feedback dir>/<id>.json`, the moved node."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/folio-review-comment-move.jsonld",
+        "x-invoke": {
+          "shell": "bun run folio-assistant-core/scripts/review-comment-move.ts"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun",
+            "git"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "review-comments"
+        ],
+        "x-selection": {
+          "when": "An editor or adjudicator, acting in a review-process task, has decided what happens to a reviewer's comment and the decision must be recorded where the edit is: on the feature branch.",
+          "limits": "Only the moves in `REVIEW_TRANSITIONS`, and only by the task each names. Anchor facts in a committed file are those of the last move; the published file is where re-anchoring shows.",
+          "cost": "Reads one directory and writes one file; one git commit with `--commit`."
+        }
+      }
+    },
+    "/tools/folio-review-comments": {
+      "post": {
+        "operationId": "folio-review-comments",
+        "summary": "Folio review comments",
+        "description": "Ingest a pull request's tagged conversation comments (`block: <label>` on the first line) into `review-comment/1.0.0` todos, and write them as `review-comments.json`. Idempotent over its previous output, whose statuses it keeps. Re-anchors every comment against the head's blocks, following `renamedFrom`, and orphans a comment whose block is gone rather than dropping it.",
+        "tags": [
+          "review-comments"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "folio-review-comments/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "repo": {
+                    "$ref": "#/components/schemas/RepoFullName",
+                    "description": "`owner/name` of the repository the pull request is in."
+                  },
+                  "pr": {
+                    "$ref": "#/components/schemas/ChangeProposalNumber",
+                    "description": "The edit-set's pull request."
+                  },
+                  "out": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Where to write `review-comments.json`."
+                  },
+                  "folio": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Read the head's blocks from the folio's manifests (as text; nothing is executed). Give this OR `blocks`."
+                  },
+                  "blocks-out": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "With `folio`: also write `blocks.json`, so a later run can anchor without checking the folio out."
+                  },
+                  "blocks": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "A published `blocks.json`. The comment-triggered refresh uses this, so it never checks out the pull request's code."
+                  },
+                  "existing": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The previous `review-comments.json`. Every comment in it is kept, with its status."
+                  },
+                  "commit": {
+                    "$ref": "#/components/schemas/CommitSha",
+                    "description": "The head commit. Default `GITHUB_SHA`, else `git rev-parse HEAD`."
+                  },
+                  "todos": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The folio's todos graph root. Review comments committed under its `todo-feedback` directory, on the feature branch, win over the previously published copy."
+                  },
+                  "comments": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Read comments from this JSON file instead of GitHub: offline runs and tests."
+                  }
+                },
+                "required": [
+                  "repo",
+                  "pr",
+                  "out"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "review-comments": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "A `folio-review-comments/v1` file whose `comments` are `review-comment/1.0.0` todos. Its one-line summary goes to stderr."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/folio-review-comments.jsonld",
+        "x-invoke": {
+          "shell": "bun run folio-assistant-core/scripts/review-comments.ts"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": true
+        },
+        "x-satisfies": [
+          "review-comments"
+        ],
+        "x-selection": {
+          "when": "A pull request that edits a folio has reviewer comments, and the review page, the heat map, or an editor needs them as structured todos anchored to blocks.",
+          "limits": "Reads conversation comments only, not line review comments (those anchor to a file line). A reviewer's edit to a comment after it was ingested is not re-read. Statuses are moved by review-process tasks, not by this Tool; it keeps whatever `existing` says.",
+          "cost": "One paginated GitHub API call per 100 comments, plus a text walk of the manifests when `folio` is given."
+        }
+      }
+    },
+    "/tools/folio-review-coverage": {
+      "post": {
+        "operationId": "folio-review-coverage",
+        "summary": "Folio review coverage",
+        "description": "Compute the two facts `content-change-review.bpmn`'s coverage gate (`GW_Covered`) reads: `uncoveredBlocks`, the changed blocks with no reviewer verdict on their CURRENT hash, and `openDefects`. Reads a preview's `changeset.json`, `blocks.json` and `review-comments.json`. With `--commit`, writes the ingested `folio-review-verdict/v1` verdicts into the todos graph's declared `review-verdicts` directory and commits them to the edit-set's FEATURE branch; refused on the base branch and a detached HEAD. Prints the facts as JSON on stdout.",
+        "tags": [
+          "review-comments"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "folio-review-coverage/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "changeset": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The preview's `changeset.json`: which blocks changed."
+                  },
+                  "blocks": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The preview's `blocks.json`: each head block's current hash."
+                  },
+                  "comments": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The preview's `review-comments.json`: open defects, and the ingested verdicts."
+                  },
+                  "out": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Also write the full `folio-review-coverage/v1` report, with the uncovered labels and the stale verdicts."
+                  },
+                  "todos": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The folio's todos graph root. Verdicts committed under its `review-verdicts` directory win over the published copy."
+                  },
+                  "commit": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Write the published verdicts into the declared directory and commit them to the current feature branch. Needs `todos`."
+                  },
+                  "base": {
+                    "$ref": "#/components/schemas/Branch",
+                    "description": "The base branch verdicts may NOT be committed to. Default `main`."
+                  }
+                },
+                "required": [
+                  "changeset",
+                  "blocks",
+                  "comments"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "coverage": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "The `folio-review-coverage/v1` report at `out`. Its `facts` field, `{\"uncoveredBlocks\": n, \"openDefects\": n}`, is also printed alone on stdout: what `workflow_complete` takes for `GW_Covered`. The summary goes to stderr."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/folio-review-coverage.jsonld",
+        "x-invoke": {
+          "shell": "bun run folio-assistant-core/scripts/review-coverage.ts"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun",
+            "git"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "review-comments"
+        ],
+        "x-selection": {
+          "when": "The review coordinator reaches `GW_Covered` and needs to know, rather than guess, whether every changed block has been read at its current version and no defect is still open.",
+          "limits": "Counts only what reviewers recorded as verdicts. A block nobody tagged is uncovered even if somebody read it. A verdict on an older hash is reported as stale and not counted.",
+          "cost": "Reads three JSON files and one directory; one git commit with `--commit`."
+        }
+      }
+    },
+    "/tools/glossary-build": {
+      "post": {
+        "operationId": "glossary-build",
+        "summary": "Glossary build",
+        "description": "Build a paper's glossary index from its manifests and render the LaTeX. `--check` reports drift instead of writing, comparing everything except the `generated` timestamp so a re-run is not mistaken for a change.",
+        "tags": [
+          "document-intake"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "glossary-build/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "targetPath": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The paper directory, which must hold a `<paper>.ts` manifest. Absent, the command exits 2 with its usage — could-not-determine, not an empty glossary."
+                  },
+                  "check": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Report drift and write nothing."
+                  }
+                },
+                "required": [
+                  "targetPath"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "glossary": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "`glossary.json` beside the paper, and `chapters/glossary.tex` at the repo root."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/glossary-build.jsonld",
+        "x-invoke": {
+          "shell": "bun run folio-assistant-core/scripts/build-glossary.ts"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "document-intake"
+        ]
+      }
+    },
+    "/tools/glossary-from-source": {
+      "post": {
+        "operationId": "glossary-from-source",
+        "summary": "Glossary candidates from a source",
+        "description": "Read a source's glossary and abbreviations sections (an L1 entry's sections/, or a folio block) into `candidate` terms of a folio-glossary/v1 scheme, verbatim, each with `source: <file>#L<line>`. Acronyms fold into the term they expand as `notation`. The scheme is merged: terms a person owns are never changed. `--check` writes nothing and fails when the scheme would change.",
+        "tags": [
+          "glossary-terms"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "glossary-from-source/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "out": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The scheme file to write or merge into: `glossary/<scheme>.glossary.json`."
+                  },
+                  "id": {
+                    "$ref": "#/components/schemas/Slug",
+                    "description": "The scheme id, for a new file."
+                  },
+                  "title": {
+                    "$ref": "#/components/schemas/Text",
+                    "description": "The scheme title, for a new file: free text, so it goes on stdin."
+                  },
+                  "from": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "A directory whose glossary and abbreviations sections are read: an L1 entry's `sections/`."
+                  },
+                  "terms": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "A Markdown file read as term and definition rows."
+                  },
+                  "abbreviations": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "A Markdown file read as acronym and expansion rows."
+                  },
+                  "check": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Fail if the scheme is stale, instead of writing."
+                  }
+                },
+                "required": [
+                  "out"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "scheme": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "The merged folio-glossary/v1 scheme."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/glossary-from-source.jsonld",
+        "x-invoke": {
+          "shell": "bun run cat glossary:from-source"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "glossary-terms"
+        ]
+      }
+    },
+    "/tools/glossary-page": {
+      "post": {
+        "operationId": "glossary-page",
+        "summary": "Glossary page",
+        "description": "Render every declared glossary — authored SKOS schemes, the swimlane ledger and the terms extracted from knowledge-graph assets — as the glossary page and one page per asset type, at the route of the visualiser core declares for it.",
+        "tags": [
+          "graph-rendering"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "glossary-page/"
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "check": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Fail if a page is stale, instead of writing."
+                  },
+                  "site": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "A site being built: write the pages at their declared route under it instead of under cat-harness's docs, as a repository's own site build does (`visualiser-writers.ts`)."
+                  },
+                  "scope": {
+                    "$ref": "#/components/schemas/IdList",
+                    "description": "A scoped site build: the comma-separated instances whose pages this writer writes (the IG and the layer it lands on); every other instance's pages are linked on that layer's own site. Passed by the tools layer's `visualiser-writers.ts` (owner, 2026-11-08, Q-SZ-2 \"B\"). Absent: every instance."
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "pages": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "The glossary pages, under the published site directory."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/glossary-page.jsonld",
+        "x-invoke": {
+          "shell": "bun run cat glossary:page"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "graph-rendering"
+        ]
+      }
+    },
+    "/tools/glossary-table": {
+      "post": {
+        "operationId": "glossary-table",
+        "summary": "Glossary and acronyms tables",
+        "description": "Rewrite the glossary and acronyms tables of a document from its folio-glossary/v1 schemes, as `glossary/glossary-tables.json` (folio-glossary-tables/v1) lists them: terms with their altLabels, definitions and editorial notes, or acronyms (notation and prefLabel). The block's caption and footnotes are left alone. `--check` writes nothing and fails when a table is stale.",
+        "tags": [
+          "graph-rendering"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "glossary-table/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "instance": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The instance root holding `glossary/glossary-tables.json`."
+                  },
+                  "check": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Fail if a table is stale, instead of writing."
+                  }
+                },
+                "required": [
+                  "instance"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "blocks": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "The rewritten table blocks, at the paths the config names."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/glossary-table.jsonld",
+        "x-invoke": {
+          "shell": "bun run cat glossary:table"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "graph-rendering"
+        ],
+        "x-selection": {
+          "when": "A document's glossary or acronyms tables should come from its SKOS glossaries. For a References list use references-render.",
+          "limits": "Only the tables `glossary/glossary-tables.json` names; captions and footnotes are left alone.",
+          "cost": "Milliseconds per table; reads the instance's glossary schemes, no network."
+        }
+      }
+    },
+    "/tools/l1-coverage": {
+      "post": {
+        "operationId": "l1-coverage",
+        "summary": "L1 extraction coverage",
+        "description": "Of the normative sentences in a publication (the closed marker list of smart-kg's `docs/COVERAGE.md` §1), count how many an L1 extraction CAPTURED, how many are EXCLUDED for a fixed-list reason a person signed off, and how many are UNACCOUNTED — per page and in total. Writes the contract's §4 report and exits non-zero below 100% accounted-for.",
+        "tags": [
+          "l1-coverage"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "l1-coverage/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "text": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The publication's body text, page-tagged: `{\"pages\":[{\"page\":n,\"text\":\"…\"}]}` JSON, or plain text with a form feed between pages (what `pdftotext` writes). Headers, references and tables of contents are stripped by the caller."
+                  },
+                  "captured": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "JSON `[{\"id\",\"text\"}]`: every statement the extraction captured, verbatim."
+                  },
+                  "exclusions": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "JSON `[{location|text, reason, signedOffBy?, signedOffAt?}]`. An exclusion without `signedOffBy` is a proposal and leaves its sentence unaccounted."
+                  },
+                  "out": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Where to write the report; stdout when absent."
+                  }
+                },
+                "required": [
+                  "text",
+                  "captured"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "report": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "An `l1-coverage-report/v1` JSON report: definitionVersion, matchMethod, source and graph sha256, totals, pages[] and sentences[]. A per-page table goes to stderr."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/l1-coverage.jsonld",
+        "x-invoke": {
+          "shell": "bun run folio-assistant-core/scripts/l1-coverage.ts"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "l1-coverage"
+        ],
+        "x-selection": {
+          "when": "An L1 extraction of a publication (recommendations, remarks, schedule entries) is about to be reviewed or promoted, and somebody needs to know — rather than assume — that no normative sentence was silently missed.",
+          "limits": "Matching is normalised substring, so a paraphrased capture reads as unaccounted. Body-text filtering is the caller's. The marker list is English.",
+          "cost": "Reads three files; no network."
+        }
+      }
+    },
+    "/tools/mesh-authority": {
+      "post": {
+        "operationId": "mesh-authority",
+        "summary": "Validate draft MeSH headings against NLM's authority",
+        "description": "Stage three of `skill-pipeline-subject-indexing` for MeSH: look up every candidate heading of a draft (a preferred heading, an entry term, or a descriptor id, with an optional qualifier) in NLM's MeSH authority at id.nlm.nih.gov, current year. Each candidate comes back `resolved` (in the preferred form), `qualifier-not-allowed` (descriptor kept, qualifier dropped), `ambiguous` (options listed for a person) or `not-found` (dropped). It never adds a heading the draft did not propose and never emits one the authority lacks.",
+        "tags": [
+          "mesh-subject-indexing"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "mesh-authority/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "draft": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "A JSON file: `{ \"candidates\": [{ \"label\"?, \"descriptor\"?, \"qualifier\"?, \"why\"? }] }`, in the order stage two ranked them."
+                  },
+                  "json": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Print the full report as JSON instead of the review table."
+                  }
+                },
+                "required": [
+                  "draft"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "report": {
+                      "$ref": "#/components/schemas/Text",
+                      "description": "A review table with one row per candidate, or with `--json` the report: `results` per candidate and `validated`, the headings a reviewer sees."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/mesh-authority.jsonld",
+        "x-invoke": {
+          "shell": "bun run folio-assistant-core/scripts/mesh-authority.ts validate"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": true
+        },
+        "x-satisfies": [
+          "mesh-subject-indexing"
+        ],
+        "x-selection": {
+          "when": "A draft list of MeSH headings from stages one and two of `mesh-subject-indexing` is ready to be checked against the authority.",
+          "limits": "Checks existence, preferred form and allowable qualifiers only. It does not judge whether a heading fits the work, and applies none of NLM's rules on heading count or major topics.",
+          "cost": "Two or three HTTPS requests per candidate to id.nlm.nih.gov; about a second for a short draft."
+        }
+      }
+    },
+    "/tools/public-comment-changesets": {
+      "post": {
+        "operationId": "public-comment-changesets",
+        "summary": "Public-comment change-sets",
+        "description": "Bring a public review's change-sets back in line with GitHub: open the primary issue of each change-set somebody has engaged with, link the other issues that discuss it, and re-render each issue's change-set section from its `changesets/CS-*.json` record. The nightly half of what the folio's public-comment workflow does on each issue event (`github`); `check` validates the records without writing.",
+        "tags": [
+          "public-comment"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "public-comment-changesets/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "operation": {
+                    "$ref": "#/components/schemas/ChangeSetAction",
+                    "description": "The command: `reconcile` (the nightly run), `check` (validate the records, write nothing) or `github` (one issue event, as the workflow does)."
+                  },
+                  "store": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The record's directory in the repository. Default `review/public-comment`."
+                  }
+                },
+                "required": [
+                  "operation"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "changesets": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "The updated `changesets/CS-*.json` records under the store; the issues are updated on GitHub."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/public-comment-changesets.jsonld",
+        "x-invoke": {
+          "shell": "bun run folio-assistant-core/scripts/public-comment-changesets.ts"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun",
+            "gh"
+          ],
+          "network": true
+        },
+        "x-satisfies": [
+          "public-comment"
+        ],
+        "x-skill-contracts": {
+          "public-comment.input": {
+            "$ref": "#/components/schemas/skill.public-comment.input"
+          },
+          "public-comment.output": {
+            "$ref": "#/components/schemas/skill.public-comment.output"
+          }
+        },
+        "x-selection": {
+          "when": "Change-set records and their GitHub issues may have drifted: a recommendation made from the CLI, an issue edited by hand, or a missed workflow run.",
+          "limits": "Writes only under the store and to issues of the current repository. One run at a time, like the workflow it backs.",
+          "cost": "Seconds plus one GitHub API call per change-set that has issues."
+        }
+      }
+    },
+    "/tools/publish-extracted-statements": {
+      "post": {
+        "operationId": "publish-extracted-statements",
+        "summary": "Publish extracted statements with source links",
+        "description": "Render each declared page (a `folio-statement-page/v1` spec naming `folio-extracted-statements/v1` lists) as Markdown: every statement extracted from a library source, verbatim, with its kind and status, linked to its library entry and to the section it came from, labelled in the source's own unit (\"Catch up schedule, slide 7\"). A statement whose source does not resolve fails the run and nothing is written. `--check` fails when a committed page is stale.",
+        "tags": [
+          "publish-extracted-statements"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "publish-extracted-statements/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "page": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "A `folio-statement-page/v1` spec (`schemas/extracted-statement.ts`): the statement lists to publish, the page to write, its title and introduction, the library viewer's and the sources' URL prefixes, and the content type's table look. Repeat the flag for several pages. A spec, not flags, because those are free text."
+                  },
+                  "check": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Compare instead of writing: exit 1 when a page is stale."
+                  },
+                  "instance-root": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The citing instance, against which a source naming no instance resolves; the repository root when absent."
+                  }
+                },
+                "required": [
+                  "page"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "page": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "A generated Markdown page, one table per list: Id, Statement, Kind, Status, Source."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/publish-extracted-statements.jsonld",
+        "x-invoke": {
+          "shell": "bun run folio-assistant-core/scripts/publish-extracted-statements.ts"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "publish-extracted-statements"
+        ],
+        "x-selection": {
+          "when": "Source documents were added to a folio's working artifact (ingestion promoted an entry, or authoring took up a source) and the statements extracted from them must be readable with a link to where each came from, in the artifact and in the shared viewer.",
+          "limits": "It renders what a collector hands it; turning a folio's own extraction format into a statement list is the collector's job. Pages and slides resolve to a section; a page several sections start on names only the page.",
+          "cost": "Reads the lists and each entry's structure.json; no network."
+        }
+      }
+    },
+    "/tools/references-extract": {
+      "post": {
+        "operationId": "references-extract",
+        "summary": "Reference lists to reference nodes",
+        "description": "Split each library entry's reference lists (a References, Bibliography or Further reading section or heading, in the six UN languages and Portuguese) into folio-reference/v1 nodes in the instance's declared `references` directory, one per cited work, keyed `<doc-id>.<section>.<n>`: provenance extracted, derivedFrom the section file, printed the entry verbatim, and only the fields read without guessing (URL, DOI, ISBN, year, access date). The bibliography page lists them as the document's own bibliography. `--check` writes nothing and fails when a node is stale.",
+        "tags": [
+          "l1-document-ingestion"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "references-extract/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "instance": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The instance root whose library sections are read and whose references directory is written."
+                  },
+                  "entry": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "One library entry's slug, to extract only its lists."
+                  },
+                  "check": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Fail if a node is stale, instead of writing."
+                  }
+                },
+                "required": [
+                  "instance"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "references": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "The extracted reference nodes: `<references dir>/<doc-id>.<section>.<n>.json`."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/references-extract.jsonld",
+        "x-invoke": {
+          "shell": "bun run cat references:extract"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "l1-document-ingestion"
+        ],
+        "x-selection": {
+          "when": "A library entry's source prints a reference list and the document should have its own bibliography. For glossary and abbreviations sections use glossary-from-source.",
+          "limits": "Reads L1 sections, not the PDF; no title or author is parsed (the node keeps the printed text). Only nodes with provenance extracted are written or removed.",
+          "cost": "Seconds for a few hundred entries; reads sections, no network."
+        }
+      }
+    },
+    "/tools/references-render": {
+      "post": {
+        "operationId": "references-render",
+        "summary": "Reference list from reference nodes",
+        "description": "Rewrite each reference-list block of a document (a block whose `meta.referenceList` is set) from the folio-reference/v1 nodes its `cites` names, in that order: the node's `printed` text verbatim when it has one, otherwise WHO style (or the short `Authors. Title. Year.` form), as a numbered or bulleted list. The block's `.md` is generated whole. `--check` writes nothing and fails when a list is stale.",
+        "tags": [
+          "graph-rendering"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "references-render/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "instance": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The instance root whose folio blocks and references directories are read."
+                  },
+                  "check": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Fail if a list is stale, instead of writing."
+                  }
+                },
+                "required": [
+                  "instance"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "blocks": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "The rewritten reference-list blocks: each block's `.md`."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/references-render.jsonld",
+        "x-invoke": {
+          "shell": "bun run cat references:render"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "graph-rendering"
+        ],
+        "x-selection": {
+          "when": "A document's References list should come from the reference nodes its block cites. For glossary or acronyms tables use glossary-table.",
+          "limits": "Only blocks with `meta.referenceList`; the whole `.md` is regenerated. A cited key with no reference node fails the run.",
+          "cost": "Milliseconds per block; reads the instance's blocks and reference nodes, no network."
+        }
+      }
+    },
+    "/tools/review-log-watch": {
+      "post": {
+        "operationId": "review-log-watch",
+        "summary": "Check a review log and its repository's issues for changes",
+        "description": "The mechanical check a review-log watcher runs on every poll. Given a drafting sheet's Contributor Feedback values and the folio repository, it reads the repository's open and closed issues (leaving out pull requests, issues labelled `no-sheet` and, with `--author`, issues someone else opened) and compares a digest of them and of the cells people set (Title, Selected Sections, Contributor Feedback, Disposition, Ready for agent, Ready for merge, Dispositions confirmed; on a public-comment log also Committee Feedback, TWG (CS), TWG (human) and Change Set (human)) with the last check's. Unchanged: it prints `{\"status\":\"unchanged\"}` and exits 0. Changed: it exits 10 and lists what changed (issue opened, updated or closed; a cell's old and new text), the Contributor Feedback rows to append, one per issue that no row's Issue cell links yet (Title the issue's title, the first Contributor Feedback column `@login (#N): first paragraph`, Issue the issue's URL; a closed issue's row marked `closed`), and `closedRows`, the rows linking a closed issue, which the watcher hides with their text struck through. A read with no Issue column (a public-comment log's Review Change Sets) tracks only issues labelled `change-set` unless `--label` says otherwise, and appends no rows: each open issue is reported as an `issue-unlinked` change instead. It writes no sheet and no issue: the watcher appends the rows and does the agent pass. With `--accept` it stores the new state for the next poll to compare against.",
+        "tags": [
+          "review-log-watch"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "review-log-watch/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "repo": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The folio repository, `owner/name`, whose issues, open and closed, are read with `gh api`."
+                  },
+                  "sheet": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The Contributor Feedback tab's values (a public-comment log: Review Change Sets) as JSON: the Sheets API `values` array (or the whole `get_values` answer), from row 1, so the header row (first cell `Change-set`) is found."
+                  },
+                  "state": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The last check's state file. Missing on the first check, which reports every open issue as opened."
+                  },
+                  "issues": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Issues as JSON (the issues API's shape), instead of reading them with `gh api`. For tests and offline runs."
+                  },
+                  "author": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Only issues this GitHub login opened. Default every author."
+                  },
+                  "sheetHash": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The sheet script's hash of the person-set cells, Watch!G1. Given, it stands for the cells, so `--sheet` needs only the header row and the Issue column."
+                  },
+                  "label": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Only issues with this label, e.g. `change-set`. Default every issue on a read with an Issue column, and `change-set` on one without (a public-comment log)."
+                  },
+                  "skipLabel": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The label that keeps an issue off the sheet. Default `no-sheet`."
+                  }
+                },
+                "required": [
+                  "repo",
+                  "sheet",
+                  "state"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "JSON on standard output: `status` (`unchanged` or `changed`), `digest`, and when changed `changes`, `append` (rows aligned to the header, each with `closed`), `closedRows` and `state`. Exit 0 unchanged, 10 changed, 2 usage."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/review-log-watch.jsonld",
+        "x-invoke": {
+          "shell": "bun run folio-assistant-core/tools/review-log-watch/watch.ts"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": true
+        },
+        "x-satisfies": [
+          "review-log-watch"
+        ],
+        "x-selection": {
+          "when": "On every poll of a review-log watcher, before any agent work: the agent pass runs only when this reports `changed`.",
+          "limits": "Reads one tab and one repository's issues; it never writes the sheet or GitHub. It sees an edit only in the watched headers, so the agent's own Green columns and the script's Grey ones never wake the watcher.",
+          "cost": "One `gh api` call per 100 issues and one small JSON file; well under a second."
+        }
+      }
+    },
+    "/tools/review-sheet-sync": {
+      "post": {
+        "operationId": "review-sheet-sync",
+        "summary": "Build the review sheet's Apps Script and a document's Config tab",
+        "description": "Builds `Code.gs` (`--script`), the one Google Apps Script every review sheet runs (from `review-sheet.gs`), and one document's Config tab rows (`--config`), filled from the folio's `review/public-comment/sheet-sync.json`, its review anchors and the draft's `pdf-line-map.json`. The script keeps a public-comment review sheet's links and joins current: each comment No. links to its comment page; Sections, Page and Line no(s) link to the page of the frozen review draft; Review Change Sets joins its comments, suggested revisions, feedback and dispositions, each `No. n` linking to its row; and on both tabs Agentic status lists each pull request of the change-set, linked, with its status and what it changed, from the Agent tab. It reads the document's URLs, tab and column names and data from the sheet's Config tab (visible, locked to the owner), which the agent writes from these rows. A person pastes the script (one file) into the sheet once (Extensions > Apps Script) and runs `installTriggers`; from then on the sheet rebuilds itself within about a minute of an edit, with no agent. With `\"mode\": \"drafting\"` in the config it builds the drafting sheet instead: one Contributor Feedback tab where each row is a change set (ids assigned by the script), Sections picked from the document's table of contents and linked to it, and Issue and Agentic status from the Agent tab.",
+        "tags": [
+          "review-sheet-script"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "review-sheet-sync/"
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "script": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Where to write the generic Code.gs. The same for every document."
+                  },
+                  "repo": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The folio repository. Default the current directory."
+                  },
+                  "config": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The folio's sheet settings, e.g. `review/public-comment/sheet-sync.json`: anchors, lineMap, draftUrl, commentUrl, and optional namedSections, aliases, tabs and columns. A drafting sheet's config (`review/drafting/sheet-sync.json`) has mode `drafting`, anchors and sectionUrl."
+                  },
+                  "out": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Where to write the Config tab's rows (JSON). Default standard output."
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "script": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "Code.gs, ready to paste into any review sheet's Apps Script editor. Never committed: it is rebuilt from the template."
+                    },
+                    "configRows": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "The Config tab's rows for one document, which the agent writes into the sheet. Never committed: rebuilt from the config."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/review-sheet-sync.jsonld",
+        "x-invoke": {
+          "shell": "bun run folio-assistant-core/tools/review-sheet-sync/build-review-sheet-script.ts"
+        },
+        "x-install": {
+          "service": "Google Apps Script bound to the review sheet: copy the template, have the agent write its Config tab, add editors to the \"Ready columns: editors\" lock, paste Code.gs, run installTriggers (skill review-sheet-script, \"Setting up a sheet for a new document\")"
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "review-sheet-script"
+        ],
+        "x-selection": {
+          "when": "A public review is kept in a shared Google Sheet with the public-comment tabs (Review Public Comments, Review Change Sets, Agent - Comments, Agent - Change Sets), and its links or joined columns must stay current without an agent re-pasting them. Also after the review anchors, the draft's link prefix or a tab or column name changes: rewrite the Config tab (the script stays).",
+          "limits": "Builds the script only; installing it is a person's step in the sheet, since the sheet's owner must authorise it. It reads only the tabs and headers named in the config. In the reviewers' columns the link text must be in the cell already: it links what reviewers wrote and does not rewrite their words. The joined columns and Agentic status it writes whole.",
+          "cost": "Reads three JSON files and writes one file of about 20 kB. In the sheet, a full refresh of 800 rows takes about 20 seconds."
+        }
+      }
+    },
+    "/tools/smart-approach-svg": {
+      "post": {
+        "operationId": "smart-approach-svg",
+        "summary": "WHO SMART Guidelines approach chart",
+        "description": "Draw the WHO SMART Guidelines approach chart (knowledge layers L1–L5 with their products, and their country adaptations, between the research, localisation and impact bands) as SVG from `smart-guidelines-approach-figure/v1` data on a who-iris library entry, such as the product catalogue handbook's Fig. 5. Every label comes from the data.",
+        "tags": [
+          "figure-rebuild"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "smart-approach-svg/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "figure": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "A smart-guidelines-approach-figure/v1 file."
+                  },
+                  "out": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Where to write the SVG; stdout when absent."
+                  }
+                },
+                "required": [
+                  "figure"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "svg": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "The chart, with text as SVG text, one `<g id=\"cell-l<n>-<name>\">` per layer cell."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/smart-approach-svg.jsonld",
+        "x-invoke": {
+          "shell": "bun run folio-assistant-core/scripts/smart-approach-svg.ts"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "figure-rebuild"
+        ],
+        "x-selection": {
+          "when": "A folio reprints the SMART Guidelines approach chart and should draw it from the one transcription instead of a picture.",
+          "limits": "Draws the three-band, two-row layout only. Whether the transcription matches the published figure is a person's review of the data.",
+          "cost": "Reads one JSON file; no network."
+        }
+      }
+    },
+    "/tools/tabular-csv": {
+      "post": {
+        "operationId": "tabular-csv",
+        "summary": "CSV tabular metadata",
+        "description": "Read a delimited text file into a `folio-tabular-csvw/v1` record: one table, its columns and their CSVW datatypes, each measured or explicitly undetermined. Routing is by content, never by extension: the first rows must agree on one field count of two or more, under exactly one of `,` `;` TAB `|`. A CSV's `fac:anchor` sheet and cell are a determined null. Governed by the `tabular-metadata` skill.",
+        "tags": [
+          "tabular-metadata"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "tabular-csv/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "$ref": "#/components/schemas/DelimitedTextPath",
+                    "description": "Path to the delimited text file."
+                  },
+                  "doc-id": {
+                    "$ref": "#/components/schemas/DocId",
+                    "description": "The record's `doc_id`. Default: the file name without its extension."
+                  },
+                  "out": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Where to write `tabular.csvw.json`. Default: stdout."
+                  }
+                },
+                "required": [
+                  "file"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "record": {
+                      "$ref": "#/components/schemas/Text",
+                      "description": "A `folio-tabular-csvw/v1` document. Exit 2 when the file is not shown to be a table."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/tabular-csv.jsonld",
+        "x-invoke": {
+          "shell": "bun run folio-assistant-core/scripts/tabular-csv.ts"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "tabular-metadata"
+        ]
+      }
+    },
+    "/tools/tabular-xlsx": {
+      "post": {
+        "operationId": "tabular-xlsx",
+        "summary": "Spreadsheet tabular metadata",
+        "description": "Read a workbook into a `folio-tabular-csvw/v1` record, one CSVW table per rectangular block of cells. Blocks are split on empty rows, then on empty columns, so several tables on one sheet are found, each anchored at its real top-left cell (`fac:anchor`: sheet, A1 cell, row, column). Dates are read through the number formats in `styles.xml`, not misread as integer serials. A malformed part is refused rather than half-read. Reads the ZIP with `node:zlib` and SpreadsheetML with `fast-xml-parser`. Governed by the `tabular-metadata` skill.",
+        "tags": [
+          "tabular-metadata"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "tabular-xlsx/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "$ref": "#/components/schemas/WorkbookPath",
+                    "description": "Path to the `.xlsx` workbook."
+                  },
+                  "doc-id": {
+                    "$ref": "#/components/schemas/DocId",
+                    "description": "The record's `doc_id`. Default: the file name without its extension."
+                  },
+                  "out": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Where to write `tabular.csvw.json`. Default: stdout."
+                  }
+                },
+                "required": [
+                  "file"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "record": {
+                      "$ref": "#/components/schemas/Text",
+                      "description": "A `folio-tabular-csvw/v1` document, one table per block. Exit 2 when the file is not a SpreadsheetML workbook."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/tabular-xlsx.jsonld",
+        "x-invoke": {
+          "shell": "bun run folio-assistant-core/scripts/tabular-xlsx.ts"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "tabular-metadata"
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ArchimateModelId": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+        "description": "An ArchiMate model's id in cat-archimate.config.json, e.g. 0.2.0",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ArchimateModelId"
+      },
+      "Branch": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._/-]*$",
+        "description": "A git branch name",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Branch"
+      },
+      "ChangeProposalNumber": {
+        "type": "integer",
+        "exclusiveMinimum": 0,
+        "maximum": 9007199254740991,
+        "description": "A change-proposal number — a pull request on GitHub, a merge request on GitLab",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ChangeProposalNumber"
+      },
+      "ChangeSetAction": {
+        "type": "string",
+        "enum": [
+          "seed",
+          "propose",
+          "add",
+          "list",
+          "body",
+          "adopt",
+          "check",
+          "reconcile",
+          "github",
+          "install"
+        ],
+        "description": "A change-set verb: check or reconcile the records, or handle one GitHub issue event.",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ChangeSetAction"
+      },
+      "CommitSha": {
+        "type": "string",
+        "pattern": "^[0-9a-f]{7,40}$",
+        "description": "A git commit sha, full or abbreviated (7-40 hex digits).",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/CommitSha"
+      },
+      "Count": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 1000000000,
+        "description": "A non-negative count — how many of something, or how many to show. Zero is a real answer.",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count"
+      },
+      "DelimitedTextPath": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^[A-Za-z0-9._][A-Za-z0-9._/-]*$",
+        "description": "A repository path to a delimited text (CSV or TSV) file.",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/DelimitedTextPath"
+      },
+      "DocId": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+        "description": "A library document id, e.g. WPR-RDO-2020-003-eng",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/DocId"
+      },
+      "Flag": {
+        "type": "boolean",
+        "description": "A boolean switch — projects to a bare flag, with no value word",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+      },
+      "IdList": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._/-]*(?:,[A-Za-z0-9][A-Za-z0-9._/-]*)*$",
+        "description": "Comma-separated ids, e.g. skills,processes/sdlc or bean-query,agent-memory",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/IdList"
+      },
+      "NodeId": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^[A-Za-z_][A-Za-z0-9_-]*$",
+        "description": "A node id within a BPMN process, e.g. A_Implement",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/NodeId"
+      },
+      "ProcessId": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^[a-z][a-z0-9-]*$",
+        "description": "A BPMN process id, e.g. crdm-requirements",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ProcessId"
+      },
+      "RepoFullName": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$",
+        "description": "A forge repository's full name, owner/name",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoFullName"
+      },
+      "RepoPath": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^[A-Za-z0-9._][A-Za-z0-9._/-]*$",
+        "description": "A path relative to the repository root. No `..` segments.",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+      },
+      "skill.public-comment.input": {
+        "title": "Public Comment Input",
+        "description": "Input schema for the public-comment skill: one operation on the public-review comment store of a document folio.",
+        "type": "object",
+        "required": [
+          "operation"
+        ],
+        "properties": {
+          "operation": {
+            "type": "string",
+            "enum": [
+              "import",
+              "import-narrative",
+              "list",
+              "triage",
+              "reassign",
+              "assign",
+              "recommend",
+              "decide",
+              "incorporate",
+              "duplicate",
+              "withdraw",
+              "github",
+              "summary"
+            ],
+            "description": "One task of public-comment.bpmn, or a read (list, summary)."
+          },
+          "file": {
+            "type": "string",
+            "description": "For import / import-narrative: the comment matrix (.xlsx), form export (.csv) or narrative text."
+          },
+          "ref": {
+            "type": "string",
+            "pattern": "^PC-\\d{4,}$",
+            "description": "The comment the operation acts on."
+          },
+          "to": {
+            "type": "string",
+            "description": "reassign/triage: a block or section label. assign: GitHub login(s), comma-separated."
+          },
+          "code": {
+            "type": "string",
+            "enum": [
+              "accepted",
+              "accepted-modified",
+              "not-accepted",
+              "noted",
+              "deferred"
+            ],
+            "description": "recommend / decide: the decision code."
+          },
+          "reason": {
+            "type": "string",
+            "description": "decide: required for every code but accepted."
+          },
+          "branch": {
+            "type": "string",
+            "description": "decide / incorporate: the change-set branch."
+          },
+          "pr": {
+            "type": "integer",
+            "description": "decide / incorporate: the change-set pull request."
+          },
+          "filter": {
+            "type": "object",
+            "description": "list: narrow by status (or 'open'), page, line, block, section, or unplaced.",
+            "properties": {
+              "status": {
+                "type": "string"
+              },
+              "page": {
+                "type": "integer"
+              },
+              "line": {
+                "type": "integer"
+              },
+              "block": {
+                "type": "string"
+              },
+              "section": {
+                "type": "string"
+              },
+              "unplaced": {
+                "type": "boolean"
+              }
+            }
+          },
+          "stagingLinks": {
+            "$ref": "#/components/schemas/skill.public-comment.input.stagingLinks",
+            "description": "The staging preview of the work under review, as the request for feedback carried it, so the reviewer opens the changed pages rather than rebuilding links. Rule: cat-harness sdlc/skills/sdlc-core/staging-review.md §\"The deep-link rule\"."
+          }
+        }
+      },
+      "skill.public-comment.input.stagingLinks": {
+        "title": "Staging links",
+        "description": "The staging preview of the work a request for feedback is about: one deep link per changed page (the page and the anchor where the change sits) with the same page on main as `before`. Mirrors StagingComparison in schemas/sdlc/staging.ts. The rule is skills/authoring/content-lifecycle/feedback-deep-links.md. Copied inline as `definitions.stagingLinks` into every skill contract that carries it; schemas/staging.test.ts fails when a copy drifts.",
+        "type": "object",
+        "required": [
+          "branch",
+          "slug",
+          "branchUrl",
+          "mainBaseUrl",
+          "stagingBaseUrl",
+          "pages"
+        ],
+        "properties": {
+          "branch": {
+            "type": "string",
+            "description": "Feature branch name."
+          },
+          "slug": {
+            "type": "string",
+            "description": "Branch slug used in the staging URL path."
+          },
+          "branchUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "pr": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "mainBaseUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "stagingBaseUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "pages": {
+            "type": "array",
+            "description": "One entry per changed page, deep-linked; from the change's rendered-impact list, never chosen by judgement.",
+            "items": {
+              "type": "object",
+              "required": [
+                "title"
+              ],
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "before": {
+                  "type": "string",
+                  "format": "uri",
+                  "description": "Same page on main; absent for a new page."
+                },
+                "after": {
+                  "type": "string",
+                  "format": "uri",
+                  "description": "The page on the staging preview, with the anchor where the change sits; absent for a deleted page."
+                },
+                "summary": {
+                  "type": "string",
+                  "description": "What to look at on this page."
+                }
+              }
+            }
+          },
+          "missing": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "What could not be linked, said rather than hidden: no preview yet (and when it will exist), no page list computed, or a changed page the publish ref does not hold."
+          }
+        },
+        "$comment": "Copy of cat-harness schemas/staging-comparison.schema.json; cat-harness schemas/staging.test.ts fails when a copy drifts."
+      },
+      "skill.public-comment.output": {
+        "title": "Public Comment Output",
+        "description": "Output schema for the public-comment skill.",
+        "type": "object",
+        "properties": {
+          "changed": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Comment refs written by the operation."
+          },
+          "unplaced": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "import: refs whose citation resolved to no block, kept for triage."
+          },
+          "refused": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "What was not done, and why: a tag from someone not in config.json, a transition the lifecycle does not allow."
+          },
+          "comments": {
+            "type": "array",
+            "description": "list: the matching public-comment/1.0.0 records."
+          },
+          "stagingLinks": {
+            "$ref": "#/components/schemas/skill.public-comment.output.stagingLinks",
+            "description": "The staging preview of the work this output asks a person to look at: one deep link per changed page, with the same page on main. Required whenever a preview exists; when it does not, say so in `missing`. Rule: cat-harness sdlc/skills/sdlc-core/staging-review.md §\"The deep-link rule\"."
+          }
+        }
+      },
+      "skill.public-comment.output.stagingLinks": {
+        "title": "Staging links",
+        "description": "The staging preview of the work a request for feedback is about: one deep link per changed page (the page and the anchor where the change sits) with the same page on main as `before`. Mirrors StagingComparison in schemas/sdlc/staging.ts. The rule is skills/authoring/content-lifecycle/feedback-deep-links.md. Copied inline as `definitions.stagingLinks` into every skill contract that carries it; schemas/staging.test.ts fails when a copy drifts.",
+        "type": "object",
+        "required": [
+          "branch",
+          "slug",
+          "branchUrl",
+          "mainBaseUrl",
+          "stagingBaseUrl",
+          "pages"
+        ],
+        "properties": {
+          "branch": {
+            "type": "string",
+            "description": "Feature branch name."
+          },
+          "slug": {
+            "type": "string",
+            "description": "Branch slug used in the staging URL path."
+          },
+          "branchUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "pr": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "mainBaseUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "stagingBaseUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "pages": {
+            "type": "array",
+            "description": "One entry per changed page, deep-linked; from the change's rendered-impact list, never chosen by judgement.",
+            "items": {
+              "type": "object",
+              "required": [
+                "title"
+              ],
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "before": {
+                  "type": "string",
+                  "format": "uri",
+                  "description": "Same page on main; absent for a new page."
+                },
+                "after": {
+                  "type": "string",
+                  "format": "uri",
+                  "description": "The page on the staging preview, with the anchor where the change sits; absent for a deleted page."
+                },
+                "summary": {
+                  "type": "string",
+                  "description": "What to look at on this page."
+                }
+              }
+            }
+          },
+          "missing": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "What could not be linked, said rather than hidden: no preview yet (and when it will exist), no page list computed, or a changed page the publish ref does not hold."
+          }
+        },
+        "$comment": "Copy of cat-harness schemas/staging-comparison.schema.json; cat-harness schemas/staging.test.ts fails when a copy drifts."
+      },
+      "skill.staging-review.input": {
+        "title": "Staging Review Input",
+        "description": "What the reader wants to look at, in their own words (kept verbatim; it narrows, never adds), and the branch or pull request whose preview to list.",
+        "type": "object",
+        "properties": {
+          "ask": {
+            "type": "string",
+            "description": "What the reader wants to look at, verbatim. Absent: the whole preview, every page the branch changed."
+          },
+          "branch": {
+            "type": "string"
+          },
+          "pr": {
+            "type": "integer",
+            "minimum": 1
+          }
+        }
+      },
+      "skill.staging-review.output": {
+        "title": "Staging Review Output",
+        "description": "The reviewable list: a narrative of what changed, where to start, and the staging links, one deep link per changed page with its before. Every other skill that asks for feedback carries this same `stagingLinks` shape.",
+        "type": "object",
+        "required": [
+          "narrative",
+          "stagingLinks"
+        ],
+        "properties": {
+          "narrative": {
+            "type": "string",
+            "description": "What a reader of the site will now see or do differently, and why, before any link."
+          },
+          "startHere": {
+            "type": "string",
+            "format": "uri",
+            "description": "The one page to open first."
+          },
+          "stagingLinks": {
+            "$ref": "#/components/schemas/skill.staging-review.output.stagingLinks"
+          }
+        }
+      },
+      "skill.staging-review.output.stagingLinks": {
+        "title": "Staging links",
+        "description": "The staging preview of the work a request for feedback is about: one deep link per changed page (the page and the anchor where the change sits) with the same page on main as `before`. Mirrors StagingComparison in schemas/sdlc/staging.ts. The rule is skills/authoring/content-lifecycle/feedback-deep-links.md. Copied inline as `definitions.stagingLinks` into every skill contract that carries it; schemas/staging.test.ts fails when a copy drifts.",
+        "type": "object",
+        "required": [
+          "branch",
+          "slug",
+          "branchUrl",
+          "mainBaseUrl",
+          "stagingBaseUrl",
+          "pages"
+        ],
+        "properties": {
+          "branch": {
+            "type": "string",
+            "description": "Feature branch name."
+          },
+          "slug": {
+            "type": "string",
+            "description": "Branch slug used in the staging URL path."
+          },
+          "branchUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "pr": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "mainBaseUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "stagingBaseUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "pages": {
+            "type": "array",
+            "description": "One entry per changed page, deep-linked; from the change's rendered-impact list, never chosen by judgement.",
+            "items": {
+              "type": "object",
+              "required": [
+                "title"
+              ],
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "before": {
+                  "type": "string",
+                  "format": "uri",
+                  "description": "Same page on main; absent for a new page."
+                },
+                "after": {
+                  "type": "string",
+                  "format": "uri",
+                  "description": "The page on the staging preview, with the anchor where the change sits; absent for a deleted page."
+                },
+                "summary": {
+                  "type": "string",
+                  "description": "What to look at on this page."
+                }
+              }
+            }
+          },
+          "missing": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "What could not be linked, said rather than hidden: no preview yet (and when it will exist), no page list computed, or a changed page the publish ref does not hold."
+          }
+        },
+        "$comment": "Copy of cat-harness schemas/staging-comparison.schema.json; cat-harness schemas/staging.test.ts fails when a copy drifts."
+      },
+      "Slug": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^[a-z0-9][a-z0-9-]*$",
+        "description": "A folio slug, e.g. quantum-observable-universe",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug"
+      },
+      "Text": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 400,
+        "description": "A short single-line human string. Not admissible as a command-line argument.",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+      },
+      "Url": {
+        "type": "string",
+        "format": "uri",
+        "description": "An absolute http(s) URL",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Url"
+      },
+      "WorkbookPath": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^[A-Za-z0-9._][A-Za-z0-9._/-]*$",
+        "description": "A repository path to a spreadsheet workbook.",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/WorkbookPath"
+      }
+    }
+  }
+}

@@ -1,0 +1,2432 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-83270",
+  "instance": "who-iris",
+  "about": "library/10665-83270",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7908,
+    "terms": 73102
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "dans les",
+        "score": 13.8252,
+        "evidence": []
+      },
+      {
+        "term": "une des",
+        "score": 13.5134,
+        "evidence": []
+      },
+      {
+        "term": "les ministres",
+        "score": 12.9617,
+        "evidence": []
+      },
+      {
+        "term": "des pays",
+        "score": 12.7853,
+        "evidence": []
+      },
+      {
+        "term": "des soins",
+        "score": 12.5078,
+        "evidence": []
+      },
+      {
+        "term": "par des",
+        "score": 12.4973,
+        "evidence": []
+      },
+      {
+        "term": "pour les",
+        "score": 12.4434,
+        "evidence": []
+      },
+      {
+        "term": "que des",
+        "score": 12.3686,
+        "evidence": []
+      },
+      {
+        "term": "des hôpitaux",
+        "score": 11.8494,
+        "evidence": []
+      },
+      {
+        "term": "des priorités",
+        "score": 11.81,
+        "evidence": []
+      },
+      {
+        "term": "sur des",
+        "score": 11.694,
+        "evidence": []
+      },
+      {
+        "term": "fixation des",
+        "score": 11.5616,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "dans les",
+        "score": 537.1983,
+        "evidence": []
+      },
+      {
+        "term": "les priorités",
+        "score": 491.0098,
+        "evidence": []
+      },
+      {
+        "term": "pour les",
+        "score": 483.4094,
+        "evidence": []
+      },
+      {
+        "term": "les ministres",
+        "score": 480.6036,
+        "evidence": []
+      },
+      {
+        "term": "les pays",
+        "score": 480.2837,
+        "evidence": []
+      },
+      {
+        "term": "par les",
+        "score": 474.823,
+        "evidence": []
+      },
+      {
+        "term": "que les",
+        "score": 466.887,
+        "evidence": []
+      },
+      {
+        "term": "une des",
+        "score": 459.3356,
+        "evidence": []
+      },
+      {
+        "term": "les soins",
+        "score": 454.4729,
+        "evidence": []
+      },
+      {
+        "term": "les plus",
+        "score": 452.4581,
+        "evidence": []
+      },
+      {
+        "term": "les hôpitaux",
+        "score": 445.5823,
+        "evidence": []
+      },
+      {
+        "term": "les dépenses",
+        "score": 442.5974,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "pour les",
+        "score": 12.6581,
+        "evidence": []
+      },
+      {
+        "term": "dans les",
+        "score": 12.1188,
+        "evidence": []
+      },
+      {
+        "term": "une des",
+        "score": 11.3384,
+        "evidence": []
+      },
+      {
+        "term": "sur les",
+        "score": 11.3064,
+        "evidence": []
+      },
+      {
+        "term": "par les",
+        "score": 10.968,
+        "evidence": []
+      },
+      {
+        "term": "que les",
+        "score": 10.6936,
+        "evidence": []
+      },
+      {
+        "term": "les pays",
+        "score": 9.8497,
+        "evidence": []
+      },
+      {
+        "term": "les plus",
+        "score": 9.7029,
+        "evidence": []
+      },
+      {
+        "term": "avec les",
+        "score": 9.6666,
+        "evidence": []
+      },
+      {
+        "term": "les soins",
+        "score": 9.2397,
+        "evidence": []
+      },
+      {
+        "term": "les autres",
+        "score": 9.2062,
+        "evidence": []
+      },
+      {
+        "term": "entre les",
+        "score": 8.849,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "pour les",
+        "score": 488.1483,
+        "evidence": []
+      },
+      {
+        "term": "dans les",
+        "score": 468.9646,
+        "evidence": []
+      },
+      {
+        "term": "par les",
+        "score": 440.3231,
+        "evidence": []
+      },
+      {
+        "term": "sur les",
+        "score": 432.5452,
+        "evidence": []
+      },
+      {
+        "term": "que les",
+        "score": 424.5665,
+        "evidence": []
+      },
+      {
+        "term": "une des",
+        "score": 422.8067,
+        "evidence": []
+      },
+      {
+        "term": "les soins",
+        "score": 392.6561,
+        "evidence": []
+      },
+      {
+        "term": "les pays",
+        "score": 391.1447,
+        "evidence": []
+      },
+      {
+        "term": "les plus",
+        "score": 391.0417,
+        "evidence": []
+      },
+      {
+        "term": "avec les",
+        "score": 389.266,
+        "evidence": []
+      },
+      {
+        "term": "les autres",
+        "score": 381.5337,
+        "evidence": []
+      },
+      {
+        "term": "les systèmes",
+        "score": 374.3697,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "pour les",
+        "score": 12.6581,
+        "evidence": []
+      },
+      {
+        "term": "dans les",
+        "score": 12.1188,
+        "evidence": []
+      },
+      {
+        "term": "une des",
+        "score": 11.3384,
+        "evidence": []
+      },
+      {
+        "term": "sur les",
+        "score": 11.3064,
+        "evidence": []
+      },
+      {
+        "term": "par les",
+        "score": 10.968,
+        "evidence": []
+      },
+      {
+        "term": "que les",
+        "score": 10.6936,
+        "evidence": []
+      },
+      {
+        "term": "les pays",
+        "score": 9.8497,
+        "evidence": []
+      },
+      {
+        "term": "les plus",
+        "score": 9.7029,
+        "evidence": []
+      },
+      {
+        "term": "avec les",
+        "score": 9.6666,
+        "evidence": []
+      },
+      {
+        "term": "les soins",
+        "score": 9.2397,
+        "evidence": []
+      },
+      {
+        "term": "les autres",
+        "score": 9.2062,
+        "evidence": []
+      },
+      {
+        "term": "entre les",
+        "score": 8.849,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "感染者",
+        "score": 140.3502,
+        "evidence": []
+      },
+      {
+        "term": "询问学员这项原则如何应用于紧急情况下的研究",
+        "score": 103.2587,
+        "evidence": []
+      },
+      {
+        "term": "干预的目的",
+        "score": 93.268,
+        "evidence": []
+      },
+      {
+        "term": "知情同意的作用",
+        "score": 93.268,
+        "evidence": []
+      },
+      {
+        "term": "学员a",
+        "score": 89.213,
+        "evidence": []
+      },
+      {
+        "term": "ignorer",
+        "score": 82.2668,
+        "evidence": []
+      },
+      {
+        "term": "assister",
+        "score": 82.0979,
+        "evidence": []
+      },
+      {
+        "term": "décompose",
+        "score": 82.0979,
+        "evidence": []
+      },
+      {
+        "term": "devrions",
+        "score": 82.0979,
+        "evidence": []
+      },
+      {
+        "term": "faisons-nous",
+        "score": 82.0979,
+        "evidence": []
+      },
+      {
+        "term": "restructurer",
+        "score": 82.0979,
+        "evidence": []
+      },
+      {
+        "term": "variera",
+        "score": 82.0552,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "page-001": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "ministres face",
+          "score": 2.2037,
+          "evidence": []
+        },
+        {
+          "term": "les ministres",
+          "score": 2.1216,
+          "evidence": []
+        },
+        {
+          "term": "document div",
+          "score": 2.0135,
+          "evidence": []
+        },
+        {
+          "term": "réunions simultanées",
+          "score": 1.8231,
+          "evidence": []
+        },
+        {
+          "term": "fixation des",
+          "score": 1.7684,
+          "evidence": []
+        },
+        {
+          "term": "des dilemmes",
+          "score": 1.7681,
+          "evidence": []
+        },
+        {
+          "term": "deux réunions",
+          "score": 1.346,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "ministres face",
+          "score": 53.0586,
+          "evidence": []
+        },
+        {
+          "term": "les ministres",
+          "score": 50.9644,
+          "evidence": []
+        },
+        {
+          "term": "document div",
+          "score": 47.6573,
+          "evidence": []
+        },
+        {
+          "term": "face des",
+          "score": 40.1255,
+          "evidence": []
+        },
+        {
+          "term": "des dilemmes",
+          "score": 35.6107,
+          "evidence": []
+        },
+        {
+          "term": "fixation des",
+          "score": 35.6107,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 28.5095,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "dans les",
+          "score": 0.7863,
+          "evidence": []
+        },
+        {
+          "term": "les ministres",
+          "score": 0.488,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.4814,
+          "evidence": []
+        },
+        {
+          "term": "des dilemmes",
+          "score": 0.4814,
+          "evidence": []
+        },
+        {
+          "term": "face des",
+          "score": 0.4814,
+          "evidence": []
+        },
+        {
+          "term": "fixation des",
+          "score": 0.4814,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.3527,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "dans les",
+          "score": 20.672,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 16.4537,
+          "evidence": []
+        },
+        {
+          "term": "des dilemmes",
+          "score": 16.4537,
+          "evidence": []
+        },
+        {
+          "term": "face des",
+          "score": 16.4537,
+          "evidence": []
+        },
+        {
+          "term": "fixation des",
+          "score": 16.4537,
+          "evidence": []
+        },
+        {
+          "term": "les ministres",
+          "score": 14.9012,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 9.5135,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "dans les",
+          "score": 0.7863,
+          "evidence": []
+        },
+        {
+          "term": "les ministres",
+          "score": 0.4994,
+          "evidence": []
+        },
+        {
+          "term": "face des",
+          "score": 0.496,
+          "evidence": []
+        },
+        {
+          "term": "fixation des",
+          "score": 0.4855,
+          "evidence": []
+        },
+        {
+          "term": "des dilemmes",
+          "score": 0.4852,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.2994,
+          "evidence": []
+        },
+        {
+          "term": "une entreprise",
+          "score": 0.2582,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "还包括区域经济一体化组织",
+          "score": 18.3982,
+          "evidence": []
+        },
+        {
+          "term": "适用时",
+          "score": 18.3982,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 18.1517,
+          "evidence": []
+        },
+        {
+          "term": "潜在受试者",
+          "score": 17.5409,
+          "evidence": []
+        },
+        {
+          "term": "可能性",
+          "score": 17.1384,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 16.2852,
+          "evidence": []
+        },
+        {
+          "term": "实验室和流感监测能力建设",
+          "score": 15.9851,
+          "evidence": []
+        }
+      ]
+    },
+    "page-002": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "les priorités",
+          "score": 2.8401,
+          "evidence": []
+        },
+        {
+          "term": "des priorités",
+          "score": 2.7399,
+          "evidence": []
+        },
+        {
+          "term": "les dépenses",
+          "score": 2.412,
+          "evidence": []
+        },
+        {
+          "term": "aux priorités",
+          "score": 2.2371,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 2.1728,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 2.1082,
+          "evidence": []
+        },
+        {
+          "term": "les ministres",
+          "score": 2.0975,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 2.045,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "les priorités",
+          "score": 142.7505,
+          "evidence": []
+        },
+        {
+          "term": "des priorités",
+          "score": 113.3774,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 109.3471,
+          "evidence": []
+        },
+        {
+          "term": "les dépenses",
+          "score": 108.1614,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 107.7291,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 99.8225,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 98.1656,
+          "evidence": []
+        },
+        {
+          "term": "pour les",
+          "score": 93.8182,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pour les",
+          "score": 2.0545,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 1.9866,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 1.827,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 1.7623,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 1.6077,
+          "evidence": []
+        },
+        {
+          "term": "des ressources",
+          "score": 1.3962,
+          "evidence": []
+        },
+        {
+          "term": "concerne les",
+          "score": 1.2106,
+          "evidence": []
+        },
+        {
+          "term": "les dépenses",
+          "score": 1.2106,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "pour les",
+          "score": 93.6091,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 92.0246,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 84.6052,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 82.9105,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 76.7934,
+          "evidence": []
+        },
+        {
+          "term": "concerne les",
+          "score": 69.3708,
+          "evidence": []
+        },
+        {
+          "term": "les dépenses",
+          "score": 69.3708,
+          "evidence": []
+        },
+        {
+          "term": "les ministres",
+          "score": 69.3708,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pour les",
+          "score": 2.0545,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 1.9866,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 1.827,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 1.7623,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 1.6077,
+          "evidence": []
+        },
+        {
+          "term": "des ressources",
+          "score": 1.3962,
+          "evidence": []
+        },
+        {
+          "term": "les priorités",
+          "score": 1.2794,
+          "evidence": []
+        },
+        {
+          "term": "concerne les",
+          "score": 1.2659,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 13.9648,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 13.8149,
+          "evidence": []
+        },
+        {
+          "term": "关注这一事实",
+          "score": 10.5891,
+          "evidence": []
+        },
+        {
+          "term": "ignorer",
+          "score": 10.5031,
+          "evidence": []
+        },
+        {
+          "term": "titré",
+          "score": 10.4483,
+          "evidence": []
+        },
+        {
+          "term": "inoculé",
+          "score": 10.4405,
+          "evidence": []
+        },
+        {
+          "term": "stockés",
+          "score": 10.432,
+          "evidence": []
+        },
+        {
+          "term": "autisme",
+          "score": 10.4209,
+          "evidence": []
+        }
+      ]
+    },
+    "page-003": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "des priorités",
+          "score": 2.4211,
+          "evidence": []
+        },
+        {
+          "term": "fixation des",
+          "score": 2.0709,
+          "evidence": []
+        },
+        {
+          "term": "les donateurs",
+          "score": 1.9088,
+          "evidence": []
+        },
+        {
+          "term": "priorités nationales",
+          "score": 1.8423,
+          "evidence": []
+        },
+        {
+          "term": "donateurs ont",
+          "score": 1.6521,
+          "evidence": []
+        },
+        {
+          "term": "doivent être",
+          "score": 1.5381,
+          "evidence": []
+        },
+        {
+          "term": "doivent pas",
+          "score": 1.5326,
+          "evidence": []
+        },
+        {
+          "term": "coup",
+          "score": 0.9356,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "des priorités",
+          "score": 84.8662,
+          "evidence": []
+        },
+        {
+          "term": "fixation des",
+          "score": 63.7048,
+          "evidence": []
+        },
+        {
+          "term": "les donateurs",
+          "score": 57.266,
+          "evidence": []
+        },
+        {
+          "term": "priorités nationales",
+          "score": 44.9271,
+          "evidence": []
+        },
+        {
+          "term": "donateurs ont",
+          "score": 36.4737,
+          "evidence": []
+        },
+        {
+          "term": "doivent pas",
+          "score": 33.4774,
+          "evidence": []
+        },
+        {
+          "term": "doivent être",
+          "score": 33.3351,
+          "evidence": []
+        },
+        {
+          "term": "est",
+          "score": 17.92,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "les",
+          "score": 0.9584,
+          "evidence": []
+        },
+        {
+          "term": "les donateurs",
+          "score": 0.9584,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.9474,
+          "evidence": []
+        },
+        {
+          "term": "des priorités",
+          "score": 0.9474,
+          "evidence": []
+        },
+        {
+          "term": "fixation des",
+          "score": 0.9474,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.6743,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.606,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.5878,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les",
+          "score": 41.4214,
+          "evidence": []
+        },
+        {
+          "term": "les donateurs",
+          "score": 41.4214,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 39.4477,
+          "evidence": []
+        },
+        {
+          "term": "des priorités",
+          "score": 39.4477,
+          "evidence": []
+        },
+        {
+          "term": "fixation des",
+          "score": 39.4477,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 14.7503,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 14.556,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 12.757,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "des priorités",
+          "score": 1.0107,
+          "evidence": []
+        },
+        {
+          "term": "les donateurs",
+          "score": 0.9905,
+          "evidence": []
+        },
+        {
+          "term": "fixation des",
+          "score": 0.9545,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.6743,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.606,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.5878,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.5128,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.4971,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "感染者",
+          "score": 17.0818,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 13.1654,
+          "evidence": []
+        },
+        {
+          "term": "在研究开始后",
+          "score": 12.7967,
+          "evidence": []
+        },
+        {
+          "term": "病毒疗法",
+          "score": 12.7967,
+          "evidence": []
+        },
+        {
+          "term": "该怎么办",
+          "score": 12.6102,
+          "evidence": []
+        },
+        {
+          "term": "心neha",
+          "score": 11.6061,
+          "evidence": []
+        },
+        {
+          "term": "研究人员相信",
+          "score": 11.5744,
+          "evidence": []
+        },
+        {
+          "term": "干预的目的",
+          "score": 11.5526,
+          "evidence": []
+        }
+      ]
+    },
+    "page-004": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "des dispensateurs",
+          "score": 2.7742,
+          "evidence": []
+        },
+        {
+          "term": "des hôpitaux",
+          "score": 2.5404,
+          "evidence": []
+        },
+        {
+          "term": "des contrats",
+          "score": 2.4177,
+          "evidence": []
+        },
+        {
+          "term": "des soins",
+          "score": 2.1744,
+          "evidence": []
+        },
+        {
+          "term": "dispensateurs ayant",
+          "score": 2.1183,
+          "evidence": []
+        },
+        {
+          "term": "secteur privé",
+          "score": 2.0105,
+          "evidence": []
+        },
+        {
+          "term": "des compétences",
+          "score": 1.964,
+          "evidence": []
+        },
+        {
+          "term": "prestation des",
+          "score": 1.9423,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "des dispensateurs",
+          "score": 115.7903,
+          "evidence": []
+        },
+        {
+          "term": "des hôpitaux",
+          "score": 113.4829,
+          "evidence": []
+        },
+        {
+          "term": "des contrats",
+          "score": 104.9708,
+          "evidence": []
+        },
+        {
+          "term": "des soins",
+          "score": 100.1157,
+          "evidence": []
+        },
+        {
+          "term": "des compétences",
+          "score": 94.1828,
+          "evidence": []
+        },
+        {
+          "term": "avec des",
+          "score": 93.6097,
+          "evidence": []
+        },
+        {
+          "term": "prestation des",
+          "score": 93.4201,
+          "evidence": []
+        },
+        {
+          "term": "par des",
+          "score": 92.7637,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pour les",
+          "score": 1.7634,
+          "evidence": []
+        },
+        {
+          "term": "par des",
+          "score": 1.5318,
+          "evidence": []
+        },
+        {
+          "term": "avec des",
+          "score": 1.3721,
+          "evidence": []
+        },
+        {
+          "term": "des soins",
+          "score": 1.3538,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 1.3365,
+          "evidence": []
+        },
+        {
+          "term": "des ressources",
+          "score": 1.2457,
+          "evidence": []
+        },
+        {
+          "term": "des services",
+          "score": 1.2308,
+          "evidence": []
+        },
+        {
+          "term": "prestation des",
+          "score": 1.1844,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "par des",
+          "score": 83.2961,
+          "evidence": []
+        },
+        {
+          "term": "pour les",
+          "score": 81.384,
+          "evidence": []
+        },
+        {
+          "term": "des soins",
+          "score": 77.8631,
+          "evidence": []
+        },
+        {
+          "term": "avec des",
+          "score": 75.1284,
+          "evidence": []
+        },
+        {
+          "term": "des ressources",
+          "score": 72.2959,
+          "evidence": []
+        },
+        {
+          "term": "des services",
+          "score": 72.2619,
+          "evidence": []
+        },
+        {
+          "term": "prestation des",
+          "score": 70.6993,
+          "evidence": []
+        },
+        {
+          "term": "des compétences",
+          "score": 69.891,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pour les",
+          "score": 1.7634,
+          "evidence": []
+        },
+        {
+          "term": "par des",
+          "score": 1.5318,
+          "evidence": []
+        },
+        {
+          "term": "avec des",
+          "score": 1.3721,
+          "evidence": []
+        },
+        {
+          "term": "des soins",
+          "score": 1.3538,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 1.3365,
+          "evidence": []
+        },
+        {
+          "term": "des ressources",
+          "score": 1.2457,
+          "evidence": []
+        },
+        {
+          "term": "des services",
+          "score": 1.2308,
+          "evidence": []
+        },
+        {
+          "term": "prestation des",
+          "score": 1.1844,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "个学习目标",
+          "score": 26.7669,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 26.7669,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 26.7669,
+          "evidence": []
+        },
+        {
+          "term": "在研究开始后",
+          "score": 25.46,
+          "evidence": []
+        },
+        {
+          "term": "病毒疗法",
+          "score": 25.46,
+          "evidence": []
+        },
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 23.5026,
+          "evidence": []
+        },
+        {
+          "term": "该怎么办",
+          "score": 22.8546,
+          "evidence": []
+        },
+        {
+          "term": "如果疫苗证明有效",
+          "score": 19.1211,
+          "evidence": []
+        }
+      ]
+    },
+    "page-005": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "les ministres",
+          "score": 2.5307,
+          "evidence": []
+        },
+        {
+          "term": "les usagers",
+          "score": 2.3111,
+          "evidence": []
+        },
+        {
+          "term": "les dispensateurs",
+          "score": 2.2765,
+          "evidence": []
+        },
+        {
+          "term": "payer les",
+          "score": 2.2757,
+          "evidence": []
+        },
+        {
+          "term": "par les",
+          "score": 2.119,
+          "evidence": []
+        },
+        {
+          "term": "vers les",
+          "score": 2.112,
+          "evidence": []
+        },
+        {
+          "term": "les plus",
+          "score": 2.1082,
+          "evidence": []
+        },
+        {
+          "term": "les fonds",
+          "score": 2.0939,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "les plus",
+          "score": 117.7086,
+          "evidence": []
+        },
+        {
+          "term": "les ministres",
+          "score": 117.202,
+          "evidence": []
+        },
+        {
+          "term": "par les",
+          "score": 113.1271,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 112.6504,
+          "evidence": []
+        },
+        {
+          "term": "payer les",
+          "score": 109.3126,
+          "evidence": []
+        },
+        {
+          "term": "les usagers",
+          "score": 107.0748,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 106.562,
+          "evidence": []
+        },
+        {
+          "term": "les dispensateurs",
+          "score": 106.2639,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "par les",
+          "score": 1.6236,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 1.6046,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 1.4787,
+          "evidence": []
+        },
+        {
+          "term": "les plus",
+          "score": 1.4614,
+          "evidence": []
+        },
+        {
+          "term": "des soins",
+          "score": 1.3868,
+          "evidence": []
+        },
+        {
+          "term": "les services",
+          "score": 1.3261,
+          "evidence": []
+        },
+        {
+          "term": "les fonds",
+          "score": 1.1964,
+          "evidence": []
+        },
+        {
+          "term": "les dispensateurs",
+          "score": 1.122,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "que les",
+          "score": 83.0591,
+          "evidence": []
+        },
+        {
+          "term": "par les",
+          "score": 81.9863,
+          "evidence": []
+        },
+        {
+          "term": "les plus",
+          "score": 73.8909,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 73.6505,
+          "evidence": []
+        },
+        {
+          "term": "les services",
+          "score": 71.107,
+          "evidence": []
+        },
+        {
+          "term": "vers les",
+          "score": 69.3292,
+          "evidence": []
+        },
+        {
+          "term": "les dispensateurs",
+          "score": 67.344,
+          "evidence": []
+        },
+        {
+          "term": "les fonds",
+          "score": 67.344,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "par les",
+          "score": 1.6236,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 1.6046,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 1.4787,
+          "evidence": []
+        },
+        {
+          "term": "les plus",
+          "score": 1.4614,
+          "evidence": []
+        },
+        {
+          "term": "des soins",
+          "score": 1.3868,
+          "evidence": []
+        },
+        {
+          "term": "les services",
+          "score": 1.3261,
+          "evidence": []
+        },
+        {
+          "term": "les fonds",
+          "score": 1.1964,
+          "evidence": []
+        },
+        {
+          "term": "vers les",
+          "score": 1.1863,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "感染者",
+          "score": 16.2283,
+          "evidence": []
+        },
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 14.2358,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 13.0758,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 13.0758,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 13.0758,
+          "evidence": []
+        },
+        {
+          "term": "在研究开始后",
+          "score": 13.0501,
+          "evidence": []
+        },
+        {
+          "term": "病毒疗法",
+          "score": 13.0501,
+          "evidence": []
+        },
+        {
+          "term": "该怎么办",
+          "score": 12.9458,
+          "evidence": []
+        }
+      ]
+    },
+    "page-006": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "vih sida",
+          "score": 1.7618,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 1.6366,
+          "evidence": []
+        },
+        {
+          "term": "des ressources",
+          "score": 1.6205,
+          "evidence": []
+        },
+        {
+          "term": "parmi les",
+          "score": 1.5891,
+          "evidence": []
+        },
+        {
+          "term": "pour les",
+          "score": 1.5839,
+          "evidence": []
+        },
+        {
+          "term": "exemple par",
+          "score": 1.5653,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 1.0027,
+          "evidence": []
+        },
+        {
+          "term": "modifier",
+          "score": 0.9515,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "des ressources",
+          "score": 51.1697,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 50.5542,
+          "evidence": []
+        },
+        {
+          "term": "pour les",
+          "score": 48.4045,
+          "evidence": []
+        },
+        {
+          "term": "parmi les",
+          "score": 47.1667,
+          "evidence": []
+        },
+        {
+          "term": "exemple par",
+          "score": 35.9548,
+          "evidence": []
+        },
+        {
+          "term": "vih sida",
+          "score": 35.9371,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 24.2626,
+          "evidence": []
+        },
+        {
+          "term": "modifier",
+          "score": 18.2558,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pour les",
+          "score": 1.5574,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 1.2009,
+          "evidence": []
+        },
+        {
+          "term": "des ressources",
+          "score": 1.0593,
+          "evidence": []
+        },
+        {
+          "term": "parmi les",
+          "score": 0.9832,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.5817,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.5662,
+          "evidence": []
+        },
+        {
+          "term": "exemple par",
+          "score": 0.5235,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.4876,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "pour les",
+          "score": 51.0988,
+          "evidence": []
+        },
+        {
+          "term": "des ressources",
+          "score": 42.1194,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 40.1405,
+          "evidence": []
+        },
+        {
+          "term": "parmi les",
+          "score": 36.3619,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 19.8397,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 12.881,
+          "evidence": []
+        },
+        {
+          "term": "exemple par",
+          "score": 11.4058,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 10.5979,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pour les",
+          "score": 1.5574,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 1.2009,
+          "evidence": []
+        },
+        {
+          "term": "des ressources",
+          "score": 1.0593,
+          "evidence": []
+        },
+        {
+          "term": "parmi les",
+          "score": 0.9832,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.5817,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.5662,
+          "evidence": []
+        },
+        {
+          "term": "exemple par",
+          "score": 0.5235,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.4782,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "感染者",
+          "score": 15.0251,
+          "evidence": []
+        },
+        {
+          "term": "在研究开始后",
+          "score": 13.1931,
+          "evidence": []
+        },
+        {
+          "term": "病毒疗法",
+          "score": 13.1931,
+          "evidence": []
+        },
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 13.0484,
+          "evidence": []
+        },
+        {
+          "term": "该怎么办",
+          "score": 12.7073,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 12.6467,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 12.6467,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 12.6467,
+          "evidence": []
+        }
+      ]
+    },
+    "page-007": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "aux antirétroviraux",
+          "score": 2.1635,
+          "evidence": []
+        },
+        {
+          "term": "aux traitements",
+          "score": 2.0797,
+          "evidence": []
+        },
+        {
+          "term": "accès aux",
+          "score": 2.0431,
+          "evidence": []
+        },
+        {
+          "term": "vih sida",
+          "score": 1.9982,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 1.7667,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 1.7628,
+          "evidence": []
+        },
+        {
+          "term": "les moyens",
+          "score": 1.7441,
+          "evidence": []
+        },
+        {
+          "term": "des maladies",
+          "score": 1.6121,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "dans les",
+          "score": 68.9495,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 68.1533,
+          "evidence": []
+        },
+        {
+          "term": "les moyens",
+          "score": 65.1767,
+          "evidence": []
+        },
+        {
+          "term": "accès aux",
+          "score": 61.081,
+          "evidence": []
+        },
+        {
+          "term": "aux antirétroviraux",
+          "score": 60.0541,
+          "evidence": []
+        },
+        {
+          "term": "aux traitements",
+          "score": 58.2036,
+          "evidence": []
+        },
+        {
+          "term": "vih sida",
+          "score": 48.039,
+          "evidence": []
+        },
+        {
+          "term": "des maladies",
+          "score": 47.0711,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "dans les",
+          "score": 1.8465,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 1.5285,
+          "evidence": []
+        },
+        {
+          "term": "des maladies",
+          "score": 1.2115,
+          "evidence": []
+        },
+        {
+          "term": "les moyens",
+          "score": 1.1272,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.7819,
+          "evidence": []
+        },
+        {
+          "term": "accès aux",
+          "score": 0.6539,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.6242,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.5678,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "dans les",
+          "score": 67.1887,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 57.9622,
+          "evidence": []
+        },
+        {
+          "term": "les moyens",
+          "score": 52.6061,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 38.7626,
+          "evidence": []
+        },
+        {
+          "term": "des maladies",
+          "score": 38.7626,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 19.5803,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 14.4805,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 12.8448,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "dans les",
+          "score": 1.8465,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 1.5285,
+          "evidence": []
+        },
+        {
+          "term": "des maladies",
+          "score": 1.2115,
+          "evidence": []
+        },
+        {
+          "term": "les moyens",
+          "score": 1.1904,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.7819,
+          "evidence": []
+        },
+        {
+          "term": "accès aux",
+          "score": 0.6539,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.6242,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.5678,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "感染者",
+          "score": 25.8487,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 24.4515,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 21.2218,
+          "evidence": []
+        },
+        {
+          "term": "关注这一事实",
+          "score": 16.4409,
+          "evidence": []
+        },
+        {
+          "term": "还不清楚",
+          "score": 16.2977,
+          "evidence": []
+        },
+        {
+          "term": "这意味着",
+          "score": 16.159,
+          "evidence": []
+        },
+        {
+          "term": "这两种hpv",
+          "score": 16.1123,
+          "evidence": []
+        },
+        {
+          "term": "学员a",
+          "score": 14.3312,
+          "evidence": []
+        }
+      ]
+    },
+    "page-008": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "avec accord",
+          "score": 1.8996,
+          "evidence": []
+        },
+        {
+          "term": "personne vivant",
+          "score": 1.7673,
+          "evidence": []
+        },
+        {
+          "term": "des partenaires",
+          "score": 1.7585,
+          "evidence": []
+        },
+        {
+          "term": "consentement explicite",
+          "score": 1.7082,
+          "evidence": []
+        },
+        {
+          "term": "des tiers",
+          "score": 1.573,
+          "evidence": []
+        },
+        {
+          "term": "l'information",
+          "score": 0.7829,
+          "evidence": []
+        },
+        {
+          "term": "droit",
+          "score": 0.6955,
+          "evidence": []
+        },
+        {
+          "term": "conseil",
+          "score": 0.6612,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "des partenaires",
+          "score": 39.3982,
+          "evidence": []
+        },
+        {
+          "term": "avec accord",
+          "score": 37.9791,
+          "evidence": []
+        },
+        {
+          "term": "des tiers",
+          "score": 32.2943,
+          "evidence": []
+        },
+        {
+          "term": "personne vivant",
+          "score": 32.1109,
+          "evidence": []
+        },
+        {
+          "term": "consentement explicite",
+          "score": 27.3492,
+          "evidence": []
+        },
+        {
+          "term": "l'information",
+          "score": 12.6731,
+          "evidence": []
+        },
+        {
+          "term": "droit",
+          "score": 11.1489,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 10.9103,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "des tiers",
+          "score": 0.6172,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.5933,
+          "evidence": []
+        },
+        {
+          "term": "des partenaires",
+          "score": 0.584,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.4025,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.3677,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.3297,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.3156,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.3052,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "des",
+          "score": 16.714,
+          "evidence": []
+        },
+        {
+          "term": "des partenaires",
+          "score": 16.714,
+          "evidence": []
+        },
+        {
+          "term": "des tiers",
+          "score": 16.714,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 15.1967,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 6.5797,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 5.6457,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 5.5554,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 4.8726,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "des tiers",
+          "score": 0.6172,
+          "evidence": []
+        },
+        {
+          "term": "des partenaires",
+          "score": 0.6073,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.5933,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.3677,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.3297,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.3156,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.2683,
+          "evidence": []
+        },
+        {
+          "term": "est",
+          "score": 0.2605,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 27.2621,
+          "evidence": []
+        },
+        {
+          "term": "学员a",
+          "score": 18.0333,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 17.193,
+          "evidence": []
+        },
+        {
+          "term": "干预的目的",
+          "score": 16.3772,
+          "evidence": []
+        },
+        {
+          "term": "知情同意的作用",
+          "score": 16.3772,
+          "evidence": []
+        },
+        {
+          "term": "追踪和报告机制",
+          "score": 13.7943,
+          "evidence": []
+        },
+        {
+          "term": "心neha",
+          "score": 11.7813,
+          "evidence": []
+        },
+        {
+          "term": "增强和迭代",
+          "score": 11.5199,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

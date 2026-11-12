@@ -1,0 +1,1490 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-162250",
+  "instance": "who-iris",
+  "about": "library/10665-162250",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7908,
+    "terms": 73102
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "director-general summing",
+        "score": 4.2366,
+        "evidence": []
+      },
+      {
+        "term": "urges member",
+        "score": 3.7598,
+        "evidence": []
+      },
+      {
+        "term": "breast-milk substitutes",
+        "score": 3.7099,
+        "evidence": []
+      },
+      {
+        "term": "member states",
+        "score": 3.5762,
+        "evidence": []
+      },
+      {
+        "term": "international code",
+        "score": 2.6214,
+        "evidence": []
+      },
+      {
+        "term": "lav htlv-iii",
+        "score": 2.6018,
+        "evidence": []
+      },
+      {
+        "term": "child feeding",
+        "score": 2.5466,
+        "evidence": []
+      },
+      {
+        "term": "concerned parties",
+        "score": 2.2749,
+        "evidence": []
+      },
+      {
+        "term": "world health",
+        "score": 1.9703,
+        "evidence": []
+      },
+      {
+        "term": "htlv-iii infection",
+        "score": 1.955,
+        "evidence": []
+      },
+      {
+        "term": "immunodeficiency syndrome",
+        "score": 1.9031,
+        "evidence": []
+      },
+      {
+        "term": "maternity wards",
+        "score": 1.8877,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "director-general summing",
+        "score": 77.1479,
+        "evidence": []
+      },
+      {
+        "term": "breast-milk substitutes",
+        "score": 69.8114,
+        "evidence": []
+      },
+      {
+        "term": "lav htlv-iii",
+        "score": 63.0686,
+        "evidence": []
+      },
+      {
+        "term": "international code",
+        "score": 60.2562,
+        "evidence": []
+      },
+      {
+        "term": "member states",
+        "score": 58.4913,
+        "evidence": []
+      },
+      {
+        "term": "urges member",
+        "score": 56.6962,
+        "evidence": []
+      },
+      {
+        "term": "htlv-iii infection",
+        "score": 45.5211,
+        "evidence": []
+      },
+      {
+        "term": "child feeding",
+        "score": 41.8935,
+        "evidence": []
+      },
+      {
+        "term": "revised drug",
+        "score": 32.2391,
+        "evidence": []
+      },
+      {
+        "term": "young child",
+        "score": 30.3841,
+        "evidence": []
+      },
+      {
+        "term": "concerned parties",
+        "score": 29.2334,
+        "evidence": []
+      },
+      {
+        "term": "wha",
+        "score": 28.597,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "world health",
+        "score": 0.941,
+        "evidence": []
+      },
+      {
+        "term": "public health",
+        "score": 0.7858,
+        "evidence": []
+      },
+      {
+        "term": "developing countries",
+        "score": 0.6279,
+        "evidence": []
+      },
+      {
+        "term": "member states",
+        "score": 0.567,
+        "evidence": []
+      },
+      {
+        "term": "health problem",
+        "score": 0.5071,
+        "evidence": []
+      },
+      {
+        "term": "support developing",
+        "score": 0.4805,
+        "evidence": []
+      },
+      {
+        "term": "hiv",
+        "score": 0.3911,
+        "evidence": []
+      },
+      {
+        "term": "organization",
+        "score": 0.3816,
+        "evidence": []
+      },
+      {
+        "term": "national",
+        "score": 0.3353,
+        "evidence": []
+      },
+      {
+        "term": "global",
+        "score": 0.333,
+        "evidence": []
+      },
+      {
+        "term": "influenza",
+        "score": 0.324,
+        "evidence": []
+      },
+      {
+        "term": "aids",
+        "score": 0.3094,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "world health",
+        "score": 15.9906,
+        "evidence": []
+      },
+      {
+        "term": "public health",
+        "score": 14.4226,
+        "evidence": []
+      },
+      {
+        "term": "health problem",
+        "score": 11.2139,
+        "evidence": []
+      },
+      {
+        "term": "hiv",
+        "score": 7.065,
+        "evidence": []
+      },
+      {
+        "term": "research",
+        "score": 5.7041,
+        "evidence": []
+      },
+      {
+        "term": "data",
+        "score": 5.0184,
+        "evidence": []
+      },
+      {
+        "term": "care",
+        "score": 4.7698,
+        "evidence": []
+      },
+      {
+        "term": "organization",
+        "score": 4.5675,
+        "evidence": []
+      },
+      {
+        "term": "hepatitis",
+        "score": 4.3786,
+        "evidence": []
+      },
+      {
+        "term": "developing countries",
+        "score": 4.2238,
+        "evidence": []
+      },
+      {
+        "term": "support developing",
+        "score": 4.157,
+        "evidence": []
+      },
+      {
+        "term": "home-based",
+        "score": 4.013,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "world health",
+        "score": 0.941,
+        "evidence": []
+      },
+      {
+        "term": "public health",
+        "score": 0.7858,
+        "evidence": []
+      },
+      {
+        "term": "developing countries",
+        "score": 0.6279,
+        "evidence": []
+      },
+      {
+        "term": "health problem",
+        "score": 0.5747,
+        "evidence": []
+      },
+      {
+        "term": "member states",
+        "score": 0.567,
+        "evidence": []
+      },
+      {
+        "term": "support developing",
+        "score": 0.4805,
+        "evidence": []
+      },
+      {
+        "term": "organization",
+        "score": 0.3816,
+        "evidence": []
+      },
+      {
+        "term": "international code",
+        "score": 0.3789,
+        "evidence": []
+      },
+      {
+        "term": "urges member",
+        "score": 0.324,
+        "evidence": []
+      },
+      {
+        "term": "child feeding",
+        "score": 0.3188,
+        "evidence": []
+      },
+      {
+        "term": "aids",
+        "score": 0.3094,
+        "evidence": []
+      },
+      {
+        "term": "young child",
+        "score": 0.2939,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "如果没有",
+        "score": 217.3921,
+        "evidence": []
+      },
+      {
+        "term": "重点人群",
+        "score": 195.2723,
+        "evidence": []
+      },
+      {
+        "term": "还包括区域经济一体化组织",
+        "score": 153.4145,
+        "evidence": []
+      },
+      {
+        "term": "适用时",
+        "score": 153.4145,
+        "evidence": []
+      },
+      {
+        "term": "要求总干事",
+        "score": 104.3351,
+        "evidence": []
+      },
+      {
+        "term": "文件a",
+        "score": 104.3275,
+        "evidence": []
+      },
+      {
+        "term": "共享流感病毒以及获得",
+        "score": 102.1821,
+        "evidence": []
+      },
+      {
+        "term": "敦促会员国",
+        "score": 92.1444,
+        "evidence": []
+      },
+      {
+        "term": "确定优先领域",
+        "score": 92.1444,
+        "evidence": []
+      },
+      {
+        "term": "实验室",
+        "score": 90.3576,
+        "evidence": []
+      },
+      {
+        "term": "巴西登革热",
+        "score": 87.7988,
+        "evidence": []
+      },
+      {
+        "term": "大流行性流感的防范",
+        "score": 86.1082,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "page-001": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "world health",
+          "score": 0.5532,
+          "evidence": []
+        },
+        {
+          "term": "thirteenth",
+          "score": 0.5095,
+          "evidence": []
+        },
+        {
+          "term": "resolutions",
+          "score": 0.466,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "committee",
+          "score": 6.6817,
+          "evidence": []
+        },
+        {
+          "term": "thirteenth",
+          "score": 6.3366,
+          "evidence": []
+        },
+        {
+          "term": "attached",
+          "score": 5.8846,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "world health",
+          "score": 0.1295,
+          "evidence": []
+        },
+        {
+          "term": "organization",
+          "score": 0.0651,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 0.0597,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "world health",
+          "score": 2.0421,
+          "evidence": []
+        },
+        {
+          "term": "organization",
+          "score": 0.8798,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 0.8533,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "world health",
+          "score": 0.1295,
+          "evidence": []
+        },
+        {
+          "term": "child",
+          "score": 0.039,
+          "evidence": []
+        },
+        {
+          "term": "infant",
+          "score": 0.0273,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 49.8642,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 46.9102,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 21.9851,
+          "evidence": []
+        }
+      ]
+    },
+    "page-002": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "director-general summing",
+          "score": 2.0948,
+          "evidence": []
+        },
+        {
+          "term": "revised drug",
+          "score": 1.4111,
+          "evidence": []
+        },
+        {
+          "term": "drug strategy",
+          "score": 1.1074,
+          "evidence": []
+        },
+        {
+          "term": "executive board",
+          "score": 1.0871,
+          "evidence": []
+        },
+        {
+          "term": "conference",
+          "score": 0.9938,
+          "evidence": []
+        },
+        {
+          "term": "rational",
+          "score": 0.8578,
+          "evidence": []
+        },
+        {
+          "term": "thanks",
+          "score": 0.8492,
+          "evidence": []
+        },
+        {
+          "term": "urges",
+          "score": 0.825,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "director-general summing",
+          "score": 44.447,
+          "evidence": []
+        },
+        {
+          "term": "revised drug",
+          "score": 32.2391,
+          "evidence": []
+        },
+        {
+          "term": "conference",
+          "score": 25.8168,
+          "evidence": []
+        },
+        {
+          "term": "drug strategy",
+          "score": 23.6644,
+          "evidence": []
+        },
+        {
+          "term": "executive board",
+          "score": 17.2457,
+          "evidence": []
+        },
+        {
+          "term": "rational",
+          "score": 16.5297,
+          "evidence": []
+        },
+        {
+          "term": "thanks",
+          "score": 15.8603,
+          "evidence": []
+        },
+        {
+          "term": "urges",
+          "score": 12.6731,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "developing countries",
+          "score": 0.1797,
+          "evidence": []
+        },
+        {
+          "term": "member states",
+          "score": 0.1681,
+          "evidence": []
+        },
+        {
+          "term": "support developing",
+          "score": 0.1282,
+          "evidence": []
+        },
+        {
+          "term": "world",
+          "score": 0.1214,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.119,
+          "evidence": []
+        },
+        {
+          "term": "global",
+          "score": 0.1081,
+          "evidence": []
+        },
+        {
+          "term": "organization",
+          "score": 0.1021,
+          "evidence": []
+        },
+        {
+          "term": "drug strategy",
+          "score": 0.1017,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health",
+          "score": 2.8124,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 1.7967,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 1.368,
+          "evidence": []
+        },
+        {
+          "term": "digital",
+          "score": 1.312,
+          "evidence": []
+        },
+        {
+          "term": "world",
+          "score": 1.2396,
+          "evidence": []
+        },
+        {
+          "term": "organization",
+          "score": 1.1855,
+          "evidence": []
+        },
+        {
+          "term": "developing countries",
+          "score": 1.1598,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 1.0965,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "developing countries",
+          "score": 0.1797,
+          "evidence": []
+        },
+        {
+          "term": "member states",
+          "score": 0.1681,
+          "evidence": []
+        },
+        {
+          "term": "support developing",
+          "score": 0.1282,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.119,
+          "evidence": []
+        },
+        {
+          "term": "drug strategy",
+          "score": 0.1017,
+          "evidence": []
+        },
+        {
+          "term": "report",
+          "score": 0.0705,
+          "evidence": []
+        },
+        {
+          "term": "resources",
+          "score": 0.0637,
+          "evidence": []
+        },
+        {
+          "term": "revised drug",
+          "score": 0.0602,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 44.4012,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 20.7773,
+          "evidence": []
+        },
+        {
+          "term": "还包括区域经济一体化组织",
+          "score": 19.5815,
+          "evidence": []
+        },
+        {
+          "term": "适用时",
+          "score": 19.5815,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 19.5287,
+          "evidence": []
+        },
+        {
+          "term": "文件a",
+          "score": 18.5352,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 17.4677,
+          "evidence": []
+        },
+        {
+          "term": "问题的讨论结束",
+          "score": 17.4677,
+          "evidence": []
+        }
+      ]
+    },
+    "page-003": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "breast-milk substitutes",
+          "score": 2.5931,
+          "evidence": []
+        },
+        {
+          "term": "child feeding",
+          "score": 1.5168,
+          "evidence": []
+        },
+        {
+          "term": "international code",
+          "score": 1.4798,
+          "evidence": []
+        },
+        {
+          "term": "young child",
+          "score": 1.3104,
+          "evidence": []
+        },
+        {
+          "term": "wha",
+          "score": 0.9554,
+          "evidence": []
+        },
+        {
+          "term": "breast-feeding",
+          "score": 0.8865,
+          "evidence": []
+        },
+        {
+          "term": "unsuitable",
+          "score": 0.8653,
+          "evidence": []
+        },
+        {
+          "term": "infant",
+          "score": 0.8369,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "breast-milk substitutes",
+          "score": 55.8491,
+          "evidence": []
+        },
+        {
+          "term": "international code",
+          "score": 37.1047,
+          "evidence": []
+        },
+        {
+          "term": "child feeding",
+          "score": 29.8399,
+          "evidence": []
+        },
+        {
+          "term": "wha",
+          "score": 24.5117,
+          "evidence": []
+        },
+        {
+          "term": "young child",
+          "score": 24.3073,
+          "evidence": []
+        },
+        {
+          "term": "infant",
+          "score": 20.2855,
+          "evidence": []
+        },
+        {
+          "term": "breast-feeding",
+          "score": 14.3677,
+          "evidence": []
+        },
+        {
+          "term": "unsuitable",
+          "score": 14.0594,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "child feeding",
+          "score": 0.1886,
+          "evidence": []
+        },
+        {
+          "term": "young child",
+          "score": 0.1826,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.1561,
+          "evidence": []
+        },
+        {
+          "term": "infants",
+          "score": 0.1293,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.1247,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.1213,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 0.1081,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding",
+          "score": 0.1054,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health",
+          "score": 2.7817,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 2.2639,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 1.996,
+          "evidence": []
+        },
+        {
+          "term": "child",
+          "score": 1.8661,
+          "evidence": []
+        },
+        {
+          "term": "child feeding",
+          "score": 1.8661,
+          "evidence": []
+        },
+        {
+          "term": "young child",
+          "score": 1.8661,
+          "evidence": []
+        },
+        {
+          "term": "home-based",
+          "score": 1.8367,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 1.6963,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "child feeding",
+          "score": 0.1886,
+          "evidence": []
+        },
+        {
+          "term": "young child",
+          "score": 0.1826,
+          "evidence": []
+        },
+        {
+          "term": "infants",
+          "score": 0.1293,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.1213,
+          "evidence": []
+        },
+        {
+          "term": "international code",
+          "score": 0.1049,
+          "evidence": []
+        },
+        {
+          "term": "implementation",
+          "score": 0.0772,
+          "evidence": []
+        },
+        {
+          "term": "member",
+          "score": 0.0642,
+          "evidence": []
+        },
+        {
+          "term": "states",
+          "score": 0.0629,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "还包括区域经济一体化组织",
+          "score": 89.0033,
+          "evidence": []
+        },
+        {
+          "term": "适用时",
+          "score": 89.0033,
+          "evidence": []
+        },
+        {
+          "term": "文件a",
+          "score": 64.325,
+          "evidence": []
+        },
+        {
+          "term": "要求总干事",
+          "score": 58.4535,
+          "evidence": []
+        },
+        {
+          "term": "敦促会员国",
+          "score": 57.2263,
+          "evidence": []
+        },
+        {
+          "term": "确定优先领域",
+          "score": 57.2263,
+          "evidence": []
+        },
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 53.7227,
+          "evidence": []
+        },
+        {
+          "term": "大流行性流感的防范",
+          "score": 43.6891,
+          "evidence": []
+        }
+      ]
+    },
+    "page-004": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "milks",
+          "score": 0.9641,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 0.8122,
+          "evidence": []
+        },
+        {
+          "term": "member states",
+          "score": 0.8009,
+          "evidence": []
+        },
+        {
+          "term": "director-general",
+          "score": 0.6078,
+          "evidence": []
+        },
+        {
+          "term": "infants",
+          "score": 0.5661,
+          "evidence": []
+        },
+        {
+          "term": "necessary",
+          "score": 0.3749,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "code",
+          "score": 18.8857,
+          "evidence": []
+        },
+        {
+          "term": "milks",
+          "score": 15.754,
+          "evidence": []
+        },
+        {
+          "term": "member states",
+          "score": 11.6983,
+          "evidence": []
+        },
+        {
+          "term": "infants",
+          "score": 9.7463,
+          "evidence": []
+        },
+        {
+          "term": "director-general",
+          "score": 9.3431,
+          "evidence": []
+        },
+        {
+          "term": "necessary",
+          "score": 5.7283,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "member states",
+          "score": 0.0794,
+          "evidence": []
+        },
+        {
+          "term": "influenza",
+          "score": 0.0653,
+          "evidence": []
+        },
+        {
+          "term": "option",
+          "score": 0.0597,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 0.0583,
+          "evidence": []
+        },
+        {
+          "term": "pandemic",
+          "score": 0.0575,
+          "evidence": []
+        },
+        {
+          "term": "monitoring",
+          "score": 0.0568,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "favours",
+          "score": 1.473,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 1.3264,
+          "evidence": []
+        },
+        {
+          "term": "option",
+          "score": 0.966,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.9095,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.7752,
+          "evidence": []
+        },
+        {
+          "term": "art",
+          "score": 0.7486,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "member states",
+          "score": 0.0794,
+          "evidence": []
+        },
+        {
+          "term": "monitoring",
+          "score": 0.0568,
+          "evidence": []
+        },
+        {
+          "term": "implementation",
+          "score": 0.0482,
+          "evidence": []
+        },
+        {
+          "term": "infants",
+          "score": 0.0426,
+          "evidence": []
+        },
+        {
+          "term": "information",
+          "score": 0.0345,
+          "evidence": []
+        },
+        {
+          "term": "through",
+          "score": 0.0328,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 63.7208,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 47.4487,
+          "evidence": []
+        },
+        {
+          "term": "如个人",
+          "score": 28.1543,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 25.2123,
+          "evidence": []
+        },
+        {
+          "term": "在每次增加背景信息",
+          "score": 24.3543,
+          "evidence": []
+        },
+        {
+          "term": "实际的和",
+          "score": 24.3543,
+          "evidence": []
+        }
+      ]
+    },
+    "page-005": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "lav htlv-iii",
+          "score": 2.6018,
+          "evidence": []
+        },
+        {
+          "term": "htlv-iii infection",
+          "score": 1.955,
+          "evidence": []
+        },
+        {
+          "term": "member states",
+          "score": 1.1734,
+          "evidence": []
+        },
+        {
+          "term": "immunodeficiency syndrome",
+          "score": 1.1669,
+          "evidence": []
+        },
+        {
+          "term": "acquired immunodeficiency",
+          "score": 1.0913,
+          "evidence": []
+        },
+        {
+          "term": "health problem",
+          "score": 1.0601,
+          "evidence": []
+        },
+        {
+          "term": "regular budget",
+          "score": 0.9544,
+          "evidence": []
+        },
+        {
+          "term": "cooperate",
+          "score": 0.8847,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "lav htlv-iii",
+          "score": 63.0686,
+          "evidence": []
+        },
+        {
+          "term": "htlv-iii infection",
+          "score": 45.5211,
+          "evidence": []
+        },
+        {
+          "term": "member states",
+          "score": 23.3965,
+          "evidence": []
+        },
+        {
+          "term": "health problem",
+          "score": 19.9083,
+          "evidence": []
+        },
+        {
+          "term": "immunodeficiency syndrome",
+          "score": 17.3521,
+          "evidence": []
+        },
+        {
+          "term": "acquired immunodeficiency",
+          "score": 16.91,
+          "evidence": []
+        },
+        {
+          "term": "regular budget",
+          "score": 14.448,
+          "evidence": []
+        },
+        {
+          "term": "cooperate",
+          "score": 14.3677,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "public health",
+          "score": 0.2535,
+          "evidence": []
+        },
+        {
+          "term": "aids",
+          "score": 0.1596,
+          "evidence": []
+        },
+        {
+          "term": "health problem",
+          "score": 0.1573,
+          "evidence": []
+        },
+        {
+          "term": "member states",
+          "score": 0.1541,
+          "evidence": []
+        },
+        {
+          "term": "world",
+          "score": 0.1535,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.146,
+          "evidence": []
+        },
+        {
+          "term": "organization",
+          "score": 0.1398,
+          "evidence": []
+        },
+        {
+          "term": "htlv-iii infection",
+          "score": 0.1269,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "public health",
+          "score": 5.1553,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 3.6071,
+          "evidence": []
+        },
+        {
+          "term": "health problem",
+          "score": 3.5919,
+          "evidence": []
+        },
+        {
+          "term": "serious",
+          "score": 2.4467,
+          "evidence": []
+        },
+        {
+          "term": "aids",
+          "score": 2.2446,
+          "evidence": []
+        },
+        {
+          "term": "htlv-iii infection",
+          "score": 2.1262,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis",
+          "score": 2.0858,
+          "evidence": []
+        },
+        {
+          "term": "world",
+          "score": 1.608,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "public health",
+          "score": 0.2535,
+          "evidence": []
+        },
+        {
+          "term": "health problem",
+          "score": 0.1757,
+          "evidence": []
+        },
+        {
+          "term": "aids",
+          "score": 0.1596,
+          "evidence": []
+        },
+        {
+          "term": "member states",
+          "score": 0.1541,
+          "evidence": []
+        },
+        {
+          "term": "world",
+          "score": 0.1535,
+          "evidence": []
+        },
+        {
+          "term": "organization",
+          "score": 0.1398,
+          "evidence": []
+        },
+        {
+          "term": "htlv-iii infection",
+          "score": 0.136,
+          "evidence": []
+        },
+        {
+          "term": "control",
+          "score": 0.088,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 46.0529,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 28.2355,
+          "evidence": []
+        },
+        {
+          "term": "要求总干事",
+          "score": 25.2563,
+          "evidence": []
+        },
+        {
+          "term": "还包括区域经济一体化组织",
+          "score": 25.2271,
+          "evidence": []
+        },
+        {
+          "term": "适用时",
+          "score": 25.2271,
+          "evidence": []
+        },
+        {
+          "term": "注意到",
+          "score": 19.5868,
+          "evidence": []
+        },
+        {
+          "term": "乌干达",
+          "score": 18.8675,
+          "evidence": []
+        },
+        {
+          "term": "保持警惕",
+          "score": 18.3858,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

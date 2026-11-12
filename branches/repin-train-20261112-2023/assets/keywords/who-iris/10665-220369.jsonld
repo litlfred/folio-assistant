@@ -1,0 +1,684 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-220369",
+  "instance": "who-iris",
+  "about": "library/10665-220369",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7908,
+    "terms": 73102
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "cas oreillons",
+        "score": 3.1614,
+        "evidence": []
+      },
+      {
+        "term": "des oreillons",
+        "score": 2.9981,
+        "evidence": []
+      },
+      {
+        "term": "oreillons pendant",
+        "score": 2.909,
+        "evidence": []
+      },
+      {
+        "term": "étude rétrospective",
+        "score": 2.8469,
+        "evidence": []
+      },
+      {
+        "term": "incidence mumps",
+        "score": 2.7632,
+        "evidence": []
+      },
+      {
+        "term": "les complications",
+        "score": 2.6777,
+        "evidence": []
+      },
+      {
+        "term": "complications pour",
+        "score": 2.6598,
+        "evidence": []
+      },
+      {
+        "term": "étude prospective",
+        "score": 2.5663,
+        "evidence": []
+      },
+      {
+        "term": "complication rate",
+        "score": 2.0593,
+        "evidence": []
+      },
+      {
+        "term": "dans étude",
+        "score": 2.0315,
+        "evidence": []
+      },
+      {
+        "term": "ont été",
+        "score": 2.0268,
+        "evidence": []
+      },
+      {
+        "term": "les deux",
+        "score": 2.0187,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "les complications",
+        "score": 125.4241,
+        "evidence": []
+      },
+      {
+        "term": "complications pour",
+        "score": 122.9373,
+        "evidence": []
+      },
+      {
+        "term": "cas oreillons",
+        "score": 109.1113,
+        "evidence": []
+      },
+      {
+        "term": "des complications",
+        "score": 105.7092,
+        "evidence": []
+      },
+      {
+        "term": "incidence mumps",
+        "score": 94.5756,
+        "evidence": []
+      },
+      {
+        "term": "étude prospective",
+        "score": 87.9939,
+        "evidence": []
+      },
+      {
+        "term": "oreillons pendant",
+        "score": 87.8509,
+        "evidence": []
+      },
+      {
+        "term": "étude rétrospective",
+        "score": 78.0288,
+        "evidence": []
+      },
+      {
+        "term": "ont été",
+        "score": 73.6501,
+        "evidence": []
+      },
+      {
+        "term": "taux incidence",
+        "score": 72.9081,
+        "evidence": []
+      },
+      {
+        "term": "les deux",
+        "score": 69.8575,
+        "evidence": []
+      },
+      {
+        "term": "sur les",
+        "score": 64.6242,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "pour les",
+        "score": 1.7722,
+        "evidence": []
+      },
+      {
+        "term": "sur les",
+        "score": 1.6239,
+        "evidence": []
+      },
+      {
+        "term": "chez les",
+        "score": 1.4819,
+        "evidence": []
+      },
+      {
+        "term": "les deux",
+        "score": 1.3257,
+        "evidence": []
+      },
+      {
+        "term": "incidence des",
+        "score": 1.2521,
+        "evidence": []
+      },
+      {
+        "term": "les complications",
+        "score": 1.1927,
+        "evidence": []
+      },
+      {
+        "term": "les mêmes",
+        "score": 1.0789,
+        "evidence": []
+      },
+      {
+        "term": "les renseignements",
+        "score": 1.0789,
+        "evidence": []
+      },
+      {
+        "term": "des oreillons",
+        "score": 1.0459,
+        "evidence": []
+      },
+      {
+        "term": "pour cas",
+        "score": 0.9373,
+        "evidence": []
+      },
+      {
+        "term": "dans étude",
+        "score": 0.7852,
+        "evidence": []
+      },
+      {
+        "term": "ont été",
+        "score": 0.766,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "pour les",
+        "score": 65.5005,
+        "evidence": []
+      },
+      {
+        "term": "sur les",
+        "score": 56.3765,
+        "evidence": []
+      },
+      {
+        "term": "chez les",
+        "score": 51.7932,
+        "evidence": []
+      },
+      {
+        "term": "les deux",
+        "score": 50.1705,
+        "evidence": []
+      },
+      {
+        "term": "les complications",
+        "score": 47.9981,
+        "evidence": []
+      },
+      {
+        "term": "les mêmes",
+        "score": 46.2726,
+        "evidence": []
+      },
+      {
+        "term": "les renseignements",
+        "score": 46.2726,
+        "evidence": []
+      },
+      {
+        "term": "incidence des",
+        "score": 35.0233,
+        "evidence": []
+      },
+      {
+        "term": "des oreillons",
+        "score": 31.1491,
+        "evidence": []
+      },
+      {
+        "term": "incidence mumps",
+        "score": 30.2938,
+        "evidence": []
+      },
+      {
+        "term": "pour cas",
+        "score": 25.1941,
+        "evidence": []
+      },
+      {
+        "term": "pour ensemble",
+        "score": 19.228,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "pour les",
+        "score": 1.7722,
+        "evidence": []
+      },
+      {
+        "term": "sur les",
+        "score": 1.6239,
+        "evidence": []
+      },
+      {
+        "term": "chez les",
+        "score": 1.4819,
+        "evidence": []
+      },
+      {
+        "term": "les deux",
+        "score": 1.3257,
+        "evidence": []
+      },
+      {
+        "term": "incidence des",
+        "score": 1.2521,
+        "evidence": []
+      },
+      {
+        "term": "les complications",
+        "score": 1.1927,
+        "evidence": []
+      },
+      {
+        "term": "les mêmes",
+        "score": 1.1043,
+        "evidence": []
+      },
+      {
+        "term": "les renseignements",
+        "score": 1.0937,
+        "evidence": []
+      },
+      {
+        "term": "des oreillons",
+        "score": 1.0805,
+        "evidence": []
+      },
+      {
+        "term": "pour cas",
+        "score": 0.9373,
+        "evidence": []
+      },
+      {
+        "term": "dans étude",
+        "score": 0.7852,
+        "evidence": []
+      },
+      {
+        "term": "ont été",
+        "score": 0.766,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "由于这个理由",
+        "score": 36.2655,
+        "evidence": []
+      },
+      {
+        "term": "提供hpv",
+        "score": 34.5501,
+        "evidence": []
+      },
+      {
+        "term": "允许进行个人反馈",
+        "score": 31.035,
+        "evidence": []
+      },
+      {
+        "term": "岁的儿童",
+        "score": 30.8681,
+        "evidence": []
+      },
+      {
+        "term": "轮状病毒疫苗",
+        "score": 29.4641,
+        "evidence": []
+      },
+      {
+        "term": "重点人群",
+        "score": 28.8716,
+        "evidence": []
+      },
+      {
+        "term": "疫苗接种",
+        "score": 28.0952,
+        "evidence": []
+      },
+      {
+        "term": "询问学员这项原则如何应用于紧急情况下的研究",
+        "score": 27.6747,
+        "evidence": []
+      },
+      {
+        "term": "引进hpv",
+        "score": 26.8106,
+        "evidence": []
+      },
+      {
+        "term": "在该案例中可以做些什么来防止或减轻潜在的发表偏倚",
+        "score": 25.2488,
+        "evidence": []
+      },
+      {
+        "term": "该案例中可能存在哪种发表偏倚",
+        "score": 25.2488,
+        "evidence": []
+      },
+      {
+        "term": "该案例如何影响突发事件的应对",
+        "score": 25.2488,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-m-um-ps-su-r-veillan-c-e": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "cas oreillons",
+          "score": 3.1614,
+          "evidence": []
+        },
+        {
+          "term": "des oreillons",
+          "score": 2.9981,
+          "evidence": []
+        },
+        {
+          "term": "oreillons pendant",
+          "score": 2.909,
+          "evidence": []
+        },
+        {
+          "term": "étude rétrospective",
+          "score": 2.8469,
+          "evidence": []
+        },
+        {
+          "term": "incidence mumps",
+          "score": 2.7632,
+          "evidence": []
+        },
+        {
+          "term": "les complications",
+          "score": 2.6777,
+          "evidence": []
+        },
+        {
+          "term": "complications pour",
+          "score": 2.6598,
+          "evidence": []
+        },
+        {
+          "term": "étude prospective",
+          "score": 2.5663,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "les complications",
+          "score": 125.4241,
+          "evidence": []
+        },
+        {
+          "term": "complications pour",
+          "score": 122.9373,
+          "evidence": []
+        },
+        {
+          "term": "cas oreillons",
+          "score": 109.1113,
+          "evidence": []
+        },
+        {
+          "term": "des complications",
+          "score": 105.7092,
+          "evidence": []
+        },
+        {
+          "term": "incidence mumps",
+          "score": 94.5756,
+          "evidence": []
+        },
+        {
+          "term": "étude prospective",
+          "score": 87.9939,
+          "evidence": []
+        },
+        {
+          "term": "oreillons pendant",
+          "score": 87.8509,
+          "evidence": []
+        },
+        {
+          "term": "étude rétrospective",
+          "score": 78.0288,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pour les",
+          "score": 1.7722,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 1.6239,
+          "evidence": []
+        },
+        {
+          "term": "chez les",
+          "score": 1.4819,
+          "evidence": []
+        },
+        {
+          "term": "les deux",
+          "score": 1.3257,
+          "evidence": []
+        },
+        {
+          "term": "incidence des",
+          "score": 1.2521,
+          "evidence": []
+        },
+        {
+          "term": "les complications",
+          "score": 1.1927,
+          "evidence": []
+        },
+        {
+          "term": "les mêmes",
+          "score": 1.0789,
+          "evidence": []
+        },
+        {
+          "term": "les renseignements",
+          "score": 1.0789,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "pour les",
+          "score": 65.5005,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 56.3765,
+          "evidence": []
+        },
+        {
+          "term": "chez les",
+          "score": 51.7932,
+          "evidence": []
+        },
+        {
+          "term": "les deux",
+          "score": 50.1705,
+          "evidence": []
+        },
+        {
+          "term": "les complications",
+          "score": 47.9981,
+          "evidence": []
+        },
+        {
+          "term": "les mêmes",
+          "score": 46.2726,
+          "evidence": []
+        },
+        {
+          "term": "les renseignements",
+          "score": 46.2726,
+          "evidence": []
+        },
+        {
+          "term": "incidence des",
+          "score": 35.0233,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pour les",
+          "score": 1.7722,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 1.6239,
+          "evidence": []
+        },
+        {
+          "term": "chez les",
+          "score": 1.4819,
+          "evidence": []
+        },
+        {
+          "term": "les deux",
+          "score": 1.3257,
+          "evidence": []
+        },
+        {
+          "term": "incidence des",
+          "score": 1.2521,
+          "evidence": []
+        },
+        {
+          "term": "les complications",
+          "score": 1.1927,
+          "evidence": []
+        },
+        {
+          "term": "les mêmes",
+          "score": 1.1043,
+          "evidence": []
+        },
+        {
+          "term": "les renseignements",
+          "score": 1.0937,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "由于这个理由",
+          "score": 36.2655,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 34.5501,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 31.035,
+          "evidence": []
+        },
+        {
+          "term": "岁的儿童",
+          "score": 30.8681,
+          "evidence": []
+        },
+        {
+          "term": "轮状病毒疫苗",
+          "score": 29.4641,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 28.8716,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 28.0952,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 27.6747,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

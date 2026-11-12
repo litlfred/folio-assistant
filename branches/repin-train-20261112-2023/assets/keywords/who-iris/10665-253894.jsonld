@@ -1,0 +1,738 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-253894",
+  "instance": "who-iris",
+  "about": "library/10665-253894",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7908,
+    "terms": 73102
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "желтой лихорадки",
+        "score": 5.0894,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "против желтой",
+        "score": 3.7451,
+        "evidence": []
+      },
+      {
+        "term": "риска желтой",
+        "score": 3.1532,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "лихорадки для",
+        "score": 2.9353,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "медико-санитарным правилам",
+        "score": 2.4339,
+        "evidence": []
+      },
+      {
+        "term": "международным медико-санитарным",
+        "score": 2.2897,
+        "evidence": []
+      },
+      {
+        "term": "вакцинации против",
+        "score": 2.1114,
+        "evidence": []
+      },
+      {
+        "term": "вакцины против",
+        "score": 1.7076,
+        "evidence": []
+      },
+      {
+        "term": "приложения международным",
+        "score": 1.6911,
+        "evidence": []
+      },
+      {
+        "term": "всей жизни",
+        "score": 1.4249,
+        "evidence": []
+      },
+      {
+        "term": "протяжении всей",
+        "score": 1.3596,
+        "evidence": []
+      },
+      {
+        "term": "всемирной ассамблеи",
+        "score": 1.2648,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "желтой лихорадки",
+        "score": 219.0815,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "против желтой",
+        "score": 149.3935,
+        "evidence": []
+      },
+      {
+        "term": "риска желтой",
+        "score": 124.1404,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "лихорадки для",
+        "score": 112.5276,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "вакцинации против",
+        "score": 54.2045,
+        "evidence": []
+      },
+      {
+        "term": "международным медико-санитарным",
+        "score": 46.6581,
+        "evidence": []
+      },
+      {
+        "term": "медико-санитарным правилам",
+        "score": 46.3991,
+        "evidence": []
+      },
+      {
+        "term": "вакцины против",
+        "score": 42.2406,
+        "evidence": []
+      },
+      {
+        "term": "приложения международным",
+        "score": 33.1146,
+        "evidence": []
+      },
+      {
+        "term": "всей жизни",
+        "score": 24.4001,
+        "evidence": []
+      },
+      {
+        "term": "протяжении всей",
+        "score": 21.8179,
+        "evidence": []
+      },
+      {
+        "term": "для лиц",
+        "score": 21.7022,
+        "evidence": [
+          "heading"
+        ]
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "вакцины против",
+        "score": 0.4131,
+        "evidence": []
+      },
+      {
+        "term": "для лиц",
+        "score": 0.4042,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "воз",
+        "score": 0.3725,
+        "evidence": []
+      },
+      {
+        "term": "лихорадки для",
+        "score": 0.3278,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "вакцинации против",
+        "score": 0.3257,
+        "evidence": []
+      },
+      {
+        "term": "ассамблеи здравоохранения",
+        "score": 0.2773,
+        "evidence": []
+      },
+      {
+        "term": "против желтой",
+        "score": 0.2109,
+        "evidence": []
+      },
+      {
+        "term": "или",
+        "score": 0.1994,
+        "evidence": []
+      },
+      {
+        "term": "что",
+        "score": 0.1876,
+        "evidence": []
+      },
+      {
+        "term": "области",
+        "score": 0.1842,
+        "evidence": []
+      },
+      {
+        "term": "также",
+        "score": 0.1702,
+        "evidence": []
+      },
+      {
+        "term": "всемирной ассамблеи",
+        "score": 0.1618,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "для лиц",
+        "score": 7.5348,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "лихорадки для",
+        "score": 6.5224,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "или",
+        "score": 5.4005,
+        "evidence": []
+      },
+      {
+        "term": "спид",
+        "score": 5.2431,
+        "evidence": []
+      },
+      {
+        "term": "что",
+        "score": 4.9159,
+        "evidence": []
+      },
+      {
+        "term": "ассамблеи здравоохранения",
+        "score": 4.2144,
+        "evidence": []
+      },
+      {
+        "term": "исследования",
+        "score": 3.8051,
+        "evidence": []
+      },
+      {
+        "term": "воз",
+        "score": 3.6873,
+        "evidence": []
+      },
+      {
+        "term": "вакцины против",
+        "score": 3.2414,
+        "evidence": []
+      },
+      {
+        "term": "плт",
+        "score": 3.0358,
+        "evidence": []
+      },
+      {
+        "term": "как",
+        "score": 2.984,
+        "evidence": []
+      },
+      {
+        "term": "также",
+        "score": 2.5699,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "вакцины против",
+        "score": 0.4131,
+        "evidence": []
+      },
+      {
+        "term": "для лиц",
+        "score": 0.4042,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "воз",
+        "score": 0.3725,
+        "evidence": []
+      },
+      {
+        "term": "лихорадки для",
+        "score": 0.337,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "вакцинации против",
+        "score": 0.3257,
+        "evidence": []
+      },
+      {
+        "term": "ассамблеи здравоохранения",
+        "score": 0.2773,
+        "evidence": []
+      },
+      {
+        "term": "против желтой",
+        "score": 0.2199,
+        "evidence": []
+      },
+      {
+        "term": "что",
+        "score": 0.1876,
+        "evidence": []
+      },
+      {
+        "term": "всемирной ассамблеи",
+        "score": 0.1618,
+        "evidence": []
+      },
+      {
+        "term": "стран",
+        "score": 0.1311,
+        "evidence": []
+      },
+      {
+        "term": "организации",
+        "score": 0.0998,
+        "evidence": []
+      },
+      {
+        "term": "чтобы",
+        "score": 0.0921,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "到辩护",
+        "score": 187.1412,
+        "evidence": []
+      },
+      {
+        "term": "肺炎疫苗试验",
+        "score": 163.2473,
+        "evidence": []
+      },
+      {
+        "term": "潜在的利益冲突",
+        "score": 144.1856,
+        "evidence": []
+      },
+      {
+        "term": "招募了",
+        "score": 130.8243,
+        "evidence": []
+      },
+      {
+        "term": "文件a",
+        "score": 129.1263,
+        "evidence": []
+      },
+      {
+        "term": "捐助者",
+        "score": 113.0487,
+        "evidence": []
+      },
+      {
+        "term": "试验的提前终止",
+        "score": 109.7597,
+        "evidence": []
+      },
+      {
+        "term": "实验室",
+        "score": 108.2569,
+        "evidence": []
+      },
+      {
+        "term": "政治利益",
+        "score": 104.1737,
+        "evidence": []
+      },
+      {
+        "term": "对照组",
+        "score": 103.2279,
+        "evidence": []
+      },
+      {
+        "term": "还包括区域经济一体化组织",
+        "score": 102.6114,
+        "evidence": []
+      },
+      {
+        "term": "适用时",
+        "score": 102.6114,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-картирование-риска-желтой-лихорадки-и-рекомендов": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "желтой лихорадки",
+          "score": 10.1789,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "риска желтой",
+          "score": 6.3064,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "лихорадки для",
+          "score": 5.8706,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "против желтой",
+          "score": 3.7451,
+          "evidence": []
+        },
+        {
+          "term": "медико-санитарным правилам",
+          "score": 2.4339,
+          "evidence": []
+        },
+        {
+          "term": "для лиц",
+          "score": 2.3142,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "международным медико-санитарным",
+          "score": 2.2897,
+          "evidence": []
+        },
+        {
+          "term": "вакцинации против",
+          "score": 2.1114,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "желтой лихорадки",
+          "score": 438.1629,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "риска желтой",
+          "score": 248.2808,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "лихорадки для",
+          "score": 225.0553,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "против желтой",
+          "score": 149.3935,
+          "evidence": []
+        },
+        {
+          "term": "вакцинации против",
+          "score": 54.2045,
+          "evidence": []
+        },
+        {
+          "term": "международным медико-санитарным",
+          "score": 46.6581,
+          "evidence": []
+        },
+        {
+          "term": "медико-санитарным правилам",
+          "score": 46.3991,
+          "evidence": []
+        },
+        {
+          "term": "для лиц",
+          "score": 43.4045,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "для лиц",
+          "score": 0.8084,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "лихорадки для",
+          "score": 0.6556,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "вакцины против",
+          "score": 0.4131,
+          "evidence": []
+        },
+        {
+          "term": "воз",
+          "score": 0.3725,
+          "evidence": []
+        },
+        {
+          "term": "вакцинации против",
+          "score": 0.3257,
+          "evidence": []
+        },
+        {
+          "term": "ассамблеи здравоохранения",
+          "score": 0.2773,
+          "evidence": []
+        },
+        {
+          "term": "против желтой",
+          "score": 0.2109,
+          "evidence": []
+        },
+        {
+          "term": "или",
+          "score": 0.1994,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "для лиц",
+          "score": 15.0696,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "лихорадки для",
+          "score": 13.0448,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "или",
+          "score": 5.4005,
+          "evidence": []
+        },
+        {
+          "term": "спид",
+          "score": 5.2431,
+          "evidence": []
+        },
+        {
+          "term": "что",
+          "score": 4.9159,
+          "evidence": []
+        },
+        {
+          "term": "ассамблеи здравоохранения",
+          "score": 4.2144,
+          "evidence": []
+        },
+        {
+          "term": "исследования",
+          "score": 3.8051,
+          "evidence": []
+        },
+        {
+          "term": "воз",
+          "score": 3.6873,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "для лиц",
+          "score": 0.8084,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "лихорадки для",
+          "score": 0.6741,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "вакцины против",
+          "score": 0.4131,
+          "evidence": []
+        },
+        {
+          "term": "воз",
+          "score": 0.3725,
+          "evidence": []
+        },
+        {
+          "term": "вакцинации против",
+          "score": 0.3257,
+          "evidence": []
+        },
+        {
+          "term": "ассамблеи здравоохранения",
+          "score": 0.2773,
+          "evidence": []
+        },
+        {
+          "term": "против желтой",
+          "score": 0.2199,
+          "evidence": []
+        },
+        {
+          "term": "что",
+          "score": 0.1876,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "到辩护",
+          "score": 187.1412,
+          "evidence": []
+        },
+        {
+          "term": "肺炎疫苗试验",
+          "score": 163.2473,
+          "evidence": []
+        },
+        {
+          "term": "潜在的利益冲突",
+          "score": 144.1856,
+          "evidence": []
+        },
+        {
+          "term": "招募了",
+          "score": 130.8243,
+          "evidence": []
+        },
+        {
+          "term": "文件a",
+          "score": 129.1263,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 113.0487,
+          "evidence": []
+        },
+        {
+          "term": "试验的提前终止",
+          "score": 109.7597,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 108.2569,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

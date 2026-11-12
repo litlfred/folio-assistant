@@ -1,0 +1,1968 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-354214",
+  "instance": "who-iris",
+  "about": "library/10665-354214",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7908,
+    "terms": 73102
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "против covid",
+        "score": 13.445,
+        "evidence": []
+      },
+      {
+        "term": "вакцины sinovac-coronavac",
+        "score": 13.3774,
+        "evidence": []
+      },
+      {
+        "term": "вакцинации против",
+        "score": 11.4274,
+        "evidence": []
+      },
+      {
+        "term": "covid для",
+        "score": 11.4138,
+        "evidence": []
+      },
+      {
+        "term": "инфекции covid",
+        "score": 10.8663,
+        "evidence": []
+      },
+      {
+        "term": "вакцины coronavac",
+        "score": 10.807,
+        "evidence": []
+      },
+      {
+        "term": "вакцины отношении",
+        "score": 10.2784,
+        "evidence": []
+      },
+      {
+        "term": "инфекцией covid",
+        "score": 9.9704,
+        "evidence": []
+      },
+      {
+        "term": "заболевания covid",
+        "score": 9.9019,
+        "evidence": []
+      },
+      {
+        "term": "введения вакцины",
+        "score": 9.8317,
+        "evidence": []
+      },
+      {
+        "term": "вакцин против",
+        "score": 9.8222,
+        "evidence": []
+      },
+      {
+        "term": "связанных covid",
+        "score": 9.8138,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "вакцины sinovac-coronavac",
+        "score": 492.2192,
+        "evidence": []
+      },
+      {
+        "term": "вакцины против",
+        "score": 454.3587,
+        "evidence": []
+      },
+      {
+        "term": "вакцины для",
+        "score": 432.6269,
+        "evidence": []
+      },
+      {
+        "term": "против covid",
+        "score": 429.6716,
+        "evidence": []
+      },
+      {
+        "term": "вакцины отношении",
+        "score": 415.5796,
+        "evidence": []
+      },
+      {
+        "term": "введения вакцины",
+        "score": 394.3381,
+        "evidence": []
+      },
+      {
+        "term": "вакцины coronavac",
+        "score": 391.547,
+        "evidence": []
+      },
+      {
+        "term": "эффективность вакцины",
+        "score": 384.7296,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "вакцинации против",
+        "score": 369.5263,
+        "evidence": []
+      },
+      {
+        "term": "эффективности вакцины",
+        "score": 365.1534,
+        "evidence": []
+      },
+      {
+        "term": "использования вакцины",
+        "score": 364.3935,
+        "evidence": []
+      },
+      {
+        "term": "инфекции covid",
+        "score": 351.6348,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "вакцины для",
+        "score": 7.8546,
+        "evidence": []
+      },
+      {
+        "term": "вакцины против",
+        "score": 7.1435,
+        "evidence": []
+      },
+      {
+        "term": "covid для",
+        "score": 6.9546,
+        "evidence": []
+      },
+      {
+        "term": "для вакцинации",
+        "score": 6.8649,
+        "evidence": []
+      },
+      {
+        "term": "для лиц",
+        "score": 5.927,
+        "evidence": []
+      },
+      {
+        "term": "вакцин против",
+        "score": 5.9254,
+        "evidence": []
+      },
+      {
+        "term": "воз вакцин",
+        "score": 5.675,
+        "evidence": []
+      },
+      {
+        "term": "для оценки",
+        "score": 5.5861,
+        "evidence": []
+      },
+      {
+        "term": "для здоровья",
+        "score": 5.558,
+        "evidence": []
+      },
+      {
+        "term": "для введения",
+        "score": 5.4758,
+        "evidence": []
+      },
+      {
+        "term": "для групп",
+        "score": 5.381,
+        "evidence": []
+      },
+      {
+        "term": "рекомендуется для",
+        "score": 5.3115,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "covid для",
+        "score": 241.8223,
+        "evidence": []
+      },
+      {
+        "term": "против covid",
+        "score": 157.2833,
+        "evidence": []
+      },
+      {
+        "term": "covid vaccines",
+        "score": 155.3172,
+        "evidence": []
+      },
+      {
+        "term": "вакцины для",
+        "score": 152.6356,
+        "evidence": []
+      },
+      {
+        "term": "заболевания covid",
+        "score": 151.5986,
+        "evidence": []
+      },
+      {
+        "term": "инфекции covid",
+        "score": 148.138,
+        "evidence": []
+      },
+      {
+        "term": "covid vaccination",
+        "score": 145.8397,
+        "evidence": []
+      },
+      {
+        "term": "для лиц",
+        "score": 133.363,
+        "evidence": []
+      },
+      {
+        "term": "для вакцинации",
+        "score": 132.5937,
+        "evidence": []
+      },
+      {
+        "term": "для оценки",
+        "score": 129.4167,
+        "evidence": []
+      },
+      {
+        "term": "для здоровья",
+        "score": 129.3709,
+        "evidence": []
+      },
+      {
+        "term": "для групп",
+        "score": 128.9865,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "вакцины для",
+        "score": 7.8546,
+        "evidence": []
+      },
+      {
+        "term": "вакцины против",
+        "score": 7.1435,
+        "evidence": []
+      },
+      {
+        "term": "covid для",
+        "score": 6.9546,
+        "evidence": []
+      },
+      {
+        "term": "для вакцинации",
+        "score": 6.8649,
+        "evidence": []
+      },
+      {
+        "term": "для лиц",
+        "score": 5.927,
+        "evidence": []
+      },
+      {
+        "term": "вакцин против",
+        "score": 5.9254,
+        "evidence": []
+      },
+      {
+        "term": "воз вакцин",
+        "score": 5.675,
+        "evidence": []
+      },
+      {
+        "term": "для оценки",
+        "score": 5.5861,
+        "evidence": []
+      },
+      {
+        "term": "для здоровья",
+        "score": 5.558,
+        "evidence": []
+      },
+      {
+        "term": "для введения",
+        "score": 5.4758,
+        "evidence": []
+      },
+      {
+        "term": "для групп",
+        "score": 5.381,
+        "evidence": []
+      },
+      {
+        "term": "рекомендуется для",
+        "score": 5.3115,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "捐助者",
+        "score": 420.5889,
+        "evidence": []
+      },
+      {
+        "term": "进行研究",
+        "score": 408.4066,
+        "evidence": []
+      },
+      {
+        "term": "在正常情况下",
+        "score": 356.6564,
+        "evidence": []
+      },
+      {
+        "term": "的研究中",
+        "score": 350.3099,
+        "evidence": []
+      },
+      {
+        "term": "肺炎疫苗试验",
+        "score": 307.3991,
+        "evidence": []
+      },
+      {
+        "term": "监测和",
+        "score": 299.1641,
+        "evidence": []
+      },
+      {
+        "term": "严重急性呼吸综合征",
+        "score": 283.407,
+        "evidence": []
+      },
+      {
+        "term": "公平性",
+        "score": 282.7699,
+        "evidence": []
+      },
+      {
+        "term": "潜在的利益冲突",
+        "score": 280.9674,
+        "evidence": []
+      },
+      {
+        "term": "被称为研究伦理委员会",
+        "score": 275.5826,
+        "evidence": []
+      },
+      {
+        "term": "政治利益",
+        "score": 273.1718,
+        "evidence": []
+      },
+      {
+        "term": "试验的提前终止",
+        "score": 256.1238,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-эффективность-вакцины": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "эффективность вакцины",
+          "score": 6.355,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "вакцины sinovac-coronavac",
+          "score": 4.1648,
+          "evidence": []
+        },
+        {
+          "term": "бустерной дозы",
+          "score": 4.0756,
+          "evidence": []
+        },
+        {
+          "term": "sinovac-coronavac против",
+          "score": 3.4016,
+          "evidence": []
+        },
+        {
+          "term": "вакцины отношении",
+          "score": 3.311,
+          "evidence": []
+        },
+        {
+          "term": "бустерные дозы",
+          "score": 3.2872,
+          "evidence": []
+        },
+        {
+          "term": "серии вакцинации",
+          "score": 3.2457,
+          "evidence": []
+        },
+        {
+          "term": "вакциной sinovac-coronavac",
+          "score": 3.1843,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "эффективность вакцины",
+          "score": 406.843,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "вакцины sinovac-coronavac",
+          "score": 251.2283,
+          "evidence": []
+        },
+        {
+          "term": "вакцины отношении",
+          "score": 224.2713,
+          "evidence": []
+        },
+        {
+          "term": "вакцины против",
+          "score": 204.6324,
+          "evidence": []
+        },
+        {
+          "term": "виде вакцины",
+          "score": 189.3944,
+          "evidence": []
+        },
+        {
+          "term": "эффективности вакцины",
+          "score": 187.3008,
+          "evidence": []
+        },
+        {
+          "term": "бустерной дозы",
+          "score": 183.5392,
+          "evidence": []
+        },
+        {
+          "term": "внедрения вакцины",
+          "score": 178.3861,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "эффективность вакцины",
+          "score": 3.1507,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "вакцины против",
+          "score": 2.3059,
+          "evidence": []
+        },
+        {
+          "term": "против covid",
+          "score": 1.927,
+          "evidence": []
+        },
+        {
+          "term": "вакцин против",
+          "score": 1.8782,
+          "evidence": []
+        },
+        {
+          "term": "эффективности вакцины",
+          "score": 1.662,
+          "evidence": []
+        },
+        {
+          "term": "вакцины отношении",
+          "score": 1.6394,
+          "evidence": []
+        },
+        {
+          "term": "воз вакцин",
+          "score": 1.5985,
+          "evidence": []
+        },
+        {
+          "term": "вакцины sinovac-coronavac",
+          "score": 1.5455,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "против covid",
+          "score": 43.9412,
+          "evidence": []
+        },
+        {
+          "term": "заболевания covid",
+          "score": 42.0148,
+          "evidence": []
+        },
+        {
+          "term": "что может",
+          "score": 40.7087,
+          "evidence": []
+        },
+        {
+          "term": "для",
+          "score": 38.0731,
+          "evidence": []
+        },
+        {
+          "term": "эффективность вакцины",
+          "score": 36.7963,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "covid составила",
+          "score": 33.9122,
+          "evidence": []
+        },
+        {
+          "term": "или",
+          "score": 33.2348,
+          "evidence": []
+        },
+        {
+          "term": "somalia",
+          "score": 26.5922,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "эффективность вакцины",
+          "score": 3.1507,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "вакцины против",
+          "score": 2.3059,
+          "evidence": []
+        },
+        {
+          "term": "против covid",
+          "score": 1.927,
+          "evidence": []
+        },
+        {
+          "term": "вакцин против",
+          "score": 1.8782,
+          "evidence": []
+        },
+        {
+          "term": "эффективности вакцины",
+          "score": 1.662,
+          "evidence": []
+        },
+        {
+          "term": "вакцины отношении",
+          "score": 1.6394,
+          "evidence": []
+        },
+        {
+          "term": "воз вакцин",
+          "score": 1.5985,
+          "evidence": []
+        },
+        {
+          "term": "вакцины sinovac-coronavac",
+          "score": 1.5455,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "进行研究",
+          "score": 126.4538,
+          "evidence": []
+        },
+        {
+          "term": "在正常情况下",
+          "score": 115.5061,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 114.3952,
+          "evidence": []
+        },
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 96.2051,
+          "evidence": []
+        },
+        {
+          "term": "的研究中",
+          "score": 93.279,
+          "evidence": []
+        },
+        {
+          "term": "监测和",
+          "score": 92.8859,
+          "evidence": []
+        },
+        {
+          "term": "潜在的利益冲突",
+          "score": 91.562,
+          "evidence": []
+        },
+        {
+          "term": "肺炎疫苗试验",
+          "score": 88.3751,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-001-вакцинация-определенных-групп-населения": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "вакцины sinovac-coronavac",
+          "score": 3.2806,
+          "evidence": []
+        },
+        {
+          "term": "инфекции covid",
+          "score": 2.6365,
+          "evidence": []
+        },
+        {
+          "term": "беременных женщин",
+          "score": 2.6204,
+          "evidence": []
+        },
+        {
+          "term": "sinovac-coronavac против",
+          "score": 2.5886,
+          "evidence": []
+        },
+        {
+          "term": "серии вакцинации",
+          "score": 2.5523,
+          "evidence": []
+        },
+        {
+          "term": "для вакцинации",
+          "score": 2.4878,
+          "evidence": []
+        },
+        {
+          "term": "вакцина sinovac-coronavac",
+          "score": 2.4821,
+          "evidence": []
+        },
+        {
+          "term": "использования вакцины",
+          "score": 2.3481,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "вакцины sinovac-coronavac",
+          "score": 117.5771,
+          "evidence": []
+        },
+        {
+          "term": "вакцины для",
+          "score": 110.6683,
+          "evidence": []
+        },
+        {
+          "term": "для вакцинации",
+          "score": 106.9518,
+          "evidence": []
+        },
+        {
+          "term": "covid для",
+          "score": 106.7646,
+          "evidence": []
+        },
+        {
+          "term": "инфекции covid",
+          "score": 96.2389,
+          "evidence": []
+        },
+        {
+          "term": "использования вакцины",
+          "score": 88.5454,
+          "evidence": []
+        },
+        {
+          "term": "для беременных",
+          "score": 88.2487,
+          "evidence": []
+        },
+        {
+          "term": "беременных женщин",
+          "score": 83.9771,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "вакцины для",
+          "score": 1.7912,
+          "evidence": []
+        },
+        {
+          "term": "для вакцинации",
+          "score": 1.593,
+          "evidence": []
+        },
+        {
+          "term": "covid для",
+          "score": 1.5414,
+          "evidence": []
+        },
+        {
+          "term": "против covid",
+          "score": 1.3274,
+          "evidence": []
+        },
+        {
+          "term": "для беременных",
+          "score": 1.1997,
+          "evidence": []
+        },
+        {
+          "term": "эффективности вакцины",
+          "score": 1.1655,
+          "evidence": []
+        },
+        {
+          "term": "эффективность вакцины",
+          "score": 1.102,
+          "evidence": []
+        },
+        {
+          "term": "инфекции covid",
+          "score": 1.07,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "covid для",
+          "score": 56.4294,
+          "evidence": []
+        },
+        {
+          "term": "вакцины для",
+          "score": 39.0527,
+          "evidence": []
+        },
+        {
+          "term": "против covid",
+          "score": 34.8091,
+          "evidence": []
+        },
+        {
+          "term": "для вакцинации",
+          "score": 33.918,
+          "evidence": []
+        },
+        {
+          "term": "инфекции covid",
+          "score": 32.5178,
+          "evidence": []
+        },
+        {
+          "term": "для беременных",
+          "score": 28.93,
+          "evidence": []
+        },
+        {
+          "term": "для кормящих",
+          "score": 28.93,
+          "evidence": []
+        },
+        {
+          "term": "формы covid",
+          "score": 27.4993,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "вакцины для",
+          "score": 1.7912,
+          "evidence": []
+        },
+        {
+          "term": "для вакцинации",
+          "score": 1.593,
+          "evidence": []
+        },
+        {
+          "term": "covid для",
+          "score": 1.5414,
+          "evidence": []
+        },
+        {
+          "term": "против covid",
+          "score": 1.3274,
+          "evidence": []
+        },
+        {
+          "term": "для беременных",
+          "score": 1.1997,
+          "evidence": []
+        },
+        {
+          "term": "эффективности вакцины",
+          "score": 1.1655,
+          "evidence": []
+        },
+        {
+          "term": "эффективность вакцины",
+          "score": 1.102,
+          "evidence": []
+        },
+        {
+          "term": "для кормящих",
+          "score": 1.0885,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在正常情况下",
+          "score": 118.3216,
+          "evidence": []
+        },
+        {
+          "term": "进行研究",
+          "score": 108.0413,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 85.5996,
+          "evidence": []
+        },
+        {
+          "term": "被称为研究伦理委员会",
+          "score": 77.8688,
+          "evidence": []
+        },
+        {
+          "term": "监测和",
+          "score": 77.474,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 73.2429,
+          "evidence": []
+        },
+        {
+          "term": "肺炎疫苗试验",
+          "score": 72.6561,
+          "evidence": []
+        },
+        {
+          "term": "公平性",
+          "score": 71.8695,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-002-особые-условия": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "вакцинации против",
+          "score": 2.245,
+          "evidence": []
+        },
+        {
+          "term": "для вакцинации",
+          "score": 2.1464,
+          "evidence": []
+        },
+        {
+          "term": "против covid",
+          "score": 2.0035,
+          "evidence": []
+        },
+        {
+          "term": "социальных мер",
+          "score": 1.8193,
+          "evidence": []
+        },
+        {
+          "term": "igm или",
+          "score": 1.7929,
+          "evidence": []
+        },
+        {
+          "term": "или igg",
+          "score": 1.7676,
+          "evidence": []
+        },
+        {
+          "term": "sinovac-coronavac против",
+          "score": 1.7514,
+          "evidence": []
+        },
+        {
+          "term": "должны быть",
+          "score": 1.6647,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "для вакцинации",
+          "score": 70.2253,
+          "evidence": []
+        },
+        {
+          "term": "вакцинации против",
+          "score": 63.4423,
+          "evidence": []
+        },
+        {
+          "term": "sars-cov",
+          "score": 48.6821,
+          "evidence": []
+        },
+        {
+          "term": "должны быть",
+          "score": 48.0198,
+          "evidence": []
+        },
+        {
+          "term": "против covid",
+          "score": 47.7744,
+          "evidence": []
+        },
+        {
+          "term": "или igg",
+          "score": 42.6836,
+          "evidence": []
+        },
+        {
+          "term": "igm или",
+          "score": 42.2543,
+          "evidence": []
+        },
+        {
+          "term": "социальных мер",
+          "score": 40.7446,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "для вакцинации",
+          "score": 1.1399,
+          "evidence": []
+        },
+        {
+          "term": "вакцинации против",
+          "score": 0.8029,
+          "evidence": []
+        },
+        {
+          "term": "против covid",
+          "score": 0.7936,
+          "evidence": []
+        },
+        {
+          "term": "sinovac-coronavac против",
+          "score": 0.6122,
+          "evidence": []
+        },
+        {
+          "term": "воз",
+          "score": 0.5697,
+          "evidence": []
+        },
+        {
+          "term": "igm или",
+          "score": 0.5483,
+          "evidence": []
+        },
+        {
+          "term": "или igg",
+          "score": 0.5483,
+          "evidence": []
+        },
+        {
+          "term": "должны быть",
+          "score": 0.5186,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "для вакцинации",
+          "score": 20.9065,
+          "evidence": []
+        },
+        {
+          "term": "против covid",
+          "score": 18.3193,
+          "evidence": []
+        },
+        {
+          "term": "igm или",
+          "score": 15.1467,
+          "evidence": []
+        },
+        {
+          "term": "или igg",
+          "score": 15.1467,
+          "evidence": []
+        },
+        {
+          "term": "что",
+          "score": 11.8437,
+          "evidence": []
+        },
+        {
+          "term": "somalia",
+          "score": 11.6322,
+          "evidence": []
+        },
+        {
+          "term": "исследования",
+          "score": 10.5475,
+          "evidence": []
+        },
+        {
+          "term": "должны быть",
+          "score": 9.854,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "для вакцинации",
+          "score": 1.1399,
+          "evidence": []
+        },
+        {
+          "term": "вакцинации против",
+          "score": 0.8029,
+          "evidence": []
+        },
+        {
+          "term": "против covid",
+          "score": 0.7936,
+          "evidence": []
+        },
+        {
+          "term": "sinovac-coronavac против",
+          "score": 0.6122,
+          "evidence": []
+        },
+        {
+          "term": "igm или",
+          "score": 0.5922,
+          "evidence": []
+        },
+        {
+          "term": "или igg",
+          "score": 0.5817,
+          "evidence": []
+        },
+        {
+          "term": "должны быть",
+          "score": 0.5186,
+          "evidence": []
+        },
+        {
+          "term": "вакцины",
+          "score": 0.4651,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 65.4341,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 51.6446,
+          "evidence": []
+        },
+        {
+          "term": "在正常情况下",
+          "score": 47.8295,
+          "evidence": []
+        },
+        {
+          "term": "进行研究",
+          "score": 46.0884,
+          "evidence": []
+        },
+        {
+          "term": "肺炎疫苗试验",
+          "score": 42.7551,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 41.5192,
+          "evidence": []
+        },
+        {
+          "term": "关注这一事实",
+          "score": 41.4824,
+          "evidence": []
+        },
+        {
+          "term": "招募了",
+          "score": 35.4173,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-003-рекомендации-по-устранению-существующих-пробелов": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "бустерных доз",
+          "score": 3.0875,
+          "evidence": []
+        },
+        {
+          "term": "введения бустерных",
+          "score": 2.8771,
+          "evidence": []
+        },
+        {
+          "term": "иммунодефицитными состояниями",
+          "score": 2.7798,
+          "evidence": []
+        },
+        {
+          "term": "вакцины против",
+          "score": 2.6494,
+          "evidence": []
+        },
+        {
+          "term": "лиц иммунодефицитными",
+          "score": 2.6251,
+          "evidence": []
+        },
+        {
+          "term": "обновлено учетом",
+          "score": 2.5115,
+          "evidence": []
+        },
+        {
+          "term": "безопасности вакцинации",
+          "score": 2.4169,
+          "evidence": []
+        },
+        {
+          "term": "иммуногенности безопасности",
+          "score": 2.4047,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "вакцины против",
+          "score": 98.7893,
+          "evidence": []
+        },
+        {
+          "term": "бустерных доз",
+          "score": 84.8234,
+          "evidence": []
+        },
+        {
+          "term": "вакцины для",
+          "score": 78.6636,
+          "evidence": []
+        },
+        {
+          "term": "против covid",
+          "score": 73.1514,
+          "evidence": []
+        },
+        {
+          "term": "лиц иммунодефицитными",
+          "score": 72.5124,
+          "evidence": []
+        },
+        {
+          "term": "введения бустерных",
+          "score": 71.7378,
+          "evidence": []
+        },
+        {
+          "term": "эффективность вакцины",
+          "score": 70.8499,
+          "evidence": []
+        },
+        {
+          "term": "безопасности вакцинации",
+          "score": 69.8092,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "вакцины для",
+          "score": 1.4665,
+          "evidence": []
+        },
+        {
+          "term": "вакцины против",
+          "score": 1.4215,
+          "evidence": []
+        },
+        {
+          "term": "против covid",
+          "score": 1.1448,
+          "evidence": []
+        },
+        {
+          "term": "для лиц",
+          "score": 1.043,
+          "evidence": []
+        },
+        {
+          "term": "эффективности вакцины",
+          "score": 1.0036,
+          "evidence": []
+        },
+        {
+          "term": "против гриппа",
+          "score": 0.9733,
+          "evidence": []
+        },
+        {
+          "term": "эффективность вакцины",
+          "score": 0.9394,
+          "evidence": []
+        },
+        {
+          "term": "после вакцинации",
+          "score": 0.8395,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "вакцины для",
+          "score": 25.7449,
+          "evidence": []
+        },
+        {
+          "term": "для лиц",
+          "score": 22.519,
+          "evidence": []
+        },
+        {
+          "term": "против covid",
+          "score": 18.2635,
+          "evidence": []
+        },
+        {
+          "term": "или",
+          "score": 16.6076,
+          "evidence": []
+        },
+        {
+          "term": "исследований",
+          "score": 15.0421,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "что",
+          "score": 13.739,
+          "evidence": []
+        },
+        {
+          "term": "исследования",
+          "score": 12.9709,
+          "evidence": []
+        },
+        {
+          "term": "исследования иммуногенности",
+          "score": 12.9709,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "вакцины для",
+          "score": 1.4665,
+          "evidence": []
+        },
+        {
+          "term": "вакцины против",
+          "score": 1.4215,
+          "evidence": []
+        },
+        {
+          "term": "против covid",
+          "score": 1.1448,
+          "evidence": []
+        },
+        {
+          "term": "для лиц",
+          "score": 1.043,
+          "evidence": []
+        },
+        {
+          "term": "эффективности вакцины",
+          "score": 1.0036,
+          "evidence": []
+        },
+        {
+          "term": "против гриппа",
+          "score": 0.9733,
+          "evidence": []
+        },
+        {
+          "term": "эффективность вакцины",
+          "score": 0.9394,
+          "evidence": []
+        },
+        {
+          "term": "после вакцинации",
+          "score": 0.8395,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "进行研究",
+          "score": 96.4456,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 91.2258,
+          "evidence": []
+        },
+        {
+          "term": "的研究中",
+          "score": 86.7147,
+          "evidence": []
+        },
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 83.8681,
+          "evidence": []
+        },
+        {
+          "term": "潜在的利益冲突",
+          "score": 78.9308,
+          "evidence": []
+        },
+        {
+          "term": "肺炎疫苗试验",
+          "score": 74.4124,
+          "evidence": []
+        },
+        {
+          "term": "监测和",
+          "score": 73.299,
+          "evidence": []
+        },
+        {
+          "term": "公平性",
+          "score": 69.6463,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-004-список-литературы": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "inactivated covid",
+          "score": 2.9513,
+          "evidence": []
+        },
+        {
+          "term": "covid vaccine",
+          "score": 2.825,
+          "evidence": []
+        },
+        {
+          "term": "доступно марта",
+          "score": 2.7642,
+          "evidence": []
+        },
+        {
+          "term": "inactivated sars-cov",
+          "score": 2.4922,
+          "evidence": []
+        },
+        {
+          "term": "covid vaccination",
+          "score": 2.3066,
+          "evidence": []
+        },
+        {
+          "term": "interim recommendations",
+          "score": 1.7632,
+          "evidence": []
+        },
+        {
+          "term": "coronavac",
+          "score": 1.6926,
+          "evidence": []
+        },
+        {
+          "term": "sage roadmap",
+          "score": 1.6779,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "covid vaccine",
+          "score": 113.1661,
+          "evidence": []
+        },
+        {
+          "term": "inactivated covid",
+          "score": 101.5567,
+          "evidence": []
+        },
+        {
+          "term": "covid vaccination",
+          "score": 83.0856,
+          "evidence": []
+        },
+        {
+          "term": "доступно марта",
+          "score": 73.4849,
+          "evidence": []
+        },
+        {
+          "term": "sars-cov vaccine",
+          "score": 67.6333,
+          "evidence": []
+        },
+        {
+          "term": "interim recommendations",
+          "score": 45.8375,
+          "evidence": []
+        },
+        {
+          "term": "coronavac",
+          "score": 45.536,
+          "evidence": []
+        },
+        {
+          "term": "interim guidance",
+          "score": 40.6817,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "covid vaccine",
+          "score": 0.9801,
+          "evidence": []
+        },
+        {
+          "term": "covid vaccination",
+          "score": 0.8611,
+          "evidence": []
+        },
+        {
+          "term": "sars-cov vaccine",
+          "score": 0.7214,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.7194,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.6879,
+          "evidence": []
+        },
+        {
+          "term": "inactivated covid",
+          "score": 0.4668,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 0.4582,
+          "evidence": []
+        },
+        {
+          "term": "accessed",
+          "score": 0.4311,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "covid vaccine",
+          "score": 45.0589,
+          "evidence": []
+        },
+        {
+          "term": "covid vaccination",
+          "score": 42.7215,
+          "evidence": []
+        },
+        {
+          "term": "inactivated covid",
+          "score": 30.2309,
+          "evidence": []
+        },
+        {
+          "term": "somalia",
+          "score": 25.1311,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 22.4782,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 21.1237,
+          "evidence": []
+        },
+        {
+          "term": "sars-cov vaccine",
+          "score": 17.5922,
+          "evidence": []
+        },
+        {
+          "term": "doi",
+          "score": 16.9274,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "covid vaccine",
+          "score": 0.9801,
+          "evidence": []
+        },
+        {
+          "term": "covid vaccination",
+          "score": 0.8611,
+          "evidence": []
+        },
+        {
+          "term": "sars-cov vaccine",
+          "score": 0.7214,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.7194,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.6879,
+          "evidence": []
+        },
+        {
+          "term": "inactivated covid",
+          "score": 0.4668,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 0.4582,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 0.4072,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 76.1683,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 64.0704,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 60.7899,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 54.9656,
+          "evidence": []
+        },
+        {
+          "term": "乌干达",
+          "score": 51.8124,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 49.9039,
+          "evidence": []
+        },
+        {
+          "term": "疫苗的",
+          "score": 48.4929,
+          "evidence": []
+        },
+        {
+          "term": "精神卫生",
+          "score": 47.7064,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "против covid",
+          "score": 1.9596,
+          "evidence": []
+        },
+        {
+          "term": "скгэ",
+          "score": 1.79,
+          "evidence": []
+        },
+        {
+          "term": "предварительные рекомендации",
+          "score": 1.7273,
+          "evidence": []
+        },
+        {
+          "term": "временное руководство",
+          "score": 1.6928,
+          "evidence": []
+        },
+        {
+          "term": "вакцины coronavac",
+          "score": 1.5522,
+          "evidence": []
+        },
+        {
+          "term": "обновлено",
+          "score": 1.4403,
+          "evidence": []
+        },
+        {
+          "term": "можно найти",
+          "score": 1.1789,
+          "evidence": []
+        },
+        {
+          "term": "вакцине",
+          "score": 1.0207,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "скгэ",
+          "score": 51.5633,
+          "evidence": []
+        },
+        {
+          "term": "против covid",
+          "score": 44.1905,
+          "evidence": []
+        },
+        {
+          "term": "предварительные рекомендации",
+          "score": 34.1938,
+          "evidence": []
+        },
+        {
+          "term": "временное руководство",
+          "score": 31.6731,
+          "evidence": []
+        },
+        {
+          "term": "обновлено",
+          "score": 31.5081,
+          "evidence": []
+        },
+        {
+          "term": "вакцины coronavac",
+          "score": 23.9805,
+          "evidence": []
+        },
+        {
+          "term": "можно найти",
+          "score": 18.9373,
+          "evidence": []
+        },
+        {
+          "term": "вакцине",
+          "score": 16.565,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "против covid",
+          "score": 0.4868,
+          "evidence": []
+        },
+        {
+          "term": "воз",
+          "score": 0.3748,
+          "evidence": []
+        },
+        {
+          "term": "для",
+          "score": 0.3594,
+          "evidence": []
+        },
+        {
+          "term": "вакцины",
+          "score": 0.2777,
+          "evidence": []
+        },
+        {
+          "term": "вакцины coronavac",
+          "score": 0.2777,
+          "evidence": []
+        },
+        {
+          "term": "или",
+          "score": 0.2252,
+          "evidence": []
+        },
+        {
+          "term": "вакцин",
+          "score": 0.203,
+          "evidence": []
+        },
+        {
+          "term": "здравоохранения",
+          "score": 0.1948,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "против covid",
+          "score": 10.8556,
+          "evidence": []
+        },
+        {
+          "term": "somalia",
+          "score": 7.8883,
+          "evidence": []
+        },
+        {
+          "term": "для",
+          "score": 6.2624,
+          "evidence": []
+        },
+        {
+          "term": "или",
+          "score": 5.3975,
+          "evidence": []
+        },
+        {
+          "term": "что",
+          "score": 4.3959,
+          "evidence": []
+        },
+        {
+          "term": "исследования",
+          "score": 3.9618,
+          "evidence": []
+        },
+        {
+          "term": "oxygen",
+          "score": 3.3636,
+          "evidence": []
+        },
+        {
+          "term": "плт",
+          "score": 3.3241,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "против covid",
+          "score": 0.4868,
+          "evidence": []
+        },
+        {
+          "term": "воз",
+          "score": 0.3748,
+          "evidence": []
+        },
+        {
+          "term": "вакцины coronavac",
+          "score": 0.3153,
+          "evidence": []
+        },
+        {
+          "term": "или",
+          "score": 0.2252,
+          "evidence": []
+        },
+        {
+          "term": "вакцин",
+          "score": 0.203,
+          "evidence": []
+        },
+        {
+          "term": "также",
+          "score": 0.1759,
+          "evidence": []
+        },
+        {
+          "term": "отношении",
+          "score": 0.1552,
+          "evidence": []
+        },
+        {
+          "term": "данных",
+          "score": 0.1391,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 114.5758,
+          "evidence": []
+        },
+        {
+          "term": "增强和迭代",
+          "score": 83.5484,
+          "evidence": []
+        },
+        {
+          "term": "行动框架",
+          "score": 83.5484,
+          "evidence": []
+        },
+        {
+          "term": "显而易见",
+          "score": 65.3737,
+          "evidence": []
+        },
+        {
+          "term": "的研究中",
+          "score": 61.7495,
+          "evidence": []
+        },
+        {
+          "term": "政治利益",
+          "score": 51.0694,
+          "evidence": []
+        },
+        {
+          "term": "可能性",
+          "score": 45.0709,
+          "evidence": []
+        },
+        {
+          "term": "乌干达",
+          "score": 39.6398,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

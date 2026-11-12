@@ -1,0 +1,139 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/process/workflow/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/package/workflow",
+      "@type": "cat-harness:SkillPackage",
+      "name": "workflow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/bpmn-authoring",
+      "@type": "bootstrap:Skill",
+      "name": "bpmn-authoring",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/79cb2450f6bda03539242ac7c3bd3d8b1c6e22f92cfab24e8214046bb29824c8",
+        "bytes": 13606,
+        "sha256": "79cb2450f6bda03539242ac7c3bd3d8b1c6e22f92cfab24e8214046bb29824c8"
+      },
+      "title": "bpmn-authoring"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/bpmn-detangle",
+      "@type": "bootstrap:Skill",
+      "name": "bpmn-detangle",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fe2fe384647026df793650ec6c2bb7aa8fd0024a0e0168e2e8a7b0bb575a7ffd",
+        "bytes": 9506,
+        "sha256": "fe2fe384647026df793650ec6c2bb7aa8fd0024a0e0168e2e8a7b0bb575a7ffd"
+      },
+      "title": "bpmn-detangle"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/bpmn-processes",
+      "@type": "bootstrap:Skill",
+      "name": "bpmn-processes",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5d41e51cb9f6c0f322cc4969219fa5b6e42e05d5bcd3e1a170fe8f72b954814d",
+        "bytes": 17113,
+        "sha256": "5d41e51cb9f6c0f322cc4969219fa5b6e42e05d5bcd3e1a170fe8f72b954814d"
+      },
+      "title": "Processes are BPMN, and the diagrams are executable"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/deterministic-and-agentic",
+      "@type": "bootstrap:Skill",
+      "name": "deterministic-and-agentic",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/88f8230cd4bf266c7f1b5094890d41759b92131d9cfd07b2feb93b0cc02ad428",
+        "bytes": 13588,
+        "sha256": "88f8230cd4bf266c7f1b5094890d41759b92131d9cfd07b2feb93b0cc02ad428"
+      },
+      "title": "The deterministic-to-agentic spectrum"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/dmn-authoring",
+      "@type": "bootstrap:Skill",
+      "name": "dmn-authoring",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7f7cbfa7a6cd9ad837c6a309f675e98979acc0e7407e37ca75318d3095b76fa8",
+        "bytes": 2906,
+        "sha256": "7f7cbfa7a6cd9ad837c6a309f675e98979acc0e7407e37ca75318d3095b76fa8"
+      },
+      "title": "dmn-authoring"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/process-state",
+      "@type": "bootstrap:Skill",
+      "name": "process-state",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7362589a7eb6326f5657d549f3beb18b1824e961fbeb4a69f169e55ec550475b",
+        "bytes": 15645,
+        "sha256": "7362589a7eb6326f5657d549f3beb18b1824e961fbeb4a69f169e55ec550475b"
+      },
+      "title": "Process state — the task you are in, inside the process you are running"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/render-kg-to-cdn",
+      "@type": "bootstrap:Skill",
+      "name": "render-kg-to-cdn",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4e529f86030d68004ed7238a4945aa529c3a0b4449dbbe9c92a3f1e60addd0d0",
+        "bytes": 3484,
+        "sha256": "4e529f86030d68004ed7238a4945aa529c3a0b4449dbbe9c92a3f1e60addd0d0"
+      },
+      "title": "Render a Knowledge Graph to a CDN"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/session-context",
+      "@type": "bootstrap:Skill",
+      "name": "session-context",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/02a86fa7db54fe3f8a810a8315d54b6ab935571d5a9c8344c15c8b8714e04c21",
+        "bytes": 6603,
+        "sha256": "02a86fa7db54fe3f8a810a8315d54b6ab935571d5a9c8344c15c8b8714e04c21"
+      },
+      "title": "Session context"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/session-state-machine",
+      "@type": "bootstrap:Skill",
+      "name": "session-state-machine",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d67f67c79adadd469530c33d5a570397aba77295ecbc387b56538a4b7cbc1617",
+        "bytes": 5625,
+        "sha256": "d67f67c79adadd469530c33d5a570397aba77295ecbc387b56538a4b7cbc1617"
+      },
+      "title": "Playing a state machine"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/specification-compiled-agents",
+      "@type": "bootstrap:Skill",
+      "name": "specification-compiled-agents",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/edf4c6670e993d1e6f01a6f7f116e611a5eb5d5f4d6610b58582a4a0f89330f5",
+        "bytes": 5993,
+        "sha256": "edf4c6670e993d1e6f01a6f7f116e611a5eb5d5f4d6610b58582a4a0f89330f5"
+      },
+      "title": "Specification-compiled agents"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/workflow-state",
+      "@type": "bootstrap:Skill",
+      "name": "workflow-state",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1c20841c76d32948b8fa810f83a4593153c7d3eb7d68b5f35f39bb0678bc8dba",
+        "bytes": 6765,
+        "sha256": "1c20841c76d32948b8fa810f83a4593153c7d3eb7d68b5f35f39bb0678bc8dba"
+      },
+      "title": "State in a running process"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills/process/workflow",
+  "path": "skills/process/workflow/"
+}

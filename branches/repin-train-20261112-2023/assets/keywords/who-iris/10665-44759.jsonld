@@ -1,0 +1,7540 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-44759",
+  "instance": "who-iris",
+  "about": "library/10665-44759",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7908,
+    "terms": 73102
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "commercial igras",
+        "score": 38.2944,
+        "evidence": []
+      },
+      {
+        "term": "igras performed",
+        "score": 37.3906,
+        "evidence": []
+      },
+      {
+        "term": "based igras",
+        "score": 37.1086,
+        "evidence": []
+      },
+      {
+        "term": "igras nor",
+        "score": 37.0901,
+        "evidence": []
+      },
+      {
+        "term": "both igras",
+        "score": 37.0125,
+        "evidence": []
+      },
+      {
+        "term": "findings igras",
+        "score": 36.6142,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "neither igras",
+        "score": 36.414,
+        "evidence": []
+      },
+      {
+        "term": "evaluating igras",
+        "score": 36.2404,
+        "evidence": []
+      },
+      {
+        "term": "igras appeared",
+        "score": 35.3392,
+        "evidence": []
+      },
+      {
+        "term": "because igras",
+        "score": 35.2599,
+        "evidence": []
+      },
+      {
+        "term": "in-house igras",
+        "score": 34.6934,
+        "evidence": []
+      },
+      {
+        "term": "igra tst",
+        "score": 27.6891,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "commercial igras",
+        "score": 1268.0425,
+        "evidence": []
+      },
+      {
+        "term": "both igras",
+        "score": 1256.8877,
+        "evidence": []
+      },
+      {
+        "term": "based igras",
+        "score": 1253.0913,
+        "evidence": []
+      },
+      {
+        "term": "igra studies",
+        "score": 1250.9239,
+        "evidence": []
+      },
+      {
+        "term": "igras performed",
+        "score": 1250.0774,
+        "evidence": []
+      },
+      {
+        "term": "findings igras",
+        "score": 1248.5714,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "because igras",
+        "score": 1247.1677,
+        "evidence": []
+      },
+      {
+        "term": "igras nor",
+        "score": 1228.0461,
+        "evidence": []
+      },
+      {
+        "term": "evaluating igras",
+        "score": 1216.2762,
+        "evidence": []
+      },
+      {
+        "term": "neither igras",
+        "score": 1213.3897,
+        "evidence": []
+      },
+      {
+        "term": "igras appeared",
+        "score": 1203.1287,
+        "evidence": []
+      },
+      {
+        "term": "in-house igras",
+        "score": 1192.3835,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "igra tst",
+        "score": 21.0169,
+        "evidence": []
+      },
+      {
+        "term": "igra studies",
+        "score": 19.2016,
+        "evidence": []
+      },
+      {
+        "term": "igra test",
+        "score": 16.6132,
+        "evidence": []
+      },
+      {
+        "term": "tst sensitivity",
+        "score": 16.3858,
+        "evidence": []
+      },
+      {
+        "term": "igra specificity",
+        "score": 15.8986,
+        "evidence": []
+      },
+      {
+        "term": "indeterminate igra",
+        "score": 13.7455,
+        "evidence": []
+      },
+      {
+        "term": "tst conversions",
+        "score": 13.7125,
+        "evidence": []
+      },
+      {
+        "term": "lower tst",
+        "score": 13.4322,
+        "evidence": []
+      },
+      {
+        "term": "igra positives",
+        "score": 13.0745,
+        "evidence": []
+      },
+      {
+        "term": "studies reported",
+        "score": 12.902,
+        "evidence": []
+      },
+      {
+        "term": "igra performance",
+        "score": 12.8304,
+        "evidence": []
+      },
+      {
+        "term": "igra negatives",
+        "score": 12.7295,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "igra studies",
+        "score": 1315.1333,
+        "evidence": []
+      },
+      {
+        "term": "unpublished studies",
+        "score": 1104.7041,
+        "evidence": []
+      },
+      {
+        "term": "studies assessed",
+        "score": 961.588,
+        "evidence": []
+      },
+      {
+        "term": "studies evaluated",
+        "score": 947.6186,
+        "evidence": []
+      },
+      {
+        "term": "concordance studies",
+        "score": 922.7698,
+        "evidence": []
+      },
+      {
+        "term": "studies identified",
+        "score": 915.9417,
+        "evidence": []
+      },
+      {
+        "term": "cohort studies",
+        "score": 884.7182,
+        "evidence": []
+      },
+      {
+        "term": "igra tst",
+        "score": 872.3899,
+        "evidence": []
+      },
+      {
+        "term": "studies reported",
+        "score": 869.4417,
+        "evidence": []
+      },
+      {
+        "term": "both studies",
+        "score": 868.2487,
+        "evidence": []
+      },
+      {
+        "term": "accuracy studies",
+        "score": 858.6743,
+        "evidence": []
+      },
+      {
+        "term": "studies performed",
+        "score": 857.6902,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "igra tst",
+        "score": 21.0169,
+        "evidence": []
+      },
+      {
+        "term": "igra studies",
+        "score": 19.2016,
+        "evidence": []
+      },
+      {
+        "term": "igra test",
+        "score": 16.6132,
+        "evidence": []
+      },
+      {
+        "term": "tst sensitivity",
+        "score": 16.3858,
+        "evidence": []
+      },
+      {
+        "term": "igra specificity",
+        "score": 15.8986,
+        "evidence": []
+      },
+      {
+        "term": "indeterminate igra",
+        "score": 13.7455,
+        "evidence": []
+      },
+      {
+        "term": "tst conversions",
+        "score": 13.7125,
+        "evidence": []
+      },
+      {
+        "term": "lower tst",
+        "score": 13.4322,
+        "evidence": []
+      },
+      {
+        "term": "igra positives",
+        "score": 13.0745,
+        "evidence": []
+      },
+      {
+        "term": "studies reported",
+        "score": 12.902,
+        "evidence": []
+      },
+      {
+        "term": "igra performance",
+        "score": 12.8304,
+        "evidence": []
+      },
+      {
+        "term": "igra negatives",
+        "score": 12.7295,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "在正常情况下",
+        "score": 1362.719,
+        "evidence": []
+      },
+      {
+        "term": "在一些国家",
+        "score": 1274.0682,
+        "evidence": []
+      },
+      {
+        "term": "青少年",
+        "score": 1274.0682,
+        "evidence": []
+      },
+      {
+        "term": "在世卫组织全球流感监测",
+        "score": 1186.0512,
+        "evidence": []
+      },
+      {
+        "term": "岁的女孩",
+        "score": 1011.1664,
+        "evidence": []
+      },
+      {
+        "term": "服务的提供",
+        "score": 1011.1664,
+        "evidence": []
+      },
+      {
+        "term": "的实验室",
+        "score": 951.696,
+        "evidence": []
+      },
+      {
+        "term": "可以考",
+        "score": 839.4833,
+        "evidence": []
+      },
+      {
+        "term": "同行评议者或杂志编辑",
+        "score": 800.2962,
+        "evidence": []
+      },
+      {
+        "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+        "score": 800.2962,
+        "evidence": []
+      },
+      {
+        "term": "或一些其他单位",
+        "score": 800.2962,
+        "evidence": []
+      },
+      {
+        "term": "tiab",
+        "score": 741.5166,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-1-background": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "tst reactivity",
+          "score": 2.6995,
+          "evidence": []
+        },
+        {
+          "term": "commercial igras",
+          "score": 2.6871,
+          "evidence": []
+        },
+        {
+          "term": "decreased tst",
+          "score": 2.0825,
+          "evidence": []
+        },
+        {
+          "term": "tst sensitivity",
+          "score": 2.0036,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis antigens",
+          "score": 1.938,
+          "evidence": []
+        },
+        {
+          "term": "bovis bcg",
+          "score": 1.8257,
+          "evidence": []
+        },
+        {
+          "term": "cellular immune",
+          "score": 1.7856,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis infection",
+          "score": 1.7734,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "commercial igras",
+          "score": 150.3165,
+          "evidence": []
+        },
+        {
+          "term": "tst reactivity",
+          "score": 113.0677,
+          "evidence": []
+        },
+        {
+          "term": "tst sensitivity",
+          "score": 100.1434,
+          "evidence": []
+        },
+        {
+          "term": "decreased tst",
+          "score": 99.4474,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis infection",
+          "score": 61.5369,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis antigens",
+          "score": 55.3314,
+          "evidence": []
+        },
+        {
+          "term": "ltbi",
+          "score": 51.9985,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 43.9468,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "tst sensitivity",
+          "score": 1.4752,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis infection",
+          "score": 1.4148,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 1.2901,
+          "evidence": []
+        },
+        {
+          "term": "decreased tst",
+          "score": 1.1329,
+          "evidence": []
+        },
+        {
+          "term": "tst reactivity",
+          "score": 1.1329,
+          "evidence": []
+        },
+        {
+          "term": "igra",
+          "score": 1.0486,
+          "evidence": []
+        },
+        {
+          "term": "commercial igras",
+          "score": 0.9025,
+          "evidence": []
+        },
+        {
+          "term": "hiv-infected individuals",
+          "score": 0.8663,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "tuberculosis infection",
+          "score": 35.0156,
+          "evidence": []
+        },
+        {
+          "term": "studies",
+          "score": 33.2185,
+          "evidence": []
+        },
+        {
+          "term": "tst sensitivity",
+          "score": 33.0177,
+          "evidence": []
+        },
+        {
+          "term": "commercial igras",
+          "score": 32.1565,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 27.1926,
+          "evidence": []
+        },
+        {
+          "term": "decreased tst",
+          "score": 25.8174,
+          "evidence": []
+        },
+        {
+          "term": "tst reactivity",
+          "score": 25.8174,
+          "evidence": []
+        },
+        {
+          "term": "subtracted",
+          "score": 22.0873,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "tst sensitivity",
+          "score": 1.4752,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis infection",
+          "score": 1.4148,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 1.2901,
+          "evidence": []
+        },
+        {
+          "term": "tst reactivity",
+          "score": 1.1914,
+          "evidence": []
+        },
+        {
+          "term": "decreased tst",
+          "score": 1.1793,
+          "evidence": []
+        },
+        {
+          "term": "igra",
+          "score": 1.0486,
+          "evidence": []
+        },
+        {
+          "term": "commercial igras",
+          "score": 0.9025,
+          "evidence": []
+        },
+        {
+          "term": "hiv-infected individuals",
+          "score": 0.8663,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在一些国家",
+          "score": 43.087,
+          "evidence": []
+        },
+        {
+          "term": "青少年",
+          "score": 43.087,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 36.0177,
+          "evidence": []
+        },
+        {
+          "term": "在正常情况下",
+          "score": 35.9522,
+          "evidence": []
+        },
+        {
+          "term": "岁的女孩",
+          "score": 34.1145,
+          "evidence": []
+        },
+        {
+          "term": "服务的提供",
+          "score": 34.1145,
+          "evidence": []
+        },
+        {
+          "term": "可以考",
+          "score": 29.1059,
+          "evidence": []
+        },
+        {
+          "term": "对照组",
+          "score": 27.6023,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-002-21-evidence-synthesis": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "evidence synthesis",
+          "score": 2.5484,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "igras",
+          "score": 1.7463,
+          "evidence": []
+        },
+        {
+          "term": "igra manufacturers",
+          "score": 1.6283,
+          "evidence": []
+        },
+        {
+          "term": "individual topic",
+          "score": 1.5827,
+          "evidence": []
+        },
+        {
+          "term": "systematic reviews",
+          "score": 1.579,
+          "evidence": []
+        },
+        {
+          "term": "accuracy studies",
+          "score": 1.5423,
+          "evidence": []
+        },
+        {
+          "term": "expert group",
+          "score": 1.4507,
+          "evidence": []
+        },
+        {
+          "term": "ifn-γ response",
+          "score": 1.3963,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "igras",
+          "score": 68.8126,
+          "evidence": []
+        },
+        {
+          "term": "accuracy studies",
+          "score": 54.8932,
+          "evidence": []
+        },
+        {
+          "term": "evidence synthesis",
+          "score": 48.6826,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "studies evaluating",
+          "score": 46.9795,
+          "evidence": []
+        },
+        {
+          "term": "systematic reviews",
+          "score": 46.9439,
+          "evidence": []
+        },
+        {
+          "term": "igra manufacturers",
+          "score": 42.835,
+          "evidence": []
+        },
+        {
+          "term": "individual topic",
+          "score": 40.5916,
+          "evidence": []
+        },
+        {
+          "term": "individual study",
+          "score": 37.0991,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "evidence synthesis",
+          "score": 1.5137,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "systematic review",
+          "score": 1.0353,
+          "evidence": []
+        },
+        {
+          "term": "accuracy studies",
+          "score": 0.9427,
+          "evidence": []
+        },
+        {
+          "term": "studies evaluating",
+          "score": 0.8317,
+          "evidence": []
+        },
+        {
+          "term": "study quality",
+          "score": 0.7077,
+          "evidence": []
+        },
+        {
+          "term": "individual study",
+          "score": 0.6264,
+          "evidence": []
+        },
+        {
+          "term": "systematic reviewers",
+          "score": 0.5823,
+          "evidence": []
+        },
+        {
+          "term": "group meeting",
+          "score": 0.5654,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "accuracy studies",
+          "score": 35.7216,
+          "evidence": []
+        },
+        {
+          "term": "studies evaluating",
+          "score": 31.4072,
+          "evidence": []
+        },
+        {
+          "term": "evidence synthesis",
+          "score": 24.3431,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "igra",
+          "score": 18.1969,
+          "evidence": []
+        },
+        {
+          "term": "igra manufacturers",
+          "score": 18.1969,
+          "evidence": []
+        },
+        {
+          "term": "study quality",
+          "score": 17.0987,
+          "evidence": []
+        },
+        {
+          "term": "subtracted",
+          "score": 15.4536,
+          "evidence": []
+        },
+        {
+          "term": "systematic review",
+          "score": 14.0212,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "evidence synthesis",
+          "score": 1.5137,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "systematic review",
+          "score": 1.0353,
+          "evidence": []
+        },
+        {
+          "term": "accuracy studies",
+          "score": 0.9427,
+          "evidence": []
+        },
+        {
+          "term": "studies evaluating",
+          "score": 0.8317,
+          "evidence": []
+        },
+        {
+          "term": "study quality",
+          "score": 0.7077,
+          "evidence": []
+        },
+        {
+          "term": "individual study",
+          "score": 0.6264,
+          "evidence": []
+        },
+        {
+          "term": "igra manufacturers",
+          "score": 0.5889,
+          "evidence": []
+        },
+        {
+          "term": "systematic reviewers",
+          "score": 0.5823,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在一些国家",
+          "score": 38.4086,
+          "evidence": []
+        },
+        {
+          "term": "青少年",
+          "score": 38.4086,
+          "evidence": []
+        },
+        {
+          "term": "在正常情况下",
+          "score": 32.3751,
+          "evidence": []
+        },
+        {
+          "term": "岁的女孩",
+          "score": 29.5368,
+          "evidence": []
+        },
+        {
+          "term": "服务的提供",
+          "score": 29.5368,
+          "evidence": []
+        },
+        {
+          "term": "可以考",
+          "score": 27.4149,
+          "evidence": []
+        },
+        {
+          "term": "在世卫组织全球流感监测",
+          "score": 26.4254,
+          "evidence": []
+        },
+        {
+          "term": "最小化",
+          "score": 24.2591,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-003-22-decision-making-during-the-expert-group-meeti": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "expert group",
+          "score": 3.1257,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "group meeting",
+          "score": 2.5815,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "who-stb secretariat",
+          "score": 1.6537,
+          "evidence": []
+        },
+        {
+          "term": "stag-tb",
+          "score": 1.2017,
+          "evidence": []
+        },
+        {
+          "term": "group members",
+          "score": 1.0734,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "expert group",
+          "score": 86.8289,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "group meeting",
+          "score": 63.5135,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "who-stb secretariat",
+          "score": 28.196,
+          "evidence": []
+        },
+        {
+          "term": "stag-tb",
+          "score": 22.768,
+          "evidence": []
+        },
+        {
+          "term": "group members",
+          "score": 22.555,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "group meeting",
+          "score": 0.548,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "expert group",
+          "score": 0.4309,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "review",
+          "score": 0.3193,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "group members",
+          "score": 0.2704,
+          "evidence": []
+        },
+        {
+          "term": "guideline",
+          "score": 0.2187,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "group meeting",
+          "score": 7.0887,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "expert group",
+          "score": 5.8854,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "review",
+          "score": 4.3901,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "guideline",
+          "score": 4.3648,
+          "evidence": []
+        },
+        {
+          "term": "group members",
+          "score": 3.7762,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "group meeting",
+          "score": 0.548,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "expert group",
+          "score": 0.4309,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "review",
+          "score": 0.3193,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "group members",
+          "score": 0.2704,
+          "evidence": []
+        },
+        {
+          "term": "guideline",
+          "score": 0.2187,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "的材料",
+          "score": 23.9614,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 14.2572,
+          "evidence": []
+        },
+        {
+          "term": "dedougou",
+          "score": 11.41,
+          "evidence": []
+        },
+        {
+          "term": "dori",
+          "score": 11.41,
+          "evidence": []
+        },
+        {
+          "term": "gaoua",
+          "score": 11.41,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-004-23-scope-of-the-policy-guidance": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "policy guidance",
+          "score": 1.3498,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "middle-income countries",
+          "score": 0.7965,
+          "evidence": []
+        },
+        {
+          "term": "igras",
+          "score": 0.7084,
+          "evidence": []
+        },
+        {
+          "term": "scope",
+          "score": 0.5927,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "laboratory",
+          "score": 0.5368,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "policy guidance",
+          "score": 18.9727,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "middle-income countries",
+          "score": 11.2595,
+          "evidence": []
+        },
+        {
+          "term": "laboratory",
+          "score": 10.355,
+          "evidence": []
+        },
+        {
+          "term": "igras",
+          "score": 9.8304,
+          "evidence": []
+        },
+        {
+          "term": "scope",
+          "score": 7.2475,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "policy guidance",
+          "score": 0.208,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "evidence",
+          "score": 0.1512,
+          "evidence": []
+        },
+        {
+          "term": "guideline",
+          "score": 0.1348,
+          "evidence": []
+        },
+        {
+          "term": "recommendations",
+          "score": 0.1247,
+          "evidence": []
+        },
+        {
+          "term": "group",
+          "score": 0.1029,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "guideline",
+          "score": 2.3143,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 2.0758,
+          "evidence": []
+        },
+        {
+          "term": "policy guidance",
+          "score": 2.0647,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "recommendation",
+          "score": 1.7959,
+          "evidence": []
+        },
+        {
+          "term": "studies",
+          "score": 1.7211,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "policy guidance",
+          "score": 0.208,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "evidence",
+          "score": 0.1512,
+          "evidence": []
+        },
+        {
+          "term": "guideline",
+          "score": 0.1348,
+          "evidence": []
+        },
+        {
+          "term": "recommendations",
+          "score": 0.1247,
+          "evidence": []
+        },
+        {
+          "term": "group",
+          "score": 0.1029,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 18.9597,
+          "evidence": []
+        },
+        {
+          "term": "dedougou",
+          "score": 16.1941,
+          "evidence": []
+        },
+        {
+          "term": "dori",
+          "score": 16.1941,
+          "evidence": []
+        },
+        {
+          "term": "gaoua",
+          "score": 16.1941,
+          "evidence": []
+        },
+        {
+          "term": "kaya",
+          "score": 16.1941,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-007-311-study-characteristics": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "igras",
+          "score": 1.3409,
+          "evidence": []
+        },
+        {
+          "term": "quantiferon-tb gold",
+          "score": 1.3074,
+          "evidence": []
+        },
+        {
+          "term": "middle-income countries",
+          "score": 0.8741,
+          "evidence": []
+        },
+        {
+          "term": "suspects",
+          "score": 0.8147,
+          "evidence": []
+        },
+        {
+          "term": "diagnostic accuracy",
+          "score": 0.7637,
+          "evidence": []
+        },
+        {
+          "term": "active",
+          "score": 0.7324,
+          "evidence": []
+        },
+        {
+          "term": "studies",
+          "score": 0.7018,
+          "evidence": []
+        },
+        {
+          "term": "oxford",
+          "score": 0.5938,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "igras",
+          "score": 34.4063,
+          "evidence": []
+        },
+        {
+          "term": "studies",
+          "score": 21.9557,
+          "evidence": []
+        },
+        {
+          "term": "quantiferon-tb gold",
+          "score": 20.8426,
+          "evidence": []
+        },
+        {
+          "term": "active",
+          "score": 17.0016,
+          "evidence": []
+        },
+        {
+          "term": "middle-income countries",
+          "score": 13.1501,
+          "evidence": []
+        },
+        {
+          "term": "suspects",
+          "score": 12.8214,
+          "evidence": []
+        },
+        {
+          "term": "diagnostic accuracy",
+          "score": 11.8743,
+          "evidence": []
+        },
+        {
+          "term": "oxford",
+          "score": 9.2898,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "study",
+          "score": 0.3817,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "studies",
+          "score": 0.2695,
+          "evidence": []
+        },
+        {
+          "term": "tst",
+          "score": 0.2692,
+          "evidence": []
+        },
+        {
+          "term": "igra",
+          "score": 0.2561,
+          "evidence": []
+        },
+        {
+          "term": "middle-income countries",
+          "score": 0.2016,
+          "evidence": []
+        },
+        {
+          "term": "diagnostic accuracy",
+          "score": 0.1862,
+          "evidence": []
+        },
+        {
+          "term": "active",
+          "score": 0.185,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.1811,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "studies",
+          "score": 12.623,
+          "evidence": []
+        },
+        {
+          "term": "igras",
+          "score": 8.362,
+          "evidence": []
+        },
+        {
+          "term": "study",
+          "score": 7.7521,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "subtracted",
+          "score": 7.3375,
+          "evidence": []
+        },
+        {
+          "term": "tst",
+          "score": 5.633,
+          "evidence": []
+        },
+        {
+          "term": "qft-g",
+          "score": 5.4603,
+          "evidence": []
+        },
+        {
+          "term": "qft-git",
+          "score": 5.3411,
+          "evidence": []
+        },
+        {
+          "term": "t-spot",
+          "score": 5.1413,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "study",
+          "score": 0.3817,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "studies",
+          "score": 0.2695,
+          "evidence": []
+        },
+        {
+          "term": "igra",
+          "score": 0.2561,
+          "evidence": []
+        },
+        {
+          "term": "middle-income countries",
+          "score": 0.2016,
+          "evidence": []
+        },
+        {
+          "term": "diagnostic accuracy",
+          "score": 0.1862,
+          "evidence": []
+        },
+        {
+          "term": "active",
+          "score": 0.185,
+          "evidence": []
+        },
+        {
+          "term": "quantiferon-tb gold",
+          "score": 0.1433,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.1416,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在正常情况下",
+          "score": 58.7757,
+          "evidence": []
+        },
+        {
+          "term": "在一些国家",
+          "score": 55.9954,
+          "evidence": []
+        },
+        {
+          "term": "青少年",
+          "score": 55.9954,
+          "evidence": []
+        },
+        {
+          "term": "在世卫组织全球流感监测",
+          "score": 44.5647,
+          "evidence": []
+        },
+        {
+          "term": "岁的女孩",
+          "score": 42.8719,
+          "evidence": []
+        },
+        {
+          "term": "服务的提供",
+          "score": 42.8719,
+          "evidence": []
+        },
+        {
+          "term": "可以考",
+          "score": 38.0933,
+          "evidence": []
+        },
+        {
+          "term": "增强和迭代",
+          "score": 37.7727,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-008-312-summary-of-results": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "both igras",
+          "score": 1.706,
+          "evidence": []
+        },
+        {
+          "term": "hiv-positive patients",
+          "score": 1.1315,
+          "evidence": []
+        },
+        {
+          "term": "active",
+          "score": 0.9025,
+          "evidence": []
+        },
+        {
+          "term": "igra-negative",
+          "score": 0.8862,
+          "evidence": []
+        },
+        {
+          "term": "added value",
+          "score": 0.8507,
+          "evidence": []
+        },
+        {
+          "term": "extra-pulmonary",
+          "score": 0.7998,
+          "evidence": []
+        },
+        {
+          "term": "t-spot",
+          "score": 0.7742,
+          "evidence": []
+        },
+        {
+          "term": "demonstrated",
+          "score": 0.6562,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "both igras",
+          "score": 40.7262,
+          "evidence": []
+        },
+        {
+          "term": "active",
+          "score": 28.3359,
+          "evidence": []
+        },
+        {
+          "term": "hiv-positive patients",
+          "score": 22.8431,
+          "evidence": []
+        },
+        {
+          "term": "igra-negative",
+          "score": 14.3677,
+          "evidence": []
+        },
+        {
+          "term": "added value",
+          "score": 13.2993,
+          "evidence": []
+        },
+        {
+          "term": "extra-pulmonary",
+          "score": 12.9814,
+          "evidence": []
+        },
+        {
+          "term": "demonstrated",
+          "score": 12.4419,
+          "evidence": []
+        },
+        {
+          "term": "t-spot",
+          "score": 10.7842,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "both igras",
+          "score": 0.3441,
+          "evidence": []
+        },
+        {
+          "term": "tst",
+          "score": 0.3321,
+          "evidence": []
+        },
+        {
+          "term": "studies",
+          "score": 0.3101,
+          "evidence": []
+        },
+        {
+          "term": "test",
+          "score": 0.25,
+          "evidence": []
+        },
+        {
+          "term": "sensitivity",
+          "score": 0.2357,
+          "evidence": []
+        },
+        {
+          "term": "specificity",
+          "score": 0.2313,
+          "evidence": []
+        },
+        {
+          "term": "active",
+          "score": 0.1801,
+          "evidence": []
+        },
+        {
+          "term": "study",
+          "score": 0.1777,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "studies",
+          "score": 12.9199,
+          "evidence": []
+        },
+        {
+          "term": "both igras",
+          "score": 10.0832,
+          "evidence": []
+        },
+        {
+          "term": "subtracted",
+          "score": 7.3915,
+          "evidence": []
+        },
+        {
+          "term": "tst",
+          "score": 6.5065,
+          "evidence": []
+        },
+        {
+          "term": "qft-g",
+          "score": 5.5152,
+          "evidence": []
+        },
+        {
+          "term": "qft-git",
+          "score": 5.418,
+          "evidence": []
+        },
+        {
+          "term": "active",
+          "score": 5.2306,
+          "evidence": []
+        },
+        {
+          "term": "t-spot",
+          "score": 5.2294,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "both igras",
+          "score": 0.3441,
+          "evidence": []
+        },
+        {
+          "term": "tst",
+          "score": 0.3321,
+          "evidence": []
+        },
+        {
+          "term": "studies",
+          "score": 0.3101,
+          "evidence": []
+        },
+        {
+          "term": "sensitivity",
+          "score": 0.2357,
+          "evidence": []
+        },
+        {
+          "term": "specificity",
+          "score": 0.2313,
+          "evidence": []
+        },
+        {
+          "term": "tests",
+          "score": 0.203,
+          "evidence": []
+        },
+        {
+          "term": "active",
+          "score": 0.1801,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 0.1721,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在正常情况下",
+          "score": 74.8828,
+          "evidence": []
+        },
+        {
+          "term": "在一些国家",
+          "score": 68.9639,
+          "evidence": []
+        },
+        {
+          "term": "青少年",
+          "score": 68.9639,
+          "evidence": []
+        },
+        {
+          "term": "岁的女孩",
+          "score": 52.8457,
+          "evidence": []
+        },
+        {
+          "term": "服务的提供",
+          "score": 52.8457,
+          "evidence": []
+        },
+        {
+          "term": "最小化",
+          "score": 47.1328,
+          "evidence": []
+        },
+        {
+          "term": "在世卫组织全球流感监测",
+          "score": 46.6633,
+          "evidence": []
+        },
+        {
+          "term": "可以考",
+          "score": 46.6174,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-009-313-strengths-and-limitations-of-the-evidence-ba": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "publication bias",
+          "score": 0.8955,
+          "evidence": []
+        },
+        {
+          "term": "strengths",
+          "score": 0.8205,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "igras",
+          "score": 0.7084,
+          "evidence": []
+        },
+        {
+          "term": "limitations",
+          "score": 0.6359,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "heterogeneity",
+          "score": 0.576,
+          "evidence": []
+        },
+        {
+          "term": "incidence",
+          "score": 0.5629,
+          "evidence": []
+        },
+        {
+          "term": "base",
+          "score": 0.5317,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "publication bias",
+          "score": 12.2174,
+          "evidence": []
+        },
+        {
+          "term": "strengths",
+          "score": 10.3829,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "igras",
+          "score": 9.8304,
+          "evidence": []
+        },
+        {
+          "term": "incidence",
+          "score": 9.3703,
+          "evidence": []
+        },
+        {
+          "term": "heterogeneity",
+          "score": 8.7409,
+          "evidence": []
+        },
+        {
+          "term": "limitations",
+          "score": 7.599,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "studies",
+          "score": 7.3186,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "evidence",
+          "score": 0.3124,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "studies",
+          "score": 0.2596,
+          "evidence": []
+        },
+        {
+          "term": "publication bias",
+          "score": 0.2111,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.1468,
+          "evidence": []
+        },
+        {
+          "term": "tst",
+          "score": 0.1415,
+          "evidence": []
+        },
+        {
+          "term": "study",
+          "score": 0.1391,
+          "evidence": []
+        },
+        {
+          "term": "sensitivity",
+          "score": 0.1371,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "studies",
+          "score": 6.1509,
+          "evidence": []
+        },
+        {
+          "term": "publication bias",
+          "score": 4.2404,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 3.7613,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "igra",
+          "score": 3.1883,
+          "evidence": []
+        },
+        {
+          "term": "subtracted",
+          "score": 2.8177,
+          "evidence": []
+        },
+        {
+          "term": "tst",
+          "score": 2.1746,
+          "evidence": []
+        },
+        {
+          "term": "serious",
+          "score": 2.1308,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "evidence",
+          "score": 0.3124,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "studies",
+          "score": 0.2596,
+          "evidence": []
+        },
+        {
+          "term": "publication bias",
+          "score": 0.2111,
+          "evidence": []
+        },
+        {
+          "term": "sensitivity",
+          "score": 0.1371,
+          "evidence": []
+        },
+        {
+          "term": "specificity",
+          "score": 0.134,
+          "evidence": []
+        },
+        {
+          "term": "limitations",
+          "score": 0.1215,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "igras",
+          "score": 0.104,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在一些国家",
+          "score": 47.8156,
+          "evidence": []
+        },
+        {
+          "term": "青少年",
+          "score": 47.8156,
+          "evidence": []
+        },
+        {
+          "term": "在正常情况下",
+          "score": 38.0777,
+          "evidence": []
+        },
+        {
+          "term": "岁的女孩",
+          "score": 37.2206,
+          "evidence": []
+        },
+        {
+          "term": "服务的提供",
+          "score": 37.2206,
+          "evidence": []
+        },
+        {
+          "term": "可以考",
+          "score": 35.7595,
+          "evidence": []
+        },
+        {
+          "term": "最小化",
+          "score": 34.7862,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-010-314-grade-evidence-profiles-and-final-policy-rec": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "evidence profiles",
+          "score": 2.1179,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "grade evidence",
+          "score": 1.9047,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "strong recommendation",
+          "score": 1.2602,
+          "evidence": []
+        },
+        {
+          "term": "diagnostic work-up",
+          "score": 1.2172,
+          "evidence": []
+        },
+        {
+          "term": "igras",
+          "score": 1.1554,
+          "evidence": []
+        },
+        {
+          "term": "middle-income countries",
+          "score": 1.0051,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "evidence profiles",
+          "score": 32.1968,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "grade evidence",
+          "score": 27.4981,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "igras",
+          "score": 24.5759,
+          "evidence": []
+        },
+        {
+          "term": "strong recommendation",
+          "score": 22.095,
+          "evidence": []
+        },
+        {
+          "term": "diagnostic work-up",
+          "score": 19.1628,
+          "evidence": []
+        },
+        {
+          "term": "tst",
+          "score": 17.8873,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "grade evidence",
+          "score": 0.7192,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "evidence profiles",
+          "score": 0.5903,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "strong recommendation",
+          "score": 0.3707,
+          "evidence": []
+        },
+        {
+          "term": "tst",
+          "score": 0.1928,
+          "evidence": []
+        },
+        {
+          "term": "igra",
+          "score": 0.1813,
+          "evidence": []
+        },
+        {
+          "term": "middle-income countries",
+          "score": 0.1761,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "grade evidence",
+          "score": 15.608,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "strong recommendation",
+          "score": 13.5079,
+          "evidence": []
+        },
+        {
+          "term": "evidence profiles",
+          "score": 11.1454,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "studies",
+          "score": 5.2485,
+          "evidence": []
+        },
+        {
+          "term": "igras",
+          "score": 4.4605,
+          "evidence": []
+        },
+        {
+          "term": "certainty",
+          "score": 4.2741,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "grade evidence",
+          "score": 0.7192,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "evidence profiles",
+          "score": 0.5903,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "strong recommendation",
+          "score": 0.3707,
+          "evidence": []
+        },
+        {
+          "term": "tst",
+          "score": 0.1928,
+          "evidence": []
+        },
+        {
+          "term": "middle-income countries",
+          "score": 0.1761,
+          "evidence": []
+        },
+        {
+          "term": "igras",
+          "score": 0.1274,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在一些国家",
+          "score": 63.4237,
+          "evidence": []
+        },
+        {
+          "term": "青少年",
+          "score": 63.4237,
+          "evidence": []
+        },
+        {
+          "term": "在正常情况下",
+          "score": 58.51,
+          "evidence": []
+        },
+        {
+          "term": "岁的女孩",
+          "score": 49.3353,
+          "evidence": []
+        },
+        {
+          "term": "服务的提供",
+          "score": 49.3353,
+          "evidence": []
+        },
+        {
+          "term": "可以考",
+          "score": 42.2368,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-012-321-study-characteristics": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "middle-income countries",
+          "score": 1.2237,
+          "evidence": []
+        },
+        {
+          "term": "igras",
+          "score": 0.894,
+          "evidence": []
+        },
+        {
+          "term": "t-spot",
+          "score": 0.7742,
+          "evidence": []
+        },
+        {
+          "term": "test performance",
+          "score": 0.7315,
+          "evidence": []
+        },
+        {
+          "term": "studies",
+          "score": 0.6561,
+          "evidence": []
+        },
+        {
+          "term": "characteristics",
+          "score": 0.5154,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "children",
+          "score": 0.4832,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "middle-income countries",
+          "score": 26.3421,
+          "evidence": []
+        },
+        {
+          "term": "studies",
+          "score": 18.2965,
+          "evidence": []
+        },
+        {
+          "term": "igras",
+          "score": 14.7456,
+          "evidence": []
+        },
+        {
+          "term": "test performance",
+          "score": 11.0179,
+          "evidence": []
+        },
+        {
+          "term": "t-spot",
+          "score": 10.7842,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 6.4538,
+          "evidence": []
+        },
+        {
+          "term": "characteristics",
+          "score": 6.4461,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "study",
+          "score": 0.3821,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "studies",
+          "score": 0.2703,
+          "evidence": []
+        },
+        {
+          "term": "tst",
+          "score": 0.2688,
+          "evidence": []
+        },
+        {
+          "term": "igra",
+          "score": 0.2513,
+          "evidence": []
+        },
+        {
+          "term": "middle-income countries",
+          "score": 0.1985,
+          "evidence": []
+        },
+        {
+          "term": "test performance",
+          "score": 0.1944,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.1478,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "studies",
+          "score": 9.9185,
+          "evidence": []
+        },
+        {
+          "term": "study",
+          "score": 6.2823,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "igras",
+          "score": 5.7637,
+          "evidence": []
+        },
+        {
+          "term": "subtracted",
+          "score": 5.2504,
+          "evidence": []
+        },
+        {
+          "term": "qft-g",
+          "score": 3.894,
+          "evidence": []
+        },
+        {
+          "term": "qft-git",
+          "score": 3.7918,
+          "evidence": []
+        },
+        {
+          "term": "tst",
+          "score": 3.7648,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "study",
+          "score": 0.3821,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "studies",
+          "score": 0.2703,
+          "evidence": []
+        },
+        {
+          "term": "middle-income countries",
+          "score": 0.1985,
+          "evidence": []
+        },
+        {
+          "term": "test performance",
+          "score": 0.1944,
+          "evidence": []
+        },
+        {
+          "term": "igras",
+          "score": 0.173,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.1478,
+          "evidence": []
+        },
+        {
+          "term": "review",
+          "score": 0.1223,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在一些国家",
+          "score": 60.0023,
+          "evidence": []
+        },
+        {
+          "term": "青少年",
+          "score": 60.0023,
+          "evidence": []
+        },
+        {
+          "term": "在正常情况下",
+          "score": 56.5833,
+          "evidence": []
+        },
+        {
+          "term": "岁的女孩",
+          "score": 46.3506,
+          "evidence": []
+        },
+        {
+          "term": "服务的提供",
+          "score": 46.3506,
+          "evidence": []
+        },
+        {
+          "term": "在世卫组织全球流感监测",
+          "score": 44.4967,
+          "evidence": []
+        },
+        {
+          "term": "可以考",
+          "score": 42.2305,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-013-322-summary-of-results": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "both igras",
+          "score": 1.7062,
+          "evidence": []
+        },
+        {
+          "term": "bcg coverage",
+          "score": 1.1673,
+          "evidence": []
+        },
+        {
+          "term": "test accuracy",
+          "score": 0.8368,
+          "evidence": []
+        },
+        {
+          "term": "tst",
+          "score": 0.8029,
+          "evidence": []
+        },
+        {
+          "term": "lower sensitivity",
+          "score": 0.7904,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.6782,
+          "evidence": []
+        },
+        {
+          "term": "ltbi",
+          "score": 0.6662,
+          "evidence": []
+        },
+        {
+          "term": "studies",
+          "score": 0.63,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "both igras",
+          "score": 43.5347,
+          "evidence": []
+        },
+        {
+          "term": "bcg coverage",
+          "score": 18.1443,
+          "evidence": []
+        },
+        {
+          "term": "tst",
+          "score": 17.8873,
+          "evidence": []
+        },
+        {
+          "term": "studies",
+          "score": 16.4668,
+          "evidence": []
+        },
+        {
+          "term": "test accuracy",
+          "score": 13.394,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 12.9075,
+          "evidence": []
+        },
+        {
+          "term": "lower sensitivity",
+          "score": 11.419,
+          "evidence": []
+        },
+        {
+          "term": "active",
+          "score": 11.3344,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "tst",
+          "score": 0.3978,
+          "evidence": []
+        },
+        {
+          "term": "igra",
+          "score": 0.3716,
+          "evidence": []
+        },
+        {
+          "term": "test accuracy",
+          "score": 0.3648,
+          "evidence": []
+        },
+        {
+          "term": "both igras",
+          "score": 0.3575,
+          "evidence": []
+        },
+        {
+          "term": "lower sensitivity",
+          "score": 0.2768,
+          "evidence": []
+        },
+        {
+          "term": "studies",
+          "score": 0.276,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.2587,
+          "evidence": []
+        },
+        {
+          "term": "specificity",
+          "score": 0.1959,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "studies",
+          "score": 13.4211,
+          "evidence": []
+        },
+        {
+          "term": "both igras",
+          "score": 10.7648,
+          "evidence": []
+        },
+        {
+          "term": "subtracted",
+          "score": 7.8888,
+          "evidence": []
+        },
+        {
+          "term": "tst",
+          "score": 7.0124,
+          "evidence": []
+        },
+        {
+          "term": "qft-g",
+          "score": 5.8899,
+          "evidence": []
+        },
+        {
+          "term": "qft-git",
+          "score": 5.7868,
+          "evidence": []
+        },
+        {
+          "term": "t-spot",
+          "score": 5.5838,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 5.4604,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "tst",
+          "score": 0.3978,
+          "evidence": []
+        },
+        {
+          "term": "igra",
+          "score": 0.3716,
+          "evidence": []
+        },
+        {
+          "term": "test accuracy",
+          "score": 0.3648,
+          "evidence": []
+        },
+        {
+          "term": "both igras",
+          "score": 0.3575,
+          "evidence": []
+        },
+        {
+          "term": "lower sensitivity",
+          "score": 0.2768,
+          "evidence": []
+        },
+        {
+          "term": "studies",
+          "score": 0.276,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.2587,
+          "evidence": []
+        },
+        {
+          "term": "active",
+          "score": 0.1922,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在一些国家",
+          "score": 54.9803,
+          "evidence": []
+        },
+        {
+          "term": "青少年",
+          "score": 54.9803,
+          "evidence": []
+        },
+        {
+          "term": "在正常情况下",
+          "score": 49.0084,
+          "evidence": []
+        },
+        {
+          "term": "岁的女孩",
+          "score": 43.1836,
+          "evidence": []
+        },
+        {
+          "term": "服务的提供",
+          "score": 43.1836,
+          "evidence": []
+        },
+        {
+          "term": "可以考",
+          "score": 39.3282,
+          "evidence": []
+        },
+        {
+          "term": "最小化",
+          "score": 37.1942,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 33.5431,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-014-323-strengths-and-limitations-of-the-evidence-ba": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "publication bias",
+          "score": 0.8955,
+          "evidence": []
+        },
+        {
+          "term": "strengths",
+          "score": 0.8205,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "surrogate",
+          "score": 0.7829,
+          "evidence": []
+        },
+        {
+          "term": "igras",
+          "score": 0.7084,
+          "evidence": []
+        },
+        {
+          "term": "limitations",
+          "score": 0.6359,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "heterogeneity",
+          "score": 0.576,
+          "evidence": []
+        },
+        {
+          "term": "studies",
+          "score": 0.5324,
+          "evidence": []
+        },
+        {
+          "term": "base",
+          "score": 0.5317,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "publication bias",
+          "score": 12.2174,
+          "evidence": []
+        },
+        {
+          "term": "surrogate",
+          "score": 11.9598,
+          "evidence": []
+        },
+        {
+          "term": "studies",
+          "score": 10.9779,
+          "evidence": []
+        },
+        {
+          "term": "strengths",
+          "score": 10.3829,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "igras",
+          "score": 9.8304,
+          "evidence": []
+        },
+        {
+          "term": "heterogeneity",
+          "score": 8.7409,
+          "evidence": []
+        },
+        {
+          "term": "limitations",
+          "score": 7.599,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "outcomes",
+          "score": 6.7953,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "evidence",
+          "score": 0.3612,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "studies",
+          "score": 0.3123,
+          "evidence": []
+        },
+        {
+          "term": "publication bias",
+          "score": 0.2254,
+          "evidence": []
+        },
+        {
+          "term": "tst",
+          "score": 0.2117,
+          "evidence": []
+        },
+        {
+          "term": "igra",
+          "score": 0.2004,
+          "evidence": []
+        },
+        {
+          "term": "study",
+          "score": 0.1743,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.173,
+          "evidence": []
+        },
+        {
+          "term": "sensitivity",
+          "score": 0.1709,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "studies",
+          "score": 8.2033,
+          "evidence": []
+        },
+        {
+          "term": "publication bias",
+          "score": 5.1331,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 4.7298,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "igra",
+          "score": 4.5633,
+          "evidence": []
+        },
+        {
+          "term": "subtracted",
+          "score": 3.923,
+          "evidence": []
+        },
+        {
+          "term": "tst",
+          "score": 3.2323,
+          "evidence": []
+        },
+        {
+          "term": "qft-g",
+          "score": 2.9143,
+          "evidence": []
+        },
+        {
+          "term": "qft-git",
+          "score": 2.8475,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "evidence",
+          "score": 0.3612,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "studies",
+          "score": 0.3123,
+          "evidence": []
+        },
+        {
+          "term": "publication bias",
+          "score": 0.2254,
+          "evidence": []
+        },
+        {
+          "term": "sensitivity",
+          "score": 0.1709,
+          "evidence": []
+        },
+        {
+          "term": "specificity",
+          "score": 0.1661,
+          "evidence": []
+        },
+        {
+          "term": "limitations",
+          "score": 0.166,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "igras",
+          "score": 0.151,
+          "evidence": []
+        },
+        {
+          "term": "systematic",
+          "score": 0.1145,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在一些国家",
+          "score": 49.0862,
+          "evidence": []
+        },
+        {
+          "term": "青少年",
+          "score": 49.0862,
+          "evidence": []
+        },
+        {
+          "term": "在正常情况下",
+          "score": 41.3275,
+          "evidence": []
+        },
+        {
+          "term": "岁的女孩",
+          "score": 37.6141,
+          "evidence": []
+        },
+        {
+          "term": "服务的提供",
+          "score": 37.6141,
+          "evidence": []
+        },
+        {
+          "term": "可以考",
+          "score": 35.3744,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 32.0194,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 32.0194,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-015-324-grade-evidence-profiles-and-final-policy-rec": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "evidence profiles",
+          "score": 1.9792,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "grade evidence",
+          "score": 1.7661,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "strong recommendation",
+          "score": 1.0833,
+          "evidence": []
+        },
+        {
+          "term": "harms associated",
+          "score": 0.9074,
+          "evidence": []
+        },
+        {
+          "term": "additional harms",
+          "score": 0.8601,
+          "evidence": []
+        },
+        {
+          "term": "blood collection",
+          "score": 0.8315,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "evidence profiles",
+          "score": 28.5485,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "grade evidence",
+          "score": 23.8498,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "strong recommendation",
+          "score": 15.9325,
+          "evidence": []
+        },
+        {
+          "term": "harms associated",
+          "score": 13.4882,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 12.9075,
+          "evidence": []
+        },
+        {
+          "term": "additional harms",
+          "score": 12.5908,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "grade evidence",
+          "score": 0.6524,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "evidence profiles",
+          "score": 0.4931,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "strong recommendation",
+          "score": 0.3434,
+          "evidence": []
+        },
+        {
+          "term": "tst",
+          "score": 0.2089,
+          "evidence": []
+        },
+        {
+          "term": "igra",
+          "score": 0.1956,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.1834,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "grade evidence",
+          "score": 10.7867,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "strong recommendation",
+          "score": 9.0723,
+          "evidence": []
+        },
+        {
+          "term": "evidence profiles",
+          "score": 8.1823,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "children",
+          "score": 4.9854,
+          "evidence": []
+        },
+        {
+          "term": "hiv status",
+          "score": 3.8603,
+          "evidence": []
+        },
+        {
+          "term": "studies",
+          "score": 3.558,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "grade evidence",
+          "score": 0.6524,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "evidence profiles",
+          "score": 0.5485,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "strong recommendation",
+          "score": 0.3434,
+          "evidence": []
+        },
+        {
+          "term": "tst",
+          "score": 0.2089,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.1834,
+          "evidence": []
+        },
+        {
+          "term": "middle-income countries",
+          "score": 0.163,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在一些国家",
+          "score": 41.334,
+          "evidence": []
+        },
+        {
+          "term": "青少年",
+          "score": 41.334,
+          "evidence": []
+        },
+        {
+          "term": "岁的女孩",
+          "score": 33.1664,
+          "evidence": []
+        },
+        {
+          "term": "服务的提供",
+          "score": 33.1664,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 30.1445,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 30.1445,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-017-331-study-characteristics": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "study",
+          "score": 0.7536,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "igras",
+          "score": 0.7084,
+          "evidence": []
+        },
+        {
+          "term": "asymptomatic",
+          "score": 0.5748,
+          "evidence": []
+        },
+        {
+          "term": "hereafter",
+          "score": 0.5429,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "study",
+          "score": 11.4961,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "studies",
+          "score": 10.9779,
+          "evidence": []
+        },
+        {
+          "term": "igras",
+          "score": 9.8304,
+          "evidence": []
+        },
+        {
+          "term": "asymptomatic",
+          "score": 9.066,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "study",
+          "score": 0.2224,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "studies",
+          "score": 0.1535,
+          "evidence": []
+        },
+        {
+          "term": "tst",
+          "score": 0.0972,
+          "evidence": []
+        },
+        {
+          "term": "igra",
+          "score": 0.0888,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "studies",
+          "score": 4.4988,
+          "evidence": []
+        },
+        {
+          "term": "study",
+          "score": 3.1872,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "igra",
+          "score": 2.5808,
+          "evidence": []
+        },
+        {
+          "term": "subtracted",
+          "score": 2.2115,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "study",
+          "score": 0.2224,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "studies",
+          "score": 0.1535,
+          "evidence": []
+        },
+        {
+          "term": "review",
+          "score": 0.0766,
+          "evidence": []
+        },
+        {
+          "term": "active",
+          "score": 0.0691,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在一些国家",
+          "score": 54.3138,
+          "evidence": []
+        },
+        {
+          "term": "青少年",
+          "score": 54.3138,
+          "evidence": []
+        },
+        {
+          "term": "在正常情况下",
+          "score": 49.3123,
+          "evidence": []
+        },
+        {
+          "term": "岁的女孩",
+          "score": 42.0964,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-018-332-summary-of-results": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hiv-infected persons",
+          "score": 1.7304,
+          "evidence": []
+        },
+        {
+          "term": "predictive value",
+          "score": 1.3709,
+          "evidence": []
+        },
+        {
+          "term": "hiv-infected individuals",
+          "score": 1.1739,
+          "evidence": []
+        },
+        {
+          "term": "ipt",
+          "score": 1.1711,
+          "evidence": []
+        },
+        {
+          "term": "igra",
+          "score": 0.9412,
+          "evidence": []
+        },
+        {
+          "term": "tst",
+          "score": 0.8029,
+          "evidence": []
+        },
+        {
+          "term": "active",
+          "score": 0.6744,
+          "evidence": []
+        },
+        {
+          "term": "reduction",
+          "score": 0.5257,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hiv-infected persons",
+          "score": 50.6632,
+          "evidence": []
+        },
+        {
+          "term": "predictive value",
+          "score": 28.9027,
+          "evidence": []
+        },
+        {
+          "term": "ipt",
+          "score": 27.5495,
+          "evidence": []
+        },
+        {
+          "term": "igra",
+          "score": 24.7934,
+          "evidence": []
+        },
+        {
+          "term": "hiv-infected individuals",
+          "score": 22.653,
+          "evidence": []
+        },
+        {
+          "term": "tst",
+          "score": 17.8873,
+          "evidence": []
+        },
+        {
+          "term": "active",
+          "score": 14.168,
+          "evidence": []
+        },
+        {
+          "term": "remains",
+          "score": 7.6217,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "tst",
+          "score": 0.4001,
+          "evidence": []
+        },
+        {
+          "term": "igra",
+          "score": 0.3746,
+          "evidence": []
+        },
+        {
+          "term": "hiv-infected individuals",
+          "score": 0.2548,
+          "evidence": []
+        },
+        {
+          "term": "test",
+          "score": 0.2493,
+          "evidence": []
+        },
+        {
+          "term": "studies",
+          "score": 0.2256,
+          "evidence": []
+        },
+        {
+          "term": "infection",
+          "score": 0.2019,
+          "evidence": []
+        },
+        {
+          "term": "active",
+          "score": 0.2013,
+          "evidence": []
+        },
+        {
+          "term": "hiv-infected persons",
+          "score": 0.1939,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "studies",
+          "score": 10.6868,
+          "evidence": []
+        },
+        {
+          "term": "igra",
+          "score": 8.5844,
+          "evidence": []
+        },
+        {
+          "term": "tst",
+          "score": 6.8369,
+          "evidence": []
+        },
+        {
+          "term": "subtracted",
+          "score": 6.6456,
+          "evidence": []
+        },
+        {
+          "term": "active",
+          "score": 5.24,
+          "evidence": []
+        },
+        {
+          "term": "qft-g",
+          "score": 4.9855,
+          "evidence": []
+        },
+        {
+          "term": "qft-git",
+          "score": 4.9338,
+          "evidence": []
+        },
+        {
+          "term": "t-spot",
+          "score": 4.7715,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "tst",
+          "score": 0.4001,
+          "evidence": []
+        },
+        {
+          "term": "igra",
+          "score": 0.3746,
+          "evidence": []
+        },
+        {
+          "term": "hiv-infected individuals",
+          "score": 0.2548,
+          "evidence": []
+        },
+        {
+          "term": "test",
+          "score": 0.2493,
+          "evidence": []
+        },
+        {
+          "term": "studies",
+          "score": 0.2256,
+          "evidence": []
+        },
+        {
+          "term": "active",
+          "score": 0.2013,
+          "evidence": []
+        },
+        {
+          "term": "hiv-infected persons",
+          "score": 0.1939,
+          "evidence": []
+        },
+        {
+          "term": "predictive value",
+          "score": 0.184,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在一些国家",
+          "score": 51.0033,
+          "evidence": []
+        },
+        {
+          "term": "青少年",
+          "score": 51.0033,
+          "evidence": []
+        },
+        {
+          "term": "在正常情况下",
+          "score": 43.3159,
+          "evidence": []
+        },
+        {
+          "term": "岁的女孩",
+          "score": 40.3019,
+          "evidence": []
+        },
+        {
+          "term": "服务的提供",
+          "score": 40.3019,
+          "evidence": []
+        },
+        {
+          "term": "可以考",
+          "score": 35.8308,
+          "evidence": []
+        },
+        {
+          "term": "在世卫组织全球流感监测",
+          "score": 30.4244,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 29.2981,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-019-333-strengths-and-limitations-of-the-evidence-ba": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "strengths",
+          "score": 0.8205,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "igras",
+          "score": 0.7084,
+          "evidence": []
+        },
+        {
+          "term": "reference standard",
+          "score": 0.6876,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "strengths",
+          "score": 10.3829,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "igras",
+          "score": 9.8304,
+          "evidence": []
+        },
+        {
+          "term": "ltbi",
+          "score": 9.4543,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "tst",
+          "score": 0.1653,
+          "evidence": []
+        },
+        {
+          "term": "igra",
+          "score": 0.1549,
+          "evidence": []
+        },
+        {
+          "term": "studies",
+          "score": 0.1461,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "studies",
+          "score": 4.7321,
+          "evidence": []
+        },
+        {
+          "term": "igra",
+          "score": 3.0415,
+          "evidence": []
+        },
+        {
+          "term": "subtracted",
+          "score": 2.44,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "tst",
+          "score": 0.1653,
+          "evidence": []
+        },
+        {
+          "term": "igra",
+          "score": 0.1549,
+          "evidence": []
+        },
+        {
+          "term": "studies",
+          "score": 0.1461,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在正常情况下",
+          "score": 80.1016,
+          "evidence": []
+        },
+        {
+          "term": "在一些国家",
+          "score": 77.5594,
+          "evidence": []
+        },
+        {
+          "term": "青少年",
+          "score": 77.5594,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-020-334-grade-evidence-profiles-and-final-policy-rec": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "evidence profiles",
+          "score": 1.9792,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "grade evidence",
+          "score": 1.7661,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "strong recommendation",
+          "score": 1.1806,
+          "evidence": []
+        },
+        {
+          "term": "middle-income countries",
+          "score": 0.7965,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "evidence profiles",
+          "score": 28.5485,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "grade evidence",
+          "score": 23.8498,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "strong recommendation",
+          "score": 19.0137,
+          "evidence": []
+        },
+        {
+          "term": "middle-income countries",
+          "score": 11.2595,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "grade evidence",
+          "score": 0.5907,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "evidence profiles",
+          "score": 0.4864,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "recommendations",
+          "score": 0.319,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "strong recommendation",
+          "score": 0.2977,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "grade evidence",
+          "score": 10.7808,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "strong recommendation",
+          "score": 10.0663,
+          "evidence": []
+        },
+        {
+          "term": "evidence profiles",
+          "score": 7.8135,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv infection",
+          "score": 4.0744,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "grade evidence",
+          "score": 0.5907,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "evidence profiles",
+          "score": 0.4864,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "recommendations",
+          "score": 0.319,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "strong recommendation",
+          "score": 0.2977,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在一些国家",
+          "score": 36.7094,
+          "evidence": []
+        },
+        {
+          "term": "青少年",
+          "score": 36.7094,
+          "evidence": []
+        },
+        {
+          "term": "岁的女孩",
+          "score": 30.3371,
+          "evidence": []
+        },
+        {
+          "term": "服务的提供",
+          "score": 30.3371,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-022-341-study-characteristics": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "study",
+          "score": 0.7536,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hcws",
+          "score": 0.6948,
+          "evidence": []
+        },
+        {
+          "term": "varied",
+          "score": 0.585,
+          "evidence": []
+        },
+        {
+          "term": "characteristics",
+          "score": 0.5154,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "study",
+          "score": 11.4961,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hcws",
+          "score": 10.7294,
+          "evidence": []
+        },
+        {
+          "term": "varied",
+          "score": 9.4259,
+          "evidence": []
+        },
+        {
+          "term": "characteristics",
+          "score": 6.4461,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "study",
+          "score": 0.2288,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "studies",
+          "score": 0.1453,
+          "evidence": []
+        },
+        {
+          "term": "tst",
+          "score": 0.1167,
+          "evidence": []
+        },
+        {
+          "term": "igra",
+          "score": 0.1094,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "studies",
+          "score": 3.3604,
+          "evidence": []
+        },
+        {
+          "term": "study",
+          "score": 2.5087,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "igra",
+          "score": 1.9281,
+          "evidence": []
+        },
+        {
+          "term": "subtracted",
+          "score": 1.68,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "study",
+          "score": 0.2288,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "studies",
+          "score": 0.1453,
+          "evidence": []
+        },
+        {
+          "term": "igra",
+          "score": 0.1094,
+          "evidence": []
+        },
+        {
+          "term": "review",
+          "score": 0.0753,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在一些国家",
+          "score": 39.8726,
+          "evidence": []
+        },
+        {
+          "term": "青少年",
+          "score": 39.8726,
+          "evidence": []
+        },
+        {
+          "term": "最小化",
+          "score": 31.1284,
+          "evidence": []
+        },
+        {
+          "term": "岁的女孩",
+          "score": 31.0444,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-023-342-summary-of-results": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "tst positivity",
+          "score": 1.6953,
+          "evidence": []
+        },
+        {
+          "term": "reversions",
+          "score": 1.4026,
+          "evidence": []
+        },
+        {
+          "term": "positivity rates",
+          "score": 1.3682,
+          "evidence": []
+        },
+        {
+          "term": "conversions",
+          "score": 1.2684,
+          "evidence": []
+        },
+        {
+          "term": "bcg vaccination",
+          "score": 1.0466,
+          "evidence": []
+        },
+        {
+          "term": "igras",
+          "score": 1.0378,
+          "evidence": []
+        },
+        {
+          "term": "serial testing",
+          "score": 1.0127,
+          "evidence": []
+        },
+        {
+          "term": "hcws",
+          "score": 0.8768,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "tst positivity",
+          "score": 36.538,
+          "evidence": []
+        },
+        {
+          "term": "reversions",
+          "score": 30.3573,
+          "evidence": []
+        },
+        {
+          "term": "conversions",
+          "score": 26.3109,
+          "evidence": []
+        },
+        {
+          "term": "positivity rates",
+          "score": 24.7423,
+          "evidence": []
+        },
+        {
+          "term": "igras",
+          "score": 19.6607,
+          "evidence": []
+        },
+        {
+          "term": "hcws",
+          "score": 16.0941,
+          "evidence": []
+        },
+        {
+          "term": "serial testing",
+          "score": 15.1206,
+          "evidence": []
+        },
+        {
+          "term": "cut-offs",
+          "score": 14.0594,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "tst positivity",
+          "score": 0.4075,
+          "evidence": []
+        },
+        {
+          "term": "igra",
+          "score": 0.3303,
+          "evidence": []
+        },
+        {
+          "term": "test",
+          "score": 0.207,
+          "evidence": []
+        },
+        {
+          "term": "bcg vaccination",
+          "score": 0.1957,
+          "evidence": []
+        },
+        {
+          "term": "infection",
+          "score": 0.1856,
+          "evidence": []
+        },
+        {
+          "term": "studies",
+          "score": 0.1837,
+          "evidence": []
+        },
+        {
+          "term": "skin",
+          "score": 0.1597,
+          "evidence": []
+        },
+        {
+          "term": "ltbi",
+          "score": 0.1556,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "studies",
+          "score": 8.2569,
+          "evidence": []
+        },
+        {
+          "term": "igra",
+          "score": 6.3715,
+          "evidence": []
+        },
+        {
+          "term": "tst positivity",
+          "score": 5.6102,
+          "evidence": []
+        },
+        {
+          "term": "subtracted",
+          "score": 5.0663,
+          "evidence": []
+        },
+        {
+          "term": "qft-g",
+          "score": 3.7947,
+          "evidence": []
+        },
+        {
+          "term": "qft-git",
+          "score": 3.7454,
+          "evidence": []
+        },
+        {
+          "term": "t-spot",
+          "score": 3.6204,
+          "evidence": []
+        },
+        {
+          "term": "active",
+          "score": 3.6196,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "tst positivity",
+          "score": 0.4075,
+          "evidence": []
+        },
+        {
+          "term": "igra",
+          "score": 0.3303,
+          "evidence": []
+        },
+        {
+          "term": "bcg vaccination",
+          "score": 0.1957,
+          "evidence": []
+        },
+        {
+          "term": "infection",
+          "score": 0.1856,
+          "evidence": []
+        },
+        {
+          "term": "positivity rates",
+          "score": 0.1386,
+          "evidence": []
+        },
+        {
+          "term": "incidence",
+          "score": 0.1256,
+          "evidence": []
+        },
+        {
+          "term": "serial testing",
+          "score": 0.1134,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.1007,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在正常情况下",
+          "score": 78.7374,
+          "evidence": []
+        },
+        {
+          "term": "在世卫组织全球流感监测",
+          "score": 57.8676,
+          "evidence": []
+        },
+        {
+          "term": "最小化",
+          "score": 55.2435,
+          "evidence": []
+        },
+        {
+          "term": "在一些国家",
+          "score": 54.0066,
+          "evidence": []
+        },
+        {
+          "term": "青少年",
+          "score": 54.0066,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 48.2016,
+          "evidence": []
+        },
+        {
+          "term": "其它技术术语",
+          "score": 45.6369,
+          "evidence": []
+        },
+        {
+          "term": "大流行性流感防范生物材料或pip生物材料",
+          "score": 45.6369,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-024-343-strengths-and-limitations-of-the-evidence-ba": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "strengths",
+          "score": 0.8205,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "evidence",
+          "score": 0.6827,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "limitations",
+          "score": 0.6359,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "strengths",
+          "score": 10.3829,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "limitations",
+          "score": 7.599,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "evidence",
+          "score": 7.2966,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "evidence",
+          "score": 0.1784,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "studies",
+          "score": 0.1089,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.0804,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "studies",
+          "score": 2.7236,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 2.395,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "igras",
+          "score": 1.5242,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "evidence",
+          "score": 0.1784,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "studies",
+          "score": 0.1089,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.0804,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在一些国家",
+          "score": 42.6739,
+          "evidence": []
+        },
+        {
+          "term": "青少年",
+          "score": 42.6739,
+          "evidence": []
+        },
+        {
+          "term": "在正常情况下",
+          "score": 37.2468,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-025-344-grade-evidence-profiles-and-final-policy-rec": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "evidence profiles",
+          "score": 1.9792,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "grade evidence",
+          "score": 1.7661,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "worker screening",
+          "score": 1.2132,
+          "evidence": []
+        },
+        {
+          "term": "strong recommendation",
+          "score": 1.0833,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "evidence profiles",
+          "score": 28.5485,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "grade evidence",
+          "score": 23.8498,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "worker screening",
+          "score": 19.544,
+          "evidence": []
+        },
+        {
+          "term": "screening programmes",
+          "score": 16.7682,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "grade evidence",
+          "score": 0.6096,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "evidence profiles",
+          "score": 0.5103,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "recommendations",
+          "score": 0.3134,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "strong recommendation",
+          "score": 0.2929,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "grade evidence",
+          "score": 10.6297,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "strong recommendation",
+          "score": 8.6046,
+          "evidence": []
+        },
+        {
+          "term": "evidence profiles",
+          "score": 7.7616,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health care",
+          "score": 3.014,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "grade evidence",
+          "score": 0.6096,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "evidence profiles",
+          "score": 0.5103,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "recommendations",
+          "score": 0.3134,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "strong recommendation",
+          "score": 0.2929,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "个学习目标",
+          "score": 20.1774,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 20.1774,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 20.1774,
+          "evidence": []
+        },
+        {
+          "term": "在一些国家",
+          "score": 17.128,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-027-351-study-characteristics": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "adult contacts",
+          "score": 1.7703,
+          "evidence": []
+        },
+        {
+          "term": "household contacts",
+          "score": 1.6849,
+          "evidence": []
+        },
+        {
+          "term": "study",
+          "score": 1.2517,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "unpublished study",
+          "score": 1.2129,
+          "evidence": []
+        },
+        {
+          "term": "unreported",
+          "score": 0.9356,
+          "evidence": []
+        },
+        {
+          "term": "study population",
+          "score": 0.9209,
+          "evidence": []
+        },
+        {
+          "term": "infection rate",
+          "score": 0.7913,
+          "evidence": []
+        },
+        {
+          "term": "studies",
+          "score": 0.741,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "adult contacts",
+          "score": 41.8388,
+          "evidence": []
+        },
+        {
+          "term": "household contacts",
+          "score": 38.0126,
+          "evidence": []
+        },
+        {
+          "term": "study",
+          "score": 34.4882,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "studies",
+          "score": 25.615,
+          "evidence": []
+        },
+        {
+          "term": "unpublished study",
+          "score": 25.5873,
+          "evidence": []
+        },
+        {
+          "term": "study population",
+          "score": 21.0882,
+          "evidence": []
+        },
+        {
+          "term": "unreported",
+          "score": 15.1787,
+          "evidence": []
+        },
+        {
+          "term": "infection rate",
+          "score": 10.7075,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "study",
+          "score": 0.4458,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "study population",
+          "score": 0.3076,
+          "evidence": []
+        },
+        {
+          "term": "unpublished study",
+          "score": 0.2962,
+          "evidence": []
+        },
+        {
+          "term": "studies",
+          "score": 0.2943,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 0.2352,
+          "evidence": []
+        },
+        {
+          "term": "household contacts",
+          "score": 0.21,
+          "evidence": []
+        },
+        {
+          "term": "infection rate",
+          "score": 0.1811,
+          "evidence": []
+        },
+        {
+          "term": "tst",
+          "score": 0.173,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "studies",
+          "score": 10.2893,
+          "evidence": []
+        },
+        {
+          "term": "household contacts",
+          "score": 10.1155,
+          "evidence": []
+        },
+        {
+          "term": "study",
+          "score": 8.255,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "unpublished study",
+          "score": 7.2776,
+          "evidence": []
+        },
+        {
+          "term": "adult contacts",
+          "score": 6.5366,
+          "evidence": []
+        },
+        {
+          "term": "investigation",
+          "score": 6.1715,
+          "evidence": []
+        },
+        {
+          "term": "igra",
+          "score": 4.8869,
+          "evidence": []
+        },
+        {
+          "term": "study population",
+          "score": 4.6658,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "study",
+          "score": 0.4458,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "study population",
+          "score": 0.3076,
+          "evidence": []
+        },
+        {
+          "term": "unpublished study",
+          "score": 0.2962,
+          "evidence": []
+        },
+        {
+          "term": "studies",
+          "score": 0.2943,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 0.2352,
+          "evidence": []
+        },
+        {
+          "term": "household contacts",
+          "score": 0.21,
+          "evidence": []
+        },
+        {
+          "term": "infection rate",
+          "score": 0.1811,
+          "evidence": []
+        },
+        {
+          "term": "adult contacts",
+          "score": 0.147,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在正常情况下",
+          "score": 57.1602,
+          "evidence": []
+        },
+        {
+          "term": "在一些国家",
+          "score": 56.2209,
+          "evidence": []
+        },
+        {
+          "term": "青少年",
+          "score": 56.2209,
+          "evidence": []
+        },
+        {
+          "term": "岁的女孩",
+          "score": 43.4243,
+          "evidence": []
+        },
+        {
+          "term": "服务的提供",
+          "score": 43.4243,
+          "evidence": []
+        },
+        {
+          "term": "在世卫组织全球流感监测",
+          "score": 38.2745,
+          "evidence": []
+        },
+        {
+          "term": "可以考",
+          "score": 37.9846,
+          "evidence": []
+        },
+        {
+          "term": "最小化",
+          "score": 37.7135,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-028-352-summary-of-results": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "tst seemed",
+          "score": 1.4943,
+          "evidence": []
+        },
+        {
+          "term": "both igras",
+          "score": 1.1833,
+          "evidence": []
+        },
+        {
+          "term": "prevalence",
+          "score": 0.6045,
+          "evidence": []
+        },
+        {
+          "term": "varied",
+          "score": 0.585,
+          "evidence": []
+        },
+        {
+          "term": "ranged",
+          "score": 0.5608,
+          "evidence": []
+        },
+        {
+          "term": "assays",
+          "score": 0.5126,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "tst seemed",
+          "score": 26.845,
+          "evidence": []
+        },
+        {
+          "term": "both igras",
+          "score": 18.9588,
+          "evidence": []
+        },
+        {
+          "term": "prevalence",
+          "score": 11.4213,
+          "evidence": []
+        },
+        {
+          "term": "varied",
+          "score": 9.4259,
+          "evidence": []
+        },
+        {
+          "term": "studies",
+          "score": 9.1482,
+          "evidence": []
+        },
+        {
+          "term": "ranged",
+          "score": 8.7013,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "tst",
+          "score": 0.3041,
+          "evidence": []
+        },
+        {
+          "term": "tst seemed",
+          "score": 0.3041,
+          "evidence": []
+        },
+        {
+          "term": "igra",
+          "score": 0.2848,
+          "evidence": []
+        },
+        {
+          "term": "both igras",
+          "score": 0.2402,
+          "evidence": []
+        },
+        {
+          "term": "studies",
+          "score": 0.1933,
+          "evidence": []
+        },
+        {
+          "term": "test",
+          "score": 0.1716,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "studies",
+          "score": 8.2178,
+          "evidence": []
+        },
+        {
+          "term": "both igras",
+          "score": 6.3708,
+          "evidence": []
+        },
+        {
+          "term": "subtracted",
+          "score": 4.7387,
+          "evidence": []
+        },
+        {
+          "term": "tst",
+          "score": 4.1685,
+          "evidence": []
+        },
+        {
+          "term": "tst seemed",
+          "score": 4.1685,
+          "evidence": []
+        },
+        {
+          "term": "qft-g",
+          "score": 3.5347,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "tst seemed",
+          "score": 0.311,
+          "evidence": []
+        },
+        {
+          "term": "igra",
+          "score": 0.2848,
+          "evidence": []
+        },
+        {
+          "term": "both igras",
+          "score": 0.2402,
+          "evidence": []
+        },
+        {
+          "term": "studies",
+          "score": 0.1933,
+          "evidence": []
+        },
+        {
+          "term": "reported",
+          "score": 0.0996,
+          "evidence": []
+        },
+        {
+          "term": "prevalence",
+          "score": 0.0807,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在正常情况下",
+          "score": 98.5859,
+          "evidence": []
+        },
+        {
+          "term": "在一些国家",
+          "score": 77.37,
+          "evidence": []
+        },
+        {
+          "term": "青少年",
+          "score": 77.37,
+          "evidence": []
+        },
+        {
+          "term": "在世卫组织全球流感监测",
+          "score": 64.7598,
+          "evidence": []
+        },
+        {
+          "term": "岁的女孩",
+          "score": 59.9188,
+          "evidence": []
+        },
+        {
+          "term": "服务的提供",
+          "score": 59.9188,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-029-353-strengths-and-limitations-of-the-evidence-ba": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "strengths",
+          "score": 0.8205,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "limitations",
+          "score": 0.6359,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "categorisation",
+          "score": 0.5861,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "strengths",
+          "score": 10.3829,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "limitations",
+          "score": 7.599,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "categorisation",
+          "score": 7.5893,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "studies",
+          "score": 0.1219,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 0.1066,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "tst",
+          "score": 0.0958,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "studies",
+          "score": 3.3451,
+          "evidence": []
+        },
+        {
+          "term": "igra",
+          "score": 1.948,
+          "evidence": []
+        },
+        {
+          "term": "subtracted",
+          "score": 1.7785,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "studies",
+          "score": 0.1219,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 0.1066,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "tst",
+          "score": 0.0958,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在一些国家",
+          "score": 57.276,
+          "evidence": []
+        },
+        {
+          "term": "青少年",
+          "score": 57.276,
+          "evidence": []
+        },
+        {
+          "term": "在正常情况下",
+          "score": 52.2998,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-030-354-grade-evidence-profiles-and-final-policy-rec": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "evidence profiles",
+          "score": 1.9792,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "grade evidence",
+          "score": 1.7661,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "outbreak investigations",
+          "score": 1.1831,
+          "evidence": []
+        },
+        {
+          "term": "strong recommendation",
+          "score": 1.0833,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "evidence profiles",
+          "score": 28.5485,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "grade evidence",
+          "score": 23.8498,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "outbreak investigations",
+          "score": 17.8473,
+          "evidence": []
+        },
+        {
+          "term": "strong recommendation",
+          "score": 15.9325,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "grade evidence",
+          "score": 0.5326,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "evidence profiles",
+          "score": 0.4515,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "strong recommendation",
+          "score": 0.3296,
+          "evidence": []
+        },
+        {
+          "term": "tst",
+          "score": 0.1547,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "grade evidence",
+          "score": 9.653,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "strong recommendation",
+          "score": 9.1814,
+          "evidence": []
+        },
+        {
+          "term": "evidence profiles",
+          "score": 7.0579,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "contacts",
+          "score": 3.1392,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "grade evidence",
+          "score": 0.5326,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "evidence profiles",
+          "score": 0.4515,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "strong recommendation",
+          "score": 0.3296,
+          "evidence": []
+        },
+        {
+          "term": "tst",
+          "score": 0.1547,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "非同寻常",
+          "score": 41.6229,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 38.8138,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 38.8138,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 38.8138,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-032-361-study-characteristics": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "igras",
+          "score": 0.7084,
+          "evidence": []
+        },
+        {
+          "term": "school-going",
+          "score": 0.6396,
+          "evidence": []
+        },
+        {
+          "term": "study",
+          "score": 0.5972,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ascertainment",
+          "score": 0.5704,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "igras",
+          "score": 9.8304,
+          "evidence": []
+        },
+        {
+          "term": "studies",
+          "score": 9.1482,
+          "evidence": []
+        },
+        {
+          "term": "school-going",
+          "score": 8.2825,
+          "evidence": []
+        },
+        {
+          "term": "leading",
+          "score": 7.7515,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "study",
+          "score": 0.2641,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "studies",
+          "score": 0.1974,
+          "evidence": []
+        },
+        {
+          "term": "tst",
+          "score": 0.1229,
+          "evidence": []
+        },
+        {
+          "term": "igra",
+          "score": 0.1146,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "studies",
+          "score": 5.3431,
+          "evidence": []
+        },
+        {
+          "term": "study",
+          "score": 3.4473,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "igras",
+          "score": 2.9599,
+          "evidence": []
+        },
+        {
+          "term": "subtracted",
+          "score": 2.7409,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "study",
+          "score": 0.2641,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "studies",
+          "score": 0.1974,
+          "evidence": []
+        },
+        {
+          "term": "igra",
+          "score": 0.1146,
+          "evidence": []
+        },
+        {
+          "term": "bias",
+          "score": 0.0951,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在一些国家",
+          "score": 56.0373,
+          "evidence": []
+        },
+        {
+          "term": "青少年",
+          "score": 56.0373,
+          "evidence": []
+        },
+        {
+          "term": "在正常情况下",
+          "score": 48.631,
+          "evidence": []
+        },
+        {
+          "term": "岁的女孩",
+          "score": 43.7004,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-033-362-summary-of-results": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "tst sensitivity",
+          "score": 1.2648,
+          "evidence": []
+        },
+        {
+          "term": "country study",
+          "score": 0.9227,
+          "evidence": []
+        },
+        {
+          "term": "study population",
+          "score": 0.9193,
+          "evidence": []
+        },
+        {
+          "term": "modest",
+          "score": 0.737,
+          "evidence": []
+        },
+        {
+          "term": "igra",
+          "score": 0.7285,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "tst sensitivity",
+          "score": 25.0166,
+          "evidence": []
+        },
+        {
+          "term": "country study",
+          "score": 17.5997,
+          "evidence": []
+        },
+        {
+          "term": "study population",
+          "score": 17.2682,
+          "evidence": []
+        },
+        {
+          "term": "igra",
+          "score": 14.1676,
+          "evidence": []
+        },
+        {
+          "term": "depending",
+          "score": 13.2368,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "tst sensitivity",
+          "score": 0.413,
+          "evidence": []
+        },
+        {
+          "term": "igra",
+          "score": 0.2416,
+          "evidence": []
+        },
+        {
+          "term": "studies",
+          "score": 0.1876,
+          "evidence": []
+        },
+        {
+          "term": "study population",
+          "score": 0.1761,
+          "evidence": []
+        },
+        {
+          "term": "test",
+          "score": 0.1693,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "studies",
+          "score": 6.5682,
+          "evidence": []
+        },
+        {
+          "term": "tst sensitivity",
+          "score": 5.3808,
+          "evidence": []
+        },
+        {
+          "term": "igra",
+          "score": 4.1043,
+          "evidence": []
+        },
+        {
+          "term": "subtracted",
+          "score": 3.1792,
+          "evidence": []
+        },
+        {
+          "term": "study population",
+          "score": 3.035,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "tst sensitivity",
+          "score": 0.413,
+          "evidence": []
+        },
+        {
+          "term": "igra",
+          "score": 0.2416,
+          "evidence": []
+        },
+        {
+          "term": "study population",
+          "score": 0.1761,
+          "evidence": []
+        },
+        {
+          "term": "country study",
+          "score": 0.1573,
+          "evidence": []
+        },
+        {
+          "term": "specificity",
+          "score": 0.1519,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在正常情况下",
+          "score": 79.5063,
+          "evidence": []
+        },
+        {
+          "term": "在一些国家",
+          "score": 76.524,
+          "evidence": []
+        },
+        {
+          "term": "青少年",
+          "score": 76.524,
+          "evidence": []
+        },
+        {
+          "term": "岁的女孩",
+          "score": 58.6748,
+          "evidence": []
+        },
+        {
+          "term": "服务的提供",
+          "score": 58.6748,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-034-363-grade-evidence-profiles-and-final-policy-rec": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "evidence profiles",
+          "score": 1.9792,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "grade evidence",
+          "score": 1.7661,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "strong recommendation",
+          "score": 1.0833,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "evidence profiles",
+          "score": 28.5485,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "grade evidence",
+          "score": 23.8498,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "strong recommendation",
+          "score": 15.9325,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "grade evidence",
+          "score": 0.5834,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "evidence profiles",
+          "score": 0.4784,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "recommendations",
+          "score": 0.3033,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "grade evidence",
+          "score": 9.9999,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "strong recommendation",
+          "score": 8.4317,
+          "evidence": []
+        },
+        {
+          "term": "evidence profiles",
+          "score": 7.1817,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "grade evidence",
+          "score": 0.5834,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "evidence profiles",
+          "score": 0.4784,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "recommendations",
+          "score": 0.3033,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "个学习目标",
+          "score": 46.3949,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 46.3949,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 46.3949,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-035-4-operational-aspects-on-the-use-of-igras": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "igras",
+          "score": 2.8338,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "transport times",
+          "score": 1.287,
+          "evidence": []
+        },
+        {
+          "term": "hrs",
+          "score": 1.2059,
+          "evidence": []
+        },
+        {
+          "term": "igra test",
+          "score": 1.1989,
+          "evidence": []
+        },
+        {
+          "term": "studies reported",
+          "score": 1.1527,
+          "evidence": []
+        },
+        {
+          "term": "reproducibility",
+          "score": 1.1288,
+          "evidence": []
+        },
+        {
+          "term": "aspects",
+          "score": 1.088,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "t-spot",
+          "score": 0.977,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "igras",
+          "score": 78.643,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "transport times",
+          "score": 25.3481,
+          "evidence": []
+        },
+        {
+          "term": "studies reported",
+          "score": 25.2778,
+          "evidence": []
+        },
+        {
+          "term": "igra test",
+          "score": 23.4194,
+          "evidence": []
+        },
+        {
+          "term": "hrs",
+          "score": 22.768,
+          "evidence": []
+        },
+        {
+          "term": "reproducibility",
+          "score": 21.5516,
+          "evidence": []
+        },
+        {
+          "term": "aspects",
+          "score": 20.536,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "four studies",
+          "score": 18.6688,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "igra test",
+          "score": 0.6316,
+          "evidence": []
+        },
+        {
+          "term": "tst",
+          "score": 0.3718,
+          "evidence": []
+        },
+        {
+          "term": "studies reported",
+          "score": 0.3349,
+          "evidence": []
+        },
+        {
+          "term": "four studies",
+          "score": 0.2662,
+          "evidence": []
+        },
+        {
+          "term": "tbst",
+          "score": 0.1993,
+          "evidence": []
+        },
+        {
+          "term": "skin",
+          "score": 0.1825,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.1754,
+          "evidence": []
+        },
+        {
+          "term": "study",
+          "score": 0.1712,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "igras",
+          "score": 16.4737,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "studies reported",
+          "score": 13.4102,
+          "evidence": []
+        },
+        {
+          "term": "four studies",
+          "score": 12.0194,
+          "evidence": []
+        },
+        {
+          "term": "igra test",
+          "score": 11.164,
+          "evidence": []
+        },
+        {
+          "term": "subtracted",
+          "score": 7.1714,
+          "evidence": []
+        },
+        {
+          "term": "tst",
+          "score": 5.9848,
+          "evidence": []
+        },
+        {
+          "term": "qft-g",
+          "score": 5.3408,
+          "evidence": []
+        },
+        {
+          "term": "qft-git",
+          "score": 5.2409,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "igra test",
+          "score": 0.6316,
+          "evidence": []
+        },
+        {
+          "term": "studies reported",
+          "score": 0.3349,
+          "evidence": []
+        },
+        {
+          "term": "four studies",
+          "score": 0.2662,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.1754,
+          "evidence": []
+        },
+        {
+          "term": "study",
+          "score": 0.1712,
+          "evidence": []
+        },
+        {
+          "term": "cost",
+          "score": 0.1486,
+          "evidence": []
+        },
+        {
+          "term": "blood",
+          "score": 0.1405,
+          "evidence": []
+        },
+        {
+          "term": "t-spot",
+          "score": 0.119,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在一些国家",
+          "score": 47.2851,
+          "evidence": []
+        },
+        {
+          "term": "青少年",
+          "score": 47.2851,
+          "evidence": []
+        },
+        {
+          "term": "在正常情况下",
+          "score": 39.3153,
+          "evidence": []
+        },
+        {
+          "term": "岁的女孩",
+          "score": 36.9793,
+          "evidence": []
+        },
+        {
+          "term": "服务的提供",
+          "score": 36.9793,
+          "evidence": []
+        },
+        {
+          "term": "最小化",
+          "score": 34.4559,
+          "evidence": []
+        },
+        {
+          "term": "可以考",
+          "score": 32.671,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 30.6505,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-036-5-overall-conclusions": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "igras",
+          "score": 1.1554,
+          "evidence": []
+        },
+        {
+          "term": "tst",
+          "score": 0.7212,
+          "evidence": []
+        },
+        {
+          "term": "conclusions",
+          "score": 0.6683,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "igras",
+          "score": 24.5759,
+          "evidence": []
+        },
+        {
+          "term": "tst",
+          "score": 14.3099,
+          "evidence": []
+        },
+        {
+          "term": "conclusions",
+          "score": 8.5143,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "tst",
+          "score": 0.1668,
+          "evidence": []
+        },
+        {
+          "term": "igra",
+          "score": 0.1552,
+          "evidence": []
+        },
+        {
+          "term": "active",
+          "score": 0.0903,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "studies",
+          "score": 3.6781,
+          "evidence": []
+        },
+        {
+          "term": "igra",
+          "score": 3.4327,
+          "evidence": []
+        },
+        {
+          "term": "subtracted",
+          "score": 2.7202,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "tst",
+          "score": 0.1668,
+          "evidence": []
+        },
+        {
+          "term": "igras",
+          "score": 0.0952,
+          "evidence": []
+        },
+        {
+          "term": "active",
+          "score": 0.0903,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "非同寻常",
+          "score": 49.2329,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 43.6854,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 43.6854,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-037-6-implications-for-further-research": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "further research",
+          "score": 1.5688,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "proof-of-principle",
+          "score": 0.6396,
+          "evidence": []
+        },
+        {
+          "term": "implications",
+          "score": 0.563,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "further research",
+          "score": 20.8763,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "proof-of-principle",
+          "score": 8.2825,
+          "evidence": []
+        },
+        {
+          "term": "implications",
+          "score": 7.0236,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "further research",
+          "score": 0.1927,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "studies",
+          "score": 0.0891,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 0.0659,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "further research",
+          "score": 4.2998,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "studies",
+          "score": 1.9235,
+          "evidence": []
+        },
+        {
+          "term": "ethical",
+          "score": 1.2691,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "further research",
+          "score": 0.1927,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "studies",
+          "score": 0.0891,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 0.0659,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "感染者",
+          "score": 20.3279,
+          "evidence": []
+        },
+        {
+          "term": "在一些国家",
+          "score": 19.9389,
+          "evidence": []
+        },
+        {
+          "term": "青少年",
+          "score": 19.9389,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-038-7-grade-tables": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "grade",
+          "score": 2.2298,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "findings igras",
+          "score": 2.2214,
+          "evidence": []
+        },
+        {
+          "term": "middle-income countries",
+          "score": 1.9134,
+          "evidence": []
+        },
+        {
+          "term": "grade evidence",
+          "score": 1.761,
+          "evidence": []
+        },
+        {
+          "term": "grade summary",
+          "score": 1.7405,
+          "evidence": []
+        },
+        {
+          "term": "evidence profile",
+          "score": 1.726,
+          "evidence": []
+        },
+        {
+          "term": "latent tuberculosis",
+          "score": 1.6627,
+          "evidence": []
+        },
+        {
+          "term": "active tuberculosis",
+          "score": 1.4071,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "grade",
+          "score": 90.3346,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "middle-income countries",
+          "score": 73.1868,
+          "evidence": []
+        },
+        {
+          "term": "findings igras",
+          "score": 66.1923,
+          "evidence": []
+        },
+        {
+          "term": "grade summary",
+          "score": 61.0642,
+          "evidence": []
+        },
+        {
+          "term": "grade evidence",
+          "score": 57.9363,
+          "evidence": []
+        },
+        {
+          "term": "evidence profile",
+          "score": 44.0998,
+          "evidence": []
+        },
+        {
+          "term": "latent tuberculosis",
+          "score": 36.9554,
+          "evidence": []
+        },
+        {
+          "term": "active tuberculosis",
+          "score": 32.6987,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "active tuberculosis",
+          "score": 0.4696,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis infection",
+          "score": 0.4304,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis screening",
+          "score": 0.3814,
+          "evidence": []
+        },
+        {
+          "term": "commercial igra",
+          "score": 0.3723,
+          "evidence": []
+        },
+        {
+          "term": "latent tuberculosis",
+          "score": 0.3609,
+          "evidence": []
+        },
+        {
+          "term": "grade evidence",
+          "score": 0.3337,
+          "evidence": []
+        },
+        {
+          "term": "tst",
+          "score": 0.3234,
+          "evidence": []
+        },
+        {
+          "term": "findings igras",
+          "score": 0.3048,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "active tuberculosis",
+          "score": 18.6351,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis infection",
+          "score": 15.9237,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis screening",
+          "score": 14.9162,
+          "evidence": []
+        },
+        {
+          "term": "latent tuberculosis",
+          "score": 14.7507,
+          "evidence": []
+        },
+        {
+          "term": "studies",
+          "score": 11.9867,
+          "evidence": []
+        },
+        {
+          "term": "findings igras",
+          "score": 10.829,
+          "evidence": []
+        },
+        {
+          "term": "commercial igra",
+          "score": 10.2088,
+          "evidence": []
+        },
+        {
+          "term": "recommendation",
+          "score": 9.0269,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "active tuberculosis",
+          "score": 0.4696,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis infection",
+          "score": 0.4304,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis screening",
+          "score": 0.3814,
+          "evidence": []
+        },
+        {
+          "term": "commercial igra",
+          "score": 0.3723,
+          "evidence": []
+        },
+        {
+          "term": "latent tuberculosis",
+          "score": 0.3609,
+          "evidence": []
+        },
+        {
+          "term": "grade evidence",
+          "score": 0.3337,
+          "evidence": []
+        },
+        {
+          "term": "findings igras",
+          "score": 0.3048,
+          "evidence": []
+        },
+        {
+          "term": "incident active",
+          "score": 0.2895,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在正常情况下",
+          "score": 63.8352,
+          "evidence": []
+        },
+        {
+          "term": "在一些国家",
+          "score": 57.9533,
+          "evidence": []
+        },
+        {
+          "term": "青少年",
+          "score": 57.9533,
+          "evidence": []
+        },
+        {
+          "term": "在世卫组织全球流感监测",
+          "score": 51.2618,
+          "evidence": []
+        },
+        {
+          "term": "岁的女孩",
+          "score": 45.0466,
+          "evidence": []
+        },
+        {
+          "term": "服务的提供",
+          "score": 45.0466,
+          "evidence": []
+        },
+        {
+          "term": "的实验室",
+          "score": 42.6246,
+          "evidence": []
+        },
+        {
+          "term": "可以考",
+          "score": 39.5132,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-039-8-selected-references": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "qft-g qft-git",
+          "score": 5.9881,
+          "evidence": []
+        },
+        {
+          "term": "points subtracted",
+          "score": 5.1428,
+          "evidence": []
+        },
+        {
+          "term": "evaluated qft-git",
+          "score": 4.1056,
+          "evidence": []
+        },
+        {
+          "term": "both qft-g",
+          "score": 4.0532,
+          "evidence": []
+        },
+        {
+          "term": "igra conversions",
+          "score": 4.0215,
+          "evidence": []
+        },
+        {
+          "term": "evaluated t-spot",
+          "score": 3.9989,
+          "evidence": []
+        },
+        {
+          "term": "serious heterogeneity",
+          "score": 3.8883,
+          "evidence": []
+        },
+        {
+          "term": "serious limitations",
+          "score": 3.7443,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "igra studies",
+          "score": 766.1444,
+          "evidence": []
+        },
+        {
+          "term": "unpublished studies",
+          "score": 684.2883,
+          "evidence": []
+        },
+        {
+          "term": "studies assessed",
+          "score": 585.1744,
+          "evidence": []
+        },
+        {
+          "term": "studies evaluated",
+          "score": 572.1153,
+          "evidence": []
+        },
+        {
+          "term": "concordance studies",
+          "score": 562.5505,
+          "evidence": []
+        },
+        {
+          "term": "studies identified",
+          "score": 551.0857,
+          "evidence": []
+        },
+        {
+          "term": "cohort studies",
+          "score": 530.5705,
+          "evidence": []
+        },
+        {
+          "term": "both studies",
+          "score": 515.7336,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "igra studies",
+          "score": 4.9496,
+          "evidence": []
+        },
+        {
+          "term": "igra tst",
+          "score": 4.5996,
+          "evidence": []
+        },
+        {
+          "term": "unpublished studies",
+          "score": 4.0649,
+          "evidence": []
+        },
+        {
+          "term": "studies assessed",
+          "score": 3.9179,
+          "evidence": []
+        },
+        {
+          "term": "serious imprecision",
+          "score": 3.9169,
+          "evidence": []
+        },
+        {
+          "term": "studies reported",
+          "score": 3.8361,
+          "evidence": []
+        },
+        {
+          "term": "concordance studies",
+          "score": 3.8245,
+          "evidence": []
+        },
+        {
+          "term": "cohort studies",
+          "score": 3.7467,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "igra studies",
+          "score": 786.3968,
+          "evidence": []
+        },
+        {
+          "term": "unpublished studies",
+          "score": 678.2575,
+          "evidence": []
+        },
+        {
+          "term": "studies assessed",
+          "score": 590.0978,
+          "evidence": []
+        },
+        {
+          "term": "studies evaluated",
+          "score": 577.7313,
+          "evidence": []
+        },
+        {
+          "term": "concordance studies",
+          "score": 564.2939,
+          "evidence": []
+        },
+        {
+          "term": "studies identified",
+          "score": 555.4809,
+          "evidence": []
+        },
+        {
+          "term": "cohort studies",
+          "score": 538.8828,
+          "evidence": []
+        },
+        {
+          "term": "studies reported",
+          "score": 526.6894,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "igra studies",
+          "score": 4.9496,
+          "evidence": []
+        },
+        {
+          "term": "igra tst",
+          "score": 4.5996,
+          "evidence": []
+        },
+        {
+          "term": "unpublished studies",
+          "score": 4.0649,
+          "evidence": []
+        },
+        {
+          "term": "studies assessed",
+          "score": 3.9179,
+          "evidence": []
+        },
+        {
+          "term": "serious imprecision",
+          "score": 3.9169,
+          "evidence": []
+        },
+        {
+          "term": "studies reported",
+          "score": 3.8361,
+          "evidence": []
+        },
+        {
+          "term": "concordance studies",
+          "score": 3.8245,
+          "evidence": []
+        },
+        {
+          "term": "cohort studies",
+          "score": 3.7467,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在正常情况下",
+          "score": 80.1939,
+          "evidence": []
+        },
+        {
+          "term": "在一些国家",
+          "score": 73.36,
+          "evidence": []
+        },
+        {
+          "term": "青少年",
+          "score": 73.36,
+          "evidence": []
+        },
+        {
+          "term": "岁的女孩",
+          "score": 57.9163,
+          "evidence": []
+        },
+        {
+          "term": "服务的提供",
+          "score": 57.9163,
+          "evidence": []
+        },
+        {
+          "term": "在世卫组织全球流感监测",
+          "score": 57.9033,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 53.9634,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 53.9634,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-040-annex-1-list-of-participants---expert-group-meet": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "stb tbl",
+          "score": 3.3304,
+          "evidence": []
+        },
+        {
+          "term": "san francisco",
+          "score": 2.64,
+          "evidence": []
+        },
+        {
+          "term": "road mailstop",
+          "score": 1.8735,
+          "evidence": []
+        },
+        {
+          "term": "clifton road",
+          "score": 1.7953,
+          "evidence": []
+        },
+        {
+          "term": "ave",
+          "score": 1.4026,
+          "evidence": []
+        },
+        {
+          "term": "bacterial pathogens",
+          "score": 1.3741,
+          "evidence": []
+        },
+        {
+          "term": "prevention clifton",
+          "score": 1.3629,
+          "evidence": []
+        },
+        {
+          "term": "ucsf",
+          "score": 1.1585,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "stb tbl",
+          "score": 82.8248,
+          "evidence": []
+        },
+        {
+          "term": "san francisco",
+          "score": 78.9207,
+          "evidence": []
+        },
+        {
+          "term": "int",
+          "score": 36.5525,
+          "evidence": []
+        },
+        {
+          "term": "usa",
+          "score": 32.9176,
+          "evidence": []
+        },
+        {
+          "term": "road mailstop",
+          "score": 32.5791,
+          "evidence": []
+        },
+        {
+          "term": "clifton road",
+          "score": 31.1928,
+          "evidence": []
+        },
+        {
+          "term": "ave",
+          "score": 30.3573,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 23.5375,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "international health",
+          "score": 0.7883,
+          "evidence": []
+        },
+        {
+          "term": "hiv aids",
+          "score": 0.7229,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 0.6743,
+          "evidence": []
+        },
+        {
+          "term": "disease control",
+          "score": 0.6102,
+          "evidence": []
+        },
+        {
+          "term": "medical center",
+          "score": 0.5821,
+          "evidence": []
+        },
+        {
+          "term": "health sciences",
+          "score": 0.5531,
+          "evidence": []
+        },
+        {
+          "term": "united",
+          "score": 0.5172,
+          "evidence": []
+        },
+        {
+          "term": "department",
+          "score": 0.505,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "university",
+          "score": 18.9052,
+          "evidence": []
+        },
+        {
+          "term": "united",
+          "score": 14.6863,
+          "evidence": []
+        },
+        {
+          "term": "hiv aids",
+          "score": 13.4112,
+          "evidence": []
+        },
+        {
+          "term": "tel",
+          "score": 13.0845,
+          "evidence": []
+        },
+        {
+          "term": "usa",
+          "score": 12.7637,
+          "evidence": []
+        },
+        {
+          "term": "fax",
+          "score": 12.4332,
+          "evidence": []
+        },
+        {
+          "term": "international health",
+          "score": 12.2095,
+          "evidence": []
+        },
+        {
+          "term": "e-mail",
+          "score": 10.9438,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "international health",
+          "score": 0.7883,
+          "evidence": []
+        },
+        {
+          "term": "hiv aids",
+          "score": 0.7229,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 0.6743,
+          "evidence": []
+        },
+        {
+          "term": "disease control",
+          "score": 0.6102,
+          "evidence": []
+        },
+        {
+          "term": "medical center",
+          "score": 0.5821,
+          "evidence": []
+        },
+        {
+          "term": "health sciences",
+          "score": 0.5531,
+          "evidence": []
+        },
+        {
+          "term": "department",
+          "score": 0.505,
+          "evidence": []
+        },
+        {
+          "term": "usa",
+          "score": 0.5033,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "的材料",
+          "score": 174.5245,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 140.6519,
+          "evidence": []
+        },
+        {
+          "term": "乌干达",
+          "score": 138.2879,
+          "evidence": []
+        },
+        {
+          "term": "精神卫生",
+          "score": 130.2103,
+          "evidence": []
+        },
+        {
+          "term": "通过确定",
+          "score": 126.4383,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 124.0646,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 119.1904,
+          "evidence": []
+        },
+        {
+          "term": "在世界卫生组织",
+          "score": 118.8341,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-041-annex-2-list-of-participants---stag-tb": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "stag-tb",
+          "score": 2.4034,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "national center",
+          "score": 1.2783,
+          "evidence": []
+        },
+        {
+          "term": "russian federation",
+          "score": 1.2121,
+          "evidence": []
+        },
+        {
+          "term": "director",
+          "score": 1.1106,
+          "evidence": []
+        },
+        {
+          "term": "united kingdom",
+          "score": 0.9672,
+          "evidence": []
+        },
+        {
+          "term": "disease control",
+          "score": 0.9264,
+          "evidence": []
+        },
+        {
+          "term": "prof",
+          "score": 0.8786,
+          "evidence": []
+        },
+        {
+          "term": "usa",
+          "score": 0.8723,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "stag-tb",
+          "score": 45.536,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "director",
+          "score": 32.4452,
+          "evidence": []
+        },
+        {
+          "term": "national center",
+          "score": 27.9552,
+          "evidence": []
+        },
+        {
+          "term": "department",
+          "score": 19.3574,
+          "evidence": []
+        },
+        {
+          "term": "russian federation",
+          "score": 19.18,
+          "evidence": []
+        },
+        {
+          "term": "usa",
+          "score": 18.2876,
+          "evidence": []
+        },
+        {
+          "term": "ministry",
+          "score": 16.2277,
+          "evidence": []
+        },
+        {
+          "term": "disease control",
+          "score": 15.9301,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "united kingdom",
+          "score": 0.708,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 0.4611,
+          "evidence": []
+        },
+        {
+          "term": "disease control",
+          "score": 0.4455,
+          "evidence": []
+        },
+        {
+          "term": "national center",
+          "score": 0.3892,
+          "evidence": []
+        },
+        {
+          "term": "department",
+          "score": 0.3587,
+          "evidence": []
+        },
+        {
+          "term": "usa",
+          "score": 0.3455,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.3328,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.33,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "united kingdom",
+          "score": 16.3504,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 12.6131,
+          "evidence": []
+        },
+        {
+          "term": "usa",
+          "score": 8.2252,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 7.3957,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis",
+          "score": 6.7425,
+          "evidence": []
+        },
+        {
+          "term": "switzerland",
+          "score": 5.5194,
+          "evidence": []
+        },
+        {
+          "term": "tel",
+          "score": 5.2502,
+          "evidence": []
+        },
+        {
+          "term": "national center",
+          "score": 5.0854,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "united kingdom",
+          "score": 0.708,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 0.4611,
+          "evidence": []
+        },
+        {
+          "term": "disease control",
+          "score": 0.4455,
+          "evidence": []
+        },
+        {
+          "term": "national center",
+          "score": 0.3892,
+          "evidence": []
+        },
+        {
+          "term": "department",
+          "score": 0.3587,
+          "evidence": []
+        },
+        {
+          "term": "usa",
+          "score": 0.3455,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.3328,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.33,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "的材料",
+          "score": 107.572,
+          "evidence": []
+        },
+        {
+          "term": "通过确定",
+          "score": 90.8103,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 84.1367,
+          "evidence": []
+        },
+        {
+          "term": "乌干达",
+          "score": 77.3657,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 75.54,
+          "evidence": []
+        },
+        {
+          "term": "精神卫生",
+          "score": 73.7523,
+          "evidence": []
+        },
+        {
+          "term": "如有必要",
+          "score": 72.266,
+          "evidence": []
+        },
+        {
+          "term": "卫生保健",
+          "score": 72.2184,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "igras nor",
+          "score": 3.5466,
+          "evidence": []
+        },
+        {
+          "term": "neither igras",
+          "score": 3.3678,
+          "evidence": []
+        },
+        {
+          "term": "commercial igras",
+          "score": 3.2882,
+          "evidence": []
+        },
+        {
+          "term": "expert group",
+          "score": 2.1529,
+          "evidence": []
+        },
+        {
+          "term": "middle-income countries",
+          "score": 2.0703,
+          "evidence": []
+        },
+        {
+          "term": "brien declared",
+          "score": 2.0152,
+          "evidence": []
+        },
+        {
+          "term": "middle-income settings",
+          "score": 1.9964,
+          "evidence": []
+        },
+        {
+          "term": "evidence profiles",
+          "score": 1.9641,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "igras nor",
+          "score": 248.3138,
+          "evidence": []
+        },
+        {
+          "term": "commercial igras",
+          "score": 245.5388,
+          "evidence": []
+        },
+        {
+          "term": "neither igras",
+          "score": 240.5961,
+          "evidence": []
+        },
+        {
+          "term": "expert group",
+          "score": 104.1621,
+          "evidence": []
+        },
+        {
+          "term": "middle-income countries",
+          "score": 92.0086,
+          "evidence": []
+        },
+        {
+          "term": "middle-income settings",
+          "score": 78.6661,
+          "evidence": []
+        },
+        {
+          "term": "group meeting",
+          "score": 76.4488,
+          "evidence": []
+        },
+        {
+          "term": "grade evidence",
+          "score": 72.3936,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "grade evidence",
+          "score": 1.5572,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 1.3332,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 1.2717,
+          "evidence": []
+        },
+        {
+          "term": "commercial igras",
+          "score": 1.2258,
+          "evidence": []
+        },
+        {
+          "term": "evidence synthesis",
+          "score": 1.2173,
+          "evidence": []
+        },
+        {
+          "term": "tst",
+          "score": 1.1306,
+          "evidence": []
+        },
+        {
+          "term": "grade evaluation",
+          "score": 1.0352,
+          "evidence": []
+        },
+        {
+          "term": "group meeting",
+          "score": 1.0041,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "studies",
+          "score": 64.631,
+          "evidence": []
+        },
+        {
+          "term": "commercial igras",
+          "score": 55.1135,
+          "evidence": []
+        },
+        {
+          "term": "igras nor",
+          "score": 49.5952,
+          "evidence": []
+        },
+        {
+          "term": "neither igras",
+          "score": 49.5952,
+          "evidence": []
+        },
+        {
+          "term": "subtracted",
+          "score": 39.2466,
+          "evidence": []
+        },
+        {
+          "term": "grade evidence",
+          "score": 37.9009,
+          "evidence": []
+        },
+        {
+          "term": "tst",
+          "score": 36.7629,
+          "evidence": []
+        },
+        {
+          "term": "strong recommendation",
+          "score": 34.765,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "grade evidence",
+          "score": 1.5572,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 1.3332,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 1.2717,
+          "evidence": []
+        },
+        {
+          "term": "commercial igras",
+          "score": 1.2258,
+          "evidence": []
+        },
+        {
+          "term": "evidence synthesis",
+          "score": 1.2173,
+          "evidence": []
+        },
+        {
+          "term": "evidence profiles",
+          "score": 1.1631,
+          "evidence": []
+        },
+        {
+          "term": "tst",
+          "score": 1.1306,
+          "evidence": []
+        },
+        {
+          "term": "evidence base",
+          "score": 1.0749,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在一些国家",
+          "score": 26.8902,
+          "evidence": []
+        },
+        {
+          "term": "青少年",
+          "score": 26.8902,
+          "evidence": []
+        },
+        {
+          "term": "在世卫组织全球流感监测",
+          "score": 26.218,
+          "evidence": []
+        },
+        {
+          "term": "岁的女孩",
+          "score": 20.578,
+          "evidence": []
+        },
+        {
+          "term": "服务的提供",
+          "score": 20.578,
+          "evidence": []
+        },
+        {
+          "term": "其它技术术语",
+          "score": 19.2995,
+          "evidence": []
+        },
+        {
+          "term": "大流行性流感防范生物材料或pip生物材料",
+          "score": 19.2995,
+          "evidence": []
+        },
+        {
+          "term": "的实验室",
+          "score": 16.5784,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

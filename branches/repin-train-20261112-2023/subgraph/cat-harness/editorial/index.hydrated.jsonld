@@ -1,0 +1,249 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/editorial/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/directory/editorial",
+      "@type": "bootstrap:Subgraph",
+      "contentSource": {
+        "declaredIn": "default",
+        "kind": "directory"
+      },
+      "description": "The editorial sub-graph — a NAMED SUB-GRAPH of the harness, OPT-IN like `sdlc`: off in every layer unless that layer lists `cat-harness.editorial` in its own `enableSubgraphs` (owner, 2026-11-10, card Q-SG-1 C, wave 2). It holds the `editorial-audits` skill package: the one-voice, devil's-advocate and integration watchers, voice reviews, readability, block density, chapter complexity, the exposition swarm drain and the production-vs-exploratory discipline. The editor, content graph, content profiles, Markdown authoring and the review skills that always-on skills cite stay in `authoring-core`. Declared FROM WITHIN in `editorial/graph.json`.",
+      "fileCount": 0,
+      "holdsGraph": [
+        "cat-harness:graphTypology/cat-harness"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/editorial",
+      "name": "editorial",
+      "path": "editorial/"
+    }
+  ],
+  "hasSubgraph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/editorial/skills/",
+      "@type": "bootstrap:Subgraph",
+      "hasSubgraph": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/editorial/skills/editorial-audits/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness/package/editorial-audits",
+              "@type": "cat-harness:SkillPackage",
+              "hasManifest": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/editorial",
+              "name": "editorial-audits",
+              "path": "editorial/skills/editorial-audits"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/block-density",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "Audits individual content blocks for single-topic coherence, length, and embedded tables.  Blocks that cover multiple topics or exceed ~2/3 of a page should be split; large tables (>5 rows) must be their own `table` block.  Child blocks from a split may belong in different chapters than the parent.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/editorial-audits",
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/editorial",
+              "instructionLines": 122,
+              "instructionsPath": "editorial/skills/editorial-audits/block-density.md",
+              "name": "block-density",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/0a619b9e05b93afd12859c9f20cd122c7db7d9e183123b16d9133355d6f4f1cf",
+                "bytes": 4918,
+                "sha256": "0a619b9e05b93afd12859c9f20cd122c7db7d9e183123b16d9133355d6f4f1cf"
+              },
+              "title": "Block Density — Topic Coherence and Table Extraction Skill"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/chapter-complexity-review",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "Analyse a chapter's internal dependency graph to find backward edges (blocks that reference something defined later), compute graph energy, and suggest section/block reorderings that minimise complexity. Uses Graphviz for visualisation and brute-force permutation search for optimal section ordering.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/editorial-audits",
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/editorial",
+              "instructionLines": 223,
+              "instructionsPath": "editorial/skills/editorial-audits/chapter-complexity-review.md",
+              "name": "chapter-complexity-review",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b5105511736e72a35cbe31f5bc5a53d827e6dd20a4bf6fb5636b2d439d9fa9ee",
+                "bytes": 8781,
+                "sha256": "b5105511736e72a35cbe31f5bc5a53d827e6dd20a4bf6fb5636b2d439d9fa9ee"
+              },
+              "title": "Chapter Complexity Review"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/devils-advocate-watcher",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "Logical devil's-advocate integration watcher — for every content block (.ts/.md) and formal sibling, constructs the strongest adversarial case that it is WRONG: the objection a hostile-but- competent referee would raise (false claim, vacuity, circularity, overclaim, hidden degree-of-freedom, logical non-sequitur, formal↔narrative divergence, citation misuse, definitional ambiguity, empirical fragility, domain implausibility, irreproducible compute). Fans out multiple adversarial-lens agents per block, then an adjudicator scores whether each objection survives rebuttal. Persists per-block <block>.qa.json entries under the `da-*` criteria family (reviewer.kind = \"agent\"). Operationalizes the standing Critical-distance red-team license (AGENTS.md). Inherits all shared mechanics (Monitor, subscriptions, queue, ledger, idle sweep, author-ask, watch-prepared-PRs, witness-drift recovery, billing-quick-fail flake) from `integration-watcher`.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/editorial-audits",
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/editorial",
+              "instructionLines": 468,
+              "instructionsPath": "editorial/skills/editorial-audits/devils-advocate-watcher.md",
+              "name": "devils-advocate-watcher",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/6161b4f958dea2e468d757027cf5e49a6a58899c78e33af83a8c521db0bde2b8",
+                "bytes": 28092,
+                "sha256": "6161b4f958dea2e468d757027cf5e49a6a58899c78e33af83a8c521db0bde2b8"
+              },
+              "title": "/devils-advocate-watcher"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/exposition-swarm-drain",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "Drain the paper's narrative blocks through an exposition-quality swarm: a small fleet of grouped-batch agents each audit their batch against the Milnor exposition gate (expo-milnor-clarity, H1–H8) plus the deterministic narrative defect checks (proof-sketch-vs-kind, proof-no-lean-mention-in-prose, proof-cross-block-duplication), then RESOLVE the flagged blocks with conservative, math-preserving edits. Each swarm agent owns its own branch (commits, pushes, opens a PR); the foreground session runs auto prepare-merge on each swarm branch and repeats batch-by-batch until the paper is completely drained. Sister to `/integration-backlog` (that drains watcher findings; this drains exposition quality).",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/editorial-audits",
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/editorial",
+              "instructionLines": 215,
+              "instructionsPath": "editorial/skills/editorial-audits/exposition-swarm-drain.md",
+              "name": "exposition-swarm-drain",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f1aae4134d3c6ee1f720edbf27c70865e678eecd7a00968e1acdaa8cf612405e",
+                "bytes": 10708,
+                "sha256": "f1aae4134d3c6ee1f720edbf27c70865e678eecd7a00968e1acdaa8cf612405e"
+              },
+              "title": "/exposition-swarm-drain — Milnor-exposition audit→resolve drain"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/integration-audit",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "Sidecar-invalidation utility for the integration-watcher pipeline. Adds mechanical QA fields (script-reviewer entries) to per-block `.qa.json` sidecars and marks the existing entries stale so the next `qa-sweep` re-evaluates them. Use when a checker bug is fixed in a QA checker module (downstream \"fresh\" entries are now incorrect) or when a registry update adds a criterion the block hasn't been audited under.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/editorial-audits",
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/editorial",
+              "instructionLines": 149,
+              "instructionsPath": "editorial/skills/editorial-audits/integration-audit.md",
+              "name": "integration-audit",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7ced61dfe3415808c263ca514b965f3ed19c55ff9bcfff211f0f9f2183dbd7a6",
+                "bytes": 6318,
+                "sha256": "7ced61dfe3415808c263ca514b965f3ed19c55ff9bcfff211f0f9f2183dbd7a6"
+              },
+              "title": "/integration-audit — invalidate + re-audit the sidecar pipeline"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/one-voice-audit",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/editorial-audits",
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/editorial",
+              "instructionLines": 311,
+              "instructionsPath": "editorial/skills/editorial-audits/one-voice-audit.md",
+              "name": "one-voice-audit",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9a9801d852a8c4047b2f4eb7f5dd8c3637e06df608b2eaae6ed7b66e547518f8",
+                "bytes": 16792,
+                "sha256": "9a9801d852a8c4047b2f4eb7f5dd8c3637e06df608b2eaae6ed7b66e547518f8"
+              },
+              "title": "One-Voice Audit"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/one-voice-integration-watcher",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "One-voice integration watcher — watches origin/main + open active PRs + newly-opened PRs for content-block changes (`.md`, `.ts`, proof files), runs the per-block QA suite covering scholarly voice, AI-slop detection, section/chapter fit, canonical-vs-deprecated notation usage, and domain-boundary placement. Persists every finding to a sibling `<block>.qa.json` audit report (multi-reviewer, per-field SHA staleness). The watcher NEVER stops — when no events arrive it falls back to idle-sweep of the staleness backlog, rebuilding the audit knowledge base that feeds future content reviews. Inherits shared mechanics (Monitor, subscriptions, queue, ledger, idle sweep, author-ask, watch-prepared-PRs, witness-drift recovery, billing-quick-fail flake, sibling-PR comment protocol) from `integration-watcher`.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/editorial-audits",
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/editorial",
+              "instructionLines": 284,
+              "instructionsPath": "editorial/skills/editorial-audits/one-voice-integration-watcher.md",
+              "name": "one-voice-integration-watcher",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fdd4a3d37256aa9194262f797d8bbb16ccf696fa5bb1125cb2a056b47715d2f9",
+                "bytes": 15977,
+                "sha256": "fdd4a3d37256aa9194262f797d8bbb16ccf696fa5bb1125cb2a056b47715d2f9"
+              },
+              "title": "/one-voice-integration-watcher"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/production-vs-exploratory-discipline",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "Distinguish PRODUCTION (derived-only, no fits) from EXPLORATORY (empirical-fit probes OK as shape-hints) from NUMEROLOGY (post-hoc fits to known constants). The bright-line guide for which output goes where, the derivation-menu check, and the escalation path for off-menu coefficients, so empirical fits are not promoted into production scripts, \"closed\" status, dashboards or named constants.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/editorial-audits",
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/editorial",
+              "instructionLines": 262,
+              "instructionsPath": "editorial/skills/editorial-audits/production-vs-exploratory-discipline.md",
+              "name": "production-vs-exploratory-discipline",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d7bfc01f0a075d30ffe2d52c3ec8d31a2c44a42ede14b06284f6f19497f2bcc5",
+                "bytes": 12147,
+                "sha256": "d7bfc01f0a075d30ffe2d52c3ec8d31a2c44a42ede14b06284f6f19497f2bcc5"
+              },
+              "title": "Production vs exploratory vs numerology — the bright-line guide"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/readability-editing",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/editorial-audits",
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/editorial",
+              "instructionLines": 118,
+              "instructionsPath": "editorial/skills/editorial-audits/readability-editing.md",
+              "name": "readability-editing",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c026d14730141e0420d9ec885d085929c960aa7cc8c55de680e3bf1e998257c2",
+                "bytes": 4959,
+                "sha256": "c026d14730141e0420d9ec885d085929c960aa7cc8c55de680e3bf1e998257c2"
+              },
+              "title": "Readability Editing Skill"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/voice-authoring-guidance",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "Load the active voices' rules BEFORE writing, so a block is drafted in the register it will be reviewed against. The authoring half of the voice overlay; `voice-overlay-review` is the half that runs after.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/editorial-audits",
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/editorial",
+              "instructionLines": 76,
+              "instructionsPath": "editorial/skills/editorial-audits/voice-authoring-guidance.md",
+              "name": "voice-authoring-guidance",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f9235cdefd054cac069bde6e394d759224e50c9c806584d32265cf7bf5585c10",
+                "bytes": 3129,
+                "sha256": "f9235cdefd054cac069bde6e394d759224e50c9c806584d32265cf7bf5585c10"
+              },
+              "title": "Voice authoring guidance"
+            }
+          ],
+          "holdsGraph": [
+            "bootstrap:graphTypology/skills"
+          ],
+          "name": "editorial/skills/editorial-audits",
+          "path": "editorial/skills/editorial-audits/"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "editorial/skills",
+      "path": "editorial/skills/"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/cat-harness"
+  ],
+  "name": "editorial",
+  "path": "editorial/"
+}

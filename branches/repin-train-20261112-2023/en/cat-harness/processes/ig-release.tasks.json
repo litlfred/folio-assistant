@@ -1,0 +1,363 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_IgRelease",
+ "markers": [
+  {
+   "id": "Task_Tag",
+   "name": "Tag the IG's current version",
+   "left": 24.17,
+   "top": 39.09,
+   "box": {
+    "left": 18.43,
+    "top": 56.36,
+    "width": 1.9,
+    "height": 4.36
+   }
+  },
+  {
+   "id": "Task_ReleaseBuild",
+   "name": "Build the tag in full and make the draft release",
+   "left": 65.39,
+   "top": 71.82,
+   "box": {
+    "left": 59.64,
+    "top": 89.09,
+    "width": 1.9,
+    "height": 4.36
+   }
+  },
+  {
+   "id": "Task_Publish",
+   "name": "Publish the draft release",
+   "left": 81.24,
+   "top": 39.09,
+   "box": {
+    "left": 75.49,
+    "top": 56.36,
+    "width": 1.9,
+    "height": 4.36
+   }
+  },
+  {
+   "id": "Task_Check",
+   "name": "Check the current version's tag and release",
+   "left": 24.17,
+   "top": 6.36,
+   "box": {
+    "left": 18.43,
+    "top": 23.64,
+    "width": 1.9,
+    "height": 4.36
+   }
+  },
+  {
+   "id": "Task_RunRelease",
+   "name": "Run IG release (draft) by hand for the tag",
+   "left": 46.76,
+   "top": 39.09,
+   "box": {
+    "left": 41.02,
+    "top": 56.36,
+    "width": 1.9,
+    "height": 4.36
+   }
+  }
+ ],
+ "processHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease",
+ "tasks": {
+  "Task_Tag": {
+   "id": "Task_Tag",
+   "name": "Tag the IG's current version",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/node/Task_Tag",
+   "stepHref": "ig-release.html#step-Task_Tag",
+   "lane": "Owner (release authority, a person)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/lane/Lane_Owner",
+   "skills": [
+    {
+     "name": "ig-binary-artefacts",
+     "href": "../../../reference/skill-instructions/ig-binary-artefacts.html"
+    },
+    {
+     "name": "ig-publication",
+     "href": "../../../reference/skill-instructions/ig-publication.html"
+    }
+   ],
+   "role": {
+    "name": "publication-manager",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
+    "title": "Publication manager",
+    "skills": [
+     {
+      "name": "content-review",
+      "href": "../../../reference/skill-instructions/content-review.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../reference/skill-instructions/decision-audit.html"
+     },
+     {
+      "name": "instance-publication",
+      "href": "../../../reference/skill-instructions/instance-publication.html"
+     },
+     {
+      "name": "package-release",
+      "href": "../../../reference/skill-instructions/package-release.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../reference/skill-instructions/publish-verification.html"
+     },
+     {
+      "name": "qa-report-signing",
+      "href": "../../../reference/skill-instructions/qa-report-signing.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../reference/skill-instructions/render-kg-to-cdn.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../reference/skill-instructions/staging-review.html"
+     }
+    ]
+   }
+  },
+  "Task_ReleaseBuild": {
+   "id": "Task_ReleaseBuild",
+   "name": "Build the tag in full and make the draft release",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/node/Task_ReleaseBuild",
+   "stepHref": "ig-release.html#step-Task_ReleaseBuild",
+   "lane": "IG release (GitHub runner: full build, draft release)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/lane/Lane_Runner",
+   "skills": [
+    {
+     "name": "ig-binary-artefacts",
+     "href": "../../../reference/skill-instructions/ig-binary-artefacts.html"
+    }
+   ],
+   "role": {
+    "name": "ig-publisher-service",
+    "href": "https://litlfred.github.io/folio-assistant/fhir-harness/role/ig-publisher-service",
+    "title": "IG publisher + validator",
+    "skills": [
+     {
+      "name": "fhir-validation",
+      "href": "../../../reference/skill-instructions/fhir-validation.html"
+     },
+     {
+      "name": "ig-publication",
+      "href": "../../../reference/skill-instructions/ig-publication.html"
+     },
+     {
+      "name": "ig-publisher-service-contract",
+      "href": "../../../reference/skill-instructions/ig-publisher-service-contract.html"
+     }
+    ]
+   }
+  },
+  "Task_Publish": {
+   "id": "Task_Publish",
+   "name": "Publish the draft release",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/node/Task_Publish",
+   "stepHref": "ig-release.html#step-Task_Publish",
+   "lane": "Owner (release authority, a person)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/lane/Lane_Owner",
+   "skills": [
+    {
+     "name": "ig-binary-artefacts",
+     "href": "../../../reference/skill-instructions/ig-binary-artefacts.html"
+    }
+   ],
+   "role": {
+    "name": "publication-manager",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
+    "title": "Publication manager",
+    "skills": [
+     {
+      "name": "content-review",
+      "href": "../../../reference/skill-instructions/content-review.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../reference/skill-instructions/decision-audit.html"
+     },
+     {
+      "name": "instance-publication",
+      "href": "../../../reference/skill-instructions/instance-publication.html"
+     },
+     {
+      "name": "package-release",
+      "href": "../../../reference/skill-instructions/package-release.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../reference/skill-instructions/publish-verification.html"
+     },
+     {
+      "name": "qa-report-signing",
+      "href": "../../../reference/skill-instructions/qa-report-signing.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../reference/skill-instructions/render-kg-to-cdn.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../reference/skill-instructions/staging-review.html"
+     }
+    ]
+   }
+  },
+  "Task_Check": {
+   "id": "Task_Check",
+   "name": "Check the current version's tag and release",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/node/Task_Check",
+   "stepHref": "ig-release.html#step-Task_Check",
+   "lane": "Release check (advisory)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/lane/Lane_Check",
+   "skills": [
+    {
+     "name": "ig-binary-artefacts",
+     "href": "../../../reference/skill-instructions/ig-binary-artefacts.html"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health",
+      "href": "../../../reference/skill-instructions/ci-health.html"
+     },
+     {
+      "name": "compiled-artefact-cache",
+      "href": "../../../reference/skill-instructions/compiled-artefact-cache.html"
+     },
+     {
+      "name": "content-test",
+      "href": "../../../reference/skill-instructions/content-test.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../reference/skill-instructions/content-validate.html"
+     },
+     {
+      "name": "feature-staging",
+      "href": "../../../reference/skill-instructions/feature-staging.html"
+     },
+     {
+      "name": "harness-projections",
+      "href": "../../../reference/skill-instructions/harness-projections.html"
+     },
+     {
+      "name": "kg-separation",
+      "href": "../../../reference/skill-instructions/kg-separation.html"
+     },
+     {
+      "name": "platform-gates",
+      "href": "../../../reference/skill-instructions/platform-gates.html"
+     },
+     {
+      "name": "prepare-merge",
+      "href": "../../../reference/skill-instructions/prepare-merge.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../reference/skill-instructions/publish-verification.html"
+     },
+     {
+      "name": "qa-reports",
+      "href": "../../../reference/skill-instructions/qa-reports.html"
+     },
+     {
+      "name": "remote-mount",
+      "href": "../../../reference/skill-instructions/remote-mount.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../reference/skill-instructions/render-kg-to-cdn.html"
+     },
+     {
+      "name": "sub-kg-lifecycle",
+      "href": "../../../reference/skill-instructions/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../reference/skill-instructions/translation-manager.html"
+     },
+     {
+      "name": "upstream-version-adoption",
+      "href": "../../../reference/skill-instructions/upstream-version-adoption.html"
+     },
+     {
+      "name": "watch",
+      "href": "../../../reference/skill-instructions/watch.html"
+     }
+    ]
+   }
+  },
+  "Task_RunRelease": {
+   "id": "Task_RunRelease",
+   "name": "Run IG release (draft) by hand for the tag",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/node/Task_RunRelease",
+   "stepHref": "ig-release.html#step-Task_RunRelease",
+   "lane": "Owner (release authority, a person)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/lane/Lane_Owner",
+   "skills": [
+    {
+     "name": "ig-binary-artefacts",
+     "href": "../../../reference/skill-instructions/ig-binary-artefacts.html"
+    }
+   ],
+   "role": {
+    "name": "publication-manager",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
+    "title": "Publication manager",
+    "skills": [
+     {
+      "name": "content-review",
+      "href": "../../../reference/skill-instructions/content-review.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../reference/skill-instructions/decision-audit.html"
+     },
+     {
+      "name": "instance-publication",
+      "href": "../../../reference/skill-instructions/instance-publication.html"
+     },
+     {
+      "name": "package-release",
+      "href": "../../../reference/skill-instructions/package-release.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../reference/skill-instructions/publish-verification.html"
+     },
+     {
+      "name": "qa-report-signing",
+      "href": "../../../reference/skill-instructions/qa-report-signing.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../reference/skill-instructions/render-kg-to-cdn.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../reference/skill-instructions/staging-review.html"
+     }
+    ]
+   }
+  }
+ }
+}

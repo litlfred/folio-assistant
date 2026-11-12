@@ -1,0 +1,4078 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-69034",
+  "instance": "who-iris",
+  "about": "library/10665-69034",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7908,
+    "terms": 73102
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "dqs options",
+        "score": 22.8827,
+        "evidence": []
+      },
+      {
+        "term": "dqs workshop",
+        "score": 22.8349,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "dqs toolbox",
+        "score": 22.0052,
+        "evidence": []
+      },
+      {
+        "term": "during dqs",
+        "score": 20.653,
+        "evidence": []
+      },
+      {
+        "term": "integrate dqs",
+        "score": 20.3139,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "dqs findings",
+        "score": 20.2382,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "conduct dqs",
+        "score": 20.1497,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "dqs measures",
+        "score": 19.7716,
+        "evidence": []
+      },
+      {
+        "term": "dqs concept",
+        "score": 19.2258,
+        "evidence": []
+      },
+      {
+        "term": "district data",
+        "score": 17.0784,
+        "evidence": []
+      },
+      {
+        "term": "immunization data",
+        "score": 16.6028,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "district monitoring",
+        "score": 16.576,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "district reports",
+        "score": 988.3474,
+        "evidence": []
+      },
+      {
+        "term": "district level",
+        "score": 934.5472,
+        "evidence": []
+      },
+      {
+        "term": "district monitoring",
+        "score": 865.6419,
+        "evidence": []
+      },
+      {
+        "term": "district data",
+        "score": 860.979,
+        "evidence": []
+      },
+      {
+        "term": "district accuracy",
+        "score": 843.3313,
+        "evidence": []
+      },
+      {
+        "term": "district vaccine",
+        "score": 833.2441,
+        "evidence": []
+      },
+      {
+        "term": "district total",
+        "score": 806.8253,
+        "evidence": []
+      },
+      {
+        "term": "district reporting",
+        "score": 793.2258,
+        "evidence": []
+      },
+      {
+        "term": "opv dtp",
+        "score": 784.7411,
+        "evidence": []
+      },
+      {
+        "term": "district tabulations",
+        "score": 781.0299,
+        "evidence": []
+      },
+      {
+        "term": "district denominator",
+        "score": 757.4894,
+        "evidence": []
+      },
+      {
+        "term": "dqs workshop",
+        "score": 746.986,
+        "evidence": [
+          "heading"
+        ]
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "district vaccine",
+        "score": 13.5946,
+        "evidence": []
+      },
+      {
+        "term": "immunization data",
+        "score": 13.3608,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "district level",
+        "score": 11.4987,
+        "evidence": []
+      },
+      {
+        "term": "immunization reporting",
+        "score": 11.1182,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "district reports",
+        "score": 11.0746,
+        "evidence": []
+      },
+      {
+        "term": "immunization register",
+        "score": 10.9248,
+        "evidence": []
+      },
+      {
+        "term": "child immunization",
+        "score": 10.6277,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "immunization monitoring",
+        "score": 10.6041,
+        "evidence": []
+      },
+      {
+        "term": "immunization coverage",
+        "score": 10.5262,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "district total",
+        "score": 10.4128,
+        "evidence": []
+      },
+      {
+        "term": "district staff",
+        "score": 10.2489,
+        "evidence": []
+      },
+      {
+        "term": "immunization card",
+        "score": 10.1557,
+        "evidence": [
+          "heading"
+        ]
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "district reports",
+        "score": 1028.4466,
+        "evidence": []
+      },
+      {
+        "term": "district level",
+        "score": 1020.1039,
+        "evidence": []
+      },
+      {
+        "term": "district vaccine",
+        "score": 914.0012,
+        "evidence": []
+      },
+      {
+        "term": "district data",
+        "score": 902.45,
+        "evidence": []
+      },
+      {
+        "term": "district accuracy",
+        "score": 888.2779,
+        "evidence": []
+      },
+      {
+        "term": "district monitoring",
+        "score": 862.4432,
+        "evidence": []
+      },
+      {
+        "term": "district reporting",
+        "score": 845.1694,
+        "evidence": []
+      },
+      {
+        "term": "district tabulations",
+        "score": 834.6225,
+        "evidence": []
+      },
+      {
+        "term": "district total",
+        "score": 810.1023,
+        "evidence": []
+      },
+      {
+        "term": "district denominator",
+        "score": 796.2442,
+        "evidence": []
+      },
+      {
+        "term": "district figure",
+        "score": 765.074,
+        "evidence": []
+      },
+      {
+        "term": "district staff",
+        "score": 761.0614,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "district vaccine",
+        "score": 13.5946,
+        "evidence": []
+      },
+      {
+        "term": "immunization data",
+        "score": 13.3608,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "district level",
+        "score": 11.4987,
+        "evidence": []
+      },
+      {
+        "term": "immunization reporting",
+        "score": 11.1182,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "district reports",
+        "score": 11.0746,
+        "evidence": []
+      },
+      {
+        "term": "immunization register",
+        "score": 10.9248,
+        "evidence": []
+      },
+      {
+        "term": "child immunization",
+        "score": 10.6277,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "immunization monitoring",
+        "score": 10.6041,
+        "evidence": []
+      },
+      {
+        "term": "immunization coverage",
+        "score": 10.5262,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "district total",
+        "score": 10.4128,
+        "evidence": []
+      },
+      {
+        "term": "district staff",
+        "score": 10.2489,
+        "evidence": []
+      },
+      {
+        "term": "immunization card",
+        "score": 10.1557,
+        "evidence": [
+          "heading"
+        ]
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "并提供一",
+        "score": 568.3917,
+        "evidence": []
+      },
+      {
+        "term": "如果没有",
+        "score": 404.6519,
+        "evidence": []
+      },
+      {
+        "term": "这一点很重要",
+        "score": 364.9873,
+        "evidence": []
+      },
+      {
+        "term": "捐助者",
+        "score": 354.6882,
+        "evidence": []
+      },
+      {
+        "term": "重点人群",
+        "score": 278.9191,
+        "evidence": []
+      },
+      {
+        "term": "允许进行个人反馈",
+        "score": 258.9261,
+        "evidence": []
+      },
+      {
+        "term": "倡导以人为本并经数字卫生保健技术赋能的卫生系统",
+        "score": 244.9681,
+        "evidence": []
+      },
+      {
+        "term": "可能会",
+        "score": 240.5088,
+        "evidence": []
+      },
+      {
+        "term": "区域和全球各",
+        "score": 236.4619,
+        "evidence": []
+      },
+      {
+        "term": "科研人员",
+        "score": 232.9346,
+        "evidence": []
+      },
+      {
+        "term": "国家免疫规划",
+        "score": 225.225,
+        "evidence": []
+      },
+      {
+        "term": "第3条",
+        "score": 222.1815,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-contents": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "conduct dqs",
+          "score": 2.1464,
+          "evidence": []
+        },
+        {
+          "term": "immunization card",
+          "score": 1.6397,
+          "evidence": []
+        },
+        {
+          "term": "immunization data",
+          "score": 1.4513,
+          "evidence": []
+        },
+        {
+          "term": "quality self-assessment",
+          "score": 1.4378,
+          "evidence": []
+        },
+        {
+          "term": "completeness timeliness",
+          "score": 1.2983,
+          "evidence": []
+        },
+        {
+          "term": "monitoring system",
+          "score": 0.8127,
+          "evidence": []
+        },
+        {
+          "term": "workshop",
+          "score": 0.7518,
+          "evidence": []
+        },
+        {
+          "term": "gavi",
+          "score": 0.6546,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "conduct dqs",
+          "score": 63.3944,
+          "evidence": []
+        },
+        {
+          "term": "immunization card",
+          "score": 34.8714,
+          "evidence": []
+        },
+        {
+          "term": "immunization data",
+          "score": 33.2314,
+          "evidence": []
+        },
+        {
+          "term": "quality self-assessment",
+          "score": 29.5358,
+          "evidence": []
+        },
+        {
+          "term": "completeness timeliness",
+          "score": 19.7526,
+          "evidence": []
+        },
+        {
+          "term": "annex",
+          "score": 14.6249,
+          "evidence": []
+        },
+        {
+          "term": "monitoring system",
+          "score": 13.949,
+          "evidence": []
+        },
+        {
+          "term": "workshop",
+          "score": 13.2338,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "immunization data",
+          "score": 0.5109,
+          "evidence": []
+        },
+        {
+          "term": "data quality",
+          "score": 0.3979,
+          "evidence": []
+        },
+        {
+          "term": "immunization card",
+          "score": 0.3616,
+          "evidence": []
+        },
+        {
+          "term": "monitoring system",
+          "score": 0.2764,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 0.2422,
+          "evidence": []
+        },
+        {
+          "term": "quality self-assessment",
+          "score": 0.2386,
+          "evidence": []
+        },
+        {
+          "term": "district",
+          "score": 0.2052,
+          "evidence": []
+        },
+        {
+          "term": "conduct dqs",
+          "score": 0.1797,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "immunization data",
+          "score": 13.6747,
+          "evidence": []
+        },
+        {
+          "term": "district",
+          "score": 10.5651,
+          "evidence": []
+        },
+        {
+          "term": "immunization card",
+          "score": 10.4803,
+          "evidence": []
+        },
+        {
+          "term": "data quality",
+          "score": 8.5987,
+          "evidence": []
+        },
+        {
+          "term": "monitoring system",
+          "score": 5.8262,
+          "evidence": []
+        },
+        {
+          "term": "reports",
+          "score": 5.7745,
+          "evidence": []
+        },
+        {
+          "term": "hus",
+          "score": 5.6727,
+          "evidence": []
+        },
+        {
+          "term": "level",
+          "score": 5.3203,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "immunization data",
+          "score": 0.5109,
+          "evidence": []
+        },
+        {
+          "term": "data quality",
+          "score": 0.3979,
+          "evidence": []
+        },
+        {
+          "term": "immunization card",
+          "score": 0.3616,
+          "evidence": []
+        },
+        {
+          "term": "monitoring system",
+          "score": 0.2764,
+          "evidence": []
+        },
+        {
+          "term": "quality self-assessment",
+          "score": 0.2386,
+          "evidence": []
+        },
+        {
+          "term": "conduct dqs",
+          "score": 0.1797,
+          "evidence": []
+        },
+        {
+          "term": "completeness timeliness",
+          "score": 0.1708,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.1658,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "管理和筹资",
+          "score": 43.5247,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 34.4836,
+          "evidence": []
+        },
+        {
+          "term": "非同寻常",
+          "score": 34.3221,
+          "evidence": []
+        },
+        {
+          "term": "结束语",
+          "score": 33.9684,
+          "evidence": []
+        },
+        {
+          "term": "行动要点",
+          "score": 32.8396,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 32.2647,
+          "evidence": []
+        },
+        {
+          "term": "个部分",
+          "score": 28.8905,
+          "evidence": []
+        },
+        {
+          "term": "宣传动员",
+          "score": 28.3851,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-002-abbreviations": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "vaccine",
+          "score": 0.7314,
+          "evidence": []
+        },
+        {
+          "term": "tetanus",
+          "score": 0.6914,
+          "evidence": []
+        },
+        {
+          "term": "vvm",
+          "score": 0.6083,
+          "evidence": []
+        },
+        {
+          "term": "vpd",
+          "score": 0.5742,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "vaccine",
+          "score": 12.3692,
+          "evidence": []
+        },
+        {
+          "term": "tetanus",
+          "score": 9.9366,
+          "evidence": []
+        },
+        {
+          "term": "vvm",
+          "score": 7.877,
+          "evidence": []
+        },
+        {
+          "term": "vpd",
+          "score": 7.1839,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "vaccine",
+          "score": 0.2163,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.186,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.1559,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 0.1392,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "vaccine",
+          "score": 4.1853,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 3.5659,
+          "evidence": []
+        },
+        {
+          "term": "district",
+          "score": 2.9997,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 2.5609,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "vaccine",
+          "score": 0.2163,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.186,
+          "evidence": []
+        },
+        {
+          "term": "district",
+          "score": 0.1146,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.1126,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 34.2445,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 33.8497,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 27.7859,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 27.4135,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-003-executive-summary": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "dqs",
+          "score": 2.0282,
+          "evidence": []
+        },
+        {
+          "term": "flexible toolbox",
+          "score": 1.9879,
+          "evidence": []
+        },
+        {
+          "term": "district monitoring",
+          "score": 1.9542,
+          "evidence": []
+        },
+        {
+          "term": "immunization monitoring",
+          "score": 1.9022,
+          "evidence": []
+        },
+        {
+          "term": "district levels",
+          "score": 1.7953,
+          "evidence": []
+        },
+        {
+          "term": "improve district",
+          "score": 1.6648,
+          "evidence": []
+        },
+        {
+          "term": "every district",
+          "score": 1.5473,
+          "evidence": []
+        },
+        {
+          "term": "immunization activities",
+          "score": 1.4436,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "dqs",
+          "score": 88.712,
+          "evidence": []
+        },
+        {
+          "term": "district monitoring",
+          "score": 67.3355,
+          "evidence": []
+        },
+        {
+          "term": "immunization monitoring",
+          "score": 64.1624,
+          "evidence": []
+        },
+        {
+          "term": "district levels",
+          "score": 52.1491,
+          "evidence": []
+        },
+        {
+          "term": "monitoring system",
+          "score": 49.5623,
+          "evidence": []
+        },
+        {
+          "term": "improve monitoring",
+          "score": 47.6442,
+          "evidence": []
+        },
+        {
+          "term": "monitoring practices",
+          "score": 47.3832,
+          "evidence": []
+        },
+        {
+          "term": "flexible toolbox",
+          "score": 43.1956,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "district monitoring",
+          "score": 0.7068,
+          "evidence": []
+        },
+        {
+          "term": "data collection",
+          "score": 0.7008,
+          "evidence": []
+        },
+        {
+          "term": "immunization monitoring",
+          "score": 0.6753,
+          "evidence": []
+        },
+        {
+          "term": "district levels",
+          "score": 0.6031,
+          "evidence": []
+        },
+        {
+          "term": "immunization activities",
+          "score": 0.5601,
+          "evidence": []
+        },
+        {
+          "term": "system indicators",
+          "score": 0.5366,
+          "evidence": []
+        },
+        {
+          "term": "every district",
+          "score": 0.515,
+          "evidence": []
+        },
+        {
+          "term": "improve district",
+          "score": 0.509,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "district monitoring",
+          "score": 35.0526,
+          "evidence": []
+        },
+        {
+          "term": "district levels",
+          "score": 30.1875,
+          "evidence": []
+        },
+        {
+          "term": "every district",
+          "score": 28.26,
+          "evidence": []
+        },
+        {
+          "term": "improve district",
+          "score": 26.9921,
+          "evidence": []
+        },
+        {
+          "term": "immunization monitoring",
+          "score": 22.0124,
+          "evidence": []
+        },
+        {
+          "term": "immunization activities",
+          "score": 16.5361,
+          "evidence": []
+        },
+        {
+          "term": "data collection",
+          "score": 14.3724,
+          "evidence": []
+        },
+        {
+          "term": "monitoring system",
+          "score": 13.4336,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "district monitoring",
+          "score": 0.7068,
+          "evidence": []
+        },
+        {
+          "term": "data collection",
+          "score": 0.7008,
+          "evidence": []
+        },
+        {
+          "term": "immunization monitoring",
+          "score": 0.6753,
+          "evidence": []
+        },
+        {
+          "term": "district levels",
+          "score": 0.6031,
+          "evidence": []
+        },
+        {
+          "term": "immunization activities",
+          "score": 0.5601,
+          "evidence": []
+        },
+        {
+          "term": "involves data",
+          "score": 0.5445,
+          "evidence": []
+        },
+        {
+          "term": "system indicators",
+          "score": 0.5366,
+          "evidence": []
+        },
+        {
+          "term": "every district",
+          "score": 0.515,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 35.5259,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 32.4905,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 28.7562,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 28.691,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 28.5966,
+          "evidence": []
+        },
+        {
+          "term": "可能会",
+          "score": 27.1128,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 25.8954,
+          "evidence": []
+        },
+        {
+          "term": "违反权利",
+          "score": 19.3815,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-004-a-introduction": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "increasing",
+          "score": 0.6426,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.5038,
+          "evidence": []
+        },
+        {
+          "term": "drop-out",
+          "score": 0.4949,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "increasing",
+          "score": 13.9633,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 6.4084,
+          "evidence": []
+        },
+        {
+          "term": "drop-out",
+          "score": 6.1424,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "district",
+          "score": 0.0843,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.0791,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.072,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "district",
+          "score": 2.1158,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 1.4534,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.8737,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "district",
+          "score": 0.0843,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.0791,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.072,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "并提供一",
+          "score": 33.5579,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 32.2172,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 28.2662,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-005-b-immnization-data-quality-self-assessment-toolb": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "quality self-assessment",
+          "score": 5.059,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "district tabulations",
+          "score": 4.4109,
+          "evidence": []
+        },
+        {
+          "term": "selected hus",
+          "score": 3.9659,
+          "evidence": []
+        },
+        {
+          "term": "district reports",
+          "score": 3.9112,
+          "evidence": []
+        },
+        {
+          "term": "re-counted immunizations",
+          "score": 3.761,
+          "evidence": []
+        },
+        {
+          "term": "data quality",
+          "score": 3.6682,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vial wastage",
+          "score": 3.5581,
+          "evidence": []
+        },
+        {
+          "term": "vaccine wastage",
+          "score": 3.5523,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "district level",
+          "score": 570.6463,
+          "evidence": []
+        },
+        {
+          "term": "district reports",
+          "score": 558.3462,
+          "evidence": []
+        },
+        {
+          "term": "district accuracy",
+          "score": 504.3885,
+          "evidence": []
+        },
+        {
+          "term": "district tabulations",
+          "score": 462.8996,
+          "evidence": []
+        },
+        {
+          "term": "district data",
+          "score": 453.7771,
+          "evidence": []
+        },
+        {
+          "term": "district reporting",
+          "score": 447.0455,
+          "evidence": []
+        },
+        {
+          "term": "district figure",
+          "score": 417.0006,
+          "evidence": []
+        },
+        {
+          "term": "district store",
+          "score": 403.3964,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "data quality",
+          "score": 6.1405,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "quality self-assessment",
+          "score": 4.4291,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "immunization data",
+          "score": 4.1602,
+          "evidence": []
+        },
+        {
+          "term": "district data",
+          "score": 4.0889,
+          "evidence": []
+        },
+        {
+          "term": "district level",
+          "score": 3.5407,
+          "evidence": []
+        },
+        {
+          "term": "immunization register",
+          "score": 3.5258,
+          "evidence": []
+        },
+        {
+          "term": "district reporting",
+          "score": 3.4873,
+          "evidence": []
+        },
+        {
+          "term": "district reports",
+          "score": 3.443,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "district reports",
+          "score": 529.0699,
+          "evidence": []
+        },
+        {
+          "term": "district level",
+          "score": 526.7166,
+          "evidence": []
+        },
+        {
+          "term": "district accuracy",
+          "score": 459.8346,
+          "evidence": []
+        },
+        {
+          "term": "district data",
+          "score": 455.9274,
+          "evidence": []
+        },
+        {
+          "term": "district reporting",
+          "score": 441.3429,
+          "evidence": []
+        },
+        {
+          "term": "district tabulations",
+          "score": 432.917,
+          "evidence": []
+        },
+        {
+          "term": "district figure",
+          "score": 397.8057,
+          "evidence": []
+        },
+        {
+          "term": "district store",
+          "score": 384.3085,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "data quality",
+          "score": 6.1405,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "quality self-assessment",
+          "score": 4.4291,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "immunization data",
+          "score": 4.1602,
+          "evidence": []
+        },
+        {
+          "term": "district data",
+          "score": 4.0889,
+          "evidence": []
+        },
+        {
+          "term": "district level",
+          "score": 3.5407,
+          "evidence": []
+        },
+        {
+          "term": "immunization register",
+          "score": 3.5258,
+          "evidence": []
+        },
+        {
+          "term": "district reporting",
+          "score": 3.4873,
+          "evidence": []
+        },
+        {
+          "term": "district reports",
+          "score": 3.443,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "并提供一",
+          "score": 36.3095,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 32.4313,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 24.4315,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 20.6573,
+          "evidence": []
+        },
+        {
+          "term": "可能会",
+          "score": 19.5306,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 18.2492,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 18.2492,
+          "evidence": []
+        },
+        {
+          "term": "或一些其他单位",
+          "score": 18.2492,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-c-where-to-conduct-a-dqs": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "dqs",
+          "score": 2.6839,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "six hus",
+          "score": 2.2347,
+          "evidence": []
+        },
+        {
+          "term": "representative selection",
+          "score": 1.6739,
+          "evidence": []
+        },
+        {
+          "term": "sample size",
+          "score": 1.494,
+          "evidence": []
+        },
+        {
+          "term": "random sampling",
+          "score": 1.4241,
+          "evidence": []
+        },
+        {
+          "term": "wastage rate",
+          "score": 1.1925,
+          "evidence": []
+        },
+        {
+          "term": "potential problems",
+          "score": 1.1371,
+          "evidence": []
+        },
+        {
+          "term": "visited",
+          "score": 1.1272,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "dqs",
+          "score": 63.3657,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "six hus",
+          "score": 62.5136,
+          "evidence": []
+        },
+        {
+          "term": "representative selection",
+          "score": 41.8833,
+          "evidence": []
+        },
+        {
+          "term": "sample size",
+          "score": 39.5404,
+          "evidence": []
+        },
+        {
+          "term": "district",
+          "score": 28.8097,
+          "evidence": []
+        },
+        {
+          "term": "visited",
+          "score": 24.5697,
+          "evidence": []
+        },
+        {
+          "term": "random sampling",
+          "score": 23.8684,
+          "evidence": []
+        },
+        {
+          "term": "potential problems",
+          "score": 21.3229,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "data quality",
+          "score": 0.6861,
+          "evidence": []
+        },
+        {
+          "term": "dqs",
+          "score": 0.5086,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "district",
+          "score": 0.5059,
+          "evidence": []
+        },
+        {
+          "term": "wastage rate",
+          "score": 0.3742,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.3731,
+          "evidence": []
+        },
+        {
+          "term": "number",
+          "score": 0.3423,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 0.3111,
+          "evidence": []
+        },
+        {
+          "term": "level",
+          "score": 0.3071,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "district",
+          "score": 28.896,
+          "evidence": []
+        },
+        {
+          "term": "dqs",
+          "score": 18.1957,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "data quality",
+          "score": 13.417,
+          "evidence": []
+        },
+        {
+          "term": "level",
+          "score": 11.9338,
+          "evidence": []
+        },
+        {
+          "term": "reports",
+          "score": 11.8168,
+          "evidence": []
+        },
+        {
+          "term": "hus",
+          "score": 11.6992,
+          "evidence": []
+        },
+        {
+          "term": "six hus",
+          "score": 11.6992,
+          "evidence": []
+        },
+        {
+          "term": "wastage rate",
+          "score": 10.8081,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "data quality",
+          "score": 0.6861,
+          "evidence": []
+        },
+        {
+          "term": "dqs",
+          "score": 0.5086,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "district",
+          "score": 0.5059,
+          "evidence": []
+        },
+        {
+          "term": "wastage rate",
+          "score": 0.3742,
+          "evidence": []
+        },
+        {
+          "term": "number",
+          "score": 0.3423,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 0.3111,
+          "evidence": []
+        },
+        {
+          "term": "sample size",
+          "score": 0.2945,
+          "evidence": []
+        },
+        {
+          "term": "six hus",
+          "score": 0.2881,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 29.3812,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 22.3352,
+          "evidence": []
+        },
+        {
+          "term": "可能会",
+          "score": 21.1869,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 21.1421,
+          "evidence": []
+        },
+        {
+          "term": "不良反应",
+          "score": 17.291,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 16.3334,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 16.3334,
+          "evidence": []
+        },
+        {
+          "term": "或一些其他单位",
+          "score": 16.3334,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-007-d-present-the-dqs-findings": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "dqs findings",
+          "score": 3.8006,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "district tabulation",
+          "score": 2.1033,
+          "evidence": []
+        },
+        {
+          "term": "months verified",
+          "score": 2.0568,
+          "evidence": []
+        },
+        {
+          "term": "radar graph",
+          "score": 1.8594,
+          "evidence": []
+        },
+        {
+          "term": "district level",
+          "score": 1.8054,
+          "evidence": []
+        },
+        {
+          "term": "selected hus",
+          "score": 1.7761,
+          "evidence": []
+        },
+        {
+          "term": "months accurate",
+          "score": 1.5961,
+          "evidence": []
+        },
+        {
+          "term": "quality indices",
+          "score": 1.3723,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "dqs findings",
+          "score": 86.0863,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "months verified",
+          "score": 54.1555,
+          "evidence": []
+        },
+        {
+          "term": "district level",
+          "score": 53.5945,
+          "evidence": []
+        },
+        {
+          "term": "district tabulation",
+          "score": 52.7807,
+          "evidence": []
+        },
+        {
+          "term": "months accurate",
+          "score": 41.1739,
+          "evidence": []
+        },
+        {
+          "term": "selected hus",
+          "score": 34.7582,
+          "evidence": []
+        },
+        {
+          "term": "radar graph",
+          "score": 30.1218,
+          "evidence": []
+        },
+        {
+          "term": "accuracy ratio",
+          "score": 26.2843,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "district level",
+          "score": 0.7296,
+          "evidence": []
+        },
+        {
+          "term": "dqs findings",
+          "score": 0.7052,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "data quality",
+          "score": 0.6515,
+          "evidence": []
+        },
+        {
+          "term": "district tabulation",
+          "score": 0.5761,
+          "evidence": []
+        },
+        {
+          "term": "selected hus",
+          "score": 0.408,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.361,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 0.2939,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 0.257,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "district level",
+          "score": 43.7436,
+          "evidence": []
+        },
+        {
+          "term": "district tabulation",
+          "score": 33.8065,
+          "evidence": []
+        },
+        {
+          "term": "dqs",
+          "score": 19.7701,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "dqs findings",
+          "score": 19.7701,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "selected hus",
+          "score": 17.2105,
+          "evidence": []
+        },
+        {
+          "term": "reports",
+          "score": 12.7541,
+          "evidence": []
+        },
+        {
+          "term": "accuracy ratio",
+          "score": 12.364,
+          "evidence": []
+        },
+        {
+          "term": "data quality",
+          "score": 12.2024,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "district level",
+          "score": 0.7296,
+          "evidence": []
+        },
+        {
+          "term": "dqs findings",
+          "score": 0.7052,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "data quality",
+          "score": 0.6515,
+          "evidence": []
+        },
+        {
+          "term": "district tabulation",
+          "score": 0.5761,
+          "evidence": []
+        },
+        {
+          "term": "selected hus",
+          "score": 0.408,
+          "evidence": []
+        },
+        {
+          "term": "months verified",
+          "score": 0.2444,
+          "evidence": []
+        },
+        {
+          "term": "quality indices",
+          "score": 0.2426,
+          "evidence": []
+        },
+        {
+          "term": "year",
+          "score": 0.2313,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 25.6418,
+          "evidence": []
+        },
+        {
+          "term": "可能会",
+          "score": 22.4645,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 21.5055,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 19.9097,
+          "evidence": []
+        },
+        {
+          "term": "进行协商",
+          "score": 17.374,
+          "evidence": []
+        },
+        {
+          "term": "非同寻常",
+          "score": 17.2028,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 16.1844,
+          "evidence": []
+        },
+        {
+          "term": "违反权利",
+          "score": 15.5833,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-008-e-conduct-a-dqs-workshop": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "dqs workshop",
+          "score": 6.9772,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "field work",
+          "score": 1.4592,
+          "evidence": []
+        },
+        {
+          "term": "quality self-assessment",
+          "score": 1.3595,
+          "evidence": []
+        },
+        {
+          "term": "during phase",
+          "score": 1.3303,
+          "evidence": []
+        },
+        {
+          "term": "week prior",
+          "score": 1.2802,
+          "evidence": []
+        },
+        {
+          "term": "menu",
+          "score": 1.2016,
+          "evidence": []
+        },
+        {
+          "term": "focal point",
+          "score": 1.1639,
+          "evidence": []
+        },
+        {
+          "term": "data quality",
+          "score": 1.1466,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "dqs workshop",
+          "score": 302.0613,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "participants",
+          "score": 41.4373,
+          "evidence": []
+        },
+        {
+          "term": "field work",
+          "score": 36.8217,
+          "evidence": []
+        },
+        {
+          "term": "days",
+          "score": 33.1964,
+          "evidence": []
+        },
+        {
+          "term": "data quality",
+          "score": 31.2957,
+          "evidence": []
+        },
+        {
+          "term": "data analysis",
+          "score": 30.0635,
+          "evidence": []
+        },
+        {
+          "term": "facilitators",
+          "score": 28.4491,
+          "evidence": []
+        },
+        {
+          "term": "during phase",
+          "score": 27.9148,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "data quality",
+          "score": 0.779,
+          "evidence": []
+        },
+        {
+          "term": "data collection",
+          "score": 0.7257,
+          "evidence": []
+        },
+        {
+          "term": "dqs workshop",
+          "score": 0.6948,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "data analysis",
+          "score": 0.6286,
+          "evidence": []
+        },
+        {
+          "term": "national level",
+          "score": 0.5747,
+          "evidence": []
+        },
+        {
+          "term": "health indicators",
+          "score": 0.555,
+          "evidence": []
+        },
+        {
+          "term": "key health",
+          "score": 0.4942,
+          "evidence": []
+        },
+        {
+          "term": "quality self-assessment",
+          "score": 0.449,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "data quality",
+          "score": 22.9257,
+          "evidence": []
+        },
+        {
+          "term": "data collection",
+          "score": 19.4571,
+          "evidence": []
+        },
+        {
+          "term": "data analysis",
+          "score": 19.0497,
+          "evidence": []
+        },
+        {
+          "term": "dqs workshop",
+          "score": 18.4263,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "district",
+          "score": 18.0711,
+          "evidence": []
+        },
+        {
+          "term": "national level",
+          "score": 14.059,
+          "evidence": []
+        },
+        {
+          "term": "monitoring systems",
+          "score": 9.2956,
+          "evidence": []
+        },
+        {
+          "term": "quality self-assessment",
+          "score": 9.1359,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "data quality",
+          "score": 0.779,
+          "evidence": []
+        },
+        {
+          "term": "data collection",
+          "score": 0.7257,
+          "evidence": []
+        },
+        {
+          "term": "dqs workshop",
+          "score": 0.6948,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "data analysis",
+          "score": 0.6286,
+          "evidence": []
+        },
+        {
+          "term": "national level",
+          "score": 0.5747,
+          "evidence": []
+        },
+        {
+          "term": "health indicators",
+          "score": 0.555,
+          "evidence": []
+        },
+        {
+          "term": "key health",
+          "score": 0.4942,
+          "evidence": []
+        },
+        {
+          "term": "quality self-assessment",
+          "score": 0.449,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 32.6389,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 27.2823,
+          "evidence": []
+        },
+        {
+          "term": "可能会",
+          "score": 26.621,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 26.2943,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 23.7275,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 20.2304,
+          "evidence": []
+        },
+        {
+          "term": "违反权利",
+          "score": 19.2393,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 17.566,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-009-f-integrate-dqs-results-into-the-routine-activit": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "integrate dqs",
+          "score": 5.9166,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "dqs options",
+          "score": 2.675,
+          "evidence": []
+        },
+        {
+          "term": "dqs measures",
+          "score": 2.4829,
+          "evidence": []
+        },
+        {
+          "term": "supervisory visits",
+          "score": 1.7919,
+          "evidence": []
+        },
+        {
+          "term": "supportive supervisory",
+          "score": 1.7018,
+          "evidence": []
+        },
+        {
+          "term": "quality self-assessment",
+          "score": 1.2491,
+          "evidence": []
+        },
+        {
+          "term": "doses administered",
+          "score": 1.124,
+          "evidence": []
+        },
+        {
+          "term": "sample chart",
+          "score": 1.0591,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "integrate dqs",
+          "score": 227.6817,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "dqs options",
+          "score": 98.5476,
+          "evidence": []
+        },
+        {
+          "term": "dqs measures",
+          "score": 95.053,
+          "evidence": []
+        },
+        {
+          "term": "supervisory visits",
+          "score": 38.5557,
+          "evidence": []
+        },
+        {
+          "term": "supportive supervisory",
+          "score": 36.4958,
+          "evidence": []
+        },
+        {
+          "term": "total",
+          "score": 30.0035,
+          "evidence": []
+        },
+        {
+          "term": "quality self-assessment",
+          "score": 21.7212,
+          "evidence": []
+        },
+        {
+          "term": "follow-up plan",
+          "score": 18.0696,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "immunization data",
+          "score": 0.5832,
+          "evidence": []
+        },
+        {
+          "term": "data quality",
+          "score": 0.498,
+          "evidence": []
+        },
+        {
+          "term": "monitoring system",
+          "score": 0.414,
+          "evidence": []
+        },
+        {
+          "term": "monitoring doses",
+          "score": 0.4121,
+          "evidence": []
+        },
+        {
+          "term": "dqs",
+          "score": 0.4116,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "integrate dqs",
+          "score": 0.4116,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "district",
+          "score": 0.3594,
+          "evidence": []
+        },
+        {
+          "term": "dqs options",
+          "score": 0.3542,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "district",
+          "score": 19.1747,
+          "evidence": []
+        },
+        {
+          "term": "immunization data",
+          "score": 14.6224,
+          "evidence": []
+        },
+        {
+          "term": "dqs",
+          "score": 13.6025,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "integrate dqs",
+          "score": 13.6025,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "monitoring doses",
+          "score": 10.4085,
+          "evidence": []
+        },
+        {
+          "term": "data quality",
+          "score": 9.8044,
+          "evidence": []
+        },
+        {
+          "term": "dqs options",
+          "score": 8.8425,
+          "evidence": []
+        },
+        {
+          "term": "level",
+          "score": 8.8081,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "immunization data",
+          "score": 0.5832,
+          "evidence": []
+        },
+        {
+          "term": "data quality",
+          "score": 0.498,
+          "evidence": []
+        },
+        {
+          "term": "integrate dqs",
+          "score": 0.4762,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "monitoring system",
+          "score": 0.414,
+          "evidence": []
+        },
+        {
+          "term": "monitoring doses",
+          "score": 0.4121,
+          "evidence": []
+        },
+        {
+          "term": "district",
+          "score": 0.3594,
+          "evidence": []
+        },
+        {
+          "term": "dqs options",
+          "score": 0.3542,
+          "evidence": []
+        },
+        {
+          "term": "quality self-assessment",
+          "score": 0.3454,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "并提供一",
+          "score": 71.0881,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 45.6684,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 39.9937,
+          "evidence": []
+        },
+        {
+          "term": "国家免疫规划",
+          "score": 39.3657,
+          "evidence": []
+        },
+        {
+          "term": "分层定价",
+          "score": 37.7773,
+          "evidence": []
+        },
+        {
+          "term": "技术转让",
+          "score": 37.7773,
+          "evidence": []
+        },
+        {
+          "term": "倡导以人为本并经数字卫生保健技术赋能的卫生系统",
+          "score": 34.8243,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 32.0808,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-010-annex-b-example-of-completenesstimeliness-report": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "completeness timeliness",
+          "score": 4.753,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cumulative completeness",
+          "score": 2.1442,
+          "evidence": []
+        },
+        {
+          "term": "total completeness",
+          "score": 1.9203,
+          "evidence": []
+        },
+        {
+          "term": "reporting table",
+          "score": 1.7074,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "month divided",
+          "score": 1.6992,
+          "evidence": []
+        },
+        {
+          "term": "reports received",
+          "score": 1.5101,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "completeness timeliness",
+          "score": 128.1806,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cumulative completeness",
+          "score": 53.8488,
+          "evidence": []
+        },
+        {
+          "term": "total completeness",
+          "score": 52.9206,
+          "evidence": []
+        },
+        {
+          "term": "month divided",
+          "score": 43.1229,
+          "evidence": []
+        },
+        {
+          "term": "total received",
+          "score": 37.2587,
+          "evidence": []
+        },
+        {
+          "term": "reports received",
+          "score": 34.2968,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "reporting table",
+          "score": 0.3406,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "dec",
+          "score": 0.3142,
+          "evidence": []
+        },
+        {
+          "term": "completeness timeliness",
+          "score": 0.29,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "jan",
+          "score": 0.2477,
+          "evidence": []
+        },
+        {
+          "term": "district office",
+          "score": 0.2367,
+          "evidence": []
+        },
+        {
+          "term": "jul",
+          "score": 0.2302,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "district office",
+          "score": 10.0278,
+          "evidence": []
+        },
+        {
+          "term": "dec",
+          "score": 6.9061,
+          "evidence": []
+        },
+        {
+          "term": "reporting table",
+          "score": 6.0462,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "completeness timeliness",
+          "score": 5.8641,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "until",
+          "score": 4.8376,
+          "evidence": []
+        },
+        {
+          "term": "reports received",
+          "score": 4.7207,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "reporting table",
+          "score": 0.3406,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "completeness timeliness",
+          "score": 0.29,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "district office",
+          "score": 0.2367,
+          "evidence": []
+        },
+        {
+          "term": "total completeness",
+          "score": 0.189,
+          "evidence": []
+        },
+        {
+          "term": "total received",
+          "score": 0.1639,
+          "evidence": []
+        },
+        {
+          "term": "reports received",
+          "score": 0.1539,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "并提供一",
+          "score": 128.2445,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 107.5658,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 90.8339,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 90.8339,
+          "evidence": []
+        },
+        {
+          "term": "或一些其他单位",
+          "score": 90.8339,
+          "evidence": []
+        },
+        {
+          "term": "国家免疫规划",
+          "score": 86.273,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-011-annex-c-standard-questions-to-assess-quality-of": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "opv dtp",
+          "score": 4.7231,
+          "evidence": []
+        },
+        {
+          "term": "monitoring system",
+          "score": 3.4459,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "standard questions",
+          "score": 3.3856,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "dtp vaccination",
+          "score": 3.3811,
+          "evidence": []
+        },
+        {
+          "term": "district reports",
+          "score": 3.1978,
+          "evidence": []
+        },
+        {
+          "term": "vaccine ledger",
+          "score": 3.1794,
+          "evidence": []
+        },
+        {
+          "term": "child immunization",
+          "score": 3.0474,
+          "evidence": []
+        },
+        {
+          "term": "district denominator",
+          "score": 2.9215,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "opv dtp",
+          "score": 292.8563,
+          "evidence": []
+        },
+        {
+          "term": "district reports",
+          "score": 234.4083,
+          "evidence": []
+        },
+        {
+          "term": "child immunization",
+          "score": 206.0616,
+          "evidence": []
+        },
+        {
+          "term": "dtp vaccination",
+          "score": 184.8602,
+          "evidence": []
+        },
+        {
+          "term": "district denominator",
+          "score": 178.4002,
+          "evidence": []
+        },
+        {
+          "term": "district level",
+          "score": 173.3795,
+          "evidence": []
+        },
+        {
+          "term": "monitoring system",
+          "score": 168.5617,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "district staff",
+          "score": 164.116,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "immunization data",
+          "score": 2.7229,
+          "evidence": []
+        },
+        {
+          "term": "vaccine dose",
+          "score": 2.5794,
+          "evidence": []
+        },
+        {
+          "term": "child immunization",
+          "score": 2.5488,
+          "evidence": []
+        },
+        {
+          "term": "immunization reporting",
+          "score": 2.5115,
+          "evidence": []
+        },
+        {
+          "term": "monitoring system",
+          "score": 2.44,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccine wastage",
+          "score": 2.3864,
+          "evidence": []
+        },
+        {
+          "term": "district reports",
+          "score": 2.3194,
+          "evidence": []
+        },
+        {
+          "term": "district level",
+          "score": 2.2989,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "district reports",
+          "score": 213.324,
+          "evidence": []
+        },
+        {
+          "term": "district level",
+          "score": 210.0241,
+          "evidence": []
+        },
+        {
+          "term": "district denominator",
+          "score": 164.0811,
+          "evidence": []
+        },
+        {
+          "term": "district staff",
+          "score": 156.5518,
+          "evidence": []
+        },
+        {
+          "term": "child immunization",
+          "score": 129.5568,
+          "evidence": []
+        },
+        {
+          "term": "immunization data",
+          "score": 120.5639,
+          "evidence": []
+        },
+        {
+          "term": "immunization tabulations",
+          "score": 112.7398,
+          "evidence": []
+        },
+        {
+          "term": "immunization reporting",
+          "score": 111.6863,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "immunization data",
+          "score": 2.7229,
+          "evidence": []
+        },
+        {
+          "term": "vaccine dose",
+          "score": 2.5794,
+          "evidence": []
+        },
+        {
+          "term": "child immunization",
+          "score": 2.5488,
+          "evidence": []
+        },
+        {
+          "term": "immunization reporting",
+          "score": 2.5115,
+          "evidence": []
+        },
+        {
+          "term": "monitoring system",
+          "score": 2.44,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccine wastage",
+          "score": 2.3864,
+          "evidence": []
+        },
+        {
+          "term": "district reports",
+          "score": 2.3194,
+          "evidence": []
+        },
+        {
+          "term": "district level",
+          "score": 2.2989,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 44.3854,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 41.8502,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 30.9076,
+          "evidence": []
+        },
+        {
+          "term": "可能会",
+          "score": 30.1128,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 28.2696,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 26.4934,
+          "evidence": []
+        },
+        {
+          "term": "违反权利",
+          "score": 21.8034,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 21.2421,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-012-annex-d-child-immunization-card-exercise": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "opv dtp",
+          "score": 5.1274,
+          "evidence": []
+        },
+        {
+          "term": "opv late",
+          "score": 3.5518,
+          "evidence": []
+        },
+        {
+          "term": "dtp vaccination",
+          "score": 3.5276,
+          "evidence": []
+        },
+        {
+          "term": "child old",
+          "score": 2.7071,
+          "evidence": []
+        },
+        {
+          "term": "old enough",
+          "score": 2.5673,
+          "evidence": []
+        },
+        {
+          "term": "measles vaccination",
+          "score": 2.4872,
+          "evidence": []
+        },
+        {
+          "term": "child due",
+          "score": 2.1957,
+          "evidence": []
+        },
+        {
+          "term": "bcg",
+          "score": 1.5034,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "opv dtp",
+          "score": 390.8317,
+          "evidence": []
+        },
+        {
+          "term": "dtp vaccination",
+          "score": 226.8134,
+          "evidence": []
+        },
+        {
+          "term": "opv late",
+          "score": 217.3828,
+          "evidence": []
+        },
+        {
+          "term": "child",
+          "score": 160.5174,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "child old",
+          "score": 132.3495,
+          "evidence": []
+        },
+        {
+          "term": "child due",
+          "score": 112.882,
+          "evidence": []
+        },
+        {
+          "term": "old enough",
+          "score": 100.3285,
+          "evidence": []
+        },
+        {
+          "term": "measles vaccination",
+          "score": 73.1638,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "immunization",
+          "score": 0.7217,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "dtp vaccination",
+          "score": 0.5683,
+          "evidence": []
+        },
+        {
+          "term": "measles vaccination",
+          "score": 0.5424,
+          "evidence": []
+        },
+        {
+          "term": "child",
+          "score": 0.4704,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccine",
+          "score": 0.3726,
+          "evidence": []
+        },
+        {
+          "term": "opv dtp",
+          "score": 0.314,
+          "evidence": []
+        },
+        {
+          "term": "child due",
+          "score": 0.2963,
+          "evidence": []
+        },
+        {
+          "term": "child old",
+          "score": 0.2916,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "immunization",
+          "score": 40.8266,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "opv dtp",
+          "score": 31.5334,
+          "evidence": []
+        },
+        {
+          "term": "child",
+          "score": 30.834,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "dtp vaccination",
+          "score": 30.1169,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 20.2275,
+          "evidence": []
+        },
+        {
+          "term": "wpv",
+          "score": 19.8598,
+          "evidence": []
+        },
+        {
+          "term": "child old",
+          "score": 17.3028,
+          "evidence": []
+        },
+        {
+          "term": "child due",
+          "score": 17.1988,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "immunization",
+          "score": 0.7217,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "dtp vaccination",
+          "score": 0.5683,
+          "evidence": []
+        },
+        {
+          "term": "measles vaccination",
+          "score": 0.5424,
+          "evidence": []
+        },
+        {
+          "term": "child",
+          "score": 0.4704,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "opv dtp",
+          "score": 0.314,
+          "evidence": []
+        },
+        {
+          "term": "child due",
+          "score": 0.2963,
+          "evidence": []
+        },
+        {
+          "term": "child old",
+          "score": 0.2916,
+          "evidence": []
+        },
+        {
+          "term": "card",
+          "score": 0.262,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "科研人员",
+          "score": 118.2042,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 115.1403,
+          "evidence": []
+        },
+        {
+          "term": "政治利益",
+          "score": 103.8654,
+          "evidence": []
+        },
+        {
+          "term": "经济方面",
+          "score": 99.7654,
+          "evidence": []
+        },
+        {
+          "term": "利益相关者",
+          "score": 98.6604,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 97.0467,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 77.5702,
+          "evidence": []
+        },
+        {
+          "term": "非政府组织",
+          "score": 76.6904,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-013-annex-e-sampling-of-health-units": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "sampling",
+          "score": 3.1593,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "sampling interval",
+          "score": 2.6175,
+          "evidence": []
+        },
+        {
+          "term": "cumulative dtp",
+          "score": 2.6,
+          "evidence": []
+        },
+        {
+          "term": "random number",
+          "score": 2.4615,
+          "evidence": []
+        },
+        {
+          "term": "sampling frame",
+          "score": 2.2217,
+          "evidence": []
+        },
+        {
+          "term": "hus",
+          "score": 1.9119,
+          "evidence": []
+        },
+        {
+          "term": "number table",
+          "score": 1.6232,
+          "evidence": []
+        },
+        {
+          "term": "cumulative population",
+          "score": 1.4398,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "sampling",
+          "score": 141.3885,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "sampling interval",
+          "score": 106.6056,
+          "evidence": []
+        },
+        {
+          "term": "random number",
+          "score": 104.2033,
+          "evidence": []
+        },
+        {
+          "term": "sampling frame",
+          "score": 80.7049,
+          "evidence": []
+        },
+        {
+          "term": "cumulative dtp",
+          "score": 69.0531,
+          "evidence": []
+        },
+        {
+          "term": "hus",
+          "score": 63.2675,
+          "evidence": []
+        },
+        {
+          "term": "number table",
+          "score": 60.5406,
+          "evidence": []
+        },
+        {
+          "term": "cumulative population",
+          "score": 33.8761,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "number table",
+          "score": 0.3791,
+          "evidence": []
+        },
+        {
+          "term": "district",
+          "score": 0.2681,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.2456,
+          "evidence": []
+        },
+        {
+          "term": "random number",
+          "score": 0.2362,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.2221,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 0.2101,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 0.2069,
+          "evidence": []
+        },
+        {
+          "term": "cumulative dtp",
+          "score": 0.1844,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "district",
+          "score": 18.0578,
+          "evidence": []
+        },
+        {
+          "term": "number table",
+          "score": 11.0009,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 8.4028,
+          "evidence": []
+        },
+        {
+          "term": "random number",
+          "score": 8.3499,
+          "evidence": []
+        },
+        {
+          "term": "reports",
+          "score": 8.3272,
+          "evidence": []
+        },
+        {
+          "term": "hus",
+          "score": 8.1944,
+          "evidence": []
+        },
+        {
+          "term": "level",
+          "score": 8.1893,
+          "evidence": []
+        },
+        {
+          "term": "dqs",
+          "score": 6.3619,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "number table",
+          "score": 0.3791,
+          "evidence": []
+        },
+        {
+          "term": "random number",
+          "score": 0.2682,
+          "evidence": []
+        },
+        {
+          "term": "district",
+          "score": 0.2681,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.2456,
+          "evidence": []
+        },
+        {
+          "term": "health units",
+          "score": 0.2111,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cumulative dtp",
+          "score": 0.1844,
+          "evidence": []
+        },
+        {
+          "term": "hus",
+          "score": 0.1641,
+          "evidence": []
+        },
+        {
+          "term": "cumulative population",
+          "score": 0.1603,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 29.1761,
+          "evidence": []
+        },
+        {
+          "term": "可能会",
+          "score": 25.6456,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 24.0138,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 23.0819,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 22.7444,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 21.6074,
+          "evidence": []
+        },
+        {
+          "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+          "score": 21.6074,
+          "evidence": []
+        },
+        {
+          "term": "或一些其他单位",
+          "score": 21.6074,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-014-annex-f-data-quality-self-assessment-workshop-sc": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "plenary session",
+          "score": 2.1877,
+          "evidence": []
+        },
+        {
+          "term": "quality self-assessment",
+          "score": 2.1364,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "data quality",
+          "score": 1.9579,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "coffee",
+          "score": 1.8972,
+          "evidence": []
+        },
+        {
+          "term": "workshop",
+          "score": 1.5037,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lunch",
+          "score": 1.4988,
+          "evidence": []
+        },
+        {
+          "term": "dqs",
+          "score": 1.342,
+          "evidence": []
+        },
+        {
+          "term": "group presentations",
+          "score": 1.2243,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "coffee",
+          "score": 65.7773,
+          "evidence": []
+        },
+        {
+          "term": "plenary session",
+          "score": 61.9691,
+          "evidence": []
+        },
+        {
+          "term": "data quality",
+          "score": 44.6463,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lunch",
+          "score": 36.831,
+          "evidence": []
+        },
+        {
+          "term": "quality self-assessment",
+          "score": 32.8689,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "dqs",
+          "score": 31.6829,
+          "evidence": []
+        },
+        {
+          "term": "data analysis",
+          "score": 29.2663,
+          "evidence": []
+        },
+        {
+          "term": "workshop",
+          "score": 26.4677,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "data quality",
+          "score": 0.9678,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "quality self-assessment",
+          "score": 0.5197,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "data collection",
+          "score": 0.4474,
+          "evidence": []
+        },
+        {
+          "term": "data analysis",
+          "score": 0.3927,
+          "evidence": []
+        },
+        {
+          "term": "health facility",
+          "score": 0.2923,
+          "evidence": []
+        },
+        {
+          "term": "monitoring tools",
+          "score": 0.2614,
+          "evidence": []
+        },
+        {
+          "term": "district",
+          "score": 0.2542,
+          "evidence": []
+        },
+        {
+          "term": "schedule",
+          "score": 0.1787,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "data quality",
+          "score": 25.1162,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "data collection",
+          "score": 10.8785,
+          "evidence": []
+        },
+        {
+          "term": "data analysis",
+          "score": 10.5071,
+          "evidence": []
+        },
+        {
+          "term": "district",
+          "score": 9.9402,
+          "evidence": []
+        },
+        {
+          "term": "quality self-assessment",
+          "score": 9.3922,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "reports",
+          "score": 4.7765,
+          "evidence": []
+        },
+        {
+          "term": "monitoring tools",
+          "score": 4.5743,
+          "evidence": []
+        },
+        {
+          "term": "level",
+          "score": 4.5696,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "data quality",
+          "score": 0.9678,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "quality self-assessment",
+          "score": 0.5197,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "data collection",
+          "score": 0.4474,
+          "evidence": []
+        },
+        {
+          "term": "data analysis",
+          "score": 0.3927,
+          "evidence": []
+        },
+        {
+          "term": "health facility",
+          "score": 0.2923,
+          "evidence": []
+        },
+        {
+          "term": "monitoring tools",
+          "score": 0.2614,
+          "evidence": []
+        },
+        {
+          "term": "district",
+          "score": 0.2542,
+          "evidence": []
+        },
+        {
+          "term": "schedule",
+          "score": 0.1787,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 43.6578,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 31.3835,
+          "evidence": []
+        },
+        {
+          "term": "非同寻常",
+          "score": 24.802,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 17.746,
+          "evidence": []
+        },
+        {
+          "term": "行动要点",
+          "score": 17.4828,
+          "evidence": []
+        },
+        {
+          "term": "结束语",
+          "score": 17.445,
+          "evidence": []
+        },
+        {
+          "term": "管理和筹资",
+          "score": 17.3685,
+          "evidence": []
+        },
+        {
+          "term": "dedougou",
+          "score": 16.7962,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "health organization",
+          "score": 1.0522,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 1.047,
+          "evidence": []
+        },
+        {
+          "term": "fax",
+          "score": 0.9319,
+          "evidence": []
+        },
+        {
+          "term": "biologicals",
+          "score": 0.8829,
+          "evidence": []
+        },
+        {
+          "term": "vaccines",
+          "score": 0.8582,
+          "evidence": []
+        },
+        {
+          "term": "email",
+          "score": 0.8055,
+          "evidence": []
+        },
+        {
+          "term": "ivb",
+          "score": 0.7413,
+          "evidence": []
+        },
+        {
+          "term": "marketing",
+          "score": 0.6586,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "health organization",
+          "score": 20.9107,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 20.5528,
+          "evidence": []
+        },
+        {
+          "term": "vaccines",
+          "score": 17.2112,
+          "evidence": []
+        },
+        {
+          "term": "biologicals",
+          "score": 16.5297,
+          "evidence": []
+        },
+        {
+          "term": "fax",
+          "score": 14.5455,
+          "evidence": []
+        },
+        {
+          "term": "email",
+          "score": 13.5989,
+          "evidence": []
+        },
+        {
+          "term": "int",
+          "score": 12.1842,
+          "evidence": []
+        },
+        {
+          "term": "publication",
+          "score": 12.1208,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health organization",
+          "score": 0.7676,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.7548,
+          "evidence": []
+        },
+        {
+          "term": "material",
+          "score": 0.3805,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 0.3726,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 0.3427,
+          "evidence": []
+        },
+        {
+          "term": "lines",
+          "score": 0.329,
+          "evidence": []
+        },
+        {
+          "term": "igo",
+          "score": 0.3047,
+          "evidence": []
+        },
+        {
+          "term": "concerning",
+          "score": 0.2842,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "world health",
+          "score": 13.5157,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 13.0366,
+          "evidence": []
+        },
+        {
+          "term": "tel",
+          "score": 8.3745,
+          "evidence": []
+        },
+        {
+          "term": "fax",
+          "score": 8.0587,
+          "evidence": []
+        },
+        {
+          "term": "e-mail",
+          "score": 7.6175,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 6.5929,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 4.6435,
+          "evidence": []
+        },
+        {
+          "term": "igo",
+          "score": 3.9958,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health organization",
+          "score": 0.7676,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.7548,
+          "evidence": []
+        },
+        {
+          "term": "material",
+          "score": 0.3805,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 0.3427,
+          "evidence": []
+        },
+        {
+          "term": "lines",
+          "score": 0.329,
+          "evidence": []
+        },
+        {
+          "term": "concerning",
+          "score": 0.2842,
+          "evidence": []
+        },
+        {
+          "term": "products",
+          "score": 0.2806,
+          "evidence": []
+        },
+        {
+          "term": "publication",
+          "score": 0.2786,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 195.5127,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 104.4826,
+          "evidence": []
+        },
+        {
+          "term": "监督机制",
+          "score": 55.6971,
+          "evidence": []
+        },
+        {
+          "term": "通过确定",
+          "score": 51.2762,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 50.5216,
+          "evidence": []
+        },
+        {
+          "term": "美国cdc",
+          "score": 48.5032,
+          "evidence": []
+        },
+        {
+          "term": "法律上",
+          "score": 47.1466,
+          "evidence": []
+        },
+        {
+          "term": "医学或其他记录",
+          "score": 44.7994,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}
