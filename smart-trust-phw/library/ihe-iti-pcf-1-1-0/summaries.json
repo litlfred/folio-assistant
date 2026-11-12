@@ -1,0 +1,234 @@
+{
+  "$schema": "folio-block-summaries/v1",
+  "entry": "ihe-iti-pcf-1-1-0",
+  "summaries": [
+    {
+      "block": "library/ihe-iti-pcf-1-1-0/blocks/prose-s001-ihe-it-infrastructure-technical-framework-supple",
+      "source": "sections/s001-ihe-it-infrastructure-technical-framework-supple.md",
+      "source_hash": "96ef0dc0c0a6478a835bc0912e5bdb9d49304a11a3877a9df51efa471d7b7080",
+      "narrative": [
+        {
+          "text": "Title heading of the library snapshot of the IHE IT Infrastructure Technical Framework Supplement on Privacy Consent on FHIR (PCF); it carries no text of its own.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "claude-opus-5-5",
+            "session": "https://claude.ai/code/session_01Qmmkt8XGaYRhVSNVtpws5L"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/ihe-iti-pcf-1-1-0/blocks/prose-s002-overview-and-bibliographic-identity",
+      "source": "sections/s002-overview-and-bibliographic-identity.md",
+      "source_hash": "e2d9d603de607496865ed5f762d8f17352100abe240cdfa539657be4303731ab",
+      "narrative": [
+        {
+          "text": "Describes PCF as specifying how patient privacy consent directives are recorded, discovered, maintained and enforced over HL7 FHIR using the Consent resource and RESTful transactions, and tabulates its identity: canonical URL https://profiles.ihe.net/ITI/PCF, version 1.1.0 (Trial Implementation, published 2023-08-04; NPM package ihe.iti.pcf@1.1.0 built 2024-02-23), FHIR 4.0.1, published by the IHE IT Infrastructure Technical Committee under CC-BY-4.0.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "claude-opus-5-5",
+            "session": "https://claude.ai/code/session_01Qmmkt8XGaYRhVSNVtpws5L"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/ihe-iti-pcf-1-1-0/blocks/prose-s003-volume-1-profiles-privacy-consent-on-fhir-pcf-1-",
+      "source": "sections/s003-volume-1-profiles-privacy-consent-on-fhir-pcf-1-.md",
+      "source_hash": "3d897c994320fdc927ca640f2b016131086d4a8e79296076c239421cd5d8f4db",
+      "narrative": [
+        {
+          "text": "Heading that opens Volume 1, the PCF profile (§1:53); it carries no text of its own.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "claude-opus-5-5",
+            "session": "https://claude.ai/code/session_01Qmmkt8XGaYRhVSNVtpws5L"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/ihe-iti-pcf-1-1-0/blocks/prose-s004-actors-and-transactions-1-53-1",
+      "source": "sections/s004-actors-and-transactions-1-53-1.md",
+      "source_hash": "864b291b1494ae2a8999da94c4668ff9b93c28059202c100d7bf30d2869f74e3",
+      "narrative": [
+        {
+          "text": "Names PCF's three actors with their CapabilityStatement canonicals: the Consent Recorder, which captures, updates and revokes a patient's consent directives and submits them to a Consent Registry; the Consent Registry, which stores, indexes, versions and serves Consent resources and their Provenance records; and the Consent Authorization Server, which evaluates active Consent directives from the Registry to return permit or deny on data access requests. All three interact through the Access Consent [ITI-108] transaction.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "claude-opus-5-5",
+            "session": "https://claude.ai/code/session_01Qmmkt8XGaYRhVSNVtpws5L"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/ihe-iti-pcf-1-1-0/blocks/prose-s005-actor-options-1-53-2",
+      "source": "sections/s005-actor-options-1-53-2.md",
+      "source_hash": "69a637d62689bfcf9dd9e8441c76306d731b86ba4dc3e79f23effa614af70963",
+      "narrative": [
+        {
+          "text": "Lists the five [ITI-108] Access Consent options the Consent Recorder and Consent Registry support: Read (by logical id or version id), Search (by patient, status, date, period, actor, action, purpose, security-label, category or source-reference), Put (update, with a Provenance record), Post (create, with a Provenance record), and Delete (DELETE, or a status transition to inactive).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "claude-opus-5-5",
+            "session": "https://claude.ai/code/session_01Qmmkt8XGaYRhVSNVtpws5L"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/ihe-iti-pcf-1-1-0/blocks/prose-s006-implicit-base-policy-sets-1-53-2-1",
+      "source": "sections/s006-implicit-base-policy-sets-1-53-2-1.md",
+      "source_hash": "327dda1b1b834c4a3491a92aaf6b3874f8c2286db7707c955fab83e2c314b2b9",
+      "narrative": [
+        {
+          "text": "Explains that a PCF Consent refines an underlying organisational or jurisdictional policy named in Consent.policy.uri, and that PCF arranges consent expressiveness into progressive profile levels; the text speaks of four levels but its table lists three. Basic Consent is a whole-record opt-in against a deny-by-default policy or opt-out against a permit-by-default one, optionally bounded by period and purpose; Intermediate Consent adds one level of nested exceptions scoped by purpose, actor, timeframe, data, or security label; Advanced Consent allows recursive trees of permit and deny sub-provisions over any combination of these.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "claude-opus-5-5",
+            "session": "https://claude.ai/code/session_01Qmmkt8XGaYRhVSNVtpws5L"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/ihe-iti-pcf-1-1-0/blocks/prose-s007-volume-2-transactions-access-consent-iti-108-2-3",
+      "source": "sections/s007-volume-2-transactions-access-consent-iti-108-2-3.md",
+      "source_hash": "b1646714c13b28ceca72c27bc47f3d948f379cb5df178952f2dbf6a09e983f9f",
+      "narrative": [
+        {
+          "text": "Heading that opens Volume 2, the Access Consent [ITI-108] transaction (§2:3.108); it carries no text of its own.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "claude-opus-5-5",
+            "session": "https://claude.ai/code/session_01Qmmkt8XGaYRhVSNVtpws5L"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/ihe-iti-pcf-1-1-0/blocks/prose-s008-scope-and-interaction-model",
+      "source": "sections/s008-scope-and-interaction-model.md",
+      "source_hash": "fe71ce399a2dea902f52fa4789d208b448a8f0501117ffbe5be97afd08c4316a",
+      "narrative": [
+        {
+          "text": "States the scope of [ITI-108]: a Consent Recorder uses it to create, update, delete, read or search Consent resources on a Consent Registry, and a Consent Authorization Server, or a composite data-sharing actor such as a VHL Sharer, uses it to query a patient's active Consent directives before disclosing health information.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "claude-opus-5-5",
+            "session": "https://claude.ai/code/session_01Qmmkt8XGaYRhVSNVtpws5L"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/ihe-iti-pcf-1-1-0/blocks/prose-s009-message-semantics-2-3-108-4",
+      "source": "sections/s009-message-semantics-2-3-108-4.md",
+      "source_hash": "1a4d12863246a2f16705473c58dea3f2b2dba3abb0ead2fd1d242e35af89c2b8",
+      "narrative": [
+        {
+          "text": "Specifies [ITI-108] as the FHIR RESTful API over HTTPS: create by POST (optionally in a transaction Bundle with an IHE.PCF.provenance resource recording who captured and attested the consent), update by PUT (e.g. revocation by setting status inactive, incrementing meta.versionId), logical delete of a Consent recorded in error, read and version read so an authorisation decision can cite the exact Consent.id and versionId, and search by patient, status, purpose, actor, period and date, security-label, and data references.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "claude-opus-5-5",
+            "session": "https://claude.ai/code/session_01Qmmkt8XGaYRhVSNVtpws5L"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/ihe-iti-pcf-1-1-0/blocks/prose-s010-volume-3-content-profiles-and-terminology-3-5-8",
+      "source": "sections/s010-volume-3-content-profiles-and-terminology-3-5-8.md",
+      "source_hash": "7eda349bfc6bca592a5b3366c1ca9fc197f7e86729bf4bc49836ad3768319f8f",
+      "narrative": [
+        {
+          "text": "Heading that opens Volume 3, PCF content profiles and terminology (§3:5.8); it carries no text of its own.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "claude-opus-5-5",
+            "session": "https://claude.ai/code/session_01Qmmkt8XGaYRhVSNVtpws5L"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/ihe-iti-pcf-1-1-0/blocks/prose-s011-required-elements-on-pcf-consent-profiles",
+      "source": "sections/s011-required-elements-on-pcf-consent-profiles.md",
+      "source_hash": "5a4be191960afc6cf9129d898210116c9576cc8201484544423479da8b75cc1d",
+      "narrative": [
+        {
+          "text": "Lists the constraints the Basic, Intermediate and Advanced PCF profiles place on FHIR Consent: a required status (draft, active, inactive or entered-in-error; proposed and rejected prohibited in active enforcement), scope fixed to patient-privacy, a category including LOINC 59284-0, a required patient and at least one policy.uri, optional dateTime, performer, organization and source, and a provision carrying type (permit or deny), period, actor, action, HCS security labels, purpose of use from PCFPurposeOfUseVS (TREAT, ETREAT, HPAYMT, HOPERAT, HRESCH, PUBHLTH, PATRQT, FAMRQT, PWATRNY, SUPNWK), dataPeriod and data references.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "claude-opus-5-5",
+            "session": "https://claude.ai/code/session_01Qmmkt8XGaYRhVSNVtpws5L"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    },
+    {
+      "block": "library/ihe-iti-pcf-1-1-0/blocks/prose-s012-conformance-artefact-inventory-in-ihe-iti-pcf-1-",
+      "source": "sections/s012-conformance-artefact-inventory-in-ihe-iti-pcf-1-.md",
+      "source_hash": "ac8006a06130f8495d47f53fa31310c3b5c1a08f01f8d3ba60eff434cea3b543",
+      "narrative": [
+        {
+          "text": "Inventories the conformance artefacts in the ihe.iti.pcf@1.1.0 package with their canonical URLs: the ImplementationGuide; CapabilityStatements for the Consent Recorder, Consent Registry and Consent Authorization Server; StructureDefinitions for the Basic, Intermediate and Advanced Consent profiles, the PCF Provenance profile and the StickToPatient extension; and the PCFPurposeOfUseVS value set plus five sensitivity value sets (substance use, behavioural health, paediatric behavioural health, opioid use disorder, psychiatry).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "claude-opus-5-5",
+            "session": "https://claude.ai/code/session_01Qmmkt8XGaYRhVSNVtpws5L"
+          },
+          "drafted_at": "2026-10-31"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,614 @@
+{
+  "$schema": "folio-vector-figures/v1",
+  "doc_id": "arxiv-2404.04834v4",
+  "figures": [
+    {
+      "id": "vfig-p009",
+      "file": "figures/vfig-p009.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "antigravity",
+          "model": "gemini-1.5-pro"
+        },
+        "at": "2026-10-09",
+        "saw": "Figure 1 diagram on page 9 comparing Waterfall and Agile software development models in multi-agent systems",
+        "page": 9
+      },
+      "page": 9,
+      "rotation": 0,
+      "captionLabels": [
+        "1"
+      ],
+      "region": [
+        45.83,
+        84.68,
+        440.11,
+        302.95
+      ],
+      "assembly": {
+        "drawings": 20,
+        "background": 0,
+        "groups": [
+          {
+            "bbox": [
+              45.83,
+              84.68,
+              440.11,
+              302.95
+            ],
+            "drawings": 20,
+            "pageEdge": false,
+            "rendered": true,
+            "labels": [
+              "Requirements",
+              "Design",
+              "Maintenance",
+              "Development",
+              "Testing",
+              "Development",
+              "Planning",
+              "Testing",
+              "Review",
+              "Sprint",
+              "Backlog",
+              "Waterfall",
+              "Agile"
+            ]
+          }
+        ],
+        "boxes": [
+          {
+            "id": "b0",
+            "bbox": [
+              45.83,
+              84.68,
+              440.11,
+              302.95
+            ],
+            "parent": null,
+            "labels": [
+              "Sprint",
+              "Backlog",
+              "Waterfall",
+              "Agile"
+            ]
+          },
+          {
+            "id": "b1",
+            "bbox": [
+              92.8,
+              121.31,
+              159.32,
+              143.15
+            ],
+            "parent": "b0",
+            "labels": [
+              "Requirements"
+            ]
+          },
+          {
+            "id": "b2",
+            "bbox": [
+              92.8,
+              149.51,
+              159.32,
+              171.35
+            ],
+            "parent": "b0",
+            "labels": [
+              "Design"
+            ]
+          },
+          {
+            "id": "b3",
+            "bbox": [
+              92.8,
+              234.29,
+              159.32,
+              256.14
+            ],
+            "parent": "b0",
+            "labels": [
+              "Maintenance"
+            ]
+          },
+          {
+            "id": "b4",
+            "bbox": [
+              92.8,
+              177.8,
+              159.32,
+              199.64
+            ],
+            "parent": "b0",
+            "labels": [
+              "Development"
+            ]
+          },
+          {
+            "id": "b5",
+            "bbox": [
+              92.8,
+              206,
+              159.32,
+              227.85
+            ],
+            "parent": "b0",
+            "labels": [
+              "Testing"
+            ]
+          },
+          {
+            "id": "b6",
+            "bbox": [
+              245.89,
+              186.39,
+              312.33,
+              208.24
+            ],
+            "parent": "b0",
+            "labels": [
+              "Development"
+            ]
+          },
+          {
+            "id": "b7",
+            "bbox": [
+              308.3,
+              149.15,
+              374.82,
+              170.99
+            ],
+            "parent": "b0",
+            "labels": [
+              "Planning"
+            ]
+          },
+          {
+            "id": "b8",
+            "bbox": [
+              310.98,
+              233.66,
+              377.5,
+              255.51
+            ],
+            "parent": "b0",
+            "labels": [
+              "Testing"
+            ]
+          },
+          {
+            "id": "b9",
+            "bbox": [
+              371.68,
+              186.39,
+              438.11,
+              208.24
+            ],
+            "parent": "b0",
+            "labels": [
+              "Review"
+            ]
+          }
+        ],
+        "unlabelledClosedShapes": 9,
+        "connectors": [],
+        "between": [],
+        "outside": 31
+      },
+      "shows": [
+        "1"
+      ],
+      "narrative": [
+        {
+          "text": "Figure 1 compares the Waterfall model (sequential phases: Requirements, Design, Development, Testing, Maintenance) with the Agile model (iterative sprints: Sprint Backlog, Planning, Development, Testing, Review) adapted for LLM-based multi-agent software engineering systems.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "antigravity",
+            "model": "gemini-1.5-pro"
+          },
+          "drafted_at": "2026-10-09",
+          "lang": "en"
+        }
+      ]
+    },
+    {
+      "id": "vfig-p011",
+      "file": "figures/vfig-p011.png",
+      "role": "decorative",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "antigravity",
+          "model": "gemini-1.5-pro"
+        },
+        "at": "2026-10-09",
+        "saw": "Rendered prompt specification text boxes for Snake Game and Tetris Game case studies on page 11",
+        "page": 11
+      },
+      "page": 11,
+      "rotation": 0,
+      "captionLabels": [
+        "2"
+      ],
+      "region": [
+        45.83,
+        221.12,
+        440.18,
+        591.35
+      ],
+      "assembly": {
+        "drawings": 4,
+        "background": 0,
+        "groups": [
+          {
+            "bbox": [
+              45.83,
+              221.12,
+              440.18,
+              336.48
+            ],
+            "drawings": 2,
+            "pageEdge": false,
+            "rendered": true,
+            "labels": [
+              "Snake Game Prompt",
+              "“Design and implement a grid-based snake game displayed on the screen. Initialize the snake",
+              "with a defined starting position, length, and direction. Enable continuous movement controlled",
+              "by arrow keys. Introduce food that spawns randomly on the grid, ensuring it does not overlap",
+              "with the snake. Trigger snake growth when food is consumed, adding a new segment to its",
+              "body. Implement a game-over condition for boundary or body collisions, displaying a message",
+              "and providing a restart option. Include a scoring system displayed in the user interface, along",
+              "with clear instructions. ”"
+            ]
+          },
+          {
+            "bbox": [
+              45.83,
+              485.97,
+              440.18,
+              591.35
+            ],
+            "drawings": 2,
+            "pageEdge": false,
+            "rendered": true,
+            "labels": [
+              "Tetris Game Prompt",
+              "“Design and implement a Tetris game. Start with a randomly chosen piece dropping from",
+              "the top. Allow players to control the tetromino using arrow keys for movement (left, right,",
+              "down) and rotation. Enable automatic downward movement with an adjustable speed. Handle",
+              "collisions with the boundaries and existing pieces, locking the tetromino in place when it cannot",
+              "move further. Check for complete rows after each placement and remove them. End the game",
+              "if new tetrominoes cannot spawn due to a full board, displaying a game over message.”"
+            ]
+          }
+        ],
+        "boxes": [
+          {
+            "id": "b0",
+            "bbox": [
+              45.83,
+              221.12,
+              440.18,
+              336.48
+            ],
+            "parent": null,
+            "labels": [
+              "Snake Game Prompt"
+            ]
+          },
+          {
+            "id": "b1",
+            "bbox": [
+              47.25,
+              238.82,
+              438.76,
+              335.06
+            ],
+            "parent": "b0",
+            "labels": [
+              "“Design and implement a grid-based snake game displayed on the screen. Initialize the snake",
+              "with a defined starting position, length, and direction. Enable continuous movement controlled",
+              "by arrow keys. Introduce food that spawns randomly on the grid, ensuring it does not overlap",
+              "with the snake. Trigger snake growth when food is consumed, adding a new segment to its",
+              "body. Implement a game-over condition for boundary or body collisions, displaying a message",
+              "and providing a restart option. Include a scoring system displayed in the user interface, along",
+              "with clear instructions. ”"
+            ]
+          },
+          {
+            "id": "b2",
+            "bbox": [
+              45.83,
+              485.97,
+              440.18,
+              591.35
+            ],
+            "parent": null,
+            "labels": [
+              "Tetris Game Prompt"
+            ]
+          },
+          {
+            "id": "b3",
+            "bbox": [
+              47.25,
+              503.36,
+              438.76,
+              589.94
+            ],
+            "parent": "b2",
+            "labels": [
+              "“Design and implement a Tetris game. Start with a randomly chosen piece dropping from",
+              "the top. Allow players to control the tetromino using arrow keys for movement (left, right,",
+              "down) and rotation. Enable automatic downward movement with an adjustable speed. Handle",
+              "collisions with the boundaries and existing pieces, locking the tetromino in place when it cannot",
+              "move further. Check for complete rows after each placement and remove them. End the game",
+              "if new tetrominoes cannot spawn due to a full board, displaying a game over message.”"
+            ]
+          }
+        ],
+        "unlabelledClosedShapes": 0,
+        "connectors": [],
+        "between": [
+          "While the first attempt to generate the Snake game was unsuccessful, we resubmitted the same",
+          "prompt to ChatDev, and the second attempt successfully produced a playable version. ChatDev also",
+          "generated a detailed manual that included information on dependencies, step-by-step instructions",
+          "for running the game, and an overview of its features. Figure 2 displays the graphical user interfaces",
+          "(GUIs) of the generated Snake game, showing the starting state, in-game state, and game-over state.",
+          "The development process was consistently efficient, taking an average of 76 seconds and costing",
+          "$0.019. Upon playing the game, we confirmed that it fulfilled all the requirements outlined in the",
+          "prompt.",
+          "4.2",
+          "Tetris Game",
+          "We present the following prompt to ChatDev to guide the generation of the Tetris game:"
+        ],
+        "outside": 10
+      },
+      "narrative": [
+        {
+          "text": "Prompt specification text boxes on page 11 providing the exact requirements fed to ChatDev for generating the Snake and Tetris games.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "antigravity",
+            "model": "gemini-1.5-pro"
+          },
+          "drafted_at": "2026-10-09",
+          "lang": "en"
+        }
+      ]
+    },
+    {
+      "id": "vfig-p013",
+      "file": "figures/vfig-p013.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "antigravity",
+          "model": "gemini-1.5-pro"
+        },
+        "at": "2026-10-09",
+        "saw": "Figure 4 diagram on page 13 showing the research agenda for LLM-based multi-agent systems in software engineering across Phase 1 and Phase 2",
+        "page": 13
+      },
+      "page": 13,
+      "rotation": 0,
+      "captionLabels": [
+        "4"
+      ],
+      "region": [
+        45.83,
+        84.68,
+        440.13,
+        260.97
+      ],
+      "assembly": {
+        "drawings": 21,
+        "background": 0,
+        "groups": [
+          {
+            "bbox": [
+              45.83,
+              84.68,
+              440.13,
+              260.97
+            ],
+            "drawings": 21,
+            "pageEdge": false,
+            "rendered": true,
+            "labels": [
+              "Phase 1: Enhancing Individual Agent Capabilities",
+              "Phase Two: Optimizing Agent Synergy",
+              "Refining Role-Playing",
+              "Capabilities",
+              "Designing Robust and",
+              "Adaptable Prompting",
+              "Frameworks",
+              "Harmonizing Human-Agent",
+              "Collaboration",
+              "Benchmarking Multi-agent",
+              "Systems",
+              "Scaling Up for Complex",
+              "Projects",
+              "Leveraging Industry",
+              "Principles",
+              "Dynamic Adaptation of",
+              "Agents and Resources",
+              "Secure and Responsible",
+              "Data Management"
+            ]
+          }
+        ],
+        "boxes": [
+          {
+            "id": "b0",
+            "bbox": [
+              57.83,
+              100.64,
+              355.18,
+              157.81
+            ],
+            "parent": null,
+            "labels": [
+              "Phase 1: Enhancing Individual Agent Capabilities"
+            ]
+          },
+          {
+            "id": "b1",
+            "bbox": [
+              178.46,
+              132.85,
+              439.17,
+              190.13
+            ],
+            "parent": null,
+            "labels": [
+              "Phase Two: Optimizing Agent Synergy"
+            ]
+          },
+          {
+            "id": "b2",
+            "bbox": [
+              71.78,
+              147.33,
+              156.09,
+              179
+            ],
+            "parent": null,
+            "labels": [
+              "Refining Role-Playing",
+              "Capabilities"
+            ]
+          },
+          {
+            "id": "b3",
+            "bbox": [
+              71.78,
+              180.51,
+              156.09,
+              212.18
+            ],
+            "parent": null,
+            "labels": [
+              "Designing Robust and",
+              "Adaptable Prompting",
+              "Frameworks"
+            ]
+          },
+          {
+            "id": "b4",
+            "bbox": [
+              205.37,
+              179.76,
+              298.44,
+              203.86
+            ],
+            "parent": null,
+            "labels": [
+              "Harmonizing Human-Agent",
+              "Collaboration"
+            ]
+          },
+          {
+            "id": "b5",
+            "bbox": [
+              205.37,
+              207.53,
+              298.44,
+              231.64
+            ],
+            "parent": null,
+            "labels": [
+              "Benchmarking Multi-agent",
+              "Systems"
+            ]
+          },
+          {
+            "id": "b6",
+            "bbox": [
+              205.37,
+              235.21,
+              298.44,
+              259.31
+            ],
+            "parent": null,
+            "labels": [
+              "Scaling Up for Complex",
+              "Projects"
+            ]
+          },
+          {
+            "id": "b7",
+            "bbox": [
+              306.22,
+              179.76,
+              399.28,
+              203.86
+            ],
+            "parent": null,
+            "labels": [
+              "Leveraging Industry",
+              "Principles"
+            ]
+          },
+          {
+            "id": "b8",
+            "bbox": [
+              306.22,
+              207.53,
+              399.28,
+              231.64
+            ],
+            "parent": null,
+            "labels": [
+              "Dynamic Adaptation of",
+              "Agents and Resources"
+            ]
+          },
+          {
+            "id": "b9",
+            "bbox": [
+              306.22,
+              235.21,
+              399.28,
+              259.31
+            ],
+            "parent": null,
+            "labels": [
+              "Secure and Responsible",
+              "Data Management"
+            ]
+          }
+        ],
+        "unlabelledClosedShapes": 1,
+        "connectors": [],
+        "between": [],
+        "outside": 34
+      },
+      "shows": [
+        "4"
+      ],
+      "narrative": [
+        {
+          "text": "Figure 4 outlines the research agenda for LLM-based multi-agent systems in software engineering, divided into Phase 1 (Enhancing Individual Agent Capabilities: refining role-playing capabilities, designing robust and adaptable prompting frameworks) and Phase 2 (Optimizing Agent Synergy: human-agent collaboration, benchmarking, scaling up for complex projects, leveraging industry principles, dynamic adaptation of agents and resources, secure and responsible data management).",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "antigravity",
+            "model": "gemini-1.5-pro"
+          },
+          "drafted_at": "2026-10-09",
+          "lang": "en"
+        }
+      ]
+    }
+  ]
+}
