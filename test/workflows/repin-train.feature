@@ -49,6 +49,24 @@ Feature: The re-pin train's decisions, and the workflows that call them
     Then compare's state is "pending"
     And pending is exactly "Repository gates (hard)"
 
+  @test:test/workflows/repin-train.test.ts::no_new_failures_compared_with_main::a_gate_the_train_skipped_while_main_ran_it_is_not_judged,_and_never_green
+  Scenario: A gate the train skipped while main ran it is not judged, and never green
+    Given the train skipped "Repository gates — instances, docs, translations (hard)", which main ran and failed
+    Then compare's state is "error"
+    And the undetermined list names that gate as skipped on the train while main ran it
+
+  @test:test/workflows/repin-train.test.ts::no_new_failures_compared_with_main::a_skipped_matrix_job_matches_main's_expanded_shards
+  Scenario: A skipped matrix job matches main's expanded shards
+    Given the train skipped "TypeScript — bun test, shard ${{ matrix.shard }}/4", and main ran shards 1/4 and 2/4
+    Then compare's state is "error"
+    And the undetermined entry names both of main's shards
+
+  @test:test/workflows/repin-train.test.ts::no_new_failures_compared_with_main::a_skip_main_also_skipped,_a_check_main_does_not_run,_or_a_job_that_is_not_a_gate_stays_a_pass
+  Scenario: A skip main also skipped, a check main does not run, or a job that is not a gate stays a pass
+    Given the train skipped "cleanup", "conflict-gate" and "Publish QA results (not a gate)"
+    And main skipped "cleanup", ran the job that is not a gate, and does not run "conflict-gate"
+    Then compare's state is "success"
+
   @test:test/workflows/repin-train.test.ts::a_failing_job_is_judged_check_by_check_when_it_left_a_record::a_new_failure_inside_a_job_main_also_fails_is_NEW,_not_masked_by_the_job
   Scenario: A new failure inside a job main also fails is new, not masked by the job
     Given JOB fails on both sides
@@ -224,6 +242,12 @@ Feature: The re-pin train's decisions, and the workflows that call them
     Given repin-train.yml
     Then "repin-train.ts verdict --sha" comes before the last "repin-train.ts decide --tree"
     And it grants "statuses: write"
+
+  @test:test/workflows/repin-train.test.ts::the_workflows::the_gates_run_the_full_tier_on_a_train,_the_dispatch_and_the_labelled_PR_alike
+  Scenario: The gates run the full tier on a train, the dispatch and the labelled PR alike
+    Given code-quality-gates.yml
+    Then its full-tier condition includes a dispatch on a "repin-train/" branch and a PR labelled "repin-train"
+    And no full-tier condition names a dispatch of main alone
 
   @test:test/workflows/repin-train.test.ts::the_workflows::without_a_bot_token,_the_train_starts_both_workflows_the_verdict_reads
   Scenario: Without a bot token, the train starts both workflows the verdict reads
