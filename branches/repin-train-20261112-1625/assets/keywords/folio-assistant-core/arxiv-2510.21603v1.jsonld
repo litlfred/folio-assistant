@@ -1,0 +1,5160 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "arxiv-2510.21603v1",
+  "instance": "folio-assistant-core",
+  "about": "library/arxiv-2510.21603v1",
+  "corpus": {
+    "library": "folio-assistant-core/library/corpus",
+    "sections": 1052,
+    "terms": 3815
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "deep research",
+        "score": 34.2139,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "deep multimodal",
+        "score": 32.5085,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "multimodal retrieval",
+        "score": 30.6314,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "deep parsing",
+        "score": 30.2411,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "deep hybrid",
+        "score": 26.2616,
+        "evidence": []
+      },
+      {
+        "term": "multimodal documents",
+        "score": 25.5216,
+        "evidence": []
+      },
+      {
+        "term": "page retrieval",
+        "score": 25.4956,
+        "evidence": []
+      },
+      {
+        "term": "multimodal doc",
+        "score": 25.2794,
+        "evidence": []
+      },
+      {
+        "term": "deep text",
+        "score": 25.0209,
+        "evidence": []
+      },
+      {
+        "term": "research systems",
+        "score": 24.4845,
+        "evidence": []
+      },
+      {
+        "term": "research evaluation",
+        "score": 23.2806,
+        "evidence": []
+      },
+      {
+        "term": "research capabilities",
+        "score": 23.1456,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "deep research",
+        "score": 718.09,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "deep multimodal",
+        "score": 661.4292,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "multimodal retrieval",
+        "score": 627.6322,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "page layout",
+        "score": 614.3898,
+        "evidence": []
+      },
+      {
+        "term": "deep parsing",
+        "score": 607.9209,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "deep text",
+        "score": 549.0428,
+        "evidence": []
+      },
+      {
+        "term": "document retrieval",
+        "score": 548.5462,
+        "evidence": []
+      },
+      {
+        "term": "multimodal doc",
+        "score": 531.3464,
+        "evidence": []
+      },
+      {
+        "term": "deep hybrid",
+        "score": 522.2904,
+        "evidence": []
+      },
+      {
+        "term": "layout recall",
+        "score": 503.1592,
+        "evidence": []
+      },
+      {
+        "term": "deepseek-r deep",
+        "score": 475.6398,
+        "evidence": []
+      },
+      {
+        "term": "qwen3-235b deep",
+        "score": 464.4955,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "deep research",
+        "score": 32.9192,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "deep multimodal",
+        "score": 30.8134,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "multimodal retrieval",
+        "score": 29.5137,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "deep parsing",
+        "score": 29.4407,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "deep hybrid",
+        "score": 25.9146,
+        "evidence": []
+      },
+      {
+        "term": "page retrieval",
+        "score": 25.6439,
+        "evidence": []
+      },
+      {
+        "term": "document retrieval",
+        "score": 25.4025,
+        "evidence": []
+      },
+      {
+        "term": "deep text",
+        "score": 24.5341,
+        "evidence": []
+      },
+      {
+        "term": "multimodal doc",
+        "score": 23.9517,
+        "evidence": []
+      },
+      {
+        "term": "research systems",
+        "score": 23.605,
+        "evidence": []
+      },
+      {
+        "term": "chunk retrieval",
+        "score": 22.9846,
+        "evidence": []
+      },
+      {
+        "term": "research evaluation",
+        "score": 22.7508,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "deep research",
+        "score": 711.725,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "deep multimodal",
+        "score": 656.6558,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "multimodal retrieval",
+        "score": 629.5503,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "deep parsing",
+        "score": 616.6583,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "page retrieval",
+        "score": 615.8412,
+        "evidence": []
+      },
+      {
+        "term": "page layout",
+        "score": 615.0334,
+        "evidence": []
+      },
+      {
+        "term": "document retrieval",
+        "score": 560.2518,
+        "evidence": []
+      },
+      {
+        "term": "deep text",
+        "score": 546.949,
+        "evidence": []
+      },
+      {
+        "term": "multimodal doc",
+        "score": 524.111,
+        "evidence": []
+      },
+      {
+        "term": "deep hybrid",
+        "score": 523.3967,
+        "evidence": []
+      },
+      {
+        "term": "layout recall",
+        "score": 502.8464,
+        "evidence": []
+      },
+      {
+        "term": "deepseek-r deep",
+        "score": 477.3508,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "deep research",
+        "score": 32.9192,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "deep multimodal",
+        "score": 30.8134,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "multimodal retrieval",
+        "score": 29.5137,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "deep parsing",
+        "score": 29.4407,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "deep hybrid",
+        "score": 25.9146,
+        "evidence": []
+      },
+      {
+        "term": "page retrieval",
+        "score": 25.6439,
+        "evidence": []
+      },
+      {
+        "term": "document retrieval",
+        "score": 25.4025,
+        "evidence": []
+      },
+      {
+        "term": "deep text",
+        "score": 24.5341,
+        "evidence": []
+      },
+      {
+        "term": "multimodal doc",
+        "score": 23.9517,
+        "evidence": []
+      },
+      {
+        "term": "research systems",
+        "score": 23.605,
+        "evidence": []
+      },
+      {
+        "term": "chunk retrieval",
+        "score": 22.9846,
+        "evidence": []
+      },
+      {
+        "term": "research evaluation",
+        "score": 22.7508,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "com plex",
+        "score": 1540.745,
+        "evidence": []
+      },
+      {
+        "term": "solve com",
+        "score": 1540.745,
+        "evidence": []
+      },
+      {
+        "term": "shurui huang",
+        "score": 1536.0027,
+        "evidence": []
+      },
+      {
+        "term": "gang wang",
+        "score": 1450.8082,
+        "evidence": []
+      },
+      {
+        "term": "yichao wang",
+        "score": 1450.8082,
+        "evidence": []
+      },
+      {
+        "term": "plex questions",
+        "score": 1250.1191,
+        "evidence": []
+      },
+      {
+        "term": "fangda",
+        "score": 1215.2728,
+        "evidence": []
+      },
+      {
+        "term": "wenjun",
+        "score": 1215.2728,
+        "evidence": []
+      },
+      {
+        "term": "zhi",
+        "score": 1215.2728,
+        "evidence": []
+      },
+      {
+        "term": "zhi zhang",
+        "score": 1215.2728,
+        "evidence": []
+      },
+      {
+        "term": "itera tive",
+        "score": 1143.5331,
+        "evidence": []
+      },
+      {
+        "term": "finan cial",
+        "score": 1058.2345,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-abstract": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "deep research",
+          "score": 2.846,
+          "evidence": []
+        },
+        {
+          "term": "multimodal document",
+          "score": 1.9002,
+          "evidence": []
+        },
+        {
+          "term": "document parsing",
+          "score": 1.7345,
+          "evidence": []
+        },
+        {
+          "term": "across documents",
+          "score": 1.6977,
+          "evidence": []
+        },
+        {
+          "term": "visual semantics",
+          "score": 1.3691,
+          "evidence": []
+        },
+        {
+          "term": "unified system",
+          "score": 1.1797,
+          "evidence": []
+        },
+        {
+          "term": "work",
+          "score": 1.1299,
+          "evidence": []
+        },
+        {
+          "term": "copies",
+          "score": 1.1231,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "deep research",
+          "score": 65.599,
+          "evidence": []
+        },
+        {
+          "term": "multimodal document",
+          "score": 33.6055,
+          "evidence": []
+        },
+        {
+          "term": "document parsing",
+          "score": 28.4237,
+          "evidence": []
+        },
+        {
+          "term": "across documents",
+          "score": 28.0825,
+          "evidence": []
+        },
+        {
+          "term": "visual semantics",
+          "score": 16.7749,
+          "evidence": []
+        },
+        {
+          "term": "copies",
+          "score": 16.7165,
+          "evidence": []
+        },
+        {
+          "term": "systems",
+          "score": 14.8014,
+          "evidence": []
+        },
+        {
+          "term": "unified system",
+          "score": 14.6753,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "deep research",
+          "score": 3.0097,
+          "evidence": []
+        },
+        {
+          "term": "multimodal document",
+          "score": 2.105,
+          "evidence": []
+        },
+        {
+          "term": "document parsing",
+          "score": 1.874,
+          "evidence": []
+        },
+        {
+          "term": "across documents",
+          "score": 1.5994,
+          "evidence": []
+        },
+        {
+          "term": "unified system",
+          "score": 1.3004,
+          "evidence": []
+        },
+        {
+          "term": "visual semantics",
+          "score": 1.2536,
+          "evidence": []
+        },
+        {
+          "term": "work",
+          "score": 1.1562,
+          "evidence": []
+        },
+        {
+          "term": "zhang",
+          "score": 1.112,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "deep research",
+          "score": 66.6103,
+          "evidence": []
+        },
+        {
+          "term": "multimodal document",
+          "score": 31.1115,
+          "evidence": []
+        },
+        {
+          "term": "document parsing",
+          "score": 31.093,
+          "evidence": []
+        },
+        {
+          "term": "across documents",
+          "score": 25.9642,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 15.4792,
+          "evidence": []
+        },
+        {
+          "term": "questions",
+          "score": 14.2881,
+          "evidence": []
+        },
+        {
+          "term": "doc-researcher",
+          "score": 13.0914,
+          "evidence": []
+        },
+        {
+          "term": "visual semantics",
+          "score": 13.0652,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "deep research",
+          "score": 3.0097,
+          "evidence": []
+        },
+        {
+          "term": "multimodal document",
+          "score": 2.105,
+          "evidence": []
+        },
+        {
+          "term": "document parsing",
+          "score": 1.874,
+          "evidence": []
+        },
+        {
+          "term": "across documents",
+          "score": 1.5994,
+          "evidence": []
+        },
+        {
+          "term": "unified system",
+          "score": 1.3004,
+          "evidence": []
+        },
+        {
+          "term": "visual semantics",
+          "score": 1.2536,
+          "evidence": []
+        },
+        {
+          "term": "work",
+          "score": 1.1562,
+          "evidence": []
+        },
+        {
+          "term": "zhang",
+          "score": 1.112,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "fangda",
+          "score": 197.2601,
+          "evidence": []
+        },
+        {
+          "term": "gang",
+          "score": 197.2601,
+          "evidence": []
+        },
+        {
+          "term": "shurui",
+          "score": 197.2601,
+          "evidence": []
+        },
+        {
+          "term": "wenjun",
+          "score": 197.2601,
+          "evidence": []
+        },
+        {
+          "term": "yichao",
+          "score": 197.2601,
+          "evidence": []
+        },
+        {
+          "term": "zhi",
+          "score": 197.2601,
+          "evidence": []
+        },
+        {
+          "term": "technologies",
+          "score": 146.4795,
+          "evidence": []
+        },
+        {
+          "term": "dexun",
+          "score": 130.0501,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-001-1-introduction": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "deep multimodal",
+          "score": 3.618,
+          "evidence": []
+        },
+        {
+          "term": "deep research",
+          "score": 3.581,
+          "evidence": []
+        },
+        {
+          "term": "multimodal retrieval",
+          "score": 3.3387,
+          "evidence": []
+        },
+        {
+          "term": "plus private",
+          "score": 3.1861,
+          "evidence": []
+        },
+        {
+          "term": "multimodal parsing",
+          "score": 3.1796,
+          "evidence": []
+        },
+        {
+          "term": "doc ument",
+          "score": 3.1577,
+          "evidence": []
+        },
+        {
+          "term": "private hospital",
+          "score": 3.0477,
+          "evidence": []
+        },
+        {
+          "term": "research capabilities",
+          "score": 3.0287,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "deep multimodal",
+          "score": 128.6704,
+          "evidence": []
+        },
+        {
+          "term": "deep research",
+          "score": 122.6543,
+          "evidence": []
+        },
+        {
+          "term": "multimodal retrieval",
+          "score": 115.0914,
+          "evidence": []
+        },
+        {
+          "term": "multimodal parsing",
+          "score": 101.6517,
+          "evidence": []
+        },
+        {
+          "term": "multimodal document",
+          "score": 98.6029,
+          "evidence": []
+        },
+        {
+          "term": "doc ument",
+          "score": 90.06,
+          "evidence": []
+        },
+        {
+          "term": "research capabilities",
+          "score": 89.8351,
+          "evidence": []
+        },
+        {
+          "term": "research workflows",
+          "score": 87.1401,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "deep multimodal",
+          "score": 3.6465,
+          "evidence": []
+        },
+        {
+          "term": "deep research",
+          "score": 3.5723,
+          "evidence": []
+        },
+        {
+          "term": "multimodal retrieval",
+          "score": 3.3837,
+          "evidence": []
+        },
+        {
+          "term": "multimodal parsing",
+          "score": 3.2101,
+          "evidence": []
+        },
+        {
+          "term": "plus private",
+          "score": 3.1869,
+          "evidence": []
+        },
+        {
+          "term": "doc ument",
+          "score": 3.1737,
+          "evidence": []
+        },
+        {
+          "term": "private hospital",
+          "score": 3.0124,
+          "evidence": []
+        },
+        {
+          "term": "research capabilities",
+          "score": 3.001,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "deep multimodal",
+          "score": 128.8873,
+          "evidence": []
+        },
+        {
+          "term": "deep research",
+          "score": 122.6899,
+          "evidence": []
+        },
+        {
+          "term": "multimodal retrieval",
+          "score": 115.7217,
+          "evidence": []
+        },
+        {
+          "term": "multimodal parsing",
+          "score": 101.3176,
+          "evidence": []
+        },
+        {
+          "term": "multimodal document",
+          "score": 99.266,
+          "evidence": []
+        },
+        {
+          "term": "research capabilities",
+          "score": 89.7983,
+          "evidence": []
+        },
+        {
+          "term": "doc ument",
+          "score": 89.7288,
+          "evidence": []
+        },
+        {
+          "term": "research workflows",
+          "score": 87.4599,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "deep multimodal",
+          "score": 3.6465,
+          "evidence": []
+        },
+        {
+          "term": "deep research",
+          "score": 3.5723,
+          "evidence": []
+        },
+        {
+          "term": "multimodal retrieval",
+          "score": 3.3837,
+          "evidence": []
+        },
+        {
+          "term": "multimodal parsing",
+          "score": 3.2101,
+          "evidence": []
+        },
+        {
+          "term": "plus private",
+          "score": 3.1869,
+          "evidence": []
+        },
+        {
+          "term": "doc ument",
+          "score": 3.1737,
+          "evidence": []
+        },
+        {
+          "term": "private hospital",
+          "score": 3.0124,
+          "evidence": []
+        },
+        {
+          "term": "research capabilities",
+          "score": 3.001,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "realistic research",
+          "score": 77.2857,
+          "evidence": []
+        },
+        {
+          "term": "doc ument",
+          "score": 75.2407,
+          "evidence": []
+        },
+        {
+          "term": "private hospital",
+          "score": 68.321,
+          "evidence": []
+        },
+        {
+          "term": "annotated evidence",
+          "score": 64.9399,
+          "evidence": []
+        },
+        {
+          "term": "multi-hop reasoning",
+          "score": 61.8633,
+          "evidence": []
+        },
+        {
+          "term": "evidence chains",
+          "score": 54.7481,
+          "evidence": []
+        },
+        {
+          "term": "reveals",
+          "score": 54.6222,
+          "evidence": []
+        },
+        {
+          "term": "sophisticated",
+          "score": 54.6222,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-002-2-related-work": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "deep parsing",
+          "score": 2.8663,
+          "evidence": []
+        },
+        {
+          "term": "deep research",
+          "score": 2.3891,
+          "evidence": []
+        },
+        {
+          "term": "document parsing",
+          "score": 2.2918,
+          "evidence": []
+        },
+        {
+          "term": "chunk page",
+          "score": 1.8758,
+          "evidence": []
+        },
+        {
+          "term": "page retrieval",
+          "score": 1.865,
+          "evidence": []
+        },
+        {
+          "term": "multimodal document",
+          "score": 1.6711,
+          "evidence": []
+        },
+        {
+          "term": "page screenshots",
+          "score": 1.6536,
+          "evidence": []
+        },
+        {
+          "term": "full-text",
+          "score": 1.2693,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "deep parsing",
+          "score": 72.3542,
+          "evidence": []
+        },
+        {
+          "term": "document parsing",
+          "score": 56.3343,
+          "evidence": []
+        },
+        {
+          "term": "deep research",
+          "score": 45.3571,
+          "evidence": []
+        },
+        {
+          "term": "page retrieval",
+          "score": 28.0305,
+          "evidence": []
+        },
+        {
+          "term": "chunk page",
+          "score": 26.1366,
+          "evidence": []
+        },
+        {
+          "term": "multimodal document",
+          "score": 25.6568,
+          "evidence": []
+        },
+        {
+          "term": "full-text",
+          "score": 21.396,
+          "evidence": []
+        },
+        {
+          "term": "page screenshots",
+          "score": 20.773,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "deep parsing",
+          "score": 2.8727,
+          "evidence": []
+        },
+        {
+          "term": "deep research",
+          "score": 2.4445,
+          "evidence": []
+        },
+        {
+          "term": "document parsing",
+          "score": 2.3624,
+          "evidence": []
+        },
+        {
+          "term": "chunk page",
+          "score": 2.0265,
+          "evidence": []
+        },
+        {
+          "term": "page retrieval",
+          "score": 1.8569,
+          "evidence": []
+        },
+        {
+          "term": "multimodal document",
+          "score": 1.8404,
+          "evidence": []
+        },
+        {
+          "term": "page screenshots",
+          "score": 1.6827,
+          "evidence": []
+        },
+        {
+          "term": "full-text",
+          "score": 1.1619,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "deep parsing",
+          "score": 68.6997,
+          "evidence": []
+        },
+        {
+          "term": "deep research",
+          "score": 50.518,
+          "evidence": []
+        },
+        {
+          "term": "document parsing",
+          "score": 48.2913,
+          "evidence": []
+        },
+        {
+          "term": "multimodal document",
+          "score": 24.9204,
+          "evidence": []
+        },
+        {
+          "term": "chunk page",
+          "score": 24.6097,
+          "evidence": []
+        },
+        {
+          "term": "page retrieval",
+          "score": 22.2502,
+          "evidence": []
+        },
+        {
+          "term": "visual",
+          "score": 16.7375,
+          "evidence": []
+        },
+        {
+          "term": "page screenshots",
+          "score": 16.3099,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "deep parsing",
+          "score": 2.8727,
+          "evidence": []
+        },
+        {
+          "term": "deep research",
+          "score": 2.4445,
+          "evidence": []
+        },
+        {
+          "term": "document parsing",
+          "score": 2.3624,
+          "evidence": []
+        },
+        {
+          "term": "chunk page",
+          "score": 2.0265,
+          "evidence": []
+        },
+        {
+          "term": "page retrieval",
+          "score": 1.8569,
+          "evidence": []
+        },
+        {
+          "term": "multimodal document",
+          "score": 1.8404,
+          "evidence": []
+        },
+        {
+          "term": "page screenshots",
+          "score": 1.6827,
+          "evidence": []
+        },
+        {
+          "term": "full-text",
+          "score": 1.1619,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "equation",
+          "score": 44.3835,
+          "evidence": []
+        },
+        {
+          "term": "vlm-based",
+          "score": 43.8946,
+          "evidence": []
+        },
+        {
+          "term": "deep parsing",
+          "score": 42.5712,
+          "evidence": []
+        },
+        {
+          "term": "one-time",
+          "score": 41.7851,
+          "evidence": []
+        },
+        {
+          "term": "refiner",
+          "score": 41.0064,
+          "evidence": []
+        },
+        {
+          "term": "synthesizes",
+          "score": 41.0064,
+          "evidence": []
+        },
+        {
+          "term": "reporter",
+          "score": 39.4119,
+          "evidence": []
+        },
+        {
+          "term": "tradeoffs",
+          "score": 39.1745,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-003-33-multimodal-deep-research": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "multimodal deep",
+          "score": 3.5931,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "deep research",
+          "score": 3.5912,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "strategies",
+          "score": 0.8082,
+          "evidence": []
+        },
+        {
+          "term": "systems",
+          "score": 0.7899,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "multimodal deep",
+          "score": 49.8666,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "deep research",
+          "score": 49.1992,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "systems",
+          "score": 11.1011,
+          "evidence": []
+        },
+        {
+          "term": "strategies",
+          "score": 9.758,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "deep research",
+          "score": 2.3699,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "multimodal deep",
+          "score": 2.1552,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "parsing",
+          "score": 0.4752,
+          "evidence": []
+        },
+        {
+          "term": "doc-researcher",
+          "score": 0.4365,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "deep research",
+          "score": 37.6508,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "multimodal deep",
+          "score": 36.4199,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "parsing",
+          "score": 6.5795,
+          "evidence": []
+        },
+        {
+          "term": "retrieval",
+          "score": 5.4126,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "deep research",
+          "score": 2.3699,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "multimodal deep",
+          "score": 2.1552,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "parsing",
+          "score": 0.4752,
+          "evidence": []
+        },
+        {
+          "term": "doc-researcher",
+          "score": 0.4365,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "multimodal deep",
+          "score": 124.275,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "deep research",
+          "score": 95.8099,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "single-round",
+          "score": 63.379,
+          "evidence": []
+        },
+        {
+          "term": "simplistic",
+          "score": 59.0949,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-004-3-method-doc-researcher": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "deep parsing",
+          "score": 1.7143,
+          "evidence": []
+        },
+        {
+          "term": "doc-researcher",
+          "score": 0.9729,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "multimodal",
+          "score": 0.712,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "deep parsing",
+          "score": 24.5713,
+          "evidence": []
+        },
+        {
+          "term": "doc-researcher",
+          "score": 8.787,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "multimodal",
+          "score": 8.2505,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "deep parsing",
+          "score": 0.6862,
+          "evidence": []
+        },
+        {
+          "term": "doc-researcher",
+          "score": 0.548,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "research",
+          "score": 0.2976,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "deep parsing",
+          "score": 14.1956,
+          "evidence": []
+        },
+        {
+          "term": "doc-researcher",
+          "score": 7.6479,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "research",
+          "score": 5.3698,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "deep parsing",
+          "score": 0.6862,
+          "evidence": []
+        },
+        {
+          "term": "doc-researcher",
+          "score": 0.548,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "research",
+          "score": 0.2976,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "fangda",
+          "score": 182.4482,
+          "evidence": []
+        },
+        {
+          "term": "gang",
+          "score": 182.4482,
+          "evidence": []
+        },
+        {
+          "term": "shurui",
+          "score": 182.4482,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-005-31-deep-multimodal-document-parsing": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "through layout-aware",
+          "score": 1.7375,
+          "evidence": []
+        },
+        {
+          "term": "multimodal",
+          "score": 1.424,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "box coordinates",
+          "score": 1.3915,
+          "evidence": []
+        },
+        {
+          "term": "parsing",
+          "score": 1.3433,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "document",
+          "score": 1.278,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "bounding box",
+          "score": 1.2547,
+          "evidence": []
+        },
+        {
+          "term": "doc",
+          "score": 1.2025,
+          "evidence": []
+        },
+        {
+          "term": "elements",
+          "score": 1.0576,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "through layout-aware",
+          "score": 25.5698,
+          "evidence": []
+        },
+        {
+          "term": "elements",
+          "score": 19.8136,
+          "evidence": []
+        },
+        {
+          "term": "doc",
+          "score": 18.2422,
+          "evidence": []
+        },
+        {
+          "term": "document",
+          "score": 17.7081,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "multimodal",
+          "score": 16.5009,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "box coordinates",
+          "score": 16.1818,
+          "evidence": []
+        },
+        {
+          "term": "parsing",
+          "score": 15.6557,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "bounding box",
+          "score": 14.4872,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "parsing",
+          "score": 1.3007,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "document",
+          "score": 1.0177,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "through layout-aware",
+          "score": 0.977,
+          "evidence": []
+        },
+        {
+          "term": "multimodal",
+          "score": 0.9683,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "page",
+          "score": 0.9554,
+          "evidence": []
+        },
+        {
+          "term": "bounding box",
+          "score": 0.8971,
+          "evidence": []
+        },
+        {
+          "term": "box coordinates",
+          "score": 0.8859,
+          "evidence": []
+        },
+        {
+          "term": "doc",
+          "score": 0.8219,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "parsing",
+          "score": 14.1823,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "multimodal",
+          "score": 13.5669,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "document",
+          "score": 10.6866,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "doc",
+          "score": 9.919,
+          "evidence": []
+        },
+        {
+          "term": "deep",
+          "score": 8.7526,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "page",
+          "score": 7.5094,
+          "evidence": []
+        },
+        {
+          "term": "layout",
+          "score": 7.1728,
+          "evidence": []
+        },
+        {
+          "term": "retrieval",
+          "score": 6.1402,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "parsing",
+          "score": 1.3007,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "document",
+          "score": 1.0177,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "through layout-aware",
+          "score": 0.977,
+          "evidence": []
+        },
+        {
+          "term": "multimodal",
+          "score": 0.9683,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "page",
+          "score": 0.9554,
+          "evidence": []
+        },
+        {
+          "term": "bounding box",
+          "score": 0.8971,
+          "evidence": []
+        },
+        {
+          "term": "box coordinates",
+          "score": 0.8859,
+          "evidence": []
+        },
+        {
+          "term": "doc",
+          "score": 0.8219,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "equation",
+          "score": 53.006,
+          "evidence": []
+        },
+        {
+          "term": "box coordinates",
+          "score": 52.4565,
+          "evidence": []
+        },
+        {
+          "term": "one-time",
+          "score": 51.7269,
+          "evidence": []
+        },
+        {
+          "term": "uments",
+          "score": 47.0555,
+          "evidence": []
+        },
+        {
+          "term": "unimernet",
+          "score": 44.5018,
+          "evidence": []
+        },
+        {
+          "term": "reporter",
+          "score": 43.8211,
+          "evidence": []
+        },
+        {
+          "term": "refiner",
+          "score": 43.2585,
+          "evidence": []
+        },
+        {
+          "term": "synthesizes",
+          "score": 43.2585,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-32-multimodal-retrieval-architecture": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "retrieval",
+          "score": 2.7715,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "human domains",
+          "score": 2.6704,
+          "evidence": []
+        },
+        {
+          "term": "expert domains",
+          "score": 2.6486,
+          "evidence": []
+        },
+        {
+          "term": "computational efficiency",
+          "score": 2.4475,
+          "evidence": []
+        },
+        {
+          "term": "multimodal",
+          "score": 2.3225,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hybrid retrieval",
+          "score": 2.1593,
+          "evidence": []
+        },
+        {
+          "term": "visual elements",
+          "score": 1.7588,
+          "evidence": []
+        },
+        {
+          "term": "vision retrievers",
+          "score": 1.73,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "retrieval",
+          "score": 74.8682,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "human domains",
+          "score": 51.8234,
+          "evidence": []
+        },
+        {
+          "term": "hybrid retrieval",
+          "score": 46.5552,
+          "evidence": []
+        },
+        {
+          "term": "expert domains",
+          "score": 43.8586,
+          "evidence": []
+        },
+        {
+          "term": "multimodal",
+          "score": 41.2524,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "computational efficiency",
+          "score": 40.1828,
+          "evidence": []
+        },
+        {
+          "term": "visual elements",
+          "score": 28.2658,
+          "evidence": []
+        },
+        {
+          "term": "textual conversion",
+          "score": 23.2556,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "retrieval",
+          "score": 2.7977,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "human domains",
+          "score": 2.7093,
+          "evidence": []
+        },
+        {
+          "term": "expert domains",
+          "score": 2.6153,
+          "evidence": []
+        },
+        {
+          "term": "computational efficiency",
+          "score": 2.4914,
+          "evidence": []
+        },
+        {
+          "term": "multimodal",
+          "score": 2.3997,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hybrid retrieval",
+          "score": 2.1998,
+          "evidence": []
+        },
+        {
+          "term": "visual elements",
+          "score": 1.836,
+          "evidence": []
+        },
+        {
+          "term": "textual conversion",
+          "score": 1.7628,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "retrieval",
+          "score": 78.3035,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "human domains",
+          "score": 49.554,
+          "evidence": []
+        },
+        {
+          "term": "hybrid retrieval",
+          "score": 48.6583,
+          "evidence": []
+        },
+        {
+          "term": "expert domains",
+          "score": 40.5495,
+          "evidence": []
+        },
+        {
+          "term": "multimodal",
+          "score": 39.3698,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "computational efficiency",
+          "score": 38.7324,
+          "evidence": []
+        },
+        {
+          "term": "visual elements",
+          "score": 31.0557,
+          "evidence": []
+        },
+        {
+          "term": "textual conversion",
+          "score": 23.1742,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "retrieval",
+          "score": 2.7977,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "human domains",
+          "score": 2.7093,
+          "evidence": []
+        },
+        {
+          "term": "expert domains",
+          "score": 2.6153,
+          "evidence": []
+        },
+        {
+          "term": "computational efficiency",
+          "score": 2.4914,
+          "evidence": []
+        },
+        {
+          "term": "multimodal",
+          "score": 2.3997,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hybrid retrieval",
+          "score": 2.1998,
+          "evidence": []
+        },
+        {
+          "term": "visual elements",
+          "score": 1.836,
+          "evidence": []
+        },
+        {
+          "term": "textual conversion",
+          "score": 1.7628,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "computational efficiency",
+          "score": 74.2365,
+          "evidence": []
+        },
+        {
+          "term": "expert domains",
+          "score": 64.8732,
+          "evidence": []
+        },
+        {
+          "term": "reporter",
+          "score": 61.432,
+          "evidence": []
+        },
+        {
+          "term": "analyzes",
+          "score": 56.1351,
+          "evidence": []
+        },
+        {
+          "term": "trade-off",
+          "score": 56.1351,
+          "evidence": []
+        },
+        {
+          "term": "refiner",
+          "score": 55.1297,
+          "evidence": []
+        },
+        {
+          "term": "synthesizes",
+          "score": 55.1297,
+          "evidence": []
+        },
+        {
+          "term": "worth",
+          "score": 53.5294,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-008-41-motivation-of-m4docbench": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "deep research",
+          "score": 2.1579,
+          "evidence": []
+        },
+        {
+          "term": "m4docbench",
+          "score": 1.4677,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "multimodal document",
+          "score": 1.4234,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 1.2554,
+          "evidence": []
+        },
+        {
+          "term": "multi-modal",
+          "score": 1.114,
+          "evidence": []
+        },
+        {
+          "term": "questions",
+          "score": 1.0136,
+          "evidence": []
+        },
+        {
+          "term": "multi-turn",
+          "score": 0.9976,
+          "evidence": []
+        },
+        {
+          "term": "multi-hop",
+          "score": 0.9924,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "deep research",
+          "score": 36.6416,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 24.4085,
+          "evidence": []
+        },
+        {
+          "term": "multimodal document",
+          "score": 19.3181,
+          "evidence": []
+        },
+        {
+          "term": "m4docbench",
+          "score": 17.2776,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "questions",
+          "score": 16.7434,
+          "evidence": []
+        },
+        {
+          "term": "multi-modal",
+          "score": 16.047,
+          "evidence": []
+        },
+        {
+          "term": "benchmarks",
+          "score": 14.637,
+          "evidence": []
+        },
+        {
+          "term": "multi-turn",
+          "score": 14.637,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "deep research",
+          "score": 2.186,
+          "evidence": []
+        },
+        {
+          "term": "m4docbench",
+          "score": 1.4766,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "multimodal document",
+          "score": 1.4664,
+          "evidence": []
+        },
+        {
+          "term": "questions",
+          "score": 1.0487,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 1.0114,
+          "evidence": []
+        },
+        {
+          "term": "multi-turn",
+          "score": 0.8574,
+          "evidence": []
+        },
+        {
+          "term": "evaluation",
+          "score": 0.8281,
+          "evidence": []
+        },
+        {
+          "term": "benchmarks",
+          "score": 0.8046,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "deep research",
+          "score": 37.7072,
+          "evidence": []
+        },
+        {
+          "term": "multimodal document",
+          "score": 20.9537,
+          "evidence": []
+        },
+        {
+          "term": "m4docbench",
+          "score": 11.2679,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "evidence",
+          "score": 10.8508,
+          "evidence": []
+        },
+        {
+          "term": "questions",
+          "score": 9.729,
+          "evidence": []
+        },
+        {
+          "term": "evaluation",
+          "score": 8.5782,
+          "evidence": []
+        },
+        {
+          "term": "parsing",
+          "score": 8.1477,
+          "evidence": []
+        },
+        {
+          "term": "systems",
+          "score": 7.4135,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "deep research",
+          "score": 2.186,
+          "evidence": []
+        },
+        {
+          "term": "m4docbench",
+          "score": 1.4766,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "multimodal document",
+          "score": 1.4664,
+          "evidence": []
+        },
+        {
+          "term": "questions",
+          "score": 1.0487,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 1.0114,
+          "evidence": []
+        },
+        {
+          "term": "multi-turn",
+          "score": 0.8574,
+          "evidence": []
+        },
+        {
+          "term": "evaluation",
+          "score": 0.8281,
+          "evidence": []
+        },
+        {
+          "term": "benchmarks",
+          "score": 0.8046,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "averaging",
+          "score": 105.0459,
+          "evidence": []
+        },
+        {
+          "term": "reveals",
+          "score": 83.0897,
+          "evidence": []
+        },
+        {
+          "term": "sophisticated",
+          "score": 83.0897,
+          "evidence": []
+        },
+        {
+          "term": "challenging",
+          "score": 78.5945,
+          "evidence": []
+        },
+        {
+          "term": "question-answer",
+          "score": 74.9816,
+          "evidence": []
+        },
+        {
+          "term": "realistic",
+          "score": 70.4697,
+          "evidence": []
+        },
+        {
+          "term": "layout-level",
+          "score": 69.1283,
+          "evidence": []
+        },
+        {
+          "term": "rigorous",
+          "score": 66.5226,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-009-42-domain-and-document-collection": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "averaging",
+          "score": 1.2743,
+          "evidence": []
+        },
+        {
+          "term": "insurance",
+          "score": 1.2482,
+          "evidence": []
+        },
+        {
+          "term": "words",
+          "score": 1.2095,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 1.042,
+          "evidence": []
+        },
+        {
+          "term": "finance",
+          "score": 1.0275,
+          "evidence": []
+        },
+        {
+          "term": "domain",
+          "score": 1.0185,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "words",
+          "score": 19.0449,
+          "evidence": []
+        },
+        {
+          "term": "averaging",
+          "score": 18.7959,
+          "evidence": []
+        },
+        {
+          "term": "insurance",
+          "score": 18.7959,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 16.056,
+          "evidence": []
+        },
+        {
+          "term": "pages",
+          "score": 15.8509,
+          "evidence": []
+        },
+        {
+          "term": "finance",
+          "score": 12.5306,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "research",
+          "score": 0.622,
+          "evidence": []
+        },
+        {
+          "term": "documents",
+          "score": 0.4687,
+          "evidence": []
+        },
+        {
+          "term": "questions",
+          "score": 0.4584,
+          "evidence": []
+        },
+        {
+          "term": "pages",
+          "score": 0.4001,
+          "evidence": []
+        },
+        {
+          "term": "words",
+          "score": 0.3887,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 0.3634,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "research",
+          "score": 7.6236,
+          "evidence": []
+        },
+        {
+          "term": "document",
+          "score": 5.9007,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "multimodal",
+          "score": 4.6307,
+          "evidence": []
+        },
+        {
+          "term": "deep",
+          "score": 3.945,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 3.7296,
+          "evidence": []
+        },
+        {
+          "term": "layout",
+          "score": 3.4845,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "research",
+          "score": 0.622,
+          "evidence": []
+        },
+        {
+          "term": "documents",
+          "score": 0.4687,
+          "evidence": []
+        },
+        {
+          "term": "pages",
+          "score": 0.4001,
+          "evidence": []
+        },
+        {
+          "term": "words",
+          "score": 0.3887,
+          "evidence": []
+        },
+        {
+          "term": "averaging",
+          "score": 0.3603,
+          "evidence": []
+        },
+        {
+          "term": "domain",
+          "score": 0.3236,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "averaging",
+          "score": 502.6342,
+          "evidence": []
+        },
+        {
+          "term": "gather",
+          "score": 338.7827,
+          "evidence": []
+        },
+        {
+          "term": "diverse",
+          "score": 331.1298,
+          "evidence": []
+        },
+        {
+          "term": "iclr",
+          "score": 324.9864,
+          "evidence": []
+        },
+        {
+          "term": "market",
+          "score": 324.9864,
+          "evidence": []
+        },
+        {
+          "term": "neurips",
+          "score": 324.9864,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-010-43-annotation-process": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "annotation",
+          "score": 1.9932,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "research systems",
+          "score": 1.6874,
+          "evidence": []
+        },
+        {
+          "term": "deep research",
+          "score": 1.6092,
+          "evidence": []
+        },
+        {
+          "term": "evaluation",
+          "score": 1.3386,
+          "evidence": []
+        },
+        {
+          "term": "questions",
+          "score": 1.0136,
+          "evidence": []
+        },
+        {
+          "term": "annotate",
+          "score": 0.9981,
+          "evidence": []
+        },
+        {
+          "term": "checklists",
+          "score": 0.9981,
+          "evidence": []
+        },
+        {
+          "term": "enabling",
+          "score": 0.9083,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "annotation",
+          "score": 28.5673,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "evaluation",
+          "score": 26.8413,
+          "evidence": []
+        },
+        {
+          "term": "research systems",
+          "score": 23.1431,
+          "evidence": []
+        },
+        {
+          "term": "deep research",
+          "score": 20.4137,
+          "evidence": []
+        },
+        {
+          "term": "questions",
+          "score": 16.7434,
+          "evidence": []
+        },
+        {
+          "term": "enabling",
+          "score": 13.1805,
+          "evidence": []
+        },
+        {
+          "term": "annotate",
+          "score": 12.5306,
+          "evidence": []
+        },
+        {
+          "term": "checklists",
+          "score": 12.5306,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "research systems",
+          "score": 1.6051,
+          "evidence": []
+        },
+        {
+          "term": "deep research",
+          "score": 1.5824,
+          "evidence": []
+        },
+        {
+          "term": "annotation",
+          "score": 1.5126,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "evaluation",
+          "score": 1.1585,
+          "evidence": []
+        },
+        {
+          "term": "questions",
+          "score": 0.8892,
+          "evidence": []
+        },
+        {
+          "term": "chunk",
+          "score": 0.8525,
+          "evidence": []
+        },
+        {
+          "term": "enabling",
+          "score": 0.7947,
+          "evidence": []
+        },
+        {
+          "term": "documents",
+          "score": 0.7609,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "deep research",
+          "score": 19.3265,
+          "evidence": []
+        },
+        {
+          "term": "research systems",
+          "score": 15.387,
+          "evidence": []
+        },
+        {
+          "term": "retrieval",
+          "score": 8.9492,
+          "evidence": []
+        },
+        {
+          "term": "documents",
+          "score": 7.6573,
+          "evidence": []
+        },
+        {
+          "term": "multimodal",
+          "score": 7.072,
+          "evidence": []
+        },
+        {
+          "term": "questions",
+          "score": 6.4111,
+          "evidence": []
+        },
+        {
+          "term": "chunk",
+          "score": 6.3581,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 6.1972,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "research systems",
+          "score": 1.6051,
+          "evidence": []
+        },
+        {
+          "term": "deep research",
+          "score": 1.5824,
+          "evidence": []
+        },
+        {
+          "term": "annotation",
+          "score": 1.5126,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "evaluation",
+          "score": 1.1585,
+          "evidence": []
+        },
+        {
+          "term": "questions",
+          "score": 0.8892,
+          "evidence": []
+        },
+        {
+          "term": "chunk",
+          "score": 0.8525,
+          "evidence": []
+        },
+        {
+          "term": "enabling",
+          "score": 0.7947,
+          "evidence": []
+        },
+        {
+          "term": "documents",
+          "score": 0.7609,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "challenging",
+          "score": 109.8064,
+          "evidence": []
+        },
+        {
+          "term": "checklists",
+          "score": 86.6096,
+          "evidence": []
+        },
+        {
+          "term": "annotate",
+          "score": 82.3638,
+          "evidence": []
+        },
+        {
+          "term": "lacking",
+          "score": 78.9595,
+          "evidence": []
+        },
+        {
+          "term": "ground-truth",
+          "score": 73.2631,
+          "evidence": []
+        },
+        {
+          "term": "charac",
+          "score": 71.9932,
+          "evidence": []
+        },
+        {
+          "term": "subquery",
+          "score": 71.9932,
+          "evidence": []
+        },
+        {
+          "term": "teristics",
+          "score": 71.9932,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-011-44-benchmark-statistics": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "questions require",
+          "score": 1.6883,
+          "evidence": []
+        },
+        {
+          "term": "average",
+          "score": 1.1388,
+          "evidence": []
+        },
+        {
+          "term": "statistics",
+          "score": 0.9242,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pages",
+          "score": 0.8143,
+          "evidence": []
+        },
+        {
+          "term": "complexity",
+          "score": 0.7977,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "questions require",
+          "score": 27.9782,
+          "evidence": []
+        },
+        {
+          "term": "average",
+          "score": 16.7165,
+          "evidence": []
+        },
+        {
+          "term": "pages",
+          "score": 11.8881,
+          "evidence": []
+        },
+        {
+          "term": "documents",
+          "score": 10.6718,
+          "evidence": []
+        },
+        {
+          "term": "complexity",
+          "score": 10.0251,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "questions require",
+          "score": 0.7932,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.6232,
+          "evidence": []
+        },
+        {
+          "term": "documents",
+          "score": 0.5199,
+          "evidence": []
+        },
+        {
+          "term": "benchmark",
+          "score": 0.4614,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "evaluation",
+          "score": 0.4479,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "research",
+          "score": 7.7336,
+          "evidence": []
+        },
+        {
+          "term": "questions require",
+          "score": 5.7251,
+          "evidence": []
+        },
+        {
+          "term": "deep",
+          "score": 5.119,
+          "evidence": []
+        },
+        {
+          "term": "documents",
+          "score": 4.9072,
+          "evidence": []
+        },
+        {
+          "term": "multimodal",
+          "score": 4.4143,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "questions require",
+          "score": 0.7932,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.6232,
+          "evidence": []
+        },
+        {
+          "term": "documents",
+          "score": 0.5199,
+          "evidence": []
+        },
+        {
+          "term": "benchmark",
+          "score": 0.4614,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "evaluation",
+          "score": 0.4479,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "averaging",
+          "score": 164.8494,
+          "evidence": []
+        },
+        {
+          "term": "challenging",
+          "score": 141.2302,
+          "evidence": []
+        },
+        {
+          "term": "average",
+          "score": 135.183,
+          "evidence": []
+        },
+        {
+          "term": "gather",
+          "score": 98.606,
+          "evidence": []
+        },
+        {
+          "term": "balanced",
+          "score": 95.4613,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-013-51-evaluation-metrics-and-benchmarks": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "bge-m jina",
+          "score": 3.3652,
+          "evidence": []
+        },
+        {
+          "term": "multi reranking",
+          "score": 3.0892,
+          "evidence": []
+        },
+        {
+          "term": "qwen jina",
+          "score": 2.8314,
+          "evidence": []
+        },
+        {
+          "term": "evaluation",
+          "score": 2.6773,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "dense",
+          "score": 2.6613,
+          "evidence": []
+        },
+        {
+          "term": "text vision",
+          "score": 2.209,
+          "evidence": []
+        },
+        {
+          "term": "retrieval performance",
+          "score": 2.1804,
+          "evidence": []
+        },
+        {
+          "term": "vision hybrid",
+          "score": 2.1675,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "dense",
+          "score": 120.3009,
+          "evidence": []
+        },
+        {
+          "term": "multi reranking",
+          "score": 75.2645,
+          "evidence": []
+        },
+        {
+          "term": "bge-m jina",
+          "score": 74.1641,
+          "evidence": []
+        },
+        {
+          "term": "evaluation",
+          "score": 53.6825,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "jina-embedding-v",
+          "score": 52.7385,
+          "evidence": []
+        },
+        {
+          "term": "qwen jina",
+          "score": 51.206,
+          "evidence": []
+        },
+        {
+          "term": "retrieval performance",
+          "score": 46.9566,
+          "evidence": []
+        },
+        {
+          "term": "multimodal retrieval",
+          "score": 45.6846,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "bge-m jina",
+          "score": 3.3057,
+          "evidence": []
+        },
+        {
+          "term": "multi reranking",
+          "score": 2.9822,
+          "evidence": []
+        },
+        {
+          "term": "qwen jina",
+          "score": 2.703,
+          "evidence": []
+        },
+        {
+          "term": "evaluation",
+          "score": 2.6914,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "dense",
+          "score": 2.643,
+          "evidence": []
+        },
+        {
+          "term": "retrieval performance",
+          "score": 2.2578,
+          "evidence": []
+        },
+        {
+          "term": "text vision",
+          "score": 2.2498,
+          "evidence": []
+        },
+        {
+          "term": "vision hybrid",
+          "score": 2.2295,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "dense",
+          "score": 119.857,
+          "evidence": []
+        },
+        {
+          "term": "multi reranking",
+          "score": 74.1967,
+          "evidence": []
+        },
+        {
+          "term": "bge-m jina",
+          "score": 73.4011,
+          "evidence": []
+        },
+        {
+          "term": "evaluation",
+          "score": 54.6269,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "jina-embedding-v",
+          "score": 52.286,
+          "evidence": []
+        },
+        {
+          "term": "qwen jina",
+          "score": 50.2019,
+          "evidence": []
+        },
+        {
+          "term": "retrieval performance",
+          "score": 49.2813,
+          "evidence": []
+        },
+        {
+          "term": "multimodal retrieval",
+          "score": 45.8475,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "bge-m jina",
+          "score": 3.3057,
+          "evidence": []
+        },
+        {
+          "term": "multi reranking",
+          "score": 2.9822,
+          "evidence": []
+        },
+        {
+          "term": "qwen jina",
+          "score": 2.703,
+          "evidence": []
+        },
+        {
+          "term": "evaluation",
+          "score": 2.6914,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "dense",
+          "score": 2.643,
+          "evidence": []
+        },
+        {
+          "term": "retrieval performance",
+          "score": 2.2578,
+          "evidence": []
+        },
+        {
+          "term": "text vision",
+          "score": 2.2498,
+          "evidence": []
+        },
+        {
+          "term": "vision hybrid",
+          "score": 2.2295,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "metrics",
+          "score": 245.2,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "multi reranking",
+          "score": 232.2521,
+          "evidence": []
+        },
+        {
+          "term": "bge-m jina",
+          "score": 217.8548,
+          "evidence": []
+        },
+        {
+          "term": "sparse",
+          "score": 203.5377,
+          "evidence": []
+        },
+        {
+          "term": "jina-embedding-v",
+          "score": 199.6644,
+          "evidence": []
+        },
+        {
+          "term": "dsewiki",
+          "score": 183.1956,
+          "evidence": []
+        },
+        {
+          "term": "dense",
+          "score": 169.5689,
+          "evidence": []
+        },
+        {
+          "term": "decomposed",
+          "score": 162.8691,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-014-52-system-setting-and-baselines": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "vision retrievers",
+          "score": 3.542,
+          "evidence": []
+        },
+        {
+          "term": "text retrievers",
+          "score": 2.912,
+          "evidence": []
+        },
+        {
+          "term": "retrievers encode",
+          "score": 2.6781,
+          "evidence": []
+        },
+        {
+          "term": "text retrieval",
+          "score": 2.3867,
+          "evidence": []
+        },
+        {
+          "term": "page screenshots",
+          "score": 2.2009,
+          "evidence": []
+        },
+        {
+          "term": "visual chunks",
+          "score": 2.1262,
+          "evidence": []
+        },
+        {
+          "term": "doc-researcher",
+          "score": 1.9883,
+          "evidence": []
+        },
+        {
+          "term": "qwen3-235b",
+          "score": 1.965,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "vision retrievers",
+          "score": 85.2446,
+          "evidence": []
+        },
+        {
+          "term": "text retrievers",
+          "score": 77.8834,
+          "evidence": []
+        },
+        {
+          "term": "doc-researcher",
+          "score": 70.296,
+          "evidence": []
+        },
+        {
+          "term": "text retrieval",
+          "score": 63.7747,
+          "evidence": []
+        },
+        {
+          "term": "deep",
+          "score": 62.7879,
+          "evidence": []
+        },
+        {
+          "term": "retrievers encode",
+          "score": 55.0152,
+          "evidence": []
+        },
+        {
+          "term": "jina",
+          "score": 52.7385,
+          "evidence": []
+        },
+        {
+          "term": "deepseek-r",
+          "score": 50.1494,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "vision retrievers",
+          "score": 3.4616,
+          "evidence": []
+        },
+        {
+          "term": "text retrievers",
+          "score": 2.8859,
+          "evidence": []
+        },
+        {
+          "term": "retrievers encode",
+          "score": 2.6115,
+          "evidence": []
+        },
+        {
+          "term": "text retrieval",
+          "score": 2.4147,
+          "evidence": []
+        },
+        {
+          "term": "visual chunks",
+          "score": 2.2231,
+          "evidence": []
+        },
+        {
+          "term": "page screenshots",
+          "score": 2.178,
+          "evidence": []
+        },
+        {
+          "term": "doc-researcher",
+          "score": 1.9605,
+          "evidence": []
+        },
+        {
+          "term": "jina",
+          "score": 1.9381,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "vision retrievers",
+          "score": 84.3597,
+          "evidence": []
+        },
+        {
+          "term": "text retrievers",
+          "score": 77.6616,
+          "evidence": []
+        },
+        {
+          "term": "doc-researcher",
+          "score": 70.4427,
+          "evidence": []
+        },
+        {
+          "term": "deep",
+          "score": 63.7715,
+          "evidence": []
+        },
+        {
+          "term": "text retrieval",
+          "score": 63.7405,
+          "evidence": []
+        },
+        {
+          "term": "retrievers encode",
+          "score": 54.1615,
+          "evidence": []
+        },
+        {
+          "term": "jina",
+          "score": 52.1659,
+          "evidence": []
+        },
+        {
+          "term": "deepseek-r",
+          "score": 49.958,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "vision retrievers",
+          "score": 3.4616,
+          "evidence": []
+        },
+        {
+          "term": "text retrievers",
+          "score": 2.8859,
+          "evidence": []
+        },
+        {
+          "term": "retrievers encode",
+          "score": 2.6115,
+          "evidence": []
+        },
+        {
+          "term": "text retrieval",
+          "score": 2.4147,
+          "evidence": []
+        },
+        {
+          "term": "visual chunks",
+          "score": 2.2231,
+          "evidence": []
+        },
+        {
+          "term": "page screenshots",
+          "score": 2.178,
+          "evidence": []
+        },
+        {
+          "term": "doc-researcher",
+          "score": 1.9605,
+          "evidence": []
+        },
+        {
+          "term": "jina",
+          "score": 1.9381,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "vision retrievers",
+          "score": 155.5907,
+          "evidence": []
+        },
+        {
+          "term": "colqwen-gen",
+          "score": 153.9406,
+          "evidence": []
+        },
+        {
+          "term": "long-context",
+          "score": 142.8265,
+          "evidence": []
+        },
+        {
+          "term": "retrievers encode",
+          "score": 141.9931,
+          "evidence": []
+        },
+        {
+          "term": "internvl",
+          "score": 138.8845,
+          "evidence": []
+        },
+        {
+          "term": "baseline",
+          "score": 133.9626,
+          "evidence": []
+        },
+        {
+          "term": "parametric",
+          "score": 133.9626,
+          "evidence": []
+        },
+        {
+          "term": "backbone",
+          "score": 129.7159,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-015-53-multimodal-retrieval-system-results": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "retrieval",
+          "score": 2.7715,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hybrid methods",
+          "score": 1.6063,
+          "evidence": []
+        },
+        {
+          "term": "recall",
+          "score": 1.2365,
+          "evidence": []
+        },
+        {
+          "term": "qwen3-embedding",
+          "score": 1.1443,
+          "evidence": []
+        },
+        {
+          "term": "sub",
+          "score": 1.1319,
+          "evidence": []
+        },
+        {
+          "term": "performance",
+          "score": 1.0027,
+          "evidence": []
+        },
+        {
+          "term": "jina-embedding-v",
+          "score": 0.9847,
+          "evidence": []
+        },
+        {
+          "term": "sub-query",
+          "score": 0.9345,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "retrieval",
+          "score": 74.8682,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hybrid methods",
+          "score": 21.4165,
+          "evidence": []
+        },
+        {
+          "term": "recall",
+          "score": 20.0502,
+          "evidence": []
+        },
+        {
+          "term": "qwen3-embedding",
+          "score": 16.7165,
+          "evidence": []
+        },
+        {
+          "term": "sub",
+          "score": 16.7165,
+          "evidence": []
+        },
+        {
+          "term": "performance",
+          "score": 14.2837,
+          "evidence": []
+        },
+        {
+          "term": "tasks",
+          "score": 12.9582,
+          "evidence": []
+        },
+        {
+          "term": "improves",
+          "score": 11.7197,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "retrieval",
+          "score": 2.7691,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hybrid methods",
+          "score": 1.426,
+          "evidence": []
+        },
+        {
+          "term": "recall",
+          "score": 1.1694,
+          "evidence": []
+        },
+        {
+          "term": "qwen3-embedding",
+          "score": 0.832,
+          "evidence": []
+        },
+        {
+          "term": "dense",
+          "score": 0.8217,
+          "evidence": []
+        },
+        {
+          "term": "improves",
+          "score": 0.8115,
+          "evidence": []
+        },
+        {
+          "term": "jina-embedding-v",
+          "score": 0.8067,
+          "evidence": []
+        },
+        {
+          "term": "tasks",
+          "score": 0.7458,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "retrieval",
+          "score": 60.2177,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "recall",
+          "score": 15.7103,
+          "evidence": []
+        },
+        {
+          "term": "dense",
+          "score": 14.509,
+          "evidence": []
+        },
+        {
+          "term": "turn",
+          "score": 13.4651,
+          "evidence": []
+        },
+        {
+          "term": "hybrid methods",
+          "score": 13.3696,
+          "evidence": []
+        },
+        {
+          "term": "jina-embedding-v",
+          "score": 8.8069,
+          "evidence": []
+        },
+        {
+          "term": "improves",
+          "score": 8.2521,
+          "evidence": []
+        },
+        {
+          "term": "qwen3-embedding",
+          "score": 7.8691,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "retrieval",
+          "score": 2.7691,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hybrid methods",
+          "score": 1.426,
+          "evidence": []
+        },
+        {
+          "term": "recall",
+          "score": 1.1694,
+          "evidence": []
+        },
+        {
+          "term": "qwen3-embedding",
+          "score": 0.832,
+          "evidence": []
+        },
+        {
+          "term": "dense",
+          "score": 0.8217,
+          "evidence": []
+        },
+        {
+          "term": "improves",
+          "score": 0.8115,
+          "evidence": []
+        },
+        {
+          "term": "jina-embedding-v",
+          "score": 0.8067,
+          "evidence": []
+        },
+        {
+          "term": "tasks",
+          "score": 0.7458,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "drop",
+          "score": 241.3763,
+          "evidence": []
+        },
+        {
+          "term": "single-modality",
+          "score": 241.3763,
+          "evidence": []
+        },
+        {
+          "term": "gains",
+          "score": 223.5059,
+          "evidence": []
+        },
+        {
+          "term": "improves",
+          "score": 198.0279,
+          "evidence": []
+        },
+        {
+          "term": "decomposed",
+          "score": 188.2599,
+          "evidence": []
+        },
+        {
+          "term": "confirms",
+          "score": 166.9272,
+          "evidence": []
+        },
+        {
+          "term": "outperforms",
+          "score": 166.9272,
+          "evidence": []
+        },
+        {
+          "term": "achieve",
+          "score": 161.714,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-016-54-main-results-multimodal-deep-research": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "deep research",
+          "score": 4.3163,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "doc-researcher achieves",
+          "score": 2.4666,
+          "evidence": []
+        },
+        {
+          "term": "deep parsing",
+          "score": 2.3561,
+          "evidence": []
+        },
+        {
+          "term": "multimodal",
+          "score": 1.424,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "recall",
+          "score": 1.0651,
+          "evidence": []
+        },
+        {
+          "term": "long-context",
+          "score": 0.9434,
+          "evidence": []
+        },
+        {
+          "term": "simplistic",
+          "score": 0.9345,
+          "evidence": []
+        },
+        {
+          "term": "layout",
+          "score": 0.9037,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "deep research",
+          "score": 74.3144,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "deep parsing",
+          "score": 44.6848,
+          "evidence": []
+        },
+        {
+          "term": "doc-researcher achieves",
+          "score": 38.2417,
+          "evidence": []
+        },
+        {
+          "term": "multimodal",
+          "score": 16.5009,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "recall",
+          "score": 15.0376,
+          "evidence": []
+        },
+        {
+          "term": "simplistic",
+          "score": 11.7197,
+          "evidence": []
+        },
+        {
+          "term": "despite",
+          "score": 11.1443,
+          "evidence": []
+        },
+        {
+          "term": "long-context",
+          "score": 11.1443,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "deep research",
+          "score": 4.7786,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "deep parsing",
+          "score": 2.5575,
+          "evidence": []
+        },
+        {
+          "term": "doc-researcher achieves",
+          "score": 2.1653,
+          "evidence": []
+        },
+        {
+          "term": "multimodal",
+          "score": 1.7984,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "retrieval",
+          "score": 0.8737,
+          "evidence": []
+        },
+        {
+          "term": "simplistic",
+          "score": 0.7742,
+          "evidence": []
+        },
+        {
+          "term": "recall",
+          "score": 0.7524,
+          "evidence": []
+        },
+        {
+          "term": "long-context",
+          "score": 0.7321,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "deep research",
+          "score": 69.5213,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "deep parsing",
+          "score": 39.7251,
+          "evidence": []
+        },
+        {
+          "term": "multimodal",
+          "score": 19.7461,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "doc-researcher achieves",
+          "score": 17.7231,
+          "evidence": []
+        },
+        {
+          "term": "retrieval",
+          "score": 13.4722,
+          "evidence": []
+        },
+        {
+          "term": "documents",
+          "score": 7.5845,
+          "evidence": []
+        },
+        {
+          "term": "hybrid",
+          "score": 7.3355,
+          "evidence": []
+        },
+        {
+          "term": "deepseek-r",
+          "score": 6.5488,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "deep research",
+          "score": 4.7786,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "deep parsing",
+          "score": 2.5575,
+          "evidence": []
+        },
+        {
+          "term": "doc-researcher achieves",
+          "score": 2.1653,
+          "evidence": []
+        },
+        {
+          "term": "multimodal",
+          "score": 1.7984,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "retrieval",
+          "score": 0.8737,
+          "evidence": []
+        },
+        {
+          "term": "simplistic",
+          "score": 0.7742,
+          "evidence": []
+        },
+        {
+          "term": "recall",
+          "score": 0.7524,
+          "evidence": []
+        },
+        {
+          "term": "long-context",
+          "score": 0.7321,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "doc-researcher achieves",
+          "score": 165.2466,
+          "evidence": []
+        },
+        {
+          "term": "baseline",
+          "score": 101.9089,
+          "evidence": []
+        },
+        {
+          "term": "parametric",
+          "score": 101.9089,
+          "evidence": []
+        },
+        {
+          "term": "deep research",
+          "score": 101.833,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "colqwen-gen",
+          "score": 92.6155,
+          "evidence": []
+        },
+        {
+          "term": "simplistic",
+          "score": 88.5992,
+          "evidence": []
+        },
+        {
+          "term": "ities",
+          "score": 82.9916,
+          "evidence": []
+        },
+        {
+          "term": "accumulation",
+          "score": 76.6318,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-017-55-ablation-study": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hybrid retrieval",
+          "score": 2.0613,
+          "evidence": []
+        },
+        {
+          "term": "turn",
+          "score": 1.6923,
+          "evidence": []
+        },
+        {
+          "term": "iterative search",
+          "score": 1.3474,
+          "evidence": []
+        },
+        {
+          "term": "design",
+          "score": 1.0715,
+          "evidence": []
+        },
+        {
+          "term": "gains",
+          "score": 0.9981,
+          "evidence": []
+        },
+        {
+          "term": "accuracy",
+          "score": 0.9976,
+          "evidence": []
+        },
+        {
+          "term": "iterations",
+          "score": 0.9345,
+          "evidence": []
+        },
+        {
+          "term": "improves",
+          "score": 0.9321,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "turn",
+          "score": 39.0321,
+          "evidence": []
+        },
+        {
+          "term": "hybrid retrieval",
+          "score": 34.1003,
+          "evidence": []
+        },
+        {
+          "term": "iterative search",
+          "score": 18.2509,
+          "evidence": []
+        },
+        {
+          "term": "design",
+          "score": 15.0376,
+          "evidence": []
+        },
+        {
+          "term": "accuracy",
+          "score": 14.637,
+          "evidence": []
+        },
+        {
+          "term": "gains",
+          "score": 12.5306,
+          "evidence": []
+        },
+        {
+          "term": "improves",
+          "score": 11.7197,
+          "evidence": []
+        },
+        {
+          "term": "iterations",
+          "score": 11.7197,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hybrid retrieval",
+          "score": 2.0266,
+          "evidence": []
+        },
+        {
+          "term": "iterative search",
+          "score": 1.3605,
+          "evidence": []
+        },
+        {
+          "term": "turn",
+          "score": 1.2335,
+          "evidence": []
+        },
+        {
+          "term": "recall",
+          "score": 0.8913,
+          "evidence": []
+        },
+        {
+          "term": "improves",
+          "score": 0.8631,
+          "evidence": []
+        },
+        {
+          "term": "gains",
+          "score": 0.8369,
+          "evidence": []
+        },
+        {
+          "term": "design",
+          "score": 0.8301,
+          "evidence": []
+        },
+        {
+          "term": "accuracy",
+          "score": 0.8113,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hybrid retrieval",
+          "score": 38.9472,
+          "evidence": []
+        },
+        {
+          "term": "turn",
+          "score": 16.2527,
+          "evidence": []
+        },
+        {
+          "term": "iterative search",
+          "score": 13.1283,
+          "evidence": []
+        },
+        {
+          "term": "recall",
+          "score": 11.8819,
+          "evidence": []
+        },
+        {
+          "term": "design",
+          "score": 9.6541,
+          "evidence": []
+        },
+        {
+          "term": "improves",
+          "score": 8.873,
+          "evidence": []
+        },
+        {
+          "term": "chunk",
+          "score": 8.7958,
+          "evidence": []
+        },
+        {
+          "term": "fine-grained",
+          "score": 7.6083,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hybrid retrieval",
+          "score": 2.0266,
+          "evidence": []
+        },
+        {
+          "term": "iterative search",
+          "score": 1.3605,
+          "evidence": []
+        },
+        {
+          "term": "turn",
+          "score": 1.2335,
+          "evidence": []
+        },
+        {
+          "term": "recall",
+          "score": 0.8913,
+          "evidence": []
+        },
+        {
+          "term": "improves",
+          "score": 0.8631,
+          "evidence": []
+        },
+        {
+          "term": "gains",
+          "score": 0.8369,
+          "evidence": []
+        },
+        {
+          "term": "design",
+          "score": 0.8301,
+          "evidence": []
+        },
+        {
+          "term": "accuracy",
+          "score": 0.8113,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "gains",
+          "score": 241.689,
+          "evidence": []
+        },
+        {
+          "term": "drop",
+          "score": 228.208,
+          "evidence": []
+        },
+        {
+          "term": "single-modality",
+          "score": 228.208,
+          "evidence": []
+        },
+        {
+          "term": "improves",
+          "score": 185.8544,
+          "evidence": []
+        },
+        {
+          "term": "confirms",
+          "score": 171.4693,
+          "evidence": []
+        },
+        {
+          "term": "outperforms",
+          "score": 171.4693,
+          "evidence": []
+        },
+        {
+          "term": "dates",
+          "score": 153.5735,
+          "evidence": []
+        },
+        {
+          "term": "achieve",
+          "score": 153.5676,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-018-56-parsing-and-deep-research-efficiency": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "deep parsing",
+          "score": 4.7009,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "deep research",
+          "score": 4.4055,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "parsing setting",
+          "score": 1.9573,
+          "evidence": []
+        },
+        {
+          "term": "dense",
+          "score": 1.4814,
+          "evidence": []
+        },
+        {
+          "term": "storage",
+          "score": 1.0862,
+          "evidence": []
+        },
+        {
+          "term": "efficiency",
+          "score": 1.0713,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "transcription",
+          "score": 0.9981,
+          "evidence": []
+        },
+        {
+          "term": "phase",
+          "score": 0.884,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "deep parsing",
+          "score": 88.8257,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "deep research",
+          "score": 73.9707,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "parsing setting",
+          "score": 32.7953,
+          "evidence": []
+        },
+        {
+          "term": "dense",
+          "score": 25.0627,
+          "evidence": []
+        },
+        {
+          "term": "storage",
+          "score": 18.2422,
+          "evidence": []
+        },
+        {
+          "term": "transcription",
+          "score": 12.5306,
+          "evidence": []
+        },
+        {
+          "term": "multi-vector",
+          "score": 10.698,
+          "evidence": []
+        },
+        {
+          "term": "parsing-free",
+          "score": 10.698,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "deep parsing",
+          "score": 4.0821,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "deep research",
+          "score": 3.8008,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "parsing setting",
+          "score": 1.528,
+          "evidence": []
+        },
+        {
+          "term": "dense",
+          "score": 1.0303,
+          "evidence": []
+        },
+        {
+          "term": "layout",
+          "score": 0.759,
+          "evidence": []
+        },
+        {
+          "term": "efficiency",
+          "score": 0.7426,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "parsing-free",
+          "score": 0.6723,
+          "evidence": []
+        },
+        {
+          "term": "storage",
+          "score": 0.6662,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "deep parsing",
+          "score": 72.327,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "deep research",
+          "score": 56.398,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "parsing setting",
+          "score": 20.9603,
+          "evidence": []
+        },
+        {
+          "term": "dense",
+          "score": 16.6558,
+          "evidence": []
+        },
+        {
+          "term": "retrieval",
+          "score": 8.7551,
+          "evidence": []
+        },
+        {
+          "term": "documents",
+          "score": 8.3093,
+          "evidence": []
+        },
+        {
+          "term": "multimodal",
+          "score": 7.2798,
+          "evidence": []
+        },
+        {
+          "term": "visual",
+          "score": 7.1413,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "deep parsing",
+          "score": 4.0821,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "deep research",
+          "score": 3.8008,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "parsing setting",
+          "score": 1.528,
+          "evidence": []
+        },
+        {
+          "term": "dense",
+          "score": 1.0303,
+          "evidence": []
+        },
+        {
+          "term": "efficiency",
+          "score": 0.7426,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "parsing-free",
+          "score": 0.6723,
+          "evidence": []
+        },
+        {
+          "term": "storage",
+          "score": 0.6662,
+          "evidence": []
+        },
+        {
+          "term": "table",
+          "score": 0.6617,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "deep parsing",
+          "score": 91.7223,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vlm-based",
+          "score": 85.1557,
+          "evidence": []
+        },
+        {
+          "term": "transcription",
+          "score": 85.03,
+          "evidence": []
+        },
+        {
+          "term": "analyzes",
+          "score": 83.2729,
+          "evidence": []
+        },
+        {
+          "term": "trade-off",
+          "score": 83.2729,
+          "evidence": []
+        },
+        {
+          "term": "one-time",
+          "score": 77.9448,
+          "evidence": []
+        },
+        {
+          "term": "accumulation",
+          "score": 75.8934,
+          "evidence": []
+        },
+        {
+          "term": "similarity",
+          "score": 73.5597,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-019-6-conclusion": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "deep research",
+          "score": 1.9401,
+          "evidence": []
+        },
+        {
+          "term": "multimodal",
+          "score": 1.2612,
+          "evidence": []
+        },
+        {
+          "term": "doc-researcher",
+          "score": 0.771,
+          "evidence": []
+        },
+        {
+          "term": "synthesis",
+          "score": 0.7674,
+          "evidence": []
+        },
+        {
+          "term": "parsing",
+          "score": 0.6717,
+          "evidence": []
+        },
+        {
+          "term": "systems",
+          "score": 0.626,
+          "evidence": []
+        },
+        {
+          "term": "existing",
+          "score": 0.4786,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "deep research",
+          "score": 28.6136,
+          "evidence": []
+        },
+        {
+          "term": "multimodal",
+          "score": 24.7514,
+          "evidence": []
+        },
+        {
+          "term": "synthesis",
+          "score": 9.5224,
+          "evidence": []
+        },
+        {
+          "term": "doc-researcher",
+          "score": 8.787,
+          "evidence": []
+        },
+        {
+          "term": "parsing",
+          "score": 7.8279,
+          "evidence": []
+        },
+        {
+          "term": "systems",
+          "score": 7.4007,
+          "evidence": []
+        },
+        {
+          "term": "existing",
+          "score": 5.8308,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "deep research",
+          "score": 1.9018,
+          "evidence": []
+        },
+        {
+          "term": "multimodal",
+          "score": 0.8588,
+          "evidence": []
+        },
+        {
+          "term": "parsing",
+          "score": 0.7346,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 0.6225,
+          "evidence": []
+        },
+        {
+          "term": "layout",
+          "score": 0.5916,
+          "evidence": []
+        },
+        {
+          "term": "doc-researcher",
+          "score": 0.5731,
+          "evidence": []
+        },
+        {
+          "term": "achieves",
+          "score": 0.462,
+          "evidence": []
+        },
+        {
+          "term": "synthesis",
+          "score": 0.4573,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "deep research",
+          "score": 27.8454,
+          "evidence": []
+        },
+        {
+          "term": "multimodal",
+          "score": 11.6766,
+          "evidence": []
+        },
+        {
+          "term": "parsing",
+          "score": 9.384,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 6.7918,
+          "evidence": []
+        },
+        {
+          "term": "documents",
+          "score": 6.7734,
+          "evidence": []
+        },
+        {
+          "term": "doc",
+          "score": 5.5959,
+          "evidence": []
+        },
+        {
+          "term": "retrieval",
+          "score": 5.4093,
+          "evidence": []
+        },
+        {
+          "term": "systems",
+          "score": 5.1838,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "deep research",
+          "score": 1.9018,
+          "evidence": []
+        },
+        {
+          "term": "multimodal",
+          "score": 0.8588,
+          "evidence": []
+        },
+        {
+          "term": "parsing",
+          "score": 0.7346,
+          "evidence": []
+        },
+        {
+          "term": "doc-researcher",
+          "score": 0.5731,
+          "evidence": []
+        },
+        {
+          "term": "synthesis",
+          "score": 0.4573,
+          "evidence": []
+        },
+        {
+          "term": "systems",
+          "score": 0.3971,
+          "evidence": []
+        },
+        {
+          "term": "existing",
+          "score": 0.3726,
+          "evidence": []
+        },
+        {
+          "term": "conclusion",
+          "score": 0.0037,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "modality-specific",
+          "score": 69.9341,
+          "evidence": []
+        },
+        {
+          "term": "mirror",
+          "score": 69.8318,
+          "evidence": []
+        },
+        {
+          "term": "simplistic",
+          "score": 69.298,
+          "evidence": []
+        },
+        {
+          "term": "baselines",
+          "score": 67.337,
+          "evidence": []
+        },
+        {
+          "term": "itera",
+          "score": 67.337,
+          "evidence": []
+        },
+        {
+          "term": "tive",
+          "score": 67.337,
+          "evidence": []
+        },
+        {
+          "term": "achieves",
+          "score": 62.1778,
+          "evidence": []
+        },
+        {
+          "term": "single-round",
+          "score": 57.2658,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-020-references": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "page layout",
+          "score": 5.658,
+          "evidence": []
+        },
+        {
+          "term": "layout merged",
+          "score": 5.0983,
+          "evidence": []
+        },
+        {
+          "term": "layout annotation",
+          "score": 4.8454,
+          "evidence": []
+        },
+        {
+          "term": "arxiv preprint",
+          "score": 4.7006,
+          "evidence": []
+        },
+        {
+          "term": "computer vision",
+          "score": 4.0308,
+          "evidence": []
+        },
+        {
+          "term": "layout type",
+          "score": 4.0188,
+          "evidence": []
+        },
+        {
+          "term": "layout info",
+          "score": 3.957,
+          "evidence": []
+        },
+        {
+          "term": "layout box",
+          "score": 3.9035,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "page layout",
+          "score": 441.5012,
+          "evidence": []
+        },
+        {
+          "term": "layout merged",
+          "score": 312.4427,
+          "evidence": []
+        },
+        {
+          "term": "layout annotation",
+          "score": 304.8432,
+          "evidence": []
+        },
+        {
+          "term": "layout type",
+          "score": 286.4816,
+          "evidence": []
+        },
+        {
+          "term": "layout info",
+          "score": 282.4925,
+          "evidence": []
+        },
+        {
+          "term": "layout box",
+          "score": 280.738,
+          "evidence": []
+        },
+        {
+          "term": "arxiv preprint",
+          "score": 219.3934,
+          "evidence": []
+        },
+        {
+          "term": "page size",
+          "score": 177.9234,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "page layout",
+          "score": 5.6683,
+          "evidence": []
+        },
+        {
+          "term": "layout merged",
+          "score": 5.1001,
+          "evidence": []
+        },
+        {
+          "term": "layout annotation",
+          "score": 4.8318,
+          "evidence": []
+        },
+        {
+          "term": "arxiv preprint",
+          "score": 4.6958,
+          "evidence": []
+        },
+        {
+          "term": "computer vision",
+          "score": 4.0351,
+          "evidence": []
+        },
+        {
+          "term": "yong liu",
+          "score": 3.8593,
+          "evidence": []
+        },
+        {
+          "term": "vision hybrid",
+          "score": 3.832,
+          "evidence": []
+        },
+        {
+          "term": "deep research",
+          "score": 3.7519,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "page layout",
+          "score": 441.6547,
+          "evidence": []
+        },
+        {
+          "term": "layout merged",
+          "score": 312.2211,
+          "evidence": []
+        },
+        {
+          "term": "layout annotation",
+          "score": 304.6225,
+          "evidence": []
+        },
+        {
+          "term": "layout type",
+          "score": 286.2627,
+          "evidence": []
+        },
+        {
+          "term": "layout info",
+          "score": 282.2513,
+          "evidence": []
+        },
+        {
+          "term": "layout box",
+          "score": 276.0523,
+          "evidence": []
+        },
+        {
+          "term": "arxiv preprint",
+          "score": 219.0679,
+          "evidence": []
+        },
+        {
+          "term": "page size",
+          "score": 178.5966,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "page layout",
+          "score": 5.6683,
+          "evidence": []
+        },
+        {
+          "term": "layout merged",
+          "score": 5.1001,
+          "evidence": []
+        },
+        {
+          "term": "layout annotation",
+          "score": 4.8318,
+          "evidence": []
+        },
+        {
+          "term": "arxiv preprint",
+          "score": 4.6958,
+          "evidence": []
+        },
+        {
+          "term": "computer vision",
+          "score": 4.0351,
+          "evidence": []
+        },
+        {
+          "term": "layout type",
+          "score": 4.0078,
+          "evidence": []
+        },
+        {
+          "term": "layout info",
+          "score": 3.9539,
+          "evidence": []
+        },
+        {
+          "term": "layout box",
+          "score": 3.8996,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "arxiv preprint",
+          "score": 79.3224,
+          "evidence": []
+        },
+        {
+          "term": "yong liu",
+          "score": 78.1773,
+          "evidence": []
+        },
+        {
+          "term": "kuicai dong",
+          "score": 65.6219,
+          "evidence": []
+        },
+        {
+          "term": "layout merged",
+          "score": 59.6981,
+          "evidence": []
+        },
+        {
+          "term": "computer vision",
+          "score": 59.2539,
+          "evidence": []
+        },
+        {
+          "term": "international conference",
+          "score": 58.3467,
+          "evidence": []
+        },
+        {
+          "term": "winter conference",
+          "score": 56.6282,
+          "evidence": []
+        },
+        {
+          "term": "retrieval-augmented generation",
+          "score": 55.8905,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "zhang",
+          "score": 1.0254,
+          "evidence": []
+        },
+        {
+          "term": "wang",
+          "score": 1.0162,
+          "evidence": []
+        },
+        {
+          "term": "liu",
+          "score": 0.995,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "kuicai",
+          "score": 11.7197,
+          "evidence": []
+        },
+        {
+          "term": "liu",
+          "score": 11.7197,
+          "evidence": []
+        },
+        {
+          "term": "wang",
+          "score": 11.7197,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "zhang",
+          "score": 0.4022,
+          "evidence": []
+        },
+        {
+          "term": "wang",
+          "score": 0.3913,
+          "evidence": []
+        },
+        {
+          "term": "deep",
+          "score": 0.2933,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "layout",
+          "score": 5.2803,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 4.6487,
+          "evidence": []
+        },
+        {
+          "term": "deep",
+          "score": 4.4381,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "zhang",
+          "score": 0.4022,
+          "evidence": []
+        },
+        {
+          "term": "wang",
+          "score": 0.3913,
+          "evidence": []
+        },
+        {
+          "term": "deep",
+          "score": 0.2933,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "fangda",
+          "score": 978.5,
+          "evidence": []
+        },
+        {
+          "term": "gang",
+          "score": 978.5,
+          "evidence": []
+        },
+        {
+          "term": "shurui",
+          "score": 978.5,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

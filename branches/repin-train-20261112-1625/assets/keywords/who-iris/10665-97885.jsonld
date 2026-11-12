@@ -1,0 +1,5070 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-97885",
+  "instance": "who-iris",
+  "about": "library/10665-97885",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7434,
+    "terms": 71211
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "mumps vaccine",
+        "score": 46.6775,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "mumps antibody",
+        "score": 44.8856,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "mumps antibodies",
+        "score": 44.1422,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "mumps strain",
+        "score": 44.13,
+        "evidence": []
+      },
+      {
+        "term": "lynn mumps",
+        "score": 43.4131,
+        "evidence": []
+      },
+      {
+        "term": "mumps virus",
+        "score": 43.2975,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "mumps vaccination",
+        "score": 42.9486,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "urabe mumps",
+        "score": 41.9151,
+        "evidence": []
+      },
+      {
+        "term": "mumps infection",
+        "score": 41.4633,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "measles mumps",
+        "score": 41.2285,
+        "evidence": []
+      },
+      {
+        "term": "mumps disease",
+        "score": 41.0909,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "mumps igg",
+        "score": 41.0361,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "mumps vaccine",
+        "score": 2835.7326,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "mumps strain",
+        "score": 2461.4062,
+        "evidence": []
+      },
+      {
+        "term": "mumps virus",
+        "score": 2377.5656,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "measles mumps",
+        "score": 2360.7665,
+        "evidence": []
+      },
+      {
+        "term": "mumps rubella",
+        "score": 2345.318,
+        "evidence": []
+      },
+      {
+        "term": "mumps antibodies",
+        "score": 2343.5041,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "mumps antibody",
+        "score": 2342.3126,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "lynn mumps",
+        "score": 2313.1208,
+        "evidence": []
+      },
+      {
+        "term": "attenuated mumps",
+        "score": 2290.2018,
+        "evidence": []
+      },
+      {
+        "term": "mumps vaccination",
+        "score": 2284.045,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "urabe mumps",
+        "score": 2278.5668,
+        "evidence": []
+      },
+      {
+        "term": "live mumps",
+        "score": 2276.79,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "mumps vaccine",
+        "score": 24.7135,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "measles mumps",
+        "score": 19.7449,
+        "evidence": []
+      },
+      {
+        "term": "mumps strain",
+        "score": 19.6482,
+        "evidence": []
+      },
+      {
+        "term": "mumps vaccination",
+        "score": 19.5964,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "mumps rubella",
+        "score": 19.2102,
+        "evidence": []
+      },
+      {
+        "term": "mumps virus",
+        "score": 18.859,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "attenuated mumps",
+        "score": 18.6679,
+        "evidence": []
+      },
+      {
+        "term": "urabe mumps",
+        "score": 18.1989,
+        "evidence": []
+      },
+      {
+        "term": "mumps antibodies",
+        "score": 18.143,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "lynn mumps",
+        "score": 18.116,
+        "evidence": []
+      },
+      {
+        "term": "mumps antibody",
+        "score": 17.8433,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "mumps infection",
+        "score": 17.6821,
+        "evidence": [
+          "heading"
+        ]
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "mumps vaccine",
+        "score": 2749.012,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "measles mumps",
+        "score": 2281.2001,
+        "evidence": []
+      },
+      {
+        "term": "mumps rubella",
+        "score": 2269.3869,
+        "evidence": []
+      },
+      {
+        "term": "mumps virus",
+        "score": 2240.4646,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "live mumps",
+        "score": 2174.4986,
+        "evidence": []
+      },
+      {
+        "term": "attenuated mumps",
+        "score": 2168.8404,
+        "evidence": []
+      },
+      {
+        "term": "mumps strain",
+        "score": 2156.9331,
+        "evidence": []
+      },
+      {
+        "term": "mumps outbreak",
+        "score": 2103.7814,
+        "evidence": []
+      },
+      {
+        "term": "mumps meningitis",
+        "score": 2098.654,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "mumps antibodies",
+        "score": 2082.4063,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "mumps vaccination",
+        "score": 2078.7863,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "urabe mumps",
+        "score": 2052.2953,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "mumps vaccine",
+        "score": 24.7135,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "measles mumps",
+        "score": 19.7449,
+        "evidence": []
+      },
+      {
+        "term": "mumps strain",
+        "score": 19.6482,
+        "evidence": []
+      },
+      {
+        "term": "mumps vaccination",
+        "score": 19.5964,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "mumps rubella",
+        "score": 19.2102,
+        "evidence": []
+      },
+      {
+        "term": "mumps virus",
+        "score": 18.859,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "attenuated mumps",
+        "score": 18.6679,
+        "evidence": []
+      },
+      {
+        "term": "urabe mumps",
+        "score": 18.1989,
+        "evidence": []
+      },
+      {
+        "term": "mumps antibodies",
+        "score": 18.143,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "lynn mumps",
+        "score": 18.116,
+        "evidence": []
+      },
+      {
+        "term": "mumps antibody",
+        "score": 17.8433,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "mumps infection",
+        "score": 17.6821,
+        "evidence": [
+          "heading"
+        ]
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "如果没有",
+        "score": 3002.7849,
+        "evidence": []
+      },
+      {
+        "term": "要在活动挂图上做好记录",
+        "score": 1390.805,
+        "evidence": []
+      },
+      {
+        "term": "问题的讨论结束",
+        "score": 1390.805,
+        "evidence": []
+      },
+      {
+        "term": "科研人员",
+        "score": 1339.0244,
+        "evidence": []
+      },
+      {
+        "term": "感染者",
+        "score": 1167.9721,
+        "evidence": []
+      },
+      {
+        "term": "世界医学协会",
+        "score": 1134.2819,
+        "evidence": []
+      },
+      {
+        "term": "以及卫生保健界",
+        "score": 1126.0949,
+        "evidence": []
+      },
+      {
+        "term": "基金会和开发银行",
+        "score": 1126.0949,
+        "evidence": []
+      },
+      {
+        "term": "大学和研究机构",
+        "score": 1126.0949,
+        "evidence": []
+      },
+      {
+        "term": "如非政府组织和民间社会组织",
+        "score": 1126.0949,
+        "evidence": []
+      },
+      {
+        "term": "宗教组织",
+        "score": 1126.0949,
+        "evidence": []
+      },
+      {
+        "term": "患者和公众",
+        "score": 1126.0949,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-contents": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "natural mumps",
+          "score": 2.5447,
+          "evidence": []
+        },
+        {
+          "term": "mumps vaccination",
+          "score": 2.4536,
+          "evidence": []
+        },
+        {
+          "term": "mumps infection",
+          "score": 2.2794,
+          "evidence": []
+        },
+        {
+          "term": "mumps disease",
+          "score": 2.2396,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "natural mumps",
+          "score": 67.382,
+          "evidence": []
+        },
+        {
+          "term": "mumps vaccination",
+          "score": 64.6844,
+          "evidence": []
+        },
+        {
+          "term": "mumps infection",
+          "score": 60.8758,
+          "evidence": []
+        },
+        {
+          "term": "mumps disease",
+          "score": 60.4644,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "mumps vaccination",
+          "score": 0.476,
+          "evidence": []
+        },
+        {
+          "term": "mumps infection",
+          "score": 0.3925,
+          "evidence": []
+        },
+        {
+          "term": "mumps disease",
+          "score": 0.3526,
+          "evidence": []
+        },
+        {
+          "term": "natural mumps",
+          "score": 0.3059,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "mumps vaccination",
+          "score": 41.7528,
+          "evidence": []
+        },
+        {
+          "term": "mumps disease",
+          "score": 40.8459,
+          "evidence": []
+        },
+        {
+          "term": "mumps infection",
+          "score": 40.6225,
+          "evidence": []
+        },
+        {
+          "term": "natural mumps",
+          "score": 39.6391,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "mumps vaccination",
+          "score": 0.476,
+          "evidence": []
+        },
+        {
+          "term": "mumps infection",
+          "score": 0.3925,
+          "evidence": []
+        },
+        {
+          "term": "mumps disease",
+          "score": 0.3526,
+          "evidence": []
+        },
+        {
+          "term": "natural mumps",
+          "score": 0.3059,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 127.0341,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 68.8928,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 66.3924,
+          "evidence": []
+        },
+        {
+          "term": "问题的讨论结束",
+          "score": 66.3924,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-001-abbreviations-and-acronyms": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "protein",
+          "score": 1.0063,
+          "evidence": []
+        },
+        {
+          "term": "acronyms",
+          "score": 0.818,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nucleoprotein",
+          "score": 0.6392,
+          "evidence": []
+        },
+        {
+          "term": "phosphoprotein",
+          "score": 0.6392,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "protein",
+          "score": 22.8501,
+          "evidence": []
+        },
+        {
+          "term": "acronyms",
+          "score": 10.5005,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nucleoprotein",
+          "score": 8.2207,
+          "evidence": []
+        },
+        {
+          "term": "phosphoprotein",
+          "score": 8.2207,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "mumps",
+          "score": 0.1642,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.159,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 0.1144,
+          "evidence": []
+        },
+        {
+          "term": "measles",
+          "score": 0.0848,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "mumps",
+          "score": 6.0307,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 2.0953,
+          "evidence": []
+        },
+        {
+          "term": "journal",
+          "score": 2.0819,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 1.6909,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "mumps",
+          "score": 0.1642,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.159,
+          "evidence": []
+        },
+        {
+          "term": "measles",
+          "score": 0.0848,
+          "evidence": []
+        },
+        {
+          "term": "rubella",
+          "score": 0.0795,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 126.6194,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 83.9613,
+          "evidence": []
+        },
+        {
+          "term": "问题的讨论结束",
+          "score": 83.9613,
+          "evidence": []
+        },
+        {
+          "term": "法律上",
+          "score": 65.5501,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-002-preface": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "immunological basis",
+          "score": 1.2381,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 1.0644,
+          "evidence": []
+        },
+        {
+          "term": "modules",
+          "score": 1.009,
+          "evidence": []
+        },
+        {
+          "term": "epi",
+          "score": 0.6879,
+          "evidence": []
+        },
+        {
+          "term": "series",
+          "score": 0.6338,
+          "evidence": []
+        },
+        {
+          "term": "papers",
+          "score": 0.5784,
+          "evidence": []
+        },
+        {
+          "term": "vaccines",
+          "score": 0.5317,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "immunization",
+          "score": 28.8604,
+          "evidence": []
+        },
+        {
+          "term": "modules",
+          "score": 23.3986,
+          "evidence": []
+        },
+        {
+          "term": "immunological basis",
+          "score": 20.3193,
+          "evidence": []
+        },
+        {
+          "term": "series",
+          "score": 10.8315,
+          "evidence": []
+        },
+        {
+          "term": "epi",
+          "score": 10.3523,
+          "evidence": []
+        },
+        {
+          "term": "papers",
+          "score": 8.9423,
+          "evidence": []
+        },
+        {
+          "term": "vaccines",
+          "score": 6.8915,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "vaccine",
+          "score": 0.293,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.2183,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.1984,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 0.1418,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.1267,
+          "evidence": []
+        },
+        {
+          "term": "mumps",
+          "score": 0.1189,
+          "evidence": []
+        },
+        {
+          "term": "measles",
+          "score": 0.1084,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "vaccine",
+          "score": 6.2737,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 5.9907,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 5.5467,
+          "evidence": []
+        },
+        {
+          "term": "catch-up",
+          "score": 3.9277,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 3.8309,
+          "evidence": []
+        },
+        {
+          "term": "piri",
+          "score": 3.7291,
+          "evidence": []
+        },
+        {
+          "term": "mumps",
+          "score": 2.1265,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "vaccination",
+          "score": 0.2183,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.1984,
+          "evidence": []
+        },
+        {
+          "term": "vaccines",
+          "score": 0.1969,
+          "evidence": []
+        },
+        {
+          "term": "immunological basis",
+          "score": 0.0709,
+          "evidence": []
+        },
+        {
+          "term": "series",
+          "score": 0.0665,
+          "evidence": []
+        },
+        {
+          "term": "development",
+          "score": 0.0587,
+          "evidence": []
+        },
+        {
+          "term": "module",
+          "score": 0.0556,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "感染者",
+          "score": 21.1014,
+          "evidence": []
+        },
+        {
+          "term": "人口约",
+          "score": 16.7233,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 15.401,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 15.196,
+          "evidence": []
+        },
+        {
+          "term": "平等主义",
+          "score": 14.7156,
+          "evidence": []
+        },
+        {
+          "term": "下面统称",
+          "score": 14.5794,
+          "evidence": []
+        },
+        {
+          "term": "协议的主题事项",
+          "score": 14.5794,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-004-11-mumps-disease": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "mumps disease",
+          "score": 4.6611,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mumps virus",
+          "score": 2.6869,
+          "evidence": []
+        },
+        {
+          "term": "mumps cases",
+          "score": 2.6637,
+          "evidence": []
+        },
+        {
+          "term": "salivary glands",
+          "score": 2.0403,
+          "evidence": []
+        },
+        {
+          "term": "witte karchmer",
+          "score": 1.9906,
+          "evidence": []
+        },
+        {
+          "term": "laurence mcgavin",
+          "score": 1.8757,
+          "evidence": []
+        },
+        {
+          "term": "parotitis",
+          "score": 1.4967,
+          "evidence": []
+        },
+        {
+          "term": "incubation period",
+          "score": 1.229,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "mumps disease",
+          "score": 149.2384,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mumps cases",
+          "score": 85.8131,
+          "evidence": []
+        },
+        {
+          "term": "mumps virus",
+          "score": 81.8532,
+          "evidence": []
+        },
+        {
+          "term": "parotitis",
+          "score": 36.5219,
+          "evidence": []
+        },
+        {
+          "term": "salivary glands",
+          "score": 32.8827,
+          "evidence": []
+        },
+        {
+          "term": "witte karchmer",
+          "score": 32.0718,
+          "evidence": []
+        },
+        {
+          "term": "laurence mcgavin",
+          "score": 30.1101,
+          "evidence": []
+        },
+        {
+          "term": "complications",
+          "score": 26.898,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "mumps disease",
+          "score": 1.5116,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mumps virus",
+          "score": 0.7619,
+          "evidence": []
+        },
+        {
+          "term": "mumps cases",
+          "score": 0.6163,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 0.3359,
+          "evidence": []
+        },
+        {
+          "term": "infection",
+          "score": 0.2641,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.2603,
+          "evidence": []
+        },
+        {
+          "term": "meningitis",
+          "score": 0.2436,
+          "evidence": []
+        },
+        {
+          "term": "measles",
+          "score": 0.2363,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "mumps disease",
+          "score": 110.7937,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mumps virus",
+          "score": 60.428,
+          "evidence": []
+        },
+        {
+          "term": "mumps cases",
+          "score": 52.9279,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 17.5878,
+          "evidence": []
+        },
+        {
+          "term": "journal",
+          "score": 16.1616,
+          "evidence": []
+        },
+        {
+          "term": "rubella",
+          "score": 8.4588,
+          "evidence": []
+        },
+        {
+          "term": "measles",
+          "score": 8.3791,
+          "evidence": []
+        },
+        {
+          "term": "measles-mumps-rubella",
+          "score": 6.3618,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "mumps disease",
+          "score": 1.5116,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mumps virus",
+          "score": 0.7619,
+          "evidence": []
+        },
+        {
+          "term": "mumps cases",
+          "score": 0.6163,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.2603,
+          "evidence": []
+        },
+        {
+          "term": "meningitis",
+          "score": 0.2436,
+          "evidence": []
+        },
+        {
+          "term": "symptoms",
+          "score": 0.1737,
+          "evidence": []
+        },
+        {
+          "term": "clinical",
+          "score": 0.1596,
+          "evidence": []
+        },
+        {
+          "term": "infectious",
+          "score": 0.1556,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 123.2589,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 72.9458,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 71.2731,
+          "evidence": []
+        },
+        {
+          "term": "问题的讨论结束",
+          "score": 71.2731,
+          "evidence": []
+        },
+        {
+          "term": "世界医学协会",
+          "score": 59.0927,
+          "evidence": []
+        },
+        {
+          "term": "在讨论期间",
+          "score": 55.1521,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 54.534,
+          "evidence": []
+        },
+        {
+          "term": "法律上",
+          "score": 52.4055,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-005-12-mumps-virus": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "mumps virus",
+          "score": 4.3311,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "protein",
+          "score": 1.1679,
+          "evidence": []
+        },
+        {
+          "term": "genotypes",
+          "score": 1.1431,
+          "evidence": []
+        },
+        {
+          "term": "jin",
+          "score": 0.8555,
+          "evidence": []
+        },
+        {
+          "term": "membrane",
+          "score": 0.8036,
+          "evidence": []
+        },
+        {
+          "term": "genome",
+          "score": 0.6698,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "mumps virus",
+          "score": 87.864,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "protein",
+          "score": 31.9901,
+          "evidence": []
+        },
+        {
+          "term": "genotypes",
+          "score": 24.8231,
+          "evidence": []
+        },
+        {
+          "term": "jin",
+          "score": 13.6688,
+          "evidence": []
+        },
+        {
+          "term": "membrane",
+          "score": 12.8578,
+          "evidence": []
+        },
+        {
+          "term": "genome",
+          "score": 10.4499,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "mumps virus",
+          "score": 0.6726,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccine",
+          "score": 0.1436,
+          "evidence": []
+        },
+        {
+          "term": "strain",
+          "score": 0.1051,
+          "evidence": []
+        },
+        {
+          "term": "rubella",
+          "score": 0.0919,
+          "evidence": []
+        },
+        {
+          "term": "aseptic",
+          "score": 0.0877,
+          "evidence": []
+        },
+        {
+          "term": "jeryl",
+          "score": 0.0876,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "mumps virus",
+          "score": 54.5041,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "journal",
+          "score": 7.4767,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 7.2057,
+          "evidence": []
+        },
+        {
+          "term": "rubella",
+          "score": 3.7693,
+          "evidence": []
+        },
+        {
+          "term": "measles",
+          "score": 3.6635,
+          "evidence": []
+        },
+        {
+          "term": "measles-mumps-rubella",
+          "score": 2.8432,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "mumps virus",
+          "score": 0.6726,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "associated",
+          "score": 0.0457,
+          "evidence": []
+        },
+        {
+          "term": "genotypes",
+          "score": 0.0383,
+          "evidence": []
+        },
+        {
+          "term": "protein",
+          "score": 0.0378,
+          "evidence": []
+        },
+        {
+          "term": "rna",
+          "score": 0.0363,
+          "evidence": []
+        },
+        {
+          "term": "jin",
+          "score": 0.0336,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 88.6854,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 78.6001,
+          "evidence": []
+        },
+        {
+          "term": "问题的讨论结束",
+          "score": 78.6001,
+          "evidence": []
+        },
+        {
+          "term": "世界医学协会",
+          "score": 62.0501,
+          "evidence": []
+        },
+        {
+          "term": "法律上",
+          "score": 60.0375,
+          "evidence": []
+        },
+        {
+          "term": "在讨论期间",
+          "score": 59.8714,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-13-mumps-vaccines": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "mumps vaccines",
+          "score": 7.4184,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lynn strain",
+          "score": 3.933,
+          "evidence": []
+        },
+        {
+          "term": "rubini strain",
+          "score": 3.8428,
+          "evidence": []
+        },
+        {
+          "term": "jeryl lynn",
+          "score": 3.6482,
+          "evidence": []
+        },
+        {
+          "term": "mumps vaccination",
+          "score": 3.4363,
+          "evidence": []
+        },
+        {
+          "term": "vaccine containing",
+          "score": 2.7531,
+          "evidence": []
+        },
+        {
+          "term": "chick embryo",
+          "score": 2.725,
+          "evidence": []
+        },
+        {
+          "term": "aseptic meningitis",
+          "score": 2.4629,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "mumps vaccines",
+          "score": 368.3415,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccine strain",
+          "score": 224.8965,
+          "evidence": []
+        },
+        {
+          "term": "lynn strain",
+          "score": 189.0457,
+          "evidence": []
+        },
+        {
+          "term": "rubini strain",
+          "score": 177.071,
+          "evidence": []
+        },
+        {
+          "term": "mumps vaccination",
+          "score": 169.9178,
+          "evidence": []
+        },
+        {
+          "term": "vaccine containing",
+          "score": 129.9788,
+          "evidence": []
+        },
+        {
+          "term": "jeryl lynn",
+          "score": 121.2384,
+          "evidence": []
+        },
+        {
+          "term": "vaccine recipient",
+          "score": 103.5431,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "mumps vaccines",
+          "score": 4.3425,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mumps vaccination",
+          "score": 2.0772,
+          "evidence": []
+        },
+        {
+          "term": "vaccine strain",
+          "score": 1.96,
+          "evidence": []
+        },
+        {
+          "term": "lynn vaccine",
+          "score": 1.7956,
+          "evidence": []
+        },
+        {
+          "term": "rubini vaccine",
+          "score": 1.7187,
+          "evidence": []
+        },
+        {
+          "term": "vaccine containing",
+          "score": 1.6192,
+          "evidence": []
+        },
+        {
+          "term": "vaccine recipient",
+          "score": 1.3074,
+          "evidence": []
+        },
+        {
+          "term": "jeryl lynn",
+          "score": 1.0537,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "mumps vaccines",
+          "score": 325.2209,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mumps vaccination",
+          "score": 161.5072,
+          "evidence": []
+        },
+        {
+          "term": "vaccine strain",
+          "score": 83.7751,
+          "evidence": []
+        },
+        {
+          "term": "lynn vaccine",
+          "score": 74.0324,
+          "evidence": []
+        },
+        {
+          "term": "rubini vaccine",
+          "score": 72.5019,
+          "evidence": []
+        },
+        {
+          "term": "vaccine containing",
+          "score": 70.4809,
+          "evidence": []
+        },
+        {
+          "term": "vaccine recipient",
+          "score": 67.8462,
+          "evidence": []
+        },
+        {
+          "term": "journal",
+          "score": 44.7811,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "mumps vaccines",
+          "score": 4.3425,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mumps vaccination",
+          "score": 2.0772,
+          "evidence": []
+        },
+        {
+          "term": "vaccine strain",
+          "score": 1.96,
+          "evidence": []
+        },
+        {
+          "term": "lynn vaccine",
+          "score": 1.7956,
+          "evidence": []
+        },
+        {
+          "term": "rubini vaccine",
+          "score": 1.7187,
+          "evidence": []
+        },
+        {
+          "term": "vaccine containing",
+          "score": 1.6192,
+          "evidence": []
+        },
+        {
+          "term": "vaccine recipient",
+          "score": 1.3603,
+          "evidence": []
+        },
+        {
+          "term": "jeryl lynn",
+          "score": 1.0537,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 223.6536,
+          "evidence": []
+        },
+        {
+          "term": "以及卫生保健界",
+          "score": 76.0508,
+          "evidence": []
+        },
+        {
+          "term": "基金会和开发银行",
+          "score": 76.0508,
+          "evidence": []
+        },
+        {
+          "term": "大学和研究机构",
+          "score": 76.0508,
+          "evidence": []
+        },
+        {
+          "term": "如非政府组织和民间社会组织",
+          "score": 76.0508,
+          "evidence": []
+        },
+        {
+          "term": "宗教组织",
+          "score": 76.0508,
+          "evidence": []
+        },
+        {
+          "term": "患者和公众",
+          "score": 76.0508,
+          "evidence": []
+        },
+        {
+          "term": "技术开发者",
+          "score": 76.0508,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-007-2-immunological-response-to-natural-infection": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "immune response",
+          "score": 1.1773,
+          "evidence": []
+        },
+        {
+          "term": "mumps",
+          "score": 0.8264,
+          "evidence": []
+        },
+        {
+          "term": "infection",
+          "score": 0.754,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "immune response",
+          "score": 20.1482,
+          "evidence": []
+        },
+        {
+          "term": "mumps",
+          "score": 10.8346,
+          "evidence": []
+        },
+        {
+          "term": "infection",
+          "score": 8.9369,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "infection",
+          "score": 0.1462,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mumps",
+          "score": 0.1162,
+          "evidence": []
+        },
+        {
+          "term": "immune response",
+          "score": 0.0842,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "mumps",
+          "score": 8.7086,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 2.9624,
+          "evidence": []
+        },
+        {
+          "term": "journal",
+          "score": 2.7699,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "infection",
+          "score": 0.1462,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mumps",
+          "score": 0.1162,
+          "evidence": []
+        },
+        {
+          "term": "immune response",
+          "score": 0.0842,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 61.6081,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 47.8888,
+          "evidence": []
+        },
+        {
+          "term": "问题的讨论结束",
+          "score": 47.8888,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-008-21-antibody-response-to-mumps-infection-in-unvac": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "symptom onset",
+          "score": 1.8973,
+          "evidence": []
+        },
+        {
+          "term": "antibody",
+          "score": 1.2165,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mumps",
+          "score": 1.0428,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "igg",
+          "score": 1.0249,
+          "evidence": []
+        },
+        {
+          "term": "ukkonen",
+          "score": 0.9686,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "symptom onset",
+          "score": 45.9052,
+          "evidence": []
+        },
+        {
+          "term": "igg",
+          "score": 19.2867,
+          "evidence": []
+        },
+        {
+          "term": "antibody",
+          "score": 18.5486,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ukkonen",
+          "score": 15.6304,
+          "evidence": []
+        },
+        {
+          "term": "antibodies",
+          "score": 15.3215,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "mumps",
+          "score": 0.3016,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "infection",
+          "score": 0.174,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "antibody",
+          "score": 0.129,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccine",
+          "score": 0.095,
+          "evidence": []
+        },
+        {
+          "term": "strain",
+          "score": 0.0766,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "mumps",
+          "score": 10.3643,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccine",
+          "score": 2.1802,
+          "evidence": []
+        },
+        {
+          "term": "journal",
+          "score": 1.5222,
+          "evidence": []
+        },
+        {
+          "term": "infection",
+          "score": 1.3535,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "treatment",
+          "score": 1.1893,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "mumps",
+          "score": 0.3016,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "infection",
+          "score": 0.174,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "antibody",
+          "score": 0.129,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "antibodies",
+          "score": 0.0705,
+          "evidence": []
+        },
+        {
+          "term": "response",
+          "score": 0.0692,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "科研人员",
+          "score": 94.5716,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 54.5101,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 52.8927,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 51.365,
+          "evidence": []
+        },
+        {
+          "term": "问题的讨论结束",
+          "score": 51.365,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-009-22-cell-mediated-immunity-following-natural-mump": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "natural mumps",
+          "score": 4.7875,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mumps disease",
+          "score": 4.1774,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cell-mediated immunity",
+          "score": 3.168,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "correlate",
+          "score": 0.9344,
+          "evidence": []
+        },
+        {
+          "term": "mumps-specific",
+          "score": 0.9064,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "natural mumps",
+          "score": 113.0947,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mumps disease",
+          "score": 99.2595,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cell-mediated immunity",
+          "score": 54.1156,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "response",
+          "score": 16.0647,
+          "evidence": []
+        },
+        {
+          "term": "correlate",
+          "score": 15.055,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "mumps disease",
+          "score": 0.7094,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "natural mumps",
+          "score": 0.6022,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cell-mediated immunity",
+          "score": 0.2538,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccine",
+          "score": 0.173,
+          "evidence": []
+        },
+        {
+          "term": "measles",
+          "score": 0.1221,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "mumps disease",
+          "score": 63.0672,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "natural mumps",
+          "score": 60.7784,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccine",
+          "score": 10.1062,
+          "evidence": []
+        },
+        {
+          "term": "journal",
+          "score": 9.5202,
+          "evidence": []
+        },
+        {
+          "term": "rubella",
+          "score": 4.8861,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "mumps disease",
+          "score": 0.7094,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "natural mumps",
+          "score": 0.6022,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cell-mediated immunity",
+          "score": 0.2538,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "infection",
+          "score": 0.1218,
+          "evidence": []
+        },
+        {
+          "term": "antibody",
+          "score": 0.0928,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 136.0485,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 89.561,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 69.4142,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 69.0051,
+          "evidence": []
+        },
+        {
+          "term": "问题的讨论结束",
+          "score": 69.0051,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-010-23-maternal-antibody": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "maternal antibody",
+          "score": 2.1282,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "clinical mumps",
+          "score": 1.9263,
+          "evidence": []
+        },
+        {
+          "term": "detectable neutralizing",
+          "score": 1.7083,
+          "evidence": []
+        },
+        {
+          "term": "neutralizing antibodies",
+          "score": 1.683,
+          "evidence": []
+        },
+        {
+          "term": "age months",
+          "score": 1.3549,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "clinical mumps",
+          "score": 40.3406,
+          "evidence": []
+        },
+        {
+          "term": "maternal antibody",
+          "score": 30.4855,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "detectable neutralizing",
+          "score": 29.7767,
+          "evidence": []
+        },
+        {
+          "term": "age months",
+          "score": 29.7522,
+          "evidence": []
+        },
+        {
+          "term": "infants",
+          "score": 29.352,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "maternal antibody",
+          "score": 0.3129,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "clinical mumps",
+          "score": 0.2797,
+          "evidence": []
+        },
+        {
+          "term": "age months",
+          "score": 0.2444,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.199,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 0.1859,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "clinical mumps",
+          "score": 24.3186,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 8.0488,
+          "evidence": []
+        },
+        {
+          "term": "journal",
+          "score": 7.1929,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 3.7559,
+          "evidence": []
+        },
+        {
+          "term": "rubella",
+          "score": 3.7426,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "maternal antibody",
+          "score": 0.3129,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "clinical mumps",
+          "score": 0.2797,
+          "evidence": []
+        },
+        {
+          "term": "age months",
+          "score": 0.2444,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.199,
+          "evidence": []
+        },
+        {
+          "term": "age born",
+          "score": 0.1455,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 96.4656,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 65.2507,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 53.4865,
+          "evidence": []
+        },
+        {
+          "term": "问题的讨论结束",
+          "score": 53.4865,
+          "evidence": []
+        },
+        {
+          "term": "世界医学协会",
+          "score": 45.4913,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-011-24-duration-of-immunity-to-natural-mumps-infecti": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "natural mumps",
+          "score": 3.5957,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "immunity",
+          "score": 1.259,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "infection",
+          "score": 0.754,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "natural mumps",
+          "score": 60.9503,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "immunity",
+          "score": 19.1467,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "infection",
+          "score": 8.9369,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "natural mumps",
+          "score": 0.3573,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "infection",
+          "score": 0.1585,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccine",
+          "score": 0.108,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "natural mumps",
+          "score": 30.4855,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccine",
+          "score": 4.9568,
+          "evidence": []
+        },
+        {
+          "term": "journal",
+          "score": 4.767,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "natural mumps",
+          "score": 0.3573,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "infection",
+          "score": 0.1585,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "immunity",
+          "score": 0.1036,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 154.0681,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 68.6351,
+          "evidence": []
+        },
+        {
+          "term": "问题的讨论结束",
+          "score": 68.6351,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-013-31-antibody-response-following-vaccination": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "jeryl lynn",
+          "score": 3.1932,
+          "evidence": []
+        },
+        {
+          "term": "mumps vaccine",
+          "score": 2.8435,
+          "evidence": []
+        },
+        {
+          "term": "following vaccination",
+          "score": 2.7783,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "antibody",
+          "score": 2.6552,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "antibody titres",
+          "score": 2.5166,
+          "evidence": []
+        },
+        {
+          "term": "neutralizing antibody",
+          "score": 2.369,
+          "evidence": []
+        },
+        {
+          "term": "seroconversion rates",
+          "score": 2.2245,
+          "evidence": []
+        },
+        {
+          "term": "vaccines containing",
+          "score": 2.0168,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "antibody",
+          "score": 92.7431,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "jeryl lynn",
+          "score": 87.9476,
+          "evidence": []
+        },
+        {
+          "term": "mumps vaccine",
+          "score": 78.9706,
+          "evidence": []
+        },
+        {
+          "term": "antibody titres",
+          "score": 74.6501,
+          "evidence": []
+        },
+        {
+          "term": "neutralizing antibody",
+          "score": 65.9193,
+          "evidence": []
+        },
+        {
+          "term": "following vaccination",
+          "score": 64.5424,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "seroconversion rates",
+          "score": 61.9031,
+          "evidence": []
+        },
+        {
+          "term": "usonis",
+          "score": 57.5447,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "mumps vaccine",
+          "score": 1.9624,
+          "evidence": []
+        },
+        {
+          "term": "following vaccination",
+          "score": 1.4242,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "jeryl lynn",
+          "score": 0.8365,
+          "evidence": []
+        },
+        {
+          "term": "vaccines containing",
+          "score": 0.8187,
+          "evidence": []
+        },
+        {
+          "term": "antibody",
+          "score": 0.7356,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "neutralizing antibody",
+          "score": 0.609,
+          "evidence": []
+        },
+        {
+          "term": "infants vaccinated",
+          "score": 0.5821,
+          "evidence": []
+        },
+        {
+          "term": "measles",
+          "score": 0.5051,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "mumps vaccine",
+          "score": 84.4948,
+          "evidence": []
+        },
+        {
+          "term": "following vaccination",
+          "score": 22.0078,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "journal",
+          "score": 17.5874,
+          "evidence": []
+        },
+        {
+          "term": "measles",
+          "score": 10.3353,
+          "evidence": []
+        },
+        {
+          "term": "vaccines containing",
+          "score": 9.8161,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 9.674,
+          "evidence": []
+        },
+        {
+          "term": "rubella",
+          "score": 9.3913,
+          "evidence": []
+        },
+        {
+          "term": "virus",
+          "score": 8.0642,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "mumps vaccine",
+          "score": 1.9624,
+          "evidence": []
+        },
+        {
+          "term": "following vaccination",
+          "score": 1.4242,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "jeryl lynn",
+          "score": 0.8365,
+          "evidence": []
+        },
+        {
+          "term": "vaccines containing",
+          "score": 0.8187,
+          "evidence": []
+        },
+        {
+          "term": "antibody",
+          "score": 0.7356,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "neutralizing antibody",
+          "score": 0.609,
+          "evidence": []
+        },
+        {
+          "term": "infants vaccinated",
+          "score": 0.5821,
+          "evidence": []
+        },
+        {
+          "term": "strain",
+          "score": 0.5035,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 343.6859,
+          "evidence": []
+        },
+        {
+          "term": "原则或价值观",
+          "score": 115.6306,
+          "evidence": []
+        },
+        {
+          "term": "人口约",
+          "score": 113.3701,
+          "evidence": []
+        },
+        {
+          "term": "平等主义",
+          "score": 109.0257,
+          "evidence": []
+        },
+        {
+          "term": "以及卫生保健界",
+          "score": 100.6194,
+          "evidence": []
+        },
+        {
+          "term": "基金会和开发银行",
+          "score": 100.6194,
+          "evidence": []
+        },
+        {
+          "term": "大学和研究机构",
+          "score": 100.6194,
+          "evidence": []
+        },
+        {
+          "term": "如非政府组织和民间社会组织",
+          "score": 100.6194,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-014-33-cell-mediated-immunity-following-mumps-vaccin": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "mumps",
+          "score": 2.9274,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mumps antigen",
+          "score": 2.2068,
+          "evidence": []
+        },
+        {
+          "term": "immune response",
+          "score": 1.0343,
+          "evidence": []
+        },
+        {
+          "term": "bruserud",
+          "score": 1.0132,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "mumps",
+          "score": 65.0077,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mumps antigen",
+          "score": 45.5212,
+          "evidence": []
+        },
+        {
+          "term": "bruserud",
+          "score": 16.4413,
+          "evidence": []
+        },
+        {
+          "term": "ilonen",
+          "score": 16.4413,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "mumps",
+          "score": 0.5091,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mumps antigen",
+          "score": 0.3199,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.3014,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccine",
+          "score": 0.2209,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "mumps",
+          "score": 47.5358,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mumps antigen",
+          "score": 24.3421,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 8.6395,
+          "evidence": []
+        },
+        {
+          "term": "journal",
+          "score": 7.5257,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "mumps",
+          "score": 0.5091,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mumps antigen",
+          "score": 0.3199,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.3014,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccine",
+          "score": 0.2209,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 198.2485,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 102.5308,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 92.1231,
+          "evidence": []
+        },
+        {
+          "term": "问题的讨论结束",
+          "score": 92.1231,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-015-34-duration-of-immunity-to-mumps-vaccination": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "mumps",
+          "score": 4.074,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mumps antibodies",
+          "score": 3.3236,
+          "evidence": []
+        },
+        {
+          "term": "mumps vaccine",
+          "score": 2.8849,
+          "evidence": []
+        },
+        {
+          "term": "against mumps",
+          "score": 2.4436,
+          "evidence": []
+        },
+        {
+          "term": "neutralizing antibody",
+          "score": 2.3603,
+          "evidence": []
+        },
+        {
+          "term": "immunity",
+          "score": 1.8444,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lebaron",
+          "score": 1.7606,
+          "evidence": []
+        },
+        {
+          "term": "antibody levels",
+          "score": 1.5915,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "mumps",
+          "score": 151.6847,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mumps antibodies",
+          "score": 111.5925,
+          "evidence": []
+        },
+        {
+          "term": "mumps vaccine",
+          "score": 91.3408,
+          "evidence": []
+        },
+        {
+          "term": "against mumps",
+          "score": 81.3017,
+          "evidence": []
+        },
+        {
+          "term": "neutralizing antibody",
+          "score": 58.5238,
+          "evidence": []
+        },
+        {
+          "term": "lebaron",
+          "score": 46.8912,
+          "evidence": []
+        },
+        {
+          "term": "antibody levels",
+          "score": 39.9612,
+          "evidence": []
+        },
+        {
+          "term": "immunity",
+          "score": 38.2935,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "mumps vaccine",
+          "score": 1.2169,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.858,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mumps antibodies",
+          "score": 0.8133,
+          "evidence": []
+        },
+        {
+          "term": "against mumps",
+          "score": 0.7502,
+          "evidence": []
+        },
+        {
+          "term": "immunity",
+          "score": 0.4454,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "neutralizing antibody",
+          "score": 0.3605,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.323,
+          "evidence": []
+        },
+        {
+          "term": "measles",
+          "score": 0.3024,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "mumps",
+          "score": 118.084,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mumps vaccine",
+          "score": 84.0551,
+          "evidence": []
+        },
+        {
+          "term": "mumps antibodies",
+          "score": 63.1579,
+          "evidence": []
+        },
+        {
+          "term": "against mumps",
+          "score": 61.1786,
+          "evidence": []
+        },
+        {
+          "term": "journal",
+          "score": 18.7493,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 11.3868,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "measles",
+          "score": 10.1709,
+          "evidence": []
+        },
+        {
+          "term": "rubella",
+          "score": 9.7687,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "mumps vaccine",
+          "score": 1.2169,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.858,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mumps antibodies",
+          "score": 0.8133,
+          "evidence": []
+        },
+        {
+          "term": "against mumps",
+          "score": 0.7502,
+          "evidence": []
+        },
+        {
+          "term": "immunity",
+          "score": 0.4454,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "neutralizing antibody",
+          "score": 0.3605,
+          "evidence": []
+        },
+        {
+          "term": "vaccinated",
+          "score": 0.252,
+          "evidence": []
+        },
+        {
+          "term": "dose",
+          "score": 0.2443,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 136.943,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 61.4375,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 57.4793,
+          "evidence": []
+        },
+        {
+          "term": "问题的讨论结束",
+          "score": 57.4793,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 51.584,
+          "evidence": []
+        },
+        {
+          "term": "以及卫生保健界",
+          "score": 50.3158,
+          "evidence": []
+        },
+        {
+          "term": "基金会和开发银行",
+          "score": 50.3158,
+          "evidence": []
+        },
+        {
+          "term": "大学和研究机构",
+          "score": 50.3158,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-016-35-correlates-of-immunity": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "mumps igg",
+          "score": 3.2755,
+          "evidence": []
+        },
+        {
+          "term": "neutralizing antibodies",
+          "score": 2.7483,
+          "evidence": []
+        },
+        {
+          "term": "neutralizing antibody",
+          "score": 2.6783,
+          "evidence": []
+        },
+        {
+          "term": "mumps infection",
+          "score": 2.5613,
+          "evidence": []
+        },
+        {
+          "term": "immunity",
+          "score": 2.518,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "anti-mumps igg",
+          "score": 2.0975,
+          "evidence": []
+        },
+        {
+          "term": "correlates",
+          "score": 1.6199,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "protection against",
+          "score": 1.377,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "mumps igg",
+          "score": 106.9753,
+          "evidence": []
+        },
+        {
+          "term": "mumps infection",
+          "score": 87.9623,
+          "evidence": []
+        },
+        {
+          "term": "immunity",
+          "score": 76.587,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "neutralizing antibody",
+          "score": 76.1928,
+          "evidence": []
+        },
+        {
+          "term": "neutralizing antibodies",
+          "score": 74.8456,
+          "evidence": []
+        },
+        {
+          "term": "anti-mumps igg",
+          "score": 40.3244,
+          "evidence": []
+        },
+        {
+          "term": "protection against",
+          "score": 29.4279,
+          "evidence": []
+        },
+        {
+          "term": "correlates",
+          "score": 26.0637,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "mumps infection",
+          "score": 0.6585,
+          "evidence": []
+        },
+        {
+          "term": "mumps igg",
+          "score": 0.4925,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 0.3377,
+          "evidence": []
+        },
+        {
+          "term": "immunity",
+          "score": 0.3123,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "neutralizing antibodies",
+          "score": 0.2795,
+          "evidence": []
+        },
+        {
+          "term": "neutralizing antibody",
+          "score": 0.2769,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.2131,
+          "evidence": []
+        },
+        {
+          "term": "strain",
+          "score": 0.2075,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "mumps infection",
+          "score": 60.5434,
+          "evidence": []
+        },
+        {
+          "term": "mumps igg",
+          "score": 59.1114,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 19.7655,
+          "evidence": []
+        },
+        {
+          "term": "journal",
+          "score": 18.5795,
+          "evidence": []
+        },
+        {
+          "term": "rubella",
+          "score": 9.5053,
+          "evidence": []
+        },
+        {
+          "term": "measles",
+          "score": 9.3313,
+          "evidence": []
+        },
+        {
+          "term": "virus",
+          "score": 8.0364,
+          "evidence": []
+        },
+        {
+          "term": "measles-mumps-rubella",
+          "score": 7.1753,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "mumps infection",
+          "score": 0.6585,
+          "evidence": []
+        },
+        {
+          "term": "mumps igg",
+          "score": 0.4925,
+          "evidence": []
+        },
+        {
+          "term": "immunity",
+          "score": 0.3123,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "neutralizing antibodies",
+          "score": 0.2795,
+          "evidence": []
+        },
+        {
+          "term": "neutralizing antibody",
+          "score": 0.2769,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.2131,
+          "evidence": []
+        },
+        {
+          "term": "protection against",
+          "score": 0.179,
+          "evidence": []
+        },
+        {
+          "term": "disease",
+          "score": 0.152,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 111.4287,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 75.1197,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 55.0589,
+          "evidence": []
+        },
+        {
+          "term": "问题的讨论结束",
+          "score": 55.0589,
+          "evidence": []
+        },
+        {
+          "term": "世界医学协会",
+          "score": 47.2802,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 47.1799,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 45.8031,
+          "evidence": []
+        },
+        {
+          "term": "在讨论期间",
+          "score": 44.1025,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-017-4-laboratory-diagnosis-of-mumps": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "mumps",
+          "score": 1.6528,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "parotitis",
+          "score": 0.9177,
+          "evidence": []
+        },
+        {
+          "term": "viral",
+          "score": 0.4744,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "mumps",
+          "score": 21.6692,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "parotitis",
+          "score": 14.6088,
+          "evidence": []
+        },
+        {
+          "term": "viral",
+          "score": 6.0499,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "mumps",
+          "score": 0.1686,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "viral",
+          "score": 0.0959,
+          "evidence": []
+        },
+        {
+          "term": "laboratory",
+          "score": 0.0924,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "mumps",
+          "score": 14.613,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccine",
+          "score": 2.5949,
+          "evidence": []
+        },
+        {
+          "term": "load",
+          "score": 2.3235,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "mumps",
+          "score": 0.1686,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "viral",
+          "score": 0.0959,
+          "evidence": []
+        },
+        {
+          "term": "laboratory",
+          "score": 0.0924,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "平等主义",
+          "score": 39.9968,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 39.3228,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 38.1128,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-018-41-virological-methods": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "mumps rna",
+          "score": 2.8663,
+          "evidence": []
+        },
+        {
+          "term": "mumps virus",
+          "score": 2.6522,
+          "evidence": []
+        },
+        {
+          "term": "rna detection",
+          "score": 1.5445,
+          "evidence": []
+        },
+        {
+          "term": "virological",
+          "score": 0.8035,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "methods",
+          "score": 0.7617,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "onset",
+          "score": 0.6674,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "mumps rna",
+          "score": 79.2831,
+          "evidence": []
+        },
+        {
+          "term": "mumps virus",
+          "score": 71.3153,
+          "evidence": []
+        },
+        {
+          "term": "rna detection",
+          "score": 33.4513,
+          "evidence": []
+        },
+        {
+          "term": "onset",
+          "score": 10.4499,
+          "evidence": []
+        },
+        {
+          "term": "appears",
+          "score": 10.2143,
+          "evidence": []
+        },
+        {
+          "term": "isolation",
+          "score": 10.1704,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "mumps virus",
+          "score": 0.3946,
+          "evidence": []
+        },
+        {
+          "term": "mumps rna",
+          "score": 0.2825,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 0.1485,
+          "evidence": []
+        },
+        {
+          "term": "viral",
+          "score": 0.1414,
+          "evidence": []
+        },
+        {
+          "term": "infection",
+          "score": 0.1163,
+          "evidence": []
+        },
+        {
+          "term": "strain",
+          "score": 0.1111,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "mumps virus",
+          "score": 43.8416,
+          "evidence": []
+        },
+        {
+          "term": "mumps rna",
+          "score": 37.6417,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 12.0013,
+          "evidence": []
+        },
+        {
+          "term": "journal",
+          "score": 11.8876,
+          "evidence": []
+        },
+        {
+          "term": "rubella",
+          "score": 6.0693,
+          "evidence": []
+        },
+        {
+          "term": "measles",
+          "score": 5.926,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "mumps virus",
+          "score": 0.3946,
+          "evidence": []
+        },
+        {
+          "term": "mumps rna",
+          "score": 0.2825,
+          "evidence": []
+        },
+        {
+          "term": "rna detection",
+          "score": 0.1088,
+          "evidence": []
+        },
+        {
+          "term": "methods",
+          "score": 0.1083,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "disease",
+          "score": 0.1004,
+          "evidence": []
+        },
+        {
+          "term": "virological",
+          "score": 0.0782,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 79.5083,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 58.5708,
+          "evidence": []
+        },
+        {
+          "term": "问题的讨论结束",
+          "score": 58.5708,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 51.8028,
+          "evidence": []
+        },
+        {
+          "term": "世界医学协会",
+          "score": 50.4233,
+          "evidence": []
+        },
+        {
+          "term": "法律上",
+          "score": 46.5487,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-019-42-serological-methods": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "igm elisa",
+          "score": 2.8179,
+          "evidence": []
+        },
+        {
+          "term": "igm response",
+          "score": 2.6455,
+          "evidence": []
+        },
+        {
+          "term": "convalescent serum",
+          "score": 2.1154,
+          "evidence": []
+        },
+        {
+          "term": "mumps",
+          "score": 1.8037,
+          "evidence": []
+        },
+        {
+          "term": "vaccine failure",
+          "score": 1.7543,
+          "evidence": []
+        },
+        {
+          "term": "vaccinated individuals",
+          "score": 1.7163,
+          "evidence": []
+        },
+        {
+          "term": "serum collected",
+          "score": 1.6237,
+          "evidence": []
+        },
+        {
+          "term": "secondary vaccine",
+          "score": 1.5727,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "igm elisa",
+          "score": 104.9227,
+          "evidence": []
+        },
+        {
+          "term": "igm response",
+          "score": 103.7963,
+          "evidence": []
+        },
+        {
+          "term": "mumps",
+          "score": 54.1731,
+          "evidence": []
+        },
+        {
+          "term": "vaccinated individuals",
+          "score": 45.6066,
+          "evidence": []
+        },
+        {
+          "term": "convalescent serum",
+          "score": 43.9399,
+          "evidence": []
+        },
+        {
+          "term": "vaccine failure",
+          "score": 38.5303,
+          "evidence": []
+        },
+        {
+          "term": "serum collected",
+          "score": 36.7531,
+          "evidence": []
+        },
+        {
+          "term": "igg",
+          "score": 32.1446,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "vaccine failure",
+          "score": 0.5465,
+          "evidence": []
+        },
+        {
+          "term": "mumps",
+          "score": 0.4602,
+          "evidence": []
+        },
+        {
+          "term": "primary vaccine",
+          "score": 0.4303,
+          "evidence": []
+        },
+        {
+          "term": "secondary vaccine",
+          "score": 0.4303,
+          "evidence": []
+        },
+        {
+          "term": "vaccinated individuals",
+          "score": 0.312,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.2672,
+          "evidence": []
+        },
+        {
+          "term": "immune response",
+          "score": 0.2402,
+          "evidence": []
+        },
+        {
+          "term": "measles",
+          "score": 0.2331,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "mumps",
+          "score": 43.3228,
+          "evidence": []
+        },
+        {
+          "term": "vaccine failure",
+          "score": 19.2338,
+          "evidence": []
+        },
+        {
+          "term": "primary vaccine",
+          "score": 17.7315,
+          "evidence": []
+        },
+        {
+          "term": "secondary vaccine",
+          "score": 17.7315,
+          "evidence": []
+        },
+        {
+          "term": "journal",
+          "score": 13.7473,
+          "evidence": []
+        },
+        {
+          "term": "measles",
+          "score": 7.3566,
+          "evidence": []
+        },
+        {
+          "term": "rubella",
+          "score": 7.1358,
+          "evidence": []
+        },
+        {
+          "term": "virus",
+          "score": 6.4352,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "vaccine failure",
+          "score": 0.5465,
+          "evidence": []
+        },
+        {
+          "term": "primary vaccine",
+          "score": 0.4806,
+          "evidence": []
+        },
+        {
+          "term": "secondary vaccine",
+          "score": 0.4697,
+          "evidence": []
+        },
+        {
+          "term": "mumps",
+          "score": 0.4602,
+          "evidence": []
+        },
+        {
+          "term": "vaccinated individuals",
+          "score": 0.312,
+          "evidence": []
+        },
+        {
+          "term": "immune response",
+          "score": 0.2402,
+          "evidence": []
+        },
+        {
+          "term": "infection",
+          "score": 0.2328,
+          "evidence": []
+        },
+        {
+          "term": "igm response",
+          "score": 0.2151,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "科研人员",
+          "score": 87.7419,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 68.4353,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 56.564,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 52.372,
+          "evidence": []
+        },
+        {
+          "term": "问题的讨论结束",
+          "score": 52.372,
+          "evidence": []
+        },
+        {
+          "term": "世界医学协会",
+          "score": 45.9338,
+          "evidence": []
+        },
+        {
+          "term": "以及卫生保健界",
+          "score": 43.1542,
+          "evidence": []
+        },
+        {
+          "term": "基金会和开发银行",
+          "score": 43.1542,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-020-43-diagnostic-challenges": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "mumps",
+          "score": 1.4637,
+          "evidence": []
+        },
+        {
+          "term": "diagnostic",
+          "score": 0.7758,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "dayan",
+          "score": 0.6123,
+          "evidence": []
+        },
+        {
+          "term": "bitsko",
+          "score": 0.5896,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "mumps",
+          "score": 32.5039,
+          "evidence": []
+        },
+        {
+          "term": "diagnostic",
+          "score": 13.0186,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "dayan",
+          "score": 7.8152,
+          "evidence": []
+        },
+        {
+          "term": "laboratory",
+          "score": 7.6627,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "mumps",
+          "score": 0.159,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 0.1114,
+          "evidence": []
+        },
+        {
+          "term": "diagnostic",
+          "score": 0.0922,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "measles",
+          "score": 0.0789,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "mumps",
+          "score": 21.8442,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 7.1535,
+          "evidence": []
+        },
+        {
+          "term": "journal",
+          "score": 6.985,
+          "evidence": []
+        },
+        {
+          "term": "rubella",
+          "score": 3.5546,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "mumps",
+          "score": 0.159,
+          "evidence": []
+        },
+        {
+          "term": "diagnostic",
+          "score": 0.0922,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "infection",
+          "score": 0.0683,
+          "evidence": []
+        },
+        {
+          "term": "laboratory",
+          "score": 0.0621,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 83.2908,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 44.8161,
+          "evidence": []
+        },
+        {
+          "term": "问题的讨论结束",
+          "score": 44.8161,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 42.344,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-022-51-vaccine-efficacy": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "leningrad strain",
+          "score": 1.8264,
+          "evidence": []
+        },
+        {
+          "term": "efficacy",
+          "score": 1.3327,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccines containing",
+          "score": 1.2109,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "leningrad strain",
+          "score": 30.0728,
+          "evidence": []
+        },
+        {
+          "term": "efficacy",
+          "score": 23.0319,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mumps",
+          "score": 21.6692,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "vaccine",
+          "score": 0.4932,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mumps",
+          "score": 0.2394,
+          "evidence": []
+        },
+        {
+          "term": "vaccines containing",
+          "score": 0.2165,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "mumps",
+          "score": 17.6863,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 14.3839,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "journal",
+          "score": 5.5778,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "vaccine",
+          "score": 0.4932,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mumps",
+          "score": 0.2394,
+          "evidence": []
+        },
+        {
+          "term": "vaccines containing",
+          "score": 0.2165,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 245.5513,
+          "evidence": []
+        },
+        {
+          "term": "人口约",
+          "score": 77.0127,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 75.3733,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-023-52-vaccine-effectiveness": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "vaccine effectiveness",
+          "score": 5.5361,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mumps vaccine",
+          "score": 3.8549,
+          "evidence": []
+        },
+        {
+          "term": "lynn mumps",
+          "score": 3.6939,
+          "evidence": []
+        },
+        {
+          "term": "lynn strain",
+          "score": 3.0856,
+          "evidence": []
+        },
+        {
+          "term": "jeryl lynn",
+          "score": 3.0831,
+          "evidence": []
+        },
+        {
+          "term": "rit strain",
+          "score": 2.8572,
+          "evidence": []
+        },
+        {
+          "term": "rubini strain",
+          "score": 2.7891,
+          "evidence": []
+        },
+        {
+          "term": "vaccine containing",
+          "score": 2.6588,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "vaccine effectiveness",
+          "score": 304.1862,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mumps vaccine",
+          "score": 193.602,
+          "evidence": []
+        },
+        {
+          "term": "lynn mumps",
+          "score": 135.6048,
+          "evidence": []
+        },
+        {
+          "term": "vaccine containing",
+          "score": 124.8589,
+          "evidence": []
+        },
+        {
+          "term": "two-dose vaccine",
+          "score": 110.3345,
+          "evidence": []
+        },
+        {
+          "term": "received mumps",
+          "score": 103.595,
+          "evidence": []
+        },
+        {
+          "term": "states school",
+          "score": 99.2122,
+          "evidence": []
+        },
+        {
+          "term": "lynn strain",
+          "score": 90.8556,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "vaccine effectiveness",
+          "score": 2.8221,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mumps vaccine",
+          "score": 2.2423,
+          "evidence": []
+        },
+        {
+          "term": "lynn mumps",
+          "score": 1.5731,
+          "evidence": []
+        },
+        {
+          "term": "vaccine containing",
+          "score": 1.3464,
+          "evidence": []
+        },
+        {
+          "term": "two-dose vaccine",
+          "score": 1.2448,
+          "evidence": []
+        },
+        {
+          "term": "received mumps",
+          "score": 1.1418,
+          "evidence": []
+        },
+        {
+          "term": "lynn strain",
+          "score": 1.0034,
+          "evidence": []
+        },
+        {
+          "term": "rubini strain",
+          "score": 0.9349,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "mumps vaccine",
+          "score": 151.7308,
+          "evidence": []
+        },
+        {
+          "term": "vaccine effectiveness",
+          "score": 114.6362,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lynn mumps",
+          "score": 104.4578,
+          "evidence": []
+        },
+        {
+          "term": "received mumps",
+          "score": 101.7763,
+          "evidence": []
+        },
+        {
+          "term": "vaccine containing",
+          "score": 53.716,
+          "evidence": []
+        },
+        {
+          "term": "two-dose vaccine",
+          "score": 51.7659,
+          "evidence": []
+        },
+        {
+          "term": "journal",
+          "score": 31.4181,
+          "evidence": []
+        },
+        {
+          "term": "united states",
+          "score": 19.7161,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "vaccine effectiveness",
+          "score": 2.8221,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mumps vaccine",
+          "score": 2.2423,
+          "evidence": []
+        },
+        {
+          "term": "lynn mumps",
+          "score": 1.5731,
+          "evidence": []
+        },
+        {
+          "term": "vaccine containing",
+          "score": 1.3464,
+          "evidence": []
+        },
+        {
+          "term": "two-dose vaccine",
+          "score": 1.2448,
+          "evidence": []
+        },
+        {
+          "term": "received mumps",
+          "score": 1.2292,
+          "evidence": []
+        },
+        {
+          "term": "lynn strain",
+          "score": 1.0034,
+          "evidence": []
+        },
+        {
+          "term": "rubini strain",
+          "score": 0.9349,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 237.5612,
+          "evidence": []
+        },
+        {
+          "term": "以及卫生保健界",
+          "score": 81.2674,
+          "evidence": []
+        },
+        {
+          "term": "基金会和开发银行",
+          "score": 81.2674,
+          "evidence": []
+        },
+        {
+          "term": "大学和研究机构",
+          "score": 81.2674,
+          "evidence": []
+        },
+        {
+          "term": "如非政府组织和民间社会组织",
+          "score": 81.2674,
+          "evidence": []
+        },
+        {
+          "term": "宗教组织",
+          "score": 81.2674,
+          "evidence": []
+        },
+        {
+          "term": "患者和公众",
+          "score": 81.2674,
+          "evidence": []
+        },
+        {
+          "term": "技术开发者",
+          "score": 81.2674,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-024-references": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "mumps rubella",
+          "score": 6.5762,
+          "evidence": []
+        },
+        {
+          "term": "attenuated mumps",
+          "score": 6.5575,
+          "evidence": []
+        },
+        {
+          "term": "measles mumps",
+          "score": 6.4564,
+          "evidence": []
+        },
+        {
+          "term": "mumps vaccine",
+          "score": 6.385,
+          "evidence": []
+        },
+        {
+          "term": "mumps strain",
+          "score": 6.0795,
+          "evidence": []
+        },
+        {
+          "term": "live mumps",
+          "score": 6.0078,
+          "evidence": []
+        },
+        {
+          "term": "mumps virus",
+          "score": 5.8395,
+          "evidence": []
+        },
+        {
+          "term": "urabe mumps",
+          "score": 5.834,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "mumps vaccine",
+          "score": 1596.3608,
+          "evidence": []
+        },
+        {
+          "term": "measles mumps",
+          "score": 1359.2571,
+          "evidence": []
+        },
+        {
+          "term": "mumps rubella",
+          "score": 1353.433,
+          "evidence": []
+        },
+        {
+          "term": "mumps virus",
+          "score": 1333.5839,
+          "evidence": []
+        },
+        {
+          "term": "live mumps",
+          "score": 1298.6463,
+          "evidence": []
+        },
+        {
+          "term": "attenuated mumps",
+          "score": 1293.6366,
+          "evidence": []
+        },
+        {
+          "term": "mumps strain",
+          "score": 1264.8294,
+          "evidence": []
+        },
+        {
+          "term": "mumps outbreak",
+          "score": 1250.426,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "mumps vaccine",
+          "score": 8.6962,
+          "evidence": []
+        },
+        {
+          "term": "mumps strain",
+          "score": 7.2873,
+          "evidence": []
+        },
+        {
+          "term": "measles mumps",
+          "score": 7.2122,
+          "evidence": []
+        },
+        {
+          "term": "mumps rubella",
+          "score": 7.1224,
+          "evidence": []
+        },
+        {
+          "term": "attenuated mumps",
+          "score": 6.9183,
+          "evidence": []
+        },
+        {
+          "term": "mumps virus",
+          "score": 6.8482,
+          "evidence": []
+        },
+        {
+          "term": "mumps vaccination",
+          "score": 6.8104,
+          "evidence": []
+        },
+        {
+          "term": "urabe mumps",
+          "score": 6.7807,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "mumps vaccine",
+          "score": 1612.8488,
+          "evidence": []
+        },
+        {
+          "term": "measles mumps",
+          "score": 1350.2836,
+          "evidence": []
+        },
+        {
+          "term": "mumps rubella",
+          "score": 1344.2313,
+          "evidence": []
+        },
+        {
+          "term": "mumps virus",
+          "score": 1326.3116,
+          "evidence": []
+        },
+        {
+          "term": "live mumps",
+          "score": 1287.6433,
+          "evidence": []
+        },
+        {
+          "term": "attenuated mumps",
+          "score": 1284.4673,
+          "evidence": []
+        },
+        {
+          "term": "mumps strain",
+          "score": 1276.1087,
+          "evidence": []
+        },
+        {
+          "term": "mumps outbreak",
+          "score": 1243.7769,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "mumps vaccine",
+          "score": 8.6962,
+          "evidence": []
+        },
+        {
+          "term": "mumps strain",
+          "score": 7.2873,
+          "evidence": []
+        },
+        {
+          "term": "measles mumps",
+          "score": 7.2122,
+          "evidence": []
+        },
+        {
+          "term": "mumps rubella",
+          "score": 7.1224,
+          "evidence": []
+        },
+        {
+          "term": "attenuated mumps",
+          "score": 6.9183,
+          "evidence": []
+        },
+        {
+          "term": "mumps virus",
+          "score": 6.8482,
+          "evidence": []
+        },
+        {
+          "term": "mumps vaccination",
+          "score": 6.8104,
+          "evidence": []
+        },
+        {
+          "term": "urabe mumps",
+          "score": 6.7807,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 182.0231,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 85.1567,
+          "evidence": []
+        },
+        {
+          "term": "问题的讨论结束",
+          "score": 85.1567,
+          "evidence": []
+        },
+        {
+          "term": "在讨论期间",
+          "score": 65.9778,
+          "evidence": []
+        },
+        {
+          "term": "以及卫生保健界",
+          "score": 65.5619,
+          "evidence": []
+        },
+        {
+          "term": "基金会和开发银行",
+          "score": 65.5619,
+          "evidence": []
+        },
+        {
+          "term": "大学和研究机构",
+          "score": 65.5619,
+          "evidence": []
+        },
+        {
+          "term": "如非政府组织和民间社会组织",
+          "score": 65.5619,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "huong mclean",
+          "score": 2.4316,
+          "evidence": []
+        },
+        {
+          "term": "jane seward",
+          "score": 2.3136,
+          "evidence": []
+        },
+        {
+          "term": "carole hickman",
+          "score": 2.2178,
+          "evidence": []
+        },
+        {
+          "term": "immunization series",
+          "score": 1.9679,
+          "evidence": []
+        },
+        {
+          "term": "organization concerning",
+          "score": 1.6734,
+          "evidence": []
+        },
+        {
+          "term": "immunological basis",
+          "score": 1.6439,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 1.5099,
+          "evidence": []
+        },
+        {
+          "term": "dotted lines",
+          "score": 1.5007,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "immunization series",
+          "score": 53.3264,
+          "evidence": []
+        },
+        {
+          "term": "organization concerning",
+          "score": 49.8052,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 47.8055,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 46.9732,
+          "evidence": []
+        },
+        {
+          "term": "huong mclean",
+          "score": 46.0282,
+          "evidence": []
+        },
+        {
+          "term": "jane seward",
+          "score": 41.8693,
+          "evidence": []
+        },
+        {
+          "term": "carole hickman",
+          "score": 39.7171,
+          "evidence": []
+        },
+        {
+          "term": "immunological basis",
+          "score": 34.059,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "organization concerning",
+          "score": 1.2397,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 1.1667,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 1.1458,
+          "evidence": []
+        },
+        {
+          "term": "dotted lines",
+          "score": 0.9139,
+          "evidence": []
+        },
+        {
+          "term": "material lies",
+          "score": 0.9065,
+          "evidence": []
+        },
+        {
+          "term": "border lines",
+          "score": 0.9058,
+          "evidence": []
+        },
+        {
+          "term": "published material",
+          "score": 0.7914,
+          "evidence": []
+        },
+        {
+          "term": "rights reserved",
+          "score": 0.7479,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "world health",
+          "score": 25.1559,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 24.7251,
+          "evidence": []
+        },
+        {
+          "term": "mumps",
+          "score": 22.2675,
+          "evidence": []
+        },
+        {
+          "term": "tel",
+          "score": 17.6142,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 17.4598,
+          "evidence": []
+        },
+        {
+          "term": "fax",
+          "score": 16.3939,
+          "evidence": []
+        },
+        {
+          "term": "organization concerning",
+          "score": 15.8874,
+          "evidence": []
+        },
+        {
+          "term": "e-mail",
+          "score": 15.6372,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "organization concerning",
+          "score": 1.2397,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 1.1667,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 1.1458,
+          "evidence": []
+        },
+        {
+          "term": "dotted lines",
+          "score": 0.9139,
+          "evidence": []
+        },
+        {
+          "term": "material lies",
+          "score": 0.9065,
+          "evidence": []
+        },
+        {
+          "term": "border lines",
+          "score": 0.9058,
+          "evidence": []
+        },
+        {
+          "term": "published material",
+          "score": 0.7914,
+          "evidence": []
+        },
+        {
+          "term": "rights reserved",
+          "score": 0.7479,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 83.3424,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 40.8682,
+          "evidence": []
+        },
+        {
+          "term": "问题的讨论结束",
+          "score": 40.8682,
+          "evidence": []
+        },
+        {
+          "term": "以及卫生保健界",
+          "score": 37.6434,
+          "evidence": []
+        },
+        {
+          "term": "基金会和开发银行",
+          "score": 37.6434,
+          "evidence": []
+        },
+        {
+          "term": "大学和研究机构",
+          "score": 37.6434,
+          "evidence": []
+        },
+        {
+          "term": "如非政府组织和民间社会组织",
+          "score": 37.6434,
+          "evidence": []
+        },
+        {
+          "term": "宗教组织",
+          "score": 37.6434,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

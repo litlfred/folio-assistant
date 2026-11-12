@@ -1,0 +1,7776 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-44796-ara",
+  "instance": "who-iris",
+  "about": "library/10665-44796-ara",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7434,
+    "terms": 71211
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺘﻲ",
+        "score": 77.3478,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+        "score": 74.6169,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "اﳌﻨﻈﻤﺔ اﻟﺘﻲ",
+        "score": 74.3655,
+        "evidence": []
+      },
+      {
+        "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+        "score": 72.5077,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+        "score": 66.2162,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "اﳌﻮاد اﻟﺘﻲ",
+        "score": 63.6344,
+        "evidence": []
+      },
+      {
+        "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+        "score": 62.5848,
+        "evidence": []
+      },
+      {
+        "term": "اﳌﻨﻈﻤﺔ اﻟﻌﺎﳌﻴﺔ",
+        "score": 62.4545,
+        "evidence": []
+      },
+      {
+        "term": "ﻣﺨﺘﱪات اﻷﻧﻔﻠﻮﻧﺰا",
+        "score": 61.3989,
+        "evidence": []
+      },
+      {
+        "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+        "score": 59.7973,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "ﻟﻘﺎﺣﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+        "score": 59.5782,
+        "evidence": []
+      },
+      {
+        "term": "اﻷﻧﻔﻠﻮﻧﺰا مبﺎ",
+        "score": 58.4312,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺘﻲ",
+        "score": 3179.7781,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "اﳌﻨﻈﻤﺔ اﻟﺘﻲ",
+        "score": 3017.6598,
+        "evidence": []
+      },
+      {
+        "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+        "score": 2921.3509,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+        "score": 2882.521,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "ﻣﺨﺘﱪات اﻷﻧﻔﻠﻮﻧﺰا",
+        "score": 2543.5695,
+        "evidence": []
+      },
+      {
+        "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+        "score": 2532.44,
+        "evidence": []
+      },
+      {
+        "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+        "score": 2513.0084,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "ﻟﻘﺎﺣﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+        "score": 2462.0001,
+        "evidence": []
+      },
+      {
+        "term": "اﳌﻨﻈﻤﺔ اﻟﻌﺎﳌﻴﺔ",
+        "score": 2395.9843,
+        "evidence": []
+      },
+      {
+        "term": "اﻷﻧﻔﻠﻮﻧﺰا مبﺎ",
+        "score": 2316.344,
+        "evidence": []
+      },
+      {
+        "term": "اﻟﻨﻤﻂ اﻷﻧﻔﻠﻮﻧﺰا",
+        "score": 2291.56,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "ﺑﺸﺄن اﻷﻧﻔﻠﻮﻧﺰا",
+        "score": 2264.7629,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺘﻲ",
+        "score": 73.9794,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "اﳌﻨﻈﻤﺔ اﻟﺘﻲ",
+        "score": 73.028,
+        "evidence": []
+      },
+      {
+        "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+        "score": 69.5657,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+        "score": 69.1493,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+        "score": 63.5637,
+        "evidence": []
+      },
+      {
+        "term": "ﻣﺨﺘﱪات اﻷﻧﻔﻠﻮﻧﺰا",
+        "score": 61.8551,
+        "evidence": []
+      },
+      {
+        "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+        "score": 61.4284,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "اﳌﻮاد اﻟﺘﻲ",
+        "score": 60.5005,
+        "evidence": []
+      },
+      {
+        "term": "اﳌﻨﻈﻤﺔ اﻟﻌﺎﳌﻴﺔ",
+        "score": 59.7954,
+        "evidence": []
+      },
+      {
+        "term": "اﻷﻧﻔﻠﻮﻧﺰا مبﺎ",
+        "score": 57.9494,
+        "evidence": []
+      },
+      {
+        "term": "اﻷﻋﻀﺎء اﳌﻨﻈﻤﺔ",
+        "score": 57.2967,
+        "evidence": []
+      },
+      {
+        "term": "ﻟﻘﺎﺣﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+        "score": 57.2003,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺘﻲ",
+        "score": 3325.24,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "اﳌﻨﻈﻤﺔ اﻟﺘﻲ",
+        "score": 3161.3452,
+        "evidence": []
+      },
+      {
+        "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+        "score": 3042.25,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+        "score": 2828.2822,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "ﻣﺨﺘﱪات اﻷﻧﻔﻠﻮﻧﺰا",
+        "score": 2664.4725,
+        "evidence": []
+      },
+      {
+        "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+        "score": 2597.4796,
+        "evidence": []
+      },
+      {
+        "term": "ﻟﻘﺎﺣﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+        "score": 2552.3883,
+        "evidence": []
+      },
+      {
+        "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+        "score": 2512.3406,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "اﻷﻧﻔﻠﻮﻧﺰا مبﺎ",
+        "score": 2416.2522,
+        "evidence": []
+      },
+      {
+        "term": "اﻟﻨﻤﻂ اﻷﻧﻔﻠﻮﻧﺰا",
+        "score": 2381.0764,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "اﳌﻨﻈﻤﺔ اﻟﻌﺎﳌﻴﺔ",
+        "score": 2323.1459,
+        "evidence": []
+      },
+      {
+        "term": "اﻷﻧﻔﻠﻮﻧﺰا اﳌﺮﺟﻌﻴﺔ",
+        "score": 2321.1392,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺘﻲ",
+        "score": 73.9794,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "اﳌﻨﻈﻤﺔ اﻟﺘﻲ",
+        "score": 73.028,
+        "evidence": []
+      },
+      {
+        "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+        "score": 69.5657,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+        "score": 69.1493,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+        "score": 63.5637,
+        "evidence": []
+      },
+      {
+        "term": "ﻣﺨﺘﱪات اﻷﻧﻔﻠﻮﻧﺰا",
+        "score": 61.8551,
+        "evidence": []
+      },
+      {
+        "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+        "score": 61.4284,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "اﳌﻮاد اﻟﺘﻲ",
+        "score": 60.5005,
+        "evidence": []
+      },
+      {
+        "term": "اﳌﻨﻈﻤﺔ اﻟﻌﺎﳌﻴﺔ",
+        "score": 59.7954,
+        "evidence": []
+      },
+      {
+        "term": "اﻷﻧﻔﻠﻮﻧﺰا مبﺎ",
+        "score": 57.9494,
+        "evidence": []
+      },
+      {
+        "term": "اﻷﻋﻀﺎء اﳌﻨﻈﻤﺔ",
+        "score": 57.2967,
+        "evidence": []
+      },
+      {
+        "term": "ﻟﻘﺎﺣﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+        "score": 57.2003,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "اﳌﺎدة اﻟﻀامﻧﺎت",
+        "score": 14991.9364,
+        "evidence": []
+      },
+      {
+        "term": "اﳌﺎدة اﻟﺘﻮﻗﻴﻊ",
+        "score": 14898.3131,
+        "evidence": []
+      },
+      {
+        "term": "اﻟﻄﺮﻓﺎن اﳌﺎدة",
+        "score": 14797.9403,
+        "evidence": []
+      },
+      {
+        "term": "ﻳﺘﻔﻖ ﻋﻠﻴﻬﺎ",
+        "score": 14544.4155,
+        "evidence": []
+      },
+      {
+        "term": "اﳌﺎدة ﻣﺪة",
+        "score": 14283.6567,
+        "evidence": []
+      },
+      {
+        "term": "اﻟﻄﺮﻓﺎن ﻫﺬا",
+        "score": 14273.3231,
+        "evidence": []
+      },
+      {
+        "term": "اﳌﻨﺼﻮص ﻋﻠﻴﻪ",
+        "score": 14134.7439,
+        "evidence": []
+      },
+      {
+        "term": "اﻷول دﻳﺴﻤﱪ",
+        "score": 14130.9857,
+        "evidence": []
+      },
+      {
+        "term": "ﻛﺎﻧﻮن اﻷول",
+        "score": 14130.9857,
+        "evidence": []
+      },
+      {
+        "term": "اﻟﺜﺎين ﻧﻮﻓﻤﱪ",
+        "score": 14124.3125,
+        "evidence": []
+      },
+      {
+        "term": "ﺗﴩﻳﻦ اﻟﺜﺎين",
+        "score": 14124.3125,
+        "evidence": []
+      },
+      {
+        "term": "ﻳﻘﺪم اﳌﻮرد",
+        "score": 14025.0745,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-اﻹﻃﺎر-اﻟﺨﺎص-ﺑﺎﻟﺘﺄﻫﺐ-ﻟﻸﻧﻔﻠﻮﻧﺰا-اﻟﺠﺎﺋﺤﺔ": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "ﻣﻨﻈﻤﺔ اﻟﺼﺤﺔ",
+          "score": 2.9227,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺼﺤﺔ اﻟﻌﺎﳌﻴﺔ",
+          "score": 2.7814,
+          "evidence": []
+        },
+        {
+          "term": "inﬂuenza",
+          "score": 1.6317,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻮاد",
+          "score": 1.065,
+          "evidence": []
+        },
+        {
+          "term": "ﻛﺎن",
+          "score": 0.9347,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺤﺼﻮل",
+          "score": 0.9063,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا",
+          "score": 0.9057,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﻟﺠﺎﺋﺤﺔ",
+          "score": 0.9023,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "ﻣﻨﻈﻤﺔ اﻟﺼﺤﺔ",
+          "score": 85.1527,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺼﺤﺔ اﻟﻌﺎﳌﻴﺔ",
+          "score": 81.577,
+          "evidence": []
+        },
+        {
+          "term": "inﬂuenza",
+          "score": 39.076,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻮاد",
+          "score": 22.7798,
+          "evidence": []
+        },
+        {
+          "term": "ﻛﺎن",
+          "score": 15.055,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺤﺼﻮل",
+          "score": 14.6088,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﻮاردة",
+          "score": 13.4332,
+          "evidence": []
+        },
+        {
+          "term": "رﻗﻢ",
+          "score": 12.5495,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "اﻟﺠﺎﺋﺤﺔ",
+          "score": 0.6228,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا",
+          "score": 0.5234,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﻟﺼﺤﺔ اﻟﻌﺎﳌﻴﺔ",
+          "score": 0.4541,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 0.4269,
+          "evidence": []
+        },
+        {
+          "term": "ﺑﺎﻟﺘﺄﻫﺐ",
+          "score": 0.4249,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﳌﻨﻈﻤﺔ",
+          "score": 0.4103,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺘﻲ",
+          "score": 0.3557,
+          "evidence": []
+        },
+        {
+          "term": "اﻹﻃﺎر",
+          "score": 0.3515,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 13.9044,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻨﻈﻤﺔ",
+          "score": 12.8376,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺠﺎﺋﺤﺔ",
+          "score": 10.9331,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﻟﺘﻲ",
+          "score": 8.8578,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا",
+          "score": 7.4859,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ﻓريوﺳﺎت",
+          "score": 6.909,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺼﺤﺔ اﻟﻌﺎﳌﻴﺔ",
+          "score": 6.4039,
+          "evidence": []
+        },
+        {
+          "term": "ﺑﺎﻟﺘﺄﻫﺐ",
+          "score": 5.2111,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "اﻟﺠﺎﺋﺤﺔ",
+          "score": 0.6228,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا",
+          "score": 0.5234,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﻟﺼﺤﺔ اﻟﻌﺎﳌﻴﺔ",
+          "score": 0.4541,
+          "evidence": []
+        },
+        {
+          "term": "ﺑﺎﻟﺘﺄﻫﺐ",
+          "score": 0.4249,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﳌﻨﻈﻤﺔ",
+          "score": 0.4103,
+          "evidence": []
+        },
+        {
+          "term": "اﻹﻃﺎر",
+          "score": 0.3515,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ﻣﻨﻈﻤﺔ اﻟﺼﺤﺔ",
+          "score": 0.3304,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻮاد",
+          "score": 0.2786,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 531.8014,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 482.0977,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 389.9579,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 389.9579,
+          "evidence": []
+        },
+        {
+          "term": "اﻹﻃﺎر",
+          "score": 337.916,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "经济方面",
+          "score": 313.8522,
+          "evidence": []
+        },
+        {
+          "term": "政治利益",
+          "score": 310.6691,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﻀامﻧﺎت",
+          "score": 288.0717,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-001-اﳌﺤﺘـﻮﻳــﺎت": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 1.808,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺘﺄﻫﺐ ﻟﻸﻧﻔﻠﻮﻧﺰا",
+          "score": 1.6609,
+          "evidence": []
+        },
+        {
+          "term": "ﺗﺒﺎدل ﻓريوﺳﺎت",
+          "score": 1.5284,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 33.7079,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺘﺄﻫﺐ ﻟﻸﻧﻔﻠﻮﻧﺰا",
+          "score": 28.5925,
+          "evidence": []
+        },
+        {
+          "term": "ﺗﺒﺎدل ﻓريوﺳﺎت",
+          "score": 23.723,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 0.4247,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 0.3309,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻨﻈﻤﺔ",
+          "score": 0.2373,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 12.1483,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻨﻈﻤﺔ",
+          "score": 7.4248,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 5.3478,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 0.4247,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 0.3309,
+          "evidence": []
+        },
+        {
+          "term": "ﺗﺒﺎدل ﻓريوﺳﺎت",
+          "score": 0.2353,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 860.7219,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 774.4793,
+          "evidence": []
+        },
+        {
+          "term": "被称为研究伦理委员会",
+          "score": 394.6406,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-002-12-وﻓريوﺳﺎت-اﻷﻧﻔﻠﻮﻧﺰا-اﻷﺧﺮى-اﻟﺘﻲ-ﻗﺪ-ﺗﺴﺒﺐ-ﺟﺎﺋﺤﺔ-ﺑ": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 2.7133,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 2.6007,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻮاد اﳌﻠﺤﻖ",
+          "score": 2.5214,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا واﻟﺘﺼﺪي",
+          "score": 2.4231,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺼﺤﺔ اﻟﻌﺎﳌﻴﺔ",
+          "score": 2.3804,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﺣﻜﺎم اﻟﻌﺎﻣﺔ",
+          "score": 2.1689,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﻌﺎﳌﻴﺔ ﻟﱰﺻﺪ",
+          "score": 2.1239,
+          "evidence": []
+        },
+        {
+          "term": "ﺗﴫﻳﻒ اﻟﺸﺆون",
+          "score": 2.0403,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 78.6518,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 73.0338,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا واﻟﺘﺼﺪي",
+          "score": 58.531,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺼﺤﺔ اﻟﻌﺎﳌﻴﺔ",
+          "score": 58.4516,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻮاد اﳌﻠﺤﻖ",
+          "score": 58.3901,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﻌﺎﳌﻴﺔ ﻟﱰﺻﺪ",
+          "score": 48.5404,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻨﻘﻞ اﳌﻮاد",
+          "score": 41.2035,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﺣﻜﺎم اﻟﻌﺎﻣﺔ",
+          "score": 41.1999,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 1.7571,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 1.5195,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺘﻲ",
+          "score": 1.4725,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا واﻟﺘﺼﺪي",
+          "score": 1.1978,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 1.1763,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﱰﺻﺪ اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 1.0575,
+          "evidence": []
+        },
+        {
+          "term": "ﺟﺎﺋﺤﺔ",
+          "score": 0.9762,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ﺑﺎﻟﺘﺄﻫﺐ ﻟﻸﻧﻔﻠﻮﻧﺰا",
+          "score": 0.9733,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 60.8412,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 42.353,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺘﻲ",
+          "score": 38.7261,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا واﻟﺘﺼﺪي",
+          "score": 34.4995,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﱰﺻﺪ اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 32.1153,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻨﻈﻤﺔ",
+          "score": 27.9783,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 20.1097,
+          "evidence": []
+        },
+        {
+          "term": "ﺟﺎﺋﺤﺔ",
+          "score": 19.4052,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 1.7571,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 1.5195,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺘﻲ",
+          "score": 1.4725,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا واﻟﺘﺼﺪي",
+          "score": 1.1978,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 1.1763,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﱰﺻﺪ اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 1.0575,
+          "evidence": []
+        },
+        {
+          "term": "ﺟﺎﺋﺤﺔ",
+          "score": 0.9762,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ﺑﺎﻟﺘﺄﻫﺐ ﻟﻸﻧﻔﻠﻮﻧﺰا",
+          "score": 0.9733,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "اﻟﻔﺮﻳﻖ اﻻﺳﺘﺸﺎري",
+          "score": 477.2478,
+          "evidence": []
+        },
+        {
+          "term": "ﺗﴫﻳﻒ اﻟﺸﺆون",
+          "score": 476.7008,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 300.0104,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 266.8808,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﺤﺮز",
+          "score": 257.8742,
+          "evidence": []
+        },
+        {
+          "term": "وﻣﻼﺣﻘﻪ",
+          "score": 257.8742,
+          "evidence": []
+        },
+        {
+          "term": "ﺑﺤﻠﻮل",
+          "score": 255.3716,
+          "evidence": []
+        },
+        {
+          "term": "واﻟﻔﺮﻳﻖ",
+          "score": 255.3716,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-003-اﻟﺘﺄﻫﺐ-ﻟﻸﻧﻔﻠﻮﻧﺰا-اﻟﺠﺎﺋﺤﺔ-ﺗﺒﺎدل-ﻓريوﺳﺎت-اﻷﻧﻔﻠﻮﻧﺰا": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 6.5862,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﻟﻠﻘﺎﺣﺎت واﻟﻔﻮاﺋﺪ",
+          "score": 4.4983,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "واﻟﻔﻮاﺋﺪ اﻷﺧﺮى",
+          "score": 4.4602,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا واﻟﺘﻮﺻﻞ",
+          "score": 4.1565,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ﺗﺒﺎدل ﻓريوﺳﺎت",
+          "score": 3.8573,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ﺑﺎﻟﺘﺄﻫﺐ ﻟﻸﻧﻔﻠﻮﻧﺰا",
+          "score": 3.3391,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺨﺎص ﺑﺎﻟﺘﺄﻫﺐ",
+          "score": 3.2622,
+          "evidence": []
+        },
+        {
+          "term": "اﻹﻃﺎر اﻟﺨﺎص",
+          "score": 3.0964,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 258.4272,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ﺑﺎﻟﺘﺄﻫﺐ ﻟﻸﻧﻔﻠﻮﻧﺰا",
+          "score": 130.0602,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺨﺎص ﺑﺎﻟﺘﺄﻫﺐ",
+          "score": 111.7742,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﻠﻘﺎﺣﺎت واﻟﻔﻮاﺋﺪ",
+          "score": 96.0842,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "واﻟﻔﻮاﺋﺪ اﻷﺧﺮى",
+          "score": 95.7576,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﻹﻃﺎر اﻟﺨﺎص",
+          "score": 95.016,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا واﻟﺘﻮﺻﻞ",
+          "score": 83.906,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ﺗﻨﻔﻴﺬ اﻹﻃﺎر",
+          "score": 74.3744,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.1704,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 1.6988,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا واﻟﺘﻮﺻﻞ",
+          "score": 1.4973,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ﺗﺒﺎدل ﻓريوﺳﺎت",
+          "score": 1.2037,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "واﻟﻔﻮاﺋﺪ اﻷﺧﺮى",
+          "score": 0.8947,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﻟﻠﻘﺎﺣﺎت واﻟﻔﻮاﺋﺪ",
+          "score": 0.7535,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ﺑﺎﻟﺘﺄﻫﺐ ﻟﻸﻧﻔﻠﻮﻧﺰا",
+          "score": 0.7033,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺼﺤﺔ اﻟﻌﺎﳌﻴﺔ",
+          "score": 0.6639,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 76.2487,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا واﻟﺘﻮﺻﻞ",
+          "score": 53.2336,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 33.6826,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ﺗﺒﺎدل ﻓريوﺳﺎت",
+          "score": 28.7152,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﳌﻨﻈﻤﺔ",
+          "score": 23.3938,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺘﻲ",
+          "score": 16.204,
+          "evidence": []
+        },
+        {
+          "term": "واﻟﻔﻮاﺋﺪ اﻷﺧﺮى",
+          "score": 14.1105,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﻟﺼﺤﺔ اﻟﻌﺎﳌﻴﺔ",
+          "score": 11.6664,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.1704,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 1.6988,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا واﻟﺘﻮﺻﻞ",
+          "score": 1.4973,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ﺗﺒﺎدل ﻓريوﺳﺎت",
+          "score": 1.2037,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "واﻟﻔﻮاﺋﺪ اﻷﺧﺮى",
+          "score": 0.8947,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﻟﻠﻘﺎﺣﺎت واﻟﻔﻮاﺋﺪ",
+          "score": 0.7535,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ﺑﺎﻟﺘﺄﻫﺐ ﻟﻸﻧﻔﻠﻮﻧﺰا",
+          "score": 0.7033,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺼﺤﺔ اﻟﻌﺎﳌﻴﺔ",
+          "score": 0.6639,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 1158.1693,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 780.4413,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 713.2321,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 627.6604,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﻌﺎﻣﻞ اﳌﻔﺘﻮح",
+          "score": 620.8064,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻔﺘﻮح اﻟﻌﻀﻮﻳﺔ",
+          "score": 620.8064,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 602.625,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﻌﻀﻮﻳﺔ ﻟﻠﺪول",
+          "score": 599.5107,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-004-١-اﳌﺒﺎدئ": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "وﺗﻌﱰف ﺑﺄن",
+          "score": 3.9189,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺘﻲ",
+          "score": 3.6021,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 3.3166,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﻨﺎﻣﻴﺔ وﺗﻌﱰف",
+          "score": 3.2832,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻘﺎﺣﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 3.2302,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺪول اﻷﻋﻀﺎء",
+          "score": 3.2178,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+          "score": 3.0953,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺼﺤﺔ اﻟﻌﺎﳌﻴﺔ",
+          "score": 2.9324,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺘﻲ",
+          "score": 162.9215,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 135.0958,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻘﺎﺣﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 126.8795,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+          "score": 123.9804,
+          "evidence": []
+        },
+        {
+          "term": "وﺗﻌﱰف ﺑﺄن",
+          "score": 120.5446,
+          "evidence": []
+        },
+        {
+          "term": "وﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 114.123,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺪول اﻷﻋﻀﺎء",
+          "score": 102.3693,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺼﺤﺔ اﻟﻌﺎﳌﻴﺔ",
+          "score": 93.4131,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺘﻲ",
+          "score": 2.8036,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.6222,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+          "score": 2.3499,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻘﺎﺣﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.1984,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 2.0486,
+          "evidence": []
+        },
+        {
+          "term": "وﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 1.9845,
+          "evidence": []
+        },
+        {
+          "term": "ﺗﺴﺒﺐ ﺟﺎﺋﺤﺔ",
+          "score": 1.671,
+          "evidence": []
+        },
+        {
+          "term": "وﺳﺎﺋﺮ ﻓريوﺳﺎت",
+          "score": 1.6266,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺘﻲ",
+          "score": 116.663,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 106.7992,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻘﺎﺣﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 89.6319,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+          "score": 88.1968,
+          "evidence": []
+        },
+        {
+          "term": "وﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 78.9558,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻨﻈﻤﺔ",
+          "score": 65.2226,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 46.9916,
+          "evidence": []
+        },
+        {
+          "term": "وﺳﺎﺋﺮ ﻓريوﺳﺎت",
+          "score": 44.5895,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺘﻲ",
+          "score": 2.8036,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.6222,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+          "score": 2.3499,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻘﺎﺣﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.1984,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 2.0486,
+          "evidence": []
+        },
+        {
+          "term": "وﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 1.9845,
+          "evidence": []
+        },
+        {
+          "term": "ﺗﺴﺒﺐ ﺟﺎﺋﺤﺔ",
+          "score": 1.671,
+          "evidence": []
+        },
+        {
+          "term": "وﺳﺎﺋﺮ ﻓريوﺳﺎت",
+          "score": 1.6266,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 640.4773,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 629.6892,
+          "evidence": []
+        },
+        {
+          "term": "واﳌﻬﺎرات واﳌﻌﺎرف",
+          "score": 516.0675,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺘﻜﻨﻮﻟﻮﺟﻴﺎت واﳌﻬﺎرات",
+          "score": 509.3374,
+          "evidence": []
+        },
+        {
+          "term": "واﳌﻌﺎرف واﻟﺪراﻳﺔ",
+          "score": 508.7944,
+          "evidence": []
+        },
+        {
+          "term": "ﺗﻠﻚ اﻟﺘﻜﻨﻮﻟﻮﺟﻴﺎت",
+          "score": 503.5519,
+          "evidence": []
+        },
+        {
+          "term": "وﺗﻌﱰف ﺑﺄن",
+          "score": 497.9656,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻋﻀﺎء واﳌﺪﻳﺮ",
+          "score": 493.3186,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-005-٢-اﻟﻐﺮض": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+          "score": 2.3515,
+          "evidence": []
+        },
+        {
+          "term": "ﻫﺬا اﻹﻃﺎر",
+          "score": 2.2157,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﺧﺮى اﻟﺘﻲ",
+          "score": 2.1325,
+          "evidence": []
+        },
+        {
+          "term": "وﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.0775,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.0284,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+          "score": 56.4877,
+          "evidence": []
+        },
+        {
+          "term": "ﻫﺬا اﻹﻃﺎر",
+          "score": 46.8206,
+          "evidence": []
+        },
+        {
+          "term": "وﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 46.1194,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﺧﺮى اﻟﺘﻲ",
+          "score": 45.2517,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 45.0193,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 0.9091,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+          "score": 0.8136,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﺧﺮى اﻟﺘﻲ",
+          "score": 0.7251,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 0.7078,
+          "evidence": []
+        },
+        {
+          "term": "وﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 0.687,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 31.7053,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+          "score": 26.1807,
+          "evidence": []
+        },
+        {
+          "term": "وﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 23.4375,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻨﻈﻤﺔ",
+          "score": 19.3667,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﺧﺮى اﻟﺘﻲ",
+          "score": 18.4706,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 0.9091,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+          "score": 0.8136,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﺧﺮى اﻟﺘﻲ",
+          "score": 0.7251,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 0.7078,
+          "evidence": []
+        },
+        {
+          "term": "وﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 0.687,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "的材料",
+          "score": 716.1049,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 671.6337,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﻐﺮض",
+          "score": 534.8246,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "وﺗﺒﺎدل اﻟﻔﻮاﺋﺪ",
+          "score": 509.4484,
+          "evidence": []
+        },
+        {
+          "term": "美国cdc",
+          "score": 338.8025,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-٤-اﻟﺘﻌﺎرﻳﻒ-واﳌﺼﻄﻠﺤﺎت": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 4.3173,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوس اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 4.2146,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺘﻲ",
+          "score": 3.9656,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+          "score": 3.6008,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻘﺎﺣﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 3.4099,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوس أﻧﻔﻠﻮﻧﺰا",
+          "score": 3.2879,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺒﴩﻳﺔ",
+          "score": 3.2792,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﻨﻤﻂ اﻟﱪي",
+          "score": 3.0856,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 276.0737,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺘﻲ",
+          "score": 230.3373,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوس اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 219.8252,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+          "score": 197.1681,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻘﺎﺣﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 182.4026,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺒﴩﻳﺔ",
+          "score": 177.4533,
+          "evidence": []
+        },
+        {
+          "term": "وﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 169.715,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوس أﻧﻔﻠﻮﻧﺰا",
+          "score": 90.3933,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺘﻲ",
+          "score": 2.6524,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.4819,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+          "score": 2.2122,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻘﺎﺣﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.0631,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 1.9282,
+          "evidence": []
+        },
+        {
+          "term": "وﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 1.863,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺒﴩﻳﺔ",
+          "score": 1.6736,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻮاد اﻟﺒﻴﻮﻟﻮﺟﻴﺔ",
+          "score": 1.6308,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺘﻲ",
+          "score": 146.2434,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 133.896,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻘﺎﺣﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 112.3462,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+          "score": 110.5536,
+          "evidence": []
+        },
+        {
+          "term": "وﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 98.9723,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺒﴩﻳﺔ",
+          "score": 93.3234,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوس اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 92.9409,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻨﻈﻤﺔ",
+          "score": 81.7284,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺘﻲ",
+          "score": 2.6524,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.4819,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+          "score": 2.2122,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻘﺎﺣﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.0631,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 1.9282,
+          "evidence": []
+        },
+        {
+          "term": "وﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 1.863,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺒﴩﻳﺔ",
+          "score": 1.6736,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻮاد اﻟﺒﻴﻮﻟﻮﺟﻴﺔ",
+          "score": 1.6308,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "ﺑﻴﺾ اﻟﺘﻔﺮﻳﺦ",
+          "score": 477.1612,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﻨﻤﻂ اﻟﱪي",
+          "score": 472.9318,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﻌﻴﻨﺎت اﻟﴪﻳﺮﻳﺔ",
+          "score": 469.9854,
+          "evidence": []
+        },
+        {
+          "term": "ﺟﺎﺋﺤﺔ ﺑﴩﻳﺔ",
+          "score": 468.4511,
+          "evidence": []
+        },
+        {
+          "term": "ﺗﺴﺒﺐ ﺟﺎﺋﺤﺔ",
+          "score": 468.0834,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 406.1498,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 308.8773,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﻐﺮض",
+          "score": 242.1481,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-007-أﺳامء-اﳌﺆﺳﺴﺎت-واﳌﻨﻈامت-واﻟﻜﻴﺎﻧﺎت": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺘﻲ",
+          "score": 3.853,
+          "evidence": []
+        },
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 3.6352,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﺧﺮى اﻟﺘﻲ",
+          "score": 3.3273,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 3.3166,
+          "evidence": []
+        },
+        {
+          "term": "ﺗﻌﻴﻨﻬﺎ اﳌﻨﻈﻤﺔ",
+          "score": 3.2806,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻘﺎﺣﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 3.2302,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻌﻨﻴﺔ ﺑﺎﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 3.1537,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻨﻈﻤﺔ وإﱃ",
+          "score": 3.0595,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺘﻲ",
+          "score": 196.6294,
+          "evidence": []
+        },
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 161.1832,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﺧﺮى اﻟﺘﻲ",
+          "score": 140.9883,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 135.0958,
+          "evidence": []
+        },
+        {
+          "term": "ﺗﻌﻴﻨﻬﺎ اﳌﻨﻈﻤﺔ",
+          "score": 132.1207,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻨﻈﻤﺔ وإﱃ",
+          "score": 127.6085,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻘﺎﺣﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 126.8795,
+          "evidence": []
+        },
+        {
+          "term": "ﻣﺨﺰون اﳌﻨﻈﻤﺔ",
+          "score": 122.5138,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺘﻲ",
+          "score": 3.356,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 3.1373,
+          "evidence": []
+        },
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 2.8572,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+          "score": 2.7949,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻘﺎﺣﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.6066,
+          "evidence": []
+        },
+        {
+          "term": "ﺑﺸﺄن اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.5219,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 2.4453,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻨﻈﻤﺔ وﻓﻘﺎ",
+          "score": 2.1461,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺘﻲ",
+          "score": 173.1349,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 158.3981,
+          "evidence": []
+        },
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 135.2566,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻘﺎﺣﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 132.894,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+          "score": 130.809,
+          "evidence": []
+        },
+        {
+          "term": "ﺑﺸﺄن اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 120.3164,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺒﴩﻳﺔ",
+          "score": 110.4638,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻨﻈﻤﺔ وﻓﻘﺎ",
+          "score": 103.0721,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺘﻲ",
+          "score": 3.356,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 3.1373,
+          "evidence": []
+        },
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 2.8572,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+          "score": 2.7949,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻘﺎﺣﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.6066,
+          "evidence": []
+        },
+        {
+          "term": "ﺑﺸﺄن اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.5219,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 2.4453,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻨﻈﻤﺔ وﻓﻘﺎ",
+          "score": 2.1461,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "واﻟﻜﻴﺎﻧﺎت",
+          "score": 472.3362,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "واﳌﻨﻈامت",
+          "score": 468.1593,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﳌﻀﺎدة ﻟﻠﻔريوﺳﺎت",
+          "score": 462.8959,
+          "evidence": []
+        },
+        {
+          "term": "اﻷدوﻳﺔ اﳌﻀﺎدة",
+          "score": 462.8286,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺪول اﻷﻋﻀﺎء",
+          "score": 462.0085,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﺤﺮز",
+          "score": 237.7957,
+          "evidence": []
+        },
+        {
+          "term": "وﻣﻼﺣﻘﻪ",
+          "score": 237.7957,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﻐﺮض",
+          "score": 237.0846,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-009-اﻷﺣﻜﺎم-اﻟﻌﺎﻣﺔ": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+          "score": 3.3268,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا واﳌﺨﺘﱪات",
+          "score": 3.2747,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺘﻲ",
+          "score": 3.2434,
+          "evidence": []
+        },
+        {
+          "term": "ﺑﺎﻟﺘﺄﻫﺐ ﻟﻸﻧﻔﻠﻮﻧﺰا",
+          "score": 3.1717,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 3.0837,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺨﺎﺻﺔ ﺑﺎﻟﺘﺄﻫﺐ",
+          "score": 3.0825,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 3.0653,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻮاد اﻟﺒﻴﻮﻟﻮﺟﻴﺔ",
+          "score": 2.9879,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+          "score": 135.4473,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺘﻲ",
+          "score": 129.2136,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا واﳌﺨﺘﱪات",
+          "score": 127.5363,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 118.1663,
+          "evidence": []
+        },
+        {
+          "term": "ﺑﺸﺄن اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 113.7652,
+          "evidence": []
+        },
+        {
+          "term": "ﺑﺎﻟﺘﺄﻫﺐ ﻟﻸﻧﻔﻠﻮﻧﺰا",
+          "score": 113.1293,
+          "evidence": []
+        },
+        {
+          "term": "وﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 108.505,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 106.7417,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺘﻲ",
+          "score": 3.0657,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.8664,
+          "evidence": []
+        },
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 2.6104,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+          "score": 2.553,
+          "evidence": []
+        },
+        {
+          "term": "ﺑﺸﺄن اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.3038,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا واﳌﺨﺘﱪات",
+          "score": 2.2537,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 2.2326,
+          "evidence": []
+        },
+        {
+          "term": "وﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.1475,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺘﻲ",
+          "score": 132.9671,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 121.6684,
+          "evidence": []
+        },
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 103.7105,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+          "score": 100.4783,
+          "evidence": []
+        },
+        {
+          "term": "ﺑﺸﺄن اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 92.4115,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا واﳌﺨﺘﱪات",
+          "score": 91.5707,
+          "evidence": []
+        },
+        {
+          "term": "وﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 89.9386,
+          "evidence": []
+        },
+        {
+          "term": "ﺑﻔريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 83.974,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺘﻲ",
+          "score": 3.0657,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.8664,
+          "evidence": []
+        },
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 2.6104,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+          "score": 2.553,
+          "evidence": []
+        },
+        {
+          "term": "ﺑﺸﺄن اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.3038,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا واﳌﺨﺘﱪات",
+          "score": 2.2537,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 2.2326,
+          "evidence": []
+        },
+        {
+          "term": "وﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.1475,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "اﻟﺪول اﻷﻋﻀﺎء",
+          "score": 466.1614,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﺤﺮز",
+          "score": 242.0841,
+          "evidence": []
+        },
+        {
+          "term": "وﻣﻼﺣﻘﻪ",
+          "score": 242.0841,
+          "evidence": []
+        },
+        {
+          "term": "ﺑﺤﻠﻮل",
+          "score": 240.5394,
+          "evidence": []
+        },
+        {
+          "term": "واﻟﻔﺮﻳﻖ",
+          "score": 240.5394,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﻐﺮض",
+          "score": 240.0611,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﻨﻄﺎق",
+          "score": 240.0611,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﻌﺎﻣﻞ",
+          "score": 240.0213,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-010-ﺻﻴﻎ-اﻻﺗﻔﺎق-اﳌﻮﺣﺪ-ﻟﻨﻘﻞ-اﳌﻮاد": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "ﻟﻨﻘﻞ اﳌﻮاد",
+          "score": 3.671,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﻻﺗﻔﺎق اﳌﻮﺣﺪ",
+          "score": 3.5006,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 2.6007,
+          "evidence": []
+        },
+        {
+          "term": "ﺗﺒﺎدل ﻓﻮاﺋﺪ",
+          "score": 2.5991,
+          "evidence": []
+        },
+        {
+          "term": "ﻓﻮاﺋﺪ اﻟﺘﺄﻫﺐ",
+          "score": 2.5638,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺠﺎﺋﺤﺔ وﺗﻘﺪﻳﺮ",
+          "score": 2.4502,
+          "evidence": []
+        },
+        {
+          "term": "ﻧﻈﺎم ﺗﺒﺎدل",
+          "score": 2.2785,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺒﻠﺪان اﳌﺘﻠﻘﻴﺔ",
+          "score": 2.2607,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 73.0338,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻨﻘﻞ اﳌﻮاد",
+          "score": 70.1245,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﻟﺠﺎﺋﺤﺔ وﺗﻘﺪﻳﺮ",
+          "score": 61.3852,
+          "evidence": []
+        },
+        {
+          "term": "اﻻﺗﻔﺎق اﳌﻮﺣﺪ",
+          "score": 61.0486,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ﺗﺒﺎدل ﻓﻮاﺋﺪ",
+          "score": 57.6933,
+          "evidence": []
+        },
+        {
+          "term": "ﻓﻮاﺋﺪ اﻟﺘﺄﻫﺐ",
+          "score": 56.6839,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺼﺤﺔ اﻟﻌﻤﻮﻣﻴﺔ",
+          "score": 47.2655,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻘﺎﺣﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 46.9142,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "ﻟﻨﻘﻞ اﳌﻮاد",
+          "score": 2.0007,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﳌﻮﺣﺪ ﻟﻨﻘﻞ",
+          "score": 1.5571,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﻻﺗﻔﺎق اﳌﻮﺣﺪ",
+          "score": 1.5237,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ﻟﻘﺎﺣﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 1.3312,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 1.2439,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا ووﺳﺎﺋﻞ",
+          "score": 1.0449,
+          "evidence": []
+        },
+        {
+          "term": "ﺑﺎﻟﺘﺄﻫﺐ ﻟﻸﻧﻔﻠﻮﻧﺰا",
+          "score": 1.0296,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺨﺎﺻﺔ ﺑﺎﻟﺘﺄﻫﺐ",
+          "score": 0.9031,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "ﻟﻘﺎﺣﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 37.9947,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻨﻘﻞ اﳌﻮاد",
+          "score": 33.1775,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا ووﺳﺎﺋﻞ",
+          "score": 31.2302,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻨﻈﻤﺔ",
+          "score": 27.7895,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻮﺣﺪ ﻟﻨﻘﻞ",
+          "score": 22.9303,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﻻﺗﻔﺎق اﳌﻮﺣﺪ",
+          "score": 21.8066,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 19.9898,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺘﻲ",
+          "score": 19.2442,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "ﻟﻨﻘﻞ اﳌﻮاد",
+          "score": 2.0007,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﳌﻮﺣﺪ ﻟﻨﻘﻞ",
+          "score": 1.5571,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﻻﺗﻔﺎق اﳌﻮﺣﺪ",
+          "score": 1.5237,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ﻟﻘﺎﺣﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 1.3312,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 1.2439,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا ووﺳﺎﺋﻞ",
+          "score": 1.0449,
+          "evidence": []
+        },
+        {
+          "term": "ﺑﺎﻟﺘﺄﻫﺐ ﻟﻸﻧﻔﻠﻮﻧﺰا",
+          "score": 1.0296,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺨﺎﺻﺔ ﺑﺎﻟﺘﺄﻫﺐ",
+          "score": 0.9031,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 747.709,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 639.0271,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 628.142,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 575.8084,
+          "evidence": []
+        },
+        {
+          "term": "إﻋﻄﺎء اﻷوﻟﻮﻳﺔ",
+          "score": 551.5842,
+          "evidence": []
+        },
+        {
+          "term": "ووﺳﺎﺋﻞ ﺗﺸﺨﻴﺼﻬﺎ",
+          "score": 540.9396,
+          "evidence": []
+        },
+        {
+          "term": "ﺗﺒﺎدل ﻓﻮاﺋﺪ",
+          "score": 531.216,
+          "evidence": []
+        },
+        {
+          "term": "ﻓﻮاﺋﺪ اﻟﺘﺄﻫﺐ",
+          "score": 530.8629,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-011-ﺗﻨﺴﻴﻖ-ﻣﻨﻈﻤﺔ-اﻟﺼﺤﺔ-اﻟﻌﺎﳌﻴﺔ-ﻟﻠﺘﺄﻫﺐ-واﻟﺘﺼﺪي-ﻟﻸﻧﻔﻠﻮﻧ": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 5.7145,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﻟﺠﺎﺋﺤﺔ واﻟﺘﺼﺪي",
+          "score": 5.277,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﻟﺪول اﻷﻋﻀﺎء",
+          "score": 3.2006,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا واﳌﺨﺘﱪات",
+          "score": 3.1633,
+          "evidence": []
+        },
+        {
+          "term": "ﺑﺸﺄن اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 3.0966,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﺨﺘﱪات اﻟﺘﻨﻈﻴﻤﻴﺔ",
+          "score": 3.0607,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻨﻈﻤﺔ ﺑﺸﺄن",
+          "score": 3.0353,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+          "score": 2.9366,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 179.7754,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﻟﺠﺎﺋﺤﺔ واﻟﺘﺼﺪي",
+          "score": 150.7698,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا واﳌﺨﺘﱪات",
+          "score": 121.2615,
+          "evidence": []
+        },
+        {
+          "term": "ﺑﺸﺄن اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 119.7346,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+          "score": 112.6675,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻨﻈﻤﺔ ﺑﺸﺄن",
+          "score": 109.027,
+          "evidence": []
+        },
+        {
+          "term": "وﺗﺮﺻﺪ اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 106.3291,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻔريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 103.8235,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 4.8099,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﻟﺠﺎﺋﺤﺔ واﻟﺘﺼﺪي",
+          "score": 3.9051,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 2.8014,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+          "score": 2.7549,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻘﺎﺣﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.5697,
+          "evidence": []
+        },
+        {
+          "term": "ﺑﺸﺄن اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.4844,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﺧﺮى اﻟﺘﻲ",
+          "score": 2.46,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا واﳌﺨﺘﱪات",
+          "score": 2.4259,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 110.8423,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 107.1484,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻘﺎﺣﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 105.4589,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+          "score": 103.7954,
+          "evidence": []
+        },
+        {
+          "term": "ﺑﺸﺄن اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 95.4629,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا واﳌﺨﺘﱪات",
+          "score": 94.5954,
+          "evidence": []
+        },
+        {
+          "term": "وﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 92.9074,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻔريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 88.9882,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 4.8099,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﻟﺠﺎﺋﺤﺔ واﻟﺘﺼﺪي",
+          "score": 3.9051,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 2.8014,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+          "score": 2.7549,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻘﺎﺣﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.5697,
+          "evidence": []
+        },
+        {
+          "term": "ﺑﺸﺄن اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.4844,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﺧﺮى اﻟﺘﻲ",
+          "score": 2.46,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا واﳌﺨﺘﱪات",
+          "score": 2.4259,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "وﻟﻮازم اﻻﺧﺘﺒﺎر",
+          "score": 474.552,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﺘﺤﺪﻳﺪ ﻓﻌﺎﻟﻴﺔ",
+          "score": 474.4514,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺪول اﻷﻋﻀﺎء",
+          "score": 471.5547,
+          "evidence": []
+        },
+        {
+          "term": "وﺗﺤﺪﻳﺪ ﺧﺼﺎﺋﺼﻬﺎ",
+          "score": 471.0318,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 401.2215,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 249.3848,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﻐﺮض",
+          "score": 246.1405,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﻨﻄﺎق",
+          "score": 246.1405,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-012-ﺑﻨﺎء-اﻟﻘﺪرات-اﻟﺘﻨﻈﻴﻤﻴﺔ": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "ﻟﻘﺎﺣﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 3.6222,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻨﻈﻤﺔ اﻻﺣﺘﻴﺎﻃﻲ",
+          "score": 3.314,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﺪﻳﺮ اﻟﻌﺎم",
+          "score": 3.2407,
+          "evidence": []
+        },
+        {
+          "term": "ﻣﺨﺰون اﳌﻨﻈﻤﺔ",
+          "score": 3.2259,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﺨﺰون اﻻﺣﺘﻴﺎﻃﻲ",
+          "score": 3.1649,
+          "evidence": []
+        },
+        {
+          "term": "وﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 3.0813,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻘﺎﺣﺎت اﻟﺘﺄﻫﺐ",
+          "score": 3.0681,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻘﺎﺣﺎت ﻓريوﺳﺎت",
+          "score": 3.0518,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "ﻟﻘﺎﺣﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 147.6741,
+          "evidence": []
+        },
+        {
+          "term": "وﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 109.6806,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+          "score": 107.1265,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 106.9304,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 101.1237,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﺪﻳﺮ اﻟﻌﺎم",
+          "score": 100.4371,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻘﺎﺣﺎت اﻟﺘﺄﻫﺐ",
+          "score": 98.3689,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻨﻈﻤﺔ اﻻﺣﺘﻴﺎﻃﻲ",
+          "score": 98.0251,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.3465,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+          "score": 2.107,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻘﺎﺣﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 1.9732,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﺧﺮى اﻟﺘﻲ",
+          "score": 1.8748,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 1.8339,
+          "evidence": []
+        },
+        {
+          "term": "وﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 1.7819,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا ووﺳﺎﺋﻞ",
+          "score": 1.5474,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻮاد اﻟﺒﻴﻮﻟﻮﺟﻴﺔ",
+          "score": 1.5189,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 101.3541,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻘﺎﺣﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 85.0665,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+          "score": 83.7046,
+          "evidence": []
+        },
+        {
+          "term": "وﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 74.9331,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا ووﺳﺎﺋﻞ",
+          "score": 69.8992,
+          "evidence": []
+        },
+        {
+          "term": "ﻣﺨﺰون اﳌﻨﻈﻤﺔ",
+          "score": 64.1494,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻨﻈﻤﺔ اﻻﺣﺘﻴﺎﻃﻲ",
+          "score": 64.0649,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﺧﺮى اﻟﺘﻲ",
+          "score": 59.0515,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.3465,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+          "score": 2.107,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻘﺎﺣﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 1.9732,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﺧﺮى اﻟﺘﻲ",
+          "score": 1.8748,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 1.8339,
+          "evidence": []
+        },
+        {
+          "term": "وﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 1.7819,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا ووﺳﺎﺋﻞ",
+          "score": 1.5474,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻮاد اﻟﺒﻴﻮﻟﻮﺟﻴﺔ",
+          "score": 1.5189,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 937.5638,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 925.6821,
+          "evidence": []
+        },
+        {
+          "term": "ﻳﻨﺒﻐﻲ ﻟﻠﺪول",
+          "score": 544.5885,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﺨﺰون اﻻﺣﺘﻴﺎﻃﻲ",
+          "score": 539.8422,
+          "evidence": []
+        },
+        {
+          "term": "ﻳﻮاﺻﻞ اﳌﺪﻳﺮ",
+          "score": 524.4304,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻠﺪول اﻷﻋﻀﺎء",
+          "score": 524.1965,
+          "evidence": []
+        },
+        {
+          "term": "ﻳﺴﺘﻤﺮ اﳌﺪﻳﺮ",
+          "score": 521.5532,
+          "evidence": []
+        },
+        {
+          "term": "اﻷدوﻳﺔ اﳌﻀﺎدة",
+          "score": 518.0227,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-013-٦٠١-إﺗﺎﺣﺔ-اﻟﻠﻘﺎﺣﺎت-ﰲ-اﻟﻔﱰة-اﻟﻔﺎﺻﻠﺔ-ﺑني-أي-ﺟﺎﺋﺤﺘن": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "اﻟﺒﻠﺪان اﻟﻨﺎﻣﻴﺔ",
+          "score": 7.2577,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ﻟﻘﺎﺣﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 4.2165,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 3.8852,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺪول اﻷﻋﻀﺎء",
+          "score": 3.6503,
+          "evidence": []
+        },
+        {
+          "term": "ﻣﻨﺘﺠﻲ ﻟﻘﺎﺣﺎت",
+          "score": 3.576,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻋﻀﺎء اﻟﺘﻲ",
+          "score": 3.4459,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﺪﻳﺮ اﻟﻌﺎم",
+          "score": 3.2407,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا ووﺳﺎﺋﻞ",
+          "score": 3.2371,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "اﻟﺒﻠﺪان اﻟﻨﺎﻣﻴﺔ",
+          "score": 277.1412,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ﻟﻘﺎﺣﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 235.2278,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 213.4833,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا ووﺳﺎﺋﻞ",
+          "score": 156.1978,
+          "evidence": []
+        },
+        {
+          "term": "وﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 153.4489,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+          "score": 151.9164,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﳌﻮﺳﻤﻴﺔ",
+          "score": 149.8866,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻘﺎح اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 148.7674,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 3.2899,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 3.2579,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+          "score": 2.9314,
+          "evidence": []
+        },
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 2.8722,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺒﻠﺪان اﻟﻨﺎﻣﻴﺔ",
+          "score": 2.7648,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ﻟﻘﺎﺣﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.7488,
+          "evidence": []
+        },
+        {
+          "term": "ﺑﺸﺄن اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.6295,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 2.555,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 147.9729,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 137.531,
+          "evidence": []
+        },
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 125.8516,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻘﺎﺣﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 124.2025,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+          "score": 122.2202,
+          "evidence": []
+        },
+        {
+          "term": "ﺑﺸﺄن اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 112.3951,
+          "evidence": []
+        },
+        {
+          "term": "وﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 109.4058,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻘﺎح اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 102.2189,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 3.2899,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 3.2579,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+          "score": 2.9314,
+          "evidence": []
+        },
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 2.8722,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺒﻠﺪان اﻟﻨﺎﻣﻴﺔ",
+          "score": 2.7648,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ﻟﻘﺎﺣﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.7488,
+          "evidence": []
+        },
+        {
+          "term": "ﺑﺸﺄن اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.6295,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 2.555,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 874.4529,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 770.2844,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 670.7282,
+          "evidence": []
+        },
+        {
+          "term": "اﺷﱰاﻛﺎت اﻟﴩﻛﺎء",
+          "score": 601.2679,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﺠﻠﺲ اﻟﺘﻨﻔﻴﺬي",
+          "score": 596.085,
+          "evidence": []
+        },
+        {
+          "term": "أﺻﺤﺎب اﳌﺼﻠﺤﺔ",
+          "score": 576.6149,
+          "evidence": []
+        },
+        {
+          "term": "ﻳﻨﺒﻐﻲ ﻟﻠﺪول",
+          "score": 558.8557,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 555.9175,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-014-٧-ﺗﴫﻳﻒ-اﻟﺸﺆون-واﻻﺳﺘﻌﺮاض": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "اﻟﻔﺮﻳﻖ اﻻﺳﺘﺸﺎري",
+          "score": 3.9541,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﺪﻳﺮ اﻟﻌﺎم",
+          "score": 3.7634,
+          "evidence": []
+        },
+        {
+          "term": "ﻫﺬا اﻹﻃﺎر",
+          "score": 3.17,
+          "evidence": []
+        },
+        {
+          "term": "ﺟﻤﻌﻴﺔ اﻟﺼﺤﺔ",
+          "score": 3.099,
+          "evidence": []
+        },
+        {
+          "term": "ﺗﻨﻔﻴﺬ ﻫﺬا",
+          "score": 3.0674,
+          "evidence": []
+        },
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 3.0342,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻨﻈﻤﺔ ﺑﺸﺄن",
+          "score": 2.9938,
+          "evidence": []
+        },
+        {
+          "term": "واﳌﺪﻳﺮ اﻟﻌﺎم",
+          "score": 2.9487,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "اﻟﻔﺮﻳﻖ اﻻﺳﺘﺸﺎري",
+          "score": 157.5259,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﺪﻳﺮ اﻟﻌﺎم",
+          "score": 150.3695,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻨﻈﻤﺔ ﺑﺸﺄن",
+          "score": 114.3691,
+          "evidence": []
+        },
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 114.3691,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﺸﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 106.9329,
+          "evidence": []
+        },
+        {
+          "term": "ﻫﺬا اﻹﻃﺎر",
+          "score": 105.3463,
+          "evidence": []
+        },
+        {
+          "term": "واﳌﺪﻳﺮ اﻟﻌﺎم",
+          "score": 102.5112,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻠﻤﺪﻳﺮ اﻟﻌﺎم",
+          "score": 101.4895,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.6224,
+          "evidence": []
+        },
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 2.3702,
+          "evidence": []
+        },
+        {
+          "term": "ﺑﺸﺄن اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.1107,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻨﻘﻞ اﳌﻮاد",
+          "score": 1.6593,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺼﺤﺔ اﻟﻌﺎﳌﻴﺔ",
+          "score": 1.6217,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﺸﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 1.4752,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺼﺤﺔ اﻟﻌﻤﻮﻣﻴﺔ",
+          "score": 1.3827,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﺨﺘﱪات اﳌﺮﺟﻌﻴﺔ",
+          "score": 1.3826,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 95.0351,
+          "evidence": []
+        },
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 81.5209,
+          "evidence": []
+        },
+        {
+          "term": "ﺑﺸﺄن اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 72.2188,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﺸﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 58.5832,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺘﻲ",
+          "score": 40.439,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻨﻘﻞ اﳌﻮاد",
+          "score": 34.9792,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺼﺤﺔ اﻟﻌﺎﳌﻴﺔ",
+          "score": 29.2288,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﺨﺘﱪات اﳌﺮﺟﻌﻴﺔ",
+          "score": 25.5072,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.6224,
+          "evidence": []
+        },
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 2.3702,
+          "evidence": []
+        },
+        {
+          "term": "ﺑﺸﺄن اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.1107,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻨﻘﻞ اﳌﻮاد",
+          "score": 1.6593,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺼﺤﺔ اﻟﻌﺎﳌﻴﺔ",
+          "score": 1.6217,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﺸﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 1.5378,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺼﺤﺔ اﻟﻌﻤﻮﻣﻴﺔ",
+          "score": 1.3827,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﺨﺘﱪات اﳌﺮﺟﻌﻴﺔ",
+          "score": 1.3826,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 573.2318,
+          "evidence": []
+        },
+        {
+          "term": "ﺗﻨﻔﻴﺬ ﻫﺬا",
+          "score": 520.3856,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻠﻤﺪﻳﺮ اﻟﻌﺎم",
+          "score": 513.8433,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﺪﻳﺮ اﻟﻌﺎم",
+          "score": 506.3975,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﻔﺮﻳﻖ اﻻﺳﺘﺸﺎري",
+          "score": 505.6385,
+          "evidence": []
+        },
+        {
+          "term": "ﻫﺬا اﻹﻃﺎر",
+          "score": 503.3422,
+          "evidence": []
+        },
+        {
+          "term": "واﳌﺪﻳﺮ اﻟﻌﺎم",
+          "score": 502.1716,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺸﺆون",
+          "score": 495.3398,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ]
+    },
+    "sec-015-رﺻﺪ-واﺳﺘﻌﺮاض-اﻹﻃﺎر": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "ﻫﺬا اﻹﻃﺎر",
+          "score": 1.9085,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﺠﻠﺲ اﻟﺘﻨﻔﻴﺬي",
+          "score": 1.8695,
+          "evidence": []
+        },
+        {
+          "term": "ﻃﺮﻳﻖ اﳌﺠﻠﺲ",
+          "score": 1.8005,
+          "evidence": []
+        },
+        {
+          "term": "ﺟﻤﻌﻴﺔ اﻟﺼﺤﺔ",
+          "score": 1.6165,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺼﺤﺔ اﻟﻌﺎﳌﻴﺔ",
+          "score": 1.4695,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "ﻫﺬا اﻹﻃﺎر",
+          "score": 35.1154,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﺠﻠﺲ اﻟﺘﻨﻔﻴﺬي",
+          "score": 30.1101,
+          "evidence": []
+        },
+        {
+          "term": "ﻃﺮﻳﻖ اﳌﺠﻠﺲ",
+          "score": 28.9909,
+          "evidence": []
+        },
+        {
+          "term": "ﺟﻤﻌﻴﺔ اﻟﺼﺤﺔ",
+          "score": 25.4073,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺼﺤﺔ اﻟﻌﺎﳌﻴﺔ",
+          "score": 23.3077,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "اﻟﺼﺤﺔ اﻟﻌﺎﳌﻴﺔ",
+          "score": 0.3857,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 0.3698,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻨﻈﻤﺔ",
+          "score": 0.3498,
+          "evidence": []
+        },
+        {
+          "term": "اﻹﻃﺎر",
+          "score": 0.3072,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﻟﺘﻲ",
+          "score": 0.3064,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 8.6408,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻨﻈﻤﺔ",
+          "score": 7.9403,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺘﻲ",
+          "score": 5.4977,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت",
+          "score": 4.2926,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺼﺤﺔ اﻟﻌﺎﳌﻴﺔ",
+          "score": 3.9612,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "اﻟﺼﺤﺔ اﻟﻌﺎﳌﻴﺔ",
+          "score": 0.3857,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 0.3698,
+          "evidence": []
+        },
+        {
+          "term": "اﻹﻃﺎر",
+          "score": 0.3072,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﻟﺘﻲ",
+          "score": 0.3064,
+          "evidence": []
+        },
+        {
+          "term": "ﻫﺬا اﻹﻃﺎر",
+          "score": 0.3011,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 1264.7078,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 1112.4957,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 779.4938,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 773.6797,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 705.0063,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-017-اﳌﻠﺤﻖ-١": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "ﻫﺬا اﻻﺗﻔﺎق",
+          "score": 3.4395,
+          "evidence": []
+        },
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 3.3684,
+          "evidence": []
+        },
+        {
+          "term": "اﻻﺗﻔﺎق رﻗﻢ",
+          "score": 3.3482,
+          "evidence": []
+        },
+        {
+          "term": "اﻻﺗﻔﺎق اﳌﻮﺣﺪ",
+          "score": 3.0423,
+          "evidence": []
+        },
+        {
+          "term": "داﺧﻞ ﺷﺒﻜﺔ",
+          "score": 2.9982,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻮاد ﻃﺒﻘﺎ",
+          "score": 2.8512,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻨﻈﻤﺔ وﻃﺒﻘﺎ",
+          "score": 2.8272,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻨﻘﻞ اﳌﻮاد",
+          "score": 2.8261,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "ﻫﺬا اﻻﺗﻔﺎق",
+          "score": 132.8835,
+          "evidence": []
+        },
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 126.9352,
+          "evidence": []
+        },
+        {
+          "term": "اﻻﺗﻔﺎق رﻗﻢ",
+          "score": 122.7771,
+          "evidence": []
+        },
+        {
+          "term": "اﻻﺗﻔﺎق اﳌﻮﺣﺪ",
+          "score": 109.6934,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻨﻈﻤﺔ وﻃﺒﻘﺎ",
+          "score": 95.6215,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻨﻘﻞ اﳌﻮاد",
+          "score": 92.9042,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻮاد ﻃﺒﻘﺎ",
+          "score": 90.2525,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻮاد ﺣﺴﺐ",
+          "score": 86.4097,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺘﻲ",
+          "score": 2.5338,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.3676,
+          "evidence": []
+        },
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 2.1855,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا واﻟﺘﺼﺪي",
+          "score": 1.8829,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 1.8435,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﱰﺻﺪ اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 1.6629,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻨﻘﻞ اﳌﻮاد",
+          "score": 1.5343,
+          "evidence": []
+        },
+        {
+          "term": "ﺑﺎﻟﺘﺄﻫﺐ ﻟﻸﻧﻔﻠﻮﻧﺰا",
+          "score": 1.5253,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺘﻲ",
+          "score": 105.9269,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 96.8512,
+          "evidence": []
+        },
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 83.2038,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا واﻟﺘﺼﺪي",
+          "score": 73.426,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﱰﺻﺪ اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 68.3342,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻨﻈﻤﺔ وﻃﺒﻘﺎ",
+          "score": 59.7755,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 42.8647,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻨﻘﻞ اﳌﻮاد",
+          "score": 35.6939,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺘﻲ",
+          "score": 2.5338,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.3676,
+          "evidence": []
+        },
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 2.1855,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا واﻟﺘﺼﺪي",
+          "score": 1.8829,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 1.8435,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﱰﺻﺪ اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 1.6629,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻨﻘﻞ اﳌﻮاد",
+          "score": 1.5343,
+          "evidence": []
+        },
+        {
+          "term": "ﺑﺎﻟﺘﺄﻫﺐ ﻟﻸﻧﻔﻠﻮﻧﺰا",
+          "score": 1.5253,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "اﻟﻄﺮﻓﺎن ﻫﺬا",
+          "score": 629.3367,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﺎدة ﺣﻘﻮق",
+          "score": 612.0003,
+          "evidence": []
+        },
+        {
+          "term": "وﻃﻨﻲ ﻣﻌﻨﻲ",
+          "score": 551.5516,
+          "evidence": []
+        },
+        {
+          "term": "ﻣﺮﻛﺰ وﻃﻨﻲ",
+          "score": 540.1,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 500.6935,
+          "evidence": []
+        },
+        {
+          "term": "وﻃﺒﻘﺎ ﳌﻌﺎﻳري",
+          "score": 500.0731,
+          "evidence": []
+        },
+        {
+          "term": "اﻻﺗﻔﺎق رﻗﻢ",
+          "score": 499.5186,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻠﺤﻖ",
+          "score": 497.4564,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ]
+    },
+    "sec-018-اﳌﺎدة-٦-ﺣﻘﻮق-اﳌﻠﻜﻴﺔ-اﻟﻔﻜﺮﻳﺔ": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "اﳌﺎدة",
+          "score": 3.471,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ﻫﺬا اﻻﺗﻔﺎق",
+          "score": 3.4205,
+          "evidence": []
+        },
+        {
+          "term": "اﻻﺗﻔﺎق رﻗﻢ",
+          "score": 3.2277,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻮرد واﳌﺘﻠﻘﻲ",
+          "score": 3.1173,
+          "evidence": []
+        },
+        {
+          "term": "ﻳﻘﺪم اﳌﻮرد",
+          "score": 3.0357,
+          "evidence": []
+        },
+        {
+          "term": "ﺟﻤﻌﻴﺔ اﻟﺼﺤﺔ",
+          "score": 2.8266,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺼﺤﺔ اﻟﻌﺎﳌﻴﺔ",
+          "score": 2.7814,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﻌﺎﳌﻴﺔ اﻹﻃﺎر",
+          "score": 2.6277,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "ﻫﺬا اﻻﺗﻔﺎق",
+          "score": 126.4692,
+          "evidence": []
+        },
+        {
+          "term": "اﻻﺗﻔﺎق رﻗﻢ",
+          "score": 104.7294,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﺎدة",
+          "score": 102.2613,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﻟﺼﺤﺔ اﻟﻌﺎﳌﻴﺔ",
+          "score": 81.577,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻮرد واﳌﺘﻠﻘﻲ",
+          "score": 78.1521,
+          "evidence": []
+        },
+        {
+          "term": "ﻳﻘﺪم اﳌﻮرد",
+          "score": 76.6196,
+          "evidence": []
+        },
+        {
+          "term": "ﺟﻤﻌﻴﺔ اﻟﺼﺤﺔ",
+          "score": 74.9899,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﻌﺎﳌﻴﺔ اﻹﻃﺎر",
+          "score": 70.1054,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 1.0781,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻮاد اﻟﺘﻲ",
+          "score": 1.0339,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺼﺤﺔ اﻟﻌﺎﳌﻴﺔ",
+          "score": 0.739,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 0.6929,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﻌﺎﳌﻴﺔ اﻹﻃﺎر",
+          "score": 0.6365,
+          "evidence": []
+        },
+        {
+          "term": "ﻫﺬا اﻻﺗﻔﺎق",
+          "score": 0.5512,
+          "evidence": []
+        },
+        {
+          "term": "ﻣﻨﻈﻤﺔ اﻟﺼﺤﺔ",
+          "score": 0.5355,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺠﺎﺋﺤﺔ",
+          "score": 0.5061,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 35.6859,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 27.6563,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻮاد اﻟﺘﻲ",
+          "score": 27.5131,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت",
+          "score": 13.7288,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺼﺤﺔ اﻟﻌﺎﳌﻴﺔ",
+          "score": 12.7994,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺠﺎﺋﺤﺔ",
+          "score": 10.9091,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﻌﺎﳌﻴﺔ اﻹﻃﺎر",
+          "score": 9.9744,
+          "evidence": []
+        },
+        {
+          "term": "ﺑﺨﺼﻮص اﳌﻮاد",
+          "score": 9.8844,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 1.0781,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻮاد اﻟﺘﻲ",
+          "score": 1.0339,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺼﺤﺔ اﻟﻌﺎﳌﻴﺔ",
+          "score": 0.739,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﻌﺎﳌﻴﺔ اﻹﻃﺎر",
+          "score": 0.6365,
+          "evidence": []
+        },
+        {
+          "term": "ﻫﺬا اﻻﺗﻔﺎق",
+          "score": 0.5512,
+          "evidence": []
+        },
+        {
+          "term": "ﻣﻨﻈﻤﺔ اﻟﺼﺤﺔ",
+          "score": 0.5355,
+          "evidence": []
+        },
+        {
+          "term": "ﺑﺨﺼﻮص اﳌﻮاد",
+          "score": 0.4923,
+          "evidence": []
+        },
+        {
+          "term": "ﺟﻤﻌﻴﺔ اﻟﺼﺤﺔ",
+          "score": 0.4597,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 1484.771,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 1288.5435,
+          "evidence": []
+        },
+        {
+          "term": "政治利益",
+          "score": 1188.1952,
+          "evidence": []
+        },
+        {
+          "term": "经济方面",
+          "score": 1165.7931,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 1163.4965,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 1163.4965,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﺎدة",
+          "score": 1102.7383,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "利益相关者",
+          "score": 945.1684,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-019-اﳌﻠﺤﻖ-٢": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 3.3712,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻨﻘﻞ اﳌﻮاد",
+          "score": 3.1111,
+          "evidence": []
+        },
+        {
+          "term": "ﺑﺎﻟﺘﺄﻫﺐ ﻟﻸﻧﻔﻠﻮﻧﺰا",
+          "score": 3.1079,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺘﺸﺨﻴﺺ اﻟﴬورﻳﺔ",
+          "score": 3.0922,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻨﻈﻤﺔ ﺑﺄﺳﻌﺎر",
+          "score": 3.0886,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻮاد اﻟﺒﻴﻮﻟﻮﺟﻴﺔ",
+          "score": 3.0431,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺼﺤﺔ اﻟﻌﺎﳌﻴﺔ",
+          "score": 2.8611,
+          "evidence": []
+        },
+        {
+          "term": "واﻟﺘﺼﺪي ﻟﻸﻧﻔﻠﻮﻧﺰا",
+          "score": 2.8356,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 140.4496,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻨﻘﻞ اﳌﻮاد",
+          "score": 110.8816,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻮاد اﻟﺒﻴﻮﻟﻮﺟﻴﺔ",
+          "score": 108.4489,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻨﻈﻤﺔ ﺑﺄﺳﻌﺎر",
+          "score": 108.2815,
+          "evidence": []
+        },
+        {
+          "term": "ﺑﺎﻟﺘﺄﻫﺐ ﻟﻸﻧﻔﻠﻮﻧﺰا",
+          "score": 107.4343,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻔريوﺳﺎت اﻟﺠﺎﺋﺤﺔ",
+          "score": 98.2056,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻘﺎح اﻟﺠﺎﺋﺤﺔ",
+          "score": 98.2056,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﺘﻠﻘﻲ",
+          "score": 87.6526,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "ﻟﻘﺎﺣﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.2332,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا واﻟﺘﺼﺪي",
+          "score": 2.1163,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 2.0906,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﱰﺻﺪ اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 1.8678,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻮاد اﻟﺒﻴﻮﻟﻮﺟﻴﺔ",
+          "score": 1.7582,
+          "evidence": []
+        },
+        {
+          "term": "ﺑﺎﻟﺘﺄﻫﺐ ﻟﻸﻧﻔﻠﻮﻧﺰا",
+          "score": 1.7304,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻨﻘﻞ اﳌﻮاد",
+          "score": 1.6946,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺼﺤﺔ اﻟﻌﺎﳌﻴﺔ",
+          "score": 1.654,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "ﻟﻘﺎﺣﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 93.291,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا واﻟﺘﺼﺪي",
+          "score": 84.2773,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﱰﺻﺪ اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 78.4379,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻨﻈﻤﺔ",
+          "score": 68.5234,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻨﻈﻤﺔ ﺑﺄﺳﻌﺎر",
+          "score": 68.5234,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 49.2019,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺘﻲ",
+          "score": 47.3069,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻨﻘﻞ اﳌﻮاد",
+          "score": 40.914,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "ﻟﻘﺎﺣﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.2332,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا واﻟﺘﺼﺪي",
+          "score": 2.1163,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 2.0906,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﱰﺻﺪ اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 1.8678,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻮاد اﻟﺒﻴﻮﻟﻮﺟﻴﺔ",
+          "score": 1.7582,
+          "evidence": []
+        },
+        {
+          "term": "ﺑﺎﻟﺘﺄﻫﺐ ﻟﻸﻧﻔﻠﻮﻧﺰا",
+          "score": 1.7304,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻨﻘﻞ اﳌﻮاد",
+          "score": 1.6946,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺼﺤﺔ اﻟﻌﺎﳌﻴﺔ",
+          "score": 1.654,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 692.5766,
+          "evidence": []
+        },
+        {
+          "term": "ﻳﺘﻔﻖ ﻋﻠﻴﻬﺎ",
+          "score": 689.5259,
+          "evidence": []
+        },
+        {
+          "term": "ﻋﻠﻴﻬﺎ اﻟﻄﺮﻓﺎن",
+          "score": 671.4278,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﺎدة اﻟﺘﺰاﻣﺎت",
+          "score": 596.708,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 576.8841,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻠﺤﻖ",
+          "score": 529.7066,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ﻫﺬا اﻻﺗﻔﺎق",
+          "score": 511.9281,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﻼزم ﺑﺎﻟﺘﻨﺴﻴﻖ",
+          "score": 511.492,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-020-اﳌﺎدة-٥-ﻓﺾ-اﻟﻨﺰاﻋﺎت": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "اﻟﻄﺮﻓﺎن اﳌﺎدة",
+          "score": 4.1098,
+          "evidence": []
+        },
+        {
+          "term": "ﻋﻠﻴﻬﺎ اﻟﻄﺮﻓﺎن",
+          "score": 3.6891,
+          "evidence": []
+        },
+        {
+          "term": "ﻳﺘﻔﻖ ﻋﻠﻴﻬﺎ",
+          "score": 3.4845,
+          "evidence": []
+        },
+        {
+          "term": "ﻫﺬا اﻻﺗﻔﺎق",
+          "score": 1.7426,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺘﻮﻗﻴﻊ",
+          "score": 1.2385,
+          "evidence": []
+        },
+        {
+          "term": "ﺑﺎﻟﻨﻴﺎﺑﺔ",
+          "score": 1.0202,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻠﺤﻖ",
+          "score": 0.893,
+          "evidence": []
+        },
+        {
+          "term": "ﺣﺴﺐ",
+          "score": 0.7588,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "اﻟﻄﺮﻓﺎن اﳌﺎدة",
+          "score": 153.392,
+          "evidence": []
+        },
+        {
+          "term": "ﻋﻠﻴﻬﺎ اﻟﻄﺮﻓﺎن",
+          "score": 131.093,
+          "evidence": []
+        },
+        {
+          "term": "ﻳﺘﻔﻖ ﻋﻠﻴﻬﺎ",
+          "score": 105.962,
+          "evidence": []
+        },
+        {
+          "term": "ﻫﺬا اﻻﺗﻔﺎق",
+          "score": 30.1806,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺘﻮﻗﻴﻊ",
+          "score": 23.4456,
+          "evidence": []
+        },
+        {
+          "term": "ﺑﺎﻟﻨﻴﺎﺑﺔ",
+          "score": 16.4413,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻠﺤﻖ",
+          "score": 14.2441,
+          "evidence": []
+        },
+        {
+          "term": "ﺣﺴﺐ",
+          "score": 12.0469,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 0.2606,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻨﻈﻤﺔ",
+          "score": 0.2539,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺘﻲ",
+          "score": 0.2183,
+          "evidence": []
+        },
+        {
+          "term": "ﻫﺬا اﻻﺗﻔﺎق",
+          "score": 0.2071,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺠﺎﺋﺤﺔ",
+          "score": 0.1907,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت",
+          "score": 0.1865,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻮاد",
+          "score": 0.1727,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا",
+          "score": 0.1593,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 7.9027,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻨﻈﻤﺔ",
+          "score": 7.3236,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺘﻲ",
+          "score": 5.0374,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت",
+          "score": 3.9224,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺠﺎﺋﺤﺔ",
+          "score": 3.1184,
+          "evidence": []
+        },
+        {
+          "term": "ﺷﺒﻜﺔ",
+          "score": 2.8768,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻮاد",
+          "score": 2.8253,
+          "evidence": []
+        },
+        {
+          "term": "ﻫﺬا اﻻﺗﻔﺎق",
+          "score": 2.5637,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "اﳌﻨﻈﻤﺔ",
+          "score": 0.2539,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺘﻲ",
+          "score": 0.2183,
+          "evidence": []
+        },
+        {
+          "term": "ﻫﺬا اﻻﺗﻔﺎق",
+          "score": 0.2071,
+          "evidence": []
+        },
+        {
+          "term": "ﺣﺴﺐ",
+          "score": 0.0902,
+          "evidence": []
+        },
+        {
+          "term": "ﻋﻠﻴﻬﺎ اﻟﻄﺮﻓﺎن",
+          "score": 0.0862,
+          "evidence": []
+        },
+        {
+          "term": "ﻳﺘﻔﻖ ﻋﻠﻴﻬﺎ",
+          "score": 0.0763,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﺎدة",
+          "score": 0.0581,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﳌﻠﺤﻖ",
+          "score": 0.0235,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 3022.1693,
+          "evidence": []
+        },
+        {
+          "term": "政治利益",
+          "score": 2601.8457,
+          "evidence": []
+        },
+        {
+          "term": "经济方面",
+          "score": 2521.9177,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 2490.8173,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 2490.8173,
+          "evidence": []
+        },
+        {
+          "term": "利益相关者",
+          "score": 2300.409,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 2190.3757,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﻄﺮﻓﺎن اﳌﺎدة",
+          "score": 2126.3833,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-021-اﳌﻠﺤﻖ-٣": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "اﻟﻔﺮﻳﻖ اﻻﺳﺘﺸﺎري",
+          "score": 3.4684,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺘﻲ",
+          "score": 3.1932,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 3.1508,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﺴﺎﻫامت اﳌﺎﻟﻴﺔ",
+          "score": 3.122,
+          "evidence": []
+        },
+        {
+          "term": "ﻫﺬا اﻹﻃﺎر",
+          "score": 3.0798,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوس اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.9984,
+          "evidence": []
+        },
+        {
+          "term": "ﻫﺬا اﻟﻨﻈﺎم",
+          "score": 2.9646,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﺎﻟﻴﺔ وﻏري",
+          "score": 2.9486,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺘﻲ",
+          "score": 117.9776,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 112.6238,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﻔﺮﻳﻖ اﻻﺳﺘﺸﺎري",
+          "score": 111.6285,
+          "evidence": []
+        },
+        {
+          "term": "ﻫﺬا اﻹﻃﺎر",
+          "score": 99.1433,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوس اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 96.4794,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا واﻟﺘﻮﺻﻞ",
+          "score": 91.8581,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻨﻈﻤﺔ وﺳﺎﺋﺮ",
+          "score": 81.3865,
+          "evidence": []
+        },
+        {
+          "term": "ﻫﺬا اﻟﻨﻈﺎم",
+          "score": 74.6684,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺘﻲ",
+          "score": 2.58,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.4123,
+          "evidence": []
+        },
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 2.1634,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 1.8853,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻨﻈﻤﺔ وﺳﺎﺋﺮ",
+          "score": 1.8428,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا واﻟﺘﻮﺻﻞ",
+          "score": 1.6576,
+          "evidence": []
+        },
+        {
+          "term": "ﺑﺎﻟﺘﺄﻫﺐ ﻟﻸﻧﻔﻠﻮﻧﺰا",
+          "score": 1.5606,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوس اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 1.4074,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺘﻲ",
+          "score": 101.4328,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 92.8151,
+          "evidence": []
+        },
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 79.0739,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻨﻈﻤﺔ وﺳﺎﺋﺮ",
+          "score": 64.8128,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا واﻟﺘﻮﺻﻞ",
+          "score": 64.7839,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوس اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 64.4414,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 40.9332,
+          "evidence": []
+        },
+        {
+          "term": "ﺗﺒﺎدل ﻓريوﺳﺎت",
+          "score": 34.9606,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺘﻲ",
+          "score": 2.58,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.4123,
+          "evidence": []
+        },
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 2.1634,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 1.8853,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻨﻈﻤﺔ وﺳﺎﺋﺮ",
+          "score": 1.8428,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا واﻟﺘﻮﺻﻞ",
+          "score": 1.6576,
+          "evidence": []
+        },
+        {
+          "term": "ﺑﺎﻟﺘﺄﻫﺐ ﻟﻸﻧﻔﻠﻮﻧﺰا",
+          "score": 1.5606,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوس اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 1.5302,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 651.8209,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 563.5136,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﻨﻈﺎم اﻟﻘﺎﺋﻢ",
+          "score": 528.3457,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﺴﺎﻫامت اﳌﺎﻟﻴﺔ",
+          "score": 527.4127,
+          "evidence": []
+        },
+        {
+          "term": "اﺳﺘﻌامل اﳌﺴﺎﻫامت",
+          "score": 512.1512,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﺪﻳﺮ اﻟﻌﺎم",
+          "score": 507.814,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﻔﺮﻳﻖ اﻻﺳﺘﺸﺎري",
+          "score": 505.7054,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺪول اﻷﻋﻀﺎء",
+          "score": 495.5177,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-022-٣-ﺗﻌﻴني-اﻷﻋﻀﺎء": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 3.7355,
+          "evidence": []
+        },
+        {
+          "term": "ﻣﺨﺘﱪات ﺷﺒﻜﺔ",
+          "score": 3.6906,
+          "evidence": []
+        },
+        {
+          "term": "ﻷﻗﺎﻟﻴﻢ اﳌﻨﻈﻤﺔ",
+          "score": 3.3304,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﻔﺮﻳﻖ اﻻﺳﺘﺸﺎري",
+          "score": 3.2746,
+          "evidence": []
+        },
+        {
+          "term": "ﺗﻘﺪم ﻣﺨﺘﱪات",
+          "score": 3.2556,
+          "evidence": []
+        },
+        {
+          "term": "ﻋﻤﻞ اﻟﻔﺮﻳﻖ",
+          "score": 3.164,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻨﻘﻞ اﳌﻮاد",
+          "score": 3.0452,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻮﺣﺪ ﻟﻨﻘﻞ",
+          "score": 2.9186,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 172.8083,
+          "evidence": []
+        },
+        {
+          "term": "ﻣﺨﺘﱪات ﺷﺒﻜﺔ",
+          "score": 145.671,
+          "evidence": []
+        },
+        {
+          "term": "ﻷﻗﺎﻟﻴﻢ اﳌﻨﻈﻤﺔ",
+          "score": 137.7765,
+          "evidence": []
+        },
+        {
+          "term": "ﺗﻘﺪم ﻣﺨﺘﱪات",
+          "score": 113.8489,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻨﻘﻞ اﳌﻮاد",
+          "score": 99.938,
+          "evidence": []
+        },
+        {
+          "term": "ﺗﺘﺒﺎدل ﻣﺨﺘﱪات",
+          "score": 99.913,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﻔﺮﻳﻖ اﻻﺳﺘﺸﺎري",
+          "score": 98.5967,
+          "evidence": []
+        },
+        {
+          "term": "ﻋﻤﻞ اﻟﻔﺮﻳﻖ",
+          "score": 89.6112,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 3.1937,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 3.1715,
+          "evidence": []
+        },
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 2.9796,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا واﻟﺘﺼﺪي",
+          "score": 2.5371,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 2.4709,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﱰﺻﺪ اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.241,
+          "evidence": []
+        },
+        {
+          "term": "ﻣﺨﺘﱪات ﺷﺒﻜﺔ",
+          "score": 2.1899,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻮاد اﻟﺒﻴﻮﻟﻮﺟﻴﺔ",
+          "score": 2.1385,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 128.4066,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 119.5493,
+          "evidence": []
+        },
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 110.4727,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا واﻟﺘﺼﺪي",
+          "score": 97.3708,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﱰﺻﺪ اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 90.6121,
+          "evidence": []
+        },
+        {
+          "term": "ﻷﻗﺎﻟﻴﻢ اﳌﻨﻈﻤﺔ",
+          "score": 79.3467,
+          "evidence": []
+        },
+        {
+          "term": "ﻣﺨﺘﱪات ﺷﺒﻜﺔ",
+          "score": 58.1024,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺘﻲ ﺗﻀﻄﻠﻊ",
+          "score": 57.969,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 3.1937,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 3.1715,
+          "evidence": []
+        },
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 2.9796,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا واﻟﺘﺼﺪي",
+          "score": 2.5371,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 2.4709,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﱰﺻﺪ اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.241,
+          "evidence": []
+        },
+        {
+          "term": "ﻣﺨﺘﱪات ﺷﺒﻜﺔ",
+          "score": 2.1899,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻮاد اﻟﺒﻴﻮﻟﻮﺟﻴﺔ",
+          "score": 2.1385,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "ﺗﻘﺪم ﻣﺨﺘﱪات",
+          "score": 484.2549,
+          "evidence": []
+        },
+        {
+          "term": "ﺗﺘﺒﺎدل ﻣﺨﺘﱪات",
+          "score": 481.452,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﺒني اﺧﺘﺼﺎﺻﺎﺗﻬﺎ",
+          "score": 480.9687,
+          "evidence": []
+        },
+        {
+          "term": "ﻣﺨﺘﱪات ﺷﺒﻜﺔ",
+          "score": 479.6524,
+          "evidence": []
+        },
+        {
+          "term": "ﺗﻀﻄﻠﻊ ﺑﻬﺎ",
+          "score": 473.0717,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﺨﺎﻃﺮ اﳌﺤﺘﻤﻠﺔ",
+          "score": 472.0572,
+          "evidence": []
+        },
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 470.0501,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺘﺎﺑﻌﺔ ﳌﻨﻈﻤﺔ",
+          "score": 469.6642,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-023-اﳌﻠﺤﻖ-٥": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 4.3259,
+          "evidence": []
+        },
+        {
+          "term": "ﻣﺨﺘﱪات ﺷﺒﻜﺔ",
+          "score": 3.9493,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﺮاﻛﺰ اﳌﺘﻌﺎوﻧﺔ",
+          "score": 3.315,
+          "evidence": []
+        },
+        {
+          "term": "ﺗﻘﺪم ﻣﺨﺘﱪات",
+          "score": 3.029,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 3.0113,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا واﻟﺘﺼﺪي",
+          "score": 2.8502,
+          "evidence": []
+        },
+        {
+          "term": "ﺗﺘﺒﺎدل ﻣﺨﺘﱪات",
+          "score": 2.7973,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.7967,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 270.8375,
+          "evidence": []
+        },
+        {
+          "term": "ﻣﺨﺘﱪات ﺷﺒﻜﺔ",
+          "score": 175.3461,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﺮاﻛﺰ اﳌﺘﻌﺎوﻧﺔ",
+          "score": 106.05,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 101.1237,
+          "evidence": []
+        },
+        {
+          "term": "ﺗﻘﺪم ﻣﺨﺘﱪات",
+          "score": 100.7397,
+          "evidence": []
+        },
+        {
+          "term": "ﺗﺘﺒﺎدل ﻣﺨﺘﱪات",
+          "score": 93.7718,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا واﻟﺘﺼﺪي",
+          "score": 87.2087,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 84.4584,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 3.9249,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 3.9009,
+          "evidence": []
+        },
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 3.7899,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا واﻟﺘﺼﺪي",
+          "score": 3.1535,
+          "evidence": []
+        },
+        {
+          "term": "ﺑﺸﺄن اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 3.1161,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 3.0319,
+          "evidence": []
+        },
+        {
+          "term": "ﻣﺨﺘﱪات ﺷﺒﻜﺔ",
+          "score": 2.8652,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﱰﺻﺪ اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.7874,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 170.2369,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 158.4674,
+          "evidence": []
+        },
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 146.4817,
+          "evidence": []
+        },
+        {
+          "term": "ﺑﺸﺄن اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 129.3552,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا واﻟﺘﺼﺪي",
+          "score": 129.0821,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﱰﺻﺪ اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 120.123,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺘﺎﺑﻊ",
+          "score": 113.724,
+          "evidence": []
+        },
+        {
+          "term": "ﻣﺨﺘﱪات ﺷﺒﻜﺔ",
+          "score": 77.0543,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 3.9249,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 3.9009,
+          "evidence": []
+        },
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 3.7899,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا واﻟﺘﺼﺪي",
+          "score": 3.1535,
+          "evidence": []
+        },
+        {
+          "term": "ﺑﺸﺄن اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 3.1161,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 3.0319,
+          "evidence": []
+        },
+        {
+          "term": "ﻣﺨﺘﱪات ﺷﺒﻜﺔ",
+          "score": 2.8652,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﱰﺻﺪ اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.7874,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 1164.0315,
+          "evidence": []
+        },
+        {
+          "term": "ﻣﺤﺪد اﺧﺘﺼﺎﺻﺎﺗﻬﺎ",
+          "score": 576.9779,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﺮﻛﺰ اﳌﺘﻌﺎون",
+          "score": 540.839,
+          "evidence": []
+        },
+        {
+          "term": "اﻻﺧﺘﺼﺎﺻﺎت اﻟﻨﻮﻋﻴﺔ",
+          "score": 539.0448,
+          "evidence": []
+        },
+        {
+          "term": "ﺗﻘﺪم ﻣﺨﺘﱪات",
+          "score": 538.831,
+          "evidence": []
+        },
+        {
+          "term": "ﺗﺘﺒﺎدل ﻣﺨﺘﱪات",
+          "score": 533.3708,
+          "evidence": []
+        },
+        {
+          "term": "اﻻﺧﺘﺼﺎﺻﺎت اﻷﺳﺎﺳﻴﺔ",
+          "score": 532.9877,
+          "evidence": []
+        },
+        {
+          "term": "وﺗﻘﺪم اﻟﺪﻋﻢ",
+          "score": 531.6095,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-024-اﻻﺧﺘﺼﺎﺻﺎت-اﻷﺳﺎﺳﻴﺔ": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 4.8396,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺘﻲ",
+          "score": 4.802,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﺒﺪءان اﻟﺘﻮﺟﻴﻬﻴﺎن",
+          "score": 4.4088,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻘﺎﺣﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 4.2823,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﳌﺮﺷﺤﺔ",
+          "score": 4.2532,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﺒﺪأ اﻟﺘﻮﺟﻴﻬﻲ",
+          "score": 4.2291,
+          "evidence": []
+        },
+        {
+          "term": "ﺗﺴﺒﺐ ﺟﺎﺋﺤﺔ",
+          "score": 4.17,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﻔريوﺳﺎت اﻟﺘﻲ",
+          "score": 3.8019,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺘﻲ",
+          "score": 421.3487,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 416.8629,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻘﺎﺣﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 309.9388,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﳌﺮﺷﺤﺔ",
+          "score": 297.0456,
+          "evidence": []
+        },
+        {
+          "term": "ﺑﺸﺄن اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 277.0381,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻔريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 275.0629,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﳌﺮﺟﻌﻴﺔ",
+          "score": 272.0143,
+          "evidence": []
+        },
+        {
+          "term": "ﺗﺴﺒﺐ ﺟﺎﺋﺤﺔ",
+          "score": 222.1494,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺘﻲ",
+          "score": 4.8352,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 4.5291,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻘﺎﺣﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 3.7486,
+          "evidence": []
+        },
+        {
+          "term": "ﺑﺸﺄن اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 3.6348,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﳌﺮﺟﻌﻴﺔ",
+          "score": 3.5984,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻨﻈﻤﺔ ﺑﺸﺄن",
+          "score": 3.5524,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 3.4974,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﻔريوﺳﺎت اﻟﺘﻲ",
+          "score": 3.2218,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺘﻲ",
+          "score": 328.9702,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 301.1882,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻘﺎﺣﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 252.6664,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﳌﺮﺟﻌﻴﺔ",
+          "score": 229.6623,
+          "evidence": []
+        },
+        {
+          "term": "ﺑﺸﺄن اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 228.6558,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﳌﺮﺷﺤﺔ",
+          "score": 222.8721,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻔريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 213.2051,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻨﻈﻤﺔ ﺑﺸﺄن",
+          "score": 211.5119,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺘﻲ",
+          "score": 4.8352,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 4.5291,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻘﺎﺣﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 3.7486,
+          "evidence": []
+        },
+        {
+          "term": "ﺑﺸﺄن اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 3.6348,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﳌﺮﺟﻌﻴﺔ",
+          "score": 3.5984,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻨﻈﻤﺔ ﺑﺸﺄن",
+          "score": 3.5524,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 3.4974,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﻔريوﺳﺎت اﻟﺘﻲ",
+          "score": 3.2218,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "واﻟﺪﻋﻢ اﳌﺨﺘﱪي",
+          "score": 505.1165,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﺒﺪءان اﻟﺘﻮﺟﻴﻬﻴﺎن",
+          "score": 503.8393,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﺒﺪأ اﻟﺘﻮﺟﻴﻬﻲ",
+          "score": 503.4844,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺘﻨﻮﻳﻪ اﻟﺴﻠﻴﻢ",
+          "score": 496.8854,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 494.2051,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﻌﻴﻨﺎت اﻟﴪﻳﺮﻳﺔ",
+          "score": 489.3414,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺘﻮﻗﻴﺖ اﳌﻨﺎﺳﺐ",
+          "score": 486.8747,
+          "evidence": []
+        },
+        {
+          "term": "اﻻﺧﺘﺼﺎﺻﺎت",
+          "score": 482.3221,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ]
+    },
+    "sec-025-اﳌﺮاﻛﺰ-اﻟﻮﻃﻨﻴﺔ-اﳌﻌﻨﻴﺔ-ﺑﺎﻷﻧﻔﻠﻮﻧﺰا": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "اﳌﻌﻨﻴﺔ ﺑﺎﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 5.319,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﻟﻮﻃﻨﻴﺔ اﳌﻌﻨﻴﺔ",
+          "score": 4.8192,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 4.1612,
+          "evidence": []
+        },
+        {
+          "term": "ﻣﺨﺘﱪات ﺷﺒﻜﺔ",
+          "score": 3.9493,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﺮاﻛﺰ اﻟﻮﻃﻨﻴﺔ",
+          "score": 3.9079,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 3.1373,
+          "evidence": []
+        },
+        {
+          "term": "ﺗﻘﺪم ﻣﺨﺘﱪات",
+          "score": 3.029,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.9586,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 231.2474,
+          "evidence": []
+        },
+        {
+          "term": "ﻣﺨﺘﱪات ﺷﺒﻜﺔ",
+          "score": 175.3461,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻌﻨﻴﺔ ﺑﺎﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 133.7733,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 112.3596,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﻮﻃﻨﻴﺔ اﳌﻌﻨﻴﺔ",
+          "score": 109.4509,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ﺗﻘﺪم ﻣﺨﺘﱪات",
+          "score": 100.7397,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 95.7321,
+          "evidence": []
+        },
+        {
+          "term": "ﺗﺘﺒﺎدل ﻣﺨﺘﱪات",
+          "score": 93.7718,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "اﳌﻌﻨﻴﺔ ﺑﺎﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 3.7826,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 3.7421,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 3.7196,
+          "evidence": []
+        },
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 3.6112,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﻮﻃﻨﻴﺔ اﳌﻌﻨﻴﺔ",
+          "score": 3.4824,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﳌﺮاﻛﺰ اﻟﻮﻃﻨﻴﺔ",
+          "score": 3.4256,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا واﻟﺘﺼﺪي",
+          "score": 3.0061,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 2.8905,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 157.0529,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 146.1792,
+          "evidence": []
+        },
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 135.0607,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا واﻟﺘﺼﺪي",
+          "score": 119.0747,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﱰﺻﺪ اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 110.8132,
+          "evidence": []
+        },
+        {
+          "term": "ﻣﺨﺎﻃﺮ اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 107.8525,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻌﻨﻴﺔ ﺑﺎﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 74.8284,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﳌﺮاﻛﺰ اﻟﻮﻃﻨﻴﺔ",
+          "score": 71.4168,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "اﳌﻌﻨﻴﺔ ﺑﺎﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 3.7826,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 3.7421,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 3.7196,
+          "evidence": []
+        },
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 3.6112,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﻮﻃﻨﻴﺔ اﳌﻌﻨﻴﺔ",
+          "score": 3.4824,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﳌﺮاﻛﺰ اﻟﻮﻃﻨﻴﺔ",
+          "score": 3.4256,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا واﻟﺘﺼﺪي",
+          "score": 3.0061,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 2.8905,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 1166.39,
+          "evidence": []
+        },
+        {
+          "term": "ﻣﺤﺪد اﺧﺘﺼﺎﺻﺎﺗﻬﺎ",
+          "score": 575.8025,
+          "evidence": []
+        },
+        {
+          "term": "ﺗﻘﺪم ﻣﺨﺘﱪات",
+          "score": 537.8215,
+          "evidence": []
+        },
+        {
+          "term": "ﺗﺘﺒﺎدل ﻣﺨﺘﱪات",
+          "score": 532.3492,
+          "evidence": []
+        },
+        {
+          "term": "اﻻﺧﺘﺼﺎﺻﺎت اﻷﺳﺎﺳﻴﺔ",
+          "score": 531.9495,
+          "evidence": []
+        },
+        {
+          "term": "وﺗﻘﺪم اﻟﺪﻋﻢ",
+          "score": 530.7772,
+          "evidence": []
+        },
+        {
+          "term": "ﻣﺨﺘﱪات ﺷﺒﻜﺔ",
+          "score": 526.5235,
+          "evidence": []
+        },
+        {
+          "term": "ﺟﻤﻴﻊ اﻷﻧﺸﻄﺔ",
+          "score": 524.7987,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-026-اﻻﺧﺘﺼﺎﺻﺎت-اﻷﺳﺎﺳﻴﺔ": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 3.6932,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺘﻲ",
+          "score": 3.5933,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﺒﺪأ اﻟﺘﻮﺟﻴﻬﻲ",
+          "score": 3.539,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﻌﻴﻨﺎت اﻟﴪﻳﺮﻳﺔ",
+          "score": 3.114,
+          "evidence": []
+        },
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 2.9507,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺘﻲ ميﻜﻦ",
+          "score": 2.9447,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+          "score": 2.9279,
+          "evidence": []
+        },
+        {
+          "term": "ﺗﺮﺻﺪ اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.8545,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 174.5726,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺘﻲ",
+          "score": 168.5395,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+          "score": 129.4445,
+          "evidence": []
+        },
+        {
+          "term": "ﺗﺮﺻﺪ اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 126.0284,
+          "evidence": []
+        },
+        {
+          "term": "وﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 124.7712,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﺒﺪأ اﻟﺘﻮﺟﻴﻬﻲ",
+          "score": 105.3853,
+          "evidence": []
+        },
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 103.0576,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﻌﻴﻨﺎت اﻟﴪﻳﺮﻳﺔ",
+          "score": 85.946,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺘﻲ",
+          "score": 2.8331,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.6537,
+          "evidence": []
+        },
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 2.411,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+          "score": 2.3577,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 2.0482,
+          "evidence": []
+        },
+        {
+          "term": "وﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 1.9833,
+          "evidence": []
+        },
+        {
+          "term": "ﺗﺮﺻﺪ اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 1.7063,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻨﻘﻞ اﳌﻮاد",
+          "score": 1.7012,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺘﻲ",
+          "score": 140.4049,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 128.5254,
+          "evidence": []
+        },
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 109.2229,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+          "score": 106.111,
+          "evidence": []
+        },
+        {
+          "term": "وﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 94.9892,
+          "evidence": []
+        },
+        {
+          "term": "ﺗﺮﺻﺪ اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 88.0133,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺘﻲ ميﻜﻦ",
+          "score": 56.9942,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 56.5215,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺘﻲ",
+          "score": 2.8331,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.6537,
+          "evidence": []
+        },
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 2.411,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+          "score": 2.3577,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 2.0482,
+          "evidence": []
+        },
+        {
+          "term": "وﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 1.9833,
+          "evidence": []
+        },
+        {
+          "term": "ﺗﺮﺻﺪ اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 1.7063,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻨﻘﻞ اﳌﻮاد",
+          "score": 1.7012,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 675.8808,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﺒﺪأ اﻟﺘﻮﺟﻴﻬﻲ",
+          "score": 503.6747,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﺒﺪءان اﻟﺘﻮﺟﻴﻬﻴﺎن",
+          "score": 503.5619,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﻌﻴﻨﺎت اﻟﴪﻳﺮﻳﺔ",
+          "score": 488.069,
+          "evidence": []
+        },
+        {
+          "term": "اﻻﺧﺘﺼﺎﺻﺎت",
+          "score": 487.4958,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﻟﻌﺮوض واﳌﻨﺸﻮرات",
+          "score": 482.8052,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﺒﺎدئ اﻟﺘﻮﺟﻴﻬﻴﺔ",
+          "score": 481.3785,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﺳﺎﺳﻴﺔ",
+          "score": 478.0773,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ]
+    },
+    "sec-028-اﻻﺧﺘﺼﺎﺻﺎت-اﳌﺘﻌﻠﻘﺔ-ﺑﺎﻟﺘﻌﺎﻣﻞ-ﻣﻊ-اﳌﻮاد-اﻟﺒﻴﻮﻟﻮﺟﻴﺔ-ا": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "اﳌﻮاد اﻟﺒﻴﻮﻟﻮﺟﻴﺔ",
+          "score": 4.7556,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 4.6716,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 4.2532,
+          "evidence": []
+        },
+        {
+          "term": "ﻣﺨﺘﱪات ﺷﺒﻜﺔ",
+          "score": 4.0405,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺨﺎﺻﺔ ﺑﺎﻟﺘﺄﻫﺐ",
+          "score": 3.7202,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 3.1215,
+          "evidence": []
+        },
+        {
+          "term": "ﺗﻘﺪم ﻣﺨﺘﱪات",
+          "score": 3.0796,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.9068,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 248.5283,
+          "evidence": []
+        },
+        {
+          "term": "ﻣﺨﺘﱪات ﺷﺒﻜﺔ",
+          "score": 187.4567,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻮاد اﻟﺒﻴﻮﻟﻮﺟﻴﺔ",
+          "score": 125.5337,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 123.5956,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 112.3596,
+          "evidence": []
+        },
+        {
+          "term": "ﺗﻘﺪم ﻣﺨﺘﱪات",
+          "score": 106.881,
+          "evidence": []
+        },
+        {
+          "term": "ﺗﺘﺒﺎدل ﻣﺨﺘﱪات",
+          "score": 99.913,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 95.6944,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 5.7584,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﳌﻮاد اﻟﺒﻴﻮﻟﻮﺟﻴﺔ",
+          "score": 5.12,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ﺑﺎﻟﺘﺄﻫﺐ ﻟﻸﻧﻔﻠﻮﻧﺰا",
+          "score": 4.7564,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﻟﺨﺎﺻﺔ ﺑﺎﻟﺘﺄﻫﺐ",
+          "score": 4.272,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 3.7274,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 3.7045,
+          "evidence": []
+        },
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 3.6071,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا واﻟﺘﺼﺪي",
+          "score": 2.9969,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 160.5154,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 149.4128,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 142.1066,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 138.0922,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا واﻟﺘﺼﺪي",
+          "score": 121.7073,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻮاد اﻟﺒﻴﻮﻟﻮﺟﻴﺔ",
+          "score": 115.5203,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ﻟﱰﺻﺪ اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 113.2611,
+          "evidence": []
+        },
+        {
+          "term": "ﺑﺎﻟﺘﺄﻫﺐ ﻟﻸﻧﻔﻠﻮﻧﺰا",
+          "score": 97.9528,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 5.7584,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﳌﻮاد اﻟﺒﻴﻮﻟﻮﺟﻴﺔ",
+          "score": 5.12,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ﺑﺎﻟﺘﺄﻫﺐ ﻟﻸﻧﻔﻠﻮﻧﺰا",
+          "score": 4.7564,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﻟﺨﺎﺻﺔ ﺑﺎﻟﺘﺄﻫﺐ",
+          "score": 4.272,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 3.7274,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 3.7045,
+          "evidence": []
+        },
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 3.6071,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا واﻟﺘﺼﺪي",
+          "score": 2.9969,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 1202.8509,
+          "evidence": []
+        },
+        {
+          "term": "ﻣﺤﺪد اﺧﺘﺼﺎﺻﺎﺗﻬﺎ",
+          "score": 582.6033,
+          "evidence": []
+        },
+        {
+          "term": "اﻻﺧﺘﺼﺎﺻﺎت",
+          "score": 556.4593,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﳌﺘﻌﻠﻘﺔ",
+          "score": 553.6018,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "أﻧﻔﻠﻮﻧﺰا اﻟﻄﻴﻮر",
+          "score": 549.3047,
+          "evidence": []
+        },
+        {
+          "term": "ﺑﺎﻟﺘﻌﺎﻣﻞ",
+          "score": 548.9615,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ﺗﻘﺪم ﻣﺨﺘﱪات",
+          "score": 543.1322,
+          "evidence": []
+        },
+        {
+          "term": "ﺗﺘﺒﺎدل ﻣﺨﺘﱪات",
+          "score": 537.5084,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-029-اﻻﺧﺘﺼﺎﺻﺎت-اﻷﺳﺎﺳﻴﺔ": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "اﳌﺒﺪأ اﻟﺘﻮﺟﻴﻬﻲ",
+          "score": 3.7395,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺘﻲ",
+          "score": 3.7324,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 3.5036,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+          "score": 3.3219,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﻌﻴﻨﺎت اﻟﴪﻳﺮﻳﺔ",
+          "score": 3.2174,
+          "evidence": []
+        },
+        {
+          "term": "ﺗﺴﺒﺐ ﺟﺎﺋﺤﺔ",
+          "score": 3.2052,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا وﻓريوﺳﺎت",
+          "score": 3.1053,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﻔريوﺳﺎت اﻟﺘﻲ",
+          "score": 2.8969,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺘﻲ",
+          "score": 179.7754,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 152.0252,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+          "score": 140.9883,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا وﻓريوﺳﺎت",
+          "score": 125.9468,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﺒﺪأ اﻟﺘﻮﺟﻴﻬﻲ",
+          "score": 120.4404,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻔريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 115.0595,
+          "evidence": []
+        },
+        {
+          "term": "ﺗﺴﺒﺐ ﺟﺎﺋﺤﺔ",
+          "score": 105.2287,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﻔريوﺳﺎت اﻟﺘﻲ",
+          "score": 102.1289,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺘﻲ",
+          "score": 2.8027,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.6259,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+          "score": 2.3334,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻨﻈﻤﺔ ﺑﺸﺄن",
+          "score": 2.0599,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 2.0246,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا وﻓريوﺳﺎت",
+          "score": 1.9635,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﻔريوﺳﺎت اﻟﺘﻲ",
+          "score": 1.8684,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻔريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 1.7736,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺘﻲ",
+          "score": 141.8429,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 129.8596,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+          "score": 107.2086,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا وﻓريوﺳﺎت",
+          "score": 95.9752,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻔريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 91.9246,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻨﻈﻤﺔ ﺑﺸﺄن",
+          "score": 91.2227,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﻔريوﺳﺎت اﻟﺘﻲ",
+          "score": 67.5899,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 57.0671,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻟﺘﻲ",
+          "score": 2.8027,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.6259,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+          "score": 2.3334,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻨﻈﻤﺔ ﺑﺸﺄن",
+          "score": 2.0599,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 2.0246,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا وﻓريوﺳﺎت",
+          "score": 1.9635,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﻔريوﺳﺎت اﻟﺘﻲ",
+          "score": 1.8684,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻔريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 1.7736,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 699.9591,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﺒﺪأ اﻟﺘﻮﺟﻴﻬﻲ",
+          "score": 517.8831,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﺒﺪءان اﻟﺘﻮﺟﻴﻬﻴﺎن",
+          "score": 517.7226,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺘﻨﻮﻳﻪ اﻟﺴﻠﻴﻢ",
+          "score": 509.9557,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﻌﻴﻨﺎت اﻟﴪﻳﺮﻳﺔ",
+          "score": 499.9957,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺘﻮﻗﻴﺖ اﳌﻨﺎﺳﺐ",
+          "score": 498.2225,
+          "evidence": []
+        },
+        {
+          "term": "اﻻﺧﺘﺼﺎﺻﺎت",
+          "score": 495.0654,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﻟﻌﺮوض واﳌﻨﺸﻮرات",
+          "score": 493.453,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-030-اﳌﺨﺘﱪات-اﻟﺘﻨﻈﻴﻤﻴﺔ-اﻷﺳﺎﺳﻴﺔ": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "اﻟﺘﻨﻈﻴﻤﻴﺔ اﻷﺳﺎﺳﻴﺔ",
+          "score": 5.9451,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﳌﺨﺘﱪات اﻟﺘﻨﻈﻴﻤﻴﺔ",
+          "score": 5.2788,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 4.1874,
+          "evidence": []
+        },
+        {
+          "term": "ﻣﺨﺘﱪات ﺷﺒﻜﺔ",
+          "score": 3.9999,
+          "evidence": []
+        },
+        {
+          "term": "اﻻﺧﺘﺼﺎﺻﺎت اﻷﺳﺎﺳﻴﺔ",
+          "score": 3.2571,
+          "evidence": []
+        },
+        {
+          "term": "ﺗﻘﺪم ﻣﺨﺘﱪات",
+          "score": 3.0796,
+          "evidence": []
+        },
+        {
+          "term": "ﺗﺘﺒﺎدل ﻣﺨﺘﱪات",
+          "score": 2.848,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.7967,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 236.9032,
+          "evidence": []
+        },
+        {
+          "term": "ﻣﺨﺘﱪات ﺷﺒﻜﺔ",
+          "score": 181.4873,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺘﻨﻈﻴﻤﻴﺔ اﻷﺳﺎﺳﻴﺔ",
+          "score": 174.4515,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﳌﺨﺘﱪات اﻟﺘﻨﻈﻴﻤﻴﺔ",
+          "score": 133.1792,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ﺗﻘﺪم ﻣﺨﺘﱪات",
+          "score": 106.881,
+          "evidence": []
+        },
+        {
+          "term": "اﻻﺧﺘﺼﺎﺻﺎت اﻷﺳﺎﺳﻴﺔ",
+          "score": 101.4634,
+          "evidence": []
+        },
+        {
+          "term": "ﺗﺘﺒﺎدل ﻣﺨﺘﱪات",
+          "score": 99.913,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 84.4584,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "اﳌﺨﺘﱪات اﻟﺘﻨﻈﻴﻤﻴﺔ",
+          "score": 3.8263,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 3.7248,
+          "evidence": []
+        },
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 3.6249,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺘﻨﻈﻴﻤﻴﺔ اﻷﺳﺎﺳﻴﺔ",
+          "score": 3.1624,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا واﻟﺘﺼﺪي",
+          "score": 3.0129,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻘﺎﺣﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 3.0117,
+          "evidence": []
+        },
+        {
+          "term": "ﺑﺸﺄن اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.9751,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 2.8956,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 155.3398,
+          "evidence": []
+        },
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 133.7152,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻘﺎﺣﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 130.2849,
+          "evidence": []
+        },
+        {
+          "term": "ﺑﺸﺄن اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 118.0385,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا واﻟﺘﺼﺪي",
+          "score": 117.7939,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﱰﺻﺪ اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 109.6161,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﺨﺘﱪات اﻟﺘﻨﻈﻴﻤﻴﺔ",
+          "score": 75.7949,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ﻣﺨﺘﱪات ﺷﺒﻜﺔ",
+          "score": 70.3492,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "اﳌﺨﺘﱪات اﻟﺘﻨﻈﻴﻤﻴﺔ",
+          "score": 3.8263,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 3.7248,
+          "evidence": []
+        },
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 3.6249,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﺘﻨﻈﻴﻤﻴﺔ اﻷﺳﺎﺳﻴﺔ",
+          "score": 3.1624,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا واﻟﺘﺼﺪي",
+          "score": 3.0129,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻘﺎﺣﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 3.0117,
+          "evidence": []
+        },
+        {
+          "term": "ﺑﺸﺄن اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.9751,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 2.8956,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 1171.4977,
+          "evidence": []
+        },
+        {
+          "term": "ﻣﺤﺪد اﺧﺘﺼﺎﺻﺎﺗﻬﺎ",
+          "score": 578.224,
+          "evidence": []
+        },
+        {
+          "term": "أﺳﺎﳼ اﺳﺘﻴﻔﺎؤﻫﺎ",
+          "score": 551.3537,
+          "evidence": []
+        },
+        {
+          "term": "وﺗﺸﻜﻞ اﻻﺧﺘﺼﺎﺻﺎت",
+          "score": 550.1233,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﴩوط اﻟﺪﻧﻴﺎ",
+          "score": 548.1764,
+          "evidence": []
+        },
+        {
+          "term": "ﺗﻘﺪم ﻣﺨﺘﱪات",
+          "score": 539.5811,
+          "evidence": []
+        },
+        {
+          "term": "ﺗﺘﺒﺎدل ﻣﺨﺘﱪات",
+          "score": 533.8975,
+          "evidence": []
+        },
+        {
+          "term": "اﻻﺧﺘﺼﺎﺻﺎت اﻷﺳﺎﺳﻴﺔ",
+          "score": 533.167,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-031-اﻻﺧﺘﺼﺎﺻﺎت-اﻷﺳﺎﺳﻴﺔ": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "ﻟﻘﺎﺣﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 4.1708,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﳌﺮﺷﺤﺔ",
+          "score": 4.1505,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 4.0107,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﻨﻤﻂ اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 3.9265,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+          "score": 3.9231,
+          "evidence": []
+        },
+        {
+          "term": "وﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 3.8853,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﺒﺎدئ اﻟﺘﻮﺟﻴﻬﻴﺔ",
+          "score": 3.6171,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﺮﺷﺤﺔ اﻟﺘﻲ",
+          "score": 3.5731,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "ﻟﻘﺎﺣﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 238.8754,
+          "evidence": []
+        },
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 230.8279,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+          "score": 225.6428,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﳌﺮﺷﺤﺔ",
+          "score": 221.402,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﻨﻤﻂ اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 217.538,
+          "evidence": []
+        },
+        {
+          "term": "وﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 213.1554,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﺒﺎدئ اﻟﺘﻮﺟﻴﻬﻴﺔ",
+          "score": 135.817,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﺧﺮى اﻟﺘﻲ",
+          "score": 130.1371,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.7189,
+          "evidence": []
+        },
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 2.4491,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+          "score": 2.4221,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻘﺎﺣﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.257,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﻨﻤﻂ اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.1854,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﺧﺮى اﻟﺘﻲ",
+          "score": 2.1628,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻨﻈﻤﺔ ﺑﺸﺄن",
+          "score": 2.1276,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 2.1019,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 159.7214,
+          "evidence": []
+        },
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 135.4057,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻘﺎﺣﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 133.9961,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+          "score": 131.8642,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﻨﻤﻂ اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 125.0155,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﳌﺮﺷﺤﺔ",
+          "score": 118.1919,
+          "evidence": []
+        },
+        {
+          "term": "وﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 118.051,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻨﻈﻤﺔ ﺑﺸﺄن",
+          "score": 112.1082,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "ﻓريوﺳﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.7189,
+          "evidence": []
+        },
+        {
+          "term": "ﺷﺒﻜﺔ اﳌﻨﻈﻤﺔ",
+          "score": 2.4491,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﻧﻔﻠﻮﻧﺰا اﻷﺧﺮى",
+          "score": 2.4221,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻘﺎﺣﺎت اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.257,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﻨﻤﻂ اﻷﻧﻔﻠﻮﻧﺰا",
+          "score": 2.1854,
+          "evidence": []
+        },
+        {
+          "term": "اﻷﺧﺮى اﻟﺘﻲ",
+          "score": 2.1628,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﻨﻈﻤﺔ ﺑﺸﺄن",
+          "score": 2.1276,
+          "evidence": []
+        },
+        {
+          "term": "ﻟﻸﻧﻔﻠﻮﻧﺰا اﻟﺠﺎﺋﺤﺔ",
+          "score": 2.1019,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "اﳌﺒﺪأ اﻟﺘﻮﺟﻴﻬﻲ",
+          "score": 483.9942,
+          "evidence": []
+        },
+        {
+          "term": "اﻟﻌﺮوض واﳌﻨﺸﻮرات",
+          "score": 463.3171,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﺒﺎدئ اﻟﺘﻮﺟﻴﻬﻴﺔ",
+          "score": 460.1752,
+          "evidence": []
+        },
+        {
+          "term": "ﺗﺴﺒﺐ ﺟﺎﺋﺤﺔ",
+          "score": 459.1205,
+          "evidence": []
+        },
+        {
+          "term": "اﺧﺘﻴﺎر ﻓريوﺳﺎت",
+          "score": 459.1185,
+          "evidence": []
+        },
+        {
+          "term": "اﳌﺸﻮرة إﻟﻴﻬﺎ",
+          "score": 459.0991,
+          "evidence": []
+        },
+        {
+          "term": "وإﺳﺪاء اﳌﺸﻮرة",
+          "score": 458.4382,
+          "evidence": []
+        },
+        {
+          "term": "إﺳﺪاء اﳌﺸﻮرة",
+          "score": 458.2205,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

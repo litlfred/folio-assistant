@@ -1,0 +1,3116 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-325892",
+  "instance": "who-iris",
+  "about": "library/10665-325892",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7434,
+    "terms": 71211
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "dtg art",
+        "score": 17.3971,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "dtg dosing",
+        "score": 15.6053,
+        "evidence": []
+      },
+      {
+        "term": "dtg among",
+        "score": 14.3709,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "approved dtg",
+        "score": 14.318,
+        "evidence": []
+      },
+      {
+        "term": "neural tube",
+        "score": 11.2565,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "art regimens",
+        "score": 10.5054,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "efv mgb",
+        "score": 9.8132,
+        "evidence": []
+      },
+      {
+        "term": "tube defects",
+        "score": 9.7788,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "first-line art",
+        "score": 9.6911,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "second-line regimens",
+        "score": 8.6767,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "childbearing potential",
+        "score": 8.2521,
+        "evidence": []
+      },
+      {
+        "term": "pregnant women",
+        "score": 8.2373,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "dtg art",
+        "score": 563.8931,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "dtg dosing",
+        "score": 512.7846,
+        "evidence": []
+      },
+      {
+        "term": "approved dtg",
+        "score": 494.8919,
+        "evidence": []
+      },
+      {
+        "term": "dtg among",
+        "score": 488.5268,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "efv mgb",
+        "score": 275.8193,
+        "evidence": []
+      },
+      {
+        "term": "neural tube",
+        "score": 229.977,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "art regimen",
+        "score": 213.8797,
+        "evidence": []
+      },
+      {
+        "term": "first-line regimen",
+        "score": 205.7726,
+        "evidence": []
+      },
+      {
+        "term": "second-line regimen",
+        "score": 180.506,
+        "evidence": []
+      },
+      {
+        "term": "tube defects",
+        "score": 173.9943,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "preferred first-line",
+        "score": 152.7013,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "alternative first-line",
+        "score": 149.1937,
+        "evidence": [
+          "heading"
+        ]
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "art regimen",
+        "score": 6.8666,
+        "evidence": []
+      },
+      {
+        "term": "dtg art",
+        "score": 6.5023,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hiv drug",
+        "score": 5.9611,
+        "evidence": []
+      },
+      {
+        "term": "pregnant women",
+        "score": 5.3789,
+        "evidence": []
+      },
+      {
+        "term": "women living",
+        "score": 5.3038,
+        "evidence": []
+      },
+      {
+        "term": "first-line art",
+        "score": 5.1574,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "antiretroviral regimens",
+        "score": 4.9811,
+        "evidence": []
+      },
+      {
+        "term": "initiating art",
+        "score": 4.979,
+        "evidence": []
+      },
+      {
+        "term": "hiv infection",
+        "score": 4.904,
+        "evidence": []
+      },
+      {
+        "term": "second-line art",
+        "score": 4.8631,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "based art",
+        "score": 4.6681,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "viral load",
+        "score": 4.4084,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "art regimen",
+        "score": 207.5243,
+        "evidence": []
+      },
+      {
+        "term": "dtg art",
+        "score": 200.7803,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "viral load",
+        "score": 143.492,
+        "evidence": []
+      },
+      {
+        "term": "hiv drug",
+        "score": 137.3383,
+        "evidence": []
+      },
+      {
+        "term": "women living",
+        "score": 136.5194,
+        "evidence": []
+      },
+      {
+        "term": "among children",
+        "score": 135.4261,
+        "evidence": []
+      },
+      {
+        "term": "first-line regimen",
+        "score": 126.5078,
+        "evidence": []
+      },
+      {
+        "term": "dtg dosing",
+        "score": 123.6027,
+        "evidence": []
+      },
+      {
+        "term": "initiating art",
+        "score": 116.8586,
+        "evidence": []
+      },
+      {
+        "term": "ral-based regimen",
+        "score": 115.0853,
+        "evidence": []
+      },
+      {
+        "term": "second-line regimen",
+        "score": 113.6403,
+        "evidence": []
+      },
+      {
+        "term": "people living",
+        "score": 110.9817,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "art regimen",
+        "score": 6.8666,
+        "evidence": []
+      },
+      {
+        "term": "dtg art",
+        "score": 6.5023,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hiv drug",
+        "score": 5.9611,
+        "evidence": []
+      },
+      {
+        "term": "pregnant women",
+        "score": 5.3789,
+        "evidence": []
+      },
+      {
+        "term": "women living",
+        "score": 5.3038,
+        "evidence": []
+      },
+      {
+        "term": "first-line art",
+        "score": 5.1574,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "antiretroviral regimens",
+        "score": 4.9811,
+        "evidence": []
+      },
+      {
+        "term": "initiating art",
+        "score": 4.979,
+        "evidence": []
+      },
+      {
+        "term": "hiv infection",
+        "score": 4.904,
+        "evidence": []
+      },
+      {
+        "term": "second-line art",
+        "score": 4.8631,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "based art",
+        "score": 4.6681,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "viral load",
+        "score": 4.4084,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "严重急性呼吸综合征",
+        "score": 390.8561,
+        "evidence": []
+      },
+      {
+        "term": "个学习目标",
+        "score": 289.7734,
+        "evidence": []
+      },
+      {
+        "term": "个核心能力和",
+        "score": 289.7734,
+        "evidence": []
+      },
+      {
+        "term": "如在公共利益与个体自主权之间",
+        "score": 289.7734,
+        "evidence": []
+      },
+      {
+        "term": "公共卫生专家",
+        "score": 261.1542,
+        "evidence": []
+      },
+      {
+        "term": "可能性",
+        "score": 252.4305,
+        "evidence": []
+      },
+      {
+        "term": "的研究中",
+        "score": 245.5539,
+        "evidence": []
+      },
+      {
+        "term": "科研人员",
+        "score": 241.9073,
+        "evidence": []
+      },
+      {
+        "term": "突发事件和",
+        "score": 221.368,
+        "evidence": []
+      },
+      {
+        "term": "进行研究",
+        "score": 216.6533,
+        "evidence": []
+      },
+      {
+        "term": "将继续寻求专家的指导建议",
+        "score": 214.1058,
+        "evidence": []
+      },
+      {
+        "term": "公平性",
+        "score": 210.7413,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-001-world-health-organization-2019": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "health organization",
+          "score": 1.5011,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "world health",
+          "score": 1.3609,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "creative commons",
+          "score": 1.1585,
+          "evidence": []
+        },
+        {
+          "term": "suggested citation",
+          "score": 1.007,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 0.957,
+          "evidence": []
+        },
+        {
+          "term": "igo",
+          "score": 0.865,
+          "evidence": []
+        },
+        {
+          "term": "by-nc-sa",
+          "score": 0.7748,
+          "evidence": []
+        },
+        {
+          "term": "work",
+          "score": 0.7517,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "work",
+          "score": 21.6589,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 21.3471,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 20.4015,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "creative commons",
+          "score": 18.7294,
+          "evidence": []
+        },
+        {
+          "term": "igo",
+          "score": 17.3154,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 15.8644,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "suggested citation",
+          "score": 15.4789,
+          "evidence": []
+        },
+        {
+          "term": "material",
+          "score": 13.4434,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health organization",
+          "score": 1.6275,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "world health",
+          "score": 1.5458,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "creative commons",
+          "score": 0.9911,
+          "evidence": []
+        },
+        {
+          "term": "suggested citation",
+          "score": 0.8697,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 0.8301,
+          "evidence": []
+        },
+        {
+          "term": "material",
+          "score": 0.7452,
+          "evidence": []
+        },
+        {
+          "term": "igo",
+          "score": 0.6848,
+          "evidence": []
+        },
+        {
+          "term": "lines",
+          "score": 0.6727,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health organization",
+          "score": 16.2244,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "world health",
+          "score": 15.8626,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "wpv",
+          "score": 10.3478,
+          "evidence": []
+        },
+        {
+          "term": "material",
+          "score": 5.459,
+          "evidence": []
+        },
+        {
+          "term": "cvdpv",
+          "score": 5.3606,
+          "evidence": []
+        },
+        {
+          "term": "poliovirus",
+          "score": 5.0827,
+          "evidence": []
+        },
+        {
+          "term": "consultado",
+          "score": 5.0712,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 4.6666,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health organization",
+          "score": 1.6275,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "world health",
+          "score": 1.5458,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "creative commons",
+          "score": 0.9911,
+          "evidence": []
+        },
+        {
+          "term": "suggested citation",
+          "score": 0.8697,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 0.8301,
+          "evidence": []
+        },
+        {
+          "term": "material",
+          "score": 0.7452,
+          "evidence": []
+        },
+        {
+          "term": "igo",
+          "score": 0.6848,
+          "evidence": []
+        },
+        {
+          "term": "lines",
+          "score": 0.6727,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 59.772,
+          "evidence": []
+        },
+        {
+          "term": "增强和迭代",
+          "score": 51.3821,
+          "evidence": []
+        },
+        {
+          "term": "行动框架",
+          "score": 51.3821,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 48.6468,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 48.0279,
+          "evidence": []
+        },
+        {
+          "term": "见下面第",
+          "score": 42.0117,
+          "evidence": []
+        },
+        {
+          "term": "设计的",
+          "score": 40.9972,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 39.4552,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-002-background": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "dtg dosing",
+          "score": 2.5504,
+          "evidence": []
+        },
+        {
+          "term": "approved dtg",
+          "score": 2.4175,
+          "evidence": []
+        },
+        {
+          "term": "first-line regimen",
+          "score": 2.31,
+          "evidence": []
+        },
+        {
+          "term": "second-line regimen",
+          "score": 2.3027,
+          "evidence": []
+        },
+        {
+          "term": "nrti backbone",
+          "score": 2.2752,
+          "evidence": []
+        },
+        {
+          "term": "conditional recommendation",
+          "score": 1.9673,
+          "evidence": []
+        },
+        {
+          "term": "preferred first-line",
+          "score": 1.9191,
+          "evidence": []
+        },
+        {
+          "term": "first-line art",
+          "score": 1.9017,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "dtg dosing",
+          "score": 78.7942,
+          "evidence": []
+        },
+        {
+          "term": "approved dtg",
+          "score": 76.1256,
+          "evidence": []
+        },
+        {
+          "term": "first-line regimen",
+          "score": 65.1996,
+          "evidence": []
+        },
+        {
+          "term": "second-line regimen",
+          "score": 64.4193,
+          "evidence": []
+        },
+        {
+          "term": "preferred first-line",
+          "score": 49.9514,
+          "evidence": []
+        },
+        {
+          "term": "nrti backbone",
+          "score": 48.9766,
+          "evidence": []
+        },
+        {
+          "term": "conditional recommendation",
+          "score": 46.196,
+          "evidence": []
+        },
+        {
+          "term": "first-line art",
+          "score": 45.9065,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "conditional recommendation",
+          "score": 0.7879,
+          "evidence": []
+        },
+        {
+          "term": "first-line art",
+          "score": 0.7785,
+          "evidence": []
+        },
+        {
+          "term": "strong recommendation",
+          "score": 0.7758,
+          "evidence": []
+        },
+        {
+          "term": "second-line art",
+          "score": 0.7505,
+          "evidence": []
+        },
+        {
+          "term": "people living",
+          "score": 0.6919,
+          "evidence": []
+        },
+        {
+          "term": "first-line regimen",
+          "score": 0.6794,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 0.65,
+          "evidence": []
+        },
+        {
+          "term": "hiv initiating",
+          "score": 0.6182,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "strong recommendation",
+          "score": 25.6162,
+          "evidence": []
+        },
+        {
+          "term": "conditional recommendation",
+          "score": 23.2624,
+          "evidence": []
+        },
+        {
+          "term": "first-line art",
+          "score": 21.7211,
+          "evidence": []
+        },
+        {
+          "term": "first-line regimen",
+          "score": 20.7132,
+          "evidence": []
+        },
+        {
+          "term": "second-line art",
+          "score": 20.1021,
+          "evidence": []
+        },
+        {
+          "term": "people living",
+          "score": 18.1497,
+          "evidence": []
+        },
+        {
+          "term": "dtg dosing",
+          "score": 17.1652,
+          "evidence": []
+        },
+        {
+          "term": "hiv initiating",
+          "score": 16.0392,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "conditional recommendation",
+          "score": 0.7879,
+          "evidence": []
+        },
+        {
+          "term": "first-line art",
+          "score": 0.7785,
+          "evidence": []
+        },
+        {
+          "term": "strong recommendation",
+          "score": 0.7758,
+          "evidence": []
+        },
+        {
+          "term": "second-line art",
+          "score": 0.7505,
+          "evidence": []
+        },
+        {
+          "term": "people living",
+          "score": 0.6919,
+          "evidence": []
+        },
+        {
+          "term": "first-line regimen",
+          "score": 0.6794,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 0.65,
+          "evidence": []
+        },
+        {
+          "term": "hiv initiating",
+          "score": 0.6182,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 67.4996,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 57.701,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 57.701,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 57.701,
+          "evidence": []
+        },
+        {
+          "term": "可能性",
+          "score": 48.7658,
+          "evidence": []
+        },
+        {
+          "term": "公共卫生专家",
+          "score": 45.0234,
+          "evidence": []
+        },
+        {
+          "term": "突发事件和",
+          "score": 42.9056,
+          "evidence": []
+        },
+        {
+          "term": "可持续发展目标和世卫组织",
+          "score": 40.0821,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-003-dtg-in-first-line-art": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "dtg",
+          "score": 2.8072,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "neural tube",
+          "score": 2.0324,
+          "evidence": []
+        },
+        {
+          "term": "tube defects",
+          "score": 1.6824,
+          "evidence": []
+        },
+        {
+          "term": "drug resistance",
+          "score": 1.0208,
+          "evidence": []
+        },
+        {
+          "term": "viral suppression",
+          "score": 1.0117,
+          "evidence": []
+        },
+        {
+          "term": "hiv drug",
+          "score": 0.99,
+          "evidence": []
+        },
+        {
+          "term": "efv",
+          "score": 0.7763,
+          "evidence": []
+        },
+        {
+          "term": "developing hiv",
+          "score": 0.7628,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "dtg",
+          "score": 74.6242,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "neural tube",
+          "score": 36.3122,
+          "evidence": []
+        },
+        {
+          "term": "tube defects",
+          "score": 28.1011,
+          "evidence": []
+        },
+        {
+          "term": "drug resistance",
+          "score": 17.8592,
+          "evidence": []
+        },
+        {
+          "term": "hiv drug",
+          "score": 17.0542,
+          "evidence": []
+        },
+        {
+          "term": "viral suppression",
+          "score": 14.2695,
+          "evidence": []
+        },
+        {
+          "term": "box",
+          "score": 12.471,
+          "evidence": []
+        },
+        {
+          "term": "efv",
+          "score": 11.4715,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "art",
+          "score": 0.523,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv drug",
+          "score": 0.457,
+          "evidence": []
+        },
+        {
+          "term": "developing hiv",
+          "score": 0.3349,
+          "evidence": []
+        },
+        {
+          "term": "drug resistance",
+          "score": 0.3228,
+          "evidence": []
+        },
+        {
+          "term": "dtg",
+          "score": 0.2957,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "viral suppression",
+          "score": 0.2912,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.1952,
+          "evidence": []
+        },
+        {
+          "term": "load",
+          "score": 0.1785,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "art",
+          "score": 9.7421,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "dtg",
+          "score": 8.5658,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv drug",
+          "score": 7.975,
+          "evidence": []
+        },
+        {
+          "term": "developing hiv",
+          "score": 5.9699,
+          "evidence": []
+        },
+        {
+          "term": "viral suppression",
+          "score": 4.8166,
+          "evidence": []
+        },
+        {
+          "term": "regimen",
+          "score": 4.4102,
+          "evidence": []
+        },
+        {
+          "term": "load",
+          "score": 4.3355,
+          "evidence": []
+        },
+        {
+          "term": "living",
+          "score": 3.944,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "art",
+          "score": 0.523,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv drug",
+          "score": 0.457,
+          "evidence": []
+        },
+        {
+          "term": "developing hiv",
+          "score": 0.3349,
+          "evidence": []
+        },
+        {
+          "term": "drug resistance",
+          "score": 0.3228,
+          "evidence": []
+        },
+        {
+          "term": "dtg",
+          "score": 0.2957,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "viral suppression",
+          "score": 0.2912,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.1952,
+          "evidence": []
+        },
+        {
+          "term": "treatment",
+          "score": 0.1564,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 44.3794,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 39.1188,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 39.1188,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 39.1188,
+          "evidence": []
+        },
+        {
+          "term": "可能性",
+          "score": 31.8746,
+          "evidence": []
+        },
+        {
+          "term": "公共卫生专家",
+          "score": 29.4588,
+          "evidence": []
+        },
+        {
+          "term": "可持续发展目标和世卫组织",
+          "score": 29.3562,
+          "evidence": []
+        },
+        {
+          "term": "突发事件和",
+          "score": 28.8687,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-004-to-women-exposed-to-dtg-before-conception-or-ear": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "neural tube",
+          "score": 3.3758,
+          "evidence": []
+        },
+        {
+          "term": "tube defect",
+          "score": 3.0037,
+          "evidence": []
+        },
+        {
+          "term": "dtg",
+          "score": 2.627,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "conception",
+          "score": 2.5914,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "periconception exposures",
+          "score": 2.2933,
+          "evidence": []
+        },
+        {
+          "term": "folate fortification",
+          "score": 2.2841,
+          "evidence": []
+        },
+        {
+          "term": "defect signal",
+          "score": 2.1742,
+          "evidence": []
+        },
+        {
+          "term": "dtg art",
+          "score": 2.0867,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "neural tube",
+          "score": 108.9365,
+          "evidence": []
+        },
+        {
+          "term": "tube defect",
+          "score": 87.0606,
+          "evidence": []
+        },
+        {
+          "term": "dtg",
+          "score": 63.9636,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "conception",
+          "score": 59.3223,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "periconception exposures",
+          "score": 50.5671,
+          "evidence": []
+        },
+        {
+          "term": "defect signal",
+          "score": 50.219,
+          "evidence": []
+        },
+        {
+          "term": "dtg art",
+          "score": 47.0514,
+          "evidence": []
+        },
+        {
+          "term": "folate fortification",
+          "score": 43.4863,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "women",
+          "score": 0.875,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pregnant women",
+          "score": 0.6821,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy",
+          "score": 0.5663,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "dtg art",
+          "score": 0.4286,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.3324,
+          "evidence": []
+        },
+        {
+          "term": "studies",
+          "score": 0.241,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding",
+          "score": 0.2022,
+          "evidence": []
+        },
+        {
+          "term": "risk",
+          "score": 0.2005,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "women",
+          "score": 14.4579,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "dtg art",
+          "score": 14.0462,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 9.5485,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy",
+          "score": 6.9481,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv",
+          "score": 6.0945,
+          "evidence": []
+        },
+        {
+          "term": "living",
+          "score": 5.4233,
+          "evidence": []
+        },
+        {
+          "term": "serious",
+          "score": 3.3629,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 3.3384,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "women",
+          "score": 0.875,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pregnant women",
+          "score": 0.6821,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy",
+          "score": 0.5663,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "dtg art",
+          "score": 0.4286,
+          "evidence": []
+        },
+        {
+          "term": "risk",
+          "score": 0.2005,
+          "evidence": []
+        },
+        {
+          "term": "among",
+          "score": 0.1808,
+          "evidence": []
+        },
+        {
+          "term": "birth",
+          "score": 0.177,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.1736,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "个学习目标",
+          "score": 38.2285,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 38.2285,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 38.2285,
+          "evidence": []
+        },
+        {
+          "term": "可持续发展目标和世卫组织",
+          "score": 37.5029,
+          "evidence": []
+        },
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 34.725,
+          "evidence": []
+        },
+        {
+          "term": "方面的作用",
+          "score": 33.1347,
+          "evidence": []
+        },
+        {
+          "term": "促进全球合作",
+          "score": 31.4598,
+          "evidence": []
+        },
+        {
+          "term": "推动数字卫生保健知识传播",
+          "score": 31.4598,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-005-box-3-a-woman-centred-approach": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "woman-centred",
+          "score": 1.9479,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "children weighing",
+          "score": 1.5948,
+          "evidence": []
+        },
+        {
+          "term": "rights-based approach",
+          "score": 1.2529,
+          "evidence": []
+        },
+        {
+          "term": "among children",
+          "score": 1.2288,
+          "evidence": []
+        },
+        {
+          "term": "human rights-based",
+          "score": 1.2133,
+          "evidence": []
+        },
+        {
+          "term": "dtg",
+          "score": 1.2094,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 0.877,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.8744,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "woman-centred",
+          "score": 31.2608,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "children weighing",
+          "score": 29.4293,
+          "evidence": []
+        },
+        {
+          "term": "dtg",
+          "score": 26.6515,
+          "evidence": []
+        },
+        {
+          "term": "among children",
+          "score": 22.8301,
+          "evidence": []
+        },
+        {
+          "term": "rights-based approach",
+          "score": 21.3081,
+          "evidence": []
+        },
+        {
+          "term": "human rights-based",
+          "score": 18.7496,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 18.318,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 13.5654,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hiv",
+          "score": 0.3791,
+          "evidence": []
+        },
+        {
+          "term": "among children",
+          "score": 0.3761,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 0.3506,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.3211,
+          "evidence": []
+        },
+        {
+          "term": "art",
+          "score": 0.2909,
+          "evidence": []
+        },
+        {
+          "term": "children weighing",
+          "score": 0.2457,
+          "evidence": []
+        },
+        {
+          "term": "viral",
+          "score": 0.2275,
+          "evidence": []
+        },
+        {
+          "term": "infants",
+          "score": 0.219,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "among children",
+          "score": 9.3425,
+          "evidence": []
+        },
+        {
+          "term": "art",
+          "score": 7.0231,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 6.9856,
+          "evidence": []
+        },
+        {
+          "term": "children weighing",
+          "score": 6.8299,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 6.5602,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 5.9099,
+          "evidence": []
+        },
+        {
+          "term": "adolescents",
+          "score": 5.9015,
+          "evidence": []
+        },
+        {
+          "term": "living",
+          "score": 5.8595,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hiv",
+          "score": 0.3791,
+          "evidence": []
+        },
+        {
+          "term": "among children",
+          "score": 0.3761,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 0.3506,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.3211,
+          "evidence": []
+        },
+        {
+          "term": "art",
+          "score": 0.2909,
+          "evidence": []
+        },
+        {
+          "term": "children weighing",
+          "score": 0.2831,
+          "evidence": []
+        },
+        {
+          "term": "viral",
+          "score": 0.2275,
+          "evidence": []
+        },
+        {
+          "term": "infants",
+          "score": 0.219,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "科研人员",
+          "score": 26.3019,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 23.8246,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 23.8246,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 22.628,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 22.2508,
+          "evidence": []
+        },
+        {
+          "term": "可能性",
+          "score": 18.5678,
+          "evidence": []
+        },
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 18.4089,
+          "evidence": []
+        },
+        {
+          "term": "学员a",
+          "score": 17.6074,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-efv-400-mg-in-first-line-art": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "efv",
+          "score": 4.4311,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "efv mgb",
+          "score": 3.454,
+          "evidence": []
+        },
+        {
+          "term": "lpv solid",
+          "score": 2.3299,
+          "evidence": []
+        },
+        {
+          "term": "weight gain",
+          "score": 2.1076,
+          "evidence": []
+        },
+        {
+          "term": "first-line regimen",
+          "score": 1.8911,
+          "evidence": []
+        },
+        {
+          "term": "art regimens",
+          "score": 1.8473,
+          "evidence": []
+        },
+        {
+          "term": "potential weight",
+          "score": 1.8153,
+          "evidence": []
+        },
+        {
+          "term": "dtg",
+          "score": 1.7313,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "efv",
+          "score": 252.3737,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "efv mgb",
+          "score": 149.6325,
+          "evidence": []
+        },
+        {
+          "term": "dtg",
+          "score": 63.9636,
+          "evidence": []
+        },
+        {
+          "term": "weight gain",
+          "score": 61.6651,
+          "evidence": []
+        },
+        {
+          "term": "lpv solid",
+          "score": 60.7434,
+          "evidence": []
+        },
+        {
+          "term": "potential weight",
+          "score": 53.0378,
+          "evidence": []
+        },
+        {
+          "term": "weight groups",
+          "score": 46.9419,
+          "evidence": []
+        },
+        {
+          "term": "ftc",
+          "score": 46.5822,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "art",
+          "score": 1.3457,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "art regimens",
+          "score": 1.2196,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 0.9545,
+          "evidence": []
+        },
+        {
+          "term": "first-line regimen",
+          "score": 0.9406,
+          "evidence": []
+        },
+        {
+          "term": "efv",
+          "score": 0.8988,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "adult women",
+          "score": 0.677,
+          "evidence": []
+        },
+        {
+          "term": "potential weight",
+          "score": 0.5806,
+          "evidence": []
+        },
+        {
+          "term": "dtg",
+          "score": 0.5753,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "art",
+          "score": 37.6516,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "first-line regimen",
+          "score": 30.3603,
+          "evidence": []
+        },
+        {
+          "term": "efv",
+          "score": 26.3937,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "children",
+          "score": 23.2266,
+          "evidence": []
+        },
+        {
+          "term": "dtg",
+          "score": 23.082,
+          "evidence": []
+        },
+        {
+          "term": "adolescents",
+          "score": 22.0455,
+          "evidence": []
+        },
+        {
+          "term": "living",
+          "score": 19.3815,
+          "evidence": []
+        },
+        {
+          "term": "w4ss",
+          "score": 15.7065,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "art",
+          "score": 1.3457,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "art regimens",
+          "score": 1.2196,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 0.9545,
+          "evidence": []
+        },
+        {
+          "term": "first-line regimen",
+          "score": 0.9406,
+          "evidence": []
+        },
+        {
+          "term": "efv",
+          "score": 0.8988,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "adult women",
+          "score": 0.677,
+          "evidence": []
+        },
+        {
+          "term": "potential weight",
+          "score": 0.5806,
+          "evidence": []
+        },
+        {
+          "term": "dtg",
+          "score": 0.5753,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 63.6858,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 50.9516,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 50.9516,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 50.9516,
+          "evidence": []
+        },
+        {
+          "term": "可能性",
+          "score": 48.8977,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 44.7912,
+          "evidence": []
+        },
+        {
+          "term": "公共卫生专家",
+          "score": 42.5181,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 39.2139,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-007-dtg-in-second-line-art": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "second-line art",
+          "score": 3.9336,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "dtg",
+          "score": 2.8072,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "atv",
+          "score": 1.9941,
+          "evidence": []
+        },
+        {
+          "term": "alternative second-line",
+          "score": 1.9693,
+          "evidence": []
+        },
+        {
+          "term": "first-line regimen",
+          "score": 1.9606,
+          "evidence": []
+        },
+        {
+          "term": "drv",
+          "score": 1.9369,
+          "evidence": []
+        },
+        {
+          "term": "lpv",
+          "score": 1.8409,
+          "evidence": []
+        },
+        {
+          "term": "abc",
+          "score": 1.8216,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "second-line art",
+          "score": 99.2665,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "azt",
+          "score": 85.2848,
+          "evidence": []
+        },
+        {
+          "term": "dtg",
+          "score": 74.6242,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lpv",
+          "score": 70.4316,
+          "evidence": []
+        },
+        {
+          "term": "abc",
+          "score": 63.4887,
+          "evidence": []
+        },
+        {
+          "term": "atv",
+          "score": 62.5217,
+          "evidence": []
+        },
+        {
+          "term": "drv",
+          "score": 57.5447,
+          "evidence": []
+        },
+        {
+          "term": "alternative second-line",
+          "score": 52.2751,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "second-line art",
+          "score": 1.245,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "dtg",
+          "score": 0.8694,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "first-line regimen",
+          "score": 0.7025,
+          "evidence": []
+        },
+        {
+          "term": "children younger",
+          "score": 0.4817,
+          "evidence": []
+        },
+        {
+          "term": "adult women",
+          "score": 0.4472,
+          "evidence": []
+        },
+        {
+          "term": "children weighing",
+          "score": 0.4442,
+          "evidence": []
+        },
+        {
+          "term": "infants",
+          "score": 0.3603,
+          "evidence": []
+        },
+        {
+          "term": "efv",
+          "score": 0.3419,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "dtg",
+          "score": 36.0971,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "art",
+          "score": 28.764,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "second-line art",
+          "score": 28.764,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "first-line regimen",
+          "score": 24.6545,
+          "evidence": []
+        },
+        {
+          "term": "children weighing",
+          "score": 24.1771,
+          "evidence": []
+        },
+        {
+          "term": "children younger",
+          "score": 24.0712,
+          "evidence": []
+        },
+        {
+          "term": "adolescents",
+          "score": 19.9223,
+          "evidence": []
+        },
+        {
+          "term": "living",
+          "score": 15.0027,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "second-line art",
+          "score": 1.245,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "dtg",
+          "score": 0.8694,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "first-line regimen",
+          "score": 0.7025,
+          "evidence": []
+        },
+        {
+          "term": "children younger",
+          "score": 0.4817,
+          "evidence": []
+        },
+        {
+          "term": "adult women",
+          "score": 0.4472,
+          "evidence": []
+        },
+        {
+          "term": "children weighing",
+          "score": 0.4442,
+          "evidence": []
+        },
+        {
+          "term": "efv",
+          "score": 0.3419,
+          "evidence": []
+        },
+        {
+          "term": "nvp",
+          "score": 0.3302,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 109.3193,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 92.8617,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 86.8337,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 83.0061,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 83.0061,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 83.0061,
+          "evidence": []
+        },
+        {
+          "term": "可能性",
+          "score": 78.6018,
+          "evidence": []
+        },
+        {
+          "term": "公共卫生专家",
+          "score": 73.352,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-009-clinical-and-implementation-considerations": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "dtg among",
+          "score": 2.7955,
+          "evidence": []
+        },
+        {
+          "term": "viral load",
+          "score": 2.409,
+          "evidence": []
+        },
+        {
+          "term": "initiate tdf",
+          "score": 2.1505,
+          "evidence": []
+        },
+        {
+          "term": "art regimens",
+          "score": 2.0859,
+          "evidence": []
+        },
+        {
+          "term": "optimal regimens",
+          "score": 2.009,
+          "evidence": []
+        },
+        {
+          "term": "optimal formulations",
+          "score": 1.9414,
+          "evidence": []
+        },
+        {
+          "term": "first-line art",
+          "score": 1.9261,
+          "evidence": []
+        },
+        {
+          "term": "load testing",
+          "score": 1.8461,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "dtg among",
+          "score": 181.9241,
+          "evidence": []
+        },
+        {
+          "term": "viral load",
+          "score": 82.0667,
+          "evidence": []
+        },
+        {
+          "term": "initiate tdf",
+          "score": 58.225,
+          "evidence": []
+        },
+        {
+          "term": "load testing",
+          "score": 57.0652,
+          "evidence": []
+        },
+        {
+          "term": "art regimens",
+          "score": 55.0745,
+          "evidence": []
+        },
+        {
+          "term": "optimal regimens",
+          "score": 54.2634,
+          "evidence": []
+        },
+        {
+          "term": "transition",
+          "score": 50.1282,
+          "evidence": []
+        },
+        {
+          "term": "optimal formulations",
+          "score": 48.0179,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "art regimens",
+          "score": 1.46,
+          "evidence": []
+        },
+        {
+          "term": "viral load",
+          "score": 1.3317,
+          "evidence": []
+        },
+        {
+          "term": "first-line art",
+          "score": 1.1702,
+          "evidence": []
+        },
+        {
+          "term": "load testing",
+          "score": 1.0978,
+          "evidence": []
+        },
+        {
+          "term": "people living",
+          "score": 0.8424,
+          "evidence": []
+        },
+        {
+          "term": "dtg among",
+          "score": 0.8179,
+          "evidence": []
+        },
+        {
+          "term": "drug resistance",
+          "score": 0.8118,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.7285,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "viral load",
+          "score": 83.3023,
+          "evidence": []
+        },
+        {
+          "term": "load testing",
+          "score": 50.7446,
+          "evidence": []
+        },
+        {
+          "term": "art regimens",
+          "score": 38.0038,
+          "evidence": []
+        },
+        {
+          "term": "dtg among",
+          "score": 31.6203,
+          "evidence": []
+        },
+        {
+          "term": "first-line art",
+          "score": 30.9351,
+          "evidence": []
+        },
+        {
+          "term": "people living",
+          "score": 30.4821,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 22.0014,
+          "evidence": []
+        },
+        {
+          "term": "adolescents",
+          "score": 19.7864,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "art regimens",
+          "score": 1.46,
+          "evidence": []
+        },
+        {
+          "term": "viral load",
+          "score": 1.3317,
+          "evidence": []
+        },
+        {
+          "term": "first-line art",
+          "score": 1.1702,
+          "evidence": []
+        },
+        {
+          "term": "load testing",
+          "score": 1.0978,
+          "evidence": []
+        },
+        {
+          "term": "people living",
+          "score": 0.8424,
+          "evidence": []
+        },
+        {
+          "term": "dtg among",
+          "score": 0.8179,
+          "evidence": []
+        },
+        {
+          "term": "drug resistance",
+          "score": 0.8118,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.7285,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 37.1936,
+          "evidence": []
+        },
+        {
+          "term": "可能性",
+          "score": 35.8195,
+          "evidence": []
+        },
+        {
+          "term": "显而易见",
+          "score": 29.0562,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 28.4006,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 28.4006,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 28.4006,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 26.0179,
+          "evidence": []
+        },
+        {
+          "term": "的研究中",
+          "score": 25.734,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-014-abc-3tc-efv": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "abc",
+          "score": 1.6692,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "dolutegravir",
+          "score": 1.4815,
+          "evidence": []
+        },
+        {
+          "term": "clin infect",
+          "score": 1.4686,
+          "evidence": []
+        },
+        {
+          "term": "infect dis",
+          "score": 1.2023,
+          "evidence": []
+        },
+        {
+          "term": "dtg",
+          "score": 1.0864,
+          "evidence": []
+        },
+        {
+          "term": "antiretroviral drugs",
+          "score": 1.0238,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 1.0176,
+          "evidence": []
+        },
+        {
+          "term": "lpv",
+          "score": 0.995,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "dolutegravir",
+          "score": 49.0328,
+          "evidence": []
+        },
+        {
+          "term": "clin infect",
+          "score": 25.4642,
+          "evidence": []
+        },
+        {
+          "term": "abc",
+          "score": 25.3955,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "dtg",
+          "score": 21.3212,
+          "evidence": []
+        },
+        {
+          "term": "lpv",
+          "score": 17.6079,
+          "evidence": []
+        },
+        {
+          "term": "pharmacokinetics",
+          "score": 17.6079,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 17.477,
+          "evidence": []
+        },
+        {
+          "term": "efavirenz",
+          "score": 16.8539,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "world health",
+          "score": 0.5755,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.5633,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 0.5616,
+          "evidence": []
+        },
+        {
+          "term": "infect dis",
+          "score": 0.5349,
+          "evidence": []
+        },
+        {
+          "term": "accessed",
+          "score": 0.4854,
+          "evidence": []
+        },
+        {
+          "term": "clin infect",
+          "score": 0.4584,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 0.4252,
+          "evidence": []
+        },
+        {
+          "term": "consolidated guidelines",
+          "score": 0.3746,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hiv infection",
+          "score": 14.0807,
+          "evidence": []
+        },
+        {
+          "term": "accessed",
+          "score": 11.1963,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 9.3776,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 9.3004,
+          "evidence": []
+        },
+        {
+          "term": "infect dis",
+          "score": 8.7731,
+          "evidence": []
+        },
+        {
+          "term": "doi",
+          "score": 7.5429,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 6.961,
+          "evidence": []
+        },
+        {
+          "term": "clin infect",
+          "score": 6.1777,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "world health",
+          "score": 0.5755,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.5633,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 0.5616,
+          "evidence": []
+        },
+        {
+          "term": "infect dis",
+          "score": 0.5349,
+          "evidence": []
+        },
+        {
+          "term": "accessed",
+          "score": 0.4854,
+          "evidence": []
+        },
+        {
+          "term": "clin infect",
+          "score": 0.4584,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 0.4252,
+          "evidence": []
+        },
+        {
+          "term": "consolidated guidelines",
+          "score": 0.3746,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 56.8979,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 51.8968,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 48.7162,
+          "evidence": []
+        },
+        {
+          "term": "问题的讨论结束",
+          "score": 48.7162,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 44.734,
+          "evidence": []
+        },
+        {
+          "term": "的研究中",
+          "score": 44.7079,
+          "evidence": []
+        },
+        {
+          "term": "进行研究",
+          "score": 38.812,
+          "evidence": []
+        },
+        {
+          "term": "公共卫生专家",
+          "score": 38.2178,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-015-references": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "handle who-cds-hiv",
+          "score": 1.6309,
+          "evidence": []
+        },
+        {
+          "term": "dolutegravir-based antiretroviral",
+          "score": 1.5913,
+          "evidence": []
+        },
+        {
+          "term": "formulary",
+          "score": 0.9973,
+          "evidence": []
+        },
+        {
+          "term": "pozniak",
+          "score": 0.9344,
+          "evidence": []
+        },
+        {
+          "term": "accessed",
+          "score": 0.8918,
+          "evidence": []
+        },
+        {
+          "term": "dooley",
+          "score": 0.8351,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.821,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.818,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "dolutegravir-based antiretroviral",
+          "score": 27.9001,
+          "evidence": []
+        },
+        {
+          "term": "handle who-cds-hiv",
+          "score": 25.0787,
+          "evidence": []
+        },
+        {
+          "term": "accessed",
+          "score": 17.0833,
+          "evidence": []
+        },
+        {
+          "term": "formulary",
+          "score": 15.055,
+          "evidence": []
+        },
+        {
+          "term": "pozniak",
+          "score": 15.055,
+          "evidence": []
+        },
+        {
+          "term": "dooley",
+          "score": 13.2225,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 12.3135,
+          "evidence": []
+        },
+        {
+          "term": "liverpool",
+          "score": 11.5567,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "world health",
+          "score": 0.6114,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.6048,
+          "evidence": []
+        },
+        {
+          "term": "accessed",
+          "score": 0.5508,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 0.4754,
+          "evidence": []
+        },
+        {
+          "term": "int",
+          "score": 0.3123,
+          "evidence": []
+        },
+        {
+          "term": "pdf",
+          "score": 0.3059,
+          "evidence": []
+        },
+        {
+          "term": "dis",
+          "score": 0.3018,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.3014,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "accessed",
+          "score": 16.5601,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 12.6168,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 12.3774,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 8.9753,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 8.3333,
+          "evidence": []
+        },
+        {
+          "term": "doi",
+          "score": 6.5663,
+          "evidence": []
+        },
+        {
+          "term": "pdf",
+          "score": 5.13,
+          "evidence": []
+        },
+        {
+          "term": "aids",
+          "score": 4.7518,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "world health",
+          "score": 0.6114,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.6048,
+          "evidence": []
+        },
+        {
+          "term": "accessed",
+          "score": 0.5508,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 0.4754,
+          "evidence": []
+        },
+        {
+          "term": "int",
+          "score": 0.3123,
+          "evidence": []
+        },
+        {
+          "term": "pdf",
+          "score": 0.3059,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.3014,
+          "evidence": []
+        },
+        {
+          "term": "dolutegravir-based antiretroviral",
+          "score": 0.2612,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 118.8123,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 62.6639,
+          "evidence": []
+        },
+        {
+          "term": "问题的讨论结束",
+          "score": 62.6639,
+          "evidence": []
+        },
+        {
+          "term": "法律上",
+          "score": 48.0209,
+          "evidence": []
+        },
+        {
+          "term": "在讨论期间",
+          "score": 43.9602,
+          "evidence": []
+        },
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 40.8688,
+          "evidence": []
+        },
+        {
+          "term": "知情同意是在被全面告知风险",
+          "score": 38.6123,
+          "evidence": []
+        },
+        {
+          "term": "世界医学协会",
+          "score": 37.9723,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

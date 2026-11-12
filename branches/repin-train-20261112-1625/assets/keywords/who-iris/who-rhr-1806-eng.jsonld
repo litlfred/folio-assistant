@@ -1,0 +1,5332 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "who-rhr-1806-eng",
+  "instance": "who-iris",
+  "about": "library/who-rhr-1806-eng",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7434,
+    "terms": 71211
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "client health",
+        "score": 25.105,
+        "evidence": []
+      },
+      {
+        "term": "manage client",
+        "score": 22.1338,
+        "evidence": []
+      },
+      {
+        "term": "transmit health",
+        "score": 21.2035,
+        "evidence": []
+      },
+      {
+        "term": "digital health",
+        "score": 20.9296,
+        "evidence": []
+      },
+      {
+        "term": "client communication",
+        "score": 20.1198,
+        "evidence": []
+      },
+      {
+        "term": "track client",
+        "score": 19.5727,
+        "evidence": []
+      },
+      {
+        "term": "health system",
+        "score": 18.9545,
+        "evidence": []
+      },
+      {
+        "term": "health management",
+        "score": 18.7226,
+        "evidence": []
+      },
+      {
+        "term": "health information",
+        "score": 18.516,
+        "evidence": []
+      },
+      {
+        "term": "mobile health",
+        "score": 18.135,
+        "evidence": []
+      },
+      {
+        "term": "health data",
+        "score": 17.7629,
+        "evidence": []
+      },
+      {
+        "term": "health services",
+        "score": 17.4872,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "client health",
+        "score": 708.9265,
+        "evidence": []
+      },
+      {
+        "term": "transmit health",
+        "score": 597.5356,
+        "evidence": []
+      },
+      {
+        "term": "manage client",
+        "score": 545.6313,
+        "evidence": []
+      },
+      {
+        "term": "healthcare provider",
+        "score": 519.2902,
+        "evidence": []
+      },
+      {
+        "term": "digital health",
+        "score": 518.3019,
+        "evidence": []
+      },
+      {
+        "term": "health system",
+        "score": 513.4316,
+        "evidence": []
+      },
+      {
+        "term": "health management",
+        "score": 511.8765,
+        "evidence": []
+      },
+      {
+        "term": "health data",
+        "score": 499.9601,
+        "evidence": []
+      },
+      {
+        "term": "mobile health",
+        "score": 496.1631,
+        "evidence": []
+      },
+      {
+        "term": "client communication",
+        "score": 489.7304,
+        "evidence": []
+      },
+      {
+        "term": "health event",
+        "score": 482.7853,
+        "evidence": []
+      },
+      {
+        "term": "health information",
+        "score": 482.465,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "client health",
+        "score": 20.4166,
+        "evidence": []
+      },
+      {
+        "term": "digital health",
+        "score": 19.9075,
+        "evidence": []
+      },
+      {
+        "term": "transmit health",
+        "score": 18.3965,
+        "evidence": []
+      },
+      {
+        "term": "health management",
+        "score": 17.9082,
+        "evidence": []
+      },
+      {
+        "term": "health services",
+        "score": 17.8971,
+        "evidence": []
+      },
+      {
+        "term": "health system",
+        "score": 17.1617,
+        "evidence": []
+      },
+      {
+        "term": "health data",
+        "score": 17.1519,
+        "evidence": []
+      },
+      {
+        "term": "health information",
+        "score": 17.1126,
+        "evidence": []
+      },
+      {
+        "term": "health worker",
+        "score": 16.4967,
+        "evidence": []
+      },
+      {
+        "term": "health event",
+        "score": 16.2255,
+        "evidence": []
+      },
+      {
+        "term": "mobile health",
+        "score": 16.131,
+        "evidence": []
+      },
+      {
+        "term": "health commodities",
+        "score": 16.0623,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "client health",
+        "score": 645.0774,
+        "evidence": []
+      },
+      {
+        "term": "digital health",
+        "score": 599.2336,
+        "evidence": []
+      },
+      {
+        "term": "transmit health",
+        "score": 556.8989,
+        "evidence": []
+      },
+      {
+        "term": "health data",
+        "score": 525.2726,
+        "evidence": []
+      },
+      {
+        "term": "health services",
+        "score": 504.5813,
+        "evidence": []
+      },
+      {
+        "term": "health worker",
+        "score": 502.5587,
+        "evidence": []
+      },
+      {
+        "term": "health management",
+        "score": 499.5888,
+        "evidence": []
+      },
+      {
+        "term": "health system",
+        "score": 482.3474,
+        "evidence": []
+      },
+      {
+        "term": "health information",
+        "score": 475.0026,
+        "evidence": []
+      },
+      {
+        "term": "health interventions",
+        "score": 473.966,
+        "evidence": []
+      },
+      {
+        "term": "mobile health",
+        "score": 469.6599,
+        "evidence": []
+      },
+      {
+        "term": "health event",
+        "score": 465.705,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "client health",
+        "score": 20.4166,
+        "evidence": []
+      },
+      {
+        "term": "digital health",
+        "score": 19.9075,
+        "evidence": []
+      },
+      {
+        "term": "transmit health",
+        "score": 18.3965,
+        "evidence": []
+      },
+      {
+        "term": "health management",
+        "score": 17.9082,
+        "evidence": []
+      },
+      {
+        "term": "health services",
+        "score": 17.8971,
+        "evidence": []
+      },
+      {
+        "term": "health system",
+        "score": 17.1617,
+        "evidence": []
+      },
+      {
+        "term": "health data",
+        "score": 17.1519,
+        "evidence": []
+      },
+      {
+        "term": "health information",
+        "score": 17.1126,
+        "evidence": []
+      },
+      {
+        "term": "health worker",
+        "score": 16.4967,
+        "evidence": []
+      },
+      {
+        "term": "health event",
+        "score": 16.2255,
+        "evidence": []
+      },
+      {
+        "term": "mobile health",
+        "score": 16.131,
+        "evidence": []
+      },
+      {
+        "term": "health commodities",
+        "score": 16.0623,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "允许进行个人反馈",
+        "score": 1091.5315,
+        "evidence": []
+      },
+      {
+        "term": "并提供一",
+        "score": 829.0473,
+        "evidence": []
+      },
+      {
+        "term": "询问学员这项原则如何应用于紧急情况下的研究",
+        "score": 784.0401,
+        "evidence": []
+      },
+      {
+        "term": "相一致",
+        "score": 737.2194,
+        "evidence": []
+      },
+      {
+        "term": "数字疗法",
+        "score": 635.0086,
+        "evidence": []
+      },
+      {
+        "term": "乌干达",
+        "score": 598.0151,
+        "evidence": []
+      },
+      {
+        "term": "加强全球",
+        "score": 584.7379,
+        "evidence": []
+      },
+      {
+        "term": "区域和国家各级的数字卫生保健治理",
+        "score": 584.7379,
+        "evidence": []
+      },
+      {
+        "term": "关注这一事实",
+        "score": 550.0392,
+        "evidence": []
+      },
+      {
+        "term": "的材料",
+        "score": 543.3842,
+        "evidence": []
+      },
+      {
+        "term": "咨询小组将由18名成员组成",
+        "score": 541.5058,
+        "evidence": []
+      },
+      {
+        "term": "汇集在流感领域中国际公认的决策者",
+        "score": 541.5058,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "page-001": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "manage client",
+          "score": 2.9947,
+          "evidence": []
+        },
+        {
+          "term": "transmit untargeted",
+          "score": 2.7177,
+          "evidence": []
+        },
+        {
+          "term": "client health",
+          "score": 2.6729,
+          "evidence": []
+        },
+        {
+          "term": "healthcare provider",
+          "score": 2.6402,
+          "evidence": []
+        },
+        {
+          "term": "client communication",
+          "score": 2.6201,
+          "evidence": []
+        },
+        {
+          "term": "transmit targeted",
+          "score": 2.4918,
+          "evidence": []
+        },
+        {
+          "term": "verify client",
+          "score": 2.36,
+          "evidence": []
+        },
+        {
+          "term": "transmit routine",
+          "score": 2.2193,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "healthcare provider",
+          "score": 137.646,
+          "evidence": []
+        },
+        {
+          "term": "client health",
+          "score": 131.9633,
+          "evidence": []
+        },
+        {
+          "term": "manage client",
+          "score": 126.587,
+          "evidence": []
+        },
+        {
+          "term": "client communication",
+          "score": 99.6026,
+          "evidence": []
+        },
+        {
+          "term": "transmit untargeted",
+          "score": 97.0398,
+          "evidence": []
+        },
+        {
+          "term": "transmit targeted",
+          "score": 94.4872,
+          "evidence": []
+        },
+        {
+          "term": "verify client",
+          "score": 90.8904,
+          "evidence": []
+        },
+        {
+          "term": "transmit routine",
+          "score": 85.9892,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "client health",
+          "score": 2.3527,
+          "evidence": []
+        },
+        {
+          "term": "manage client",
+          "score": 2.2181,
+          "evidence": []
+        },
+        {
+          "term": "client communication",
+          "score": 2.1232,
+          "evidence": []
+        },
+        {
+          "term": "digital health",
+          "score": 1.8531,
+          "evidence": []
+        },
+        {
+          "term": "health event",
+          "score": 1.7894,
+          "evidence": []
+        },
+        {
+          "term": "health commodities",
+          "score": 1.744,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 1.7434,
+          "evidence": []
+        },
+        {
+          "term": "healthcare provider",
+          "score": 1.7276,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "client health",
+          "score": 108.3444,
+          "evidence": []
+        },
+        {
+          "term": "digital health",
+          "score": 84.7975,
+          "evidence": []
+        },
+        {
+          "term": "client communication",
+          "score": 78.1171,
+          "evidence": []
+        },
+        {
+          "term": "manage client",
+          "score": 74.862,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 72.1014,
+          "evidence": []
+        },
+        {
+          "term": "health event",
+          "score": 70.7803,
+          "evidence": []
+        },
+        {
+          "term": "health interventions",
+          "score": 70.5928,
+          "evidence": []
+        },
+        {
+          "term": "health commodities",
+          "score": 69.4216,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "client health",
+          "score": 2.3527,
+          "evidence": []
+        },
+        {
+          "term": "manage client",
+          "score": 2.2181,
+          "evidence": []
+        },
+        {
+          "term": "client communication",
+          "score": 2.1232,
+          "evidence": []
+        },
+        {
+          "term": "digital health",
+          "score": 1.8531,
+          "evidence": []
+        },
+        {
+          "term": "health event",
+          "score": 1.7894,
+          "evidence": []
+        },
+        {
+          "term": "health commodities",
+          "score": 1.744,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 1.7434,
+          "evidence": []
+        },
+        {
+          "term": "healthcare provider",
+          "score": 1.7276,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 53.8463,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 47.6701,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 46.8303,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 35.5891,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 35.1888,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 35.1888,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 34.3796,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 32.4592,
+          "evidence": []
+        }
+      ]
+    },
+    "page-002": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "digital health",
+          "score": 1.4907,
+          "evidence": []
+        },
+        {
+          "term": "classification scheme",
+          "score": 1.2656,
+          "evidence": []
+        },
+        {
+          "term": "system categories",
+          "score": 1.1762,
+          "evidence": []
+        },
+        {
+          "term": "health intervention",
+          "score": 1.1432,
+          "evidence": []
+        },
+        {
+          "term": "system challenges",
+          "score": 1.009,
+          "evidence": []
+        },
+        {
+          "term": "identified health",
+          "score": 0.9341,
+          "evidence": []
+        },
+        {
+          "term": "service utilisation",
+          "score": 0.8996,
+          "evidence": []
+        },
+        {
+          "term": "hsc",
+          "score": 0.816,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "digital health",
+          "score": 38.2932,
+          "evidence": []
+        },
+        {
+          "term": "health system",
+          "score": 28.9947,
+          "evidence": []
+        },
+        {
+          "term": "health intervention",
+          "score": 25.903,
+          "evidence": []
+        },
+        {
+          "term": "system categories",
+          "score": 23.6109,
+          "evidence": []
+        },
+        {
+          "term": "classification scheme",
+          "score": 22.343,
+          "evidence": []
+        },
+        {
+          "term": "identified health",
+          "score": 21.3,
+          "evidence": []
+        },
+        {
+          "term": "system challenges",
+          "score": 19.9548,
+          "evidence": []
+        },
+        {
+          "term": "hsc",
+          "score": 13.0318,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "digital health",
+          "score": 1.251,
+          "evidence": []
+        },
+        {
+          "term": "health system",
+          "score": 0.877,
+          "evidence": []
+        },
+        {
+          "term": "health interventions",
+          "score": 0.853,
+          "evidence": []
+        },
+        {
+          "term": "identified health",
+          "score": 0.613,
+          "evidence": []
+        },
+        {
+          "term": "information systems",
+          "score": 0.4771,
+          "evidence": []
+        },
+        {
+          "term": "system challenges",
+          "score": 0.4497,
+          "evidence": []
+        },
+        {
+          "term": "system categories",
+          "score": 0.3223,
+          "evidence": []
+        },
+        {
+          "term": "ehealth",
+          "score": 0.2774,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "digital health",
+          "score": 34.4219,
+          "evidence": []
+        },
+        {
+          "term": "health system",
+          "score": 19.0585,
+          "evidence": []
+        },
+        {
+          "term": "health interventions",
+          "score": 18.2593,
+          "evidence": []
+        },
+        {
+          "term": "identified health",
+          "score": 14.7182,
+          "evidence": []
+        },
+        {
+          "term": "information systems",
+          "score": 7.1617,
+          "evidence": []
+        },
+        {
+          "term": "system challenges",
+          "score": 5.481,
+          "evidence": []
+        },
+        {
+          "term": "system categories",
+          "score": 4.3404,
+          "evidence": []
+        },
+        {
+          "term": "support",
+          "score": 3.8604,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "digital health",
+          "score": 1.251,
+          "evidence": []
+        },
+        {
+          "term": "health system",
+          "score": 0.877,
+          "evidence": []
+        },
+        {
+          "term": "health interventions",
+          "score": 0.853,
+          "evidence": []
+        },
+        {
+          "term": "identified health",
+          "score": 0.613,
+          "evidence": []
+        },
+        {
+          "term": "information systems",
+          "score": 0.4771,
+          "evidence": []
+        },
+        {
+          "term": "system challenges",
+          "score": 0.4497,
+          "evidence": []
+        },
+        {
+          "term": "system categories",
+          "score": 0.3549,
+          "evidence": []
+        },
+        {
+          "term": "support",
+          "score": 0.2149,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 48.9702,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 45.4965,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 40.4358,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 38.1517,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 35.4508,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 35.2062,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 35.2062,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 31.1574,
+          "evidence": []
+        }
+      ]
+    },
+    "page-003": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "digital health",
+          "score": 1.4064,
+          "evidence": []
+        },
+        {
+          "term": "health commodities",
+          "score": 1.3166,
+          "evidence": []
+        },
+        {
+          "term": "health system",
+          "score": 1.2182,
+          "evidence": []
+        },
+        {
+          "term": "healthcare provider",
+          "score": 1.1692,
+          "evidence": []
+        },
+        {
+          "term": "health interventions",
+          "score": 1.0412,
+          "evidence": []
+        },
+        {
+          "term": "technical consultations",
+          "score": 0.9404,
+          "evidence": []
+        },
+        {
+          "term": "medical record",
+          "score": 0.9176,
+          "evidence": []
+        },
+        {
+          "term": "public feedback",
+          "score": 0.9028,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "digital health",
+          "score": 33.0854,
+          "evidence": []
+        },
+        {
+          "term": "health system",
+          "score": 31.6519,
+          "evidence": []
+        },
+        {
+          "term": "health commodities",
+          "score": 28.3955,
+          "evidence": []
+        },
+        {
+          "term": "health interventions",
+          "score": 21.735,
+          "evidence": []
+        },
+        {
+          "term": "healthcare provider",
+          "score": 18.7707,
+          "evidence": []
+        },
+        {
+          "term": "classification",
+          "score": 15.8381,
+          "evidence": []
+        },
+        {
+          "term": "technical consultations",
+          "score": 14.8356,
+          "evidence": []
+        },
+        {
+          "term": "public feedback",
+          "score": 14.044,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "digital health",
+          "score": 1.134,
+          "evidence": []
+        },
+        {
+          "term": "health system",
+          "score": 0.8312,
+          "evidence": []
+        },
+        {
+          "term": "health interventions",
+          "score": 0.7911,
+          "evidence": []
+        },
+        {
+          "term": "health commodities",
+          "score": 0.762,
+          "evidence": []
+        },
+        {
+          "term": "healthcare provider",
+          "score": 0.5167,
+          "evidence": []
+        },
+        {
+          "term": "client",
+          "score": 0.4451,
+          "evidence": []
+        },
+        {
+          "term": "medical record",
+          "score": 0.3424,
+          "evidence": []
+        },
+        {
+          "term": "transmit",
+          "score": 0.3194,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "digital health",
+          "score": 31.8016,
+          "evidence": []
+        },
+        {
+          "term": "health system",
+          "score": 20.0631,
+          "evidence": []
+        },
+        {
+          "term": "health interventions",
+          "score": 19.5424,
+          "evidence": []
+        },
+        {
+          "term": "health commodities",
+          "score": 18.0959,
+          "evidence": []
+        },
+        {
+          "term": "client",
+          "score": 7.6553,
+          "evidence": []
+        },
+        {
+          "term": "healthcare provider",
+          "score": 6.3748,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 5.7708,
+          "evidence": []
+        },
+        {
+          "term": "transmit",
+          "score": 5.5073,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "digital health",
+          "score": 1.134,
+          "evidence": []
+        },
+        {
+          "term": "health system",
+          "score": 0.8312,
+          "evidence": []
+        },
+        {
+          "term": "health interventions",
+          "score": 0.7911,
+          "evidence": []
+        },
+        {
+          "term": "health commodities",
+          "score": 0.762,
+          "evidence": []
+        },
+        {
+          "term": "healthcare provider",
+          "score": 0.5167,
+          "evidence": []
+        },
+        {
+          "term": "client",
+          "score": 0.4451,
+          "evidence": []
+        },
+        {
+          "term": "medical record",
+          "score": 0.3424,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.284,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 54.3213,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 43.5898,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 42.9866,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 40.1701,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 37.1499,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 36.9229,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 34.2348,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 34.2348,
+          "evidence": []
+        }
+      ]
+    },
+    "page-004": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "insufficient",
+          "score": 1.1494,
+          "evidence": []
+        },
+        {
+          "term": "health commodities",
+          "score": 1.1411,
+          "evidence": []
+        },
+        {
+          "term": "health worker",
+          "score": 0.918,
+          "evidence": []
+        },
+        {
+          "term": "lack",
+          "score": 0.8897,
+          "evidence": []
+        },
+        {
+          "term": "inadequate",
+          "score": 0.8775,
+          "evidence": []
+        },
+        {
+          "term": "poor",
+          "score": 0.6559,
+          "evidence": []
+        },
+        {
+          "term": "delayed",
+          "score": 0.5523,
+          "evidence": []
+        },
+        {
+          "term": "utilization",
+          "score": 0.5301,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "insufficient",
+          "score": 32.684,
+          "evidence": []
+        },
+        {
+          "term": "lack",
+          "score": 27.7639,
+          "evidence": []
+        },
+        {
+          "term": "health commodities",
+          "score": 18.7672,
+          "evidence": []
+        },
+        {
+          "term": "inadequate",
+          "score": 18.439,
+          "evidence": []
+        },
+        {
+          "term": "poor",
+          "score": 13.2764,
+          "evidence": []
+        },
+        {
+          "term": "health worker",
+          "score": 12.0639,
+          "evidence": []
+        },
+        {
+          "term": "delayed",
+          "score": 8.4267,
+          "evidence": []
+        },
+        {
+          "term": "utilization",
+          "score": 7.8604,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health worker",
+          "score": 0.4361,
+          "evidence": []
+        },
+        {
+          "term": "health commodities",
+          "score": 0.4116,
+          "evidence": []
+        },
+        {
+          "term": "services",
+          "score": 0.1937,
+          "evidence": []
+        },
+        {
+          "term": "management",
+          "score": 0.1818,
+          "evidence": []
+        },
+        {
+          "term": "digital",
+          "score": 0.1752,
+          "evidence": []
+        },
+        {
+          "term": "transmit",
+          "score": 0.1741,
+          "evidence": []
+        },
+        {
+          "term": "client",
+          "score": 0.1723,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.1704,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health worker",
+          "score": 7.4812,
+          "evidence": []
+        },
+        {
+          "term": "health commodities",
+          "score": 6.8736,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 3.4375,
+          "evidence": []
+        },
+        {
+          "term": "services",
+          "score": 2.6654,
+          "evidence": []
+        },
+        {
+          "term": "transmit",
+          "score": 2.6001,
+          "evidence": []
+        },
+        {
+          "term": "client",
+          "score": 2.4061,
+          "evidence": []
+        },
+        {
+          "term": "management",
+          "score": 2.2166,
+          "evidence": []
+        },
+        {
+          "term": "system",
+          "score": 2.09,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health worker",
+          "score": 0.4361,
+          "evidence": []
+        },
+        {
+          "term": "health commodities",
+          "score": 0.4116,
+          "evidence": []
+        },
+        {
+          "term": "services",
+          "score": 0.1937,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.1704,
+          "evidence": []
+        },
+        {
+          "term": "information",
+          "score": 0.1495,
+          "evidence": []
+        },
+        {
+          "term": "care",
+          "score": 0.135,
+          "evidence": []
+        },
+        {
+          "term": "access",
+          "score": 0.1316,
+          "evidence": []
+        },
+        {
+          "term": "quality",
+          "score": 0.1005,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 38.7012,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 33.5916,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 33.5916,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 33.1898,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 32.4393,
+          "evidence": []
+        },
+        {
+          "term": "潜在受试者",
+          "score": 27.8832,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 27.6838,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 27.5867,
+          "evidence": []
+        }
+      ]
+    },
+    "page-005": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "accessed march",
+          "score": 1.5305,
+          "evidence": []
+        },
+        {
+          "term": "information system",
+          "score": 1.4148,
+          "evidence": []
+        },
+        {
+          "term": "health record",
+          "score": 1.2095,
+          "evidence": []
+        },
+        {
+          "term": "management information",
+          "score": 1.0952,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 1.077,
+          "evidence": []
+        },
+        {
+          "term": "standards organization",
+          "score": 0.9263,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.9119,
+          "evidence": []
+        },
+        {
+          "term": "international standards",
+          "score": 0.9028,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "information system",
+          "score": 52.1069,
+          "evidence": []
+        },
+        {
+          "term": "management information",
+          "score": 26.5207,
+          "evidence": []
+        },
+        {
+          "term": "accessed march",
+          "score": 25.4986,
+          "evidence": []
+        },
+        {
+          "term": "health record",
+          "score": 22.0069,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 20.7044,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 16.3753,
+          "evidence": []
+        },
+        {
+          "term": "standards organization",
+          "score": 13.7895,
+          "evidence": []
+        },
+        {
+          "term": "international standards",
+          "score": 11.9419,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "world health",
+          "score": 0.8417,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.8314,
+          "evidence": []
+        },
+        {
+          "term": "health record",
+          "score": 0.6266,
+          "evidence": []
+        },
+        {
+          "term": "information system",
+          "score": 0.4918,
+          "evidence": []
+        },
+        {
+          "term": "management information",
+          "score": 0.4716,
+          "evidence": []
+        },
+        {
+          "term": "digital",
+          "score": 0.4547,
+          "evidence": []
+        },
+        {
+          "term": "standards organization",
+          "score": 0.4472,
+          "evidence": []
+        },
+        {
+          "term": "accessed march",
+          "score": 0.4438,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "world health",
+          "score": 17.1995,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 16.8626,
+          "evidence": []
+        },
+        {
+          "term": "health record",
+          "score": 13.0226,
+          "evidence": []
+        },
+        {
+          "term": "accessed march",
+          "score": 12.5892,
+          "evidence": []
+        },
+        {
+          "term": "digital",
+          "score": 7.5228,
+          "evidence": []
+        },
+        {
+          "term": "information system",
+          "score": 7.0749,
+          "evidence": []
+        },
+        {
+          "term": "standards organization",
+          "score": 6.544,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 6.249,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "world health",
+          "score": 0.8417,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.8314,
+          "evidence": []
+        },
+        {
+          "term": "health record",
+          "score": 0.6266,
+          "evidence": []
+        },
+        {
+          "term": "information system",
+          "score": 0.4918,
+          "evidence": []
+        },
+        {
+          "term": "management information",
+          "score": 0.4716,
+          "evidence": []
+        },
+        {
+          "term": "standards organization",
+          "score": 0.4472,
+          "evidence": []
+        },
+        {
+          "term": "accessed march",
+          "score": 0.4438,
+          "evidence": []
+        },
+        {
+          "term": "ehealth",
+          "score": 0.3898,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 70.0419,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 56.5775,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 47.5277,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 46.8789,
+          "evidence": []
+        },
+        {
+          "term": "数字疗法",
+          "score": 46.8704,
+          "evidence": []
+        },
+        {
+          "term": "关注这一事实",
+          "score": 40.2476,
+          "evidence": []
+        },
+        {
+          "term": "加强全球",
+          "score": 40.008,
+          "evidence": []
+        },
+        {
+          "term": "区域和国家各级的数字卫生保健治理",
+          "score": 40.008,
+          "evidence": []
+        }
+      ]
+    },
+    "page-006": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "transmit untargeted",
+          "score": 2.3917,
+          "evidence": []
+        },
+        {
+          "term": "client communication",
+          "score": 2.1053,
+          "evidence": []
+        },
+        {
+          "term": "transmit targeted",
+          "score": 1.9958,
+          "evidence": []
+        },
+        {
+          "term": "untargeted health",
+          "score": 1.4973,
+          "evidence": []
+        },
+        {
+          "term": "event alerts",
+          "score": 1.2626,
+          "evidence": []
+        },
+        {
+          "term": "health information",
+          "score": 0.8927,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "transmit untargeted",
+          "score": 62.8205,
+          "evidence": []
+        },
+        {
+          "term": "client communication",
+          "score": 56.1818,
+          "evidence": []
+        },
+        {
+          "term": "transmit targeted",
+          "score": 53.7592,
+          "evidence": []
+        },
+        {
+          "term": "untargeted health",
+          "score": 29.328,
+          "evidence": []
+        },
+        {
+          "term": "event alerts",
+          "score": 20.7843,
+          "evidence": []
+        },
+        {
+          "term": "health information",
+          "score": 16.0976,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "client communication",
+          "score": 0.7292,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 0.5156,
+          "evidence": []
+        },
+        {
+          "term": "health event",
+          "score": 0.5092,
+          "evidence": []
+        },
+        {
+          "term": "transmit targeted",
+          "score": 0.5004,
+          "evidence": []
+        },
+        {
+          "term": "transmit untargeted",
+          "score": 0.4965,
+          "evidence": []
+        },
+        {
+          "term": "event alerts",
+          "score": 0.4744,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "client communication",
+          "score": 27.001,
+          "evidence": []
+        },
+        {
+          "term": "health event",
+          "score": 17.3274,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 16.9559,
+          "evidence": []
+        },
+        {
+          "term": "health information",
+          "score": 15.27,
+          "evidence": []
+        },
+        {
+          "term": "transmit targeted",
+          "score": 15.2331,
+          "evidence": []
+        },
+        {
+          "term": "untargeted health",
+          "score": 14.9261,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "client communication",
+          "score": 0.7292,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 0.5156,
+          "evidence": []
+        },
+        {
+          "term": "health event",
+          "score": 0.5092,
+          "evidence": []
+        },
+        {
+          "term": "transmit targeted",
+          "score": 0.5004,
+          "evidence": []
+        },
+        {
+          "term": "transmit untargeted",
+          "score": 0.4965,
+          "evidence": []
+        },
+        {
+          "term": "event alerts",
+          "score": 0.4744,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 61.4052,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 56.7551,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 49.6045,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 44.4957,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 38.0314,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 37.6249,
+          "evidence": []
+        }
+      ]
+    },
+    "page-007": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "healthcare provider",
+          "score": 2.3873,
+          "evidence": []
+        },
+        {
+          "term": "manage client",
+          "score": 2.0444,
+          "evidence": []
+        },
+        {
+          "term": "client health",
+          "score": 1.8683,
+          "evidence": []
+        },
+        {
+          "term": "manage referrals",
+          "score": 1.2932,
+          "evidence": []
+        },
+        {
+          "term": "transmit",
+          "score": 1.1008,
+          "evidence": []
+        },
+        {
+          "term": "clinical records",
+          "score": 1.0093,
+          "evidence": []
+        },
+        {
+          "term": "health status",
+          "score": 0.9059,
+          "evidence": []
+        },
+        {
+          "term": "track",
+          "score": 0.6904,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "healthcare provider",
+          "score": 100.1076,
+          "evidence": []
+        },
+        {
+          "term": "manage client",
+          "score": 45.3303,
+          "evidence": []
+        },
+        {
+          "term": "client health",
+          "score": 42.406,
+          "evidence": []
+        },
+        {
+          "term": "transmit",
+          "score": 24.4423,
+          "evidence": []
+        },
+        {
+          "term": "manage referrals",
+          "score": 22.5941,
+          "evidence": []
+        },
+        {
+          "term": "health status",
+          "score": 15.2696,
+          "evidence": []
+        },
+        {
+          "term": "clinical records",
+          "score": 14.9524,
+          "evidence": []
+        },
+        {
+          "term": "track",
+          "score": 14.1727,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "client health",
+          "score": 1.0648,
+          "evidence": []
+        },
+        {
+          "term": "manage client",
+          "score": 1.0292,
+          "evidence": []
+        },
+        {
+          "term": "healthcare provider",
+          "score": 0.8346,
+          "evidence": []
+        },
+        {
+          "term": "health status",
+          "score": 0.6648,
+          "evidence": []
+        },
+        {
+          "term": "manage referrals",
+          "score": 0.5731,
+          "evidence": []
+        },
+        {
+          "term": "transmit",
+          "score": 0.5134,
+          "evidence": []
+        },
+        {
+          "term": "clinical records",
+          "score": 0.4964,
+          "evidence": []
+        },
+        {
+          "term": "alerts",
+          "score": 0.3683,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "client health",
+          "score": 35.5105,
+          "evidence": []
+        },
+        {
+          "term": "manage client",
+          "score": 27.1399,
+          "evidence": []
+        },
+        {
+          "term": "health status",
+          "score": 19.5933,
+          "evidence": []
+        },
+        {
+          "term": "healthcare provider",
+          "score": 15.6731,
+          "evidence": []
+        },
+        {
+          "term": "transmit",
+          "score": 12.3933,
+          "evidence": []
+        },
+        {
+          "term": "manage referrals",
+          "score": 9.3787,
+          "evidence": []
+        },
+        {
+          "term": "communication",
+          "score": 8.5327,
+          "evidence": []
+        },
+        {
+          "term": "notification",
+          "score": 8.1929,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "client health",
+          "score": 1.0648,
+          "evidence": []
+        },
+        {
+          "term": "manage client",
+          "score": 1.0292,
+          "evidence": []
+        },
+        {
+          "term": "healthcare provider",
+          "score": 0.8346,
+          "evidence": []
+        },
+        {
+          "term": "health status",
+          "score": 0.6648,
+          "evidence": []
+        },
+        {
+          "term": "manage referrals",
+          "score": 0.5731,
+          "evidence": []
+        },
+        {
+          "term": "transmit",
+          "score": 0.5134,
+          "evidence": []
+        },
+        {
+          "term": "clinical records",
+          "score": 0.4964,
+          "evidence": []
+        },
+        {
+          "term": "alerts",
+          "score": 0.3683,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 47.3272,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 42.4323,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 41.6956,
+          "evidence": []
+        },
+        {
+          "term": "乌干达",
+          "score": 29.8466,
+          "evidence": []
+        },
+        {
+          "term": "潜在受试者",
+          "score": 28.0727,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 27.8679,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 27.8679,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 27.7612,
+          "evidence": []
+        }
+      ]
+    },
+    "page-008": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "death event",
+          "score": 1.5673,
+          "evidence": []
+        },
+        {
+          "term": "birth event",
+          "score": 1.5134,
+          "evidence": []
+        },
+        {
+          "term": "healthcare provider",
+          "score": 1.5112,
+          "evidence": []
+        },
+        {
+          "term": "health commodities",
+          "score": 1.4338,
+          "evidence": []
+        },
+        {
+          "term": "list health",
+          "score": 0.9134,
+          "evidence": []
+        },
+        {
+          "term": "health facilities",
+          "score": 0.8853,
+          "evidence": []
+        },
+        {
+          "term": "manage",
+          "score": 0.8418,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 0.8356,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "death event",
+          "score": 34.4097,
+          "evidence": []
+        },
+        {
+          "term": "birth event",
+          "score": 32.9703,
+          "evidence": []
+        },
+        {
+          "term": "healthcare provider",
+          "score": 31.2846,
+          "evidence": []
+        },
+        {
+          "term": "health commodities",
+          "score": 30.6951,
+          "evidence": []
+        },
+        {
+          "term": "manage",
+          "score": 20.1419,
+          "evidence": []
+        },
+        {
+          "term": "register",
+          "score": 15.8039,
+          "evidence": []
+        },
+        {
+          "term": "list health",
+          "score": 15.4433,
+          "evidence": []
+        },
+        {
+          "term": "health facilities",
+          "score": 14.9599,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "healthcare provider",
+          "score": 0.6101,
+          "evidence": []
+        },
+        {
+          "term": "health commodities",
+          "score": 0.5673,
+          "evidence": []
+        },
+        {
+          "term": "birth event",
+          "score": 0.4988,
+          "evidence": []
+        },
+        {
+          "term": "death event",
+          "score": 0.4931,
+          "evidence": []
+        },
+        {
+          "term": "health facilities",
+          "score": 0.4655,
+          "evidence": []
+        },
+        {
+          "term": "transmit",
+          "score": 0.4186,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 0.4172,
+          "evidence": []
+        },
+        {
+          "term": "client",
+          "score": 0.4114,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health commodities",
+          "score": 14.1322,
+          "evidence": []
+        },
+        {
+          "term": "health facilities",
+          "score": 12.107,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 11.8325,
+          "evidence": []
+        },
+        {
+          "term": "list health",
+          "score": 10.8128,
+          "evidence": []
+        },
+        {
+          "term": "client",
+          "score": 9.1374,
+          "evidence": []
+        },
+        {
+          "term": "healthcare provider",
+          "score": 8.7698,
+          "evidence": []
+        },
+        {
+          "term": "transmit",
+          "score": 7.8674,
+          "evidence": []
+        },
+        {
+          "term": "death event",
+          "score": 6.7803,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "healthcare provider",
+          "score": 0.6101,
+          "evidence": []
+        },
+        {
+          "term": "health commodities",
+          "score": 0.5673,
+          "evidence": []
+        },
+        {
+          "term": "birth event",
+          "score": 0.4988,
+          "evidence": []
+        },
+        {
+          "term": "death event",
+          "score": 0.4931,
+          "evidence": []
+        },
+        {
+          "term": "health facilities",
+          "score": 0.4655,
+          "evidence": []
+        },
+        {
+          "term": "transmit",
+          "score": 0.4186,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 0.4172,
+          "evidence": []
+        },
+        {
+          "term": "list health",
+          "score": 0.3872,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 57.7299,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 55.0451,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 49.8529,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 43.375,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 43.375,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 41.3104,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 38.5575,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 35.9667,
+          "evidence": []
+        }
+      ]
+    },
+    "page-009": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "map location",
+          "score": 1.769,
+          "evidence": []
+        },
+        {
+          "term": "data exchange",
+          "score": 1.0508,
+          "evidence": []
+        },
+        {
+          "term": "data collection",
+          "score": 0.951,
+          "evidence": []
+        },
+        {
+          "term": "page",
+          "score": 0.4902,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "map location",
+          "score": 35.7911,
+          "evidence": []
+        },
+        {
+          "term": "data exchange",
+          "score": 20.7565,
+          "evidence": []
+        },
+        {
+          "term": "data collection",
+          "score": 19.0488,
+          "evidence": []
+        },
+        {
+          "term": "events",
+          "score": 6.3936,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "data exchange",
+          "score": 0.2956,
+          "evidence": []
+        },
+        {
+          "term": "data collection",
+          "score": 0.2879,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.2198,
+          "evidence": []
+        },
+        {
+          "term": "digital",
+          "score": 0.1936,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "data collection",
+          "score": 8.0212,
+          "evidence": []
+        },
+        {
+          "term": "data exchange",
+          "score": 7.6707,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 3.6203,
+          "evidence": []
+        },
+        {
+          "term": "digital",
+          "score": 2.5815,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "data exchange",
+          "score": 0.2956,
+          "evidence": []
+        },
+        {
+          "term": "data collection",
+          "score": 0.2879,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.2198,
+          "evidence": []
+        },
+        {
+          "term": "digital",
+          "score": 0.1936,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 56.6567,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 52.6878,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 50.2165,
+          "evidence": []
+        },
+        {
+          "term": "潜在受试者",
+          "score": 36.6123,
+          "evidence": []
+        }
+      ]
+    },
+    "page-010": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "client communication",
+          "score": 2.5241,
+          "evidence": []
+        },
+        {
+          "term": "transmit untargeted",
+          "score": 2.3298,
+          "evidence": []
+        },
+        {
+          "term": "sms reminders",
+          "score": 2.1089,
+          "evidence": []
+        },
+        {
+          "term": "transmit targeted",
+          "score": 1.9467,
+          "evidence": []
+        },
+        {
+          "term": "messaging campaign",
+          "score": 1.9039,
+          "evidence": []
+        },
+        {
+          "term": "untargeted health",
+          "score": 1.7789,
+          "evidence": []
+        },
+        {
+          "term": "event alerts",
+          "score": 1.7163,
+          "evidence": []
+        },
+        {
+          "term": "event notification",
+          "score": 1.6205,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "client communication",
+          "score": 77.5622,
+          "evidence": []
+        },
+        {
+          "term": "sms reminders",
+          "score": 58.5058,
+          "evidence": []
+        },
+        {
+          "term": "transmit untargeted",
+          "score": 54.4299,
+          "evidence": []
+        },
+        {
+          "term": "transmit targeted",
+          "score": 45.6025,
+          "evidence": []
+        },
+        {
+          "term": "untargeted health",
+          "score": 45.2311,
+          "evidence": []
+        },
+        {
+          "term": "messaging campaign",
+          "score": 43.0949,
+          "evidence": []
+        },
+        {
+          "term": "peer group",
+          "score": 37.961,
+          "evidence": []
+        },
+        {
+          "term": "event alerts",
+          "score": 36.8888,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "client communication",
+          "score": 1.2315,
+          "evidence": []
+        },
+        {
+          "term": "health status",
+          "score": 0.8085,
+          "evidence": []
+        },
+        {
+          "term": "health event",
+          "score": 0.807,
+          "evidence": []
+        },
+        {
+          "term": "targeted health",
+          "score": 0.752,
+          "evidence": []
+        },
+        {
+          "term": "transmit targeted",
+          "score": 0.7357,
+          "evidence": []
+        },
+        {
+          "term": "health information",
+          "score": 0.7249,
+          "evidence": []
+        },
+        {
+          "term": "health system",
+          "score": 0.7182,
+          "evidence": []
+        },
+        {
+          "term": "untargeted health",
+          "score": 0.6909,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "client communication",
+          "score": 34.5168,
+          "evidence": []
+        },
+        {
+          "term": "health event",
+          "score": 27.3775,
+          "evidence": []
+        },
+        {
+          "term": "targeted health",
+          "score": 27.3439,
+          "evidence": []
+        },
+        {
+          "term": "health status",
+          "score": 25.952,
+          "evidence": []
+        },
+        {
+          "term": "health information",
+          "score": 25.2012,
+          "evidence": []
+        },
+        {
+          "term": "health system",
+          "score": 24.3006,
+          "evidence": []
+        },
+        {
+          "term": "untargeted health",
+          "score": 23.9973,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 23.5166,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "client communication",
+          "score": 1.2315,
+          "evidence": []
+        },
+        {
+          "term": "health status",
+          "score": 0.8085,
+          "evidence": []
+        },
+        {
+          "term": "health event",
+          "score": 0.807,
+          "evidence": []
+        },
+        {
+          "term": "targeted health",
+          "score": 0.752,
+          "evidence": []
+        },
+        {
+          "term": "transmit targeted",
+          "score": 0.7357,
+          "evidence": []
+        },
+        {
+          "term": "health information",
+          "score": 0.7249,
+          "evidence": []
+        },
+        {
+          "term": "health system",
+          "score": 0.7182,
+          "evidence": []
+        },
+        {
+          "term": "untargeted health",
+          "score": 0.6909,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 45.8791,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 43.2779,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 34.2525,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 28.2167,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 26.3273,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 26.3273,
+          "evidence": []
+        },
+        {
+          "term": "乌干达",
+          "score": 24.8572,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 24.6395,
+          "evidence": []
+        }
+      ]
+    },
+    "page-011": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "client health",
+          "score": 2.3782,
+          "evidence": []
+        },
+        {
+          "term": "client personal",
+          "score": 2.3746,
+          "evidence": []
+        },
+        {
+          "term": "cash transfers",
+          "score": 2.074,
+          "evidence": []
+        },
+        {
+          "term": "conditional cash",
+          "score": 1.8959,
+          "evidence": []
+        },
+        {
+          "term": "health smartcard",
+          "score": 1.7664,
+          "evidence": []
+        },
+        {
+          "term": "weighing card",
+          "score": 1.5089,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 1.4191,
+          "evidence": []
+        },
+        {
+          "term": "health record",
+          "score": 1.4135,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "client health",
+          "score": 89.2463,
+          "evidence": []
+        },
+        {
+          "term": "client personal",
+          "score": 66.6567,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 53.0603,
+          "evidence": []
+        },
+        {
+          "term": "health smartcard",
+          "score": 51.4536,
+          "evidence": []
+        },
+        {
+          "term": "health monitoring",
+          "score": 47.3754,
+          "evidence": []
+        },
+        {
+          "term": "health information",
+          "score": 46.2001,
+          "evidence": []
+        },
+        {
+          "term": "health record",
+          "score": 44.7649,
+          "evidence": []
+        },
+        {
+          "term": "cash transfers",
+          "score": 44.7341,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "client health",
+          "score": 1.4336,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 1.2112,
+          "evidence": []
+        },
+        {
+          "term": "health system",
+          "score": 1.1021,
+          "evidence": []
+        },
+        {
+          "term": "health information",
+          "score": 1.0621,
+          "evidence": []
+        },
+        {
+          "term": "health record",
+          "score": 1.0471,
+          "evidence": []
+        },
+        {
+          "term": "client personal",
+          "score": 0.9973,
+          "evidence": []
+        },
+        {
+          "term": "health status",
+          "score": 0.9668,
+          "evidence": []
+        },
+        {
+          "term": "health monitoring",
+          "score": 0.9315,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "client health",
+          "score": 56.0331,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 40.4148,
+          "evidence": []
+        },
+        {
+          "term": "health system",
+          "score": 35.9185,
+          "evidence": []
+        },
+        {
+          "term": "health information",
+          "score": 35.4453,
+          "evidence": []
+        },
+        {
+          "term": "health status",
+          "score": 34.3561,
+          "evidence": []
+        },
+        {
+          "term": "health record",
+          "score": 33.5737,
+          "evidence": []
+        },
+        {
+          "term": "health events",
+          "score": 31.9788,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 31.6368,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "client health",
+          "score": 1.4336,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 1.2112,
+          "evidence": []
+        },
+        {
+          "term": "health system",
+          "score": 1.1021,
+          "evidence": []
+        },
+        {
+          "term": "health information",
+          "score": 1.0621,
+          "evidence": []
+        },
+        {
+          "term": "health record",
+          "score": 1.0471,
+          "evidence": []
+        },
+        {
+          "term": "client personal",
+          "score": 0.9973,
+          "evidence": []
+        },
+        {
+          "term": "health status",
+          "score": 0.9668,
+          "evidence": []
+        },
+        {
+          "term": "health monitoring",
+          "score": 0.9315,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 50.3876,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 46.6666,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 46.5039,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 40.5425,
+          "evidence": []
+        },
+        {
+          "term": "不喜欢使用卫生设施",
+          "score": 37.4998,
+          "evidence": []
+        },
+        {
+          "term": "从而可降低有色人种的高感染率",
+          "score": 37.4998,
+          "evidence": []
+        },
+        {
+          "term": "最后会形成控制这些疾病",
+          "score": 37.4998,
+          "evidence": []
+        },
+        {
+          "term": "医生认为这个问题对于他的研究至关重要",
+          "score": 37.4998,
+          "evidence": []
+        }
+      ]
+    },
+    "page-012": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "client health",
+          "score": 2.1802,
+          "evidence": []
+        },
+        {
+          "term": "manage client",
+          "score": 2.18,
+          "evidence": []
+        },
+        {
+          "term": "client registry",
+          "score": 2.1476,
+          "evidence": []
+        },
+        {
+          "term": "health record",
+          "score": 1.9535,
+          "evidence": []
+        },
+        {
+          "term": "medical record",
+          "score": 1.8347,
+          "evidence": []
+        },
+        {
+          "term": "job aid",
+          "score": 1.7922,
+          "evidence": []
+        },
+        {
+          "term": "commcare mobile",
+          "score": 1.7498,
+          "evidence": []
+        },
+        {
+          "term": "register children",
+          "score": 1.6587,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "health record",
+          "score": 68.5204,
+          "evidence": []
+        },
+        {
+          "term": "client health",
+          "score": 67.7323,
+          "evidence": []
+        },
+        {
+          "term": "manage client",
+          "score": 54.901,
+          "evidence": []
+        },
+        {
+          "term": "client registry",
+          "score": 52.6861,
+          "evidence": []
+        },
+        {
+          "term": "medical record",
+          "score": 51.7813,
+          "evidence": []
+        },
+        {
+          "term": "clinical records",
+          "score": 43.7913,
+          "evidence": []
+        },
+        {
+          "term": "job aid",
+          "score": 42.5217,
+          "evidence": []
+        },
+        {
+          "term": "health data",
+          "score": 41.2023,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "client health",
+          "score": 1.3506,
+          "evidence": []
+        },
+        {
+          "term": "digital health",
+          "score": 1.267,
+          "evidence": []
+        },
+        {
+          "term": "health data",
+          "score": 1.2545,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 1.2312,
+          "evidence": []
+        },
+        {
+          "term": "health records",
+          "score": 1.206,
+          "evidence": []
+        },
+        {
+          "term": "health information",
+          "score": 1.1133,
+          "evidence": []
+        },
+        {
+          "term": "manage client",
+          "score": 1.0887,
+          "evidence": []
+        },
+        {
+          "term": "health status",
+          "score": 0.9961,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "client health",
+          "score": 45.5994,
+          "evidence": []
+        },
+        {
+          "term": "digital health",
+          "score": 41.3829,
+          "evidence": []
+        },
+        {
+          "term": "health data",
+          "score": 41.0895,
+          "evidence": []
+        },
+        {
+          "term": "health records",
+          "score": 37.6206,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 36.393,
+          "evidence": []
+        },
+        {
+          "term": "health information",
+          "score": 33.8886,
+          "evidence": []
+        },
+        {
+          "term": "health status",
+          "score": 31.1869,
+          "evidence": []
+        },
+        {
+          "term": "personal health",
+          "score": 27.3037,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "client health",
+          "score": 1.3506,
+          "evidence": []
+        },
+        {
+          "term": "digital health",
+          "score": 1.267,
+          "evidence": []
+        },
+        {
+          "term": "health data",
+          "score": 1.2545,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 1.2312,
+          "evidence": []
+        },
+        {
+          "term": "health records",
+          "score": 1.206,
+          "evidence": []
+        },
+        {
+          "term": "health information",
+          "score": 1.1133,
+          "evidence": []
+        },
+        {
+          "term": "manage client",
+          "score": 1.0887,
+          "evidence": []
+        },
+        {
+          "term": "health status",
+          "score": 0.9961,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 38.8013,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 37.8004,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 36.0019,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 26.6592,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 26.35,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 26.35,
+          "evidence": []
+        },
+        {
+          "term": "潜在受试者",
+          "score": 25.9009,
+          "evidence": []
+        },
+        {
+          "term": "乌干达",
+          "score": 24.5473,
+          "evidence": []
+        }
+      ]
+    },
+    "page-013": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "healthcare provider",
+          "score": 2.3527,
+          "evidence": []
+        },
+        {
+          "term": "phone-based communication",
+          "score": 1.8964,
+          "evidence": []
+        },
+        {
+          "term": "health enablement",
+          "score": 1.7877,
+          "evidence": []
+        },
+        {
+          "term": "manage referrals",
+          "score": 1.7782,
+          "evidence": []
+        },
+        {
+          "term": "client health",
+          "score": 1.7748,
+          "evidence": []
+        },
+        {
+          "term": "communication system",
+          "score": 1.5763,
+          "evidence": []
+        },
+        {
+          "term": "text messaging",
+          "score": 1.5646,
+          "evidence": []
+        },
+        {
+          "term": "referral management",
+          "score": 1.5137,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "healthcare provider",
+          "score": 96.9745,
+          "evidence": []
+        },
+        {
+          "term": "health workers",
+          "score": 57.9059,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 57.3269,
+          "evidence": []
+        },
+        {
+          "term": "phone-based communication",
+          "score": 54.4992,
+          "evidence": []
+        },
+        {
+          "term": "health enablement",
+          "score": 54.0796,
+          "evidence": []
+        },
+        {
+          "term": "client health",
+          "score": 53.5894,
+          "evidence": []
+        },
+        {
+          "term": "manage referrals",
+          "score": 52.5448,
+          "evidence": []
+        },
+        {
+          "term": "communication system",
+          "score": 50.4727,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "client health",
+          "score": 1.7645,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 1.5337,
+          "evidence": []
+        },
+        {
+          "term": "health worker",
+          "score": 1.3846,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 1.3215,
+          "evidence": []
+        },
+        {
+          "term": "healthcare provider",
+          "score": 1.1035,
+          "evidence": []
+        },
+        {
+          "term": "health sector",
+          "score": 1.0703,
+          "evidence": []
+        },
+        {
+          "term": "communication system",
+          "score": 1.0426,
+          "evidence": []
+        },
+        {
+          "term": "health enablement",
+          "score": 0.862,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "client health",
+          "score": 58.5111,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 49.7531,
+          "evidence": []
+        },
+        {
+          "term": "health workers",
+          "score": 47.302,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 41.9218,
+          "evidence": []
+        },
+        {
+          "term": "health sector",
+          "score": 37.9669,
+          "evidence": []
+        },
+        {
+          "term": "health enablement",
+          "score": 35.489,
+          "evidence": []
+        },
+        {
+          "term": "communication system",
+          "score": 21.4084,
+          "evidence": []
+        },
+        {
+          "term": "healthcare provider",
+          "score": 21.1043,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "client health",
+          "score": 1.7645,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 1.5337,
+          "evidence": []
+        },
+        {
+          "term": "health worker",
+          "score": 1.3846,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 1.3215,
+          "evidence": []
+        },
+        {
+          "term": "healthcare provider",
+          "score": 1.1035,
+          "evidence": []
+        },
+        {
+          "term": "health sector",
+          "score": 1.0703,
+          "evidence": []
+        },
+        {
+          "term": "communication system",
+          "score": 1.0426,
+          "evidence": []
+        },
+        {
+          "term": "health enablement",
+          "score": 0.8904,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 50.1415,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 41.358,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 37.6786,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 30.8342,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 29.7259,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 29.7259,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 29.5296,
+          "evidence": []
+        },
+        {
+          "term": "乌干达",
+          "score": 28.6918,
+          "evidence": []
+        }
+      ]
+    },
+    "page-014": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "prescription orders",
+          "score": 2.073,
+          "evidence": []
+        },
+        {
+          "term": "healthcare provider",
+          "score": 1.9555,
+          "evidence": []
+        },
+        {
+          "term": "diagnostic orders",
+          "score": 1.7236,
+          "evidence": []
+        },
+        {
+          "term": "mobile phone",
+          "score": 1.5887,
+          "evidence": []
+        },
+        {
+          "term": "automated scheduling",
+          "score": 1.5622,
+          "evidence": []
+        },
+        {
+          "term": "provider training",
+          "score": 1.5355,
+          "evidence": []
+        },
+        {
+          "term": "educational videos",
+          "score": 1.4825,
+          "evidence": []
+        },
+        {
+          "term": "delivery app",
+          "score": 1.4543,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "healthcare provider",
+          "score": 59.433,
+          "evidence": []
+        },
+        {
+          "term": "prescription orders",
+          "score": 50.8467,
+          "evidence": []
+        },
+        {
+          "term": "diagnostic orders",
+          "score": 44.5201,
+          "evidence": []
+        },
+        {
+          "term": "mobile phone",
+          "score": 37.5858,
+          "evidence": []
+        },
+        {
+          "term": "provider training",
+          "score": 36.1989,
+          "evidence": []
+        },
+        {
+          "term": "automated scheduling",
+          "score": 31.8555,
+          "evidence": []
+        },
+        {
+          "term": "medication",
+          "score": 30.2309,
+          "evidence": []
+        },
+        {
+          "term": "delivery app",
+          "score": 27.7144,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "healthcare provider",
+          "score": 0.944,
+          "evidence": []
+        },
+        {
+          "term": "provider training",
+          "score": 0.9005,
+          "evidence": []
+        },
+        {
+          "term": "digital devices",
+          "score": 0.8088,
+          "evidence": []
+        },
+        {
+          "term": "client",
+          "score": 0.7147,
+          "evidence": []
+        },
+        {
+          "term": "training content",
+          "score": 0.5901,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.5687,
+          "evidence": []
+        },
+        {
+          "term": "mobile phone",
+          "score": 0.5564,
+          "evidence": []
+        },
+        {
+          "term": "digital approaches",
+          "score": 0.5183,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health",
+          "score": 18.8288,
+          "evidence": []
+        },
+        {
+          "term": "digital devices",
+          "score": 16.4331,
+          "evidence": []
+        },
+        {
+          "term": "client",
+          "score": 14.2161,
+          "evidence": []
+        },
+        {
+          "term": "healthcare provider",
+          "score": 13.4425,
+          "evidence": []
+        },
+        {
+          "term": "digital approaches",
+          "score": 11.2271,
+          "evidence": []
+        },
+        {
+          "term": "provider training",
+          "score": 10.8274,
+          "evidence": []
+        },
+        {
+          "term": "transmit",
+          "score": 10.3198,
+          "evidence": []
+        },
+        {
+          "term": "communication",
+          "score": 7.4219,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "healthcare provider",
+          "score": 0.944,
+          "evidence": []
+        },
+        {
+          "term": "provider training",
+          "score": 0.9005,
+          "evidence": []
+        },
+        {
+          "term": "digital devices",
+          "score": 0.8088,
+          "evidence": []
+        },
+        {
+          "term": "client",
+          "score": 0.7147,
+          "evidence": []
+        },
+        {
+          "term": "digital approaches",
+          "score": 0.6076,
+          "evidence": []
+        },
+        {
+          "term": "training content",
+          "score": 0.5901,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.5687,
+          "evidence": []
+        },
+        {
+          "term": "mobile phone",
+          "score": 0.5564,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 33.2813,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 31.7107,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 28.7574,
+          "evidence": []
+        },
+        {
+          "term": "潜在受试者",
+          "score": 22.5951,
+          "evidence": []
+        },
+        {
+          "term": "乌干达",
+          "score": 21.2135,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 19.1185,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 19.1185,
+          "evidence": []
+        },
+        {
+          "term": "精神卫生",
+          "score": 18.8783,
+          "evidence": []
+        }
+      ]
+    },
+    "page-015": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "commodities logistics",
+          "score": 2.1282,
+          "evidence": []
+        },
+        {
+          "term": "health commodities",
+          "score": 1.9408,
+          "evidence": []
+        },
+        {
+          "term": "stock levels",
+          "score": 1.9283,
+          "evidence": []
+        },
+        {
+          "term": "logging thermometers",
+          "score": 1.9264,
+          "evidence": []
+        },
+        {
+          "term": "drug authenticity",
+          "score": 1.7624,
+          "evidence": []
+        },
+        {
+          "term": "msos ebola",
+          "score": 1.7115,
+          "evidence": []
+        },
+        {
+          "term": "medical commodities",
+          "score": 1.6387,
+          "evidence": []
+        },
+        {
+          "term": "registration certification",
+          "score": 1.6292,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "health commodities",
+          "score": 68.3926,
+          "evidence": []
+        },
+        {
+          "term": "commodities logistics",
+          "score": 63.6269,
+          "evidence": []
+        },
+        {
+          "term": "stock levels",
+          "score": 60.6906,
+          "evidence": []
+        },
+        {
+          "term": "medical commodities",
+          "score": 46.8935,
+          "evidence": []
+        },
+        {
+          "term": "health worker",
+          "score": 44.0696,
+          "evidence": []
+        },
+        {
+          "term": "logistics management",
+          "score": 40.9714,
+          "evidence": []
+        },
+        {
+          "term": "health workforce",
+          "score": 37.9088,
+          "evidence": []
+        },
+        {
+          "term": "health surveillance",
+          "score": 36.8762,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health worker",
+          "score": 1.259,
+          "evidence": []
+        },
+        {
+          "term": "health commodities",
+          "score": 1.181,
+          "evidence": []
+        },
+        {
+          "term": "health workforce",
+          "score": 1.1531,
+          "evidence": []
+        },
+        {
+          "term": "health events",
+          "score": 1.0797,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 1.0137,
+          "evidence": []
+        },
+        {
+          "term": "health surveillance",
+          "score": 0.9675,
+          "evidence": []
+        },
+        {
+          "term": "healthcare provider",
+          "score": 0.8692,
+          "evidence": []
+        },
+        {
+          "term": "medical commodities",
+          "score": 0.7941,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health workers",
+          "score": 36.9299,
+          "evidence": []
+        },
+        {
+          "term": "health workforce",
+          "score": 35.9654,
+          "evidence": []
+        },
+        {
+          "term": "health commodities",
+          "score": 32.7258,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 30.8408,
+          "evidence": []
+        },
+        {
+          "term": "health events",
+          "score": 30.5531,
+          "evidence": []
+        },
+        {
+          "term": "health surveillance",
+          "score": 29.6105,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 16.4436,
+          "evidence": []
+        },
+        {
+          "term": "data logging",
+          "score": 16.4436,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health worker",
+          "score": 1.259,
+          "evidence": []
+        },
+        {
+          "term": "health commodities",
+          "score": 1.181,
+          "evidence": []
+        },
+        {
+          "term": "health workforce",
+          "score": 1.1531,
+          "evidence": []
+        },
+        {
+          "term": "health events",
+          "score": 1.0797,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 1.0137,
+          "evidence": []
+        },
+        {
+          "term": "health surveillance",
+          "score": 0.9675,
+          "evidence": []
+        },
+        {
+          "term": "healthcare provider",
+          "score": 0.8692,
+          "evidence": []
+        },
+        {
+          "term": "medical commodities",
+          "score": 0.7941,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 54.0216,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 45.8005,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 41.8943,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 32.9512,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 32.9512,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 32.3859,
+          "evidence": []
+        },
+        {
+          "term": "潜在受试者",
+          "score": 31.5468,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 30.9092,
+          "evidence": []
+        }
+      ]
+    },
+    "page-016": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "birth registration",
+          "score": 2.3318,
+          "evidence": []
+        },
+        {
+          "term": "death event",
+          "score": 2.1749,
+          "evidence": []
+        },
+        {
+          "term": "event alert",
+          "score": 1.9524,
+          "evidence": []
+        },
+        {
+          "term": "mobile birth",
+          "score": 1.9512,
+          "evidence": []
+        },
+        {
+          "term": "notify death",
+          "score": 1.9388,
+          "evidence": []
+        },
+        {
+          "term": "civil registration",
+          "score": 1.8761,
+          "evidence": []
+        },
+        {
+          "term": "registration initiative",
+          "score": 1.7587,
+          "evidence": []
+        },
+        {
+          "term": "health equipment",
+          "score": 1.7051,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "birth registration",
+          "score": 81.5782,
+          "evidence": []
+        },
+        {
+          "term": "death event",
+          "score": 69.9597,
+          "evidence": []
+        },
+        {
+          "term": "health equipment",
+          "score": 62.9515,
+          "evidence": []
+        },
+        {
+          "term": "mobile birth",
+          "score": 62.0119,
+          "evidence": []
+        },
+        {
+          "term": "health facilities",
+          "score": 56.4182,
+          "evidence": []
+        },
+        {
+          "term": "civil registration",
+          "score": 54.8864,
+          "evidence": []
+        },
+        {
+          "term": "notify death",
+          "score": 54.3262,
+          "evidence": []
+        },
+        {
+          "term": "registration initiative",
+          "score": 50.8815,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health system",
+          "score": 1.1618,
+          "evidence": []
+        },
+        {
+          "term": "health worker",
+          "score": 1.1508,
+          "evidence": []
+        },
+        {
+          "term": "health facility",
+          "score": 1.1129,
+          "evidence": []
+        },
+        {
+          "term": "health facilities",
+          "score": 1.102,
+          "evidence": []
+        },
+        {
+          "term": "health providers",
+          "score": 1.042,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 1.0137,
+          "evidence": []
+        },
+        {
+          "term": "health equipment",
+          "score": 0.995,
+          "evidence": []
+        },
+        {
+          "term": "healthcare provider",
+          "score": 0.9936,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health worker",
+          "score": 40.8185,
+          "evidence": []
+        },
+        {
+          "term": "health system",
+          "score": 38.7586,
+          "evidence": []
+        },
+        {
+          "term": "health facilities",
+          "score": 36.3532,
+          "evidence": []
+        },
+        {
+          "term": "health facility",
+          "score": 36.0324,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 35.4273,
+          "evidence": []
+        },
+        {
+          "term": "health equipment",
+          "score": 33.7468,
+          "evidence": []
+        },
+        {
+          "term": "health providers",
+          "score": 33.4762,
+          "evidence": []
+        },
+        {
+          "term": "digital approaches",
+          "score": 17.8638,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health system",
+          "score": 1.1618,
+          "evidence": []
+        },
+        {
+          "term": "health worker",
+          "score": 1.1508,
+          "evidence": []
+        },
+        {
+          "term": "health facility",
+          "score": 1.1129,
+          "evidence": []
+        },
+        {
+          "term": "health facilities",
+          "score": 1.102,
+          "evidence": []
+        },
+        {
+          "term": "health providers",
+          "score": 1.042,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 1.0137,
+          "evidence": []
+        },
+        {
+          "term": "health equipment",
+          "score": 0.995,
+          "evidence": []
+        },
+        {
+          "term": "healthcare provider",
+          "score": 0.9936,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 48.535,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 44.2731,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 38.3857,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 31.7537,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 31.7537,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 31.5032,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 30.6709,
+          "evidence": []
+        },
+        {
+          "term": "乌干达",
+          "score": 30.3943,
+          "evidence": []
+        }
+      ]
+    },
+    "page-017": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "gps mapping",
+          "score": 2.2516,
+          "evidence": []
+        },
+        {
+          "term": "map location",
+          "score": 2.1556,
+          "evidence": []
+        },
+        {
+          "term": "visualization gps",
+          "score": 1.8938,
+          "evidence": []
+        },
+        {
+          "term": "geospatial visualization",
+          "score": 1.7616,
+          "evidence": []
+        },
+        {
+          "term": "data collection",
+          "score": 1.55,
+          "evidence": []
+        },
+        {
+          "term": "data exchange",
+          "score": 1.5388,
+          "evidence": []
+        },
+        {
+          "term": "data warehouse",
+          "score": 1.471,
+          "evidence": []
+        },
+        {
+          "term": "data services",
+          "score": 1.3338,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "data collection",
+          "score": 64.803,
+          "evidence": []
+        },
+        {
+          "term": "gps mapping",
+          "score": 61.1985,
+          "evidence": []
+        },
+        {
+          "term": "data exchange",
+          "score": 60.1919,
+          "evidence": []
+        },
+        {
+          "term": "data warehouse",
+          "score": 55.7813,
+          "evidence": []
+        },
+        {
+          "term": "map location",
+          "score": 55.6283,
+          "evidence": []
+        },
+        {
+          "term": "data services",
+          "score": 54.2782,
+          "evidence": []
+        },
+        {
+          "term": "visualization gps",
+          "score": 38.8641,
+          "evidence": []
+        },
+        {
+          "term": "geospatial visualization",
+          "score": 30.8058,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "data services",
+          "score": 1.1398,
+          "evidence": []
+        },
+        {
+          "term": "data collection",
+          "score": 0.9922,
+          "evidence": []
+        },
+        {
+          "term": "data exchange",
+          "score": 0.9781,
+          "evidence": []
+        },
+        {
+          "term": "data warehouse",
+          "score": 0.8799,
+          "evidence": []
+        },
+        {
+          "term": "health facilities",
+          "score": 0.8793,
+          "evidence": []
+        },
+        {
+          "term": "digital",
+          "score": 0.5582,
+          "evidence": []
+        },
+        {
+          "term": "digital approaches",
+          "score": 0.5582,
+          "evidence": []
+        },
+        {
+          "term": "management",
+          "score": 0.4852,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "data services",
+          "score": 34.1747,
+          "evidence": []
+        },
+        {
+          "term": "data collection",
+          "score": 32.7155,
+          "evidence": []
+        },
+        {
+          "term": "data exchange",
+          "score": 31.0551,
+          "evidence": []
+        },
+        {
+          "term": "data warehouse",
+          "score": 29.1046,
+          "evidence": []
+        },
+        {
+          "term": "health facilities",
+          "score": 15.8798,
+          "evidence": []
+        },
+        {
+          "term": "digital",
+          "score": 10.326,
+          "evidence": []
+        },
+        {
+          "term": "digital approaches",
+          "score": 10.326,
+          "evidence": []
+        },
+        {
+          "term": "system",
+          "score": 8.9965,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "data services",
+          "score": 1.1398,
+          "evidence": []
+        },
+        {
+          "term": "data collection",
+          "score": 0.9922,
+          "evidence": []
+        },
+        {
+          "term": "data exchange",
+          "score": 0.9781,
+          "evidence": []
+        },
+        {
+          "term": "data warehouse",
+          "score": 0.8799,
+          "evidence": []
+        },
+        {
+          "term": "health facilities",
+          "score": 0.8793,
+          "evidence": []
+        },
+        {
+          "term": "digital approaches",
+          "score": 0.6189,
+          "evidence": []
+        },
+        {
+          "term": "management",
+          "score": 0.4852,
+          "evidence": []
+        },
+        {
+          "term": "system",
+          "score": 0.472,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 49.9398,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 47.7417,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 44.8604,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 32.4529,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 32.4529,
+          "evidence": []
+        },
+        {
+          "term": "潜在受试者",
+          "score": 32.2663,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 29.4425,
+          "evidence": []
+        },
+        {
+          "term": "乌干达",
+          "score": 28.8125,
+          "evidence": []
+        }
+      ]
+    },
+    "page-018": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "accessed november",
+          "score": 3.033,
+          "evidence": []
+        },
+        {
+          "term": "waha international",
+          "score": 1.6394,
+          "evidence": []
+        },
+        {
+          "term": "national ehealth",
+          "score": 1.4785,
+          "evidence": []
+        },
+        {
+          "term": "international telecommunication",
+          "score": 1.4422,
+          "evidence": []
+        },
+        {
+          "term": "international conference",
+          "score": 1.3261,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 1.274,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 1.2274,
+          "evidence": []
+        },
+        {
+          "term": "telecommunication union",
+          "score": 1.1984,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "accessed november",
+          "score": 130.9533,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 31.932,
+          "evidence": []
+        },
+        {
+          "term": "waha international",
+          "score": 29.6502,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 29.5594,
+          "evidence": []
+        },
+        {
+          "term": "international telecommunication",
+          "score": 25.37,
+          "evidence": []
+        },
+        {
+          "term": "international conference",
+          "score": 23.9837,
+          "evidence": []
+        },
+        {
+          "term": "health workers",
+          "score": 23.7607,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 23.1713,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "world health",
+          "score": 1.3171,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 1.3004,
+          "evidence": []
+        },
+        {
+          "term": "accessed november",
+          "score": 0.9613,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 0.8957,
+          "evidence": []
+        },
+        {
+          "term": "national ehealth",
+          "score": 0.8903,
+          "evidence": []
+        },
+        {
+          "term": "health workers",
+          "score": 0.7889,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 0.6366,
+          "evidence": []
+        },
+        {
+          "term": "international telecommunication",
+          "score": 0.5689,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "accessed november",
+          "score": 53.7263,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 37.7328,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 37.1693,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 21.5717,
+          "evidence": []
+        },
+        {
+          "term": "health workers",
+          "score": 19.0624,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 16.1877,
+          "evidence": []
+        },
+        {
+          "term": "pdf",
+          "score": 14.2152,
+          "evidence": []
+        },
+        {
+          "term": "national ehealth",
+          "score": 13.7974,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "world health",
+          "score": 1.3171,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 1.3004,
+          "evidence": []
+        },
+        {
+          "term": "accessed november",
+          "score": 0.9613,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 0.8957,
+          "evidence": []
+        },
+        {
+          "term": "national ehealth",
+          "score": 0.8903,
+          "evidence": []
+        },
+        {
+          "term": "health workers",
+          "score": 0.7889,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 0.6366,
+          "evidence": []
+        },
+        {
+          "term": "international telecommunication",
+          "score": 0.5689,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 127.5732,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 77.4083,
+          "evidence": []
+        },
+        {
+          "term": "数字疗法",
+          "score": 57.0663,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 56.0576,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 54.5772,
+          "evidence": []
+        },
+        {
+          "term": "问题的讨论结束",
+          "score": 54.5772,
+          "evidence": []
+        },
+        {
+          "term": "一致元数据和定义",
+          "score": 48.5644,
+          "evidence": []
+        },
+        {
+          "term": "人口约",
+          "score": 47.611,
+          "evidence": []
+        }
+      ]
+    },
+    "page-019": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "accessed november",
+          "score": 2.5411,
+          "evidence": []
+        },
+        {
+          "term": "concept lab",
+          "score": 1.0906,
+          "evidence": []
+        },
+        {
+          "term": "salaam",
+          "score": 1.0712,
+          "evidence": []
+        },
+        {
+          "term": "open concept",
+          "score": 1.0387,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.849,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.8466,
+          "evidence": []
+        },
+        {
+          "term": "dar",
+          "score": 0.813,
+          "evidence": []
+        },
+        {
+          "term": "website",
+          "score": 0.7232,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "accessed november",
+          "score": 79.1071,
+          "evidence": []
+        },
+        {
+          "term": "salaam",
+          "score": 20.1498,
+          "evidence": []
+        },
+        {
+          "term": "concept lab",
+          "score": 16.8402,
+          "evidence": []
+        },
+        {
+          "term": "open concept",
+          "score": 15.6723,
+          "evidence": []
+        },
+        {
+          "term": "dar",
+          "score": 14.7745,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 12.9781,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 12.8741,
+          "evidence": []
+        },
+        {
+          "term": "website",
+          "score": 11.9815,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "world health",
+          "score": 0.7036,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.6968,
+          "evidence": []
+        },
+        {
+          "term": "accessed november",
+          "score": 0.555,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 0.3442,
+          "evidence": []
+        },
+        {
+          "term": "pdf",
+          "score": 0.2503,
+          "evidence": []
+        },
+        {
+          "term": "digital",
+          "score": 0.2384,
+          "evidence": []
+        },
+        {
+          "term": "handle",
+          "score": 0.1968,
+          "evidence": []
+        },
+        {
+          "term": "doi",
+          "score": 0.1941,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "accessed november",
+          "score": 28.9963,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 17.5832,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 17.3562,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 7.4099,
+          "evidence": []
+        },
+        {
+          "term": "pdf",
+          "score": 7.2143,
+          "evidence": []
+        },
+        {
+          "term": "website",
+          "score": 5.8344,
+          "evidence": []
+        },
+        {
+          "term": "online",
+          "score": 5.6196,
+          "evidence": []
+        },
+        {
+          "term": "august",
+          "score": 4.5284,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "world health",
+          "score": 0.7036,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.6968,
+          "evidence": []
+        },
+        {
+          "term": "accessed november",
+          "score": 0.555,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 0.3442,
+          "evidence": []
+        },
+        {
+          "term": "website",
+          "score": 0.1878,
+          "evidence": []
+        },
+        {
+          "term": "system",
+          "score": 0.1463,
+          "evidence": []
+        },
+        {
+          "term": "report",
+          "score": 0.1303,
+          "evidence": []
+        },
+        {
+          "term": "registration",
+          "score": 0.0868,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 106.0526,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 53.5911,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 51.5876,
+          "evidence": []
+        },
+        {
+          "term": "一致元数据和定义",
+          "score": 43.5094,
+          "evidence": []
+        },
+        {
+          "term": "执行委员会",
+          "score": 42.5994,
+          "evidence": []
+        },
+        {
+          "term": "保持警惕",
+          "score": 41.4481,
+          "evidence": []
+        },
+        {
+          "term": "议程项目",
+          "score": 41.0917,
+          "evidence": []
+        },
+        {
+          "term": "abeba",
+          "score": 40.4975,
+          "evidence": []
+        }
+      ]
+    },
+    "page-020": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "tigest tamrat",
+          "score": 1.4227,
+          "evidence": []
+        },
+        {
+          "term": "garrett mehl",
+          "score": 1.3016,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 1.0778,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 1.0738,
+          "evidence": []
+        },
+        {
+          "term": "path",
+          "score": 1.064,
+          "evidence": []
+        },
+        {
+          "term": "igo",
+          "score": 0.865,
+          "evidence": []
+        },
+        {
+          "term": "derek",
+          "score": 0.8222,
+          "evidence": []
+        },
+        {
+          "term": "consultant",
+          "score": 0.7983,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "tigest tamrat",
+          "score": 22.8349,
+          "evidence": []
+        },
+        {
+          "term": "path",
+          "score": 21.6955,
+          "evidence": []
+        },
+        {
+          "term": "garrett mehl",
+          "score": 20.4375,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 19.3158,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 19.0557,
+          "evidence": []
+        },
+        {
+          "term": "igo",
+          "score": 17.3154,
+          "evidence": []
+        },
+        {
+          "term": "consultant",
+          "score": 14.7195,
+          "evidence": []
+        },
+        {
+          "term": "derek",
+          "score": 13.2225,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health organization",
+          "score": 0.9809,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.9758,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.4678,
+          "evidence": []
+        },
+        {
+          "term": "digital",
+          "score": 0.3745,
+          "evidence": []
+        },
+        {
+          "term": "garrett mehl",
+          "score": 0.3673,
+          "evidence": []
+        },
+        {
+          "term": "international",
+          "score": 0.3347,
+          "evidence": []
+        },
+        {
+          "term": "tigest tamrat",
+          "score": 0.3322,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 0.3209,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "world health",
+          "score": 13.3908,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 13.2305,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 7.8816,
+          "evidence": []
+        },
+        {
+          "term": "digital",
+          "score": 5.9061,
+          "evidence": []
+        },
+        {
+          "term": "united",
+          "score": 5.5494,
+          "evidence": []
+        },
+        {
+          "term": "consultado",
+          "score": 4.6393,
+          "evidence": []
+        },
+        {
+          "term": "usa",
+          "score": 4.5993,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 4.343,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health organization",
+          "score": 0.9809,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.9758,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.4678,
+          "evidence": []
+        },
+        {
+          "term": "digital",
+          "score": 0.3745,
+          "evidence": []
+        },
+        {
+          "term": "garrett mehl",
+          "score": 0.3673,
+          "evidence": []
+        },
+        {
+          "term": "international",
+          "score": 0.3347,
+          "evidence": []
+        },
+        {
+          "term": "tigest tamrat",
+          "score": 0.3322,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 0.3209,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 240.257,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 175.5492,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 153.2287,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 153.2287,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 150.3161,
+          "evidence": []
+        },
+        {
+          "term": "以及卫生保健界",
+          "score": 146.0239,
+          "evidence": []
+        },
+        {
+          "term": "基金会和开发银行",
+          "score": 146.0239,
+          "evidence": []
+        },
+        {
+          "term": "大学和研究机构",
+          "score": 146.0239,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

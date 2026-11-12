@@ -1,0 +1,3700 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-255866",
+  "instance": "who-iris",
+  "about": "library/10665-255866",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7434,
+    "terms": 71211
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "breastfeeding women",
+        "score": 18.6543,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "during prep",
+        "score": 18.6332,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "pregnant women",
+        "score": 17.055,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "prep safety",
+        "score": 16.1335,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "prep services",
+        "score": 15.8771,
+        "evidence": []
+      },
+      {
+        "term": "prep among",
+        "score": 15.128,
+        "evidence": []
+      },
+      {
+        "term": "prep regimens",
+        "score": 15.0211,
+        "evidence": []
+      },
+      {
+        "term": "continue prep",
+        "score": 15.0189,
+        "evidence": []
+      },
+      {
+        "term": "offering prep",
+        "score": 14.9676,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "oral prep",
+        "score": 14.9406,
+        "evidence": []
+      },
+      {
+        "term": "hiv-negative women",
+        "score": 14.9264,
+        "evidence": []
+      },
+      {
+        "term": "continuing prep",
+        "score": 14.7445,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "during prep",
+        "score": 570.1804,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "prep safety",
+        "score": 506.1176,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "prep services",
+        "score": 494.2606,
+        "evidence": []
+      },
+      {
+        "term": "prep among",
+        "score": 491.9344,
+        "evidence": []
+      },
+      {
+        "term": "prep regimens",
+        "score": 490.7685,
+        "evidence": []
+      },
+      {
+        "term": "offering prep",
+        "score": 490.0362,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "continue prep",
+        "score": 487.8945,
+        "evidence": []
+      },
+      {
+        "term": "receiving prep",
+        "score": 487.7564,
+        "evidence": []
+      },
+      {
+        "term": "oral prep",
+        "score": 484.9069,
+        "evidence": []
+      },
+      {
+        "term": "continuing prep",
+        "score": 481.658,
+        "evidence": []
+      },
+      {
+        "term": "discontinuing prep",
+        "score": 472.8372,
+        "evidence": []
+      },
+      {
+        "term": "providing prep",
+        "score": 471.0504,
+        "evidence": [
+          "heading"
+        ]
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "pregnant women",
+        "score": 9.7845,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hiv risk",
+        "score": 9.5923,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hiv infection",
+        "score": 9.3741,
+        "evidence": []
+      },
+      {
+        "term": "hiv prevention",
+        "score": 9.2588,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hiv testing",
+        "score": 9.1707,
+        "evidence": []
+      },
+      {
+        "term": "prep services",
+        "score": 9.1275,
+        "evidence": []
+      },
+      {
+        "term": "breastfeeding women",
+        "score": 9.1,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "during prep",
+        "score": 9.0151,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "oral prep",
+        "score": 8.8129,
+        "evidence": []
+      },
+      {
+        "term": "prep among",
+        "score": 8.7303,
+        "evidence": []
+      },
+      {
+        "term": "hiv transmission",
+        "score": 8.5083,
+        "evidence": []
+      },
+      {
+        "term": "partner hiv",
+        "score": 8.3116,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "oral prep",
+        "score": 486.5584,
+        "evidence": []
+      },
+      {
+        "term": "prep services",
+        "score": 479.6662,
+        "evidence": []
+      },
+      {
+        "term": "during prep",
+        "score": 478.5049,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "prep among",
+        "score": 464.6302,
+        "evidence": []
+      },
+      {
+        "term": "prep trials",
+        "score": 462.644,
+        "evidence": []
+      },
+      {
+        "term": "prep safety",
+        "score": 454.6851,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "receiving prep",
+        "score": 454.118,
+        "evidence": []
+      },
+      {
+        "term": "continue prep",
+        "score": 450.5952,
+        "evidence": []
+      },
+      {
+        "term": "offering prep",
+        "score": 449.2521,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "continuing prep",
+        "score": 438.8663,
+        "evidence": []
+      },
+      {
+        "term": "discontinuing prep",
+        "score": 438.8663,
+        "evidence": []
+      },
+      {
+        "term": "prep regimens",
+        "score": 438.8663,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "pregnant women",
+        "score": 9.7845,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hiv risk",
+        "score": 9.5923,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hiv infection",
+        "score": 9.3741,
+        "evidence": []
+      },
+      {
+        "term": "hiv prevention",
+        "score": 9.2588,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hiv testing",
+        "score": 9.1707,
+        "evidence": []
+      },
+      {
+        "term": "prep services",
+        "score": 9.1275,
+        "evidence": []
+      },
+      {
+        "term": "breastfeeding women",
+        "score": 9.1,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "during prep",
+        "score": 9.0151,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "oral prep",
+        "score": 8.8129,
+        "evidence": []
+      },
+      {
+        "term": "prep among",
+        "score": 8.7303,
+        "evidence": []
+      },
+      {
+        "term": "hiv transmission",
+        "score": 8.5083,
+        "evidence": []
+      },
+      {
+        "term": "partner hiv",
+        "score": 8.3116,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "并提供一",
+        "score": 327.6601,
+        "evidence": []
+      },
+      {
+        "term": "在大流行间期提供疫苗供发展中国家使用",
+        "score": 295.4779,
+        "evidence": []
+      },
+      {
+        "term": "提供大流行性流感疫苗",
+        "score": 295.4779,
+        "evidence": []
+      },
+      {
+        "term": "严重急性呼吸综合征",
+        "score": 290.6398,
+        "evidence": []
+      },
+      {
+        "term": "相一致",
+        "score": 286.8339,
+        "evidence": []
+      },
+      {
+        "term": "科研人员",
+        "score": 267.7848,
+        "evidence": []
+      },
+      {
+        "term": "将继续寻求专家的指导建议",
+        "score": 238.8288,
+        "evidence": []
+      },
+      {
+        "term": "这一点很重要",
+        "score": 226.7891,
+        "evidence": []
+      },
+      {
+        "term": "个学习目标",
+        "score": 221.0371,
+        "evidence": []
+      },
+      {
+        "term": "个核心能力和",
+        "score": 221.0371,
+        "evidence": []
+      },
+      {
+        "term": "如在公共利益与个体自主权之间",
+        "score": 221.0371,
+        "evidence": []
+      },
+      {
+        "term": "学员a",
+        "score": 210.7055,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-introduction": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "breastfeeding women",
+          "score": 1.7651,
+          "evidence": []
+        },
+        {
+          "term": "offering prep",
+          "score": 1.6159,
+          "evidence": []
+        },
+        {
+          "term": "during pregnancy",
+          "score": 1.3135,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 1.258,
+          "evidence": []
+        },
+        {
+          "term": "hiv prevention",
+          "score": 1.2221,
+          "evidence": []
+        },
+        {
+          "term": "incidence settings",
+          "score": 1.0743,
+          "evidence": []
+        },
+        {
+          "term": "postnatal",
+          "score": 0.7425,
+          "evidence": []
+        },
+        {
+          "term": "antenatal",
+          "score": 0.7259,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "breastfeeding women",
+          "score": 39.0213,
+          "evidence": []
+        },
+        {
+          "term": "offering prep",
+          "score": 37.6015,
+          "evidence": []
+        },
+        {
+          "term": "hiv prevention",
+          "score": 30.6132,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 30.4855,
+          "evidence": []
+        },
+        {
+          "term": "during pregnancy",
+          "score": 22.4139,
+          "evidence": []
+        },
+        {
+          "term": "incidence settings",
+          "score": 18.2984,
+          "evidence": []
+        },
+        {
+          "term": "postnatal",
+          "score": 13.1116,
+          "evidence": []
+        },
+        {
+          "term": "infants",
+          "score": 13.0453,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hiv infection",
+          "score": 0.8981,
+          "evidence": []
+        },
+        {
+          "term": "hiv prevention",
+          "score": 0.8753,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding women",
+          "score": 0.8277,
+          "evidence": []
+        },
+        {
+          "term": "offering prep",
+          "score": 0.637,
+          "evidence": []
+        },
+        {
+          "term": "during pregnancy",
+          "score": 0.5622,
+          "evidence": []
+        },
+        {
+          "term": "pregnant",
+          "score": 0.3082,
+          "evidence": []
+        },
+        {
+          "term": "infant",
+          "score": 0.2667,
+          "evidence": []
+        },
+        {
+          "term": "art",
+          "score": 0.2595,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "offering prep",
+          "score": 29.1802,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 21.487,
+          "evidence": []
+        },
+        {
+          "term": "hiv prevention",
+          "score": 21.1064,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding women",
+          "score": 14.5598,
+          "evidence": []
+        },
+        {
+          "term": "during pregnancy",
+          "score": 9.1958,
+          "evidence": []
+        },
+        {
+          "term": "testing",
+          "score": 5.015,
+          "evidence": []
+        },
+        {
+          "term": "hivst",
+          "score": 4.7781,
+          "evidence": []
+        },
+        {
+          "term": "pregnant",
+          "score": 4.7219,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hiv infection",
+          "score": 0.8981,
+          "evidence": []
+        },
+        {
+          "term": "hiv prevention",
+          "score": 0.8753,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding women",
+          "score": 0.8277,
+          "evidence": []
+        },
+        {
+          "term": "offering prep",
+          "score": 0.637,
+          "evidence": []
+        },
+        {
+          "term": "during pregnancy",
+          "score": 0.5622,
+          "evidence": []
+        },
+        {
+          "term": "pregnant",
+          "score": 0.3082,
+          "evidence": []
+        },
+        {
+          "term": "risk",
+          "score": 0.2541,
+          "evidence": []
+        },
+        {
+          "term": "services",
+          "score": 0.2406,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 32.1066,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 28.062,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 28.062,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 27.1666,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 24.6035,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 23.0812,
+          "evidence": []
+        },
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 21.63,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 20.2756,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-001-what-is-prep": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "prep",
+          "score": 1.0622,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "tdf",
+          "score": 0.8709,
+          "evidence": []
+        },
+        {
+          "term": "ftc",
+          "score": 0.5015,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "tdf",
+          "score": 15.0054,
+          "evidence": []
+        },
+        {
+          "term": "prep",
+          "score": 14.4821,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "emtricitabine",
+          "score": 5.8228,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "prep",
+          "score": 0.4152,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "oral",
+          "score": 0.0752,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.0731,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "prep",
+          "score": 15.0176,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv",
+          "score": 1.7243,
+          "evidence": []
+        },
+        {
+          "term": "hivst",
+          "score": 1.2081,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "prep",
+          "score": 0.4152,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "oral",
+          "score": 0.0752,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.0731,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 63.0583,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 48.6785,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 48.6785,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-002-who-recommendation-on-prep": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "prep",
+          "score": 2.6806,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "oral prep",
+          "score": 1.8346,
+          "evidence": []
+        },
+        {
+          "term": "prep during",
+          "score": 1.6922,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding women",
+          "score": 1.6231,
+          "evidence": []
+        },
+        {
+          "term": "containing tdf",
+          "score": 1.5493,
+          "evidence": []
+        },
+        {
+          "term": "recommendation",
+          "score": 1.4689,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "continuing substantial",
+          "score": 1.3741,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 1.3555,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "prep",
+          "score": 108.6154,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "oral prep",
+          "score": 61.4796,
+          "evidence": []
+        },
+        {
+          "term": "prep during",
+          "score": 58.5529,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 33.4148,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding women",
+          "score": 32.1521,
+          "evidence": []
+        },
+        {
+          "term": "hiv prevention",
+          "score": 31.3401,
+          "evidence": []
+        },
+        {
+          "term": "substantial risk",
+          "score": 31.0981,
+          "evidence": []
+        },
+        {
+          "term": "containing tdf",
+          "score": 28.2268,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "prep",
+          "score": 1.2138,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "oral prep",
+          "score": 0.8414,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 0.8334,
+          "evidence": []
+        },
+        {
+          "term": "hiv prevention",
+          "score": 0.8064,
+          "evidence": []
+        },
+        {
+          "term": "prep during",
+          "score": 0.7746,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding women",
+          "score": 0.7127,
+          "evidence": []
+        },
+        {
+          "term": "hiv incidence",
+          "score": 0.675,
+          "evidence": []
+        },
+        {
+          "term": "preventing hiv",
+          "score": 0.6158,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "prep",
+          "score": 100.8006,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "oral prep",
+          "score": 55.5783,
+          "evidence": []
+        },
+        {
+          "term": "prep during",
+          "score": 52.5573,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 21.4637,
+          "evidence": []
+        },
+        {
+          "term": "hiv prevention",
+          "score": 21.0813,
+          "evidence": []
+        },
+        {
+          "term": "hiv incidence",
+          "score": 18.6574,
+          "evidence": []
+        },
+        {
+          "term": "preventing hiv",
+          "score": 16.8871,
+          "evidence": []
+        },
+        {
+          "term": "recommendation",
+          "score": 16.2202,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "prep",
+          "score": 1.2138,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "oral prep",
+          "score": 0.8414,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 0.8334,
+          "evidence": []
+        },
+        {
+          "term": "hiv prevention",
+          "score": 0.8064,
+          "evidence": []
+        },
+        {
+          "term": "prep during",
+          "score": 0.7746,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding women",
+          "score": 0.7127,
+          "evidence": []
+        },
+        {
+          "term": "hiv incidence",
+          "score": 0.675,
+          "evidence": []
+        },
+        {
+          "term": "preventing hiv",
+          "score": 0.6158,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 28.1376,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 24.3077,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 24.3077,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 24.3077,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 21.0645,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 21.0645,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 20.8713,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 20.6172,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-003-why-offer-prep-to-pregnant-and-breastfeeding-wom": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "breastfeeding women",
+          "score": 3.3525,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cervical inflammation",
+          "score": 1.4581,
+          "evidence": []
+        },
+        {
+          "term": "during pregnancy",
+          "score": 1.3973,
+          "evidence": []
+        },
+        {
+          "term": "pregnant",
+          "score": 1.1985,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv infection",
+          "score": 1.1635,
+          "evidence": []
+        },
+        {
+          "term": "postpartum period",
+          "score": 1.0881,
+          "evidence": []
+        },
+        {
+          "term": "increased risk",
+          "score": 0.8047,
+          "evidence": []
+        },
+        {
+          "term": "prep",
+          "score": 0.6702,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "breastfeeding women",
+          "score": 68.8837,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv infection",
+          "score": 26.7121,
+          "evidence": []
+        },
+        {
+          "term": "during pregnancy",
+          "score": 25.3642,
+          "evidence": []
+        },
+        {
+          "term": "cervical inflammation",
+          "score": 24.6527,
+          "evidence": []
+        },
+        {
+          "term": "pregnant",
+          "score": 18.1,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "postpartum period",
+          "score": 14.7736,
+          "evidence": []
+        },
+        {
+          "term": "increased risk",
+          "score": 11.7543,
+          "evidence": []
+        },
+        {
+          "term": "partner",
+          "score": 10.8018,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "breastfeeding women",
+          "score": 1.3951,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv infection",
+          "score": 0.7115,
+          "evidence": []
+        },
+        {
+          "term": "prep",
+          "score": 0.6672,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pregnant",
+          "score": 0.5414,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "during pregnancy",
+          "score": 0.4784,
+          "evidence": []
+        },
+        {
+          "term": "increased risk",
+          "score": 0.291,
+          "evidence": []
+        },
+        {
+          "term": "anc",
+          "score": 0.2375,
+          "evidence": []
+        },
+        {
+          "term": "postpartum period",
+          "score": 0.2127,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "breastfeeding women",
+          "score": 25.3849,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv infection",
+          "score": 17.1023,
+          "evidence": []
+        },
+        {
+          "term": "prep",
+          "score": 10.3751,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pregnant",
+          "score": 8.5185,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "during pregnancy",
+          "score": 8.5021,
+          "evidence": []
+        },
+        {
+          "term": "anc",
+          "score": 4.7515,
+          "evidence": []
+        },
+        {
+          "term": "art",
+          "score": 4.0607,
+          "evidence": []
+        },
+        {
+          "term": "doi",
+          "score": 3.7219,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "breastfeeding women",
+          "score": 1.3951,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv infection",
+          "score": 0.7115,
+          "evidence": []
+        },
+        {
+          "term": "prep",
+          "score": 0.6672,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pregnant",
+          "score": 0.5414,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "during pregnancy",
+          "score": 0.4784,
+          "evidence": []
+        },
+        {
+          "term": "increased risk",
+          "score": 0.291,
+          "evidence": []
+        },
+        {
+          "term": "postpartum period",
+          "score": 0.2127,
+          "evidence": []
+        },
+        {
+          "term": "testing",
+          "score": 0.1901,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 25.0948,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 22.9332,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 22.9332,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 22.9332,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 21.3296,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 18.9469,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 18.275,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 18.275,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-004-prep-safety-during-pregnancy-and-breastfeeding": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "during pregnancy",
+          "score": 4.4411,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "during breastfeeding",
+          "score": 4.3002,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "tdf ftc",
+          "score": 3.5512,
+          "evidence": []
+        },
+        {
+          "term": "tdf art",
+          "score": 3.3806,
+          "evidence": []
+        },
+        {
+          "term": "prep",
+          "score": 3.2217,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "receiving tdf",
+          "score": 2.81,
+          "evidence": []
+        },
+        {
+          "term": "hiv-negative women",
+          "score": 2.7783,
+          "evidence": []
+        },
+        {
+          "term": "tdf-containing art",
+          "score": 2.735,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "prep",
+          "score": 195.5078,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "tdf art",
+          "score": 188.3373,
+          "evidence": []
+        },
+        {
+          "term": "tdf ftc",
+          "score": 165.8043,
+          "evidence": []
+        },
+        {
+          "term": "during pregnancy",
+          "score": 165.6414,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "during breastfeeding",
+          "score": 162.5486,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "receiving tdf",
+          "score": 143.679,
+          "evidence": []
+        },
+        {
+          "term": "hiv-negative women",
+          "score": 138.0271,
+          "evidence": []
+        },
+        {
+          "term": "prep regimens",
+          "score": 117.1059,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "during pregnancy",
+          "score": 2.4304,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "during breastfeeding",
+          "score": 2.085,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prep",
+          "score": 1.9717,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pregnant women",
+          "score": 1.7025,
+          "evidence": []
+        },
+        {
+          "term": "among women",
+          "score": 1.4176,
+          "evidence": []
+        },
+        {
+          "term": "hiv-negative women",
+          "score": 1.3344,
+          "evidence": []
+        },
+        {
+          "term": "women receiving",
+          "score": 1.2974,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 1.284,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "prep",
+          "score": 191.3567,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "receiving prep",
+          "score": 100.8131,
+          "evidence": []
+        },
+        {
+          "term": "prep regimens",
+          "score": 100.4656,
+          "evidence": []
+        },
+        {
+          "term": "during pregnancy",
+          "score": 70.3481,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pregnant women",
+          "score": 60.0134,
+          "evidence": []
+        },
+        {
+          "term": "tdf art",
+          "score": 52.6246,
+          "evidence": []
+        },
+        {
+          "term": "among women",
+          "score": 51.1199,
+          "evidence": []
+        },
+        {
+          "term": "hiv-positive women",
+          "score": 49.8251,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "during pregnancy",
+          "score": 2.4304,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "during breastfeeding",
+          "score": 2.085,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prep",
+          "score": 1.9717,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pregnant women",
+          "score": 1.7025,
+          "evidence": []
+        },
+        {
+          "term": "among women",
+          "score": 1.4176,
+          "evidence": []
+        },
+        {
+          "term": "hiv-negative women",
+          "score": 1.3344,
+          "evidence": []
+        },
+        {
+          "term": "women receiving",
+          "score": 1.2974,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 1.284,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 35.9712,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 33.9308,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 33.9308,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 33.9308,
+          "evidence": []
+        },
+        {
+          "term": "突发事件和",
+          "score": 24.7691,
+          "evidence": []
+        },
+        {
+          "term": "公共卫生专家",
+          "score": 23.8782,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 22.7709,
+          "evidence": []
+        },
+        {
+          "term": "可持续发展目标和世卫组织",
+          "score": 21.898,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-005-providing-prep-to-women-who-would-most-benefit": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "prep",
+          "score": 1.556,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "woman",
+          "score": 0.9285,
+          "evidence": []
+        },
+        {
+          "term": "hiv prevention",
+          "score": 0.8944,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.8744,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "substantial risk",
+          "score": 0.8613,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "prep",
+          "score": 28.9641,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv prevention",
+          "score": 15.3066,
+          "evidence": []
+        },
+        {
+          "term": "woman",
+          "score": 13.0484,
+          "evidence": []
+        },
+        {
+          "term": "substantial risk",
+          "score": 12.8084,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 9.159,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "prep",
+          "score": 0.6715,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "women",
+          "score": 0.5686,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv prevention",
+          "score": 0.4635,
+          "evidence": []
+        },
+        {
+          "term": "substantial risk",
+          "score": 0.2155,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy",
+          "score": 0.1792,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "prep",
+          "score": 28.3308,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv prevention",
+          "score": 9.6911,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 7.7648,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "anc",
+          "score": 2.7713,
+          "evidence": []
+        },
+        {
+          "term": "testing",
+          "score": 2.4945,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "prep",
+          "score": 0.6715,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "women",
+          "score": 0.5686,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv prevention",
+          "score": 0.4635,
+          "evidence": []
+        },
+        {
+          "term": "substantial risk",
+          "score": 0.2155,
+          "evidence": []
+        },
+        {
+          "term": "infection",
+          "score": 0.1527,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 29.5118,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 27.4873,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 27.4873,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 27.4873,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 26.7123,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-prep-as-part-of-pmtct-in-settings-of-high-hiv-in": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hiv incidence",
+          "score": 3.123,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prep",
+          "score": 2.6806,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "offer partner",
+          "score": 2.348,
+          "evidence": []
+        },
+        {
+          "term": "partner referral",
+          "score": 2.2418,
+          "evidence": []
+        },
+        {
+          "term": "male partner",
+          "score": 2.1919,
+          "evidence": []
+        },
+        {
+          "term": "hiv-negative women",
+          "score": 2.1417,
+          "evidence": []
+        },
+        {
+          "term": "partner notification",
+          "score": 2.0424,
+          "evidence": []
+        },
+        {
+          "term": "partner testing",
+          "score": 1.8877,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "prep",
+          "score": 108.6154,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv incidence",
+          "score": 98.963,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "offer partner",
+          "score": 88.5795,
+          "evidence": []
+        },
+        {
+          "term": "partner referral",
+          "score": 78.2326,
+          "evidence": []
+        },
+        {
+          "term": "male partner",
+          "score": 77.2151,
+          "evidence": []
+        },
+        {
+          "term": "hiv risk",
+          "score": 76.3121,
+          "evidence": []
+        },
+        {
+          "term": "partner notification",
+          "score": 72.7452,
+          "evidence": []
+        },
+        {
+          "term": "partner testing",
+          "score": 72.5082,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hiv incidence",
+          "score": 2.1227,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prep",
+          "score": 1.7818,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv testing",
+          "score": 1.3556,
+          "evidence": []
+        },
+        {
+          "term": "hiv risk",
+          "score": 1.3352,
+          "evidence": []
+        },
+        {
+          "term": "hiv prevention",
+          "score": 1.2991,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 1.1387,
+          "evidence": []
+        },
+        {
+          "term": "hiv acquisition",
+          "score": 1.0703,
+          "evidence": []
+        },
+        {
+          "term": "comprehensive hiv",
+          "score": 1.0038,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "prep",
+          "score": 110.2863,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv incidence",
+          "score": 74.7185,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "request prep",
+          "score": 55.1431,
+          "evidence": []
+        },
+        {
+          "term": "hiv testing",
+          "score": 45.7054,
+          "evidence": []
+        },
+        {
+          "term": "hiv risk",
+          "score": 41.5824,
+          "evidence": []
+        },
+        {
+          "term": "hiv prevention",
+          "score": 40.8158,
+          "evidence": []
+        },
+        {
+          "term": "hiv acquisition",
+          "score": 36.3993,
+          "evidence": []
+        },
+        {
+          "term": "comprehensive hiv",
+          "score": 34.0473,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hiv incidence",
+          "score": 2.1227,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prep",
+          "score": 1.7818,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv testing",
+          "score": 1.3556,
+          "evidence": []
+        },
+        {
+          "term": "hiv risk",
+          "score": 1.3352,
+          "evidence": []
+        },
+        {
+          "term": "hiv prevention",
+          "score": 1.2991,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 1.1387,
+          "evidence": []
+        },
+        {
+          "term": "hiv acquisition",
+          "score": 1.0703,
+          "evidence": []
+        },
+        {
+          "term": "comprehensive hiv",
+          "score": 1.0038,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 23.6133,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 23.4419,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 20.8413,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 20.8413,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 19.5685,
+          "evidence": []
+        },
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 19.3881,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 17.7186,
+          "evidence": []
+        },
+        {
+          "term": "可能性",
+          "score": 17.4334,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-007-prep-for-safer-conception": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "prep",
+          "score": 1.3403,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "male partner",
+          "score": 1.3273,
+          "evidence": []
+        },
+        {
+          "term": "hiv risk",
+          "score": 1.1406,
+          "evidence": []
+        },
+        {
+          "term": "hiv status",
+          "score": 1.0868,
+          "evidence": []
+        },
+        {
+          "term": "hiv transmission",
+          "score": 1.0839,
+          "evidence": []
+        },
+        {
+          "term": "woman",
+          "score": 0.9285,
+          "evidence": []
+        },
+        {
+          "term": "conception",
+          "score": 0.9231,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "rpr",
+          "score": 0.8593,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hiv risk",
+          "score": 24.9266,
+          "evidence": []
+        },
+        {
+          "term": "male partner",
+          "score": 22.4048,
+          "evidence": []
+        },
+        {
+          "term": "prep",
+          "score": 21.7231,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv transmission",
+          "score": 21.6753,
+          "evidence": []
+        },
+        {
+          "term": "hiv status",
+          "score": 21.0015,
+          "evidence": []
+        },
+        {
+          "term": "risk assessment",
+          "score": 15.3531,
+          "evidence": []
+        },
+        {
+          "term": "rpr",
+          "score": 13.4332,
+          "evidence": []
+        },
+        {
+          "term": "woman",
+          "score": 13.0484,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "prep",
+          "score": 0.569,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv risk",
+          "score": 0.5263,
+          "evidence": []
+        },
+        {
+          "term": "hiv status",
+          "score": 0.49,
+          "evidence": []
+        },
+        {
+          "term": "hiv transmission",
+          "score": 0.4832,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.3201,
+          "evidence": []
+        },
+        {
+          "term": "male partner",
+          "score": 0.2596,
+          "evidence": []
+        },
+        {
+          "term": "risk assessment",
+          "score": 0.2018,
+          "evidence": []
+        },
+        {
+          "term": "art",
+          "score": 0.2014,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "prep",
+          "score": 22.7029,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv status",
+          "score": 13.2801,
+          "evidence": []
+        },
+        {
+          "term": "hiv risk",
+          "score": 12.676,
+          "evidence": []
+        },
+        {
+          "term": "hiv transmission",
+          "score": 11.8716,
+          "evidence": []
+        },
+        {
+          "term": "art",
+          "score": 4.1965,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 3.9981,
+          "evidence": []
+        },
+        {
+          "term": "testing",
+          "score": 3.3699,
+          "evidence": []
+        },
+        {
+          "term": "people",
+          "score": 3.2932,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "prep",
+          "score": 0.569,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv risk",
+          "score": 0.5263,
+          "evidence": []
+        },
+        {
+          "term": "hiv status",
+          "score": 0.49,
+          "evidence": []
+        },
+        {
+          "term": "hiv transmission",
+          "score": 0.4832,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.3201,
+          "evidence": []
+        },
+        {
+          "term": "male partner",
+          "score": 0.2596,
+          "evidence": []
+        },
+        {
+          "term": "risk assessment",
+          "score": 0.2018,
+          "evidence": []
+        },
+        {
+          "term": "art",
+          "score": 0.2014,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 33.1318,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 31.0134,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 31.0134,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 31.0134,
+          "evidence": []
+        },
+        {
+          "term": "突发事件和",
+          "score": 21.8939,
+          "evidence": []
+        },
+        {
+          "term": "公共卫生专家",
+          "score": 21.7874,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 20.8761,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 18.1207,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-008-monitoring-prep-use-by-pregnant-and-breastfeedin": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "pregnant women",
+          "score": 2.6246,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prep",
+          "score": 2.5515,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "arv toxicity",
+          "score": 2.2773,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding",
+          "score": 2.0817,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "during prep",
+          "score": 1.9795,
+          "evidence": []
+        },
+        {
+          "term": "toxicity surveillance",
+          "score": 1.9477,
+          "evidence": []
+        },
+        {
+          "term": "monitoring toxicity",
+          "score": 1.8622,
+          "evidence": []
+        },
+        {
+          "term": "active toxicity",
+          "score": 1.8433,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "prep",
+          "score": 94.1334,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "arv toxicity",
+          "score": 68.3762,
+          "evidence": []
+        },
+        {
+          "term": "during prep",
+          "score": 64.0475,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding",
+          "score": 58.9234,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "toxicity surveillance",
+          "score": 53.0227,
+          "evidence": []
+        },
+        {
+          "term": "monitoring toxicity",
+          "score": 51.5209,
+          "evidence": []
+        },
+        {
+          "term": "active toxicity",
+          "score": 48.4328,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 40.9975,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pregnant women",
+          "score": 1.7147,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prep",
+          "score": 0.7134,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "during pregnancy",
+          "score": 0.6537,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding",
+          "score": 0.5942,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "infant outcomes",
+          "score": 0.476,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding period",
+          "score": 0.4682,
+          "evidence": []
+        },
+        {
+          "term": "birth outcomes",
+          "score": 0.4016,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.393,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "prep",
+          "score": 81.7573,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "during prep",
+          "score": 45.1608,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 30.0147,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "during pregnancy",
+          "score": 12.494,
+          "evidence": []
+        },
+        {
+          "term": "art",
+          "score": 8.6077,
+          "evidence": []
+        },
+        {
+          "term": "hivst",
+          "score": 6.9029,
+          "evidence": []
+        },
+        {
+          "term": "anc",
+          "score": 6.8748,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding",
+          "score": 6.2066,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pregnant women",
+          "score": 1.7147,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prep",
+          "score": 0.7134,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "during pregnancy",
+          "score": 0.6537,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding",
+          "score": 0.5942,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "infant outcomes",
+          "score": 0.476,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding period",
+          "score": 0.4682,
+          "evidence": []
+        },
+        {
+          "term": "birth outcomes",
+          "score": 0.4016,
+          "evidence": []
+        },
+        {
+          "term": "monitoring",
+          "score": 0.3794,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 34.1557,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 34.1557,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 29.5577,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 29.4753,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 27.9721,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 25.6469,
+          "evidence": []
+        },
+        {
+          "term": "可能性",
+          "score": 23.4703,
+          "evidence": []
+        },
+        {
+          "term": "疫苗储备",
+          "score": 21.1709,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-009-summary-of-issues-and-considerations": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hiv-negative women",
+          "score": 1.4649,
+          "evidence": []
+        },
+        {
+          "term": "gender-based violence",
+          "score": 1.4056,
+          "evidence": []
+        },
+        {
+          "term": "prep",
+          "score": 1.1131,
+          "evidence": []
+        },
+        {
+          "term": "substantial risk",
+          "score": 0.9233,
+          "evidence": []
+        },
+        {
+          "term": "sex workers",
+          "score": 0.8449,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy",
+          "score": 0.7397,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding",
+          "score": 0.6567,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 0.6527,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "prep",
+          "score": 32.5846,
+          "evidence": []
+        },
+        {
+          "term": "hiv-negative women",
+          "score": 28.8772,
+          "evidence": []
+        },
+        {
+          "term": "gender-based violence",
+          "score": 20.6062,
+          "evidence": []
+        },
+        {
+          "term": "substantial risk",
+          "score": 14.654,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy",
+          "score": 11.801,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding",
+          "score": 11.0481,
+          "evidence": []
+        },
+        {
+          "term": "sex workers",
+          "score": 10.7273,
+          "evidence": []
+        },
+        {
+          "term": "partners",
+          "score": 8.82,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hiv-negative women",
+          "score": 0.5647,
+          "evidence": []
+        },
+        {
+          "term": "prep",
+          "score": 0.4609,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.4435,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 0.378,
+          "evidence": []
+        },
+        {
+          "term": "substantial risk",
+          "score": 0.3203,
+          "evidence": []
+        },
+        {
+          "term": "sex workers",
+          "score": 0.2913,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy",
+          "score": 0.2775,
+          "evidence": []
+        },
+        {
+          "term": "prevention",
+          "score": 0.2297,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "prep",
+          "score": 29.6019,
+          "evidence": []
+        },
+        {
+          "term": "hiv-negative women",
+          "score": 11.0204,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 9.1604,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy",
+          "score": 5.4235,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 5.2799,
+          "evidence": []
+        },
+        {
+          "term": "hivst",
+          "score": 4.9459,
+          "evidence": []
+        },
+        {
+          "term": "substantial risk",
+          "score": 3.9352,
+          "evidence": []
+        },
+        {
+          "term": "counselling",
+          "score": 3.902,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hiv-negative women",
+          "score": 0.5647,
+          "evidence": []
+        },
+        {
+          "term": "prep",
+          "score": 0.4609,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.4435,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 0.378,
+          "evidence": []
+        },
+        {
+          "term": "substantial risk",
+          "score": 0.3203,
+          "evidence": []
+        },
+        {
+          "term": "sex workers",
+          "score": 0.2913,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy",
+          "score": 0.2775,
+          "evidence": []
+        },
+        {
+          "term": "testing",
+          "score": 0.2289,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "并提供一",
+          "score": 31.6645,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 30.8706,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 30.5099,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 30.5099,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 24.9593,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 24.785,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 22.3827,
+          "evidence": []
+        },
+        {
+          "term": "疫苗储备",
+          "score": 19.5297,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-010-key-messages": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hormonal contraception",
+          "score": 1.971,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding women",
+          "score": 1.7231,
+          "evidence": []
+        },
+        {
+          "term": "prep",
+          "score": 1.4234,
+          "evidence": []
+        },
+        {
+          "term": "some women",
+          "score": 1.2278,
+          "evidence": []
+        },
+        {
+          "term": "hiv risk",
+          "score": 1.1777,
+          "evidence": []
+        },
+        {
+          "term": "hiv acquisition",
+          "score": 1.1456,
+          "evidence": []
+        },
+        {
+          "term": "during pregnancy",
+          "score": 0.989,
+          "evidence": []
+        },
+        {
+          "term": "arvs",
+          "score": 0.8336,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "prep",
+          "score": 65.1693,
+          "evidence": []
+        },
+        {
+          "term": "hormonal contraception",
+          "score": 36.9723,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding women",
+          "score": 36.7316,
+          "evidence": []
+        },
+        {
+          "term": "hiv risk",
+          "score": 26.7722,
+          "evidence": []
+        },
+        {
+          "term": "some women",
+          "score": 22.5476,
+          "evidence": []
+        },
+        {
+          "term": "hiv acquisition",
+          "score": 22.1732,
+          "evidence": []
+        },
+        {
+          "term": "adherence",
+          "score": 13.2028,
+          "evidence": []
+        },
+        {
+          "term": "during pregnancy",
+          "score": 13.0959,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hiv risk",
+          "score": 0.6693,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding women",
+          "score": 0.6418,
+          "evidence": []
+        },
+        {
+          "term": "prep",
+          "score": 0.6213,
+          "evidence": []
+        },
+        {
+          "term": "some women",
+          "score": 0.5334,
+          "evidence": []
+        },
+        {
+          "term": "hiv acquisition",
+          "score": 0.5315,
+          "evidence": []
+        },
+        {
+          "term": "during pregnancy",
+          "score": 0.4595,
+          "evidence": []
+        },
+        {
+          "term": "pregnant",
+          "score": 0.2291,
+          "evidence": []
+        },
+        {
+          "term": "prevention",
+          "score": 0.2252,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "prep",
+          "score": 58.4154,
+          "evidence": []
+        },
+        {
+          "term": "hiv risk",
+          "score": 17.1329,
+          "evidence": []
+        },
+        {
+          "term": "hiv acquisition",
+          "score": 14.0637,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding women",
+          "score": 11.2992,
+          "evidence": []
+        },
+        {
+          "term": "some women",
+          "score": 10.3456,
+          "evidence": []
+        },
+        {
+          "term": "hivst",
+          "score": 9.7038,
+          "evidence": []
+        },
+        {
+          "term": "during pregnancy",
+          "score": 7.2258,
+          "evidence": []
+        },
+        {
+          "term": "oral",
+          "score": 5.3961,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hiv risk",
+          "score": 0.6693,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding women",
+          "score": 0.6418,
+          "evidence": []
+        },
+        {
+          "term": "prep",
+          "score": 0.6213,
+          "evidence": []
+        },
+        {
+          "term": "some women",
+          "score": 0.5334,
+          "evidence": []
+        },
+        {
+          "term": "hiv acquisition",
+          "score": 0.5315,
+          "evidence": []
+        },
+        {
+          "term": "during pregnancy",
+          "score": 0.4595,
+          "evidence": []
+        },
+        {
+          "term": "pregnant",
+          "score": 0.2291,
+          "evidence": []
+        },
+        {
+          "term": "services",
+          "score": 0.2135,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "并提供一",
+          "score": 29.6124,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 28.9369,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 25.9115,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 25.9115,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 22.8776,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 21.0317,
+          "evidence": []
+        },
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 19.4942,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 19.1916,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-011-references": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "pre-exposure prophylaxis",
+          "score": 1.8012,
+          "evidence": []
+        },
+        {
+          "term": "hiv acquisition",
+          "score": 1.6831,
+          "evidence": []
+        },
+        {
+          "term": "during pregnancy",
+          "score": 1.6815,
+          "evidence": []
+        },
+        {
+          "term": "defic syndr",
+          "score": 1.4528,
+          "evidence": []
+        },
+        {
+          "term": "incident hiv",
+          "score": 1.4319,
+          "evidence": []
+        },
+        {
+          "term": "sexual behavior",
+          "score": 1.3204,
+          "evidence": []
+        },
+        {
+          "term": "acquir immune",
+          "score": 1.2726,
+          "evidence": []
+        },
+        {
+          "term": "drake",
+          "score": 1.229,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hiv acquisition",
+          "score": 51.585,
+          "evidence": []
+        },
+        {
+          "term": "incident hiv",
+          "score": 40.1724,
+          "evidence": []
+        },
+        {
+          "term": "pre-exposure prophylaxis",
+          "score": 40.0366,
+          "evidence": []
+        },
+        {
+          "term": "during pregnancy",
+          "score": 39.2877,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 35.2522,
+          "evidence": []
+        },
+        {
+          "term": "drake",
+          "score": 23.4456,
+          "evidence": []
+        },
+        {
+          "term": "matemo",
+          "score": 22.5826,
+          "evidence": []
+        },
+        {
+          "term": "defic syndr",
+          "score": 22.4719,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hiv infection",
+          "score": 1.128,
+          "evidence": []
+        },
+        {
+          "term": "infect dis",
+          "score": 0.8896,
+          "evidence": []
+        },
+        {
+          "term": "hiv acquisition",
+          "score": 0.8459,
+          "evidence": []
+        },
+        {
+          "term": "clin infect",
+          "score": 0.7294,
+          "evidence": []
+        },
+        {
+          "term": "incident hiv",
+          "score": 0.6877,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.641,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.6247,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.6246,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hiv infection",
+          "score": 32.8479,
+          "evidence": []
+        },
+        {
+          "term": "hiv acquisition",
+          "score": 28.5295,
+          "evidence": []
+        },
+        {
+          "term": "incident hiv",
+          "score": 27.1455,
+          "evidence": []
+        },
+        {
+          "term": "doi",
+          "score": 14.7754,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 14.1126,
+          "evidence": []
+        },
+        {
+          "term": "infect dis",
+          "score": 12.7342,
+          "evidence": []
+        },
+        {
+          "term": "aids",
+          "score": 12.2832,
+          "evidence": []
+        },
+        {
+          "term": "among pregnant",
+          "score": 9.609,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hiv infection",
+          "score": 1.128,
+          "evidence": []
+        },
+        {
+          "term": "infect dis",
+          "score": 0.8896,
+          "evidence": []
+        },
+        {
+          "term": "hiv acquisition",
+          "score": 0.8459,
+          "evidence": []
+        },
+        {
+          "term": "incident hiv",
+          "score": 0.7532,
+          "evidence": []
+        },
+        {
+          "term": "clin infect",
+          "score": 0.7294,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.641,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.6247,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.6246,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 59.4006,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 51.0439,
+          "evidence": []
+        },
+        {
+          "term": "问题的讨论结束",
+          "score": 51.0439,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 45.4091,
+          "evidence": []
+        },
+        {
+          "term": "在讨论期间",
+          "score": 38.1191,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 37.9763,
+          "evidence": []
+        },
+        {
+          "term": "法律上",
+          "score": 37.5513,
+          "evidence": []
+        },
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 37.2566,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "breastfeeding women",
+          "score": 1.4735,
+          "evidence": []
+        },
+        {
+          "term": "during pregnancy",
+          "score": 1.2552,
+          "evidence": []
+        },
+        {
+          "term": "prep",
+          "score": 1.2012,
+          "evidence": []
+        },
+        {
+          "term": "creative commons",
+          "score": 1.1585,
+          "evidence": []
+        },
+        {
+          "term": "technical brief",
+          "score": 1.083,
+          "evidence": []
+        },
+        {
+          "term": "preventing hiv",
+          "score": 1.0678,
+          "evidence": []
+        },
+        {
+          "term": "suggested citation",
+          "score": 1.007,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 0.957,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "prep",
+          "score": 39.8257,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding women",
+          "score": 28.9655,
+          "evidence": []
+        },
+        {
+          "term": "work",
+          "score": 21.6589,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 21.3471,
+          "evidence": []
+        },
+        {
+          "term": "during pregnancy",
+          "score": 20.2914,
+          "evidence": []
+        },
+        {
+          "term": "technical brief",
+          "score": 19.3127,
+          "evidence": []
+        },
+        {
+          "term": "creative commons",
+          "score": 18.7294,
+          "evidence": []
+        },
+        {
+          "term": "preventing hiv",
+          "score": 18.4248,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "creative commons",
+          "score": 1.0013,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.9231,
+          "evidence": []
+        },
+        {
+          "term": "suggested citation",
+          "score": 0.9003,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.874,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 0.8317,
+          "evidence": []
+        },
+        {
+          "term": "material",
+          "score": 0.7539,
+          "evidence": []
+        },
+        {
+          "term": "igo",
+          "score": 0.6861,
+          "evidence": []
+        },
+        {
+          "term": "lines",
+          "score": 0.6742,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "prep",
+          "score": 35.7877,
+          "evidence": []
+        },
+        {
+          "term": "wpv",
+          "score": 10.298,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 8.9303,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 8.7742,
+          "evidence": []
+        },
+        {
+          "term": "hiv during",
+          "score": 7.9084,
+          "evidence": []
+        },
+        {
+          "term": "hivst",
+          "score": 6.1118,
+          "evidence": []
+        },
+        {
+          "term": "preventing hiv",
+          "score": 5.7428,
+          "evidence": []
+        },
+        {
+          "term": "breastfeeding women",
+          "score": 5.7313,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "creative commons",
+          "score": 1.0013,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.9231,
+          "evidence": []
+        },
+        {
+          "term": "suggested citation",
+          "score": 0.9003,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.874,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 0.8317,
+          "evidence": []
+        },
+        {
+          "term": "material",
+          "score": 0.7539,
+          "evidence": []
+        },
+        {
+          "term": "igo",
+          "score": 0.6861,
+          "evidence": []
+        },
+        {
+          "term": "lines",
+          "score": 0.6742,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "并提供一",
+          "score": 46.4301,
+          "evidence": []
+        },
+        {
+          "term": "增强和迭代",
+          "score": 41.9576,
+          "evidence": []
+        },
+        {
+          "term": "行动框架",
+          "score": 41.9576,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 40.7018,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 39.0785,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 38.1689,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 37.6281,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 37.6281,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

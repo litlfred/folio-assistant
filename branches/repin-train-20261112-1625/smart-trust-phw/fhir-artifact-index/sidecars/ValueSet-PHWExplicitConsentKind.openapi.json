@@ -1,0 +1,64 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Kinds of explicit consent (HL7 ActConsentDirective) Schema API",
+    "description": "JSON Schema for Kinds of explicit consent (HL7 ActConsentDirective) ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/ValueSet-PHWExplicitConsentKind.schema.json": {
+      "get": {
+        "summary": "JSON Schema definition for the enumeration ValueSet-PHWExplicitConsentKind",
+        "description": "This endpoint serves the JSON Schema definition for the enumeration ValueSet-PHWExplicitConsentKind.",
+        "responses": {
+          "200": {
+            "description": "The JSON Schema for ValueSet-PHWExplicitConsentKind",
+            "content": {
+              "application/schema+json": {
+                "schema": {
+                  "$ref": "./ValueSet-PHWExplicitConsentKind.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ValueSet-PHWExplicitConsentKind": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "http://smart.who.int/trust-phw/ValueSet-PHWExplicitConsentKind.schema.json",
+        "title": "Kinds of explicit consent (HL7 ActConsentDirective) Schema",
+        "description": "JSON Schema for Kinds of explicit consent (HL7 ActConsentDirective) ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+        "type": "object",
+        "required": [
+          "system",
+          "code"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "system": {
+            "type": "string",
+            "const": "http://terminology.hl7.org/CodeSystem/v3-ActCode"
+          },
+          "code": {
+            "type": "string",
+            "enum": [
+              "OPTIN",
+              "OPTINR",
+              "OPTOUT",
+              "OPTOUTE"
+            ]
+          }
+        },
+        "narrative": "This schema validates Coding-shaped objects for the Kinds of explicit consent (HL7 ActConsentDirective) ValueSet. Each value must be an object with 'system' (CodeSystem URI) and 'code' (fragment after '#') properties. Display values are available at http://smart.who.int/trust-phw/ValueSet-PHWExplicitConsentKind.displays.json. The canonical IRI for a code can be reconstructed as system + '#' + code. For a complete listing of all ValueSets, see artifacts.html#terminology-value-sets.",
+        "fhir:displays": "http://smart.who.int/trust-phw/ValueSet-PHWExplicitConsentKind.displays.json",
+        "fhir:valueSet": "http://smart.who.int/trust-phw/ValueSet/PHWExplicitConsentKind",
+        "fhir:version": "0.2.0-litlfred",
+        "fhir:expansionTimestamp": "2026-11-10T20:00:37+00:00"
+      }
+    }
+  }
+}

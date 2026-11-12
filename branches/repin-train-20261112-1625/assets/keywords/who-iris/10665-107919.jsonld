@@ -1,0 +1,5332 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-107919",
+  "instance": "who-iris",
+  "about": "library/10665-107919",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7434,
+    "terms": 71211
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "european region",
+        "score": 20.8385,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "european countries",
+        "score": 20.5411,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "high-priority countries",
+        "score": 17.5221,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "european union",
+        "score": 17.0855,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "kncv contribute",
+        "score": 15.2674,
+        "evidence": []
+      },
+      {
+        "term": "eastern europe",
+        "score": 14.7633,
+        "evidence": []
+      },
+      {
+        "term": "plenary session",
+        "score": 14.6848,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "control interventions",
+        "score": 14.1835,
+        "evidence": []
+      },
+      {
+        "term": "incidence countries",
+        "score": 14.163,
+        "evidence": []
+      },
+      {
+        "term": "berlin declaration",
+        "score": 14.0256,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "western europe",
+        "score": 13.5655,
+        "evidence": []
+      },
+      {
+        "term": "hiv control",
+        "score": 13.4979,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "european countries",
+        "score": 453.9324,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "european region",
+        "score": 387.1014,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "high-priority countries",
+        "score": 348.8298,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "berlin declaration",
+        "score": 328.1785,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "eastern europe",
+        "score": 324.0153,
+        "evidence": []
+      },
+      {
+        "term": "european union",
+        "score": 319.6899,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "kncv contribute",
+        "score": 314.7595,
+        "evidence": []
+      },
+      {
+        "term": "plenary session",
+        "score": 313.1959,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "western europe",
+        "score": 310.3889,
+        "evidence": []
+      },
+      {
+        "term": "control strengthening",
+        "score": 304.7567,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "parallel session",
+        "score": 303.8252,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "ecdc contribute",
+        "score": 300.0861,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "world health",
+        "score": 9.186,
+        "evidence": []
+      },
+      {
+        "term": "health care",
+        "score": 8.9342,
+        "evidence": []
+      },
+      {
+        "term": "public health",
+        "score": 8.439,
+        "evidence": []
+      },
+      {
+        "term": "health organization",
+        "score": 7.951,
+        "evidence": []
+      },
+      {
+        "term": "health report",
+        "score": 7.9176,
+        "evidence": []
+      },
+      {
+        "term": "some countries",
+        "score": 7.899,
+        "evidence": []
+      },
+      {
+        "term": "european countries",
+        "score": 7.7737,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "national tuberculosis",
+        "score": 7.6761,
+        "evidence": []
+      },
+      {
+        "term": "health systems",
+        "score": 7.5934,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "incidence countries",
+        "score": 7.56,
+        "evidence": []
+      },
+      {
+        "term": "health services",
+        "score": 7.521,
+        "evidence": []
+      },
+      {
+        "term": "hiv control",
+        "score": 7.5115,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "public health",
+        "score": 140.236,
+        "evidence": []
+      },
+      {
+        "term": "health care",
+        "score": 139.91,
+        "evidence": []
+      },
+      {
+        "term": "world health",
+        "score": 121.425,
+        "evidence": []
+      },
+      {
+        "term": "health organization",
+        "score": 118.5994,
+        "evidence": []
+      },
+      {
+        "term": "health services",
+        "score": 116.3079,
+        "evidence": []
+      },
+      {
+        "term": "health report",
+        "score": 115.9534,
+        "evidence": []
+      },
+      {
+        "term": "national tuberculosis",
+        "score": 112.7618,
+        "evidence": []
+      },
+      {
+        "term": "health systems",
+        "score": 112.3355,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "contact investigation",
+        "score": 111.2361,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "primary health",
+        "score": 108.062,
+        "evidence": []
+      },
+      {
+        "term": "united kingdom",
+        "score": 94.8501,
+        "evidence": []
+      },
+      {
+        "term": "health protection",
+        "score": 94.4839,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "world health",
+        "score": 9.186,
+        "evidence": []
+      },
+      {
+        "term": "health care",
+        "score": 8.9342,
+        "evidence": []
+      },
+      {
+        "term": "public health",
+        "score": 8.439,
+        "evidence": []
+      },
+      {
+        "term": "health organization",
+        "score": 7.951,
+        "evidence": []
+      },
+      {
+        "term": "health report",
+        "score": 7.9176,
+        "evidence": []
+      },
+      {
+        "term": "some countries",
+        "score": 7.899,
+        "evidence": []
+      },
+      {
+        "term": "european countries",
+        "score": 7.7737,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "national tuberculosis",
+        "score": 7.6761,
+        "evidence": []
+      },
+      {
+        "term": "health systems",
+        "score": 7.5934,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "incidence countries",
+        "score": 7.56,
+        "evidence": []
+      },
+      {
+        "term": "health services",
+        "score": 7.521,
+        "evidence": []
+      },
+      {
+        "term": "hiv control",
+        "score": 7.5115,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "感染者",
+        "score": 382.0126,
+        "evidence": []
+      },
+      {
+        "term": "政治利益",
+        "score": 373.045,
+        "evidence": []
+      },
+      {
+        "term": "允许进行个人反馈",
+        "score": 372.1019,
+        "evidence": []
+      },
+      {
+        "term": "一致元数据和定义",
+        "score": 337.5303,
+        "evidence": []
+      },
+      {
+        "term": "位置服务",
+        "score": 268.6118,
+        "evidence": []
+      },
+      {
+        "term": "在卫生系统强化",
+        "score": 268.6118,
+        "evidence": []
+      },
+      {
+        "term": "的背景下",
+        "score": 268.6118,
+        "evidence": []
+      },
+      {
+        "term": "执行委员会",
+        "score": 268.3788,
+        "evidence": []
+      },
+      {
+        "term": "其它技术术语",
+        "score": 266.9743,
+        "evidence": []
+      },
+      {
+        "term": "大流行性流感防范生物材料或pip生物材料",
+        "score": 266.9743,
+        "evidence": []
+      },
+      {
+        "term": "保持警惕",
+        "score": 265.1897,
+        "evidence": []
+      },
+      {
+        "term": "加强全球",
+        "score": 264.2183,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-abbreviations-and-acronyms": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "global fund",
+          "score": 0.8436,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis",
+          "score": 0.783,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.7357,
+          "evidence": []
+        },
+        {
+          "term": "unitaid",
+          "score": 0.7059,
+          "evidence": []
+        },
+        {
+          "term": "union",
+          "score": 0.6467,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "tuberculosis",
+          "score": 20.8501,
+          "evidence": []
+        },
+        {
+          "term": "global fund",
+          "score": 11.7578,
+          "evidence": []
+        },
+        {
+          "term": "union",
+          "score": 11.3341,
+          "evidence": []
+        },
+        {
+          "term": "unitaid",
+          "score": 10.7169,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 8.9635,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "world health",
+          "score": 0.3711,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.3456,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis",
+          "score": 0.2317,
+          "evidence": []
+        },
+        {
+          "term": "global fund",
+          "score": 0.178,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.1158,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "tuberculosis",
+          "score": 10.8507,
+          "evidence": []
+        },
+        {
+          "term": "dis",
+          "score": 4.3716,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 4.1271,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 4.0356,
+          "evidence": []
+        },
+        {
+          "term": "infect",
+          "score": 3.0972,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "world health",
+          "score": 0.3711,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.3456,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis",
+          "score": 0.2317,
+          "evidence": []
+        },
+        {
+          "term": "global fund",
+          "score": 0.178,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.1158,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 78.0829,
+          "evidence": []
+        },
+        {
+          "term": "政治利益",
+          "score": 42.748,
+          "evidence": []
+        },
+        {
+          "term": "利益相关者",
+          "score": 41.7973,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 40.5845,
+          "evidence": []
+        },
+        {
+          "term": "问题的讨论结束",
+          "score": 40.5845,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-001-executive-summary": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "european region",
+          "score": 2.012,
+          "evidence": []
+        },
+        {
+          "term": "european union",
+          "score": 1.7513,
+          "evidence": []
+        },
+        {
+          "term": "high-priority countries",
+          "score": 1.6008,
+          "evidence": []
+        },
+        {
+          "term": "action plan",
+          "score": 1.5761,
+          "evidence": []
+        },
+        {
+          "term": "mdr-tb interventions",
+          "score": 1.4362,
+          "evidence": []
+        },
+        {
+          "term": "parallel session",
+          "score": 1.1994,
+          "evidence": []
+        },
+        {
+          "term": "eastern europe",
+          "score": 1.1566,
+          "evidence": []
+        },
+        {
+          "term": "infection control",
+          "score": 1.0745,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "european region",
+          "score": 46.8575,
+          "evidence": []
+        },
+        {
+          "term": "european union",
+          "score": 41.3954,
+          "evidence": []
+        },
+        {
+          "term": "high-priority countries",
+          "score": 38.6221,
+          "evidence": []
+        },
+        {
+          "term": "mdr-tb interventions",
+          "score": 30.9299,
+          "evidence": []
+        },
+        {
+          "term": "stop",
+          "score": 24.1408,
+          "evidence": []
+        },
+        {
+          "term": "action plan",
+          "score": 22.8999,
+          "evidence": []
+        },
+        {
+          "term": "infection control",
+          "score": 21.4727,
+          "evidence": []
+        },
+        {
+          "term": "parallel session",
+          "score": 19.4309,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health systems",
+          "score": 0.569,
+          "evidence": []
+        },
+        {
+          "term": "action plan",
+          "score": 0.4638,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 0.4342,
+          "evidence": []
+        },
+        {
+          "term": "high-priority countries",
+          "score": 0.4342,
+          "evidence": []
+        },
+        {
+          "term": "infection control",
+          "score": 0.4226,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.4092,
+          "evidence": []
+        },
+        {
+          "term": "european region",
+          "score": 0.3818,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.3585,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "action plan",
+          "score": 7.1494,
+          "evidence": []
+        },
+        {
+          "term": "health systems",
+          "score": 6.9854,
+          "evidence": []
+        },
+        {
+          "term": "infection control",
+          "score": 6.1622,
+          "evidence": []
+        },
+        {
+          "term": "ehealth",
+          "score": 5.7457,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 5.6325,
+          "evidence": []
+        },
+        {
+          "term": "hiv coinfection",
+          "score": 5.6325,
+          "evidence": []
+        },
+        {
+          "term": "european region",
+          "score": 5.3304,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 5.0501,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health systems",
+          "score": 0.569,
+          "evidence": []
+        },
+        {
+          "term": "high-priority countries",
+          "score": 0.5005,
+          "evidence": []
+        },
+        {
+          "term": "action plan",
+          "score": 0.4638,
+          "evidence": []
+        },
+        {
+          "term": "infection control",
+          "score": 0.4226,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.4092,
+          "evidence": []
+        },
+        {
+          "term": "hiv coinfection",
+          "score": 0.3881,
+          "evidence": []
+        },
+        {
+          "term": "european region",
+          "score": 0.3818,
+          "evidence": []
+        },
+        {
+          "term": "global",
+          "score": 0.3229,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 11.8628,
+          "evidence": []
+        },
+        {
+          "term": "他们认为通过",
+          "score": 7.9267,
+          "evidence": []
+        },
+        {
+          "term": "例病人中选择",
+          "score": 7.9267,
+          "evidence": []
+        },
+        {
+          "term": "官员们建议通过获取随机选定的结核病病人样本",
+          "score": 7.9267,
+          "evidence": []
+        },
+        {
+          "term": "对病人进行检测来确定感染耐药菌株的病例数",
+          "score": 7.9267,
+          "evidence": []
+        },
+        {
+          "term": "所以不可能向病人反馈个人的检测结果",
+          "score": 7.9267,
+          "evidence": []
+        },
+        {
+          "term": "指导医务人员对这些病人采集血液",
+          "score": 7.9267,
+          "evidence": []
+        },
+        {
+          "term": "月内到国家主要医疗机构就诊的每",
+          "score": 7.9267,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-002-introduction": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "wolfheze workshop",
+          "score": 2.8337,
+          "evidence": []
+        },
+        {
+          "term": "ntp managers",
+          "score": 2.1947,
+          "evidence": []
+        },
+        {
+          "term": "correspondents meeting",
+          "score": 2.0391,
+          "evidence": []
+        },
+        {
+          "term": "surveillance correspondents",
+          "score": 2.0056,
+          "evidence": []
+        },
+        {
+          "term": "european region",
+          "score": 1.5827,
+          "evidence": []
+        },
+        {
+          "term": "europe",
+          "score": 1.1536,
+          "evidence": []
+        },
+        {
+          "term": "political commitment",
+          "score": 1.1011,
+          "evidence": []
+        },
+        {
+          "term": "ecdc",
+          "score": 0.9671,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "wolfheze workshop",
+          "score": 81.3625,
+          "evidence": []
+        },
+        {
+          "term": "ntp managers",
+          "score": 60.6302,
+          "evidence": []
+        },
+        {
+          "term": "correspondents meeting",
+          "score": 46.8847,
+          "evidence": []
+        },
+        {
+          "term": "surveillance correspondents",
+          "score": 42.0253,
+          "evidence": []
+        },
+        {
+          "term": "europe",
+          "score": 36.2112,
+          "evidence": []
+        },
+        {
+          "term": "european region",
+          "score": 29.0609,
+          "evidence": []
+        },
+        {
+          "term": "organized",
+          "score": 21.3955,
+          "evidence": []
+        },
+        {
+          "term": "netherlands",
+          "score": 18.7772,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "european region",
+          "score": 0.3611,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.2913,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 0.2815,
+          "evidence": []
+        },
+        {
+          "term": "global",
+          "score": 0.221,
+          "evidence": []
+        },
+        {
+          "term": "regional",
+          "score": 0.2166,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.2138,
+          "evidence": []
+        },
+        {
+          "term": "country",
+          "score": 0.21,
+          "evidence": []
+        },
+        {
+          "term": "surveillance",
+          "score": 0.1992,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "data",
+          "score": 3.5948,
+          "evidence": []
+        },
+        {
+          "term": "european region",
+          "score": 3.2126,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 2.919,
+          "evidence": []
+        },
+        {
+          "term": "united",
+          "score": 2.6834,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis",
+          "score": 2.6424,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 2.5854,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 2.5494,
+          "evidence": []
+        },
+        {
+          "term": "accessed",
+          "score": 2.4823,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "european region",
+          "score": 0.3611,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.2913,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 0.2815,
+          "evidence": []
+        },
+        {
+          "term": "surveillance correspondents",
+          "score": 0.2101,
+          "evidence": []
+        },
+        {
+          "term": "managers meeting",
+          "score": 0.1806,
+          "evidence": []
+        },
+        {
+          "term": "plan",
+          "score": 0.1719,
+          "evidence": []
+        },
+        {
+          "term": "control",
+          "score": 0.1713,
+          "evidence": []
+        },
+        {
+          "term": "programme",
+          "score": 0.1541,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "chho",
+          "score": 46.6402,
+          "evidence": []
+        },
+        {
+          "term": "dzong",
+          "score": 46.6402,
+          "evidence": []
+        },
+        {
+          "term": "rangoon",
+          "score": 46.6402,
+          "evidence": []
+        },
+        {
+          "term": "roumania",
+          "score": 46.6402,
+          "evidence": []
+        },
+        {
+          "term": "rumania",
+          "score": 46.6402,
+          "evidence": []
+        },
+        {
+          "term": "salonica",
+          "score": 46.6402,
+          "evidence": []
+        },
+        {
+          "term": "samarkand",
+          "score": 46.6402,
+          "evidence": []
+        },
+        {
+          "term": "sanaa",
+          "score": 46.6402,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-003-objectives-of-the-meeting": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "wolfheze",
+          "score": 0.8711,
+          "evidence": []
+        },
+        {
+          "term": "meeting",
+          "score": 0.8006,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "region",
+          "score": 0.7206,
+          "evidence": []
+        },
+        {
+          "term": "low-tb-prevalence",
+          "score": 0.6392,
+          "evidence": []
+        },
+        {
+          "term": "correspondents",
+          "score": 0.6193,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "wolfheze",
+          "score": 13.6688,
+          "evidence": []
+        },
+        {
+          "term": "meeting",
+          "score": 11.7195,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "region",
+          "score": 10.2871,
+          "evidence": []
+        },
+        {
+          "term": "low-tb-prevalence",
+          "score": 8.2207,
+          "evidence": []
+        },
+        {
+          "term": "correspondents",
+          "score": 7.8152,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "countries",
+          "score": 0.1431,
+          "evidence": []
+        },
+        {
+          "term": "meeting",
+          "score": 0.1375,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "national",
+          "score": 0.1337,
+          "evidence": []
+        },
+        {
+          "term": "global",
+          "score": 0.1045,
+          "evidence": []
+        },
+        {
+          "term": "country",
+          "score": 0.1035,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "ehealth",
+          "score": 1.8029,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis",
+          "score": 1.6332,
+          "evidence": []
+        },
+        {
+          "term": "hcv",
+          "score": 1.5593,
+          "evidence": []
+        },
+        {
+          "term": "hbv",
+          "score": 1.5367,
+          "evidence": []
+        },
+        {
+          "term": "action",
+          "score": 1.2883,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "countries",
+          "score": 0.1431,
+          "evidence": []
+        },
+        {
+          "term": "meeting",
+          "score": 0.1375,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "national",
+          "score": 0.1337,
+          "evidence": []
+        },
+        {
+          "term": "country",
+          "score": 0.1035,
+          "evidence": []
+        },
+        {
+          "term": "plan",
+          "score": 0.1018,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 26.8306,
+          "evidence": []
+        },
+        {
+          "term": "位置服务",
+          "score": 16.2079,
+          "evidence": []
+        },
+        {
+          "term": "在卫生系统强化",
+          "score": 16.2079,
+          "evidence": []
+        },
+        {
+          "term": "的背景下",
+          "score": 16.2079,
+          "evidence": []
+        },
+        {
+          "term": "加强全球",
+          "score": 15.5245,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-004-opening-session": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "martien borgdorff",
+          "score": 2.2653,
+          "evidence": []
+        },
+        {
+          "term": "elisabeth roelofs",
+          "score": 1.9049,
+          "evidence": []
+        },
+        {
+          "term": "berlin declaration",
+          "score": 1.8088,
+          "evidence": []
+        },
+        {
+          "term": "risards zaleskis",
+          "score": 1.7681,
+          "evidence": []
+        },
+        {
+          "term": "sandra elisabeth",
+          "score": 1.7107,
+          "evidence": []
+        },
+        {
+          "term": "karoline fernandez",
+          "score": 1.6661,
+          "evidence": []
+        },
+        {
+          "term": "european region",
+          "score": 1.611,
+          "evidence": []
+        },
+        {
+          "term": "opening",
+          "score": 1.4287,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "martien borgdorff",
+          "score": 43.0857,
+          "evidence": []
+        },
+        {
+          "term": "berlin declaration",
+          "score": 34.8318,
+          "evidence": []
+        },
+        {
+          "term": "elisabeth roelofs",
+          "score": 30.6855,
+          "evidence": []
+        },
+        {
+          "term": "ecdc",
+          "score": 29.8469,
+          "evidence": []
+        },
+        {
+          "term": "european region",
+          "score": 28.7351,
+          "evidence": []
+        },
+        {
+          "term": "risards zaleskis",
+          "score": 27.8716,
+          "evidence": []
+        },
+        {
+          "term": "sandra elisabeth",
+          "score": 27.6046,
+          "evidence": []
+        },
+        {
+          "term": "karoline fernandez",
+          "score": 26.6557,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "public health",
+          "score": 0.3667,
+          "evidence": []
+        },
+        {
+          "term": "european region",
+          "score": 0.3465,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.3102,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 0.3075,
+          "evidence": []
+        },
+        {
+          "term": "member states",
+          "score": 0.2821,
+          "evidence": []
+        },
+        {
+          "term": "surveillance",
+          "score": 0.2282,
+          "evidence": []
+        },
+        {
+          "term": "country",
+          "score": 0.2133,
+          "evidence": []
+        },
+        {
+          "term": "action",
+          "score": 0.2077,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "public health",
+          "score": 5.7442,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 4.8263,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 3.016,
+          "evidence": []
+        },
+        {
+          "term": "european region",
+          "score": 2.9598,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis",
+          "score": 2.3537,
+          "evidence": []
+        },
+        {
+          "term": "method",
+          "score": 2.3441,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 2.3133,
+          "evidence": []
+        },
+        {
+          "term": "hcv",
+          "score": 2.3097,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "public health",
+          "score": 0.3667,
+          "evidence": []
+        },
+        {
+          "term": "european region",
+          "score": 0.3465,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.3102,
+          "evidence": []
+        },
+        {
+          "term": "member states",
+          "score": 0.2821,
+          "evidence": []
+        },
+        {
+          "term": "surveillance",
+          "score": 0.2282,
+          "evidence": []
+        },
+        {
+          "term": "country",
+          "score": 0.2133,
+          "evidence": []
+        },
+        {
+          "term": "action",
+          "score": 0.2077,
+          "evidence": []
+        },
+        {
+          "term": "session",
+          "score": 0.1931,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "感染者",
+          "score": 33.1581,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 32.8012,
+          "evidence": []
+        },
+        {
+          "term": "一致元数据和定义",
+          "score": 24.5396,
+          "evidence": []
+        },
+        {
+          "term": "位置服务",
+          "score": 21.3826,
+          "evidence": []
+        },
+        {
+          "term": "在卫生系统强化",
+          "score": 21.3826,
+          "evidence": []
+        },
+        {
+          "term": "的背景下",
+          "score": 21.3826,
+          "evidence": []
+        },
+        {
+          "term": "这两种hpv",
+          "score": 21.205,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 20.8046,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-plenary-session-1-follow-up-on-the-berlin-declar": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "berlin declaration",
+          "score": 6.1813,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "high-priority countries",
+          "score": 1.9602,
+          "evidence": []
+        },
+        {
+          "term": "european region",
+          "score": 1.9319,
+          "evidence": []
+        },
+        {
+          "term": "lucica ditiu",
+          "score": 1.7859,
+          "evidence": []
+        },
+        {
+          "term": "davide manissero",
+          "score": 1.784,
+          "evidence": []
+        },
+        {
+          "term": "risards zaleskis",
+          "score": 1.7681,
+          "evidence": []
+        },
+        {
+          "term": "follow-up",
+          "score": 1.7039,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ntp managers",
+          "score": 1.6986,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "berlin declaration",
+          "score": 238.3756,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "high-priority countries",
+          "score": 48.8932,
+          "evidence": []
+        },
+        {
+          "term": "follow-up",
+          "score": 46.0152,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "kncv",
+          "score": 44.3722,
+          "evidence": []
+        },
+        {
+          "term": "european region",
+          "score": 43.4285,
+          "evidence": []
+        },
+        {
+          "term": "fight against",
+          "score": 37.9152,
+          "evidence": []
+        },
+        {
+          "term": "input indicators",
+          "score": 37.0602,
+          "evidence": []
+        },
+        {
+          "term": "ntp managers",
+          "score": 34.6458,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "high-priority countries",
+          "score": 0.6068,
+          "evidence": []
+        },
+        {
+          "term": "action plan",
+          "score": 0.6033,
+          "evidence": []
+        },
+        {
+          "term": "health systems",
+          "score": 0.5855,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.5223,
+          "evidence": []
+        },
+        {
+          "term": "european region",
+          "score": 0.4947,
+          "evidence": []
+        },
+        {
+          "term": "framework action",
+          "score": 0.4935,
+          "evidence": []
+        },
+        {
+          "term": "berlin declaration",
+          "score": 0.4765,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "indicators",
+          "score": 0.3585,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "action plan",
+          "score": 10.3244,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 8.6444,
+          "evidence": []
+        },
+        {
+          "term": "ehealth",
+          "score": 8.4041,
+          "evidence": []
+        },
+        {
+          "term": "health systems",
+          "score": 7.4357,
+          "evidence": []
+        },
+        {
+          "term": "framework action",
+          "score": 7.4334,
+          "evidence": []
+        },
+        {
+          "term": "input indicators",
+          "score": 5.1862,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 4.962,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 4.8793,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "high-priority countries",
+          "score": 0.6068,
+          "evidence": []
+        },
+        {
+          "term": "action plan",
+          "score": 0.6033,
+          "evidence": []
+        },
+        {
+          "term": "health systems",
+          "score": 0.5855,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.5223,
+          "evidence": []
+        },
+        {
+          "term": "european region",
+          "score": 0.4947,
+          "evidence": []
+        },
+        {
+          "term": "framework action",
+          "score": 0.4935,
+          "evidence": []
+        },
+        {
+          "term": "berlin declaration",
+          "score": 0.4765,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "input indicators",
+          "score": 0.4246,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 24.0066,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 18.5583,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 15.2307,
+          "evidence": []
+        },
+        {
+          "term": "位置服务",
+          "score": 15.2034,
+          "evidence": []
+        },
+        {
+          "term": "在卫生系统强化",
+          "score": 15.2034,
+          "evidence": []
+        },
+        {
+          "term": "的背景下",
+          "score": 15.2034,
+          "evidence": []
+        },
+        {
+          "term": "一致元数据和定义",
+          "score": 14.8465,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 14.5543,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-007-plenary-session-2-strategic-plans-for-tb-high-pr": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "high-priority countries",
+          "score": 3.589,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "european union",
+          "score": 3.166,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "masoud dara",
+          "score": 2.1794,
+          "evidence": []
+        },
+        {
+          "term": "action plan",
+          "score": 1.8138,
+          "evidence": []
+        },
+        {
+          "term": "davide manissero",
+          "score": 1.784,
+          "evidence": []
+        },
+        {
+          "term": "european region",
+          "score": 1.6569,
+          "evidence": []
+        },
+        {
+          "term": "fight against",
+          "score": 1.6135,
+          "evidence": []
+        },
+        {
+          "term": "ntp managers",
+          "score": 1.4631,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "high-priority countries",
+          "score": 85.6252,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "european union",
+          "score": 67.7253,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "masoud dara",
+          "score": 40.7374,
+          "evidence": []
+        },
+        {
+          "term": "fight against",
+          "score": 37.3093,
+          "evidence": []
+        },
+        {
+          "term": "action plan",
+          "score": 35.1383,
+          "evidence": []
+        },
+        {
+          "term": "european region",
+          "score": 32.8157,
+          "evidence": []
+        },
+        {
+          "term": "davide manissero",
+          "score": 28.4882,
+          "evidence": []
+        },
+        {
+          "term": "control",
+          "score": 26.721,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "countries",
+          "score": 0.9478,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "high-priority countries",
+          "score": 0.9478,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health care",
+          "score": 0.8119,
+          "evidence": []
+        },
+        {
+          "term": "health system",
+          "score": 0.7137,
+          "evidence": []
+        },
+        {
+          "term": "action plan",
+          "score": 0.6362,
+          "evidence": []
+        },
+        {
+          "term": "framework action",
+          "score": 0.534,
+          "evidence": []
+        },
+        {
+          "term": "primary health",
+          "score": 0.5217,
+          "evidence": []
+        },
+        {
+          "term": "care level",
+          "score": 0.5171,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health care",
+          "score": 15.4273,
+          "evidence": []
+        },
+        {
+          "term": "health systems",
+          "score": 12.6419,
+          "evidence": []
+        },
+        {
+          "term": "primary health",
+          "score": 11.2586,
+          "evidence": []
+        },
+        {
+          "term": "action plan",
+          "score": 11.0174,
+          "evidence": []
+        },
+        {
+          "term": "ehealth",
+          "score": 9.8919,
+          "evidence": []
+        },
+        {
+          "term": "framework action",
+          "score": 8.0614,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 7.9737,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "high-priority countries",
+          "score": 7.9737,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "high-priority countries",
+          "score": 1.1366,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health care",
+          "score": 0.8119,
+          "evidence": []
+        },
+        {
+          "term": "health system",
+          "score": 0.7137,
+          "evidence": []
+        },
+        {
+          "term": "action plan",
+          "score": 0.6362,
+          "evidence": []
+        },
+        {
+          "term": "primary health",
+          "score": 0.61,
+          "evidence": []
+        },
+        {
+          "term": "framework action",
+          "score": 0.534,
+          "evidence": []
+        },
+        {
+          "term": "care level",
+          "score": 0.5171,
+          "evidence": []
+        },
+        {
+          "term": "european union",
+          "score": 0.5134,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 26.5991,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 21.3344,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 19.9788,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 19.9788,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 16.6841,
+          "evidence": []
+        },
+        {
+          "term": "位置服务",
+          "score": 15.9992,
+          "evidence": []
+        },
+        {
+          "term": "在卫生系统强化",
+          "score": 15.9992,
+          "evidence": []
+        },
+        {
+          "term": "的背景下",
+          "score": 15.9992,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-008-plenary-session-3-tb-control-in-migrants": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "migrants",
+          "score": 2.7142,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "undocumented persons",
+          "score": 2.4511,
+          "evidence": []
+        },
+        {
+          "term": "among migrants",
+          "score": 1.8392,
+          "evidence": []
+        },
+        {
+          "term": "screening practices",
+          "score": 1.7204,
+          "evidence": []
+        },
+        {
+          "term": "screening interventions",
+          "score": 1.6848,
+          "evidence": []
+        },
+        {
+          "term": "screening detected",
+          "score": 1.6426,
+          "evidence": []
+        },
+        {
+          "term": "migrant health",
+          "score": 1.5641,
+          "evidence": []
+        },
+        {
+          "term": "russian federation",
+          "score": 1.5224,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "migrants",
+          "score": 90.7671,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "undocumented persons",
+          "score": 66.6391,
+          "evidence": []
+        },
+        {
+          "term": "screening practices",
+          "score": 61.632,
+          "evidence": []
+        },
+        {
+          "term": "screening interventions",
+          "score": 59.5091,
+          "evidence": []
+        },
+        {
+          "term": "screening detected",
+          "score": 57.2841,
+          "evidence": []
+        },
+        {
+          "term": "screening policies",
+          "score": 55.1129,
+          "evidence": []
+        },
+        {
+          "term": "among migrants",
+          "score": 53.4158,
+          "evidence": []
+        },
+        {
+          "term": "migrant health",
+          "score": 34.7989,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health care",
+          "score": 0.6215,
+          "evidence": []
+        },
+        {
+          "term": "screening interventions",
+          "score": 0.5223,
+          "evidence": []
+        },
+        {
+          "term": "care services",
+          "score": 0.4532,
+          "evidence": []
+        },
+        {
+          "term": "disease burden",
+          "score": 0.4219,
+          "evidence": []
+        },
+        {
+          "term": "screening policies",
+          "score": 0.3794,
+          "evidence": []
+        },
+        {
+          "term": "control",
+          "score": 0.3703,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "available evidence",
+          "score": 0.3665,
+          "evidence": []
+        },
+        {
+          "term": "migrant health",
+          "score": 0.3651,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "screening interventions",
+          "score": 15.0348,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 12.6601,
+          "evidence": []
+        },
+        {
+          "term": "screening detected",
+          "score": 11.8513,
+          "evidence": []
+        },
+        {
+          "term": "screening policies",
+          "score": 11.8513,
+          "evidence": []
+        },
+        {
+          "term": "screening practices",
+          "score": 11.8513,
+          "evidence": []
+        },
+        {
+          "term": "migrant health",
+          "score": 8.3043,
+          "evidence": []
+        },
+        {
+          "term": "treatment",
+          "score": 8.1754,
+          "evidence": []
+        },
+        {
+          "term": "care services",
+          "score": 7.3753,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health care",
+          "score": 0.6215,
+          "evidence": []
+        },
+        {
+          "term": "screening interventions",
+          "score": 0.5223,
+          "evidence": []
+        },
+        {
+          "term": "care services",
+          "score": 0.4532,
+          "evidence": []
+        },
+        {
+          "term": "disease burden",
+          "score": 0.4219,
+          "evidence": []
+        },
+        {
+          "term": "migrant health",
+          "score": 0.3829,
+          "evidence": []
+        },
+        {
+          "term": "screening policies",
+          "score": 0.3794,
+          "evidence": []
+        },
+        {
+          "term": "control",
+          "score": 0.3703,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "available evidence",
+          "score": 0.3665,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "感染者",
+          "score": 9.8821,
+          "evidence": []
+        },
+        {
+          "term": "其它技术术语",
+          "score": 9.647,
+          "evidence": []
+        },
+        {
+          "term": "大流行性流感防范生物材料或pip生物材料",
+          "score": 9.647,
+          "evidence": []
+        },
+        {
+          "term": "术语的定义和使用",
+          "score": 7.74,
+          "evidence": []
+        },
+        {
+          "term": "经济方面",
+          "score": 7.6821,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 7.3876,
+          "evidence": []
+        },
+        {
+          "term": "在世卫组织全球流感监测",
+          "score": 7.2486,
+          "evidence": []
+        },
+        {
+          "term": "这两种hpv",
+          "score": 6.9308,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-009-plenary-session-4-role-of-rapid-detection-for-dr": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "rapid detection",
+          "score": 3.3321,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "sabine rüsch-gerdes",
+          "score": 1.8505,
+          "evidence": []
+        },
+        {
+          "term": "rapid tests",
+          "score": 1.7269,
+          "evidence": []
+        },
+        {
+          "term": "francis drobniewski",
+          "score": 1.6643,
+          "evidence": []
+        },
+        {
+          "term": "rick brien",
+          "score": 1.6179,
+          "evidence": []
+        },
+        {
+          "term": "producers",
+          "score": 1.0622,
+          "evidence": []
+        },
+        {
+          "term": "plenary",
+          "score": 0.9763,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "united kingdom",
+          "score": 0.9713,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "rapid detection",
+          "score": 121.9247,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "rapid tests",
+          "score": 70.6175,
+          "evidence": []
+        },
+        {
+          "term": "sabine rüsch-gerdes",
+          "score": 29.2992,
+          "evidence": []
+        },
+        {
+          "term": "francis drobniewski",
+          "score": 26.7006,
+          "evidence": []
+        },
+        {
+          "term": "rick brien",
+          "score": 25.9827,
+          "evidence": []
+        },
+        {
+          "term": "mdr-tb",
+          "score": 22.9573,
+          "evidence": []
+        },
+        {
+          "term": "producers",
+          "score": 20.1498,
+          "evidence": []
+        },
+        {
+          "term": "chair",
+          "score": 19.928,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "rapid detection",
+          "score": 0.5324,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "susceptibility testing",
+          "score": 0.2981,
+          "evidence": []
+        },
+        {
+          "term": "rapid tests",
+          "score": 0.291,
+          "evidence": []
+        },
+        {
+          "term": "resistance",
+          "score": 0.2607,
+          "evidence": []
+        },
+        {
+          "term": "drug susceptibility",
+          "score": 0.2334,
+          "evidence": []
+        },
+        {
+          "term": "mtb",
+          "score": 0.2022,
+          "evidence": []
+        },
+        {
+          "term": "laboratory",
+          "score": 0.2,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 0.1877,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "rapid detection",
+          "score": 4.3202,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "united kingdom",
+          "score": 4.0154,
+          "evidence": []
+        },
+        {
+          "term": "test",
+          "score": 3.6967,
+          "evidence": []
+        },
+        {
+          "term": "susceptibility testing",
+          "score": 3.5504,
+          "evidence": []
+        },
+        {
+          "term": "xpert",
+          "score": 3.349,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 3.1336,
+          "evidence": []
+        },
+        {
+          "term": "cost",
+          "score": 2.8623,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 2.6614,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "rapid detection",
+          "score": 0.5324,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "susceptibility testing",
+          "score": 0.2981,
+          "evidence": []
+        },
+        {
+          "term": "rapid tests",
+          "score": 0.291,
+          "evidence": []
+        },
+        {
+          "term": "drug susceptibility",
+          "score": 0.2334,
+          "evidence": []
+        },
+        {
+          "term": "laboratory",
+          "score": 0.2,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 0.1877,
+          "evidence": []
+        },
+        {
+          "term": "cost",
+          "score": 0.1587,
+          "evidence": []
+        },
+        {
+          "term": "country",
+          "score": 0.1372,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 25.5292,
+          "evidence": []
+        },
+        {
+          "term": "政治利益",
+          "score": 21.4222,
+          "evidence": []
+        },
+        {
+          "term": "经济方面",
+          "score": 19.9481,
+          "evidence": []
+        },
+        {
+          "term": "利益相关者",
+          "score": 18.9967,
+          "evidence": []
+        },
+        {
+          "term": "非政府组织",
+          "score": 15.4615,
+          "evidence": []
+        },
+        {
+          "term": "他们认为通过",
+          "score": 15.13,
+          "evidence": []
+        },
+        {
+          "term": "例病人中选择",
+          "score": 15.13,
+          "evidence": []
+        },
+        {
+          "term": "官员们建议通过获取随机选定的结核病病人样本",
+          "score": 15.13,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-011-parallel-session-1-how-can-mdr-tb-interventions": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "risards zaleskis",
+          "score": 2.2311,
+          "evidence": []
+        },
+        {
+          "term": "manfred danilovits",
+          "score": 1.9409,
+          "evidence": []
+        },
+        {
+          "term": "mdr-tb",
+          "score": 1.8415,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "private sector",
+          "score": 1.2314,
+          "evidence": []
+        },
+        {
+          "term": "xdr-tb patients",
+          "score": 1.1999,
+          "evidence": []
+        },
+        {
+          "term": "vaira",
+          "score": 0.9705,
+          "evidence": []
+        },
+        {
+          "term": "facilitator",
+          "score": 0.9438,
+          "evidence": []
+        },
+        {
+          "term": "rapporteur",
+          "score": 0.9433,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "mdr-tb",
+          "score": 45.9147,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "risards zaleskis",
+          "score": 41.8075,
+          "evidence": []
+        },
+        {
+          "term": "manfred danilovits",
+          "score": 31.2608,
+          "evidence": []
+        },
+        {
+          "term": "private sector",
+          "score": 21.4818,
+          "evidence": []
+        },
+        {
+          "term": "xdr-tb patients",
+          "score": 20.6989,
+          "evidence": []
+        },
+        {
+          "term": "facilitator",
+          "score": 19.6259,
+          "evidence": []
+        },
+        {
+          "term": "group",
+          "score": 17.9918,
+          "evidence": []
+        },
+        {
+          "term": "rapporteur",
+          "score": 16.5379,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "countries",
+          "score": 0.4623,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health",
+          "score": 0.3108,
+          "evidence": []
+        },
+        {
+          "term": "interventions",
+          "score": 0.2418,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "national",
+          "score": 0.2411,
+          "evidence": []
+        },
+        {
+          "term": "region",
+          "score": 0.2402,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "treatment",
+          "score": 0.2237,
+          "evidence": []
+        },
+        {
+          "term": "care",
+          "score": 0.2085,
+          "evidence": []
+        },
+        {
+          "term": "mdr-tb",
+          "score": 0.1933,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health",
+          "score": 4.2779,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 3.374,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 3.0439,
+          "evidence": []
+        },
+        {
+          "term": "investigation",
+          "score": 2.775,
+          "evidence": []
+        },
+        {
+          "term": "care",
+          "score": 2.768,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 2.7654,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "public",
+          "score": 2.6447,
+          "evidence": []
+        },
+        {
+          "term": "group",
+          "score": 2.5605,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "countries",
+          "score": 0.4623,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health",
+          "score": 0.3108,
+          "evidence": []
+        },
+        {
+          "term": "interventions",
+          "score": 0.2418,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "region",
+          "score": 0.2402,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "treatment",
+          "score": 0.2237,
+          "evidence": []
+        },
+        {
+          "term": "xdr-tb patients",
+          "score": 0.2217,
+          "evidence": []
+        },
+        {
+          "term": "mdr-tb",
+          "score": 0.1933,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "private sector",
+          "score": 0.1889,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "经济方面",
+          "score": 18.5449,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 16.6694,
+          "evidence": []
+        },
+        {
+          "term": "政治利益",
+          "score": 16.128,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 15.5575,
+          "evidence": []
+        },
+        {
+          "term": "abeba",
+          "score": 15.4881,
+          "evidence": []
+        },
+        {
+          "term": "ad-dawhah",
+          "score": 15.4881,
+          "evidence": []
+        },
+        {
+          "term": "al-iskandariyah",
+          "score": 15.4881,
+          "evidence": []
+        },
+        {
+          "term": "al-qahirah",
+          "score": 15.4881,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-012-parallel-session-2-discussion-on-the-draft-docum": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "contact investigation",
+          "score": 4.7014,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "draft document",
+          "score": 3.6777,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "margreet kamphorst",
+          "score": 2.458,
+          "evidence": []
+        },
+        {
+          "term": "connie erkens",
+          "score": 2.4556,
+          "evidence": []
+        },
+        {
+          "term": "draft consensus",
+          "score": 2.0186,
+          "evidence": []
+        },
+        {
+          "term": "jean-pierre zellweger",
+          "score": 1.9409,
+          "evidence": []
+        },
+        {
+          "term": "group agreed",
+          "score": 1.8281,
+          "evidence": []
+        },
+        {
+          "term": "participants agreed",
+          "score": 1.7786,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "contact investigation",
+          "score": 141.2231,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "draft document",
+          "score": 110.1603,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "consensus document",
+          "score": 64.6975,
+          "evidence": []
+        },
+        {
+          "term": "group agreed",
+          "score": 57.0552,
+          "evidence": []
+        },
+        {
+          "term": "connie erkens",
+          "score": 52.9301,
+          "evidence": []
+        },
+        {
+          "term": "margreet kamphorst",
+          "score": 46.8912,
+          "evidence": []
+        },
+        {
+          "term": "writing group",
+          "score": 46.2428,
+          "evidence": []
+        },
+        {
+          "term": "participants agreed",
+          "score": 43.3523,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "contact investigation",
+          "score": 0.8192,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "countries",
+          "score": 0.6167,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "preventive treatment",
+          "score": 0.5341,
+          "evidence": []
+        },
+        {
+          "term": "draft document",
+          "score": 0.487,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "incidence countries",
+          "score": 0.4747,
+          "evidence": []
+        },
+        {
+          "term": "infectious case",
+          "score": 0.3892,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.3854,
+          "evidence": []
+        },
+        {
+          "term": "group",
+          "score": 0.3358,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "contact investigation",
+          "score": 79.3773,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "susceptible contacts",
+          "score": 20.5017,
+          "evidence": []
+        },
+        {
+          "term": "household",
+          "score": 11.8259,
+          "evidence": []
+        },
+        {
+          "term": "preventive treatment",
+          "score": 10.3223,
+          "evidence": []
+        },
+        {
+          "term": "guideline",
+          "score": 7.9865,
+          "evidence": []
+        },
+        {
+          "term": "index",
+          "score": 7.7782,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 7.5174,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "group",
+          "score": 7.5144,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "contact investigation",
+          "score": 0.8192,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "countries",
+          "score": 0.6167,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "preventive treatment",
+          "score": 0.5341,
+          "evidence": []
+        },
+        {
+          "term": "draft document",
+          "score": 0.487,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "incidence countries",
+          "score": 0.4747,
+          "evidence": []
+        },
+        {
+          "term": "group agreed",
+          "score": 0.4051,
+          "evidence": []
+        },
+        {
+          "term": "infectious case",
+          "score": 0.3892,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.3854,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "政治利益",
+          "score": 16.2075,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 14.6244,
+          "evidence": []
+        },
+        {
+          "term": "其它技术术语",
+          "score": 12.6007,
+          "evidence": []
+        },
+        {
+          "term": "大流行性流感防范生物材料或pip生物材料",
+          "score": 12.6007,
+          "evidence": []
+        },
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 12.1494,
+          "evidence": []
+        },
+        {
+          "term": "经济方面",
+          "score": 11.8747,
+          "evidence": []
+        },
+        {
+          "term": "利益相关者",
+          "score": 11.7803,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 11.2274,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-013-parallel-session-3-scaling-up-tbhiv-intervention": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hiv interventions",
+          "score": 2.4424,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lucica ditiu",
+          "score": 1.7859,
+          "evidence": []
+        },
+        {
+          "term": "masoud dara",
+          "score": 1.7271,
+          "evidence": []
+        },
+        {
+          "term": "hiv doctors",
+          "score": 1.3079,
+          "evidence": []
+        },
+        {
+          "term": "coinfected patients",
+          "score": 1.2655,
+          "evidence": []
+        },
+        {
+          "term": "hiv control",
+          "score": 1.2456,
+          "evidence": []
+        },
+        {
+          "term": "scaling",
+          "score": 1.198,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "main obstacles",
+          "score": 1.0736,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hiv interventions",
+          "score": 59.0425,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv control",
+          "score": 31.2654,
+          "evidence": []
+        },
+        {
+          "term": "hiv doctors",
+          "score": 30.4676,
+          "evidence": []
+        },
+        {
+          "term": "lucica ditiu",
+          "score": 28.4882,
+          "evidence": []
+        },
+        {
+          "term": "masoud dara",
+          "score": 27.1583,
+          "evidence": []
+        },
+        {
+          "term": "scaling",
+          "score": 21.7231,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "coinfected patients",
+          "score": 20.8406,
+          "evidence": []
+        },
+        {
+          "term": "kncv",
+          "score": 16.6396,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hiv interventions",
+          "score": 0.6952,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv control",
+          "score": 0.3511,
+          "evidence": []
+        },
+        {
+          "term": "hiv doctors",
+          "score": 0.2558,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.2276,
+          "evidence": []
+        },
+        {
+          "term": "region",
+          "score": 0.2226,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "countries",
+          "score": 0.1952,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.192,
+          "evidence": []
+        },
+        {
+          "term": "infection control",
+          "score": 0.192,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hiv",
+          "score": 22.7052,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv interventions",
+          "score": 22.7052,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv control",
+          "score": 11.885,
+          "evidence": []
+        },
+        {
+          "term": "hiv doctors",
+          "score": 11.3526,
+          "evidence": []
+        },
+        {
+          "term": "aids",
+          "score": 3.7582,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 3.112,
+          "evidence": []
+        },
+        {
+          "term": "testing",
+          "score": 2.7324,
+          "evidence": []
+        },
+        {
+          "term": "infection control",
+          "score": 2.6324,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hiv interventions",
+          "score": 0.6952,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv control",
+          "score": 0.3511,
+          "evidence": []
+        },
+        {
+          "term": "hiv doctors",
+          "score": 0.2806,
+          "evidence": []
+        },
+        {
+          "term": "region",
+          "score": 0.2226,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "countries",
+          "score": 0.1952,
+          "evidence": []
+        },
+        {
+          "term": "infection control",
+          "score": 0.192,
+          "evidence": []
+        },
+        {
+          "term": "treatment",
+          "score": 0.1532,
+          "evidence": []
+        },
+        {
+          "term": "care",
+          "score": 0.1301,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 30.4883,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 22.9093,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 19.4017,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 17.7624,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 17.7624,
+          "evidence": []
+        },
+        {
+          "term": "一致元数据和定义",
+          "score": 17.4357,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 17.4064,
+          "evidence": []
+        },
+        {
+          "term": "加强全球",
+          "score": 16.8538,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-014-parallel-session-4-guidelines-for-tb-infection-c": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "infection control",
+          "score": 3.5816,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "european region",
+          "score": 3.2219,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "control measures",
+          "score": 1.3638,
+          "evidence": []
+        },
+        {
+          "term": "guidelines",
+          "score": 1.3468,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "session",
+          "score": 1.0651,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "national plans",
+          "score": 0.9032,
+          "evidence": []
+        },
+        {
+          "term": "comments",
+          "score": 0.8175,
+          "evidence": []
+        },
+        {
+          "term": "romania",
+          "score": 0.7636,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "infection control",
+          "score": 121.2485,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "european region",
+          "score": 57.4703,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "guidelines",
+          "score": 38.1969,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "control measures",
+          "score": 37.9082,
+          "evidence": []
+        },
+        {
+          "term": "comments",
+          "score": 17.6118,
+          "evidence": []
+        },
+        {
+          "term": "session",
+          "score": 15.6395,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "national plans",
+          "score": 13.1609,
+          "evidence": []
+        },
+        {
+          "term": "romania",
+          "score": 12.2825,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "infection control",
+          "score": 0.4307,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "european region",
+          "score": 0.4161,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "national plans",
+          "score": 0.2571,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 0.2211,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.1921,
+          "evidence": []
+        },
+        {
+          "term": "guidelines",
+          "score": 0.1761,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "group",
+          "score": 0.1382,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.1367,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "infection control",
+          "score": 10.4774,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "european region",
+          "score": 7.7804,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hepatitis",
+          "score": 4.3767,
+          "evidence": []
+        },
+        {
+          "term": "hcv",
+          "score": 4.2395,
+          "evidence": []
+        },
+        {
+          "term": "hbv",
+          "score": 4.2218,
+          "evidence": []
+        },
+        {
+          "term": "hsv",
+          "score": 3.638,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 2.9324,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 2.5053,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "infection control",
+          "score": 0.4307,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "european region",
+          "score": 0.4161,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "national plans",
+          "score": 0.2571,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 0.2211,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.1921,
+          "evidence": []
+        },
+        {
+          "term": "guidelines",
+          "score": 0.1761,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "control measures",
+          "score": 0.1387,
+          "evidence": []
+        },
+        {
+          "term": "recommendations",
+          "score": 0.107,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 25.2802,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 21.3223,
+          "evidence": []
+        },
+        {
+          "term": "abeba",
+          "score": 20.3454,
+          "evidence": []
+        },
+        {
+          "term": "ad-dawhah",
+          "score": 20.3454,
+          "evidence": []
+        },
+        {
+          "term": "al-iskandariyah",
+          "score": 20.3454,
+          "evidence": []
+        },
+        {
+          "term": "al-qahirah",
+          "score": 20.3454,
+          "evidence": []
+        },
+        {
+          "term": "alexandria",
+          "score": 20.3454,
+          "evidence": []
+        },
+        {
+          "term": "alma-ata",
+          "score": 20.3454,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-015-parallel-session-5-how-can-country-reviews-contr": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "country reviews",
+          "score": 3.528,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "incidence country",
+          "score": 3.3376,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vincent kuyvenhoven",
+          "score": 2.2008,
+          "evidence": []
+        },
+        {
+          "term": "davide manissero",
+          "score": 1.784,
+          "evidence": []
+        },
+        {
+          "term": "ecdc",
+          "score": 1.7335,
+          "evidence": []
+        },
+        {
+          "term": "country visits",
+          "score": 1.5622,
+          "evidence": []
+        },
+        {
+          "term": "contribute",
+          "score": 1.2144,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "review teams",
+          "score": 1.1862,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "country reviews",
+          "score": 116.0446,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "incidence country",
+          "score": 100.4453,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ecdc",
+          "score": 65.6632,
+          "evidence": []
+        },
+        {
+          "term": "country visits",
+          "score": 44.9533,
+          "evidence": []
+        },
+        {
+          "term": "vincent kuyvenhoven",
+          "score": 41.8693,
+          "evidence": []
+        },
+        {
+          "term": "review teams",
+          "score": 29.3175,
+          "evidence": []
+        },
+        {
+          "term": "davide manissero",
+          "score": 28.4882,
+          "evidence": []
+        },
+        {
+          "term": "contribute",
+          "score": 22.46,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "country reviews",
+          "score": 0.5459,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "incidence country",
+          "score": 0.5161,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "countries",
+          "score": 0.2717,
+          "evidence": []
+        },
+        {
+          "term": "visit countries",
+          "score": 0.2717,
+          "evidence": []
+        },
+        {
+          "term": "control",
+          "score": 0.2703,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "national",
+          "score": 0.241,
+          "evidence": []
+        },
+        {
+          "term": "group",
+          "score": 0.2012,
+          "evidence": []
+        },
+        {
+          "term": "region",
+          "score": 0.1716,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "country reviews",
+          "score": 8.4133,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "guideline",
+          "score": 5.0372,
+          "evidence": []
+        },
+        {
+          "term": "incidence country",
+          "score": 4.7894,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "review teams",
+          "score": 4.2679,
+          "evidence": []
+        },
+        {
+          "term": "gdg",
+          "score": 4.0342,
+          "evidence": []
+        },
+        {
+          "term": "group",
+          "score": 3.667,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 3.358,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 2.652,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "country reviews",
+          "score": 0.5459,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "incidence country",
+          "score": 0.5161,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "visit countries",
+          "score": 0.3116,
+          "evidence": []
+        },
+        {
+          "term": "control",
+          "score": 0.2703,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "national",
+          "score": 0.241,
+          "evidence": []
+        },
+        {
+          "term": "group",
+          "score": 0.2012,
+          "evidence": []
+        },
+        {
+          "term": "review teams",
+          "score": 0.1683,
+          "evidence": []
+        },
+        {
+          "term": "recommendations",
+          "score": 0.1551,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "感染者",
+          "score": 29.913,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 21.7085,
+          "evidence": []
+        },
+        {
+          "term": "其它技术术语",
+          "score": 20.133,
+          "evidence": []
+        },
+        {
+          "term": "大流行性流感防范生物材料或pip生物材料",
+          "score": 20.133,
+          "evidence": []
+        },
+        {
+          "term": "这两种hpv",
+          "score": 19.1077,
+          "evidence": []
+        },
+        {
+          "term": "一致元数据和定义",
+          "score": 17.8104,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 16.9811,
+          "evidence": []
+        },
+        {
+          "term": "术语的定义和使用",
+          "score": 16.7431,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-016-parallel-session-6-tb-control-strengthening-heal": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "health systems",
+          "score": 1.6585,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ntp managers",
+          "score": 1.352,
+          "evidence": []
+        },
+        {
+          "term": "strengthening",
+          "score": 1.2357,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "control",
+          "score": 1.0797,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "primary health",
+          "score": 0.9572,
+          "evidence": []
+        },
+        {
+          "term": "colombani",
+          "score": 0.9173,
+          "evidence": []
+        },
+        {
+          "term": "pierpaolo",
+          "score": 0.9173,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 0.8938,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "health systems",
+          "score": 28.9368,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "strengthening",
+          "score": 25.707,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ntp managers",
+          "score": 22.771,
+          "evidence": []
+        },
+        {
+          "term": "control",
+          "score": 19.4335,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "primary health",
+          "score": 17.7958,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 15.1897,
+          "evidence": []
+        },
+        {
+          "term": "chair",
+          "score": 14.946,
+          "evidence": []
+        },
+        {
+          "term": "colombani",
+          "score": 14.6088,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health systems",
+          "score": 0.802,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health care",
+          "score": 0.4731,
+          "evidence": []
+        },
+        {
+          "term": "primary health",
+          "score": 0.3527,
+          "evidence": []
+        },
+        {
+          "term": "care level",
+          "score": 0.2818,
+          "evidence": []
+        },
+        {
+          "term": "control",
+          "score": 0.2237,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "national",
+          "score": 0.1848,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 0.1763,
+          "evidence": []
+        },
+        {
+          "term": "resource development",
+          "score": 0.1486,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health systems",
+          "score": 14.9063,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health care",
+          "score": 8.6294,
+          "evidence": []
+        },
+        {
+          "term": "primary health",
+          "score": 6.6984,
+          "evidence": []
+        },
+        {
+          "term": "care level",
+          "score": 3.5777,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 2.2304,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 2.1338,
+          "evidence": []
+        },
+        {
+          "term": "services",
+          "score": 2.1054,
+          "evidence": []
+        },
+        {
+          "term": "district",
+          "score": 2.105,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health systems",
+          "score": 0.802,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health care",
+          "score": 0.4731,
+          "evidence": []
+        },
+        {
+          "term": "primary health",
+          "score": 0.3527,
+          "evidence": []
+        },
+        {
+          "term": "care level",
+          "score": 0.2818,
+          "evidence": []
+        },
+        {
+          "term": "control",
+          "score": 0.2237,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "countries",
+          "score": 0.1763,
+          "evidence": []
+        },
+        {
+          "term": "resource development",
+          "score": 0.1486,
+          "evidence": []
+        },
+        {
+          "term": "human resource",
+          "score": 0.1432,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 29.7874,
+          "evidence": []
+        },
+        {
+          "term": "habana",
+          "score": 23.6752,
+          "evidence": []
+        },
+        {
+          "term": "hannover",
+          "score": 23.6752,
+          "evidence": []
+        },
+        {
+          "term": "hanover",
+          "score": 23.6752,
+          "evidence": []
+        },
+        {
+          "term": "helsingfors",
+          "score": 23.6752,
+          "evidence": []
+        },
+        {
+          "term": "kaiffa",
+          "score": 23.6752,
+          "evidence": []
+        },
+        {
+          "term": "katar",
+          "score": 23.6752,
+          "evidence": []
+        },
+        {
+          "term": "katmandu",
+          "score": 23.6752,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-017-closure": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "berlin declaration",
+          "score": 2.4183,
+          "evidence": []
+        },
+        {
+          "term": "ntp reviews",
+          "score": 2.1348,
+          "evidence": []
+        },
+        {
+          "term": "contact investigation",
+          "score": 1.9104,
+          "evidence": []
+        },
+        {
+          "term": "low-incidence countries",
+          "score": 1.8808,
+          "evidence": []
+        },
+        {
+          "term": "high-priority countries",
+          "score": 1.8508,
+          "evidence": []
+        },
+        {
+          "term": "martien borgdorff",
+          "score": 1.7952,
+          "evidence": []
+        },
+        {
+          "term": "risards zaleskis",
+          "score": 1.7681,
+          "evidence": []
+        },
+        {
+          "term": "among immigrants",
+          "score": 1.7444,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "berlin declaration",
+          "score": 64.0079,
+          "evidence": []
+        },
+        {
+          "term": "ntp reviews",
+          "score": 55.7008,
+          "evidence": []
+        },
+        {
+          "term": "low-incidence countries",
+          "score": 50.3908,
+          "evidence": []
+        },
+        {
+          "term": "high-priority countries",
+          "score": 48.4828,
+          "evidence": []
+        },
+        {
+          "term": "among immigrants",
+          "score": 42.9641,
+          "evidence": []
+        },
+        {
+          "term": "contact investigation",
+          "score": 41.1017,
+          "evidence": []
+        },
+        {
+          "term": "control",
+          "score": 31.5794,
+          "evidence": []
+        },
+        {
+          "term": "strengthening political",
+          "score": 30.3268,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "countries",
+          "score": 0.5543,
+          "evidence": []
+        },
+        {
+          "term": "high-priority countries",
+          "score": 0.5543,
+          "evidence": []
+        },
+        {
+          "term": "low-incidence countries",
+          "score": 0.5543,
+          "evidence": []
+        },
+        {
+          "term": "hiv interventions",
+          "score": 0.5047,
+          "evidence": []
+        },
+        {
+          "term": "strengthening health",
+          "score": 0.4911,
+          "evidence": []
+        },
+        {
+          "term": "health systems",
+          "score": 0.4756,
+          "evidence": []
+        },
+        {
+          "term": "european region",
+          "score": 0.4519,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.408,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "contact investigation",
+          "score": 23.9317,
+          "evidence": []
+        },
+        {
+          "term": "index case",
+          "score": 8.379,
+          "evidence": []
+        },
+        {
+          "term": "health systems",
+          "score": 7.7388,
+          "evidence": []
+        },
+        {
+          "term": "hiv interventions",
+          "score": 7.2981,
+          "evidence": []
+        },
+        {
+          "term": "household",
+          "score": 6.943,
+          "evidence": []
+        },
+        {
+          "term": "strengthening health",
+          "score": 6.1859,
+          "evidence": []
+        },
+        {
+          "term": "infection",
+          "score": 5.699,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 5.1278,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "high-priority countries",
+          "score": 0.6378,
+          "evidence": []
+        },
+        {
+          "term": "low-incidence countries",
+          "score": 0.5952,
+          "evidence": []
+        },
+        {
+          "term": "hiv interventions",
+          "score": 0.5047,
+          "evidence": []
+        },
+        {
+          "term": "strengthening health",
+          "score": 0.4911,
+          "evidence": []
+        },
+        {
+          "term": "health systems",
+          "score": 0.4756,
+          "evidence": []
+        },
+        {
+          "term": "european region",
+          "score": 0.4519,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.408,
+          "evidence": []
+        },
+        {
+          "term": "further development",
+          "score": 0.3897,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "其它技术术语",
+          "score": 8.2488,
+          "evidence": []
+        },
+        {
+          "term": "大流行性流感防范生物材料或pip生物材料",
+          "score": 8.2488,
+          "evidence": []
+        },
+        {
+          "term": "术语的定义和使用",
+          "score": 6.5689,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 6.5217,
+          "evidence": []
+        },
+        {
+          "term": "在世卫组织全球流感监测",
+          "score": 6.0008,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 5.9053,
+          "evidence": []
+        },
+        {
+          "term": "公共卫生伦",
+          "score": 5.4959,
+          "evidence": []
+        },
+        {
+          "term": "并探讨引导这些框架区别和共同点的价值",
+          "score": 5.4959,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-018-annex-1-programme": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "rapporteur parallel",
+          "score": 3.4286,
+          "evidence": []
+        },
+        {
+          "term": "risards zaleskis",
+          "score": 3.3467,
+          "evidence": []
+        },
+        {
+          "term": "parallel session",
+          "score": 2.8886,
+          "evidence": []
+        },
+        {
+          "term": "masoud dara",
+          "score": 2.8168,
+          "evidence": []
+        },
+        {
+          "term": "plenary session",
+          "score": 2.6319,
+          "evidence": []
+        },
+        {
+          "term": "davide manissero",
+          "score": 2.6136,
+          "evidence": []
+        },
+        {
+          "term": "coffee break",
+          "score": 2.5438,
+          "evidence": []
+        },
+        {
+          "term": "lucica ditiu",
+          "score": 2.4356,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "rapporteur parallel",
+          "score": 170.5365,
+          "evidence": []
+        },
+        {
+          "term": "parallel session",
+          "score": 147.904,
+          "evidence": []
+        },
+        {
+          "term": "plenary session",
+          "score": 106.4298,
+          "evidence": []
+        },
+        {
+          "term": "risards zaleskis",
+          "score": 97.5507,
+          "evidence": []
+        },
+        {
+          "term": "europe",
+          "score": 76.4459,
+          "evidence": []
+        },
+        {
+          "term": "masoud dara",
+          "score": 67.8957,
+          "evidence": []
+        },
+        {
+          "term": "kncv",
+          "score": 61.0118,
+          "evidence": []
+        },
+        {
+          "term": "ecdc",
+          "score": 59.6938,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "european region",
+          "score": 0.5672,
+          "evidence": []
+        },
+        {
+          "term": "high-priority countries",
+          "score": 0.5397,
+          "evidence": []
+        },
+        {
+          "term": "programme",
+          "score": 0.4698,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv interventions",
+          "score": 0.4469,
+          "evidence": []
+        },
+        {
+          "term": "health systems",
+          "score": 0.4372,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.4346,
+          "evidence": []
+        },
+        {
+          "term": "united kingdom",
+          "score": 0.4244,
+          "evidence": []
+        },
+        {
+          "term": "country reviews",
+          "score": 0.3564,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "united kingdom",
+          "score": 12.2157,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 8.1194,
+          "evidence": []
+        },
+        {
+          "term": "min",
+          "score": 7.1615,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 6.2754,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 6.024,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 5.6956,
+          "evidence": []
+        },
+        {
+          "term": "group",
+          "score": 5.6834,
+          "evidence": []
+        },
+        {
+          "term": "usa",
+          "score": 5.3538,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "european region",
+          "score": 0.5672,
+          "evidence": []
+        },
+        {
+          "term": "high-priority countries",
+          "score": 0.5397,
+          "evidence": []
+        },
+        {
+          "term": "programme",
+          "score": 0.4698,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv interventions",
+          "score": 0.4469,
+          "evidence": []
+        },
+        {
+          "term": "health systems",
+          "score": 0.4372,
+          "evidence": []
+        },
+        {
+          "term": "united kingdom",
+          "score": 0.4244,
+          "evidence": []
+        },
+        {
+          "term": "infection control",
+          "score": 0.3943,
+          "evidence": []
+        },
+        {
+          "term": "country reviews",
+          "score": 0.3564,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "政治利益",
+          "score": 75.7366,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 56.7206,
+          "evidence": []
+        },
+        {
+          "term": "这意味着",
+          "score": 55.829,
+          "evidence": []
+        },
+        {
+          "term": "经济方面",
+          "score": 53.4911,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 52.7669,
+          "evidence": []
+        },
+        {
+          "term": "以及卫生保健界",
+          "score": 48.0342,
+          "evidence": []
+        },
+        {
+          "term": "基金会和开发银行",
+          "score": 48.0342,
+          "evidence": []
+        },
+        {
+          "term": "大学和研究机构",
+          "score": 48.0342,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-019-annex-2-list-of-participants": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "manager national",
+          "score": 2.8075,
+          "evidence": []
+        },
+        {
+          "term": "senior consultant",
+          "score": 2.7507,
+          "evidence": []
+        },
+        {
+          "term": "project manager",
+          "score": 2.5744,
+          "evidence": []
+        },
+        {
+          "term": "senior epidemiologist",
+          "score": 2.5593,
+          "evidence": []
+        },
+        {
+          "term": "hague",
+          "score": 2.4158,
+          "evidence": []
+        },
+        {
+          "term": "medical officer",
+          "score": 2.1891,
+          "evidence": []
+        },
+        {
+          "term": "lung diseases",
+          "score": 2.1846,
+          "evidence": []
+        },
+        {
+          "term": "control officer",
+          "score": 2.1349,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "manager national",
+          "score": 170.1411,
+          "evidence": []
+        },
+        {
+          "term": "project manager",
+          "score": 137.0517,
+          "evidence": []
+        },
+        {
+          "term": "hague",
+          "score": 114.1821,
+          "evidence": []
+        },
+        {
+          "term": "senior consultant",
+          "score": 99.335,
+          "evidence": []
+        },
+        {
+          "term": "senior epidemiologist",
+          "score": 75.9858,
+          "evidence": []
+        },
+        {
+          "term": "control officer",
+          "score": 74.8308,
+          "evidence": []
+        },
+        {
+          "term": "lung diseases",
+          "score": 74.6723,
+          "evidence": []
+        },
+        {
+          "term": "medical officer",
+          "score": 74.3884,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "research institute",
+          "score": 1.4219,
+          "evidence": []
+        },
+        {
+          "term": "united kingdom",
+          "score": 1.2974,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 1.1158,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 1.0934,
+          "evidence": []
+        },
+        {
+          "term": "regional office",
+          "score": 1.0912,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 0.9791,
+          "evidence": []
+        },
+        {
+          "term": "scientific research",
+          "score": 0.9116,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 0.8142,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "united kingdom",
+          "score": 31.642,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 24.6826,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 21.6241,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 20.9255,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 20.8428,
+          "evidence": []
+        },
+        {
+          "term": "tel",
+          "score": 19.3054,
+          "evidence": []
+        },
+        {
+          "term": "research institute",
+          "score": 18.6261,
+          "evidence": []
+        },
+        {
+          "term": "fax",
+          "score": 17.5518,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "research institute",
+          "score": 1.4219,
+          "evidence": []
+        },
+        {
+          "term": "united kingdom",
+          "score": 1.2974,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 1.1158,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 1.0934,
+          "evidence": []
+        },
+        {
+          "term": "regional office",
+          "score": 1.0912,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 0.9791,
+          "evidence": []
+        },
+        {
+          "term": "scientific research",
+          "score": 0.9116,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 0.8142,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "政治利益",
+          "score": 106.2268,
+          "evidence": []
+        },
+        {
+          "term": "abeba",
+          "score": 96.5888,
+          "evidence": []
+        },
+        {
+          "term": "ad-dawhah",
+          "score": 96.5888,
+          "evidence": []
+        },
+        {
+          "term": "al-iskandariyah",
+          "score": 96.5888,
+          "evidence": []
+        },
+        {
+          "term": "al-qahirah",
+          "score": 96.5888,
+          "evidence": []
+        },
+        {
+          "term": "alexandria",
+          "score": 96.5888,
+          "evidence": []
+        },
+        {
+          "term": "alma-ata",
+          "score": 96.5888,
+          "evidence": []
+        },
+        {
+          "term": "antwerpen",
+          "score": 96.5888,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "plenary session",
+          "score": 2.4665,
+          "evidence": []
+        },
+        {
+          "term": "parallel session",
+          "score": 2.2048,
+          "evidence": []
+        },
+        {
+          "term": "european region",
+          "score": 2.1194,
+          "evidence": []
+        },
+        {
+          "term": "wolfheze workshop",
+          "score": 1.7154,
+          "evidence": []
+        },
+        {
+          "term": "european union",
+          "score": 1.6204,
+          "evidence": []
+        },
+        {
+          "term": "drug-resistant tuberculosis",
+          "score": 1.5758,
+          "evidence": []
+        },
+        {
+          "term": "berlin declaration",
+          "score": 1.5079,
+          "evidence": []
+        },
+        {
+          "term": "high-priority countries",
+          "score": 1.4833,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "plenary session",
+          "score": 73.4116,
+          "evidence": []
+        },
+        {
+          "term": "parallel session",
+          "score": 70.1014,
+          "evidence": []
+        },
+        {
+          "term": "european region",
+          "score": 54.367,
+          "evidence": []
+        },
+        {
+          "term": "drug-resistant tuberculosis",
+          "score": 42.4462,
+          "evidence": []
+        },
+        {
+          "term": "european union",
+          "score": 41.3489,
+          "evidence": []
+        },
+        {
+          "term": "national tuberculosis",
+          "score": 36.5325,
+          "evidence": []
+        },
+        {
+          "term": "wolfheze workshop",
+          "score": 29.399,
+          "evidence": []
+        },
+        {
+          "term": "high-priority countries",
+          "score": 29.1718,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "world health",
+          "score": 0.9946,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.9278,
+          "evidence": []
+        },
+        {
+          "term": "national tuberculosis",
+          "score": 0.5314,
+          "evidence": []
+        },
+        {
+          "term": "regional office",
+          "score": 0.4244,
+          "evidence": []
+        },
+        {
+          "term": "european region",
+          "score": 0.3971,
+          "evidence": []
+        },
+        {
+          "term": "infection control",
+          "score": 0.3464,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 0.3426,
+          "evidence": []
+        },
+        {
+          "term": "material",
+          "score": 0.3183,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "national tuberculosis",
+          "score": 19.3641,
+          "evidence": []
+        },
+        {
+          "term": "drug-resistant tuberculosis",
+          "score": 17.5378,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 15.1816,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 14.6802,
+          "evidence": []
+        },
+        {
+          "term": "accessed",
+          "score": 6.358,
+          "evidence": []
+        },
+        {
+          "term": "dis",
+          "score": 6.2774,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 6.0686,
+          "evidence": []
+        },
+        {
+          "term": "infection control",
+          "score": 5.8694,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "world health",
+          "score": 0.9946,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.9278,
+          "evidence": []
+        },
+        {
+          "term": "national tuberculosis",
+          "score": 0.5314,
+          "evidence": []
+        },
+        {
+          "term": "regional office",
+          "score": 0.4244,
+          "evidence": []
+        },
+        {
+          "term": "european region",
+          "score": 0.3971,
+          "evidence": []
+        },
+        {
+          "term": "high-priority countries",
+          "score": 0.3749,
+          "evidence": []
+        },
+        {
+          "term": "infection control",
+          "score": 0.3464,
+          "evidence": []
+        },
+        {
+          "term": "drug-resistant tuberculosis",
+          "score": 0.3242,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 29.4989,
+          "evidence": []
+        },
+        {
+          "term": "abeba",
+          "score": 27.097,
+          "evidence": []
+        },
+        {
+          "term": "ad-dawhah",
+          "score": 27.097,
+          "evidence": []
+        },
+        {
+          "term": "al-iskandariyah",
+          "score": 27.097,
+          "evidence": []
+        },
+        {
+          "term": "al-qahirah",
+          "score": 27.097,
+          "evidence": []
+        },
+        {
+          "term": "alexandria",
+          "score": 27.097,
+          "evidence": []
+        },
+        {
+          "term": "alma-ata",
+          "score": 27.097,
+          "evidence": []
+        },
+        {
+          "term": "antwerpen",
+          "score": 27.097,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

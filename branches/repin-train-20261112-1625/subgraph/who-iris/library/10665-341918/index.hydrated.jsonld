@@ -1,0 +1,105 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/who-iris/library/10665-341918/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/who-iris/source/10665-341918",
+      "@type": "cat-harness:SourceDocument",
+      "path": "library/10665-341918/manifest.jsonld",
+      "title": "La OMS recomienda la adopción de enfoques basados en las redes de contactos para la realización de pruebas del VIH en los grupos de población clave, en el marco de un conjunto de servicios para las parejas: sinopsis de políticas"
+    }
+  ],
+  "hasSubgraph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/who-iris/library/10665-341918/blocks/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio/library/10665-341918/blocks/figure-img-p001-1",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Figure",
+          "path": "library/10665-341918/blocks/figure-img-p001-1.jsonld"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/10665-341918/blocks/prose-page-001",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/10665-341918/blocks/prose-page-001.jsonld",
+          "title": "Page 1"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/10665-341918/blocks/prose-page-002",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/10665-341918/blocks/prose-page-002.jsonld",
+          "title": "Page 2"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/10665-341918/blocks/prose-page-003",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/10665-341918/blocks/prose-page-003.jsonld",
+          "title": "Page 3"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/10665-341918/blocks/prose-page-004",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/10665-341918/blocks/prose-page-004.jsonld",
+          "title": "Page 4"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "name": "library/10665-341918/blocks",
+      "path": "library/10665-341918/blocks/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/who-iris/library/10665-341918/images/",
+      "@type": "bootstrap:Subgraph",
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "name": "library/10665-341918/images",
+      "path": "library/10665-341918/images/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/who-iris/library/10665-341918/sections/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio/library/10665-341918/sections/page-001",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/10665-341918/sections/page-001.jsonld",
+          "title": "Page 1"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/10665-341918/sections/page-002",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/10665-341918/sections/page-002.jsonld",
+          "title": "Page 2"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/10665-341918/sections/page-003",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/10665-341918/sections/page-003.jsonld",
+          "title": "Page 3"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/10665-341918/sections/page-004",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/10665-341918/sections/page-004.jsonld",
+          "title": "Page 4"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "name": "library/10665-341918/sections",
+      "path": "library/10665-341918/sections/"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/library"
+  ],
+  "name": "library/10665-341918",
+  "path": "library/10665-341918/"
+}

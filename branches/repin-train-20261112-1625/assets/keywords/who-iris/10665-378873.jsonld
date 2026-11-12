@@ -1,0 +1,3736 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-378873",
+  "instance": "who-iris",
+  "about": "library/10665-378873",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7434,
+    "terms": 71211
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "santé des",
+        "score": 50.8418,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "santé gestion",
+        "score": 50.6804,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "santé numérique",
+        "score": 45.9246,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "santé pour",
+        "score": 45.066,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "des données",
+        "score": 44.353,
+        "evidence": []
+      },
+      {
+        "term": "des personnes",
+        "score": 43.0118,
+        "evidence": []
+      },
+      {
+        "term": "des prestataires",
+        "score": 42.6354,
+        "evidence": []
+      },
+      {
+        "term": "les données",
+        "score": 41.7488,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "santé qui",
+        "score": 40.4166,
+        "evidence": []
+      },
+      {
+        "term": "des soins",
+        "score": 39.7837,
+        "evidence": []
+      },
+      {
+        "term": "santé une",
+        "score": 39.6273,
+        "evidence": []
+      },
+      {
+        "term": "santé par",
+        "score": 39.3124,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "santé des",
+        "score": 5931.329,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "gestion des",
+        "score": 4747.7624,
+        "evidence": []
+      },
+      {
+        "term": "des données",
+        "score": 4622.2574,
+        "evidence": []
+      },
+      {
+        "term": "des personnes",
+        "score": 4415.7342,
+        "evidence": []
+      },
+      {
+        "term": "des prestataires",
+        "score": 4355.576,
+        "evidence": []
+      },
+      {
+        "term": "des soins",
+        "score": 4281.4321,
+        "evidence": []
+      },
+      {
+        "term": "pour des",
+        "score": 4233.4936,
+        "evidence": []
+      },
+      {
+        "term": "des systèmes",
+        "score": 4087.7448,
+        "evidence": []
+      },
+      {
+        "term": "sur des",
+        "score": 4022.0574,
+        "evidence": []
+      },
+      {
+        "term": "dans des",
+        "score": 3869.1886,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "une des",
+        "score": 3793.2735,
+        "evidence": []
+      },
+      {
+        "term": "des services",
+        "score": 3784.6652,
+        "evidence": [
+          "heading"
+        ]
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "santé des",
+        "score": 51.9904,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "santé gestion",
+        "score": 49.5478,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "santé numérique",
+        "score": 45.2792,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "santé pour",
+        "score": 44.7881,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "des données",
+        "score": 43.9295,
+        "evidence": []
+      },
+      {
+        "term": "des prestataires",
+        "score": 41.7271,
+        "evidence": []
+      },
+      {
+        "term": "des personnes",
+        "score": 41.1045,
+        "evidence": []
+      },
+      {
+        "term": "des soins",
+        "score": 41.0912,
+        "evidence": []
+      },
+      {
+        "term": "santé une",
+        "score": 40.1197,
+        "evidence": []
+      },
+      {
+        "term": "les données",
+        "score": 40.1018,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "santé qui",
+        "score": 39.5963,
+        "evidence": []
+      },
+      {
+        "term": "santé par",
+        "score": 39.1972,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "santé des",
+        "score": 6000.489,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "gestion des",
+        "score": 4868.4535,
+        "evidence": []
+      },
+      {
+        "term": "des données",
+        "score": 4614.8451,
+        "evidence": []
+      },
+      {
+        "term": "des prestataires",
+        "score": 4461.9306,
+        "evidence": []
+      },
+      {
+        "term": "des soins",
+        "score": 4425.6209,
+        "evidence": []
+      },
+      {
+        "term": "des personnes",
+        "score": 4377.0335,
+        "evidence": []
+      },
+      {
+        "term": "pour des",
+        "score": 4347.3013,
+        "evidence": []
+      },
+      {
+        "term": "des systèmes",
+        "score": 4205.3184,
+        "evidence": []
+      },
+      {
+        "term": "sur des",
+        "score": 4125.7697,
+        "evidence": []
+      },
+      {
+        "term": "dans des",
+        "score": 3930.1604,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "une des",
+        "score": 3902.2252,
+        "evidence": []
+      },
+      {
+        "term": "des services",
+        "score": 3870.7362,
+        "evidence": [
+          "heading"
+        ]
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "santé des",
+        "score": 51.9904,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "santé gestion",
+        "score": 49.5478,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "santé numérique",
+        "score": 45.2792,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "santé pour",
+        "score": 44.7881,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "des données",
+        "score": 43.9295,
+        "evidence": []
+      },
+      {
+        "term": "des prestataires",
+        "score": 41.7271,
+        "evidence": []
+      },
+      {
+        "term": "des personnes",
+        "score": 41.1045,
+        "evidence": []
+      },
+      {
+        "term": "des soins",
+        "score": 41.0912,
+        "evidence": []
+      },
+      {
+        "term": "santé une",
+        "score": 40.1197,
+        "evidence": []
+      },
+      {
+        "term": "les données",
+        "score": 40.1018,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "santé qui",
+        "score": 39.5963,
+        "evidence": []
+      },
+      {
+        "term": "santé par",
+        "score": 39.1972,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "如果没有",
+        "score": 918.4275,
+        "evidence": []
+      },
+      {
+        "term": "相一致",
+        "score": 678.8144,
+        "evidence": []
+      },
+      {
+        "term": "咨询小组将由18名成员组成",
+        "score": 631.2912,
+        "evidence": []
+      },
+      {
+        "term": "汇集在流感领域中国际公认的决策者",
+        "score": 631.2912,
+        "evidence": []
+      },
+      {
+        "term": "允许进行个人反馈",
+        "score": 483.8932,
+        "evidence": []
+      },
+      {
+        "term": "并提供一",
+        "score": 477.7599,
+        "evidence": []
+      },
+      {
+        "term": "必需的",
+        "score": 375.9143,
+        "evidence": []
+      },
+      {
+        "term": "国家流感中心和必要的管制实验室",
+        "score": 343.5866,
+        "evidence": []
+      },
+      {
+        "term": "可能会",
+        "score": 321.2849,
+        "evidence": []
+      },
+      {
+        "term": "一致元数据和定义",
+        "score": 314.56,
+        "evidence": []
+      },
+      {
+        "term": "的材料",
+        "score": 307.8817,
+        "evidence": []
+      },
+      {
+        "term": "倡导以人为本并经数字卫生保健技术赋能的卫生系统",
+        "score": 302.9436,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-remerciements": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "santé remercie",
+          "score": 2.8806,
+          "evidence": []
+        },
+        {
+          "term": "remercie les",
+          "score": 2.532,
+          "evidence": []
+        },
+        {
+          "term": "oms pour",
+          "score": 2.4788,
+          "evidence": []
+        },
+        {
+          "term": "santé numérique",
+          "score": 2.4683,
+          "evidence": []
+        },
+        {
+          "term": "département santé",
+          "score": 2.4253,
+          "evidence": []
+        },
+        {
+          "term": "pour leurs",
+          "score": 2.2941,
+          "evidence": []
+        },
+        {
+          "term": "bureau régional",
+          "score": 2.2058,
+          "evidence": []
+        },
+        {
+          "term": "suivantes pour",
+          "score": 2.1334,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "oms pour",
+          "score": 79.1697,
+          "evidence": []
+        },
+        {
+          "term": "santé remercie",
+          "score": 64.8489,
+          "evidence": []
+        },
+        {
+          "term": "pour leurs",
+          "score": 63.3051,
+          "evidence": []
+        },
+        {
+          "term": "remercie les",
+          "score": 58.2832,
+          "evidence": []
+        },
+        {
+          "term": "bureau régional",
+          "score": 57.375,
+          "evidence": []
+        },
+        {
+          "term": "suivantes pour",
+          "score": 53.508,
+          "evidence": []
+        },
+        {
+          "term": "département santé",
+          "score": 52.647,
+          "evidence": []
+        },
+        {
+          "term": "santé numérique",
+          "score": 48.4489,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "santé numérique",
+          "score": 1.6901,
+          "evidence": []
+        },
+        {
+          "term": "oms pour",
+          "score": 1.6018,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 1.5733,
+          "evidence": []
+        },
+        {
+          "term": "département santé",
+          "score": 1.4008,
+          "evidence": []
+        },
+        {
+          "term": "santé remercie",
+          "score": 1.3363,
+          "evidence": []
+        },
+        {
+          "term": "les personnes",
+          "score": 1.2677,
+          "evidence": []
+        },
+        {
+          "term": "les membres",
+          "score": 1.2317,
+          "evidence": []
+        },
+        {
+          "term": "pour leurs",
+          "score": 1.051,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "santé numérique",
+          "score": 40.8752,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 36.2884,
+          "evidence": []
+        },
+        {
+          "term": "les personnes",
+          "score": 34.3072,
+          "evidence": []
+        },
+        {
+          "term": "les membres",
+          "score": 29.8757,
+          "evidence": []
+        },
+        {
+          "term": "département santé",
+          "score": 28.0236,
+          "evidence": []
+        },
+        {
+          "term": "santé remercie",
+          "score": 28.0236,
+          "evidence": []
+        },
+        {
+          "term": "les classifications",
+          "score": 27.2923,
+          "evidence": []
+        },
+        {
+          "term": "oms pour",
+          "score": 25.4031,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "santé numérique",
+          "score": 1.6901,
+          "evidence": []
+        },
+        {
+          "term": "oms pour",
+          "score": 1.6018,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 1.5733,
+          "evidence": []
+        },
+        {
+          "term": "département santé",
+          "score": 1.4008,
+          "evidence": []
+        },
+        {
+          "term": "santé remercie",
+          "score": 1.3363,
+          "evidence": []
+        },
+        {
+          "term": "les personnes",
+          "score": 1.2677,
+          "evidence": []
+        },
+        {
+          "term": "les membres",
+          "score": 1.2317,
+          "evidence": []
+        },
+        {
+          "term": "des états-unis",
+          "score": 1.155,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 353.5202,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 320.6922,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 303.9293,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 297.8647,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 297.8647,
+          "evidence": []
+        },
+        {
+          "term": "以及卫生保健界",
+          "score": 266.0639,
+          "evidence": []
+        },
+        {
+          "term": "基金会和开发银行",
+          "score": 266.0639,
+          "evidence": []
+        },
+        {
+          "term": "大学和研究机构",
+          "score": 266.0639,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-001-résumé-dorientation": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "santé des",
+          "score": 5.1364,
+          "evidence": []
+        },
+        {
+          "term": "gestion des",
+          "score": 4.9487,
+          "evidence": []
+        },
+        {
+          "term": "santé numérique",
+          "score": 4.851,
+          "evidence": []
+        },
+        {
+          "term": "des prestataires",
+          "score": 4.6603,
+          "evidence": []
+        },
+        {
+          "term": "des données",
+          "score": 4.6452,
+          "evidence": []
+        },
+        {
+          "term": "des personnes",
+          "score": 4.6165,
+          "evidence": []
+        },
+        {
+          "term": "des systèmes",
+          "score": 4.5889,
+          "evidence": []
+        },
+        {
+          "term": "cation des",
+          "score": 4.4937,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "santé des",
+          "score": 788.0706,
+          "evidence": []
+        },
+        {
+          "term": "gestion des",
+          "score": 666.444,
+          "evidence": []
+        },
+        {
+          "term": "des personnes",
+          "score": 632.2134,
+          "evidence": []
+        },
+        {
+          "term": "des données",
+          "score": 621.0765,
+          "evidence": []
+        },
+        {
+          "term": "des systèmes",
+          "score": 607.6769,
+          "evidence": []
+        },
+        {
+          "term": "des prestataires",
+          "score": 600.6401,
+          "evidence": []
+        },
+        {
+          "term": "des soins",
+          "score": 598.4215,
+          "evidence": []
+        },
+        {
+          "term": "cation des",
+          "score": 584.1992,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "santé des",
+          "score": 5.7775,
+          "evidence": []
+        },
+        {
+          "term": "gestion des",
+          "score": 5.3911,
+          "evidence": []
+        },
+        {
+          "term": "santé numérique",
+          "score": 5.3474,
+          "evidence": []
+        },
+        {
+          "term": "des prestataires",
+          "score": 4.8394,
+          "evidence": []
+        },
+        {
+          "term": "des données",
+          "score": 4.7663,
+          "evidence": []
+        },
+        {
+          "term": "des personnes",
+          "score": 4.6042,
+          "evidence": []
+        },
+        {
+          "term": "des soins",
+          "score": 4.582,
+          "evidence": []
+        },
+        {
+          "term": "santé par",
+          "score": 4.4206,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "santé des",
+          "score": 775.7706,
+          "evidence": []
+        },
+        {
+          "term": "gestion des",
+          "score": 651.3675,
+          "evidence": []
+        },
+        {
+          "term": "des prestataires",
+          "score": 589.555,
+          "evidence": []
+        },
+        {
+          "term": "des données",
+          "score": 584.4991,
+          "evidence": []
+        },
+        {
+          "term": "des soins",
+          "score": 582.1625,
+          "evidence": []
+        },
+        {
+          "term": "des personnes",
+          "score": 571.8549,
+          "evidence": []
+        },
+        {
+          "term": "des systèmes",
+          "score": 556.1113,
+          "evidence": []
+        },
+        {
+          "term": "pour des",
+          "score": 553.8266,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "santé des",
+          "score": 5.7775,
+          "evidence": []
+        },
+        {
+          "term": "gestion des",
+          "score": 5.3911,
+          "evidence": []
+        },
+        {
+          "term": "santé numérique",
+          "score": 5.3474,
+          "evidence": []
+        },
+        {
+          "term": "des prestataires",
+          "score": 4.8394,
+          "evidence": []
+        },
+        {
+          "term": "des données",
+          "score": 4.7663,
+          "evidence": []
+        },
+        {
+          "term": "des personnes",
+          "score": 4.6042,
+          "evidence": []
+        },
+        {
+          "term": "des soins",
+          "score": 4.582,
+          "evidence": []
+        },
+        {
+          "term": "santé par",
+          "score": 4.4206,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 51.1947,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 49.2775,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 41.2511,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 39.8876,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 39.8876,
+          "evidence": []
+        },
+        {
+          "term": "必需的",
+          "score": 39.587,
+          "evidence": []
+        },
+        {
+          "term": "被称为研究伦理委员会",
+          "score": 33.2479,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 33.1808,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-002-quest-ce-que-la-classification-des-interventions": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "des applications",
+          "score": 7.2776,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "classification des",
+          "score": 6.8694,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des interventions",
+          "score": 6.7968,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "numériques dans",
+          "score": 6.6547,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des services",
+          "score": 6.4952,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "santé",
+          "score": 5.9206,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "œuvre numérique",
+          "score": 5.1547,
+          "evidence": []
+        },
+        {
+          "term": "des défis",
+          "score": 4.5534,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "santé",
+          "score": 941.107,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des applications",
+          "score": 793.7628,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des interventions",
+          "score": 791.016,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des services",
+          "score": 784.6256,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "classification des",
+          "score": 757.5573,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "santé numérique",
+          "score": 735.6143,
+          "evidence": []
+        },
+        {
+          "term": "santé relevés",
+          "score": 485.1623,
+          "evidence": []
+        },
+        {
+          "term": "santé concerné",
+          "score": 483.9867,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "des applications",
+          "score": 7.9074,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des services",
+          "score": 7.4026,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des interventions",
+          "score": 7.3561,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "santé",
+          "score": 7.3046,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "classification des",
+          "score": 6.6886,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "numériques dans",
+          "score": 6.5842,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des données",
+          "score": 5.0914,
+          "evidence": []
+        },
+        {
+          "term": "gestion des",
+          "score": 4.6955,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "des services",
+          "score": 871.9951,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des interventions",
+          "score": 845.1515,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des applications",
+          "score": 836.4534,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "santé",
+          "score": 828.7978,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "classification des",
+          "score": 799.7492,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "santé numérique",
+          "score": 637.5615,
+          "evidence": []
+        },
+        {
+          "term": "des données",
+          "score": 488.029,
+          "evidence": []
+        },
+        {
+          "term": "gestion des",
+          "score": 486.2346,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "des applications",
+          "score": 7.9074,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des services",
+          "score": 7.4026,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des interventions",
+          "score": 7.3561,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "santé",
+          "score": 7.3046,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "classification des",
+          "score": 6.6886,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "numériques dans",
+          "score": 6.5842,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des données",
+          "score": 5.0914,
+          "evidence": []
+        },
+        {
+          "term": "gestion des",
+          "score": 4.6955,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 43.8395,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 39.2056,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 35.669,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 31.9882,
+          "evidence": []
+        },
+        {
+          "term": "风险最小化",
+          "score": 31.6849,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 31.125,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 31.125,
+          "evidence": []
+        },
+        {
+          "term": "被称为研究伦理委员会",
+          "score": 29.488,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-003-défis-du-système-de-santé": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "santé",
+          "score": 3.5398,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des personnes",
+          "score": 3.3905,
+          "evidence": []
+        },
+        {
+          "term": "les personnes",
+          "score": 3.3537,
+          "evidence": []
+        },
+        {
+          "term": "aux personnes",
+          "score": 2.826,
+          "evidence": []
+        },
+        {
+          "term": "personnes pour",
+          "score": 2.8065,
+          "evidence": []
+        },
+        {
+          "term": "gestion des",
+          "score": 2.7219,
+          "evidence": []
+        },
+        {
+          "term": "santé par",
+          "score": 2.6656,
+          "evidence": []
+        },
+        {
+          "term": "envoi alertes",
+          "score": 2.4486,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "des personnes",
+          "score": 161.5774,
+          "evidence": []
+        },
+        {
+          "term": "les personnes",
+          "score": 160.9041,
+          "evidence": []
+        },
+        {
+          "term": "aux personnes",
+          "score": 124.9029,
+          "evidence": []
+        },
+        {
+          "term": "personnes pour",
+          "score": 123.3184,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 120.0069,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "santé par",
+          "score": 80.2191,
+          "evidence": []
+        },
+        {
+          "term": "gestion des",
+          "score": 79.6372,
+          "evidence": []
+        },
+        {
+          "term": "des événements",
+          "score": 68.9819,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "santé",
+          "score": 2.2733,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pour des",
+          "score": 1.8971,
+          "evidence": []
+        },
+        {
+          "term": "gestion des",
+          "score": 1.8447,
+          "evidence": []
+        },
+        {
+          "term": "des données",
+          "score": 1.8152,
+          "evidence": []
+        },
+        {
+          "term": "pour les",
+          "score": 1.8032,
+          "evidence": []
+        },
+        {
+          "term": "des personnes",
+          "score": 1.7125,
+          "evidence": []
+        },
+        {
+          "term": "santé par",
+          "score": 1.5863,
+          "evidence": []
+        },
+        {
+          "term": "des services",
+          "score": 1.4902,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "santé",
+          "score": 113.6649,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des personnes",
+          "score": 90.7786,
+          "evidence": []
+        },
+        {
+          "term": "gestion des",
+          "score": 85.7807,
+          "evidence": []
+        },
+        {
+          "term": "pour des",
+          "score": 79.912,
+          "evidence": []
+        },
+        {
+          "term": "des services",
+          "score": 71.6259,
+          "evidence": []
+        },
+        {
+          "term": "des données",
+          "score": 70.6715,
+          "evidence": []
+        },
+        {
+          "term": "les personnes",
+          "score": 69.3693,
+          "evidence": []
+        },
+        {
+          "term": "santé par",
+          "score": 68.5953,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "santé",
+          "score": 2.2733,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pour des",
+          "score": 1.8971,
+          "evidence": []
+        },
+        {
+          "term": "gestion des",
+          "score": 1.8447,
+          "evidence": []
+        },
+        {
+          "term": "des données",
+          "score": 1.8152,
+          "evidence": []
+        },
+        {
+          "term": "pour les",
+          "score": 1.8032,
+          "evidence": []
+        },
+        {
+          "term": "des personnes",
+          "score": 1.7125,
+          "evidence": []
+        },
+        {
+          "term": "santé par",
+          "score": 1.5863,
+          "evidence": []
+        },
+        {
+          "term": "des services",
+          "score": 1.4902,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "并提供一",
+          "score": 66.673,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 52.3335,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 50.999,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 46.0437,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 46.0437,
+          "evidence": []
+        },
+        {
+          "term": "必需的",
+          "score": 45.062,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 44.537,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 33.8679,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-004-interventions-de-santé-numérique-pour-les-person": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "les personnes",
+          "score": 8.8608,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "santé numérique",
+          "score": 8.4538,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "personnes pour",
+          "score": 8.2826,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des personnes",
+          "score": 4.6336,
+          "evidence": []
+        },
+        {
+          "term": "des prestataires",
+          "score": 4.4998,
+          "evidence": []
+        },
+        {
+          "term": "santé par",
+          "score": 4.2581,
+          "evidence": []
+        },
+        {
+          "term": "gestion des",
+          "score": 4.2524,
+          "evidence": []
+        },
+        {
+          "term": "des soins",
+          "score": 4.184,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "les personnes",
+          "score": 887.9848,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "santé numérique",
+          "score": 695.5956,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "personnes pour",
+          "score": 695.4047,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des personnes",
+          "score": 524.4298,
+          "evidence": []
+        },
+        {
+          "term": "des soins",
+          "score": 424.1558,
+          "evidence": []
+        },
+        {
+          "term": "des prestataires",
+          "score": 422.7711,
+          "evidence": []
+        },
+        {
+          "term": "santé par",
+          "score": 413.9981,
+          "evidence": []
+        },
+        {
+          "term": "santé communication",
+          "score": 407.4188,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "les personnes",
+          "score": 8.3661,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pour les",
+          "score": 7.6248,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "santé numérique",
+          "score": 7.4793,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "gestion des",
+          "score": 4.8608,
+          "evidence": []
+        },
+        {
+          "term": "des prestataires",
+          "score": 4.5184,
+          "evidence": []
+        },
+        {
+          "term": "des soins",
+          "score": 4.4771,
+          "evidence": []
+        },
+        {
+          "term": "des données",
+          "score": 4.4606,
+          "evidence": []
+        },
+        {
+          "term": "sur des",
+          "score": 4.0275,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les personnes",
+          "score": 688.2682,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "santé numérique",
+          "score": 665.3916,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pour les",
+          "score": 589.077,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des personnes",
+          "score": 471.4264,
+          "evidence": []
+        },
+        {
+          "term": "des prestataires",
+          "score": 466.629,
+          "evidence": []
+        },
+        {
+          "term": "des soins",
+          "score": 462.4137,
+          "evidence": []
+        },
+        {
+          "term": "gestion des",
+          "score": 451.8283,
+          "evidence": []
+        },
+        {
+          "term": "sur des",
+          "score": 390.1413,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "les personnes",
+          "score": 8.3661,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pour les",
+          "score": 7.6248,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "santé numérique",
+          "score": 7.4793,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "gestion des",
+          "score": 4.8608,
+          "evidence": []
+        },
+        {
+          "term": "des prestataires",
+          "score": 4.5184,
+          "evidence": []
+        },
+        {
+          "term": "des soins",
+          "score": 4.4771,
+          "evidence": []
+        },
+        {
+          "term": "des données",
+          "score": 4.4606,
+          "evidence": []
+        },
+        {
+          "term": "sur des",
+          "score": 4.0275,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "并提供一",
+          "score": 41.3126,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 34.4746,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 32.166,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 30.724,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 30.724,
+          "evidence": []
+        },
+        {
+          "term": "必需的",
+          "score": 29.4079,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 27.153,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 26.3142,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-005-interventions-de-santé-numérique-pour-les-presta": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "les prestataires",
+          "score": 9.7389,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "santé pour",
+          "score": 9.4096,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "santé numérique",
+          "score": 8.9495,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "soins pour",
+          "score": 8.4487,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des prestataires",
+          "score": 5.1904,
+          "evidence": []
+        },
+        {
+          "term": "gestion des",
+          "score": 5.0189,
+          "evidence": []
+        },
+        {
+          "term": "aux prestataires",
+          "score": 4.6076,
+          "evidence": []
+        },
+        {
+          "term": "des personnes",
+          "score": 4.549,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "les prestataires",
+          "score": 1089.0521,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "santé pour",
+          "score": 1059.9872,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "soins pour",
+          "score": 848.2262,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "santé numérique",
+          "score": 814.9341,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des prestataires",
+          "score": 766.1289,
+          "evidence": []
+        },
+        {
+          "term": "gestion des",
+          "score": 706.2626,
+          "evidence": []
+        },
+        {
+          "term": "des personnes",
+          "score": 635.3119,
+          "evidence": []
+        },
+        {
+          "term": "sur des",
+          "score": 610.9312,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "les prestataires",
+          "score": 9.9439,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "santé pour",
+          "score": 9.3548,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "santé numérique",
+          "score": 8.8872,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "soins pour",
+          "score": 8.7124,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "gestion des",
+          "score": 5.9786,
+          "evidence": []
+        },
+        {
+          "term": "des personnes",
+          "score": 5.2807,
+          "evidence": []
+        },
+        {
+          "term": "des données",
+          "score": 5.2015,
+          "evidence": []
+        },
+        {
+          "term": "suivi des",
+          "score": 4.8113,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "santé pour",
+          "score": 1081.7057,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les prestataires",
+          "score": 948.0137,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "santé numérique",
+          "score": 866.5248,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "gestion des",
+          "score": 719.2513,
+          "evidence": []
+        },
+        {
+          "term": "soins pour",
+          "score": 702.3682,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des personnes",
+          "score": 698.9774,
+          "evidence": []
+        },
+        {
+          "term": "des données",
+          "score": 619.4592,
+          "evidence": []
+        },
+        {
+          "term": "sur des",
+          "score": 610.4938,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "les prestataires",
+          "score": 9.9439,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "santé pour",
+          "score": 9.3548,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "santé numérique",
+          "score": 8.8872,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "soins pour",
+          "score": 8.7124,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "gestion des",
+          "score": 5.9786,
+          "evidence": []
+        },
+        {
+          "term": "des personnes",
+          "score": 5.2807,
+          "evidence": []
+        },
+        {
+          "term": "des données",
+          "score": 5.2015,
+          "evidence": []
+        },
+        {
+          "term": "suivi des",
+          "score": 4.8113,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 38.0352,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 35.8244,
+          "evidence": []
+        },
+        {
+          "term": "风险最小化",
+          "score": 31.2318,
+          "evidence": []
+        },
+        {
+          "term": "必需的",
+          "score": 30.8157,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 30.2727,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 30.2675,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 30.2675,
+          "evidence": []
+        },
+        {
+          "term": "dedougou",
+          "score": 27.8156,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-interventions-de-santé-numérique-pour-le-personn": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "santé gestion",
+          "score": 10.7647,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "santé numérique",
+          "score": 8.1379,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "gestion dans",
+          "score": 7.9662,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "numérique pour",
+          "score": 6.247,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "gestion des",
+          "score": 5.0984,
+          "evidence": []
+        },
+        {
+          "term": "système",
+          "score": 4.9366,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des prestataires",
+          "score": 4.715,
+          "evidence": []
+        },
+        {
+          "term": "des établissements",
+          "score": 4.4959,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "santé gestion",
+          "score": 1077.0235,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "gestion des",
+          "score": 698.0044,
+          "evidence": []
+        },
+        {
+          "term": "santé numérique",
+          "score": 623.2941,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "gestion dans",
+          "score": 620.0476,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des prestataires",
+          "score": 588.8415,
+          "evidence": []
+        },
+        {
+          "term": "des établissements",
+          "score": 577.1948,
+          "evidence": []
+        },
+        {
+          "term": "des données",
+          "score": 560.6445,
+          "evidence": []
+        },
+        {
+          "term": "enregistrement des",
+          "score": 550.2451,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "santé gestion",
+          "score": 10.1098,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "santé numérique",
+          "score": 8.1445,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "gestion dans",
+          "score": 7.5425,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "numérique pour",
+          "score": 6.3313,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "gestion des",
+          "score": 4.844,
+          "evidence": []
+        },
+        {
+          "term": "des données",
+          "score": 4.4019,
+          "evidence": []
+        },
+        {
+          "term": "des prestataires",
+          "score": 4.3742,
+          "evidence": []
+        },
+        {
+          "term": "soins gestion",
+          "score": 4.3715,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "santé gestion",
+          "score": 988.5441,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "santé numérique",
+          "score": 674.8882,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "gestion des",
+          "score": 620.9366,
+          "evidence": []
+        },
+        {
+          "term": "des données",
+          "score": 560.3195,
+          "evidence": []
+        },
+        {
+          "term": "des prestataires",
+          "score": 549.7978,
+          "evidence": []
+        },
+        {
+          "term": "des personnes",
+          "score": 533.1011,
+          "evidence": []
+        },
+        {
+          "term": "des systèmes",
+          "score": 526.1668,
+          "evidence": []
+        },
+        {
+          "term": "gestion dans",
+          "score": 506.5975,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "santé gestion",
+          "score": 10.1098,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "santé numérique",
+          "score": 8.1445,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "gestion dans",
+          "score": 7.5425,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "numérique pour",
+          "score": 6.3313,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "gestion des",
+          "score": 4.844,
+          "evidence": []
+        },
+        {
+          "term": "des données",
+          "score": 4.4019,
+          "evidence": []
+        },
+        {
+          "term": "des prestataires",
+          "score": 4.3742,
+          "evidence": []
+        },
+        {
+          "term": "soins gestion",
+          "score": 4.3715,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 43.1738,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 42.7136,
+          "evidence": []
+        },
+        {
+          "term": "必需的",
+          "score": 35.5177,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 32.8861,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 32.2744,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 32.2744,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 31.2406,
+          "evidence": []
+        },
+        {
+          "term": "风险最小化",
+          "score": 30.6332,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-007-interventions-de-santé-numérique-pour-les-servic": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "les données",
+          "score": 8.861,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "données pour",
+          "score": 8.4267,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "santé numérique",
+          "score": 6.0295,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les services",
+          "score": 5.2747,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des données",
+          "score": 4.848,
+          "evidence": []
+        },
+        {
+          "term": "les interventions",
+          "score": 4.7417,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "gestion des",
+          "score": 4.2022,
+          "evidence": []
+        },
+        {
+          "term": "cartographie des",
+          "score": 4.0909,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "les données",
+          "score": 859.6542,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "données pour",
+          "score": 751.8247,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des données",
+          "score": 602.8713,
+          "evidence": []
+        },
+        {
+          "term": "gestion des",
+          "score": 392.0078,
+          "evidence": []
+        },
+        {
+          "term": "cartographie des",
+          "score": 373.9465,
+          "evidence": []
+        },
+        {
+          "term": "cartographique des",
+          "score": 364.5306,
+          "evidence": []
+        },
+        {
+          "term": "des prestataires",
+          "score": 353.4402,
+          "evidence": []
+        },
+        {
+          "term": "sur des",
+          "score": 351.0572,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "santé numérique",
+          "score": 6.7109,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les données",
+          "score": 6.6623,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pour les",
+          "score": 6.3052,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les services",
+          "score": 4.886,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les interventions",
+          "score": 4.3605,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des données",
+          "score": 3.5704,
+          "evidence": []
+        },
+        {
+          "term": "gestion des",
+          "score": 3.5275,
+          "evidence": []
+        },
+        {
+          "term": "des prestataires",
+          "score": 3.257,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les données",
+          "score": 548.137,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pour les",
+          "score": 437.6574,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des données",
+          "score": 406.0048,
+          "evidence": []
+        },
+        {
+          "term": "gestion des",
+          "score": 390.895,
+          "evidence": []
+        },
+        {
+          "term": "santé numérique",
+          "score": 346.0232,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les services",
+          "score": 341.9604,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "sur des",
+          "score": 332.382,
+          "evidence": []
+        },
+        {
+          "term": "des prestataires",
+          "score": 332.1684,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "santé numérique",
+          "score": 6.7109,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les données",
+          "score": 6.6623,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pour les",
+          "score": 6.3052,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les services",
+          "score": 4.886,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les interventions",
+          "score": 4.3605,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des données",
+          "score": 3.5704,
+          "evidence": []
+        },
+        {
+          "term": "gestion des",
+          "score": 3.5275,
+          "evidence": []
+        },
+        {
+          "term": "des prestataires",
+          "score": 3.257,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "并提供一",
+          "score": 46.629,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 38.5257,
+          "evidence": []
+        },
+        {
+          "term": "必需的",
+          "score": 34.3873,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 33.4645,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 31.4515,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 31.3557,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 31.3557,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 30.0373,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-008-types-de-services-et-dapplications": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "des systèmes",
+          "score": 5.1667,
+          "evidence": []
+        },
+        {
+          "term": "gestion des",
+          "score": 5.1168,
+          "evidence": []
+        },
+        {
+          "term": "santé des",
+          "score": 4.9525,
+          "evidence": []
+        },
+        {
+          "term": "domaines fonctionnels",
+          "score": 4.9319,
+          "evidence": []
+        },
+        {
+          "term": "des données",
+          "score": 4.7653,
+          "evidence": []
+        },
+        {
+          "term": "autres descripteurs",
+          "score": 4.7157,
+          "evidence": []
+        },
+        {
+          "term": "des prestataires",
+          "score": 4.4978,
+          "evidence": []
+        },
+        {
+          "term": "systèmes qui",
+          "score": 4.4839,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "des systèmes",
+          "score": 796.707,
+          "evidence": []
+        },
+        {
+          "term": "gestion des",
+          "score": 684.7932,
+          "evidence": []
+        },
+        {
+          "term": "santé des",
+          "score": 666.354,
+          "evidence": []
+        },
+        {
+          "term": "des données",
+          "score": 612.8962,
+          "evidence": []
+        },
+        {
+          "term": "des prestataires",
+          "score": 519.0239,
+          "evidence": []
+        },
+        {
+          "term": "des soins",
+          "score": 513.2021,
+          "evidence": []
+        },
+        {
+          "term": "registres des",
+          "score": 498.6007,
+          "evidence": []
+        },
+        {
+          "term": "des personnes",
+          "score": 494.2219,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "santé des",
+          "score": 4.7361,
+          "evidence": []
+        },
+        {
+          "term": "gestion des",
+          "score": 4.6354,
+          "evidence": []
+        },
+        {
+          "term": "des données",
+          "score": 4.2986,
+          "evidence": []
+        },
+        {
+          "term": "santé numérique",
+          "score": 4.2567,
+          "evidence": []
+        },
+        {
+          "term": "des prestataires",
+          "score": 4.1979,
+          "evidence": []
+        },
+        {
+          "term": "des soins",
+          "score": 4.0753,
+          "evidence": []
+        },
+        {
+          "term": "des personnes",
+          "score": 4.0275,
+          "evidence": []
+        },
+        {
+          "term": "les données",
+          "score": 3.8848,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "gestion des",
+          "score": 734.3349,
+          "evidence": []
+        },
+        {
+          "term": "des systèmes",
+          "score": 720.1955,
+          "evidence": []
+        },
+        {
+          "term": "des données",
+          "score": 720.0672,
+          "evidence": []
+        },
+        {
+          "term": "santé des",
+          "score": 711.0943,
+          "evidence": []
+        },
+        {
+          "term": "des prestataires",
+          "score": 596.4962,
+          "evidence": []
+        },
+        {
+          "term": "des soins",
+          "score": 583.1037,
+          "evidence": []
+        },
+        {
+          "term": "des personnes",
+          "score": 560.7424,
+          "evidence": []
+        },
+        {
+          "term": "des établissements",
+          "score": 536.9787,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "santé des",
+          "score": 4.7361,
+          "evidence": []
+        },
+        {
+          "term": "gestion des",
+          "score": 4.6354,
+          "evidence": []
+        },
+        {
+          "term": "des données",
+          "score": 4.2986,
+          "evidence": []
+        },
+        {
+          "term": "santé numérique",
+          "score": 4.2567,
+          "evidence": []
+        },
+        {
+          "term": "des prestataires",
+          "score": 4.1979,
+          "evidence": []
+        },
+        {
+          "term": "des soins",
+          "score": 4.0753,
+          "evidence": []
+        },
+        {
+          "term": "des personnes",
+          "score": 4.0275,
+          "evidence": []
+        },
+        {
+          "term": "les données",
+          "score": 3.8848,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 49.723,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 45.8635,
+          "evidence": []
+        },
+        {
+          "term": "必需的",
+          "score": 40.5125,
+          "evidence": []
+        },
+        {
+          "term": "风险最小化",
+          "score": 37.2923,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 36.2337,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 36.1657,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 36.1657,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 35.4999,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-009-références-bibliographiques": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "mhealth compendium",
+          "score": 4.5267,
+          "evidence": []
+        },
+        {
+          "term": "compendium database",
+          "score": 4.4296,
+          "evidence": []
+        },
+        {
+          "term": "consulté",
+          "score": 3.4659,
+          "evidence": []
+        },
+        {
+          "term": "décembre",
+          "score": 2.8829,
+          "evidence": []
+        },
+        {
+          "term": "k4health",
+          "score": 2.7823,
+          "evidence": []
+        },
+        {
+          "term": "baltimore",
+          "score": 2.6198,
+          "evidence": []
+        },
+        {
+          "term": "santé électronique",
+          "score": 2.4844,
+          "evidence": []
+        },
+        {
+          "term": "ligne",
+          "score": 2.314,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "consulté",
+          "score": 430.1824,
+          "evidence": []
+        },
+        {
+          "term": "mhealth compendium",
+          "score": 389.9248,
+          "evidence": []
+        },
+        {
+          "term": "compendium database",
+          "score": 366.9408,
+          "evidence": []
+        },
+        {
+          "term": "k4health",
+          "score": 237.1436,
+          "evidence": []
+        },
+        {
+          "term": "décembre",
+          "score": 231.133,
+          "evidence": []
+        },
+        {
+          "term": "baltimore",
+          "score": 213.7135,
+          "evidence": []
+        },
+        {
+          "term": "ligne",
+          "score": 184.8379,
+          "evidence": []
+        },
+        {
+          "term": "handle",
+          "score": 168.4293,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "mhealth compendium",
+          "score": 2.7296,
+          "evidence": []
+        },
+        {
+          "term": "compendium database",
+          "score": 2.2044,
+          "evidence": []
+        },
+        {
+          "term": "health information",
+          "score": 2.0681,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 2.0651,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 2.0355,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 1.921,
+          "evidence": []
+        },
+        {
+          "term": "global health",
+          "score": 1.8851,
+          "evidence": []
+        },
+        {
+          "term": "national health",
+          "score": 1.7574,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "mhealth compendium",
+          "score": 418.9463,
+          "evidence": []
+        },
+        {
+          "term": "compendium database",
+          "score": 402.6242,
+          "evidence": []
+        },
+        {
+          "term": "consulté",
+          "score": 391.2818,
+          "evidence": []
+        },
+        {
+          "term": "k4health",
+          "score": 247.9414,
+          "evidence": []
+        },
+        {
+          "term": "baltimore",
+          "score": 224.1417,
+          "evidence": []
+        },
+        {
+          "term": "handle",
+          "score": 179.6297,
+          "evidence": []
+        },
+        {
+          "term": "décembre",
+          "score": 173.6546,
+          "evidence": []
+        },
+        {
+          "term": "données",
+          "score": 145.4089,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "mhealth compendium",
+          "score": 2.7296,
+          "evidence": []
+        },
+        {
+          "term": "compendium database",
+          "score": 2.2044,
+          "evidence": []
+        },
+        {
+          "term": "health information",
+          "score": 2.0681,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 2.0651,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 2.0355,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 1.921,
+          "evidence": []
+        },
+        {
+          "term": "global health",
+          "score": 1.8851,
+          "evidence": []
+        },
+        {
+          "term": "national health",
+          "score": 1.7574,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 184.3879,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 88.8925,
+          "evidence": []
+        },
+        {
+          "term": "显而易见",
+          "score": 83.0316,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 82.3883,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 79.1683,
+          "evidence": []
+        },
+        {
+          "term": "问题的讨论结束",
+          "score": 79.1683,
+          "evidence": []
+        },
+        {
+          "term": "潜在受试者",
+          "score": 71.72,
+          "evidence": []
+        },
+        {
+          "term": "数字疗法",
+          "score": 69.4209,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-010-annexe": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "santé numérique",
+          "score": 3.4311,
+          "evidence": []
+        },
+        {
+          "term": "les commentaires",
+          "score": 2.8243,
+          "evidence": []
+        },
+        {
+          "term": "des commentaires",
+          "score": 2.7975,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 2.57,
+          "evidence": []
+        },
+        {
+          "term": "des rétroactions",
+          "score": 2.5426,
+          "evidence": []
+        },
+        {
+          "term": "travail sur",
+          "score": 2.4427,
+          "evidence": []
+        },
+        {
+          "term": "des exemples",
+          "score": 2.4173,
+          "evidence": []
+        },
+        {
+          "term": "les données",
+          "score": 2.2365,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "santé numérique",
+          "score": 101.1336,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 92.9801,
+          "evidence": []
+        },
+        {
+          "term": "les commentaires",
+          "score": 90.5181,
+          "evidence": []
+        },
+        {
+          "term": "des commentaires",
+          "score": 83.4741,
+          "evidence": []
+        },
+        {
+          "term": "des rétroactions",
+          "score": 71.2153,
+          "evidence": []
+        },
+        {
+          "term": "les interventions",
+          "score": 68.3051,
+          "evidence": []
+        },
+        {
+          "term": "les données",
+          "score": 66.9757,
+          "evidence": []
+        },
+        {
+          "term": "des exemples",
+          "score": 65.9417,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "santé numérique",
+          "score": 2.2072,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 2.1984,
+          "evidence": []
+        },
+        {
+          "term": "les données",
+          "score": 2.1491,
+          "evidence": []
+        },
+        {
+          "term": "des interventions",
+          "score": 1.7724,
+          "evidence": []
+        },
+        {
+          "term": "des exemples",
+          "score": 1.5863,
+          "evidence": []
+        },
+        {
+          "term": "des commentaires",
+          "score": 1.4448,
+          "evidence": []
+        },
+        {
+          "term": "des rétroactions",
+          "score": 1.4448,
+          "evidence": []
+        },
+        {
+          "term": "les publications",
+          "score": 1.3808,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "santé numérique",
+          "score": 85.3698,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 69.1941,
+          "evidence": []
+        },
+        {
+          "term": "les données",
+          "score": 66.4493,
+          "evidence": []
+        },
+        {
+          "term": "des interventions",
+          "score": 65.3669,
+          "evidence": []
+        },
+        {
+          "term": "des commentaires",
+          "score": 60.3453,
+          "evidence": []
+        },
+        {
+          "term": "des exemples",
+          "score": 60.3453,
+          "evidence": []
+        },
+        {
+          "term": "des rétroactions",
+          "score": 60.3453,
+          "evidence": []
+        },
+        {
+          "term": "les publications",
+          "score": 54.1276,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "santé numérique",
+          "score": 2.2072,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 2.1984,
+          "evidence": []
+        },
+        {
+          "term": "les données",
+          "score": 2.1491,
+          "evidence": []
+        },
+        {
+          "term": "des interventions",
+          "score": 1.7724,
+          "evidence": []
+        },
+        {
+          "term": "des exemples",
+          "score": 1.5863,
+          "evidence": []
+        },
+        {
+          "term": "des rétroactions",
+          "score": 1.4969,
+          "evidence": []
+        },
+        {
+          "term": "des commentaires",
+          "score": 1.4795,
+          "evidence": []
+        },
+        {
+          "term": "les publications",
+          "score": 1.4406,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 24.1051,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 24.1048,
+          "evidence": []
+        },
+        {
+          "term": "被称为研究伦理委员会",
+          "score": 17.6198,
+          "evidence": []
+        },
+        {
+          "term": "风险最小化",
+          "score": 17.4706,
+          "evidence": []
+        },
+        {
+          "term": "必需的",
+          "score": 17.3916,
+          "evidence": []
+        },
+        {
+          "term": "中所讨论的一样",
+          "score": 16.5357,
+          "evidence": []
+        },
+        {
+          "term": "监督机制",
+          "score": 16.5266,
+          "evidence": []
+        },
+        {
+          "term": "参见学习目标",
+          "score": 15.6367,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "gestion des",
+          "score": 4.8959,
+          "evidence": []
+        },
+        {
+          "term": "santé numérique",
+          "score": 4.6522,
+          "evidence": []
+        },
+        {
+          "term": "des données",
+          "score": 4.5816,
+          "evidence": []
+        },
+        {
+          "term": "des prestataires",
+          "score": 4.578,
+          "evidence": []
+        },
+        {
+          "term": "des personnes",
+          "score": 4.5233,
+          "evidence": []
+        },
+        {
+          "term": "cation des",
+          "score": 4.473,
+          "evidence": []
+        },
+        {
+          "term": "des soins",
+          "score": 4.29,
+          "evidence": []
+        },
+        {
+          "term": "pour des",
+          "score": 4.0862,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "gestion des",
+          "score": 636.4385,
+          "evidence": []
+        },
+        {
+          "term": "des personnes",
+          "score": 593.1745,
+          "evidence": []
+        },
+        {
+          "term": "des données",
+          "score": 589.6882,
+          "evidence": []
+        },
+        {
+          "term": "des soins",
+          "score": 569.5235,
+          "evidence": []
+        },
+        {
+          "term": "des prestataires",
+          "score": 568.718,
+          "evidence": []
+        },
+        {
+          "term": "cation des",
+          "score": 563.4404,
+          "evidence": []
+        },
+        {
+          "term": "pour des",
+          "score": 557.8809,
+          "evidence": []
+        },
+        {
+          "term": "sur des",
+          "score": 533.226,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "santé numérique",
+          "score": 5.8136,
+          "evidence": []
+        },
+        {
+          "term": "gestion des",
+          "score": 5.2246,
+          "evidence": []
+        },
+        {
+          "term": "des données",
+          "score": 4.9047,
+          "evidence": []
+        },
+        {
+          "term": "santé par",
+          "score": 4.8368,
+          "evidence": []
+        },
+        {
+          "term": "des prestataires",
+          "score": 4.74,
+          "evidence": []
+        },
+        {
+          "term": "santé publique",
+          "score": 4.5525,
+          "evidence": []
+        },
+        {
+          "term": "des personnes",
+          "score": 4.5458,
+          "evidence": []
+        },
+        {
+          "term": "pour des",
+          "score": 4.4689,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "gestion des",
+          "score": 607.4683,
+          "evidence": []
+        },
+        {
+          "term": "des prestataires",
+          "score": 550.1871,
+          "evidence": []
+        },
+        {
+          "term": "des soins",
+          "score": 542.4742,
+          "evidence": []
+        },
+        {
+          "term": "des données",
+          "score": 540.4742,
+          "evidence": []
+        },
+        {
+          "term": "des personnes",
+          "score": 532.0748,
+          "evidence": []
+        },
+        {
+          "term": "pour des",
+          "score": 516.958,
+          "evidence": []
+        },
+        {
+          "term": "sur des",
+          "score": 500.5638,
+          "evidence": []
+        },
+        {
+          "term": "des services",
+          "score": 469.306,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "santé numérique",
+          "score": 5.8136,
+          "evidence": []
+        },
+        {
+          "term": "gestion des",
+          "score": 5.2246,
+          "evidence": []
+        },
+        {
+          "term": "des données",
+          "score": 4.9047,
+          "evidence": []
+        },
+        {
+          "term": "santé par",
+          "score": 4.8368,
+          "evidence": []
+        },
+        {
+          "term": "des prestataires",
+          "score": 4.74,
+          "evidence": []
+        },
+        {
+          "term": "santé publique",
+          "score": 4.5525,
+          "evidence": []
+        },
+        {
+          "term": "des personnes",
+          "score": 4.5458,
+          "evidence": []
+        },
+        {
+          "term": "pour des",
+          "score": 4.4689,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 54.7053,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 46.7865,
+          "evidence": []
+        },
+        {
+          "term": "必需的",
+          "score": 39.109,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 33.65,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 33.65,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 33.3399,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 32.1105,
+          "evidence": []
+        },
+        {
+          "term": "被称为研究伦理委员会",
+          "score": 31.5197,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

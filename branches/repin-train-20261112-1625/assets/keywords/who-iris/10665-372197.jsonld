@@ -1,0 +1,3834 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-372197",
+  "instance": "who-iris",
+  "about": "library/10665-372197",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7434,
+    "terms": 71211
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "influenza pandemic",
+        "score": 30.7154,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "influenza preparedness",
+        "score": 29.1091,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "influenza viruses",
+        "score": 23.7982,
+        "evidence": []
+      },
+      {
+        "term": "seasonal influenza",
+        "score": 23.687,
+        "evidence": []
+      },
+      {
+        "term": "global influenza",
+        "score": 23.1231,
+        "evidence": []
+      },
+      {
+        "term": "influenza vaccine",
+        "score": 22.7264,
+        "evidence": []
+      },
+      {
+        "term": "influenza severity",
+        "score": 22.24,
+        "evidence": []
+      },
+      {
+        "term": "national influenza",
+        "score": 22.0874,
+        "evidence": []
+      },
+      {
+        "term": "influenza surveillance",
+        "score": 22.079,
+        "evidence": []
+      },
+      {
+        "term": "influenza products",
+        "score": 21.2123,
+        "evidence": []
+      },
+      {
+        "term": "report influenza",
+        "score": 21.2105,
+        "evidence": []
+      },
+      {
+        "term": "influenza risk",
+        "score": 20.7901,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "influenza pandemic",
+        "score": 1132.9683,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "influenza preparedness",
+        "score": 1017.8324,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "influenza viruses",
+        "score": 877.3563,
+        "evidence": []
+      },
+      {
+        "term": "seasonal influenza",
+        "score": 864.8575,
+        "evidence": []
+      },
+      {
+        "term": "influenza surveillance",
+        "score": 848.2314,
+        "evidence": []
+      },
+      {
+        "term": "global influenza",
+        "score": 843.1617,
+        "evidence": []
+      },
+      {
+        "term": "influenza severity",
+        "score": 834.5291,
+        "evidence": []
+      },
+      {
+        "term": "influenza burden",
+        "score": 829.2859,
+        "evidence": []
+      },
+      {
+        "term": "national influenza",
+        "score": 827.0706,
+        "evidence": []
+      },
+      {
+        "term": "influenza products",
+        "score": 811.1314,
+        "evidence": []
+      },
+      {
+        "term": "influenza vaccine",
+        "score": 810.2551,
+        "evidence": []
+      },
+      {
+        "term": "influenza disease",
+        "score": 798.6832,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "influenza pandemic",
+        "score": 19.1142,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "influenza viruses",
+        "score": 16.8523,
+        "evidence": []
+      },
+      {
+        "term": "influenza preparedness",
+        "score": 15.846,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "influenza vaccine",
+        "score": 15.6923,
+        "evidence": []
+      },
+      {
+        "term": "global influenza",
+        "score": 14.8213,
+        "evidence": []
+      },
+      {
+        "term": "national influenza",
+        "score": 14.2467,
+        "evidence": []
+      },
+      {
+        "term": "influenza surveillance",
+        "score": 13.821,
+        "evidence": []
+      },
+      {
+        "term": "influenza virus",
+        "score": 13.4751,
+        "evidence": []
+      },
+      {
+        "term": "report influenza",
+        "score": 13.0851,
+        "evidence": []
+      },
+      {
+        "term": "influenza data",
+        "score": 13.0455,
+        "evidence": []
+      },
+      {
+        "term": "pandemic response",
+        "score": 12.9382,
+        "evidence": []
+      },
+      {
+        "term": "influenza risk",
+        "score": 12.3825,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "influenza viruses",
+        "score": 655.1558,
+        "evidence": []
+      },
+      {
+        "term": "influenza pandemic",
+        "score": 649.2427,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "influenza vaccine",
+        "score": 510.3151,
+        "evidence": []
+      },
+      {
+        "term": "influenza data",
+        "score": 500.0487,
+        "evidence": []
+      },
+      {
+        "term": "national influenza",
+        "score": 495.573,
+        "evidence": []
+      },
+      {
+        "term": "global influenza",
+        "score": 492.9693,
+        "evidence": []
+      },
+      {
+        "term": "influenza preparedness",
+        "score": 490.9633,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "influenza surveillance",
+        "score": 490.0391,
+        "evidence": []
+      },
+      {
+        "term": "influenza risk",
+        "score": 473.897,
+        "evidence": []
+      },
+      {
+        "term": "influenza virus",
+        "score": 468.368,
+        "evidence": []
+      },
+      {
+        "term": "influenza centre",
+        "score": 463.2104,
+        "evidence": []
+      },
+      {
+        "term": "influenza vaccination",
+        "score": 459.6582,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "influenza pandemic",
+        "score": 19.1142,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "influenza viruses",
+        "score": 16.8523,
+        "evidence": []
+      },
+      {
+        "term": "influenza preparedness",
+        "score": 15.846,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "influenza vaccine",
+        "score": 15.6923,
+        "evidence": []
+      },
+      {
+        "term": "global influenza",
+        "score": 14.8213,
+        "evidence": []
+      },
+      {
+        "term": "national influenza",
+        "score": 14.2467,
+        "evidence": []
+      },
+      {
+        "term": "influenza surveillance",
+        "score": 13.821,
+        "evidence": []
+      },
+      {
+        "term": "influenza virus",
+        "score": 13.4751,
+        "evidence": []
+      },
+      {
+        "term": "report influenza",
+        "score": 13.0851,
+        "evidence": []
+      },
+      {
+        "term": "influenza data",
+        "score": 13.0455,
+        "evidence": []
+      },
+      {
+        "term": "pandemic response",
+        "score": 12.9382,
+        "evidence": []
+      },
+      {
+        "term": "influenza risk",
+        "score": 12.3825,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "见下面第",
+        "score": 524.3994,
+        "evidence": []
+      },
+      {
+        "term": "下面统称",
+        "score": 513.5219,
+        "evidence": []
+      },
+      {
+        "term": "本协议条款适用于由提供者转让给接受者的",
+        "score": 513.5219,
+        "evidence": []
+      },
+      {
+        "term": "节中所定义",
+        "score": 513.5219,
+        "evidence": []
+      },
+      {
+        "term": "协议的主题事项",
+        "score": 513.5219,
+        "evidence": []
+      },
+      {
+        "term": "协议缔约方",
+        "score": 513.5219,
+        "evidence": []
+      },
+      {
+        "term": "第1条",
+        "score": 513.5219,
+        "evidence": []
+      },
+      {
+        "term": "第2条",
+        "score": 513.5219,
+        "evidence": []
+      },
+      {
+        "term": "在大流行间期提供疫苗供发展中国家使用",
+        "score": 503.8679,
+        "evidence": []
+      },
+      {
+        "term": "提供大流行性流感疫苗",
+        "score": 503.8679,
+        "evidence": []
+      },
+      {
+        "term": "疫苗储备",
+        "score": 481.6172,
+        "evidence": []
+      },
+      {
+        "term": "巴西登革热",
+        "score": 473.9871,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-001-introduction": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "pandemic preparedness",
+          "score": 2.1114,
+          "evidence": []
+        },
+        {
+          "term": "pip framework",
+          "score": 1.5935,
+          "evidence": []
+        },
+        {
+          "term": "pip secretariat",
+          "score": 1.5835,
+          "evidence": []
+        },
+        {
+          "term": "hlip",
+          "score": 1.3939,
+          "evidence": []
+        },
+        {
+          "term": "preparedness capacity",
+          "score": 1.3722,
+          "evidence": []
+        },
+        {
+          "term": "financial implementation",
+          "score": 1.1745,
+          "evidence": []
+        },
+        {
+          "term": "influenza",
+          "score": 1.0333,
+          "evidence": []
+        },
+        {
+          "term": "gisrs",
+          "score": 0.9808,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "pandemic preparedness",
+          "score": 52.8989,
+          "evidence": []
+        },
+        {
+          "term": "pip framework",
+          "score": 37.1704,
+          "evidence": []
+        },
+        {
+          "term": "pip secretariat",
+          "score": 34.7037,
+          "evidence": []
+        },
+        {
+          "term": "hlip",
+          "score": 30.1101,
+          "evidence": []
+        },
+        {
+          "term": "preparedness capacity",
+          "score": 27.9443,
+          "evidence": []
+        },
+        {
+          "term": "financial implementation",
+          "score": 25.9914,
+          "evidence": []
+        },
+        {
+          "term": "influenza",
+          "score": 20.8444,
+          "evidence": []
+        },
+        {
+          "term": "progress",
+          "score": 18.4043,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pandemic preparedness",
+          "score": 0.8797,
+          "evidence": []
+        },
+        {
+          "term": "influenza",
+          "score": 0.6758,
+          "evidence": []
+        },
+        {
+          "term": "preparedness capacity",
+          "score": 0.5552,
+          "evidence": []
+        },
+        {
+          "term": "pip framework",
+          "score": 0.4901,
+          "evidence": []
+        },
+        {
+          "term": "gisrs",
+          "score": 0.4055,
+          "evidence": []
+        },
+        {
+          "term": "viruses",
+          "score": 0.4026,
+          "evidence": []
+        },
+        {
+          "term": "pip secretariat",
+          "score": 0.3624,
+          "evidence": []
+        },
+        {
+          "term": "laboratories",
+          "score": 0.3275,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "influenza",
+          "score": 18.0605,
+          "evidence": []
+        },
+        {
+          "term": "pandemic preparedness",
+          "score": 10.9767,
+          "evidence": []
+        },
+        {
+          "term": "laboratories",
+          "score": 10.2137,
+          "evidence": []
+        },
+        {
+          "term": "gisrs",
+          "score": 10.0476,
+          "evidence": []
+        },
+        {
+          "term": "viruses",
+          "score": 9.0457,
+          "evidence": []
+        },
+        {
+          "term": "guiding",
+          "score": 7.3844,
+          "evidence": []
+        },
+        {
+          "term": "reference",
+          "score": 4.5083,
+          "evidence": []
+        },
+        {
+          "term": "transfer",
+          "score": 3.8428,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pandemic preparedness",
+          "score": 0.8797,
+          "evidence": []
+        },
+        {
+          "term": "influenza",
+          "score": 0.6758,
+          "evidence": []
+        },
+        {
+          "term": "preparedness capacity",
+          "score": 0.5552,
+          "evidence": []
+        },
+        {
+          "term": "pip framework",
+          "score": 0.4901,
+          "evidence": []
+        },
+        {
+          "term": "gisrs",
+          "score": 0.4055,
+          "evidence": []
+        },
+        {
+          "term": "pip secretariat",
+          "score": 0.3624,
+          "evidence": []
+        },
+        {
+          "term": "capacity building",
+          "score": 0.3107,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 0.2896,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 76.9699,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 76.9699,
+          "evidence": []
+        },
+        {
+          "term": "见下面第",
+          "score": 74.2531,
+          "evidence": []
+        },
+        {
+          "term": "疫苗储备",
+          "score": 68.2137,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 65.3163,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 53.0624,
+          "evidence": []
+        },
+        {
+          "term": "其它技术术语",
+          "score": 44.425,
+          "evidence": []
+        },
+        {
+          "term": "大流行性流感防范生物材料或pip生物材料",
+          "score": 44.425,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-002-pip-framework-implementation-overview": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "pip framework",
+          "score": 4.1585,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pip secretariat",
+          "score": 2.096,
+          "evidence": []
+        },
+        {
+          "term": "recipient member",
+          "score": 1.9383,
+          "evidence": []
+        },
+        {
+          "term": "biennial budget",
+          "score": 1.6388,
+          "evidence": []
+        },
+        {
+          "term": "member states",
+          "score": 1.5294,
+          "evidence": []
+        },
+        {
+          "term": "broader pandemic",
+          "score": 1.4295,
+          "evidence": []
+        },
+        {
+          "term": "future pandemic",
+          "score": 1.3255,
+          "evidence": []
+        },
+        {
+          "term": "smta",
+          "score": 1.2602,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "pip framework",
+          "score": 146.8234,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pip secretariat",
+          "score": 69.7115,
+          "evidence": []
+        },
+        {
+          "term": "recipient member",
+          "score": 43.1673,
+          "evidence": []
+        },
+        {
+          "term": "member states",
+          "score": 38.428,
+          "evidence": []
+        },
+        {
+          "term": "biennial budget",
+          "score": 29.3771,
+          "evidence": []
+        },
+        {
+          "term": "broader pandemic",
+          "score": 26.454,
+          "evidence": []
+        },
+        {
+          "term": "smta",
+          "score": 25.7157,
+          "evidence": []
+        },
+        {
+          "term": "future pandemic",
+          "score": 25.1681,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pip framework",
+          "score": 1.0729,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "influenza",
+          "score": 0.7689,
+          "evidence": []
+        },
+        {
+          "term": "future pandemic",
+          "score": 0.6944,
+          "evidence": []
+        },
+        {
+          "term": "broader pandemic",
+          "score": 0.5975,
+          "evidence": []
+        },
+        {
+          "term": "member states",
+          "score": 0.537,
+          "evidence": []
+        },
+        {
+          "term": "viruses",
+          "score": 0.4648,
+          "evidence": []
+        },
+        {
+          "term": "gisrs",
+          "score": 0.4578,
+          "evidence": []
+        },
+        {
+          "term": "pip secretariat",
+          "score": 0.4147,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "influenza",
+          "score": 16.4964,
+          "evidence": []
+        },
+        {
+          "term": "laboratories",
+          "score": 9.0689,
+          "evidence": []
+        },
+        {
+          "term": "gisrs",
+          "score": 8.8002,
+          "evidence": []
+        },
+        {
+          "term": "viruses",
+          "score": 8.1838,
+          "evidence": []
+        },
+        {
+          "term": "broader pandemic",
+          "score": 7.8162,
+          "evidence": []
+        },
+        {
+          "term": "future pandemic",
+          "score": 7.8162,
+          "evidence": []
+        },
+        {
+          "term": "guiding",
+          "score": 6.6376,
+          "evidence": []
+        },
+        {
+          "term": "pip framework",
+          "score": 5.3218,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pip framework",
+          "score": 1.0729,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "influenza",
+          "score": 0.7689,
+          "evidence": []
+        },
+        {
+          "term": "future pandemic",
+          "score": 0.6944,
+          "evidence": []
+        },
+        {
+          "term": "broader pandemic",
+          "score": 0.6021,
+          "evidence": []
+        },
+        {
+          "term": "member states",
+          "score": 0.537,
+          "evidence": []
+        },
+        {
+          "term": "pip secretariat",
+          "score": 0.4147,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 0.4048,
+          "evidence": []
+        },
+        {
+          "term": "recipient member",
+          "score": 0.3886,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "下面统称",
+          "score": 138.7979,
+          "evidence": []
+        },
+        {
+          "term": "协议的主题事项",
+          "score": 138.7979,
+          "evidence": []
+        },
+        {
+          "term": "协议缔约方",
+          "score": 138.7979,
+          "evidence": []
+        },
+        {
+          "term": "本协议条款适用于由提供者转让给接受者的",
+          "score": 138.7979,
+          "evidence": []
+        },
+        {
+          "term": "第1条",
+          "score": 138.7979,
+          "evidence": []
+        },
+        {
+          "term": "第2条",
+          "score": 138.7979,
+          "evidence": []
+        },
+        {
+          "term": "节中所定义",
+          "score": 138.7979,
+          "evidence": []
+        },
+        {
+          "term": "框架第",
+          "score": 111.6081,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-003-technical-and-financial-implementation-progress": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "response trainings",
+          "score": 1.8543,
+          "evidence": []
+        },
+        {
+          "term": "biennial budget",
+          "score": 1.7961,
+          "evidence": []
+        },
+        {
+          "term": "severity assessments",
+          "score": 1.7772,
+          "evidence": []
+        },
+        {
+          "term": "output reading",
+          "score": 1.6839,
+          "evidence": []
+        },
+        {
+          "term": "funds implemented",
+          "score": 1.6491,
+          "evidence": []
+        },
+        {
+          "term": "excluding psc",
+          "score": 1.5062,
+          "evidence": []
+        },
+        {
+          "term": "risk assessments",
+          "score": 1.4319,
+          "evidence": []
+        },
+        {
+          "term": "influenza",
+          "score": 1.1993,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "severity assessments",
+          "score": 41.9125,
+          "evidence": []
+        },
+        {
+          "term": "response trainings",
+          "score": 39.1029,
+          "evidence": []
+        },
+        {
+          "term": "funds implemented",
+          "score": 37.4295,
+          "evidence": []
+        },
+        {
+          "term": "biennial budget",
+          "score": 35.5183,
+          "evidence": []
+        },
+        {
+          "term": "risk assessments",
+          "score": 34.493,
+          "evidence": []
+        },
+        {
+          "term": "output reading",
+          "score": 31.2849,
+          "evidence": []
+        },
+        {
+          "term": "influenza",
+          "score": 29.1822,
+          "evidence": []
+        },
+        {
+          "term": "excluding psc",
+          "score": 23.911,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "influenza",
+          "score": 0.5209,
+          "evidence": []
+        },
+        {
+          "term": "pandemic",
+          "score": 0.4296,
+          "evidence": []
+        },
+        {
+          "term": "viruses",
+          "score": 0.3067,
+          "evidence": []
+        },
+        {
+          "term": "gisrs",
+          "score": 0.2908,
+          "evidence": []
+        },
+        {
+          "term": "preparedness",
+          "score": 0.2597,
+          "evidence": []
+        },
+        {
+          "term": "laboratories",
+          "score": 0.2461,
+          "evidence": []
+        },
+        {
+          "term": "response",
+          "score": 0.23,
+          "evidence": []
+        },
+        {
+          "term": "response trainings",
+          "score": 0.23,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "influenza",
+          "score": 14.8486,
+          "evidence": []
+        },
+        {
+          "term": "laboratories",
+          "score": 8.317,
+          "evidence": []
+        },
+        {
+          "term": "pandemic",
+          "score": 7.4734,
+          "evidence": []
+        },
+        {
+          "term": "gisrs",
+          "score": 7.4288,
+          "evidence": []
+        },
+        {
+          "term": "viruses",
+          "score": 7.3767,
+          "evidence": []
+        },
+        {
+          "term": "guiding",
+          "score": 5.9357,
+          "evidence": []
+        },
+        {
+          "term": "covid",
+          "score": 3.7687,
+          "evidence": []
+        },
+        {
+          "term": "reference",
+          "score": 3.6638,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "influenza",
+          "score": 0.5209,
+          "evidence": []
+        },
+        {
+          "term": "pandemic",
+          "score": 0.4296,
+          "evidence": []
+        },
+        {
+          "term": "response trainings",
+          "score": 0.2652,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 0.216,
+          "evidence": []
+        },
+        {
+          "term": "surveillance",
+          "score": 0.1822,
+          "evidence": []
+        },
+        {
+          "term": "indicators",
+          "score": 0.1766,
+          "evidence": []
+        },
+        {
+          "term": "covid",
+          "score": 0.1712,
+          "evidence": []
+        },
+        {
+          "term": "progress",
+          "score": 0.1456,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 48.7821,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 32.6872,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 28.9759,
+          "evidence": []
+        },
+        {
+          "term": "对照组",
+          "score": 28.1457,
+          "evidence": []
+        },
+        {
+          "term": "显而易见",
+          "score": 24.5248,
+          "evidence": []
+        },
+        {
+          "term": "招募了",
+          "score": 21.6094,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 21.309,
+          "evidence": []
+        },
+        {
+          "term": "协议的主题事项",
+          "score": 21.0265,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-004-laboratory-surveillance": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "zoonotic influenza",
+          "score": 3.5103,
+          "evidence": []
+        },
+        {
+          "term": "influenza viruses",
+          "score": 3.4756,
+          "evidence": []
+        },
+        {
+          "term": "pandemic influenza",
+          "score": 3.1703,
+          "evidence": []
+        },
+        {
+          "term": "influenza severity",
+          "score": 3.0515,
+          "evidence": []
+        },
+        {
+          "term": "influenza virus",
+          "score": 2.8872,
+          "evidence": []
+        },
+        {
+          "term": "influenza sentinel",
+          "score": 2.6947,
+          "evidence": []
+        },
+        {
+          "term": "shared influenza",
+          "score": 2.5187,
+          "evidence": []
+        },
+        {
+          "term": "national influenza",
+          "score": 2.4656,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "influenza viruses",
+          "score": 167.0545,
+          "evidence": []
+        },
+        {
+          "term": "zoonotic influenza",
+          "score": 161.5885,
+          "evidence": []
+        },
+        {
+          "term": "pandemic influenza",
+          "score": 159.5584,
+          "evidence": []
+        },
+        {
+          "term": "influenza severity",
+          "score": 152.8068,
+          "evidence": []
+        },
+        {
+          "term": "influenza virus",
+          "score": 145.0659,
+          "evidence": []
+        },
+        {
+          "term": "influenza sentinel",
+          "score": 136.3026,
+          "evidence": []
+        },
+        {
+          "term": "shared influenza",
+          "score": 134.936,
+          "evidence": []
+        },
+        {
+          "term": "national influenza",
+          "score": 133.0863,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pandemic influenza",
+          "score": 2.3747,
+          "evidence": []
+        },
+        {
+          "term": "influenza viruses",
+          "score": 2.1546,
+          "evidence": []
+        },
+        {
+          "term": "influenza virus",
+          "score": 1.777,
+          "evidence": []
+        },
+        {
+          "term": "national influenza",
+          "score": 1.6822,
+          "evidence": []
+        },
+        {
+          "term": "influenza cases",
+          "score": 1.5627,
+          "evidence": []
+        },
+        {
+          "term": "influenza samples",
+          "score": 1.4905,
+          "evidence": []
+        },
+        {
+          "term": "influenza severity",
+          "score": 1.4688,
+          "evidence": []
+        },
+        {
+          "term": "influenza sentinel",
+          "score": 1.4476,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "influenza viruses",
+          "score": 106.2247,
+          "evidence": []
+        },
+        {
+          "term": "pandemic influenza",
+          "score": 102.7392,
+          "evidence": []
+        },
+        {
+          "term": "national influenza",
+          "score": 77.5503,
+          "evidence": []
+        },
+        {
+          "term": "influenza virus",
+          "score": 76.8041,
+          "evidence": []
+        },
+        {
+          "term": "influenza cases",
+          "score": 72.8036,
+          "evidence": []
+        },
+        {
+          "term": "influenza samples",
+          "score": 70.6017,
+          "evidence": []
+        },
+        {
+          "term": "influenza sentinel",
+          "score": 70.6017,
+          "evidence": []
+        },
+        {
+          "term": "influenza severity",
+          "score": 70.6017,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pandemic influenza",
+          "score": 2.3747,
+          "evidence": []
+        },
+        {
+          "term": "influenza viruses",
+          "score": 2.1546,
+          "evidence": []
+        },
+        {
+          "term": "influenza virus",
+          "score": 1.777,
+          "evidence": []
+        },
+        {
+          "term": "national influenza",
+          "score": 1.6822,
+          "evidence": []
+        },
+        {
+          "term": "influenza cases",
+          "score": 1.5627,
+          "evidence": []
+        },
+        {
+          "term": "influenza samples",
+          "score": 1.4905,
+          "evidence": []
+        },
+        {
+          "term": "influenza severity",
+          "score": 1.4688,
+          "evidence": []
+        },
+        {
+          "term": "influenza sentinel",
+          "score": 1.4476,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 44.7783,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 35.3088,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 32.2467,
+          "evidence": []
+        },
+        {
+          "term": "显而易见",
+          "score": 28.5189,
+          "evidence": []
+        },
+        {
+          "term": "对照组",
+          "score": 26.7103,
+          "evidence": []
+        },
+        {
+          "term": "的研究中",
+          "score": 25.5124,
+          "evidence": []
+        },
+        {
+          "term": "下面统称",
+          "score": 24.917,
+          "evidence": []
+        },
+        {
+          "term": "本协议条款适用于由提供者转让给接受者的",
+          "score": 24.917,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-005-burden-of-disease": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "disease burden",
+          "score": 3.4493,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "influenza-associated hospitalization",
+          "score": 2.7685,
+          "evidence": []
+        },
+        {
+          "term": "bod estimates",
+          "score": 2.6228,
+          "evidence": []
+        },
+        {
+          "term": "influenza-associated non-respiratory",
+          "score": 2.5793,
+          "evidence": []
+        },
+        {
+          "term": "pyramid tool",
+          "score": 2.4648,
+          "evidence": []
+        },
+        {
+          "term": "influenza averted",
+          "score": 2.3017,
+          "evidence": []
+        },
+        {
+          "term": "seasonal influenza",
+          "score": 2.1766,
+          "evidence": []
+        },
+        {
+          "term": "influenza vaccination",
+          "score": 2.1566,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "disease burden",
+          "score": 126.5923,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "burden estimates",
+          "score": 87.0109,
+          "evidence": []
+        },
+        {
+          "term": "bod estimates",
+          "score": 77.0134,
+          "evidence": []
+        },
+        {
+          "term": "pyramid tool",
+          "score": 74.1316,
+          "evidence": []
+        },
+        {
+          "term": "influenza-associated hospitalization",
+          "score": 69.9345,
+          "evidence": []
+        },
+        {
+          "term": "influenza disease",
+          "score": 62.6344,
+          "evidence": []
+        },
+        {
+          "term": "influenza-associated non-respiratory",
+          "score": 61.8736,
+          "evidence": []
+        },
+        {
+          "term": "influenza averted",
+          "score": 61.3862,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "influenza vaccination",
+          "score": 0.5239,
+          "evidence": []
+        },
+        {
+          "term": "influenza disease",
+          "score": 0.509,
+          "evidence": []
+        },
+        {
+          "term": "seasonal influenza",
+          "score": 0.4692,
+          "evidence": []
+        },
+        {
+          "term": "global studies",
+          "score": 0.4274,
+          "evidence": []
+        },
+        {
+          "term": "disease burden",
+          "score": 0.4205,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "influenza averted",
+          "score": 0.3949,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 0.3169,
+          "evidence": []
+        },
+        {
+          "term": "pandemic",
+          "score": 0.3003,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "influenza vaccination",
+          "score": 20.3503,
+          "evidence": []
+        },
+        {
+          "term": "influenza disease",
+          "score": 18.6974,
+          "evidence": []
+        },
+        {
+          "term": "influenza averted",
+          "score": 18.0758,
+          "evidence": []
+        },
+        {
+          "term": "seasonal influenza",
+          "score": 17.3235,
+          "evidence": []
+        },
+        {
+          "term": "laboratories",
+          "score": 9.2976,
+          "evidence": []
+        },
+        {
+          "term": "viruses",
+          "score": 8.5931,
+          "evidence": []
+        },
+        {
+          "term": "gisrs",
+          "score": 8.1597,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 8.0427,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "influenza vaccination",
+          "score": 0.5239,
+          "evidence": []
+        },
+        {
+          "term": "influenza disease",
+          "score": 0.509,
+          "evidence": []
+        },
+        {
+          "term": "seasonal influenza",
+          "score": 0.4692,
+          "evidence": []
+        },
+        {
+          "term": "influenza averted",
+          "score": 0.4361,
+          "evidence": []
+        },
+        {
+          "term": "global studies",
+          "score": 0.4274,
+          "evidence": []
+        },
+        {
+          "term": "disease burden",
+          "score": 0.4205,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "countries",
+          "score": 0.3169,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.2841,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 24.9173,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 14.6749,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 13.8393,
+          "evidence": []
+        },
+        {
+          "term": "对照组",
+          "score": 11.594,
+          "evidence": []
+        },
+        {
+          "term": "位置服务",
+          "score": 11.1297,
+          "evidence": []
+        },
+        {
+          "term": "在卫生系统强化",
+          "score": 11.1297,
+          "evidence": []
+        },
+        {
+          "term": "的背景下",
+          "score": 11.1297,
+          "evidence": []
+        },
+        {
+          "term": "世卫组织建议将针对重点人群的基于社交网络的艾滋病毒检测方法作为一揽子伙伴服务的一部分",
+          "score": 10.9598,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-regulatory-capacity-building": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "regulatory capacity",
+          "score": 3.5403,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pandemic influenza",
+          "score": 2.3613,
+          "evidence": []
+        },
+        {
+          "term": "regulatory preparedness",
+          "score": 2.1469,
+          "evidence": []
+        },
+        {
+          "term": "pandemic products",
+          "score": 2.0063,
+          "evidence": []
+        },
+        {
+          "term": "emergency regulatory",
+          "score": 1.9907,
+          "evidence": []
+        },
+        {
+          "term": "regulatory capacities",
+          "score": 1.9114,
+          "evidence": []
+        },
+        {
+          "term": "regulatory pathways",
+          "score": 1.8858,
+          "evidence": []
+        },
+        {
+          "term": "national regulatory",
+          "score": 1.7554,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "regulatory capacity",
+          "score": 126.648,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "regulatory preparedness",
+          "score": 72.5586,
+          "evidence": []
+        },
+        {
+          "term": "emergency regulatory",
+          "score": 68.5164,
+          "evidence": []
+        },
+        {
+          "term": "regulatory capacities",
+          "score": 65.0262,
+          "evidence": []
+        },
+        {
+          "term": "regulatory pathways",
+          "score": 64.4395,
+          "evidence": []
+        },
+        {
+          "term": "pandemic influenza",
+          "score": 63.3375,
+          "evidence": []
+        },
+        {
+          "term": "national regulatory",
+          "score": 62.7866,
+          "evidence": []
+        },
+        {
+          "term": "defined regulatory",
+          "score": 60.3321,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pandemic influenza",
+          "score": 1.0212,
+          "evidence": []
+        },
+        {
+          "term": "regulatory capacity",
+          "score": 0.6387,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "influenza products",
+          "score": 0.6292,
+          "evidence": []
+        },
+        {
+          "term": "regulatory preparedness",
+          "score": 0.4203,
+          "evidence": []
+        },
+        {
+          "term": "support activities",
+          "score": 0.3418,
+          "evidence": []
+        },
+        {
+          "term": "countries regions",
+          "score": 0.3368,
+          "evidence": []
+        },
+        {
+          "term": "viruses",
+          "score": 0.3328,
+          "evidence": []
+        },
+        {
+          "term": "national regulatory",
+          "score": 0.3262,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "pandemic influenza",
+          "score": 28.206,
+          "evidence": []
+        },
+        {
+          "term": "influenza products",
+          "score": 19.3931,
+          "evidence": []
+        },
+        {
+          "term": "laboratories",
+          "score": 10.5065,
+          "evidence": []
+        },
+        {
+          "term": "viruses",
+          "score": 9.341,
+          "evidence": []
+        },
+        {
+          "term": "gisrs",
+          "score": 9.0441,
+          "evidence": []
+        },
+        {
+          "term": "guiding",
+          "score": 7.6684,
+          "evidence": []
+        },
+        {
+          "term": "regulatory capacity",
+          "score": 7.4525,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "national guideline",
+          "score": 6.5343,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pandemic influenza",
+          "score": 1.0212,
+          "evidence": []
+        },
+        {
+          "term": "regulatory capacity",
+          "score": 0.6387,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "influenza products",
+          "score": 0.6292,
+          "evidence": []
+        },
+        {
+          "term": "regulatory preparedness",
+          "score": 0.4203,
+          "evidence": []
+        },
+        {
+          "term": "support activities",
+          "score": 0.3418,
+          "evidence": []
+        },
+        {
+          "term": "countries regions",
+          "score": 0.3368,
+          "evidence": []
+        },
+        {
+          "term": "national regulatory",
+          "score": 0.3262,
+          "evidence": []
+        },
+        {
+          "term": "technical support",
+          "score": 0.3016,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 49.521,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 41.4255,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 41.4255,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 40.3306,
+          "evidence": []
+        },
+        {
+          "term": "见下面第",
+          "score": 37.4139,
+          "evidence": []
+        },
+        {
+          "term": "疫苗储备",
+          "score": 34.0879,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 33.8777,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 32.1872,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-007-risk-communications-community-engagement": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "community engagement",
+          "score": 3.1162,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pandemic influenza",
+          "score": 3.0235,
+          "evidence": []
+        },
+        {
+          "term": "influenza preparedness",
+          "score": 3.0043,
+          "evidence": []
+        },
+        {
+          "term": "epi-win communities",
+          "score": 2.5916,
+          "evidence": []
+        },
+        {
+          "term": "influenza modules",
+          "score": 2.3168,
+          "evidence": []
+        },
+        {
+          "term": "influenza risk",
+          "score": 2.0832,
+          "evidence": []
+        },
+        {
+          "term": "respiratory pathogen",
+          "score": 1.4583,
+          "evidence": []
+        },
+        {
+          "term": "ears",
+          "score": 1.4528,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "pandemic influenza",
+          "score": 121.0289,
+          "evidence": []
+        },
+        {
+          "term": "influenza preparedness",
+          "score": 119.5191,
+          "evidence": []
+        },
+        {
+          "term": "influenza modules",
+          "score": 84.3994,
+          "evidence": []
+        },
+        {
+          "term": "influenza risk",
+          "score": 80.5769,
+          "evidence": []
+        },
+        {
+          "term": "community engagement",
+          "score": 78.2373,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "epi-win communities",
+          "score": 63.435,
+          "evidence": []
+        },
+        {
+          "term": "platform",
+          "score": 33.7649,
+          "evidence": []
+        },
+        {
+          "term": "ears",
+          "score": 31.2608,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pandemic influenza",
+          "score": 1.2153,
+          "evidence": []
+        },
+        {
+          "term": "influenza preparedness",
+          "score": 0.9864,
+          "evidence": []
+        },
+        {
+          "term": "influenza risk",
+          "score": 0.7809,
+          "evidence": []
+        },
+        {
+          "term": "influenza modules",
+          "score": 0.6435,
+          "evidence": []
+        },
+        {
+          "term": "viruses",
+          "score": 0.3691,
+          "evidence": []
+        },
+        {
+          "term": "response",
+          "score": 0.3317,
+          "evidence": []
+        },
+        {
+          "term": "gisrs",
+          "score": 0.3309,
+          "evidence": []
+        },
+        {
+          "term": "laboratories",
+          "score": 0.2912,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "pandemic influenza",
+          "score": 53.7155,
+          "evidence": []
+        },
+        {
+          "term": "influenza preparedness",
+          "score": 39.5956,
+          "evidence": []
+        },
+        {
+          "term": "influenza risk",
+          "score": 37.876,
+          "evidence": []
+        },
+        {
+          "term": "influenza modules",
+          "score": 35.0866,
+          "evidence": []
+        },
+        {
+          "term": "laboratories",
+          "score": 20.1127,
+          "evidence": []
+        },
+        {
+          "term": "viruses",
+          "score": 17.5115,
+          "evidence": []
+        },
+        {
+          "term": "gisrs",
+          "score": 16.8912,
+          "evidence": []
+        },
+        {
+          "term": "guiding",
+          "score": 14.1147,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pandemic influenza",
+          "score": 1.2153,
+          "evidence": []
+        },
+        {
+          "term": "influenza preparedness",
+          "score": 0.9864,
+          "evidence": []
+        },
+        {
+          "term": "influenza risk",
+          "score": 0.7809,
+          "evidence": []
+        },
+        {
+          "term": "influenza modules",
+          "score": 0.6693,
+          "evidence": []
+        },
+        {
+          "term": "community engagement",
+          "score": 0.3805,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "response",
+          "score": 0.3317,
+          "evidence": []
+        },
+        {
+          "term": "covid",
+          "score": 0.2827,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 0.2505,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 66.4385,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 34.8877,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 32.8547,
+          "evidence": []
+        },
+        {
+          "term": "对照组",
+          "score": 28.3771,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 26.3839,
+          "evidence": []
+        },
+        {
+          "term": "被称为研究伦理委员会",
+          "score": 25.7228,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 25.4618,
+          "evidence": []
+        },
+        {
+          "term": "见下面第",
+          "score": 23.208,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-008-planning-for-deployment": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "pandemic influenza",
+          "score": 2.6147,
+          "evidence": []
+        },
+        {
+          "term": "influenza preparedness",
+          "score": 2.4552,
+          "evidence": []
+        },
+        {
+          "term": "seasonal influenza",
+          "score": 2.2227,
+          "evidence": []
+        },
+        {
+          "term": "deployment",
+          "score": 2.2036,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "influenza vaccination",
+          "score": 2.2028,
+          "evidence": []
+        },
+        {
+          "term": "influenza vaccine",
+          "score": 2.1353,
+          "evidence": []
+        },
+        {
+          "term": "national deployment",
+          "score": 1.6287,
+          "evidence": []
+        },
+        {
+          "term": "global deployment",
+          "score": 1.5909,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "pandemic influenza",
+          "score": 80.686,
+          "evidence": []
+        },
+        {
+          "term": "deployment",
+          "score": 72.9721,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "influenza preparedness",
+          "score": 72.2662,
+          "evidence": []
+        },
+        {
+          "term": "influenza vaccination",
+          "score": 63.1658,
+          "evidence": []
+        },
+        {
+          "term": "seasonal influenza",
+          "score": 61.1899,
+          "evidence": []
+        },
+        {
+          "term": "influenza vaccine",
+          "score": 59.3257,
+          "evidence": []
+        },
+        {
+          "term": "national deployment",
+          "score": 46.1097,
+          "evidence": []
+        },
+        {
+          "term": "global deployment",
+          "score": 44.4155,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pandemic influenza",
+          "score": 1.2092,
+          "evidence": []
+        },
+        {
+          "term": "influenza vaccine",
+          "score": 1.0788,
+          "evidence": []
+        },
+        {
+          "term": "influenza preparedness",
+          "score": 0.9887,
+          "evidence": []
+        },
+        {
+          "term": "influenza vaccination",
+          "score": 0.88,
+          "evidence": []
+        },
+        {
+          "term": "seasonal influenza",
+          "score": 0.7668,
+          "evidence": []
+        },
+        {
+          "term": "vaccination plan",
+          "score": 0.4372,
+          "evidence": []
+        },
+        {
+          "term": "vaccine procurement",
+          "score": 0.4191,
+          "evidence": []
+        },
+        {
+          "term": "national deployment",
+          "score": 0.414,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "pandemic influenza",
+          "score": 37.3929,
+          "evidence": []
+        },
+        {
+          "term": "influenza vaccine",
+          "score": 31.4313,
+          "evidence": []
+        },
+        {
+          "term": "influenza vaccination",
+          "score": 29.5862,
+          "evidence": []
+        },
+        {
+          "term": "influenza preparedness",
+          "score": 28.0782,
+          "evidence": []
+        },
+        {
+          "term": "seasonal influenza",
+          "score": 24.9385,
+          "evidence": []
+        },
+        {
+          "term": "laboratories",
+          "score": 14.1176,
+          "evidence": []
+        },
+        {
+          "term": "viruses",
+          "score": 12.5085,
+          "evidence": []
+        },
+        {
+          "term": "gisrs",
+          "score": 11.9846,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pandemic influenza",
+          "score": 1.2092,
+          "evidence": []
+        },
+        {
+          "term": "influenza vaccine",
+          "score": 1.0788,
+          "evidence": []
+        },
+        {
+          "term": "influenza preparedness",
+          "score": 0.9887,
+          "evidence": []
+        },
+        {
+          "term": "influenza vaccination",
+          "score": 0.88,
+          "evidence": []
+        },
+        {
+          "term": "seasonal influenza",
+          "score": 0.7668,
+          "evidence": []
+        },
+        {
+          "term": "vaccine procurement",
+          "score": 0.4473,
+          "evidence": []
+        },
+        {
+          "term": "vaccination plan",
+          "score": 0.4372,
+          "evidence": []
+        },
+        {
+          "term": "national deployment",
+          "score": 0.414,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 51.3205,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 30.3501,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 26.9287,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 25.8402,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 24.6772,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 24.6772,
+          "evidence": []
+        },
+        {
+          "term": "见下面第",
+          "score": 23.9787,
+          "evidence": []
+        },
+        {
+          "term": "平等主义",
+          "score": 22.9894,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-009-influenza-pandemic-preparedness-planning": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "pandemic preparedness",
+          "score": 4.6645,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pandemic influenza",
+          "score": 3.8698,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ippp",
+          "score": 1.6008,
+          "evidence": []
+        },
+        {
+          "term": "multi sectoral",
+          "score": 1.4589,
+          "evidence": []
+        },
+        {
+          "term": "simulation exercise",
+          "score": 1.3825,
+          "evidence": []
+        },
+        {
+          "term": "exercise package",
+          "score": 1.1091,
+          "evidence": []
+        },
+        {
+          "term": "recipient",
+          "score": 1.105,
+          "evidence": []
+        },
+        {
+          "term": "planning",
+          "score": 0.9332,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "pandemic preparedness",
+          "score": 132.4852,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pandemic influenza",
+          "score": 86.332,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ippp",
+          "score": 42.7324,
+          "evidence": []
+        },
+        {
+          "term": "multi sectoral",
+          "score": 23.3286,
+          "evidence": []
+        },
+        {
+          "term": "recipient",
+          "score": 21.1049,
+          "evidence": []
+        },
+        {
+          "term": "simulation exercise",
+          "score": 20.9048,
+          "evidence": []
+        },
+        {
+          "term": "exercise package",
+          "score": 16.1574,
+          "evidence": []
+        },
+        {
+          "term": "response",
+          "score": 16.0647,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pandemic influenza",
+          "score": 1.9413,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pandemic preparedness",
+          "score": 1.4497,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "viruses",
+          "score": 0.3061,
+          "evidence": []
+        },
+        {
+          "term": "gisrs",
+          "score": 0.2774,
+          "evidence": []
+        },
+        {
+          "term": "laboratories",
+          "score": 0.2409,
+          "evidence": []
+        },
+        {
+          "term": "response",
+          "score": 0.2371,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 0.2358,
+          "evidence": []
+        },
+        {
+          "term": "global",
+          "score": 0.2189,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "pandemic influenza",
+          "score": 39.2657,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pandemic preparedness",
+          "score": 17.7379,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "laboratories",
+          "score": 7.1547,
+          "evidence": []
+        },
+        {
+          "term": "covid",
+          "score": 6.7631,
+          "evidence": []
+        },
+        {
+          "term": "viruses",
+          "score": 6.1691,
+          "evidence": []
+        },
+        {
+          "term": "somalia",
+          "score": 6.1498,
+          "evidence": []
+        },
+        {
+          "term": "gisrs",
+          "score": 5.916,
+          "evidence": []
+        },
+        {
+          "term": "guiding",
+          "score": 5.021,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pandemic influenza",
+          "score": 1.9413,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pandemic preparedness",
+          "score": 1.4497,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "response",
+          "score": 0.2371,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 0.2358,
+          "evidence": []
+        },
+        {
+          "term": "global",
+          "score": 0.2189,
+          "evidence": []
+        },
+        {
+          "term": "covid",
+          "score": 0.2004,
+          "evidence": []
+        },
+        {
+          "term": "planning",
+          "score": 0.1871,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "national",
+          "score": 0.1863,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 45.0842,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 29.1333,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 29.1333,
+          "evidence": []
+        },
+        {
+          "term": "见下面第",
+          "score": 27.1375,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 26.1864,
+          "evidence": []
+        },
+        {
+          "term": "下面统称",
+          "score": 25.3901,
+          "evidence": []
+        },
+        {
+          "term": "本协议条款适用于由提供者转让给接受者的",
+          "score": 25.3901,
+          "evidence": []
+        },
+        {
+          "term": "节中所定义",
+          "score": 25.3901,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-010-pip-framework-secretariat": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "pip secretariat",
+          "score": 4.113,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pip framework",
+          "score": 3.8469,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pip advisory",
+          "score": 2.3926,
+          "evidence": []
+        },
+        {
+          "term": "hlip iii",
+          "score": 1.8071,
+          "evidence": []
+        },
+        {
+          "term": "advisory group",
+          "score": 1.7084,
+          "evidence": []
+        },
+        {
+          "term": "agwg",
+          "score": 1.2988,
+          "evidence": []
+        },
+        {
+          "term": "proportional division",
+          "score": 1.2968,
+          "evidence": []
+        },
+        {
+          "term": "draft decision",
+          "score": 1.2044,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "pip secretariat",
+          "score": 130.595,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pip framework",
+          "score": 127.309,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pip advisory",
+          "score": 81.4006,
+          "evidence": []
+        },
+        {
+          "term": "advisory group",
+          "score": 46.4243,
+          "evidence": []
+        },
+        {
+          "term": "hlip iii",
+          "score": 36.4582,
+          "evidence": []
+        },
+        {
+          "term": "agwg",
+          "score": 24.662,
+          "evidence": []
+        },
+        {
+          "term": "draft decision",
+          "score": 20.6246,
+          "evidence": []
+        },
+        {
+          "term": "proportional division",
+          "score": 20.4168,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pip framework",
+          "score": 1.0081,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pip secretariat",
+          "score": 0.7679,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "influenza",
+          "score": 0.6564,
+          "evidence": []
+        },
+        {
+          "term": "pandemic",
+          "score": 0.5432,
+          "evidence": []
+        },
+        {
+          "term": "viruses",
+          "score": 0.3978,
+          "evidence": []
+        },
+        {
+          "term": "pip advisory",
+          "score": 0.3961,
+          "evidence": []
+        },
+        {
+          "term": "advisory group",
+          "score": 0.3828,
+          "evidence": []
+        },
+        {
+          "term": "gisrs",
+          "score": 0.3789,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "influenza",
+          "score": 9.994,
+          "evidence": []
+        },
+        {
+          "term": "pandemic",
+          "score": 5.6037,
+          "evidence": []
+        },
+        {
+          "term": "laboratories",
+          "score": 5.5259,
+          "evidence": []
+        },
+        {
+          "term": "covid",
+          "score": 5.1939,
+          "evidence": []
+        },
+        {
+          "term": "gisrs",
+          "score": 5.1361,
+          "evidence": []
+        },
+        {
+          "term": "viruses",
+          "score": 4.8628,
+          "evidence": []
+        },
+        {
+          "term": "somalia",
+          "score": 4.4794,
+          "evidence": []
+        },
+        {
+          "term": "pip framework",
+          "score": 4.3337,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pip framework",
+          "score": 1.0081,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pip secretariat",
+          "score": 0.7679,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "influenza",
+          "score": 0.6564,
+          "evidence": []
+        },
+        {
+          "term": "pip advisory",
+          "score": 0.3961,
+          "evidence": []
+        },
+        {
+          "term": "advisory group",
+          "score": 0.3828,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 0.3408,
+          "evidence": []
+        },
+        {
+          "term": "preparedness",
+          "score": 0.337,
+          "evidence": []
+        },
+        {
+          "term": "global",
+          "score": 0.2839,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 98.3274,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 98.3274,
+          "evidence": []
+        },
+        {
+          "term": "协议的主题事项",
+          "score": 92.4528,
+          "evidence": []
+        },
+        {
+          "term": "协议缔约方",
+          "score": 92.4528,
+          "evidence": []
+        },
+        {
+          "term": "第1条",
+          "score": 92.4528,
+          "evidence": []
+        },
+        {
+          "term": "第2条",
+          "score": 92.4528,
+          "evidence": []
+        },
+        {
+          "term": "下面统称",
+          "score": 92.4528,
+          "evidence": []
+        },
+        {
+          "term": "本协议条款适用于由提供者转让给接受者的",
+          "score": 92.4528,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-011-stories-from-the-field": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "influenza viruses",
+          "score": 4.0695,
+          "evidence": []
+        },
+        {
+          "term": "seasonal influenza",
+          "score": 4.0469,
+          "evidence": []
+        },
+        {
+          "term": "influenza pandemic",
+          "score": 3.9744,
+          "evidence": []
+        },
+        {
+          "term": "influenza surveillance",
+          "score": 3.4834,
+          "evidence": []
+        },
+        {
+          "term": "influenza sentinel",
+          "score": 3.3575,
+          "evidence": []
+        },
+        {
+          "term": "influenza burden",
+          "score": 3.1512,
+          "evidence": []
+        },
+        {
+          "term": "national influenza",
+          "score": 3.1481,
+          "evidence": []
+        },
+        {
+          "term": "global influenza",
+          "score": 3.1341,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "influenza pandemic",
+          "score": 317.0979,
+          "evidence": []
+        },
+        {
+          "term": "seasonal influenza",
+          "score": 292.0993,
+          "evidence": []
+        },
+        {
+          "term": "influenza viruses",
+          "score": 290.4344,
+          "evidence": []
+        },
+        {
+          "term": "influenza surveillance",
+          "score": 286.1674,
+          "evidence": []
+        },
+        {
+          "term": "national influenza",
+          "score": 258.8026,
+          "evidence": []
+        },
+        {
+          "term": "global influenza",
+          "score": 252.8728,
+          "evidence": []
+        },
+        {
+          "term": "influenza burden",
+          "score": 251.2871,
+          "evidence": []
+        },
+        {
+          "term": "future influenza",
+          "score": 249.1441,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "influenza pandemic",
+          "score": 3.6942,
+          "evidence": []
+        },
+        {
+          "term": "influenza viruses",
+          "score": 3.244,
+          "evidence": []
+        },
+        {
+          "term": "influenza vaccine",
+          "score": 2.9969,
+          "evidence": []
+        },
+        {
+          "term": "global influenza",
+          "score": 2.9208,
+          "evidence": []
+        },
+        {
+          "term": "national influenza",
+          "score": 2.8278,
+          "evidence": []
+        },
+        {
+          "term": "influenza surveillance",
+          "score": 2.7708,
+          "evidence": []
+        },
+        {
+          "term": "pandemic preparedness",
+          "score": 2.6755,
+          "evidence": []
+        },
+        {
+          "term": "pandemic response",
+          "score": 2.538,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "influenza viruses",
+          "score": 210.1838,
+          "evidence": []
+        },
+        {
+          "term": "influenza pandemic",
+          "score": 207.4968,
+          "evidence": []
+        },
+        {
+          "term": "influenza vaccine",
+          "score": 158.5516,
+          "evidence": []
+        },
+        {
+          "term": "influenza surveillance",
+          "score": 158.192,
+          "evidence": []
+        },
+        {
+          "term": "national influenza",
+          "score": 156.8289,
+          "evidence": []
+        },
+        {
+          "term": "global influenza",
+          "score": 155.4083,
+          "evidence": []
+        },
+        {
+          "term": "influenza centre",
+          "score": 148.507,
+          "evidence": []
+        },
+        {
+          "term": "future influenza",
+          "score": 144.1165,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "influenza pandemic",
+          "score": 3.6942,
+          "evidence": []
+        },
+        {
+          "term": "influenza viruses",
+          "score": 3.244,
+          "evidence": []
+        },
+        {
+          "term": "influenza vaccine",
+          "score": 2.9969,
+          "evidence": []
+        },
+        {
+          "term": "global influenza",
+          "score": 2.9208,
+          "evidence": []
+        },
+        {
+          "term": "national influenza",
+          "score": 2.8278,
+          "evidence": []
+        },
+        {
+          "term": "influenza surveillance",
+          "score": 2.7708,
+          "evidence": []
+        },
+        {
+          "term": "pandemic preparedness",
+          "score": 2.6755,
+          "evidence": []
+        },
+        {
+          "term": "pandemic response",
+          "score": 2.538,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 41.0086,
+          "evidence": []
+        },
+        {
+          "term": "下面统称",
+          "score": 29.1382,
+          "evidence": []
+        },
+        {
+          "term": "本协议条款适用于由提供者转让给接受者的",
+          "score": 29.1382,
+          "evidence": []
+        },
+        {
+          "term": "节中所定义",
+          "score": 29.1382,
+          "evidence": []
+        },
+        {
+          "term": "协议的主题事项",
+          "score": 29.1382,
+          "evidence": []
+        },
+        {
+          "term": "协议缔约方",
+          "score": 29.1382,
+          "evidence": []
+        },
+        {
+          "term": "第1条",
+          "score": 29.1382,
+          "evidence": []
+        },
+        {
+          "term": "第2条",
+          "score": 29.1382,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-012-annex-financial-report": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "vaccines ltd",
+          "score": 3.1909,
+          "evidence": []
+        },
+        {
+          "term": "biotech ltd",
+          "score": 3.0712,
+          "evidence": []
+        },
+        {
+          "term": "india ltd",
+          "score": 2.7091,
+          "evidence": []
+        },
+        {
+          "term": "influenza preparedness",
+          "score": 2.6547,
+          "evidence": []
+        },
+        {
+          "term": "pandemic influenza",
+          "score": 2.5275,
+          "evidence": []
+        },
+        {
+          "term": "response funds",
+          "score": 2.4153,
+          "evidence": []
+        },
+        {
+          "term": "balance funds",
+          "score": 2.3939,
+          "evidence": []
+        },
+        {
+          "term": "funds distributed",
+          "score": 2.384,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "vaccines ltd",
+          "score": 145.1005,
+          "evidence": []
+        },
+        {
+          "term": "biotech ltd",
+          "score": 137.6484,
+          "evidence": []
+        },
+        {
+          "term": "india ltd",
+          "score": 131.4572,
+          "evidence": []
+        },
+        {
+          "term": "response funds",
+          "score": 97.6383,
+          "evidence": []
+        },
+        {
+          "term": "balance funds",
+          "score": 90.0801,
+          "evidence": []
+        },
+        {
+          "term": "funds distributed",
+          "score": 89.6654,
+          "evidence": []
+        },
+        {
+          "term": "influenza preparedness",
+          "score": 85.3309,
+          "evidence": []
+        },
+        {
+          "term": "pandemic influenza",
+          "score": 77.19,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pandemic influenza",
+          "score": 1.7773,
+          "evidence": []
+        },
+        {
+          "term": "influenza preparedness",
+          "score": 1.4975,
+          "evidence": []
+        },
+        {
+          "term": "influenza products",
+          "score": 1.1766,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 0.662,
+          "evidence": []
+        },
+        {
+          "term": "viruses",
+          "score": 0.6075,
+          "evidence": []
+        },
+        {
+          "term": "gisrs",
+          "score": 0.581,
+          "evidence": []
+        },
+        {
+          "term": "response funds",
+          "score": 0.5466,
+          "evidence": []
+        },
+        {
+          "term": "innovative vaccines",
+          "score": 0.5435,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "pandemic influenza",
+          "score": 45.0999,
+          "evidence": []
+        },
+        {
+          "term": "influenza preparedness",
+          "score": 34.2507,
+          "evidence": []
+        },
+        {
+          "term": "influenza products",
+          "score": 31.7527,
+          "evidence": []
+        },
+        {
+          "term": "laboratories",
+          "score": 16.9095,
+          "evidence": []
+        },
+        {
+          "term": "gisrs",
+          "score": 15.2588,
+          "evidence": []
+        },
+        {
+          "term": "viruses",
+          "score": 15.0929,
+          "evidence": []
+        },
+        {
+          "term": "guiding",
+          "score": 12.1996,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 9.6652,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pandemic influenza",
+          "score": 1.7773,
+          "evidence": []
+        },
+        {
+          "term": "influenza preparedness",
+          "score": 1.4975,
+          "evidence": []
+        },
+        {
+          "term": "influenza products",
+          "score": 1.1766,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 0.662,
+          "evidence": []
+        },
+        {
+          "term": "vaccines ltd",
+          "score": 0.6064,
+          "evidence": []
+        },
+        {
+          "term": "innovative vaccines",
+          "score": 0.5948,
+          "evidence": []
+        },
+        {
+          "term": "response funds",
+          "score": 0.5466,
+          "evidence": []
+        },
+        {
+          "term": "biological products",
+          "score": 0.5373,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "个试验结果一样",
+          "score": 162.4783,
+          "evidence": []
+        },
+        {
+          "term": "年发表了一篇有关奥司他韦",
+          "score": 162.4783,
+          "evidence": []
+        },
+        {
+          "term": "是如同我们知道的未发表和未见到的",
+          "score": 162.4783,
+          "evidence": []
+        },
+        {
+          "term": "治疗药物的理由",
+          "score": 162.4783,
+          "evidence": []
+        },
+        {
+          "term": "篇未发表的研究数据",
+          "score": 162.4783,
+          "evidence": []
+        },
+        {
+          "term": "综述的作者指出",
+          "score": 162.4783,
+          "evidence": []
+        },
+        {
+          "term": "罗氏有限公司",
+          "score": 162.4783,
+          "evidence": []
+        },
+        {
+          "term": "罗氏有限公司赞助的",
+          "score": 162.4783,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "influenza pandemic",
+          "score": 2.6229,
+          "evidence": []
+        },
+        {
+          "term": "influenza preparedness",
+          "score": 2.5658,
+          "evidence": []
+        },
+        {
+          "term": "influenza virus",
+          "score": 2.0376,
+          "evidence": []
+        },
+        {
+          "term": "preparedness framework",
+          "score": 1.8052,
+          "evidence": []
+        },
+        {
+          "term": "january december",
+          "score": 1.7601,
+          "evidence": []
+        },
+        {
+          "term": "preparedness planning",
+          "score": 1.6744,
+          "evidence": []
+        },
+        {
+          "term": "report january",
+          "score": 1.6033,
+          "evidence": []
+        },
+        {
+          "term": "report month",
+          "score": 1.4881,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "influenza pandemic",
+          "score": 80.3495,
+          "evidence": []
+        },
+        {
+          "term": "influenza preparedness",
+          "score": 76.9931,
+          "evidence": []
+        },
+        {
+          "term": "influenza virus",
+          "score": 54.4289,
+          "evidence": []
+        },
+        {
+          "term": "preparedness framework",
+          "score": 47.165,
+          "evidence": []
+        },
+        {
+          "term": "preparedness planning",
+          "score": 40.5522,
+          "evidence": []
+        },
+        {
+          "term": "report january",
+          "score": 37.627,
+          "evidence": []
+        },
+        {
+          "term": "progress report",
+          "score": 36.5247,
+          "evidence": []
+        },
+        {
+          "term": "report month",
+          "score": 35.8973,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "influenza pandemic",
+          "score": 1.4244,
+          "evidence": []
+        },
+        {
+          "term": "influenza preparedness",
+          "score": 1.2035,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 1.0993,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 1.0921,
+          "evidence": []
+        },
+        {
+          "term": "influenza virus",
+          "score": 1.0447,
+          "evidence": []
+        },
+        {
+          "term": "creative commons",
+          "score": 0.9925,
+          "evidence": []
+        },
+        {
+          "term": "material",
+          "score": 0.912,
+          "evidence": []
+        },
+        {
+          "term": "suggested citation",
+          "score": 0.8601,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "influenza pandemic",
+          "score": 41.1384,
+          "evidence": []
+        },
+        {
+          "term": "influenza preparedness",
+          "score": 31.4169,
+          "evidence": []
+        },
+        {
+          "term": "influenza virus",
+          "score": 30.6271,
+          "evidence": []
+        },
+        {
+          "term": "laboratories",
+          "score": 15.5686,
+          "evidence": []
+        },
+        {
+          "term": "gisrs",
+          "score": 14.4849,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 14.4317,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 14.2897,
+          "evidence": []
+        },
+        {
+          "term": "viruses",
+          "score": 13.8675,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "influenza pandemic",
+          "score": 1.4244,
+          "evidence": []
+        },
+        {
+          "term": "influenza preparedness",
+          "score": 1.2035,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 1.0993,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 1.0921,
+          "evidence": []
+        },
+        {
+          "term": "influenza virus",
+          "score": 1.0447,
+          "evidence": []
+        },
+        {
+          "term": "creative commons",
+          "score": 0.9925,
+          "evidence": []
+        },
+        {
+          "term": "material",
+          "score": 0.912,
+          "evidence": []
+        },
+        {
+          "term": "suggested citation",
+          "score": 0.8601,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 53.3474,
+          "evidence": []
+        },
+        {
+          "term": "见下面第",
+          "score": 47.1276,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 42.3154,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 42.3154,
+          "evidence": []
+        },
+        {
+          "term": "下面统称",
+          "score": 42.1442,
+          "evidence": []
+        },
+        {
+          "term": "本协议条款适用于由提供者转让给接受者的",
+          "score": 42.1442,
+          "evidence": []
+        },
+        {
+          "term": "节中所定义",
+          "score": 42.1442,
+          "evidence": []
+        },
+        {
+          "term": "协议的主题事项",
+          "score": 42.1442,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

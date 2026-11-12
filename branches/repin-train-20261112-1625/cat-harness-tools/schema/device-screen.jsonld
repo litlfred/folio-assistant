@@ -1,0 +1,40 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/cat-harness-tools/cat-harness-tools.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/cat-harness-tools/schema/device-screen.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/cat-harness-tools/cat-harness-tools.jsonld",
+  "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/device-screen.jsonld",
+  "staging": {
+    "branch": "repin-train/20261112-1625",
+    "sha": "6ca206c84dafc1f6a11bf0c86a9c4c99eaad9882",
+    "pr": "repin-train/20261112-1625",
+    "run": "43258944433"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/device-screen",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "device-screen",
+      "title": "device-screen",
+      "summary": "Device screens: what one person sees on one device at a moment of a",
+      "module": "schemas/process/device-screen.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-schemas",
+      "jsonSchema": [
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/device-screen/ActionsBlockSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/device-screen/AlertBlockSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/device-screen/ConsentBlockSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/device-screen/DeviceScreenSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/device-screen/FieldsBlockSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/device-screen/HeaderBlockSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/device-screen/NoteBlockSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/device-screen/PasscodeBlockSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/device-screen/PersonCardBlockSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/device-screen/QrBlockSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/device-screen/RecordListBlockSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/device-screen/ScreenBlockSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/device-screen/ScreenGlyphSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/device-screen/ScreenStateSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/device-screen/StatusBadgeBlockSchema.schema.json"
+      ]
+    }
+  ]
+}

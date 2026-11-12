@@ -1,0 +1,788 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-172045",
+  "instance": "who-iris",
+  "about": "library/10665-172045",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7434,
+    "terms": 71211
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "cosponsored united",
+        "score": 2.8004,
+        "evidence": []
+      },
+      {
+        "term": "united nations",
+        "score": 2.3112,
+        "evidence": []
+      },
+      {
+        "term": "consensus option",
+        "score": 2.2981,
+        "evidence": []
+      },
+      {
+        "term": "nations programme",
+        "score": 2.0329,
+        "evidence": []
+      },
+      {
+        "term": "executive heads",
+        "score": 1.6129,
+        "evidence": []
+      },
+      {
+        "term": "executive board",
+        "score": 1.6054,
+        "evidence": []
+      },
+      {
+        "term": "director-general",
+        "score": 1.3671,
+        "evidence": []
+      },
+      {
+        "term": "world health",
+        "score": 1.1082,
+        "evidence": []
+      },
+      {
+        "term": "resolution",
+        "score": 1.1044,
+        "evidence": []
+      },
+      {
+        "term": "professor",
+        "score": 1.0871,
+        "evidence": []
+      },
+      {
+        "term": "secretary-general",
+        "score": 1.0282,
+        "evidence": []
+      },
+      {
+        "term": "establishment",
+        "score": 1.0277,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "united nations",
+        "score": 56.981,
+        "evidence": []
+      },
+      {
+        "term": "cosponsored united",
+        "score": 54.7665,
+        "evidence": []
+      },
+      {
+        "term": "nations programme",
+        "score": 43.6882,
+        "evidence": []
+      },
+      {
+        "term": "consensus option",
+        "score": 37.4301,
+        "evidence": []
+      },
+      {
+        "term": "executive board",
+        "score": 34.1529,
+        "evidence": []
+      },
+      {
+        "term": "executive heads",
+        "score": 32.7929,
+        "evidence": []
+      },
+      {
+        "term": "professor",
+        "score": 23.1133,
+        "evidence": []
+      },
+      {
+        "term": "director-general",
+        "score": 23.0488,
+        "evidence": []
+      },
+      {
+        "term": "resolution",
+        "score": 17.7916,
+        "evidence": []
+      },
+      {
+        "term": "establishment",
+        "score": 15.1279,
+        "evidence": []
+      },
+      {
+        "term": "joint",
+        "score": 14.0808,
+        "evidence": []
+      },
+      {
+        "term": "secretary-general",
+        "score": 13.2225,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "world health",
+        "score": 0.482,
+        "evidence": []
+      },
+      {
+        "term": "united nations",
+        "score": 0.403,
+        "evidence": []
+      },
+      {
+        "term": "nations programme",
+        "score": 0.317,
+        "evidence": []
+      },
+      {
+        "term": "organization",
+        "score": 0.2424,
+        "evidence": []
+      },
+      {
+        "term": "geneva",
+        "score": 0.2249,
+        "evidence": []
+      },
+      {
+        "term": "international",
+        "score": 0.2158,
+        "evidence": []
+      },
+      {
+        "term": "cosponsored united",
+        "score": 0.2056,
+        "evidence": []
+      },
+      {
+        "term": "aids",
+        "score": 0.2008,
+        "evidence": []
+      },
+      {
+        "term": "global",
+        "score": 0.1997,
+        "evidence": []
+      },
+      {
+        "term": "accessed",
+        "score": 0.1929,
+        "evidence": []
+      },
+      {
+        "term": "research",
+        "score": 0.1495,
+        "evidence": []
+      },
+      {
+        "term": "states",
+        "score": 0.1491,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "world health",
+        "score": 8.5859,
+        "evidence": []
+      },
+      {
+        "term": "united nations",
+        "score": 8.0464,
+        "evidence": []
+      },
+      {
+        "term": "cosponsored united",
+        "score": 5.5647,
+        "evidence": []
+      },
+      {
+        "term": "favours",
+        "score": 4.7624,
+        "evidence": []
+      },
+      {
+        "term": "university",
+        "score": 4.7442,
+        "evidence": []
+      },
+      {
+        "term": "nations programme",
+        "score": 3.8988,
+        "evidence": []
+      },
+      {
+        "term": "aids",
+        "score": 3.5661,
+        "evidence": []
+      },
+      {
+        "term": "geneva",
+        "score": 3.5092,
+        "evidence": []
+      },
+      {
+        "term": "organization",
+        "score": 3.3932,
+        "evidence": []
+      },
+      {
+        "term": "consensus option",
+        "score": 3.3648,
+        "evidence": []
+      },
+      {
+        "term": "men",
+        "score": 3.3024,
+        "evidence": []
+      },
+      {
+        "term": "usa",
+        "score": 3.0263,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "world health",
+        "score": 0.482,
+        "evidence": []
+      },
+      {
+        "term": "united nations",
+        "score": 0.403,
+        "evidence": []
+      },
+      {
+        "term": "nations programme",
+        "score": 0.317,
+        "evidence": []
+      },
+      {
+        "term": "organization",
+        "score": 0.2424,
+        "evidence": []
+      },
+      {
+        "term": "cosponsored united",
+        "score": 0.2122,
+        "evidence": []
+      },
+      {
+        "term": "global",
+        "score": 0.1997,
+        "evidence": []
+      },
+      {
+        "term": "development",
+        "score": 0.1463,
+        "evidence": []
+      },
+      {
+        "term": "consensus option",
+        "score": 0.1436,
+        "evidence": []
+      },
+      {
+        "term": "joint",
+        "score": 0.1254,
+        "evidence": []
+      },
+      {
+        "term": "fund",
+        "score": 0.0993,
+        "evidence": []
+      },
+      {
+        "term": "document",
+        "score": 0.0784,
+        "evidence": []
+      },
+      {
+        "term": "director-general",
+        "score": 0.0726,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "如果没有",
+        "score": 143.6872,
+        "evidence": []
+      },
+      {
+        "term": "询问学员这项原则如何应用于紧急情况下的研究",
+        "score": 103.8133,
+        "evidence": []
+      },
+      {
+        "term": "相一致",
+        "score": 80.2547,
+        "evidence": []
+      },
+      {
+        "term": "关注这一事实",
+        "score": 76.9204,
+        "evidence": []
+      },
+      {
+        "term": "允许进行个人反馈",
+        "score": 71.7194,
+        "evidence": []
+      },
+      {
+        "term": "重要部分",
+        "score": 71.271,
+        "evidence": []
+      },
+      {
+        "term": "数字疗法",
+        "score": 71.016,
+        "evidence": []
+      },
+      {
+        "term": "一致元数据和定义",
+        "score": 69.8466,
+        "evidence": []
+      },
+      {
+        "term": "感染者",
+        "score": 67.6994,
+        "evidence": []
+      },
+      {
+        "term": "教员询问其余学员每个报告人的报告有无遗漏什么内容",
+        "score": 63.8757,
+        "evidence": []
+      },
+      {
+        "term": "咨询小组将由18名成员组成",
+        "score": 61.2232,
+        "evidence": []
+      },
+      {
+        "term": "汇集在流感领域中国际公认的决策者",
+        "score": 61.2232,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-001-no-10": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "cosponsors",
+          "score": 0.6392,
+          "evidence": []
+        },
+        {
+          "term": "establishment",
+          "score": 0.6301,
+          "evidence": []
+        },
+        {
+          "term": "director-general",
+          "score": 0.6044,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "establishment",
+          "score": 10.0852,
+          "evidence": []
+        },
+        {
+          "term": "director-general",
+          "score": 9.2195,
+          "evidence": []
+        },
+        {
+          "term": "cosponsors",
+          "score": 8.2207,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "world",
+          "score": 0.0603,
+          "evidence": []
+        },
+        {
+          "term": "organization",
+          "score": 0.0503,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 0.048,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "favours",
+          "score": 0.9209,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.8711,
+          "evidence": []
+        },
+        {
+          "term": "option",
+          "score": 0.7649,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "world",
+          "score": 0.0603,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.0442,
+          "evidence": []
+        },
+        {
+          "term": "united",
+          "score": 0.0437,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 68.257,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 55.9749,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 48.1845,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "cosponsored united",
+          "score": 1.9801,
+          "evidence": []
+        },
+        {
+          "term": "united nations",
+          "score": 1.7764,
+          "evidence": []
+        },
+        {
+          "term": "executive heads",
+          "score": 1.6129,
+          "evidence": []
+        },
+        {
+          "term": "consensus option",
+          "score": 1.6063,
+          "evidence": []
+        },
+        {
+          "term": "executive board",
+          "score": 1.6054,
+          "evidence": []
+        },
+        {
+          "term": "nations programme",
+          "score": 1.4389,
+          "evidence": []
+        },
+        {
+          "term": "professor",
+          "score": 1.0871,
+          "evidence": []
+        },
+        {
+          "term": "doc",
+          "score": 0.7627,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "united nations",
+          "score": 51.2829,
+          "evidence": []
+        },
+        {
+          "term": "cosponsored united",
+          "score": 45.0166,
+          "evidence": []
+        },
+        {
+          "term": "nations programme",
+          "score": 36.9078,
+          "evidence": []
+        },
+        {
+          "term": "executive board",
+          "score": 34.1529,
+          "evidence": []
+        },
+        {
+          "term": "executive heads",
+          "score": 32.7929,
+          "evidence": []
+        },
+        {
+          "term": "consensus option",
+          "score": 29.9441,
+          "evidence": []
+        },
+        {
+          "term": "professor",
+          "score": 23.1133,
+          "evidence": []
+        },
+        {
+          "term": "director-general",
+          "score": 13.8293,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "world health",
+          "score": 0.3774,
+          "evidence": []
+        },
+        {
+          "term": "united nations",
+          "score": 0.3171,
+          "evidence": []
+        },
+        {
+          "term": "nations programme",
+          "score": 0.2488,
+          "evidence": []
+        },
+        {
+          "term": "organization",
+          "score": 0.1921,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 0.1769,
+          "evidence": []
+        },
+        {
+          "term": "international",
+          "score": 0.1728,
+          "evidence": []
+        },
+        {
+          "term": "aids",
+          "score": 0.1643,
+          "evidence": []
+        },
+        {
+          "term": "cosponsored united",
+          "score": 0.1619,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "world health",
+          "score": 7.124,
+          "evidence": []
+        },
+        {
+          "term": "united nations",
+          "score": 7.0468,
+          "evidence": []
+        },
+        {
+          "term": "cosponsored united",
+          "score": 4.896,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 4.2513,
+          "evidence": []
+        },
+        {
+          "term": "favours",
+          "score": 3.8415,
+          "evidence": []
+        },
+        {
+          "term": "nations programme",
+          "score": 3.3651,
+          "evidence": []
+        },
+        {
+          "term": "aids",
+          "score": 3.1719,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 2.9594,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "world health",
+          "score": 0.3774,
+          "evidence": []
+        },
+        {
+          "term": "united nations",
+          "score": 0.3171,
+          "evidence": []
+        },
+        {
+          "term": "nations programme",
+          "score": 0.2488,
+          "evidence": []
+        },
+        {
+          "term": "organization",
+          "score": 0.1921,
+          "evidence": []
+        },
+        {
+          "term": "cosponsored united",
+          "score": 0.1671,
+          "evidence": []
+        },
+        {
+          "term": "global",
+          "score": 0.1609,
+          "evidence": []
+        },
+        {
+          "term": "development",
+          "score": 0.1218,
+          "evidence": []
+        },
+        {
+          "term": "consensus option",
+          "score": 0.1024,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 75.4302,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 47.8384,
+          "evidence": []
+        },
+        {
+          "term": "关注这一事实",
+          "score": 35.1653,
+          "evidence": []
+        },
+        {
+          "term": "数字疗法",
+          "score": 34.1892,
+          "evidence": []
+        },
+        {
+          "term": "一致元数据和定义",
+          "score": 32.0839,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 32.0703,
+          "evidence": []
+        },
+        {
+          "term": "重要部分",
+          "score": 30.4636,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 28.8983,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

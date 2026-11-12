@@ -1,0 +1,123 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/content/content-lifecycle-ext/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/block-change-summary",
+      "@type": "bootstrap:Skill",
+      "name": "block-change-summary",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/37dfa18a8d48eec08c09c312a35585fb492b2de34362d34a689752ead75e1634",
+        "bytes": 4334,
+        "sha256": "37dfa18a8d48eec08c09c312a35585fb492b2de34362d34a689752ead75e1634"
+      },
+      "title": "Block Change Summary"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-author",
+      "@type": "bootstrap:Skill",
+      "name": "content-author",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/db87d9aad42ad0af7af56bf70c9bea824cb34be1f33ce3300063859b1e79ff46",
+        "bytes": 1709,
+        "sha256": "db87d9aad42ad0af7af56bf70c9bea824cb34be1f33ce3300063859b1e79ff46"
+      },
+      "title": "Content Authoring"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-plan",
+      "@type": "bootstrap:Skill",
+      "name": "content-plan",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1f4d7044eb58e715c4f81db0eb202a178f70630056527cb8dd2ea372aec00c1e",
+        "bytes": 819,
+        "sha256": "1f4d7044eb58e715c4f81db0eb202a178f70630056527cb8dd2ea372aec00c1e"
+      },
+      "title": "Content Planning"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-publish",
+      "@type": "bootstrap:Skill",
+      "name": "content-publish",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/91a25beeacaba1a9ea03668a537338317b586d57417d2f8201d3c61c93f6b053",
+        "bytes": 1271,
+        "sha256": "91a25beeacaba1a9ea03668a537338317b586d57417d2f8201d3c61c93f6b053"
+      },
+      "title": "Content Publication"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-retire",
+      "@type": "bootstrap:Skill",
+      "name": "content-retire",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/0461e4044e3d917944a15d9b3f1f565fb0c5ae8e6a41a2bd1f939435f8165609",
+        "bytes": 649,
+        "sha256": "0461e4044e3d917944a15d9b3f1f565fb0c5ae8e6a41a2bd1f939435f8165609"
+      },
+      "title": "Content Retirement"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/corpus-commit-contract",
+      "@type": "bootstrap:Skill",
+      "name": "corpus-commit-contract",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1a95381c1cc8a4d5647f367fddcf54345385781776410c6fc26a3b1ad24c4cd0",
+        "bytes": 2590,
+        "sha256": "1a95381c1cc8a4d5647f367fddcf54345385781776410c6fc26a3b1ad24c4cd0"
+      },
+      "title": "Corpus — committing an accepted edit"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/diff",
+      "@type": "bootstrap:Skill",
+      "name": "diff",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9941234f1c135b245ea7ce2849f0ff88c19caaa068076c5e5d2da4a24ed897fa",
+        "bytes": 6363,
+        "sha256": "9941234f1c135b245ea7ce2849f0ff88c19caaa068076c5e5d2da4a24ed897fa"
+      },
+      "title": "Diff — Content Block Change Report"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/quality-control",
+      "@type": "bootstrap:Skill",
+      "name": "quality-control",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e75569e7720c01aba43762ac123a8df8fcb490468ca576267883e4dc8b99efb5",
+        "bytes": 2829,
+        "sha256": "e75569e7720c01aba43762ac123a8df8fcb490468ca576267883e4dc8b99efb5"
+      },
+      "title": "quality-control"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/registry-authority-contract",
+      "@type": "bootstrap:Skill",
+      "name": "registry-authority-contract",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/98ac49b67b73f4e780715695859b35f4c8d98992e5e6f4b044f742fcca9a7a6d",
+        "bytes": 2561,
+        "sha256": "98ac49b67b73f4e780715695859b35f4c8d98992e5e6f4b044f742fcca9a7a6d"
+      },
+      "title": "External registry — confirming a source's authority"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/review-comments",
+      "@type": "bootstrap:Skill",
+      "name": "review-comments",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2f03149ee410f5b2f4edf345e920dc0654033f6056c95de7d522a320e93449dc",
+        "bytes": 19060,
+        "sha256": "2f03149ee410f5b2f4edf345e920dc0654033f6056c95de7d522a320e93449dc"
+      },
+      "title": "Review comments — from a PR comment to a structured todo"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills/content/content-lifecycle-ext",
+  "path": "skills/content/content-lifecycle-ext/"
+}

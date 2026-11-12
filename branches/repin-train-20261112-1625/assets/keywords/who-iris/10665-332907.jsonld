@@ -1,0 +1,5524 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-332907",
+  "instance": "who-iris",
+  "about": "library/10665-332907",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7434,
+    "terms": 71211
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "children living",
+        "score": 21.0903,
+        "evidence": []
+      },
+      {
+        "term": "among children",
+        "score": 18.9387,
+        "evidence": []
+      },
+      {
+        "term": "children younger",
+        "score": 18.6848,
+        "evidence": []
+      },
+      {
+        "term": "children years",
+        "score": 18.6035,
+        "evidence": []
+      },
+      {
+        "term": "advanced hiv",
+        "score": 17.2489,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "antiretroviral therapy",
+        "score": 17.1045,
+        "evidence": []
+      },
+      {
+        "term": "hiv disease",
+        "score": 16.8608,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "children older",
+        "score": 16.7788,
+        "evidence": []
+      },
+      {
+        "term": "hiv-infected children",
+        "score": 16.3835,
+        "evidence": []
+      },
+      {
+        "term": "cryptococcal disease",
+        "score": 16.1793,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "children starting",
+        "score": 15.8943,
+        "evidence": []
+      },
+      {
+        "term": "children admitted",
+        "score": 15.6742,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "children living",
+        "score": 453.9458,
+        "evidence": []
+      },
+      {
+        "term": "children years",
+        "score": 422.5955,
+        "evidence": []
+      },
+      {
+        "term": "children younger",
+        "score": 416.9137,
+        "evidence": []
+      },
+      {
+        "term": "among children",
+        "score": 406.9559,
+        "evidence": []
+      },
+      {
+        "term": "hiv-infected children",
+        "score": 389.9791,
+        "evidence": []
+      },
+      {
+        "term": "advanced hiv",
+        "score": 379.6872,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "antiretroviral therapy",
+        "score": 372.6854,
+        "evidence": []
+      },
+      {
+        "term": "children older",
+        "score": 369.1572,
+        "evidence": []
+      },
+      {
+        "term": "children admitted",
+        "score": 357.2884,
+        "evidence": []
+      },
+      {
+        "term": "children starting",
+        "score": 356.3886,
+        "evidence": []
+      },
+      {
+        "term": "african children",
+        "score": 352.844,
+        "evidence": []
+      },
+      {
+        "term": "hiv disease",
+        "score": 349.969,
+        "evidence": [
+          "heading"
+        ]
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "children living",
+        "score": 12.4889,
+        "evidence": []
+      },
+      {
+        "term": "hiv disease",
+        "score": 12.0457,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "children years",
+        "score": 11.3542,
+        "evidence": []
+      },
+      {
+        "term": "among children",
+        "score": 11.3147,
+        "evidence": []
+      },
+      {
+        "term": "hiv infection",
+        "score": 10.8908,
+        "evidence": []
+      },
+      {
+        "term": "hiv aids",
+        "score": 10.5524,
+        "evidence": []
+      },
+      {
+        "term": "hiv care",
+        "score": 9.9361,
+        "evidence": []
+      },
+      {
+        "term": "hiv-infected children",
+        "score": 9.7975,
+        "evidence": []
+      },
+      {
+        "term": "adolescents living",
+        "score": 9.7384,
+        "evidence": []
+      },
+      {
+        "term": "advanced hiv",
+        "score": 9.6801,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "young children",
+        "score": 9.5796,
+        "evidence": []
+      },
+      {
+        "term": "children younger",
+        "score": 9.4985,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "children living",
+        "score": 318.8105,
+        "evidence": []
+      },
+      {
+        "term": "children years",
+        "score": 277.0669,
+        "evidence": []
+      },
+      {
+        "term": "among children",
+        "score": 271.4056,
+        "evidence": []
+      },
+      {
+        "term": "hiv disease",
+        "score": 253.0094,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "young children",
+        "score": 251.0501,
+        "evidence": []
+      },
+      {
+        "term": "hiv-infected children",
+        "score": 248.1999,
+        "evidence": []
+      },
+      {
+        "term": "children starting",
+        "score": 244.069,
+        "evidence": []
+      },
+      {
+        "term": "children younger",
+        "score": 242.4065,
+        "evidence": []
+      },
+      {
+        "term": "african children",
+        "score": 241.1832,
+        "evidence": []
+      },
+      {
+        "term": "children older",
+        "score": 240.4149,
+        "evidence": []
+      },
+      {
+        "term": "hiv aids",
+        "score": 238.8218,
+        "evidence": []
+      },
+      {
+        "term": "hiv infection",
+        "score": 228.6553,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "children living",
+        "score": 12.4889,
+        "evidence": []
+      },
+      {
+        "term": "hiv disease",
+        "score": 12.0457,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "children years",
+        "score": 11.3542,
+        "evidence": []
+      },
+      {
+        "term": "among children",
+        "score": 11.3147,
+        "evidence": []
+      },
+      {
+        "term": "hiv infection",
+        "score": 10.8908,
+        "evidence": []
+      },
+      {
+        "term": "hiv aids",
+        "score": 10.5524,
+        "evidence": []
+      },
+      {
+        "term": "hiv care",
+        "score": 9.9361,
+        "evidence": []
+      },
+      {
+        "term": "hiv-infected children",
+        "score": 9.7975,
+        "evidence": []
+      },
+      {
+        "term": "adolescents living",
+        "score": 9.7384,
+        "evidence": []
+      },
+      {
+        "term": "advanced hiv",
+        "score": 9.6801,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "young children",
+        "score": 9.5796,
+        "evidence": []
+      },
+      {
+        "term": "children younger",
+        "score": 9.4985,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "严重急性呼吸综合征",
+        "score": 785.0263,
+        "evidence": []
+      },
+      {
+        "term": "个学习目标",
+        "score": 737.7491,
+        "evidence": []
+      },
+      {
+        "term": "个核心能力和",
+        "score": 737.7491,
+        "evidence": []
+      },
+      {
+        "term": "如在公共利益与个体自主权之间",
+        "score": 737.7491,
+        "evidence": []
+      },
+      {
+        "term": "捐助者",
+        "score": 629.5303,
+        "evidence": []
+      },
+      {
+        "term": "公共卫生专家",
+        "score": 517.149,
+        "evidence": []
+      },
+      {
+        "term": "突发事件和",
+        "score": 511.1602,
+        "evidence": []
+      },
+      {
+        "term": "可持续发展目标和世卫组织",
+        "score": 463.9406,
+        "evidence": []
+      },
+      {
+        "term": "要在活动挂图上做好记录",
+        "score": 441.9694,
+        "evidence": []
+      },
+      {
+        "term": "问题的讨论结束",
+        "score": 441.9694,
+        "evidence": []
+      },
+      {
+        "term": "区域和全球各",
+        "score": 423.587,
+        "evidence": []
+      },
+      {
+        "term": "方面的作用",
+        "score": 408.6931,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-abbreviations": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "lpv",
+          "score": 0.4975,
+          "evidence": []
+        },
+        {
+          "term": "efv",
+          "score": 0.4898,
+          "evidence": []
+        },
+        {
+          "term": "bacille",
+          "score": 0.4879,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "bacille",
+          "score": 5.9694,
+          "evidence": []
+        },
+        {
+          "term": "lopinavir",
+          "score": 5.8693,
+          "evidence": []
+        },
+        {
+          "term": "lpv",
+          "score": 5.8693,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "tuberculosis",
+          "score": 0.0877,
+          "evidence": []
+        },
+        {
+          "term": "isoniazid",
+          "score": 0.057,
+          "evidence": []
+        },
+        {
+          "term": "rifampicin",
+          "score": 0.0493,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "tuberculosis",
+          "score": 1.7502,
+          "evidence": []
+        },
+        {
+          "term": "regimen",
+          "score": 1.2091,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 1.0879,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "tuberculosis",
+          "score": 0.0877,
+          "evidence": []
+        },
+        {
+          "term": "isoniazid",
+          "score": 0.057,
+          "evidence": []
+        },
+        {
+          "term": "rifampicin",
+          "score": 0.0493,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 190.3168,
+          "evidence": []
+        },
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 117.0619,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 106.7993,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-001-acknowledgements": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "university",
+          "score": 0.9217,
+          "evidence": []
+        },
+        {
+          "term": "stis programme",
+          "score": 0.9202,
+          "evidence": []
+        },
+        {
+          "term": "united states",
+          "score": 0.8,
+          "evidence": []
+        },
+        {
+          "term": "martina",
+          "score": 0.7931,
+          "evidence": []
+        },
+        {
+          "term": "college",
+          "score": 0.6092,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis",
+          "score": 0.5933,
+          "evidence": []
+        },
+        {
+          "term": "brief",
+          "score": 0.5349,
+          "evidence": []
+        },
+        {
+          "term": "initiative",
+          "score": 0.5141,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "university",
+          "score": 20.5245,
+          "evidence": []
+        },
+        {
+          "term": "stis programme",
+          "score": 13.0293,
+          "evidence": []
+        },
+        {
+          "term": "martina",
+          "score": 12.6977,
+          "evidence": []
+        },
+        {
+          "term": "united states",
+          "score": 10.7109,
+          "evidence": []
+        },
+        {
+          "term": "college",
+          "score": 9.3023,
+          "evidence": []
+        },
+        {
+          "term": "brief",
+          "score": 8.2527,
+          "evidence": []
+        },
+        {
+          "term": "foundation",
+          "score": 7.4867,
+          "evidence": []
+        },
+        {
+          "term": "initiative",
+          "score": 6.753,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "united states",
+          "score": 0.3999,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 0.3307,
+          "evidence": []
+        },
+        {
+          "term": "usa",
+          "score": 0.2401,
+          "evidence": []
+        },
+        {
+          "term": "kingdom",
+          "score": 0.2231,
+          "evidence": []
+        },
+        {
+          "term": "institute",
+          "score": 0.2084,
+          "evidence": []
+        },
+        {
+          "term": "department",
+          "score": 0.1892,
+          "evidence": []
+        },
+        {
+          "term": "aids",
+          "score": 0.1889,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.1868,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "united states",
+          "score": 9.7558,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 9.0265,
+          "evidence": []
+        },
+        {
+          "term": "usa",
+          "score": 5.728,
+          "evidence": []
+        },
+        {
+          "term": "kingdom",
+          "score": 4.1427,
+          "evidence": []
+        },
+        {
+          "term": "switzerland",
+          "score": 3.4609,
+          "evidence": []
+        },
+        {
+          "term": "department",
+          "score": 3.1284,
+          "evidence": []
+        },
+        {
+          "term": "south",
+          "score": 3.1273,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 3.0554,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "united states",
+          "score": 0.3999,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 0.3307,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.1868,
+          "evidence": []
+        },
+        {
+          "term": "global",
+          "score": 0.1732,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis",
+          "score": 0.1516,
+          "evidence": []
+        },
+        {
+          "term": "stis programme",
+          "score": 0.1513,
+          "evidence": []
+        },
+        {
+          "term": "college",
+          "score": 0.1412,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.1376,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 380.1233,
+          "evidence": []
+        },
+        {
+          "term": "执行委员会",
+          "score": 144.9006,
+          "evidence": []
+        },
+        {
+          "term": "政治利益",
+          "score": 144.0962,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 136.8799,
+          "evidence": []
+        },
+        {
+          "term": "议程项目",
+          "score": 136.4611,
+          "evidence": []
+        },
+        {
+          "term": "保持警惕",
+          "score": 135.2632,
+          "evidence": []
+        },
+        {
+          "term": "以及卫生保健界",
+          "score": 134.698,
+          "evidence": []
+        },
+        {
+          "term": "基金会和开发银行",
+          "score": 134.698,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-002-background": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "advanced hiv",
+          "score": 1.2764,
+          "evidence": []
+        },
+        {
+          "term": "children living",
+          "score": 1.1662,
+          "evidence": []
+        },
+        {
+          "term": "adolescents living",
+          "score": 1.1555,
+          "evidence": []
+        },
+        {
+          "term": "hiv disease",
+          "score": 1.1053,
+          "evidence": []
+        },
+        {
+          "term": "pneumonia",
+          "score": 0.6399,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "advanced hiv",
+          "score": 25.4838,
+          "evidence": []
+        },
+        {
+          "term": "hiv disease",
+          "score": 21.2597,
+          "evidence": []
+        },
+        {
+          "term": "adolescents living",
+          "score": 18.9363,
+          "evidence": []
+        },
+        {
+          "term": "children living",
+          "score": 18.8987,
+          "evidence": []
+        },
+        {
+          "term": "pneumonia",
+          "score": 9.2743,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "children living",
+          "score": 0.4295,
+          "evidence": []
+        },
+        {
+          "term": "hiv disease",
+          "score": 0.4285,
+          "evidence": []
+        },
+        {
+          "term": "adolescents living",
+          "score": 0.3692,
+          "evidence": []
+        },
+        {
+          "term": "advanced hiv",
+          "score": 0.3519,
+          "evidence": []
+        },
+        {
+          "term": "cryptococcal",
+          "score": 0.1685,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "children living",
+          "score": 10.38,
+          "evidence": []
+        },
+        {
+          "term": "hiv disease",
+          "score": 9.1171,
+          "evidence": []
+        },
+        {
+          "term": "adolescents living",
+          "score": 8.5266,
+          "evidence": []
+        },
+        {
+          "term": "advanced hiv",
+          "score": 7.4184,
+          "evidence": []
+        },
+        {
+          "term": "treatment",
+          "score": 3.2562,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "children living",
+          "score": 0.4295,
+          "evidence": []
+        },
+        {
+          "term": "hiv disease",
+          "score": 0.4285,
+          "evidence": []
+        },
+        {
+          "term": "adolescents living",
+          "score": 0.3692,
+          "evidence": []
+        },
+        {
+          "term": "advanced hiv",
+          "score": 0.3519,
+          "evidence": []
+        },
+        {
+          "term": "cryptococcal",
+          "score": 0.1685,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 32.951,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 28.3502,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 28.3502,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 28.3502,
+          "evidence": []
+        },
+        {
+          "term": "可能性",
+          "score": 25.7135,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-003-current-who-guidelines-on-managing-advanced-hiv": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "advanced disease",
+          "score": 4.2534,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "advanced hiv",
+          "score": 3.8472,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cryptococcal antigen",
+          "score": 2.7388,
+          "evidence": []
+        },
+        {
+          "term": "cryptococcal meningitis",
+          "score": 2.3101,
+          "evidence": []
+        },
+        {
+          "term": "blood cryptococcal",
+          "score": 2.2656,
+          "evidence": []
+        },
+        {
+          "term": "pre-emptive therapy",
+          "score": 2.2211,
+          "evidence": []
+        },
+        {
+          "term": "children younger",
+          "score": 2.1196,
+          "evidence": []
+        },
+        {
+          "term": "fluconazole pre-emptive",
+          "score": 2.0886,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "advanced disease",
+          "score": 170.0732,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "advanced hiv",
+          "score": 142.9855,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cryptococcal disease",
+          "score": 100.1224,
+          "evidence": []
+        },
+        {
+          "term": "cryptococcal antigen",
+          "score": 96.9429,
+          "evidence": []
+        },
+        {
+          "term": "cryptococcal meningitis",
+          "score": 78.5288,
+          "evidence": []
+        },
+        {
+          "term": "blood cryptococcal",
+          "score": 76.6986,
+          "evidence": []
+        },
+        {
+          "term": "children younger",
+          "score": 64.408,
+          "evidence": []
+        },
+        {
+          "term": "advanced immunosuppression",
+          "score": 62.3795,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hiv disease",
+          "score": 2.8327,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "advanced hiv",
+          "score": 2.3116,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "children living",
+          "score": 1.5684,
+          "evidence": []
+        },
+        {
+          "term": "cryptococcal meningitis",
+          "score": 1.5141,
+          "evidence": []
+        },
+        {
+          "term": "among children",
+          "score": 1.345,
+          "evidence": []
+        },
+        {
+          "term": "adolescents living",
+          "score": 1.3448,
+          "evidence": []
+        },
+        {
+          "term": "cryptococcal antigen",
+          "score": 1.2256,
+          "evidence": []
+        },
+        {
+          "term": "children younger",
+          "score": 1.1585,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hiv disease",
+          "score": 65.5159,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "advanced hiv",
+          "score": 47.7162,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "yes",
+          "score": 43.6025,
+          "evidence": []
+        },
+        {
+          "term": "children living",
+          "score": 41.7179,
+          "evidence": []
+        },
+        {
+          "term": "cryptococcal disease",
+          "score": 37.978,
+          "evidence": []
+        },
+        {
+          "term": "cryptococcal meningitis",
+          "score": 35.8018,
+          "evidence": []
+        },
+        {
+          "term": "among children",
+          "score": 34.2409,
+          "evidence": []
+        },
+        {
+          "term": "cryptococcal antigen",
+          "score": 31.9943,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hiv disease",
+          "score": 2.8327,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "advanced hiv",
+          "score": 2.3116,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "children living",
+          "score": 1.5684,
+          "evidence": []
+        },
+        {
+          "term": "cryptococcal meningitis",
+          "score": 1.5141,
+          "evidence": []
+        },
+        {
+          "term": "among children",
+          "score": 1.345,
+          "evidence": []
+        },
+        {
+          "term": "adolescents living",
+          "score": 1.3448,
+          "evidence": []
+        },
+        {
+          "term": "cryptococcal antigen",
+          "score": 1.2256,
+          "evidence": []
+        },
+        {
+          "term": "children younger",
+          "score": 1.1585,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 51.4986,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 45.3214,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 45.3214,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 45.3214,
+          "evidence": []
+        },
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 44.9425,
+          "evidence": []
+        },
+        {
+          "term": "可持续发展目标和世卫组织",
+          "score": 39.5487,
+          "evidence": []
+        },
+        {
+          "term": "方面的作用",
+          "score": 35.6422,
+          "evidence": []
+        },
+        {
+          "term": "区域和全球各",
+          "score": 33.7576,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-005-tuberculosis": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "cell count",
+          "score": 1.6565,
+          "evidence": []
+        },
+        {
+          "term": "children living",
+          "score": 1.6242,
+          "evidence": []
+        },
+        {
+          "term": "among children",
+          "score": 1.5461,
+          "evidence": []
+        },
+        {
+          "term": "adolescents living",
+          "score": 1.5036,
+          "evidence": []
+        },
+        {
+          "term": "lf-lam guidelines",
+          "score": 1.4572,
+          "evidence": []
+        },
+        {
+          "term": "gastric aspirate",
+          "score": 1.4304,
+          "evidence": []
+        },
+        {
+          "term": "advanced hiv",
+          "score": 1.3594,
+          "evidence": []
+        },
+        {
+          "term": "antiretroviral therapy",
+          "score": 1.3441,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "children living",
+          "score": 42.808,
+          "evidence": []
+        },
+        {
+          "term": "among children",
+          "score": 41.8912,
+          "evidence": []
+        },
+        {
+          "term": "cell count",
+          "score": 35.8908,
+          "evidence": []
+        },
+        {
+          "term": "lf-lam guidelines",
+          "score": 33.1985,
+          "evidence": []
+        },
+        {
+          "term": "adolescents living",
+          "score": 32.9481,
+          "evidence": []
+        },
+        {
+          "term": "symptoms",
+          "score": 30.417,
+          "evidence": []
+        },
+        {
+          "term": "advanced hiv",
+          "score": 30.1014,
+          "evidence": []
+        },
+        {
+          "term": "antiretroviral therapy",
+          "score": 25.4921,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "children living",
+          "score": 0.9471,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis",
+          "score": 0.8819,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv disease",
+          "score": 0.8517,
+          "evidence": []
+        },
+        {
+          "term": "among children",
+          "score": 0.8298,
+          "evidence": []
+        },
+        {
+          "term": "adolescents living",
+          "score": 0.7848,
+          "evidence": []
+        },
+        {
+          "term": "advanced hiv",
+          "score": 0.634,
+          "evidence": []
+        },
+        {
+          "term": "xpert ultra",
+          "score": 0.5989,
+          "evidence": []
+        },
+        {
+          "term": "disease guidelines",
+          "score": 0.5501,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "children living",
+          "score": 30.3589,
+          "evidence": []
+        },
+        {
+          "term": "among children",
+          "score": 24.9937,
+          "evidence": []
+        },
+        {
+          "term": "adolescents living",
+          "score": 19.69,
+          "evidence": []
+        },
+        {
+          "term": "hiv disease",
+          "score": 18.8237,
+          "evidence": []
+        },
+        {
+          "term": "xpert ultra",
+          "score": 18.2019,
+          "evidence": []
+        },
+        {
+          "term": "advanced hiv",
+          "score": 14.021,
+          "evidence": []
+        },
+        {
+          "term": "gastric aspirate",
+          "score": 11.7264,
+          "evidence": []
+        },
+        {
+          "term": "stool",
+          "score": 9.6304,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "children living",
+          "score": 0.9471,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis",
+          "score": 0.8819,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv disease",
+          "score": 0.8517,
+          "evidence": []
+        },
+        {
+          "term": "among children",
+          "score": 0.8298,
+          "evidence": []
+        },
+        {
+          "term": "adolescents living",
+          "score": 0.7848,
+          "evidence": []
+        },
+        {
+          "term": "advanced hiv",
+          "score": 0.634,
+          "evidence": []
+        },
+        {
+          "term": "xpert ultra",
+          "score": 0.5989,
+          "evidence": []
+        },
+        {
+          "term": "disease guidelines",
+          "score": 0.5501,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "个学习目标",
+          "score": 70.4895,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 70.4895,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 70.4895,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 70.3432,
+          "evidence": []
+        },
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 66.4735,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 58.8682,
+          "evidence": []
+        },
+        {
+          "term": "可持续发展目标和世卫组织",
+          "score": 55.4456,
+          "evidence": []
+        },
+        {
+          "term": "方面的作用",
+          "score": 49.8346,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-cryptococcal-disease": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "cryptococcal disease",
+          "score": 3.1615,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "children younger",
+          "score": 1.2247,
+          "evidence": []
+        },
+        {
+          "term": "children living",
+          "score": 1.0426,
+          "evidence": []
+        },
+        {
+          "term": "five years",
+          "score": 0.7947,
+          "evidence": []
+        },
+        {
+          "term": "emptive",
+          "score": 0.6392,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "cryptococcal disease",
+          "score": 64.326,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "children younger",
+          "score": 19.3158,
+          "evidence": []
+        },
+        {
+          "term": "children living",
+          "score": 15.8442,
+          "evidence": []
+        },
+        {
+          "term": "five years",
+          "score": 11.0613,
+          "evidence": []
+        },
+        {
+          "term": "emptive",
+          "score": 8.2207,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "cryptococcal disease",
+          "score": 0.7481,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "children living",
+          "score": 0.415,
+          "evidence": []
+        },
+        {
+          "term": "children younger",
+          "score": 0.3059,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.278,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.2742,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "cryptococcal disease",
+          "score": 14.9427,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "children living",
+          "score": 9.0447,
+          "evidence": []
+        },
+        {
+          "term": "children younger",
+          "score": 6.713,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 4.2196,
+          "evidence": []
+        },
+        {
+          "term": "adolescents",
+          "score": 3.9114,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "cryptococcal disease",
+          "score": 0.7481,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "children living",
+          "score": 0.415,
+          "evidence": []
+        },
+        {
+          "term": "children younger",
+          "score": 0.3059,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.278,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.2742,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 43.2552,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 35.3135,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 35.1856,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 35.1856,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 35.1856,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-008-tuberculosis": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "drug interactions",
+          "score": 1.1695,
+          "evidence": []
+        },
+        {
+          "term": "among children",
+          "score": 0.8221,
+          "evidence": []
+        },
+        {
+          "term": "lpv",
+          "score": 0.7885,
+          "evidence": []
+        },
+        {
+          "term": "dispersible",
+          "score": 0.7808,
+          "evidence": []
+        },
+        {
+          "term": "dtg",
+          "score": 0.7416,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "drug interactions",
+          "score": 20.8095,
+          "evidence": []
+        },
+        {
+          "term": "dispersible",
+          "score": 12.0469,
+          "evidence": []
+        },
+        {
+          "term": "lpv",
+          "score": 11.7386,
+          "evidence": []
+        },
+        {
+          "term": "dtg",
+          "score": 10.6606,
+          "evidence": []
+        },
+        {
+          "term": "among children",
+          "score": 10.411,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "drug interactions",
+          "score": 0.176,
+          "evidence": []
+        },
+        {
+          "term": "among children",
+          "score": 0.1756,
+          "evidence": []
+        },
+        {
+          "term": "regimen",
+          "score": 0.1731,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis",
+          "score": 0.1559,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "isoniazid",
+          "score": 0.1319,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "among children",
+          "score": 5.9311,
+          "evidence": []
+        },
+        {
+          "term": "regimen",
+          "score": 5.1029,
+          "evidence": []
+        },
+        {
+          "term": "adolescents",
+          "score": 3.9156,
+          "evidence": []
+        },
+        {
+          "term": "treatment",
+          "score": 3.4592,
+          "evidence": []
+        },
+        {
+          "term": "dtg",
+          "score": 2.7921,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "drug interactions",
+          "score": 0.176,
+          "evidence": []
+        },
+        {
+          "term": "among children",
+          "score": 0.1756,
+          "evidence": []
+        },
+        {
+          "term": "regimen",
+          "score": 0.1731,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis",
+          "score": 0.1559,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "isoniazid",
+          "score": 0.1319,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 56.2024,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 54.6322,
+          "evidence": []
+        },
+        {
+          "term": "可能性",
+          "score": 49.5746,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 44.534,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 44.534,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-009-severe-pneumonia": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "severe pneumonia",
+          "score": 3.5135,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pneumocystis pneumonia",
+          "score": 2.1041,
+          "evidence": []
+        },
+        {
+          "term": "pneumonia among",
+          "score": 1.4625,
+          "evidence": []
+        },
+        {
+          "term": "antibiotics recommended",
+          "score": 1.2029,
+          "evidence": []
+        },
+        {
+          "term": "children living",
+          "score": 1.0045,
+          "evidence": []
+        },
+        {
+          "term": "co-trimoxazole",
+          "score": 0.9128,
+          "evidence": []
+        },
+        {
+          "term": "empirical",
+          "score": 0.8226,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "severe pneumonia",
+          "score": 76.6322,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pneumocystis pneumonia",
+          "score": 46.2466,
+          "evidence": []
+        },
+        {
+          "term": "pneumonia among",
+          "score": 31.8391,
+          "evidence": []
+        },
+        {
+          "term": "antibiotics recommended",
+          "score": 17.1084,
+          "evidence": []
+        },
+        {
+          "term": "co-trimoxazole",
+          "score": 15.3215,
+          "evidence": []
+        },
+        {
+          "term": "empirical",
+          "score": 15.0054,
+          "evidence": []
+        },
+        {
+          "term": "children living",
+          "score": 14.174,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "children living",
+          "score": 0.4159,
+          "evidence": []
+        },
+        {
+          "term": "severe pneumonia",
+          "score": 0.3965,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv",
+          "score": 0.2293,
+          "evidence": []
+        },
+        {
+          "term": "pneumonia among",
+          "score": 0.2085,
+          "evidence": []
+        },
+        {
+          "term": "adolescents",
+          "score": 0.1649,
+          "evidence": []
+        },
+        {
+          "term": "treatment",
+          "score": 0.1562,
+          "evidence": []
+        },
+        {
+          "term": "age group",
+          "score": 0.1477,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "children living",
+          "score": 8.4029,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 5.7433,
+          "evidence": []
+        },
+        {
+          "term": "severe pneumonia",
+          "score": 3.9309,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "adolescents",
+          "score": 3.0312,
+          "evidence": []
+        },
+        {
+          "term": "treatment",
+          "score": 2.8748,
+          "evidence": []
+        },
+        {
+          "term": "art",
+          "score": 2.6437,
+          "evidence": []
+        },
+        {
+          "term": "recommendation",
+          "score": 2.4239,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "children living",
+          "score": 0.4159,
+          "evidence": []
+        },
+        {
+          "term": "severe pneumonia",
+          "score": 0.3965,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv",
+          "score": 0.2293,
+          "evidence": []
+        },
+        {
+          "term": "pneumonia among",
+          "score": 0.2085,
+          "evidence": []
+        },
+        {
+          "term": "age group",
+          "score": 0.1477,
+          "evidence": []
+        },
+        {
+          "term": "antibiotics recommended",
+          "score": 0.1376,
+          "evidence": []
+        },
+        {
+          "term": "recommendation",
+          "score": 0.1211,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 67.0126,
+          "evidence": []
+        },
+        {
+          "term": "中发生",
+          "score": 66.1031,
+          "evidence": []
+        },
+        {
+          "term": "但可追溯到",
+          "score": 66.1031,
+          "evidence": []
+        },
+        {
+          "term": "但很多病人最终产生耐药",
+          "score": 66.1031,
+          "evidence": []
+        },
+        {
+          "term": "但这种真菌对免疫功能正常",
+          "score": 66.1031,
+          "evidence": []
+        },
+        {
+          "term": "关的并发症",
+          "score": 66.1031,
+          "evidence": []
+        },
+        {
+          "term": "因为病毒的复制率高",
+          "score": 66.1031,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-010-severe-bacterial-infections": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "bacteraemia",
+          "score": 0.9344,
+          "evidence": []
+        },
+        {
+          "term": "infections",
+          "score": 0.8751,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "care-associated",
+          "score": 0.6494,
+          "evidence": []
+        },
+        {
+          "term": "gram-negative",
+          "score": 0.6392,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "bacteraemia",
+          "score": 15.055,
+          "evidence": []
+        },
+        {
+          "term": "infections",
+          "score": 11.4563,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "care-associated",
+          "score": 8.2207,
+          "evidence": []
+        },
+        {
+          "term": "gram-negative",
+          "score": 8.2207,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hiv",
+          "score": 0.1657,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.1471,
+          "evidence": []
+        },
+        {
+          "term": "infections",
+          "score": 0.1253,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "treatment",
+          "score": 0.1009,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "children",
+          "score": 2.8936,
+          "evidence": []
+        },
+        {
+          "term": "treatment",
+          "score": 2.0115,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 1.9657,
+          "evidence": []
+        },
+        {
+          "term": "adolescents",
+          "score": 1.6812,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hiv",
+          "score": 0.1657,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.1471,
+          "evidence": []
+        },
+        {
+          "term": "infections",
+          "score": 0.1253,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "treatment",
+          "score": 0.1009,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 48.744,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 46.602,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 46.602,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 46.602,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-011-cryptococcal-meningitis": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "cryptococcal",
+          "score": 0.8315,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "meningitis",
+          "score": 0.6858,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "day",
+          "score": 0.6146,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "day",
+          "score": 10.3246,
+          "evidence": []
+        },
+        {
+          "term": "cryptococcal",
+          "score": 9.5099,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "meningitis",
+          "score": 7.9731,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "cryptococcal",
+          "score": 0.3156,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "meningitis",
+          "score": 0.2263,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "amphotericin",
+          "score": 0.1075,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "cryptococcal",
+          "score": 4.1572,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "meningitis",
+          "score": 1.9975,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "treatment",
+          "score": 1.5523,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "cryptococcal",
+          "score": 0.3156,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "meningitis",
+          "score": 0.2263,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "amphotericin",
+          "score": 0.1075,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "可持续发展目标和世卫组织",
+          "score": 57.4299,
+          "evidence": []
+        },
+        {
+          "term": "方面的作用",
+          "score": 51.3591,
+          "evidence": []
+        },
+        {
+          "term": "促进全球合作",
+          "score": 49.6881,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-012-malnutrition": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "malnutrition",
+          "score": 1.5031,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "acute malnutrition",
+          "score": 1.2793,
+          "evidence": []
+        },
+        {
+          "term": "severe acute",
+          "score": 1.0217,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.9861,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.9822,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 0.8439,
+          "evidence": []
+        },
+        {
+          "term": "treatment programmes",
+          "score": 0.7419,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "malnutrition",
+          "score": 26.6189,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "acute malnutrition",
+          "score": 21.2538,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 15.8145,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 15.5544,
+          "evidence": []
+        },
+        {
+          "term": "severe acute",
+          "score": 14.9398,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 13.5564,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 12.7898,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "world health",
+          "score": 0.4825,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.4645,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 0.4446,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.289,
+          "evidence": []
+        },
+        {
+          "term": "treatment programmes",
+          "score": 0.2487,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 0.2454,
+          "evidence": []
+        },
+        {
+          "term": "accessed",
+          "score": 0.2276,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "world health",
+          "score": 9.0885,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 8.7704,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 7.3772,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 7.0875,
+          "evidence": []
+        },
+        {
+          "term": "accessed",
+          "score": 5.3986,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 5.1434,
+          "evidence": []
+        },
+        {
+          "term": "adolescents",
+          "score": 4.5728,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "world health",
+          "score": 0.4825,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.4645,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 0.4446,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.289,
+          "evidence": []
+        },
+        {
+          "term": "treatment programmes",
+          "score": 0.2487,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 0.2454,
+          "evidence": []
+        },
+        {
+          "term": "guidelines",
+          "score": 0.1614,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 19.1776,
+          "evidence": []
+        },
+        {
+          "term": "问题的讨论结束",
+          "score": 19.1776,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 17.8146,
+          "evidence": []
+        },
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 17.1629,
+          "evidence": []
+        },
+        {
+          "term": "的研究中",
+          "score": 16.3915,
+          "evidence": []
+        },
+        {
+          "term": "世界医学协会",
+          "score": 14.4095,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 14.115,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-013-optimize": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "antiretroviral therapy",
+          "score": 1.835,
+          "evidence": []
+        },
+        {
+          "term": "acute malnutrition",
+          "score": 1.6456,
+          "evidence": []
+        },
+        {
+          "term": "therapy initiation",
+          "score": 1.4794,
+          "evidence": []
+        },
+        {
+          "term": "initiating antiretroviral",
+          "score": 1.4629,
+          "evidence": []
+        },
+        {
+          "term": "severe acute",
+          "score": 1.3964,
+          "evidence": []
+        },
+        {
+          "term": "randomized trial",
+          "score": 1.2095,
+          "evidence": []
+        },
+        {
+          "term": "median age",
+          "score": 1.1341,
+          "evidence": []
+        },
+        {
+          "term": "age months",
+          "score": 0.9046,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "antiretroviral therapy",
+          "score": 50.9842,
+          "evidence": []
+        },
+        {
+          "term": "initiating antiretroviral",
+          "score": 34.6599,
+          "evidence": []
+        },
+        {
+          "term": "therapy initiation",
+          "score": 34.2386,
+          "evidence": []
+        },
+        {
+          "term": "acute malnutrition",
+          "score": 33.6346,
+          "evidence": []
+        },
+        {
+          "term": "severe acute",
+          "score": 26.3819,
+          "evidence": []
+        },
+        {
+          "term": "randomized trial",
+          "score": 19.6933,
+          "evidence": []
+        },
+        {
+          "term": "median age",
+          "score": 19.1442,
+          "evidence": []
+        },
+        {
+          "term": "age months",
+          "score": 13.5998,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "antiretroviral therapy",
+          "score": 0.3831,
+          "evidence": []
+        },
+        {
+          "term": "therapy initiation",
+          "score": 0.3641,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.2935,
+          "evidence": []
+        },
+        {
+          "term": "age months",
+          "score": 0.2913,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.2744,
+          "evidence": []
+        },
+        {
+          "term": "art",
+          "score": 0.2698,
+          "evidence": []
+        },
+        {
+          "term": "initiating antiretroviral",
+          "score": 0.2586,
+          "evidence": []
+        },
+        {
+          "term": "treatment",
+          "score": 0.2381,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "children",
+          "score": 7.0899,
+          "evidence": []
+        },
+        {
+          "term": "load",
+          "score": 6.8024,
+          "evidence": []
+        },
+        {
+          "term": "antiretroviral therapy",
+          "score": 6.2886,
+          "evidence": []
+        },
+        {
+          "term": "viral",
+          "score": 6.0857,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 5.0609,
+          "evidence": []
+        },
+        {
+          "term": "treatment",
+          "score": 4.696,
+          "evidence": []
+        },
+        {
+          "term": "therapy initiation",
+          "score": 4.6133,
+          "evidence": []
+        },
+        {
+          "term": "adolescents",
+          "score": 4.2467,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "antiretroviral therapy",
+          "score": 0.3831,
+          "evidence": []
+        },
+        {
+          "term": "therapy initiation",
+          "score": 0.3641,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.2935,
+          "evidence": []
+        },
+        {
+          "term": "age months",
+          "score": 0.2913,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.2744,
+          "evidence": []
+        },
+        {
+          "term": "initiating antiretroviral",
+          "score": 0.2586,
+          "evidence": []
+        },
+        {
+          "term": "treatment",
+          "score": 0.2381,
+          "evidence": []
+        },
+        {
+          "term": "randomized trial",
+          "score": 0.2046,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 41.5062,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 31.8889,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 31.8889,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 31.8889,
+          "evidence": []
+        },
+        {
+          "term": "的研究中",
+          "score": 31.4822,
+          "evidence": []
+        },
+        {
+          "term": "可持续发展目标和世卫组织",
+          "score": 29.5948,
+          "evidence": []
+        },
+        {
+          "term": "公共卫生专家",
+          "score": 27.4725,
+          "evidence": []
+        },
+        {
+          "term": "方面的作用",
+          "score": 26.5436,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-014-counselling-and-support": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "counselling",
+          "score": 1.2315,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "icap",
+          "score": 0.7195,
+          "evidence": []
+        },
+        {
+          "term": "columbia",
+          "score": 0.7044,
+          "evidence": []
+        },
+        {
+          "term": "support",
+          "score": 0.5968,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "counselling",
+          "score": 19.568,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "icap",
+          "score": 11.3899,
+          "evidence": []
+        },
+        {
+          "term": "columbia",
+          "score": 11.236,
+          "evidence": []
+        },
+        {
+          "term": "arv",
+          "score": 7.8197,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "counselling",
+          "score": 0.1838,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv",
+          "score": 0.1238,
+          "evidence": []
+        },
+        {
+          "term": "support",
+          "score": 0.1196,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "geneva",
+          "score": 0.1118,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "counselling",
+          "score": 2.2116,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "load",
+          "score": 1.8727,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 1.7744,
+          "evidence": []
+        },
+        {
+          "term": "viral",
+          "score": 1.7597,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "counselling",
+          "score": 0.1838,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "support",
+          "score": 0.1196,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "geneva",
+          "score": 0.1118,
+          "evidence": []
+        },
+        {
+          "term": "world",
+          "score": 0.1021,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 54.0522,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 35.1773,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 34.0949,
+          "evidence": []
+        },
+        {
+          "term": "注意到",
+          "score": 27.7016,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-016-preventing-tb-pneumocystis-pneumonia-bacterial-i": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "preventive treatment",
+          "score": 1.8134,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis preventive",
+          "score": 1.7653,
+          "evidence": []
+        },
+        {
+          "term": "studied among",
+          "score": 1.6461,
+          "evidence": []
+        },
+        {
+          "term": "drug interaction",
+          "score": 1.5071,
+          "evidence": []
+        },
+        {
+          "term": "children living",
+          "score": 1.48,
+          "evidence": []
+        },
+        {
+          "term": "rifapentine",
+          "score": 1.4711,
+          "evidence": []
+        },
+        {
+          "term": "major ddi",
+          "score": 1.3779,
+          "evidence": []
+        },
+        {
+          "term": "ddi expected",
+          "score": 1.3494,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "isoniazid",
+          "score": 48.9622,
+          "evidence": []
+        },
+        {
+          "term": "preventive treatment",
+          "score": 47.6538,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis preventive",
+          "score": 45.5003,
+          "evidence": []
+        },
+        {
+          "term": "rifapentine",
+          "score": 43.0997,
+          "evidence": []
+        },
+        {
+          "term": "studied among",
+          "score": 37.2257,
+          "evidence": []
+        },
+        {
+          "term": "drug interaction",
+          "score": 32.7156,
+          "evidence": []
+        },
+        {
+          "term": "children living",
+          "score": 32.1499,
+          "evidence": []
+        },
+        {
+          "term": "six months",
+          "score": 28.8462,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "children living",
+          "score": 0.7902,
+          "evidence": []
+        },
+        {
+          "term": "treatment regimens",
+          "score": 0.7272,
+          "evidence": []
+        },
+        {
+          "term": "preventive treatment",
+          "score": 0.6591,
+          "evidence": []
+        },
+        {
+          "term": "among children",
+          "score": 0.6432,
+          "evidence": []
+        },
+        {
+          "term": "infants living",
+          "score": 0.604,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis preventive",
+          "score": 0.5824,
+          "evidence": []
+        },
+        {
+          "term": "disease",
+          "score": 0.5645,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "antiretroviral therapy",
+          "score": 0.4833,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "preventive treatment",
+          "score": 29.3945,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis preventive",
+          "score": 27.4852,
+          "evidence": []
+        },
+        {
+          "term": "children living",
+          "score": 25.8075,
+          "evidence": []
+        },
+        {
+          "term": "treatment regimens",
+          "score": 24.6014,
+          "evidence": []
+        },
+        {
+          "term": "among children",
+          "score": 20.6032,
+          "evidence": []
+        },
+        {
+          "term": "isoniazid",
+          "score": 15.6697,
+          "evidence": []
+        },
+        {
+          "term": "infants living",
+          "score": 13.8776,
+          "evidence": []
+        },
+        {
+          "term": "tpt",
+          "score": 11.7921,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "children living",
+          "score": 0.7902,
+          "evidence": []
+        },
+        {
+          "term": "treatment regimens",
+          "score": 0.7272,
+          "evidence": []
+        },
+        {
+          "term": "preventive treatment",
+          "score": 0.6591,
+          "evidence": []
+        },
+        {
+          "term": "among children",
+          "score": 0.6432,
+          "evidence": []
+        },
+        {
+          "term": "infants living",
+          "score": 0.604,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis preventive",
+          "score": 0.5824,
+          "evidence": []
+        },
+        {
+          "term": "disease",
+          "score": 0.5645,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "antiretroviral therapy",
+          "score": 0.4833,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 50.7619,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 40.9256,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 40.9256,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 40.9256,
+          "evidence": []
+        },
+        {
+          "term": "公共卫生专家",
+          "score": 33.592,
+          "evidence": []
+        },
+        {
+          "term": "的研究中",
+          "score": 32.787,
+          "evidence": []
+        },
+        {
+          "term": "可能性",
+          "score": 31.5484,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 31.1329,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-017-pcp-and-other-infections": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "pneumocystis pneumonia",
+          "score": 1.7781,
+          "evidence": []
+        },
+        {
+          "term": "cryptococcal antigen",
+          "score": 1.7084,
+          "evidence": []
+        },
+        {
+          "term": "cryptococcal meningitis",
+          "score": 1.6511,
+          "evidence": []
+        },
+        {
+          "term": "azithromycin",
+          "score": 1.6035,
+          "evidence": []
+        },
+        {
+          "term": "antiretroviral therapy",
+          "score": 1.5596,
+          "evidence": []
+        },
+        {
+          "term": "bacterial infections",
+          "score": 1.4387,
+          "evidence": []
+        },
+        {
+          "term": "count cells",
+          "score": 1.3835,
+          "evidence": []
+        },
+        {
+          "term": "receiving antiretroviral",
+          "score": 1.192,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "azithromycin",
+          "score": 41.8075,
+          "evidence": []
+        },
+        {
+          "term": "antiretroviral therapy",
+          "score": 34.9153,
+          "evidence": []
+        },
+        {
+          "term": "pneumocystis pneumonia",
+          "score": 32.3352,
+          "evidence": []
+        },
+        {
+          "term": "cryptococcal antigen",
+          "score": 32.0371,
+          "evidence": []
+        },
+        {
+          "term": "cryptococcal meningitis",
+          "score": 30.9794,
+          "evidence": []
+        },
+        {
+          "term": "bacterial infections",
+          "score": 26.0686,
+          "evidence": []
+        },
+        {
+          "term": "co-trimoxazole",
+          "score": 25.5358,
+          "evidence": []
+        },
+        {
+          "term": "count cells",
+          "score": 24.3774,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "cryptococcal meningitis",
+          "score": 0.8507,
+          "evidence": []
+        },
+        {
+          "term": "hiv disease",
+          "score": 0.7859,
+          "evidence": []
+        },
+        {
+          "term": "cryptococcal antigen",
+          "score": 0.6805,
+          "evidence": []
+        },
+        {
+          "term": "advanced hiv",
+          "score": 0.6679,
+          "evidence": []
+        },
+        {
+          "term": "antiretroviral therapy",
+          "score": 0.5955,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.5405,
+          "evidence": []
+        },
+        {
+          "term": "adolescents",
+          "score": 0.3761,
+          "evidence": []
+        },
+        {
+          "term": "cell count",
+          "score": 0.3737,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "children",
+          "score": 13.9109,
+          "evidence": []
+        },
+        {
+          "term": "cryptococcal meningitis",
+          "score": 12.9062,
+          "evidence": []
+        },
+        {
+          "term": "hiv disease",
+          "score": 12.2702,
+          "evidence": []
+        },
+        {
+          "term": "cryptococcal antigen",
+          "score": 11.0487,
+          "evidence": []
+        },
+        {
+          "term": "advanced hiv",
+          "score": 9.0696,
+          "evidence": []
+        },
+        {
+          "term": "adolescents",
+          "score": 9.0602,
+          "evidence": []
+        },
+        {
+          "term": "antiretroviral therapy",
+          "score": 8.8813,
+          "evidence": []
+        },
+        {
+          "term": "treatment",
+          "score": 8.0225,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "cryptococcal meningitis",
+          "score": 0.8507,
+          "evidence": []
+        },
+        {
+          "term": "hiv disease",
+          "score": 0.7859,
+          "evidence": []
+        },
+        {
+          "term": "cryptococcal antigen",
+          "score": 0.6805,
+          "evidence": []
+        },
+        {
+          "term": "advanced hiv",
+          "score": 0.6679,
+          "evidence": []
+        },
+        {
+          "term": "antiretroviral therapy",
+          "score": 0.5955,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.5405,
+          "evidence": []
+        },
+        {
+          "term": "adolescents",
+          "score": 0.3761,
+          "evidence": []
+        },
+        {
+          "term": "cell count",
+          "score": 0.3737,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 55.6883,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 49.3188,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 49.3188,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 49.3188,
+          "evidence": []
+        },
+        {
+          "term": "可持续发展目标和世卫组织",
+          "score": 38.4146,
+          "evidence": []
+        },
+        {
+          "term": "公共卫生专家",
+          "score": 36.8349,
+          "evidence": []
+        },
+        {
+          "term": "突发事件和",
+          "score": 36.0356,
+          "evidence": []
+        },
+        {
+          "term": "方面的作用",
+          "score": 33.6867,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-018-vaccinations": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "pneumococcal conjugate",
+          "score": 2.6009,
+          "evidence": []
+        },
+        {
+          "term": "measles vaccine",
+          "score": 2.496,
+          "evidence": []
+        },
+        {
+          "term": "bcg vaccination",
+          "score": 2.2546,
+          "evidence": []
+        },
+        {
+          "term": "catch-up vaccination",
+          "score": 2.0081,
+          "evidence": []
+        },
+        {
+          "term": "children living",
+          "score": 1.9502,
+          "evidence": []
+        },
+        {
+          "term": "children years",
+          "score": 1.9031,
+          "evidence": []
+        },
+        {
+          "term": "position papers",
+          "score": 1.8878,
+          "evidence": []
+        },
+        {
+          "term": "children younger",
+          "score": 1.8068,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "children living",
+          "score": 66.4314,
+          "evidence": []
+        },
+        {
+          "term": "children years",
+          "score": 65.9544,
+          "evidence": []
+        },
+        {
+          "term": "measles vaccine",
+          "score": 65.9072,
+          "evidence": []
+        },
+        {
+          "term": "bcg vaccination",
+          "score": 65.7838,
+          "evidence": []
+        },
+        {
+          "term": "hiv disease",
+          "score": 60.0085,
+          "evidence": []
+        },
+        {
+          "term": "pneumococcal conjugate",
+          "score": 59.493,
+          "evidence": []
+        },
+        {
+          "term": "advanced hiv",
+          "score": 55.3275,
+          "evidence": []
+        },
+        {
+          "term": "children younger",
+          "score": 53.4875,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "children years",
+          "score": 1.4855,
+          "evidence": []
+        },
+        {
+          "term": "children living",
+          "score": 1.4224,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 1.2991,
+          "evidence": []
+        },
+        {
+          "term": "measles vaccine",
+          "score": 1.2931,
+          "evidence": []
+        },
+        {
+          "term": "hiv disease",
+          "score": 1.2737,
+          "evidence": []
+        },
+        {
+          "term": "conjugate vaccine",
+          "score": 1.1087,
+          "evidence": []
+        },
+        {
+          "term": "children younger",
+          "score": 1.1017,
+          "evidence": []
+        },
+        {
+          "term": "bcg vaccination",
+          "score": 1.0751,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "children living",
+          "score": 38.1468,
+          "evidence": []
+        },
+        {
+          "term": "hiv disease",
+          "score": 37.7866,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 35.7736,
+          "evidence": []
+        },
+        {
+          "term": "hiv status",
+          "score": 34.2135,
+          "evidence": []
+        },
+        {
+          "term": "children years",
+          "score": 32.0783,
+          "evidence": []
+        },
+        {
+          "term": "catch-up vaccination",
+          "score": 29.5504,
+          "evidence": []
+        },
+        {
+          "term": "advanced hiv",
+          "score": 28.4197,
+          "evidence": []
+        },
+        {
+          "term": "unknown hiv",
+          "score": 28.4197,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "children years",
+          "score": 1.4855,
+          "evidence": []
+        },
+        {
+          "term": "children living",
+          "score": 1.4224,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 1.2991,
+          "evidence": []
+        },
+        {
+          "term": "measles vaccine",
+          "score": 1.2931,
+          "evidence": []
+        },
+        {
+          "term": "hiv disease",
+          "score": 1.2737,
+          "evidence": []
+        },
+        {
+          "term": "conjugate vaccine",
+          "score": 1.1087,
+          "evidence": []
+        },
+        {
+          "term": "children younger",
+          "score": 1.1017,
+          "evidence": []
+        },
+        {
+          "term": "bcg vaccination",
+          "score": 1.0751,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 31.6171,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 27.737,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 27.737,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 27.737,
+          "evidence": []
+        },
+        {
+          "term": "行动要点",
+          "score": 24.6584,
+          "evidence": []
+        },
+        {
+          "term": "很重要",
+          "score": 24.4186,
+          "evidence": []
+        },
+        {
+          "term": "挑战性",
+          "score": 23.4152,
+          "evidence": []
+        },
+        {
+          "term": "非同寻常",
+          "score": 23.1331,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-020-national-level": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "guidelines relating",
+          "score": 1.0132,
+          "evidence": []
+        },
+        {
+          "term": "advanced hiv",
+          "score": 0.9683,
+          "evidence": []
+        },
+        {
+          "term": "hiv disease",
+          "score": 0.8124,
+          "evidence": []
+        },
+        {
+          "term": "expanded",
+          "score": 0.5769,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "guidelines relating",
+          "score": 17.6265,
+          "evidence": []
+        },
+        {
+          "term": "advanced hiv",
+          "score": 15.0507,
+          "evidence": []
+        },
+        {
+          "term": "hiv disease",
+          "score": 11.8901,
+          "evidence": []
+        },
+        {
+          "term": "expanded",
+          "score": 8.5974,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hiv disease",
+          "score": 0.2425,
+          "evidence": []
+        },
+        {
+          "term": "advanced hiv",
+          "score": 0.1982,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.174,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.1435,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hiv disease",
+          "score": 5.4161,
+          "evidence": []
+        },
+        {
+          "term": "advanced hiv",
+          "score": 4.5604,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 3.6574,
+          "evidence": []
+        },
+        {
+          "term": "adolescents",
+          "score": 2.2916,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hiv disease",
+          "score": 0.2425,
+          "evidence": []
+        },
+        {
+          "term": "advanced hiv",
+          "score": 0.1982,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.174,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.1435,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 24.3025,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 24.3025,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 23.8379,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 23.33,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-021-facility-level": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "disease package",
+          "score": 1.2665,
+          "evidence": []
+        },
+        {
+          "term": "advanced hiv",
+          "score": 1.1539,
+          "evidence": []
+        },
+        {
+          "term": "regimen based",
+          "score": 0.998,
+          "evidence": []
+        },
+        {
+          "term": "mix",
+          "score": 0.6428,
+          "evidence": []
+        },
+        {
+          "term": "enhanced",
+          "score": 0.5812,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.5724,
+          "evidence": []
+        },
+        {
+          "term": "child",
+          "score": 0.5637,
+          "evidence": []
+        },
+        {
+          "term": "referral",
+          "score": 0.551,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "disease package",
+          "score": 26.3668,
+          "evidence": []
+        },
+        {
+          "term": "advanced hiv",
+          "score": 20.8663,
+          "evidence": []
+        },
+        {
+          "term": "regimen based",
+          "score": 14.9232,
+          "evidence": []
+        },
+        {
+          "term": "mix",
+          "score": 10.1273,
+          "evidence": []
+        },
+        {
+          "term": "child",
+          "score": 8.5641,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 8.5265,
+          "evidence": []
+        },
+        {
+          "term": "enhanced",
+          "score": 8.5197,
+          "evidence": []
+        },
+        {
+          "term": "referral",
+          "score": 6.8089,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hiv disease",
+          "score": 0.3098,
+          "evidence": []
+        },
+        {
+          "term": "advanced hiv",
+          "score": 0.2745,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.2525,
+          "evidence": []
+        },
+        {
+          "term": "adolescents",
+          "score": 0.1804,
+          "evidence": []
+        },
+        {
+          "term": "treatment",
+          "score": 0.1737,
+          "evidence": []
+        },
+        {
+          "term": "regimen based",
+          "score": 0.1657,
+          "evidence": []
+        },
+        {
+          "term": "art",
+          "score": 0.1627,
+          "evidence": []
+        },
+        {
+          "term": "disease package",
+          "score": 0.1379,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "children",
+          "score": 6.9702,
+          "evidence": []
+        },
+        {
+          "term": "hiv disease",
+          "score": 5.6882,
+          "evidence": []
+        },
+        {
+          "term": "advanced hiv",
+          "score": 4.4942,
+          "evidence": []
+        },
+        {
+          "term": "adolescents",
+          "score": 4.3076,
+          "evidence": []
+        },
+        {
+          "term": "treatment",
+          "score": 4.0363,
+          "evidence": []
+        },
+        {
+          "term": "regimen based",
+          "score": 3.9749,
+          "evidence": []
+        },
+        {
+          "term": "child",
+          "score": 2.3764,
+          "evidence": []
+        },
+        {
+          "term": "living",
+          "score": 1.9919,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hiv disease",
+          "score": 0.3098,
+          "evidence": []
+        },
+        {
+          "term": "advanced hiv",
+          "score": 0.2745,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.2525,
+          "evidence": []
+        },
+        {
+          "term": "regimen based",
+          "score": 0.1657,
+          "evidence": []
+        },
+        {
+          "term": "disease package",
+          "score": 0.1379,
+          "evidence": []
+        },
+        {
+          "term": "child",
+          "score": 0.1309,
+          "evidence": []
+        },
+        {
+          "term": "facility",
+          "score": 0.1169,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "referral",
+          "score": 0.0777,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "可能性",
+          "score": 27.3963,
+          "evidence": []
+        },
+        {
+          "term": "显而易见",
+          "score": 22.5896,
+          "evidence": []
+        },
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 21.2476,
+          "evidence": []
+        },
+        {
+          "term": "潜在受试者",
+          "score": 19.6502,
+          "evidence": []
+        },
+        {
+          "term": "的研究中",
+          "score": 17.1409,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 16.6812,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 16.1727,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 16.1727,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-022-health-care-providers": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "advanced hiv",
+          "score": 0.8626,
+          "evidence": []
+        },
+        {
+          "term": "disease package",
+          "score": 0.8117,
+          "evidence": []
+        },
+        {
+          "term": "health-care",
+          "score": 0.71,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "clinical diagnosis",
+          "score": 0.6513,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "advanced hiv",
+          "score": 11.9723,
+          "evidence": []
+        },
+        {
+          "term": "disease package",
+          "score": 11.3856,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 8.5265,
+          "evidence": []
+        },
+        {
+          "term": "clinical diagnosis",
+          "score": 8.4558,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hiv disease",
+          "score": 0.2517,
+          "evidence": []
+        },
+        {
+          "term": "advanced hiv",
+          "score": 0.2135,
+          "evidence": []
+        },
+        {
+          "term": "clinical diagnosis",
+          "score": 0.1642,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.1618,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hiv disease",
+          "score": 4.4684,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 4.3589,
+          "evidence": []
+        },
+        {
+          "term": "advanced hiv",
+          "score": 3.48,
+          "evidence": []
+        },
+        {
+          "term": "adolescents",
+          "score": 2.8137,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hiv disease",
+          "score": 0.2517,
+          "evidence": []
+        },
+        {
+          "term": "advanced hiv",
+          "score": 0.2135,
+          "evidence": []
+        },
+        {
+          "term": "clinical diagnosis",
+          "score": 0.1642,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.1618,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "可能性",
+          "score": 21.7461,
+          "evidence": []
+        },
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 19.6967,
+          "evidence": []
+        },
+        {
+          "term": "显而易见",
+          "score": 18.7199,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 15.5086,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-023-laboratory": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "washings",
+          "score": 0.6392,
+          "evidence": []
+        },
+        {
+          "term": "bags",
+          "score": 0.5853,
+          "evidence": []
+        },
+        {
+          "term": "transporting",
+          "score": 0.5141,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "washings",
+          "score": 8.2207,
+          "evidence": []
+        },
+        {
+          "term": "bags",
+          "score": 7.5275,
+          "evidence": []
+        },
+        {
+          "term": "transporting",
+          "score": 6.6112,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "children",
+          "score": 0.0705,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis",
+          "score": 0.0549,
+          "evidence": []
+        },
+        {
+          "term": "stool",
+          "score": 0.0479,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "children",
+          "score": 1.6723,
+          "evidence": []
+        },
+        {
+          "term": "stool",
+          "score": 0.9663,
+          "evidence": []
+        },
+        {
+          "term": "xpert",
+          "score": 0.9633,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "children",
+          "score": 0.0705,
+          "evidence": []
+        },
+        {
+          "term": "stool",
+          "score": 0.0479,
+          "evidence": []
+        },
+        {
+          "term": "sputum",
+          "score": 0.0458,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "个学习目标",
+          "score": 39.624,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 39.624,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 39.624,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-024-monitoring-and-evaluation": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "procurement mechanism",
+          "score": 2.706,
+          "evidence": []
+        },
+        {
+          "term": "pooled procurement",
+          "score": 2.5291,
+          "evidence": []
+        },
+        {
+          "term": "fund pooled",
+          "score": 2.3656,
+          "evidence": []
+        },
+        {
+          "term": "usaid procurement",
+          "score": 2.2236,
+          "evidence": []
+        },
+        {
+          "term": "global fund",
+          "score": 2.1349,
+          "evidence": []
+        },
+        {
+          "term": "global price",
+          "score": 1.9623,
+          "evidence": []
+        },
+        {
+          "term": "rifapentine global",
+          "score": 1.956,
+          "evidence": []
+        },
+        {
+          "term": "price discount",
+          "score": 1.8051,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "procurement mechanism",
+          "score": 126.9322,
+          "evidence": []
+        },
+        {
+          "term": "pooled procurement",
+          "score": 118.0448,
+          "evidence": []
+        },
+        {
+          "term": "fund pooled",
+          "score": 100.3088,
+          "evidence": []
+        },
+        {
+          "term": "usaid procurement",
+          "score": 88.8942,
+          "evidence": []
+        },
+        {
+          "term": "global fund",
+          "score": 88.2515,
+          "evidence": []
+        },
+        {
+          "term": "global price",
+          "score": 59.463,
+          "evidence": []
+        },
+        {
+          "term": "rifapentine global",
+          "score": 55.2497,
+          "evidence": []
+        },
+        {
+          "term": "tablet",
+          "score": 41.4092,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hiv disease",
+          "score": 0.3597,
+          "evidence": []
+        },
+        {
+          "term": "xpert mtb",
+          "score": 0.2862,
+          "evidence": []
+        },
+        {
+          "term": "advanced hiv",
+          "score": 0.2752,
+          "evidence": []
+        },
+        {
+          "term": "mtb rif",
+          "score": 0.2506,
+          "evidence": []
+        },
+        {
+          "term": "cryptococcal",
+          "score": 0.2343,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis",
+          "score": 0.2331,
+          "evidence": []
+        },
+        {
+          "term": "rifapentine global",
+          "score": 0.2321,
+          "evidence": []
+        },
+        {
+          "term": "monitoring",
+          "score": 0.2314,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "tpt",
+          "score": 6.0365,
+          "evidence": []
+        },
+        {
+          "term": "rifapentine global",
+          "score": 5.2002,
+          "evidence": []
+        },
+        {
+          "term": "hiv disease",
+          "score": 4.8611,
+          "evidence": []
+        },
+        {
+          "term": "isoniazid",
+          "score": 4.8115,
+          "evidence": []
+        },
+        {
+          "term": "regimen",
+          "score": 4.2903,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis",
+          "score": 3.9836,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 3.9315,
+          "evidence": []
+        },
+        {
+          "term": "accessed",
+          "score": 3.8386,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hiv disease",
+          "score": 0.3597,
+          "evidence": []
+        },
+        {
+          "term": "xpert mtb",
+          "score": 0.2862,
+          "evidence": []
+        },
+        {
+          "term": "advanced hiv",
+          "score": 0.2752,
+          "evidence": []
+        },
+        {
+          "term": "mtb rif",
+          "score": 0.2506,
+          "evidence": []
+        },
+        {
+          "term": "cryptococcal",
+          "score": 0.2343,
+          "evidence": []
+        },
+        {
+          "term": "rifapentine global",
+          "score": 0.2321,
+          "evidence": []
+        },
+        {
+          "term": "monitoring",
+          "score": 0.2314,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "children",
+          "score": 0.23,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 48.6529,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 27.6186,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 19.2619,
+          "evidence": []
+        },
+        {
+          "term": "知情同意是在被全面告知风险",
+          "score": 16.9829,
+          "evidence": []
+        },
+        {
+          "term": "政治利益",
+          "score": 16.9457,
+          "evidence": []
+        },
+        {
+          "term": "利益相关者",
+          "score": 16.0048,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 15.9061,
+          "evidence": []
+        },
+        {
+          "term": "问题的讨论结束",
+          "score": 15.9061,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-026-clinical-research": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "preventive treatment",
+          "score": 1.3054,
+          "evidence": []
+        },
+        {
+          "term": "children living",
+          "score": 1.293,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 1.229,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "among children",
+          "score": 1.1968,
+          "evidence": []
+        },
+        {
+          "term": "research gaps",
+          "score": 1.181,
+          "evidence": []
+        },
+        {
+          "term": "hiv younger",
+          "score": 1.1025,
+          "evidence": []
+        },
+        {
+          "term": "gaps related",
+          "score": 0.9629,
+          "evidence": []
+        },
+        {
+          "term": "pneumonia",
+          "score": 0.9374,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "children living",
+          "score": 24.8322,
+          "evidence": []
+        },
+        {
+          "term": "among children",
+          "score": 23.0772,
+          "evidence": []
+        },
+        {
+          "term": "preventive treatment",
+          "score": 23.0195,
+          "evidence": []
+        },
+        {
+          "term": "pneumonia",
+          "score": 18.5486,
+          "evidence": []
+        },
+        {
+          "term": "hiv younger",
+          "score": 17.6041,
+          "evidence": []
+        },
+        {
+          "term": "gaps related",
+          "score": 16.6761,
+          "evidence": []
+        },
+        {
+          "term": "research gaps",
+          "score": 16.0452,
+          "evidence": []
+        },
+        {
+          "term": "studied",
+          "score": 15.6007,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "children living",
+          "score": 0.4607,
+          "evidence": []
+        },
+        {
+          "term": "among children",
+          "score": 0.4334,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.3658,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv younger",
+          "score": 0.3543,
+          "evidence": []
+        },
+        {
+          "term": "clinical",
+          "score": 0.2793,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "preventive treatment",
+          "score": 0.258,
+          "evidence": []
+        },
+        {
+          "term": "cryptococcal",
+          "score": 0.2328,
+          "evidence": []
+        },
+        {
+          "term": "adolescents",
+          "score": 0.1996,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "children living",
+          "score": 13.6656,
+          "evidence": []
+        },
+        {
+          "term": "among children",
+          "score": 10.998,
+          "evidence": []
+        },
+        {
+          "term": "preventive treatment",
+          "score": 8.2116,
+          "evidence": []
+        },
+        {
+          "term": "adolescents",
+          "score": 5.9976,
+          "evidence": []
+        },
+        {
+          "term": "hiv younger",
+          "score": 5.6092,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 3.737,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "regimen",
+          "score": 3.6687,
+          "evidence": []
+        },
+        {
+          "term": "clinical",
+          "score": 3.6043,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "children living",
+          "score": 0.4607,
+          "evidence": []
+        },
+        {
+          "term": "among children",
+          "score": 0.4334,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.3658,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv younger",
+          "score": 0.3543,
+          "evidence": []
+        },
+        {
+          "term": "clinical",
+          "score": 0.2793,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "preventive treatment",
+          "score": 0.258,
+          "evidence": []
+        },
+        {
+          "term": "research gaps",
+          "score": 0.204,
+          "evidence": []
+        },
+        {
+          "term": "pneumonia",
+          "score": 0.0836,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 34.3197,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 31.1875,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 31.1875,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 31.1875,
+          "evidence": []
+        },
+        {
+          "term": "可持续发展目标和世卫组织",
+          "score": 27.6063,
+          "evidence": []
+        },
+        {
+          "term": "可能性",
+          "score": 26.6735,
+          "evidence": []
+        },
+        {
+          "term": "方面的作用",
+          "score": 24.109,
+          "evidence": []
+        },
+        {
+          "term": "公共卫生专家",
+          "score": 22.2045,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-027-operational-research": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "studied",
+          "score": 0.6949,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.6145,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "tb-speed",
+          "score": 0.5106,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "studied",
+          "score": 10.4005,
+          "evidence": []
+        },
+        {
+          "term": "catalyzing",
+          "score": 6.4289,
+          "evidence": []
+        },
+        {
+          "term": "tb-speed",
+          "score": 6.2748,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "research",
+          "score": 0.1771,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "study",
+          "score": 0.065,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.0592,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "research",
+          "score": 1.6426,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "tuberculosis",
+          "score": 1.5017,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 1.0942,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "research",
+          "score": 0.1771,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "study",
+          "score": 0.065,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.0592,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 52.088,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 35.8525,
+          "evidence": []
+        },
+        {
+          "term": "问题的讨论结束",
+          "score": 35.8525,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-028-references": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "infect dis",
+          "score": 2.9261,
+          "evidence": []
+        },
+        {
+          "term": "lancet infect",
+          "score": 2.7444,
+          "evidence": []
+        },
+        {
+          "term": "pediatr infect",
+          "score": 2.7003,
+          "evidence": []
+        },
+        {
+          "term": "accessed june",
+          "score": 2.6654,
+          "evidence": []
+        },
+        {
+          "term": "hiv-infected children",
+          "score": 2.4269,
+          "evidence": []
+        },
+        {
+          "term": "lung dis",
+          "score": 2.2195,
+          "evidence": []
+        },
+        {
+          "term": "clin infect",
+          "score": 2.1871,
+          "evidence": []
+        },
+        {
+          "term": "lancet hiv",
+          "score": 2.1351,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "infect dis",
+          "score": 110.5071,
+          "evidence": []
+        },
+        {
+          "term": "hiv-infected children",
+          "score": 109.5412,
+          "evidence": []
+        },
+        {
+          "term": "lancet infect",
+          "score": 101.9428,
+          "evidence": []
+        },
+        {
+          "term": "accessed june",
+          "score": 88.4957,
+          "evidence": []
+        },
+        {
+          "term": "pediatr infect",
+          "score": 86.8268,
+          "evidence": []
+        },
+        {
+          "term": "african children",
+          "score": 84.259,
+          "evidence": []
+        },
+        {
+          "term": "lancet hiv",
+          "score": 83.5931,
+          "evidence": []
+        },
+        {
+          "term": "children admitted",
+          "score": 83.0476,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "infect dis",
+          "score": 2.1481,
+          "evidence": []
+        },
+        {
+          "term": "lancet hiv",
+          "score": 1.8344,
+          "evidence": []
+        },
+        {
+          "term": "hiv aids",
+          "score": 1.7999,
+          "evidence": []
+        },
+        {
+          "term": "clin infect",
+          "score": 1.7992,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 1.7213,
+          "evidence": []
+        },
+        {
+          "term": "pulmonary tuberculosis",
+          "score": 1.6423,
+          "evidence": []
+        },
+        {
+          "term": "hiv-infected children",
+          "score": 1.6102,
+          "evidence": []
+        },
+        {
+          "term": "lung dis",
+          "score": 1.6099,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "pulmonary tuberculosis",
+          "score": 70.9266,
+          "evidence": []
+        },
+        {
+          "term": "infect dis",
+          "score": 68.6535,
+          "evidence": []
+        },
+        {
+          "term": "active tuberculosis",
+          "score": 62.4638,
+          "evidence": []
+        },
+        {
+          "term": "hiv aids",
+          "score": 57.6103,
+          "evidence": []
+        },
+        {
+          "term": "lancet hiv",
+          "score": 53.0341,
+          "evidence": []
+        },
+        {
+          "term": "lung dis",
+          "score": 51.7763,
+          "evidence": []
+        },
+        {
+          "term": "accessed june",
+          "score": 51.4098,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 50.4031,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "infect dis",
+          "score": 2.1481,
+          "evidence": []
+        },
+        {
+          "term": "lancet hiv",
+          "score": 1.8344,
+          "evidence": []
+        },
+        {
+          "term": "hiv aids",
+          "score": 1.7999,
+          "evidence": []
+        },
+        {
+          "term": "clin infect",
+          "score": 1.7992,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 1.7213,
+          "evidence": []
+        },
+        {
+          "term": "pulmonary tuberculosis",
+          "score": 1.6423,
+          "evidence": []
+        },
+        {
+          "term": "hiv-infected children",
+          "score": 1.6102,
+          "evidence": []
+        },
+        {
+          "term": "lung dis",
+          "score": 1.6099,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 77.0995,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 70.2604,
+          "evidence": []
+        },
+        {
+          "term": "问题的讨论结束",
+          "score": 70.2604,
+          "evidence": []
+        },
+        {
+          "term": "法律上",
+          "score": 63.1119,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 55.4364,
+          "evidence": []
+        },
+        {
+          "term": "世界医学协会",
+          "score": 53.7174,
+          "evidence": []
+        },
+        {
+          "term": "知情同意是在被全面告知风险",
+          "score": 50.4793,
+          "evidence": []
+        },
+        {
+          "term": "利益相关者",
+          "score": 49.0467,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "cryptococcal disease",
+          "score": 1.4853,
+          "evidence": []
+        },
+        {
+          "term": "stop aids",
+          "score": 1.3683,
+          "evidence": []
+        },
+        {
+          "term": "advanced hiv",
+          "score": 1.2846,
+          "evidence": []
+        },
+        {
+          "term": "technical brief",
+          "score": 1.2573,
+          "evidence": []
+        },
+        {
+          "term": "bacterial infections",
+          "score": 1.1843,
+          "evidence": []
+        },
+        {
+          "term": "creative commons",
+          "score": 1.1585,
+          "evidence": []
+        },
+        {
+          "term": "suggested citation",
+          "score": 1.007,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 0.957,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "cryptococcal disease",
+          "score": 28.9444,
+          "evidence": []
+        },
+        {
+          "term": "stop aids",
+          "score": 26.6351,
+          "evidence": []
+        },
+        {
+          "term": "advanced hiv",
+          "score": 26.0828,
+          "evidence": []
+        },
+        {
+          "term": "technical brief",
+          "score": 25.7502,
+          "evidence": []
+        },
+        {
+          "term": "work",
+          "score": 21.6589,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 21.3471,
+          "evidence": []
+        },
+        {
+          "term": "creative commons",
+          "score": 18.7294,
+          "evidence": []
+        },
+        {
+          "term": "bacterial infections",
+          "score": 18.3338,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health organization",
+          "score": 1.0305,
+          "evidence": []
+        },
+        {
+          "term": "creative commons",
+          "score": 1.0167,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.9964,
+          "evidence": []
+        },
+        {
+          "term": "suggested citation",
+          "score": 0.8891,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 0.8498,
+          "evidence": []
+        },
+        {
+          "term": "material",
+          "score": 0.7524,
+          "evidence": []
+        },
+        {
+          "term": "igo",
+          "score": 0.7029,
+          "evidence": []
+        },
+        {
+          "term": "lines",
+          "score": 0.6862,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health organization",
+          "score": 10.4826,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 10.2469,
+          "evidence": []
+        },
+        {
+          "term": "wpv",
+          "score": 9.7246,
+          "evidence": []
+        },
+        {
+          "term": "cryptococcal disease",
+          "score": 8.0316,
+          "evidence": []
+        },
+        {
+          "term": "hiv disease",
+          "score": 7.7925,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 6.8672,
+          "evidence": []
+        },
+        {
+          "term": "advanced hiv",
+          "score": 6.6266,
+          "evidence": []
+        },
+        {
+          "term": "adolescents",
+          "score": 5.8884,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health organization",
+          "score": 1.0305,
+          "evidence": []
+        },
+        {
+          "term": "creative commons",
+          "score": 1.0167,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.9964,
+          "evidence": []
+        },
+        {
+          "term": "suggested citation",
+          "score": 0.8891,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 0.8498,
+          "evidence": []
+        },
+        {
+          "term": "material",
+          "score": 0.7524,
+          "evidence": []
+        },
+        {
+          "term": "igo",
+          "score": 0.7029,
+          "evidence": []
+        },
+        {
+          "term": "lines",
+          "score": 0.6862,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 40.5048,
+          "evidence": []
+        },
+        {
+          "term": "增强和迭代",
+          "score": 39.8155,
+          "evidence": []
+        },
+        {
+          "term": "行动框架",
+          "score": 39.8155,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 36.599,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 32.0556,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 29.9542,
+          "evidence": []
+        },
+        {
+          "term": "设计的",
+          "score": 29.2461,
+          "evidence": []
+        },
+        {
+          "term": "对照组",
+          "score": 28.8463,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

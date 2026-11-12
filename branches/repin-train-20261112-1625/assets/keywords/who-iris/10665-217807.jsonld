@@ -1,0 +1,264 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-217807",
+  "instance": "who-iris",
+  "about": "library/10665-217807",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7434,
+    "terms": 71211
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "vaccinating centre",
+        "score": 1.5109,
+        "evidence": []
+      },
+      {
+        "term": "yellow-fever",
+        "score": 1.0202,
+        "evidence": []
+      },
+      {
+        "term": "insérer",
+        "score": 0.8925,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "vaccinating centre",
+        "score": 27.5383,
+        "evidence": []
+      },
+      {
+        "term": "yellow-fever",
+        "score": 16.4413,
+        "evidence": []
+      },
+      {
+        "term": "insérer",
+        "score": 14.2441,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "les",
+        "score": 0.1114,
+        "evidence": []
+      },
+      {
+        "term": "des",
+        "score": 0.1041,
+        "evidence": []
+      },
+      {
+        "term": "pour",
+        "score": 0.0799,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "les",
+        "score": 1.8388,
+        "evidence": []
+      },
+      {
+        "term": "vaccination",
+        "score": 1.2622,
+        "evidence": []
+      },
+      {
+        "term": "university",
+        "score": 1.2295,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "les",
+        "score": 0.1114,
+        "evidence": []
+      },
+      {
+        "term": "pour",
+        "score": 0.0799,
+        "evidence": []
+      },
+      {
+        "term": "vaccination",
+        "score": 0.0732,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "重点人群",
+        "score": 379.1858,
+        "evidence": []
+      },
+      {
+        "term": "捐助者",
+        "score": 190.0555,
+        "evidence": []
+      },
+      {
+        "term": "利益相关者",
+        "score": 120.8639,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "page-001": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "vaccinating centre",
+          "score": 1.5109,
+          "evidence": []
+        },
+        {
+          "term": "yellow-fever",
+          "score": 1.0202,
+          "evidence": []
+        },
+        {
+          "term": "insérer",
+          "score": 0.8925,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "vaccinating centre",
+          "score": 27.5383,
+          "evidence": []
+        },
+        {
+          "term": "yellow-fever",
+          "score": 16.4413,
+          "evidence": []
+        },
+        {
+          "term": "insérer",
+          "score": 14.2441,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "les",
+          "score": 0.1114,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.1041,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.0799,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les",
+          "score": 1.8388,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 1.2622,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 1.2295,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "les",
+          "score": 0.1114,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.0799,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.0732,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 379.1858,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 190.0555,
+          "evidence": []
+        },
+        {
+          "term": "利益相关者",
+          "score": 120.8639,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/folio-assistant-core/process/Process_FolioReviewPublish/node/End_FeedbackIn.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "repin-train/20261112-1625",
+    "sha": "6ca206c84dafc1f6a11bf0c86a9c4c99eaad9882",
+    "pr": "repin-train/20261112-1625",
+    "run": "43258944433"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/folio-assistant-core/process/Process_FolioReviewPublish/node/End_FeedbackIn",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Feedback in: changes asked",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/folio-assistant-core/process/Process_FolioReviewPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/folio-assistant-core/role/authoring-committee",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/folio-assistant-core/process/Process_FolioReviewPublish/lane/Lane_Committee",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/folio-assistant-core/process/Process_FolioReviewPublish#flow/F7"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_FolioReviewPublish/node/End_FeedbackIn"
+    }
+  ]
+}

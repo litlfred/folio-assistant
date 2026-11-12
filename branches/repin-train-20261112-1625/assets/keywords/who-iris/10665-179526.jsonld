@@ -1,0 +1,938 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-179526",
+  "instance": "who-iris",
+  "about": "library/10665-179526",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7434,
+    "terms": 71211
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "lutte contre",
+        "score": 4.7127,
+        "evidence": []
+      },
+      {
+        "term": "plurisectorielle contre",
+        "score": 4.3252,
+        "evidence": []
+      },
+      {
+        "term": "que les",
+        "score": 4.1235,
+        "evidence": []
+      },
+      {
+        "term": "dans les",
+        "score": 4.0609,
+        "evidence": []
+      },
+      {
+        "term": "les mesures",
+        "score": 4.0506,
+        "evidence": []
+      },
+      {
+        "term": "que des",
+        "score": 4.0369,
+        "evidence": []
+      },
+      {
+        "term": "l'oms pour",
+        "score": 4.0284,
+        "evidence": []
+      },
+      {
+        "term": "protéger les",
+        "score": 3.9757,
+        "evidence": []
+      },
+      {
+        "term": "contre l'infection",
+        "score": 3.8967,
+        "evidence": []
+      },
+      {
+        "term": "stratégie mondiale",
+        "score": 3.7505,
+        "evidence": []
+      },
+      {
+        "term": "système des",
+        "score": 3.6458,
+        "evidence": []
+      },
+      {
+        "term": "les autres",
+        "score": 3.63,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "lutte contre",
+        "score": 170.0138,
+        "evidence": []
+      },
+      {
+        "term": "les mesures",
+        "score": 140.1255,
+        "evidence": []
+      },
+      {
+        "term": "dans les",
+        "score": 135.891,
+        "evidence": []
+      },
+      {
+        "term": "que les",
+        "score": 135.0347,
+        "evidence": []
+      },
+      {
+        "term": "protéger les",
+        "score": 126.5414,
+        "evidence": []
+      },
+      {
+        "term": "plurisectorielle contre",
+        "score": 124.4176,
+        "evidence": []
+      },
+      {
+        "term": "par les",
+        "score": 122.6633,
+        "evidence": []
+      },
+      {
+        "term": "les autres",
+        "score": 119.4496,
+        "evidence": []
+      },
+      {
+        "term": "contre l'infection",
+        "score": 117.2505,
+        "evidence": []
+      },
+      {
+        "term": "les personnes",
+        "score": 116.1576,
+        "evidence": []
+      },
+      {
+        "term": "sida",
+        "score": 115.9802,
+        "evidence": []
+      },
+      {
+        "term": "les pays",
+        "score": 115.4096,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "dans les",
+        "score": 4.0568,
+        "evidence": []
+      },
+      {
+        "term": "que les",
+        "score": 3.6884,
+        "evidence": []
+      },
+      {
+        "term": "par les",
+        "score": 3.5846,
+        "evidence": []
+      },
+      {
+        "term": "que des",
+        "score": 3.5479,
+        "evidence": []
+      },
+      {
+        "term": "les pays",
+        "score": 3.5443,
+        "evidence": []
+      },
+      {
+        "term": "avec les",
+        "score": 3.2992,
+        "evidence": []
+      },
+      {
+        "term": "les autres",
+        "score": 3.0927,
+        "evidence": []
+      },
+      {
+        "term": "les mesures",
+        "score": 3.0787,
+        "evidence": []
+      },
+      {
+        "term": "tous les",
+        "score": 3.0549,
+        "evidence": []
+      },
+      {
+        "term": "pour que",
+        "score": 2.9478,
+        "evidence": []
+      },
+      {
+        "term": "les personnes",
+        "score": 2.7844,
+        "evidence": []
+      },
+      {
+        "term": "les moyens",
+        "score": 2.7614,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "dans les",
+        "score": 130.638,
+        "evidence": []
+      },
+      {
+        "term": "par les",
+        "score": 123.0858,
+        "evidence": []
+      },
+      {
+        "term": "que les",
+        "score": 122.4523,
+        "evidence": []
+      },
+      {
+        "term": "les pays",
+        "score": 113.9331,
+        "evidence": []
+      },
+      {
+        "term": "les personnes",
+        "score": 109.7891,
+        "evidence": []
+      },
+      {
+        "term": "avec les",
+        "score": 109.0636,
+        "evidence": []
+      },
+      {
+        "term": "les autres",
+        "score": 107.7525,
+        "evidence": []
+      },
+      {
+        "term": "tous les",
+        "score": 104.8038,
+        "evidence": []
+      },
+      {
+        "term": "les mesures",
+        "score": 103.7831,
+        "evidence": []
+      },
+      {
+        "term": "les moyens",
+        "score": 101.1295,
+        "evidence": []
+      },
+      {
+        "term": "protéger les",
+        "score": 98.9525,
+        "evidence": []
+      },
+      {
+        "term": "que des",
+        "score": 94.1632,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "dans les",
+        "score": 4.0568,
+        "evidence": []
+      },
+      {
+        "term": "que les",
+        "score": 3.6884,
+        "evidence": []
+      },
+      {
+        "term": "par les",
+        "score": 3.5846,
+        "evidence": []
+      },
+      {
+        "term": "que des",
+        "score": 3.5479,
+        "evidence": []
+      },
+      {
+        "term": "les pays",
+        "score": 3.5443,
+        "evidence": []
+      },
+      {
+        "term": "avec les",
+        "score": 3.2992,
+        "evidence": []
+      },
+      {
+        "term": "les autres",
+        "score": 3.0927,
+        "evidence": []
+      },
+      {
+        "term": "les mesures",
+        "score": 3.0787,
+        "evidence": []
+      },
+      {
+        "term": "tous les",
+        "score": 3.0549,
+        "evidence": []
+      },
+      {
+        "term": "pour que",
+        "score": 2.9478,
+        "evidence": []
+      },
+      {
+        "term": "les personnes",
+        "score": 2.7844,
+        "evidence": []
+      },
+      {
+        "term": "les moyens",
+        "score": 2.7614,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "还包括区域经济一体化组织",
+        "score": 52.2371,
+        "evidence": []
+      },
+      {
+        "term": "适用时",
+        "score": 52.2371,
+        "evidence": []
+      },
+      {
+        "term": "共享流感病毒以及获得",
+        "score": 50.4446,
+        "evidence": []
+      },
+      {
+        "term": "政治利益",
+        "score": 47.2368,
+        "evidence": []
+      },
+      {
+        "term": "经济方面",
+        "score": 47.0238,
+        "evidence": []
+      },
+      {
+        "term": "大流行性流感防范框架",
+        "score": 46.2477,
+        "evidence": []
+      },
+      {
+        "term": "重点人群",
+        "score": 45.0222,
+        "evidence": []
+      },
+      {
+        "term": "捐助者",
+        "score": 40.1601,
+        "evidence": []
+      },
+      {
+        "term": "非政府组织",
+        "score": 35.612,
+        "evidence": []
+      },
+      {
+        "term": "大流行性流感的防范",
+        "score": 35.0097,
+        "evidence": []
+      },
+      {
+        "term": "数据安全",
+        "score": 34.5567,
+        "evidence": []
+      },
+      {
+        "term": "通过确定",
+        "score": 34.4578,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-page-2": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "les mesures",
+          "score": 2.7969,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 2.6577,
+          "evidence": []
+        },
+        {
+          "term": "lutte contre",
+          "score": 2.6267,
+          "evidence": []
+        },
+        {
+          "term": "des mesures",
+          "score": 2.6251,
+          "evidence": []
+        },
+        {
+          "term": "pour freiner",
+          "score": 2.6023,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 2.5152,
+          "evidence": []
+        },
+        {
+          "term": "les personnes",
+          "score": 2.4553,
+          "evidence": []
+        },
+        {
+          "term": "par les",
+          "score": 2.4398,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "les mesures",
+          "score": 120.5719,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 112.6846,
+          "evidence": []
+        },
+        {
+          "term": "lutte contre",
+          "score": 109.5286,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 109.3761,
+          "evidence": []
+        },
+        {
+          "term": "par les",
+          "score": 104.4082,
+          "evidence": []
+        },
+        {
+          "term": "les personnes",
+          "score": 100.7905,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 100.0424,
+          "evidence": []
+        },
+        {
+          "term": "les autres",
+          "score": 97.2816,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "dans les",
+          "score": 2.7038,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 2.4804,
+          "evidence": []
+        },
+        {
+          "term": "par les",
+          "score": 2.3927,
+          "evidence": []
+        },
+        {
+          "term": "que des",
+          "score": 2.3722,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 2.3459,
+          "evidence": []
+        },
+        {
+          "term": "les autres",
+          "score": 2.0576,
+          "evidence": []
+        },
+        {
+          "term": "les mesures",
+          "score": 2.0558,
+          "evidence": []
+        },
+        {
+          "term": "tous les",
+          "score": 2.0324,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "dans les",
+          "score": 105.1128,
+          "evidence": []
+        },
+        {
+          "term": "par les",
+          "score": 99.6664,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 99.5542,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 92.0333,
+          "evidence": []
+        },
+        {
+          "term": "les personnes",
+          "score": 90.4014,
+          "evidence": []
+        },
+        {
+          "term": "les autres",
+          "score": 87.4069,
+          "evidence": []
+        },
+        {
+          "term": "tous les",
+          "score": 85.0486,
+          "evidence": []
+        },
+        {
+          "term": "les mesures",
+          "score": 84.3152,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "dans les",
+          "score": 2.7038,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 2.4804,
+          "evidence": []
+        },
+        {
+          "term": "par les",
+          "score": 2.3927,
+          "evidence": []
+        },
+        {
+          "term": "que des",
+          "score": 2.3722,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 2.3459,
+          "evidence": []
+        },
+        {
+          "term": "les autres",
+          "score": 2.0576,
+          "evidence": []
+        },
+        {
+          "term": "les mesures",
+          "score": 2.0558,
+          "evidence": []
+        },
+        {
+          "term": "tous les",
+          "score": 2.0324,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 24.5496,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 22.5054,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 21.5457,
+          "evidence": []
+        },
+        {
+          "term": "知识产权",
+          "score": 19.2141,
+          "evidence": []
+        },
+        {
+          "term": "经济方面",
+          "score": 18.491,
+          "evidence": []
+        },
+        {
+          "term": "中所讨论的一样",
+          "score": 17.9798,
+          "evidence": []
+        },
+        {
+          "term": "政治利益",
+          "score": 17.609,
+          "evidence": []
+        },
+        {
+          "term": "风险最小化",
+          "score": 17.4785,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "l'oms pour",
+          "score": 2.1427,
+          "evidence": []
+        },
+        {
+          "term": "lutte contre",
+          "score": 2.086,
+          "evidence": []
+        },
+        {
+          "term": "stratégie mondiale",
+          "score": 1.859,
+          "evidence": []
+        },
+        {
+          "term": "système des",
+          "score": 1.7309,
+          "evidence": []
+        },
+        {
+          "term": "directeur général",
+          "score": 1.6905,
+          "evidence": []
+        },
+        {
+          "term": "assemblée mondiale",
+          "score": 1.5761,
+          "evidence": []
+        },
+        {
+          "term": "des nations",
+          "score": 1.5177,
+          "evidence": []
+        },
+        {
+          "term": "nations unies",
+          "score": 1.4162,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "lutte contre",
+          "score": 60.4852,
+          "evidence": []
+        },
+        {
+          "term": "sida",
+          "score": 40.3409,
+          "evidence": []
+        },
+        {
+          "term": "stratégie mondiale",
+          "score": 39.1296,
+          "evidence": []
+        },
+        {
+          "term": "l'oms pour",
+          "score": 37.7733,
+          "evidence": []
+        },
+        {
+          "term": "assemblée mondiale",
+          "score": 31.9416,
+          "evidence": []
+        },
+        {
+          "term": "directeur général",
+          "score": 29.2515,
+          "evidence": []
+        },
+        {
+          "term": "des nations",
+          "score": 27.3748,
+          "evidence": []
+        },
+        {
+          "term": "système des",
+          "score": 26.6459,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "les autres",
+          "score": 1.0351,
+          "evidence": []
+        },
+        {
+          "term": "système des",
+          "score": 0.9188,
+          "evidence": []
+        },
+        {
+          "term": "des nations",
+          "score": 0.9181,
+          "evidence": []
+        },
+        {
+          "term": "l'oms pour",
+          "score": 0.646,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.5551,
+          "evidence": []
+        },
+        {
+          "term": "général sur",
+          "score": 0.515,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.4797,
+          "evidence": []
+        },
+        {
+          "term": "stratégie mondiale",
+          "score": 0.4673,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les autres",
+          "score": 20.3456,
+          "evidence": []
+        },
+        {
+          "term": "des nations",
+          "score": 16.6562,
+          "evidence": []
+        },
+        {
+          "term": "système des",
+          "score": 16.4995,
+          "evidence": []
+        },
+        {
+          "term": "l'oms pour",
+          "score": 9.1099,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 7.0734,
+          "evidence": []
+        },
+        {
+          "term": "stratégie mondiale",
+          "score": 6.5788,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 6.4543,
+          "evidence": []
+        },
+        {
+          "term": "assemblée mondiale",
+          "score": 6.1526,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "les autres",
+          "score": 1.0351,
+          "evidence": []
+        },
+        {
+          "term": "système des",
+          "score": 0.9188,
+          "evidence": []
+        },
+        {
+          "term": "des nations",
+          "score": 0.9181,
+          "evidence": []
+        },
+        {
+          "term": "l'oms pour",
+          "score": 0.6723,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.5551,
+          "evidence": []
+        },
+        {
+          "term": "général sur",
+          "score": 0.515,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.4797,
+          "evidence": []
+        },
+        {
+          "term": "stratégie mondiale",
+          "score": 0.4673,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "还包括区域经济一体化组织",
+          "score": 54.8123,
+          "evidence": []
+        },
+        {
+          "term": "适用时",
+          "score": 54.8123,
+          "evidence": []
+        },
+        {
+          "term": "共享流感病毒以及获得",
+          "score": 49.3864,
+          "evidence": []
+        },
+        {
+          "term": "大流行性流感防范框架",
+          "score": 41.0782,
+          "evidence": []
+        },
+        {
+          "term": "大流行性流感的防范",
+          "score": 35.0638,
+          "evidence": []
+        },
+        {
+          "term": "敦促会员国",
+          "score": 33.8105,
+          "evidence": []
+        },
+        {
+          "term": "确定优先领域",
+          "score": 33.8105,
+          "evidence": []
+        },
+        {
+          "term": "要求总干事",
+          "score": 33.7422,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

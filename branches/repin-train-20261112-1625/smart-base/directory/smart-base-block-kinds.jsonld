@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/smart-base/directory/smart-base-block-kinds.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/directory/smart-base-block-kinds.jsonld",
+  "staging": {
+    "branch": "repin-train/20261112-1625",
+    "sha": "6ca206c84dafc1f6a11bf0c86a9c4c99eaad9882",
+    "pr": "repin-train/20261112-1625",
+    "run": "43258944433"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/directory/smart-base-block-kinds",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "smart-base-block-kinds",
+      "path": "block-kinds/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/block-kinds"
+      ],
+      "description": "The `dak` adapter's block kinds, one folio-block-kind/v1 node per file: kind, builder, label prefix and RDF types. Read by schemas/dak-kinds.ts and dak-jsonld.ts; loadContributions registers them for a folio only when its dependency tree includes smart-base.",
+      "readmePath": "block-kinds/README.md",
+      "fileCount": 0,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-block-kinds"
+    }
+  ]
+}

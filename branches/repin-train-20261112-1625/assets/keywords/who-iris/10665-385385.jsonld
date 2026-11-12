@@ -1,0 +1,756 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-385385",
+  "instance": "who-iris",
+  "about": "library/10665-385385",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7434,
+    "terms": 71211
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "hcv elimination",
+        "score": 6.4456,
+        "evidence": []
+      },
+      {
+        "term": "birth-dose hepatitis",
+        "score": 6.4317,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "chronic hbv",
+        "score": 6.0353,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "viremic hcv",
+        "score": 6.0254,
+        "evidence": []
+      },
+      {
+        "term": "hcv infection",
+        "score": 5.9714,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hcv diagnosed",
+        "score": 5.9134,
+        "evidence": []
+      },
+      {
+        "term": "hcv treatment",
+        "score": 5.751,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hcv prevalence",
+        "score": 5.7019,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hcv incidence",
+        "score": 5.6717,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "eliminating hcv",
+        "score": 5.6506,
+        "evidence": []
+      },
+      {
+        "term": "hcv treated",
+        "score": 5.6283,
+        "evidence": []
+      },
+      {
+        "term": "hcv screening",
+        "score": 5.6273,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "hepatitis infection",
+        "score": 1997.2989,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hcv infection",
+        "score": 1966.9415,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hepatitis treatment",
+        "score": 1837.3049,
+        "evidence": []
+      },
+      {
+        "term": "chronic hepatitis",
+        "score": 1795.2049,
+        "evidence": []
+      },
+      {
+        "term": "hbv infection",
+        "score": 1788.9788,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "global hepatitis",
+        "score": 1778.1311,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hepatitis elimination",
+        "score": 1761.1489,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "viral hepatitis",
+        "score": 1719.3096,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "world hepatitis",
+        "score": 1645.0955,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "birth-dose hepatitis",
+        "score": 1601.4181,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hepatitis transmission",
+        "score": 1598.1945,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hcv diagnosed",
+        "score": 1579.2189,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "hcv elimination",
+        "score": 6.9162,
+        "evidence": []
+      },
+      {
+        "term": "chronic hbv",
+        "score": 6.7489,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "birth-dose hepatitis",
+        "score": 6.647,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hcv infections",
+        "score": 6.383,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "viremic hcv",
+        "score": 6.27,
+        "evidence": []
+      },
+      {
+        "term": "hcv diagnosed",
+        "score": 6.2629,
+        "evidence": []
+      },
+      {
+        "term": "hcv prevalence",
+        "score": 6.0754,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hcv treatment",
+        "score": 6.0402,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hcv transmission",
+        "score": 6.0326,
+        "evidence": []
+      },
+      {
+        "term": "hcv screening",
+        "score": 5.9683,
+        "evidence": []
+      },
+      {
+        "term": "hcv incidence",
+        "score": 5.9315,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "eliminating hcv",
+        "score": 5.9251,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "hepatitis infection",
+        "score": 1989.8667,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hcv infection",
+        "score": 1978.4311,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hepatitis treatment",
+        "score": 1831.3651,
+        "evidence": []
+      },
+      {
+        "term": "hbv infection",
+        "score": 1792.2958,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "chronic hepatitis",
+        "score": 1786.8911,
+        "evidence": []
+      },
+      {
+        "term": "global hepatitis",
+        "score": 1771.4607,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hepatitis elimination",
+        "score": 1753.5475,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "viral hepatitis",
+        "score": 1713.8436,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "world hepatitis",
+        "score": 1639.6524,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "birth-dose hepatitis",
+        "score": 1592.506,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hepatitis transmission",
+        "score": 1592.3921,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hcv diagnosed",
+        "score": 1589.6438,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "hcv elimination",
+        "score": 6.9162,
+        "evidence": []
+      },
+      {
+        "term": "chronic hbv",
+        "score": 6.7489,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "birth-dose hepatitis",
+        "score": 6.647,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hcv infections",
+        "score": 6.383,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "viremic hcv",
+        "score": 6.27,
+        "evidence": []
+      },
+      {
+        "term": "hcv diagnosed",
+        "score": 6.2629,
+        "evidence": []
+      },
+      {
+        "term": "hcv prevalence",
+        "score": 6.0754,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hcv treatment",
+        "score": 6.0402,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hcv transmission",
+        "score": 6.0326,
+        "evidence": []
+      },
+      {
+        "term": "hcv screening",
+        "score": 5.9683,
+        "evidence": []
+      },
+      {
+        "term": "hcv incidence",
+        "score": 5.9315,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "eliminating hcv",
+        "score": 5.9251,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "允许进行个人反馈",
+        "score": 24.2175,
+        "evidence": []
+      },
+      {
+        "term": "相一致",
+        "score": 17.2744,
+        "evidence": []
+      },
+      {
+        "term": "感染者",
+        "score": 15.103,
+        "evidence": []
+      },
+      {
+        "term": "加强全球",
+        "score": 14.1668,
+        "evidence": []
+      },
+      {
+        "term": "区域和国家各级的数字卫生保健治理",
+        "score": 14.1668,
+        "evidence": []
+      },
+      {
+        "term": "位置服务",
+        "score": 13.8646,
+        "evidence": []
+      },
+      {
+        "term": "在卫生系统强化",
+        "score": 13.8646,
+        "evidence": []
+      },
+      {
+        "term": "的背景下",
+        "score": 13.8646,
+        "evidence": []
+      },
+      {
+        "term": "并提供一",
+        "score": 12.9119,
+        "evidence": []
+      },
+      {
+        "term": "一致元数据和定义",
+        "score": 11.8568,
+        "evidence": []
+      },
+      {
+        "term": "严重急性呼吸综合征",
+        "score": 11.3519,
+        "evidence": []
+      },
+      {
+        "term": "疫苗储备",
+        "score": 10.9021,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-document": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hcv elimination",
+          "score": 6.4456,
+          "evidence": []
+        },
+        {
+          "term": "birth-dose hepatitis",
+          "score": 6.4317,
+          "evidence": []
+        },
+        {
+          "term": "chronic hbv",
+          "score": 6.0353,
+          "evidence": []
+        },
+        {
+          "term": "viremic hcv",
+          "score": 6.0254,
+          "evidence": []
+        },
+        {
+          "term": "hcv infection",
+          "score": 5.9714,
+          "evidence": []
+        },
+        {
+          "term": "hcv diagnosed",
+          "score": 5.9134,
+          "evidence": []
+        },
+        {
+          "term": "hcv treatment",
+          "score": 5.751,
+          "evidence": []
+        },
+        {
+          "term": "hcv prevalence",
+          "score": 5.7019,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hepatitis infection",
+          "score": 1997.2989,
+          "evidence": []
+        },
+        {
+          "term": "hcv infection",
+          "score": 1966.9415,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis treatment",
+          "score": 1837.3049,
+          "evidence": []
+        },
+        {
+          "term": "chronic hepatitis",
+          "score": 1795.2049,
+          "evidence": []
+        },
+        {
+          "term": "hbv infection",
+          "score": 1788.9788,
+          "evidence": []
+        },
+        {
+          "term": "global hepatitis",
+          "score": 1778.1311,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis elimination",
+          "score": 1761.1489,
+          "evidence": []
+        },
+        {
+          "term": "viral hepatitis",
+          "score": 1719.3096,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hcv elimination",
+          "score": 6.9162,
+          "evidence": []
+        },
+        {
+          "term": "chronic hbv",
+          "score": 6.7489,
+          "evidence": []
+        },
+        {
+          "term": "birth-dose hepatitis",
+          "score": 6.647,
+          "evidence": []
+        },
+        {
+          "term": "hcv infections",
+          "score": 6.383,
+          "evidence": []
+        },
+        {
+          "term": "viremic hcv",
+          "score": 6.27,
+          "evidence": []
+        },
+        {
+          "term": "hcv diagnosed",
+          "score": 6.2629,
+          "evidence": []
+        },
+        {
+          "term": "hcv prevalence",
+          "score": 6.0754,
+          "evidence": []
+        },
+        {
+          "term": "hcv treatment",
+          "score": 6.0402,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hepatitis infection",
+          "score": 1989.8667,
+          "evidence": []
+        },
+        {
+          "term": "hcv infection",
+          "score": 1978.4311,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis treatment",
+          "score": 1831.3651,
+          "evidence": []
+        },
+        {
+          "term": "hbv infection",
+          "score": 1792.2958,
+          "evidence": []
+        },
+        {
+          "term": "chronic hepatitis",
+          "score": 1786.8911,
+          "evidence": []
+        },
+        {
+          "term": "global hepatitis",
+          "score": 1771.4607,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis elimination",
+          "score": 1753.5475,
+          "evidence": []
+        },
+        {
+          "term": "viral hepatitis",
+          "score": 1713.8436,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hcv elimination",
+          "score": 6.9162,
+          "evidence": []
+        },
+        {
+          "term": "chronic hbv",
+          "score": 6.7489,
+          "evidence": []
+        },
+        {
+          "term": "birth-dose hepatitis",
+          "score": 6.647,
+          "evidence": []
+        },
+        {
+          "term": "hcv infections",
+          "score": 6.383,
+          "evidence": []
+        },
+        {
+          "term": "viremic hcv",
+          "score": 6.27,
+          "evidence": []
+        },
+        {
+          "term": "hcv diagnosed",
+          "score": 6.2629,
+          "evidence": []
+        },
+        {
+          "term": "hcv prevalence",
+          "score": 6.0754,
+          "evidence": []
+        },
+        {
+          "term": "hcv treatment",
+          "score": 6.0402,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 24.2175,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 17.2744,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 15.103,
+          "evidence": []
+        },
+        {
+          "term": "加强全球",
+          "score": 14.1668,
+          "evidence": []
+        },
+        {
+          "term": "区域和国家各级的数字卫生保健治理",
+          "score": 14.1668,
+          "evidence": []
+        },
+        {
+          "term": "位置服务",
+          "score": 13.8646,
+          "evidence": []
+        },
+        {
+          "term": "在卫生系统强化",
+          "score": 13.8646,
+          "evidence": []
+        },
+        {
+          "term": "的背景下",
+          "score": 13.8646,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

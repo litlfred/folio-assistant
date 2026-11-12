@@ -1,0 +1,1918 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-342490",
+  "instance": "who-iris",
+  "about": "library/10665-342490",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7434,
+    "terms": 71211
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "covid vaccine",
+        "score": 9.3694,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "vaccine vial",
+        "score": 9.3646,
+        "evidence": []
+      },
+      {
+        "term": "vaccine janssen",
+        "score": 8.7085,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "punctured vaccine",
+        "score": 7.8105,
+        "evidence": []
+      },
+      {
+        "term": "thawed vaccine",
+        "score": 7.8105,
+        "evidence": []
+      },
+      {
+        "term": "vaccine administration",
+        "score": 7.7189,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "vaccine preparation",
+        "score": 6.6716,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "janssen cilag",
+        "score": 4.6695,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "expiry date",
+        "score": 3.0972,
+        "evidence": []
+      },
+      {
+        "term": "allergic reactions",
+        "score": 2.9235,
+        "evidence": []
+      },
+      {
+        "term": "cov",
+        "score": 2.8743,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "cilag international",
+        "score": 2.5794,
+        "evidence": [
+          "heading"
+        ]
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "vaccine vial",
+        "score": 272.188,
+        "evidence": []
+      },
+      {
+        "term": "covid vaccine",
+        "score": 238.3019,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "vaccine janssen",
+        "score": 227.4732,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "vaccine administration",
+        "score": 210.6862,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "punctured vaccine",
+        "score": 209.565,
+        "evidence": []
+      },
+      {
+        "term": "thawed vaccine",
+        "score": 209.565,
+        "evidence": []
+      },
+      {
+        "term": "vaccine preparation",
+        "score": 195.8134,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "expiry date",
+        "score": 82.8773,
+        "evidence": []
+      },
+      {
+        "term": "janssen cilag",
+        "score": 74.2366,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "original expiry",
+        "score": 58.7866,
+        "evidence": []
+      },
+      {
+        "term": "updated expiry",
+        "score": 56.7439,
+        "evidence": []
+      },
+      {
+        "term": "side effects",
+        "score": 53.2354,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "covid vaccine",
+        "score": 2.0551,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "vaccine administration",
+        "score": 1.858,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "vaccine vials",
+        "score": 1.8211,
+        "evidence": []
+      },
+      {
+        "term": "punctured vaccine",
+        "score": 1.5403,
+        "evidence": []
+      },
+      {
+        "term": "thawed vaccine",
+        "score": 1.5403,
+        "evidence": []
+      },
+      {
+        "term": "vaccine janssen",
+        "score": 1.5403,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "vaccine preparation",
+        "score": 1.5403,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "vaccination",
+        "score": 1.2383,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "immunization session",
+        "score": 1.1022,
+        "evidence": []
+      },
+      {
+        "term": "dose",
+        "score": 0.8958,
+        "evidence": []
+      },
+      {
+        "term": "health organization",
+        "score": 0.8663,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "world health",
+        "score": 0.849,
+        "evidence": [
+          "heading"
+        ]
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "covid vaccine",
+        "score": 73.5794,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "vaccine administration",
+        "score": 49.6399,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "vaccine vial",
+        "score": 49.6116,
+        "evidence": []
+      },
+      {
+        "term": "punctured vaccine",
+        "score": 47.3804,
+        "evidence": []
+      },
+      {
+        "term": "thawed vaccine",
+        "score": 47.3804,
+        "evidence": []
+      },
+      {
+        "term": "vaccine janssen",
+        "score": 47.3804,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "vaccine preparation",
+        "score": 47.3804,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "mumps",
+        "score": 32.1149,
+        "evidence": []
+      },
+      {
+        "term": "vaccination",
+        "score": 31.3015,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "immunization",
+        "score": 29.9639,
+        "evidence": []
+      },
+      {
+        "term": "immunization session",
+        "score": 29.9639,
+        "evidence": []
+      },
+      {
+        "term": "somalia",
+        "score": 22.0965,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "covid vaccine",
+        "score": 2.0551,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "vaccine administration",
+        "score": 1.858,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "vaccine vials",
+        "score": 1.8211,
+        "evidence": []
+      },
+      {
+        "term": "vaccine preparation",
+        "score": 1.6546,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "punctured vaccine",
+        "score": 1.563,
+        "evidence": []
+      },
+      {
+        "term": "thawed vaccine",
+        "score": 1.563,
+        "evidence": []
+      },
+      {
+        "term": "vaccine janssen",
+        "score": 1.5614,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "vaccination",
+        "score": 1.2383,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "immunization session",
+        "score": 1.1022,
+        "evidence": []
+      },
+      {
+        "term": "dose",
+        "score": 0.8958,
+        "evidence": []
+      },
+      {
+        "term": "health organization",
+        "score": 0.8663,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "world health",
+        "score": 0.849,
+        "evidence": [
+          "heading"
+        ]
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "感染者",
+        "score": 208.2693,
+        "evidence": []
+      },
+      {
+        "term": "科研人员",
+        "score": 185.1921,
+        "evidence": []
+      },
+      {
+        "term": "这些情况下",
+        "score": 155.9397,
+        "evidence": []
+      },
+      {
+        "term": "乌干达",
+        "score": 146.8887,
+        "evidence": []
+      },
+      {
+        "term": "到辩护",
+        "score": 144.5453,
+        "evidence": []
+      },
+      {
+        "term": "这两种hpv",
+        "score": 141.3536,
+        "evidence": []
+      },
+      {
+        "term": "反过来",
+        "score": 139.1881,
+        "evidence": []
+      },
+      {
+        "term": "下面统称",
+        "score": 137.9563,
+        "evidence": []
+      },
+      {
+        "term": "本协议条款适用于由提供者转让给接受者的",
+        "score": 137.9563,
+        "evidence": []
+      },
+      {
+        "term": "节中所定义",
+        "score": 137.9563,
+        "evidence": []
+      },
+      {
+        "term": "协议的主题事项",
+        "score": 137.9563,
+        "evidence": []
+      },
+      {
+        "term": "协议缔约方",
+        "score": 137.9563,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-003-1-general-information": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "vial",
+          "score": 0.7276,
+          "evidence": []
+        },
+        {
+          "term": "deltoid",
+          "score": 0.5853,
+          "evidence": []
+        },
+        {
+          "term": "multi-dose",
+          "score": 0.5357,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "vial",
+          "score": 11.236,
+          "evidence": []
+        },
+        {
+          "term": "deltoid",
+          "score": 7.5275,
+          "evidence": []
+        },
+        {
+          "term": "multi-dose",
+          "score": 6.8344,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "vaccine",
+          "score": 0.139,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.1059,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.0871,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "vaccine",
+          "score": 2.1226,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 1.6639,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 1.579,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "vaccine",
+          "score": 0.139,
+          "evidence": []
+        },
+        {
+          "term": "dose",
+          "score": 0.086,
+          "evidence": []
+        },
+        {
+          "term": "schedule",
+          "score": 0.048,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 29.7702,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 29.0415,
+          "evidence": []
+        },
+        {
+          "term": "很重要",
+          "score": 25.7419,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-004-2-storage-conditions-and-shelf-life-of-vaccine": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "storage conditions",
+          "score": 2.7348,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "expiry date",
+          "score": 2.5909,
+          "evidence": []
+        },
+        {
+          "term": "shelf life",
+          "score": 2.5371,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "original expiry",
+          "score": 2.1565,
+          "evidence": []
+        },
+        {
+          "term": "updated expiry",
+          "score": 1.9631,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 1.8417,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "expiry date",
+          "score": 76.4169,
+          "evidence": []
+        },
+        {
+          "term": "original expiry",
+          "score": 58.7866,
+          "evidence": []
+        },
+        {
+          "term": "storage conditions",
+          "score": 54.5871,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "updated expiry",
+          "score": 53.6108,
+          "evidence": []
+        },
+        {
+          "term": "shelf life",
+          "score": 39.2691,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccine",
+          "score": 37.1963,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "vaccine",
+          "score": 0.5103,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccine vials",
+          "score": 0.3098,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.1746,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.1666,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 0.1521,
+          "evidence": []
+        },
+        {
+          "term": "date",
+          "score": 0.0982,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "vaccine",
+          "score": 11.6251,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccine vials",
+          "score": 6.2073,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 4.3157,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 3.4744,
+          "evidence": []
+        },
+        {
+          "term": "mumps",
+          "score": 3.2479,
+          "evidence": []
+        },
+        {
+          "term": "status",
+          "score": 3.0623,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "vaccine",
+          "score": 0.5103,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccine vials",
+          "score": 0.3098,
+          "evidence": []
+        },
+        {
+          "term": "expiry date",
+          "score": 0.1199,
+          "evidence": []
+        },
+        {
+          "term": "months",
+          "score": 0.0811,
+          "evidence": []
+        },
+        {
+          "term": "shelf life",
+          "score": 0.0547,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hours",
+          "score": 0.0402,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "科研人员",
+          "score": 31.2928,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 30.394,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 29.3275,
+          "evidence": []
+        },
+        {
+          "term": "乌干达",
+          "score": 23.8815,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 23.6776,
+          "evidence": []
+        },
+        {
+          "term": "协议的主题事项",
+          "score": 23.1661,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-3-material-needed-for-vaccination-and-supplies": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "supplies",
+          "score": 0.6967,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "syringe",
+          "score": 0.6604,
+          "evidence": []
+        },
+        {
+          "term": "anaphylactic",
+          "score": 0.6193,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "syringe",
+          "score": 10.044,
+          "evidence": []
+        },
+        {
+          "term": "hand",
+          "score": 8.9423,
+          "evidence": []
+        },
+        {
+          "term": "supplies",
+          "score": 8.2196,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "vaccination",
+          "score": 0.176,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccine",
+          "score": 0.1001,
+          "evidence": []
+        },
+        {
+          "term": "dose",
+          "score": 0.0756,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "vaccination",
+          "score": 2.0575,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccine",
+          "score": 1.3434,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.7848,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "vaccination",
+          "score": 0.176,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccine",
+          "score": 0.1001,
+          "evidence": []
+        },
+        {
+          "term": "infection",
+          "score": 0.0621,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "感染者",
+          "score": 29.9425,
+          "evidence": []
+        },
+        {
+          "term": "在正常情况下",
+          "score": 28.0421,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 20.497,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-009-precautions": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "covid vaccine",
+          "score": 1.115,
+          "evidence": []
+        },
+        {
+          "term": "haemophilia",
+          "score": 0.6257,
+          "evidence": []
+        },
+        {
+          "term": "bruising",
+          "score": 0.6077,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "covid vaccine",
+          "score": 13.9018,
+          "evidence": []
+        },
+        {
+          "term": "june",
+          "score": 7.916,
+          "evidence": []
+        },
+        {
+          "term": "bruising",
+          "score": 7.8152,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "covid vaccine",
+          "score": 0.1394,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.0706,
+          "evidence": []
+        },
+        {
+          "term": "ddcc",
+          "score": 0.0572,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "covid vaccine",
+          "score": 4.2021,
+          "evidence": []
+        },
+        {
+          "term": "somalia",
+          "score": 2.5106,
+          "evidence": []
+        },
+        {
+          "term": "mumps",
+          "score": 1.0878,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "covid vaccine",
+          "score": 0.1394,
+          "evidence": []
+        },
+        {
+          "term": "june",
+          "score": 0.0257,
+          "evidence": []
+        },
+        {
+          "term": "international",
+          "score": 0.0234,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "感染者",
+          "score": 35.8246,
+          "evidence": []
+        },
+        {
+          "term": "这些情况下",
+          "score": 32.7028,
+          "evidence": []
+        },
+        {
+          "term": "这两种hpv",
+          "score": 24.5104,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-010-5-preparation-and-administration-of-vaccine": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "vaccine administration",
+          "score": 4.9683,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccine preparation",
+          "score": 4.9562,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccine vial",
+          "score": 3.2569,
+          "evidence": []
+        },
+        {
+          "term": "punctured vaccine",
+          "score": 2.9676,
+          "evidence": []
+        },
+        {
+          "term": "thawed vaccine",
+          "score": 2.9676,
+          "evidence": []
+        },
+        {
+          "term": "covid vaccine",
+          "score": 2.2639,
+          "evidence": []
+        },
+        {
+          "term": "discard",
+          "score": 1.2988,
+          "evidence": []
+        },
+        {
+          "term": "syringe",
+          "score": 1.0771,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "vaccine administration",
+          "score": 245.3841,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccine preparation",
+          "score": 242.8417,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccine vial",
+          "score": 158.4696,
+          "evidence": []
+        },
+        {
+          "term": "punctured vaccine",
+          "score": 126.9517,
+          "evidence": []
+        },
+        {
+          "term": "thawed vaccine",
+          "score": 126.9517,
+          "evidence": []
+        },
+        {
+          "term": "covid vaccine",
+          "score": 109.9922,
+          "evidence": []
+        },
+        {
+          "term": "syringe",
+          "score": 25.11,
+          "evidence": []
+        },
+        {
+          "term": "discard",
+          "score": 24.662,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "vaccine administration",
+          "score": 1.3904,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccine preparation",
+          "score": 1.112,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "covid vaccine",
+          "score": 0.6918,
+          "evidence": []
+        },
+        {
+          "term": "vaccine vials",
+          "score": 0.6698,
+          "evidence": []
+        },
+        {
+          "term": "punctured vaccine",
+          "score": 0.556,
+          "evidence": []
+        },
+        {
+          "term": "thawed vaccine",
+          "score": 0.556,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.4589,
+          "evidence": []
+        },
+        {
+          "term": "dose",
+          "score": 0.3634,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "vaccine administration",
+          "score": 54.6084,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccine preparation",
+          "score": 52.1467,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "covid vaccine",
+          "score": 30.4351,
+          "evidence": []
+        },
+        {
+          "term": "vaccine vials",
+          "score": 27.2624,
+          "evidence": []
+        },
+        {
+          "term": "punctured vaccine",
+          "score": 26.0733,
+          "evidence": []
+        },
+        {
+          "term": "thawed vaccine",
+          "score": 26.0733,
+          "evidence": []
+        },
+        {
+          "term": "mumps",
+          "score": 19.5432,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 16.7276,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "vaccine administration",
+          "score": 1.3904,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccine preparation",
+          "score": 1.213,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "covid vaccine",
+          "score": 0.6918,
+          "evidence": []
+        },
+        {
+          "term": "vaccine vials",
+          "score": 0.6698,
+          "evidence": []
+        },
+        {
+          "term": "punctured vaccine",
+          "score": 0.5653,
+          "evidence": []
+        },
+        {
+          "term": "thawed vaccine",
+          "score": 0.5653,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.4589,
+          "evidence": []
+        },
+        {
+          "term": "dose",
+          "score": 0.3634,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "科研人员",
+          "score": 32.4508,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 27.2335,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 26.5036,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 25.5737,
+          "evidence": []
+        },
+        {
+          "term": "的妇女",
+          "score": 21.6235,
+          "evidence": []
+        },
+        {
+          "term": "很重要",
+          "score": 21.0057,
+          "evidence": []
+        },
+        {
+          "term": "疫苗有关的",
+          "score": 20.9178,
+          "evidence": []
+        },
+        {
+          "term": "挑战性",
+          "score": 20.335,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-011-6-management-of-anaphylaxis-and-anxiety-related": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "anaphylaxis",
+          "score": 1.7664,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "reactions",
+          "score": 1.4726,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "fainting",
+          "score": 0.6392,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "anaphylaxis",
+          "score": 28.4882,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "reactions",
+          "score": 25.9122,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "fainting",
+          "score": 8.2207,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "management",
+          "score": 0.0365,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "reactions",
+          "score": 0.0316,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "worker",
+          "score": 0.0232,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "tpt",
+          "score": 0.6153,
+          "evidence": []
+        },
+        {
+          "term": "client",
+          "score": 0.3948,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.339,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "management",
+          "score": 0.0365,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "reactions",
+          "score": 0.0316,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "worker",
+          "score": 0.0232,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 42.3787,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 27.0572,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 26.4593,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-012-7-communication-during-vaccination-visit": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "side effects",
+          "score": 1.9023,
+          "evidence": []
+        },
+        {
+          "term": "common side",
+          "score": 1.7879,
+          "evidence": []
+        },
+        {
+          "term": "covid vaccine",
+          "score": 1.735,
+          "evidence": []
+        },
+        {
+          "term": "contraindications",
+          "score": 0.9214,
+          "evidence": []
+        },
+        {
+          "term": "explain",
+          "score": 0.8956,
+          "evidence": []
+        },
+        {
+          "term": "yourself",
+          "score": 0.7956,
+          "evidence": []
+        },
+        {
+          "term": "sure",
+          "score": 0.753,
+          "evidence": []
+        },
+        {
+          "term": "visit",
+          "score": 0.6556,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "side effects",
+          "score": 48.3105,
+          "evidence": []
+        },
+        {
+          "term": "common side",
+          "score": 44.4835,
+          "evidence": []
+        },
+        {
+          "term": "covid vaccine",
+          "score": 33.2515,
+          "evidence": []
+        },
+        {
+          "term": "explain",
+          "score": 17.1164,
+          "evidence": []
+        },
+        {
+          "term": "sure",
+          "score": 13.9115,
+          "evidence": []
+        },
+        {
+          "term": "yourself",
+          "score": 12.8578,
+          "evidence": []
+        },
+        {
+          "term": "contraindications",
+          "score": 11.7386,
+          "evidence": []
+        },
+        {
+          "term": "concerns",
+          "score": 9.39,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "vaccination",
+          "score": 0.3068,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "covid vaccine",
+          "score": 0.2551,
+          "evidence": []
+        },
+        {
+          "term": "visit",
+          "score": 0.1273,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "during",
+          "score": 0.1238,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "doses",
+          "score": 0.1112,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.0982,
+          "evidence": []
+        },
+        {
+          "term": "because",
+          "score": 0.0905,
+          "evidence": []
+        },
+        {
+          "term": "some",
+          "score": 0.0858,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "covid vaccine",
+          "score": 9.46,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 6.4154,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "somalia",
+          "score": 3.7437,
+          "evidence": []
+        },
+        {
+          "term": "mumps",
+          "score": 3.6759,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 2.8327,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 2.1245,
+          "evidence": []
+        },
+        {
+          "term": "immz",
+          "score": 1.8548,
+          "evidence": []
+        },
+        {
+          "term": "catch-up",
+          "score": 1.8526,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "vaccination",
+          "score": 0.3068,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "covid vaccine",
+          "score": 0.2551,
+          "evidence": []
+        },
+        {
+          "term": "visit",
+          "score": 0.1273,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "during",
+          "score": 0.1238,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "side effects",
+          "score": 0.0847,
+          "evidence": []
+        },
+        {
+          "term": "concerns",
+          "score": 0.083,
+          "evidence": []
+        },
+        {
+          "term": "communication",
+          "score": 0.0801,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ask",
+          "score": 0.0725,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "科研人员",
+          "score": 28.7702,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 28.3593,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 14.3347,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 14.3347,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 13.7544,
+          "evidence": []
+        },
+        {
+          "term": "在正常情况下",
+          "score": 13.5457,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 12.9687,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 12.4546,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-013-8-sources": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "vaccine janssen",
+          "score": 2.2382,
+          "evidence": []
+        },
+        {
+          "term": "covid vaccine",
+          "score": 2.1112,
+          "evidence": []
+        },
+        {
+          "term": "accessed march",
+          "score": 1.7386,
+          "evidence": []
+        },
+        {
+          "term": "cov",
+          "score": 1.3304,
+          "evidence": []
+        },
+        {
+          "term": "interim recommendations",
+          "score": 0.9648,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.8577,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.8542,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "vaccine janssen",
+          "score": 50.3425,
+          "evidence": []
+        },
+        {
+          "term": "covid vaccine",
+          "score": 49.4079,
+          "evidence": []
+        },
+        {
+          "term": "accessed march",
+          "score": 32.8593,
+          "evidence": []
+        },
+        {
+          "term": "cov",
+          "score": 32.1446,
+          "evidence": []
+        },
+        {
+          "term": "interim recommendations",
+          "score": 13.5837,
+          "evidence": []
+        },
+        {
+          "term": "background document",
+          "score": 12.3391,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 11.9514,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "world health",
+          "score": 0.4847,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.4743,
+          "evidence": []
+        },
+        {
+          "term": "accessed march",
+          "score": 0.4554,
+          "evidence": []
+        },
+        {
+          "term": "covid vaccine",
+          "score": 0.3882,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 0.298,
+          "evidence": []
+        },
+        {
+          "term": "vaccine janssen",
+          "score": 0.2175,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.1945,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "covid vaccine",
+          "score": 17.7058,
+          "evidence": []
+        },
+        {
+          "term": "accessed march",
+          "score": 17.3132,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 10.8445,
+          "evidence": []
+        },
+        {
+          "term": "somalia",
+          "score": 10.5628,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 10.3603,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 5.2915,
+          "evidence": []
+        },
+        {
+          "term": "vaccine janssen",
+          "score": 5.1838,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "world health",
+          "score": 0.4847,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.4743,
+          "evidence": []
+        },
+        {
+          "term": "accessed march",
+          "score": 0.4554,
+          "evidence": []
+        },
+        {
+          "term": "covid vaccine",
+          "score": 0.3882,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 0.298,
+          "evidence": []
+        },
+        {
+          "term": "vaccine janssen",
+          "score": 0.2251,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.1945,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 39.4854,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 26.2237,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 22.6843,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 20.0498,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 20.031,
+          "evidence": []
+        },
+        {
+          "term": "问题的讨论结束",
+          "score": 20.031,
+          "evidence": []
+        },
+        {
+          "term": "在sars",
+          "score": 19.2654,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/who-iris/library/10665-202203/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/who-iris/source/10665-202203",
+      "@type": "cat-harness:SourceDocument",
+      "path": "library/10665-202203/manifest.jsonld",
+      "title": "Глобальная стратегия предупреждения СПИД и борьбы с ним: проект резолюции, предложенный делегациями Австралии, Бахрейна, Бельгии, Ботсваны, Бурунди, Гаити, Гамбии, Гвинеи, Дании, Заира, Зaмбии, Зимбабве, Индии, Иcландии, Италии,.Камеруна, Канады, Катара, Кении, Кувейта, Лесото, Либерии, Мапави, Мозамбика, Нидерландов, Норвегии, Объединенной Республики Танзании, Свазиленда, Сейшельских Островов, Соединенного Королевства Великобритании и Северной Ирландии, Сомали, Союза Советских Социалистических Республик, Того, Уганды, Финляндии, Франции, Чада, Швейцарии, Швеции и Эфиопии"
+    }
+  ],
+  "hasSubgraph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/who-iris/library/10665-202203/blocks/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio/library/10665-202203/blocks/figure-img-p001-1",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Figure",
+          "path": "library/10665-202203/blocks/figure-img-p001-1.jsonld"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/10665-202203/blocks/figure-img-p002-1",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Figure",
+          "path": "library/10665-202203/blocks/figure-img-p002-1.jsonld"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/10665-202203/blocks/figure-img-p003-1",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Figure",
+          "path": "library/10665-202203/blocks/figure-img-p003-1.jsonld"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/10665-202203/blocks/figure-img-p004-1",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Figure",
+          "path": "library/10665-202203/blocks/figure-img-p004-1.jsonld"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/10665-202203/blocks/figure-img-p006-1",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Figure",
+          "path": "library/10665-202203/blocks/figure-img-p006-1.jsonld"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/10665-202203/blocks/prose-sec-000",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/10665-202203/blocks/prose-sec-000.jsonld",
+          "title": "-ter"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/10665-202203/blocks/prose-sec-front-matter",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/10665-202203/blocks/prose-sec-front-matter.jsonld",
+          "title": "Front matter"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "name": "library/10665-202203/blocks",
+      "path": "library/10665-202203/blocks/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/who-iris/library/10665-202203/images/",
+      "@type": "bootstrap:Subgraph",
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "name": "library/10665-202203/images",
+      "path": "library/10665-202203/images/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/who-iris/library/10665-202203/sections/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio/library/10665-202203/sections/sec-000",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/10665-202203/sections/sec-000.jsonld",
+          "title": "-ter"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/10665-202203/sections/sec-front-matter",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/10665-202203/sections/sec-front-matter.jsonld",
+          "title": "Front matter"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "name": "library/10665-202203/sections",
+      "path": "library/10665-202203/sections/"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/library"
+  ],
+  "name": "library/10665-202203",
+  "path": "library/10665-202203/"
+}

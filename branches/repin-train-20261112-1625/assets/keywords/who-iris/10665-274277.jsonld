@@ -1,0 +1,4726 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-274277",
+  "instance": "who-iris",
+  "about": "library/10665-274277",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7434,
+    "terms": 71211
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "home-based records",
+        "score": 41.2261,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "home-based maternal",
+        "score": 36.2969,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "versus home-based",
+        "score": 28.5423,
+        "evidence": []
+      },
+      {
+        "term": "home-based vaccination",
+        "score": 27.7143,
+        "evidence": []
+      },
+      {
+        "term": "comparing home-based",
+        "score": 25.5349,
+        "evidence": []
+      },
+      {
+        "term": "health records",
+        "score": 25.443,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "valued home-based",
+        "score": 25.4091,
+        "evidence": []
+      },
+      {
+        "term": "owning home-based",
+        "score": 25.3862,
+        "evidence": []
+      },
+      {
+        "term": "around home-based",
+        "score": 25.3187,
+        "evidence": []
+      },
+      {
+        "term": "implementing home-based",
+        "score": 25.2168,
+        "evidence": []
+      },
+      {
+        "term": "linking home-based",
+        "score": 25.0249,
+        "evidence": []
+      },
+      {
+        "term": "reading home-based",
+        "score": 25.0134,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "home-based records",
+        "score": 2385.7059,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "home-based maternal",
+        "score": 1682.3034,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "versus home-based",
+        "score": 1492.8164,
+        "evidence": []
+      },
+      {
+        "term": "home-based vaccination",
+        "score": 1389.4019,
+        "evidence": []
+      },
+      {
+        "term": "valued home-based",
+        "score": 1362.1891,
+        "evidence": []
+      },
+      {
+        "term": "comparing home-based",
+        "score": 1359.0651,
+        "evidence": []
+      },
+      {
+        "term": "owning home-based",
+        "score": 1356.7099,
+        "evidence": []
+      },
+      {
+        "term": "implementing home-based",
+        "score": 1353.4002,
+        "evidence": []
+      },
+      {
+        "term": "around home-based",
+        "score": 1352.4007,
+        "evidence": []
+      },
+      {
+        "term": "linking home-based",
+        "score": 1350.9515,
+        "evidence": []
+      },
+      {
+        "term": "reading home-based",
+        "score": 1350.4044,
+        "evidence": []
+      },
+      {
+        "term": "health records",
+        "score": 1341.2093,
+        "evidence": [
+          "heading"
+        ]
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "home-based records",
+        "score": 21.1259,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "home-based maternal",
+        "score": 20.2115,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "child health",
+        "score": 17.7074,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "versus home-based",
+        "score": 16.3972,
+        "evidence": []
+      },
+      {
+        "term": "research evidence",
+        "score": 16.2119,
+        "evidence": []
+      },
+      {
+        "term": "child outcomes",
+        "score": 16.1635,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "maternal newborn",
+        "score": 16.0889,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "child care",
+        "score": 15.7448,
+        "evidence": []
+      },
+      {
+        "term": "child care-seeking",
+        "score": 15.6683,
+        "evidence": []
+      },
+      {
+        "term": "low-certainty evidence",
+        "score": 15.5577,
+        "evidence": []
+      },
+      {
+        "term": "women caregivers",
+        "score": 15.416,
+        "evidence": []
+      },
+      {
+        "term": "home-based vaccination",
+        "score": 15.2199,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "home-based records",
+        "score": 2210.3152,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "home-based maternal",
+        "score": 1442.8003,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "versus home-based",
+        "score": 1338.3863,
+        "evidence": []
+      },
+      {
+        "term": "health records",
+        "score": 1297.9018,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "home-based vaccination",
+        "score": 1239.0854,
+        "evidence": []
+      },
+      {
+        "term": "valued home-based",
+        "score": 1214.1541,
+        "evidence": []
+      },
+      {
+        "term": "around home-based",
+        "score": 1177.9881,
+        "evidence": []
+      },
+      {
+        "term": "comparing home-based",
+        "score": 1177.9881,
+        "evidence": []
+      },
+      {
+        "term": "implementing home-based",
+        "score": 1177.9881,
+        "evidence": []
+      },
+      {
+        "term": "linking home-based",
+        "score": 1177.9881,
+        "evidence": []
+      },
+      {
+        "term": "owning home-based",
+        "score": 1177.9881,
+        "evidence": []
+      },
+      {
+        "term": "reading home-based",
+        "score": 1177.9881,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "home-based records",
+        "score": 21.1259,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "home-based maternal",
+        "score": 20.2115,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "child health",
+        "score": 17.7074,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "versus home-based",
+        "score": 16.3972,
+        "evidence": []
+      },
+      {
+        "term": "research evidence",
+        "score": 16.2119,
+        "evidence": []
+      },
+      {
+        "term": "child outcomes",
+        "score": 16.1635,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "maternal newborn",
+        "score": 16.0889,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "child care",
+        "score": 15.7448,
+        "evidence": []
+      },
+      {
+        "term": "child care-seeking",
+        "score": 15.6683,
+        "evidence": []
+      },
+      {
+        "term": "low-certainty evidence",
+        "score": 15.5577,
+        "evidence": []
+      },
+      {
+        "term": "women caregivers",
+        "score": 15.416,
+        "evidence": []
+      },
+      {
+        "term": "home-based vaccination",
+        "score": 15.2199,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "在大流行间期提供疫苗供发展中国家使用",
+        "score": 347.534,
+        "evidence": []
+      },
+      {
+        "term": "提供大流行性流感疫苗",
+        "score": 347.534,
+        "evidence": []
+      },
+      {
+        "term": "询问学员这项原则如何应用于紧急情况下的研究",
+        "score": 316.4494,
+        "evidence": []
+      },
+      {
+        "term": "相一致",
+        "score": 260.6306,
+        "evidence": []
+      },
+      {
+        "term": "疫苗储备",
+        "score": 259.2323,
+        "evidence": []
+      },
+      {
+        "term": "允许进行个人反馈",
+        "score": 243.8731,
+        "evidence": []
+      },
+      {
+        "term": "将继续寻求专家的指导建议",
+        "score": 230.4103,
+        "evidence": []
+      },
+      {
+        "term": "关注这一事实",
+        "score": 229.5874,
+        "evidence": []
+      },
+      {
+        "term": "见下面第",
+        "score": 224.7222,
+        "evidence": []
+      },
+      {
+        "term": "如果没有",
+        "score": 223.5094,
+        "evidence": []
+      },
+      {
+        "term": "咨询小组将由18名成员组成",
+        "score": 200.2082,
+        "evidence": []
+      },
+      {
+        "term": "汇集在流感领域中国际公认的决策者",
+        "score": 200.2082,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-acknowledgements": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "home-based records",
+          "score": 1.209,
+          "evidence": []
+        },
+        {
+          "term": "child health",
+          "score": 0.9271,
+          "evidence": []
+        },
+        {
+          "term": "guideline development",
+          "score": 0.7539,
+          "evidence": []
+        },
+        {
+          "term": "acknowledge",
+          "score": 0.6932,
+          "evidence": []
+        },
+        {
+          "term": "acknowledgements",
+          "score": 0.6644,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "home-based records",
+          "score": 15.4681,
+          "evidence": []
+        },
+        {
+          "term": "child health",
+          "score": 12.9406,
+          "evidence": []
+        },
+        {
+          "term": "newborn",
+          "score": 11.0804,
+          "evidence": []
+        },
+        {
+          "term": "guideline development",
+          "score": 10.8242,
+          "evidence": []
+        },
+        {
+          "term": "acknowledge",
+          "score": 10.7749,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "child health",
+          "score": 0.3302,
+          "evidence": []
+        },
+        {
+          "term": "guideline development",
+          "score": 0.2723,
+          "evidence": []
+        },
+        {
+          "term": "home-based records",
+          "score": 0.2337,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.1743,
+          "evidence": []
+        },
+        {
+          "term": "group",
+          "score": 0.1526,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "home-based records",
+          "score": 11.6623,
+          "evidence": []
+        },
+        {
+          "term": "child health",
+          "score": 5.5085,
+          "evidence": []
+        },
+        {
+          "term": "guideline development",
+          "score": 3.5874,
+          "evidence": []
+        },
+        {
+          "term": "mch",
+          "score": 2.1681,
+          "evidence": []
+        },
+        {
+          "term": "group",
+          "score": 2.0721,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "child health",
+          "score": 0.3302,
+          "evidence": []
+        },
+        {
+          "term": "guideline development",
+          "score": 0.2723,
+          "evidence": []
+        },
+        {
+          "term": "home-based records",
+          "score": 0.2337,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.1743,
+          "evidence": []
+        },
+        {
+          "term": "group",
+          "score": 0.1526,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 55.9241,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 54.4494,
+          "evidence": []
+        },
+        {
+          "term": "关注这一事实",
+          "score": 39.6149,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 38.2895,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 36.8562,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-001-acronyms-and-abbreviations": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "united nations",
+          "score": 1.2417,
+          "evidence": []
+        },
+        {
+          "term": "anc antenatal",
+          "score": 1.1683,
+          "evidence": []
+        },
+        {
+          "term": "child health",
+          "score": 0.9583,
+          "evidence": []
+        },
+        {
+          "term": "human rights",
+          "score": 0.9056,
+          "evidence": []
+        },
+        {
+          "term": "department",
+          "score": 0.8595,
+          "evidence": []
+        },
+        {
+          "term": "antenatal care",
+          "score": 0.7916,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.6408,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.6145,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "united nations",
+          "score": 22.7924,
+          "evidence": []
+        },
+        {
+          "term": "department",
+          "score": 22.6355,
+          "evidence": []
+        },
+        {
+          "term": "anc antenatal",
+          "score": 14.0038,
+          "evidence": []
+        },
+        {
+          "term": "child health",
+          "score": 13.8159,
+          "evidence": []
+        },
+        {
+          "term": "human rights",
+          "score": 12.9565,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 9.6201,
+          "evidence": []
+        },
+        {
+          "term": "antenatal care",
+          "score": 9.5242,
+          "evidence": []
+        },
+        {
+          "term": "maternal",
+          "score": 8.9527,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "child health",
+          "score": 0.5892,
+          "evidence": []
+        },
+        {
+          "term": "anc antenatal",
+          "score": 0.3591,
+          "evidence": []
+        },
+        {
+          "term": "united nations",
+          "score": 0.3581,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.3379,
+          "evidence": []
+        },
+        {
+          "term": "antenatal care",
+          "score": 0.3134,
+          "evidence": []
+        },
+        {
+          "term": "maternal",
+          "score": 0.2799,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.2642,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 0.2468,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "child health",
+          "score": 7.5394,
+          "evidence": []
+        },
+        {
+          "term": "anc antenatal",
+          "score": 7.5111,
+          "evidence": []
+        },
+        {
+          "term": "united nations",
+          "score": 5.4622,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 4.5389,
+          "evidence": []
+        },
+        {
+          "term": "antenatal care",
+          "score": 3.8337,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 3.6267,
+          "evidence": []
+        },
+        {
+          "term": "home-based",
+          "score": 3.5592,
+          "evidence": []
+        },
+        {
+          "term": "guideline",
+          "score": 3.5306,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "child health",
+          "score": 0.5892,
+          "evidence": []
+        },
+        {
+          "term": "anc antenatal",
+          "score": 0.3591,
+          "evidence": []
+        },
+        {
+          "term": "united nations",
+          "score": 0.3581,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.3379,
+          "evidence": []
+        },
+        {
+          "term": "antenatal care",
+          "score": 0.3134,
+          "evidence": []
+        },
+        {
+          "term": "maternal",
+          "score": 0.2799,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 0.2468,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.227,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "必需的",
+          "score": 63.0212,
+          "evidence": []
+        },
+        {
+          "term": "岁的儿童",
+          "score": 54.943,
+          "evidence": []
+        },
+        {
+          "term": "对儿童服用高剂量维生素a",
+          "score": 51.6484,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 50.618,
+          "evidence": []
+        },
+        {
+          "term": "项研究",
+          "score": 47.2604,
+          "evidence": []
+        },
+        {
+          "term": "判定术后放射治疗价值的研究",
+          "score": 44.5328,
+          "evidence": []
+        },
+        {
+          "term": "轮状病毒疫苗",
+          "score": 44.0599,
+          "evidence": []
+        },
+        {
+          "term": "同行评议者或杂志编辑",
+          "score": 43.3689,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-002-executive-summary": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "home-based records",
+          "score": 3.4974,
+          "evidence": []
+        },
+        {
+          "term": "low-certainty evidence",
+          "score": 1.6996,
+          "evidence": []
+        },
+        {
+          "term": "child health",
+          "score": 1.5924,
+          "evidence": []
+        },
+        {
+          "term": "evidence base",
+          "score": 1.4006,
+          "evidence": []
+        },
+        {
+          "term": "health books",
+          "score": 1.3389,
+          "evidence": []
+        },
+        {
+          "term": "research gaps",
+          "score": 1.2432,
+          "evidence": []
+        },
+        {
+          "term": "guideline development",
+          "score": 1.2427,
+          "evidence": []
+        },
+        {
+          "term": "health providers",
+          "score": 1.1211,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "home-based records",
+          "score": 177.8836,
+          "evidence": []
+        },
+        {
+          "term": "child health",
+          "score": 46.0531,
+          "evidence": []
+        },
+        {
+          "term": "low-certainty evidence",
+          "score": 44.8117,
+          "evidence": []
+        },
+        {
+          "term": "evidence base",
+          "score": 40.2065,
+          "evidence": []
+        },
+        {
+          "term": "guideline development",
+          "score": 29.5391,
+          "evidence": []
+        },
+        {
+          "term": "health books",
+          "score": 29.0628,
+          "evidence": []
+        },
+        {
+          "term": "health information",
+          "score": 27.2955,
+          "evidence": []
+        },
+        {
+          "term": "health providers",
+          "score": 25.307,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "home-based records",
+          "score": 1.1797,
+          "evidence": []
+        },
+        {
+          "term": "low-certainty evidence",
+          "score": 1.1008,
+          "evidence": []
+        },
+        {
+          "term": "child health",
+          "score": 0.9981,
+          "evidence": []
+        },
+        {
+          "term": "guideline development",
+          "score": 0.8622,
+          "evidence": []
+        },
+        {
+          "term": "health information",
+          "score": 0.7618,
+          "evidence": []
+        },
+        {
+          "term": "evidence base",
+          "score": 0.7419,
+          "evidence": []
+        },
+        {
+          "term": "health providers",
+          "score": 0.7163,
+          "evidence": []
+        },
+        {
+          "term": "health systems",
+          "score": 0.6606,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "home-based records",
+          "score": 132.5385,
+          "evidence": []
+        },
+        {
+          "term": "low-certainty evidence",
+          "score": 46.9906,
+          "evidence": []
+        },
+        {
+          "term": "child health",
+          "score": 33.0565,
+          "evidence": []
+        },
+        {
+          "term": "evidence base",
+          "score": 27.0761,
+          "evidence": []
+        },
+        {
+          "term": "mch",
+          "score": 21.859,
+          "evidence": []
+        },
+        {
+          "term": "health providers",
+          "score": 20.5327,
+          "evidence": []
+        },
+        {
+          "term": "guideline development",
+          "score": 19.7394,
+          "evidence": []
+        },
+        {
+          "term": "health information",
+          "score": 19.3423,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "home-based records",
+          "score": 1.1797,
+          "evidence": []
+        },
+        {
+          "term": "low-certainty evidence",
+          "score": 1.1008,
+          "evidence": []
+        },
+        {
+          "term": "child health",
+          "score": 0.9981,
+          "evidence": []
+        },
+        {
+          "term": "guideline development",
+          "score": 0.8622,
+          "evidence": []
+        },
+        {
+          "term": "evidence base",
+          "score": 0.8106,
+          "evidence": []
+        },
+        {
+          "term": "health information",
+          "score": 0.7618,
+          "evidence": []
+        },
+        {
+          "term": "health providers",
+          "score": 0.7163,
+          "evidence": []
+        },
+        {
+          "term": "health systems",
+          "score": 0.6606,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 21.2006,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 21.2006,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 17.5361,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 13.722,
+          "evidence": []
+        },
+        {
+          "term": "疫苗储备",
+          "score": 12.9455,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 12.9099,
+          "evidence": []
+        },
+        {
+          "term": "见下面第",
+          "score": 11.6986,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 9.3109,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-003-1-home-based-records-an-overview": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "home-based records",
+          "score": 8.1076,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mnch care",
+          "score": 2.2309,
+          "evidence": []
+        },
+        {
+          "term": "based records",
+          "score": 2.1869,
+          "evidence": []
+        },
+        {
+          "term": "mnch outcomes",
+          "score": 2.1169,
+          "evidence": []
+        },
+        {
+          "term": "across mnch",
+          "score": 1.9466,
+          "evidence": []
+        },
+        {
+          "term": "maternal health",
+          "score": 1.8075,
+          "evidence": []
+        },
+        {
+          "term": "child growth",
+          "score": 1.7418,
+          "evidence": []
+        },
+        {
+          "term": "brown gacic-dobo",
+          "score": 1.6814,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "home-based records",
+          "score": 599.8889,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "based records",
+          "score": 134.0314,
+          "evidence": []
+        },
+        {
+          "term": "mnch care",
+          "score": 74.1082,
+          "evidence": []
+        },
+        {
+          "term": "maternal health",
+          "score": 72.2154,
+          "evidence": []
+        },
+        {
+          "term": "child health",
+          "score": 65.0811,
+          "evidence": []
+        },
+        {
+          "term": "mnch outcomes",
+          "score": 60.904,
+          "evidence": []
+        },
+        {
+          "term": "health information",
+          "score": 54.7721,
+          "evidence": []
+        },
+        {
+          "term": "across mnch",
+          "score": 54.5406,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "home-based records",
+          "score": 2.9088,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "child health",
+          "score": 1.3694,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 1.3405,
+          "evidence": []
+        },
+        {
+          "term": "maternal health",
+          "score": 1.2785,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 1.0989,
+          "evidence": []
+        },
+        {
+          "term": "health information",
+          "score": 1.0703,
+          "evidence": []
+        },
+        {
+          "term": "mnch care",
+          "score": 1.0118,
+          "evidence": []
+        },
+        {
+          "term": "based records",
+          "score": 0.9545,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "home-based records",
+          "score": 417.0995,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "based records",
+          "score": 106.127,
+          "evidence": []
+        },
+        {
+          "term": "child health",
+          "score": 61.1648,
+          "evidence": []
+        },
+        {
+          "term": "maternal health",
+          "score": 45.8281,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 45.6366,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 38.8958,
+          "evidence": []
+        },
+        {
+          "term": "child growth",
+          "score": 37.9756,
+          "evidence": []
+        },
+        {
+          "term": "health information",
+          "score": 37.6667,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "home-based records",
+          "score": 2.9088,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "child health",
+          "score": 1.3694,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 1.3405,
+          "evidence": []
+        },
+        {
+          "term": "maternal health",
+          "score": 1.2785,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 1.0989,
+          "evidence": []
+        },
+        {
+          "term": "health information",
+          "score": 1.0703,
+          "evidence": []
+        },
+        {
+          "term": "mnch care",
+          "score": 1.0118,
+          "evidence": []
+        },
+        {
+          "term": "based records",
+          "score": 0.9545,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 31.2727,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 31.2727,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 25.5002,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 24.9323,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 24.6273,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 20.3011,
+          "evidence": []
+        },
+        {
+          "term": "疫苗储备",
+          "score": 20.2348,
+          "evidence": []
+        },
+        {
+          "term": "见下面第",
+          "score": 18.2735,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-004-2-methods": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "home-based records",
+          "score": 3.2845,
+          "evidence": []
+        },
+        {
+          "term": "gdg meeting",
+          "score": 2.4956,
+          "evidence": []
+        },
+        {
+          "term": "gdg members",
+          "score": 2.47,
+          "evidence": []
+        },
+        {
+          "term": "steering group",
+          "score": 2.3978,
+          "evidence": []
+        },
+        {
+          "term": "etd table",
+          "score": 2.1656,
+          "evidence": []
+        },
+        {
+          "term": "scoping meeting",
+          "score": 2.1133,
+          "evidence": []
+        },
+        {
+          "term": "external observers",
+          "score": 2.0891,
+          "evidence": []
+        },
+        {
+          "term": "cerqual profiles",
+          "score": 2.0458,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "home-based records",
+          "score": 145.2631,
+          "evidence": []
+        },
+        {
+          "term": "gdg meeting",
+          "score": 140.3385,
+          "evidence": []
+        },
+        {
+          "term": "gdg members",
+          "score": 130.9411,
+          "evidence": []
+        },
+        {
+          "term": "steering group",
+          "score": 109.4766,
+          "evidence": []
+        },
+        {
+          "term": "guideline development",
+          "score": 90.0755,
+          "evidence": []
+        },
+        {
+          "term": "draft guideline",
+          "score": 84.969,
+          "evidence": []
+        },
+        {
+          "term": "evidence synthesis",
+          "score": 80.2746,
+          "evidence": []
+        },
+        {
+          "term": "guideline methodologist",
+          "score": 79.7003,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "qualitative evidence",
+          "score": 2.5135,
+          "evidence": []
+        },
+        {
+          "term": "guideline development",
+          "score": 2.4372,
+          "evidence": []
+        },
+        {
+          "term": "evidence synthesis",
+          "score": 2.3029,
+          "evidence": []
+        },
+        {
+          "term": "systematic review",
+          "score": 2.301,
+          "evidence": []
+        },
+        {
+          "term": "steering group",
+          "score": 2.0902,
+          "evidence": []
+        },
+        {
+          "term": "gdg members",
+          "score": 2.0199,
+          "evidence": []
+        },
+        {
+          "term": "final guideline",
+          "score": 2.0193,
+          "evidence": []
+        },
+        {
+          "term": "evidence retrieval",
+          "score": 2.0078,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "home-based records",
+          "score": 130.9998,
+          "evidence": []
+        },
+        {
+          "term": "guideline development",
+          "score": 88.401,
+          "evidence": []
+        },
+        {
+          "term": "qualitative evidence",
+          "score": 78.0474,
+          "evidence": []
+        },
+        {
+          "term": "draft guideline",
+          "score": 75.0601,
+          "evidence": []
+        },
+        {
+          "term": "final guideline",
+          "score": 74.6643,
+          "evidence": []
+        },
+        {
+          "term": "gdg members",
+          "score": 74.579,
+          "evidence": []
+        },
+        {
+          "term": "guideline document",
+          "score": 73.8759,
+          "evidence": []
+        },
+        {
+          "term": "based records",
+          "score": 71.2819,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "qualitative evidence",
+          "score": 2.5135,
+          "evidence": []
+        },
+        {
+          "term": "guideline development",
+          "score": 2.4372,
+          "evidence": []
+        },
+        {
+          "term": "evidence synthesis",
+          "score": 2.3029,
+          "evidence": []
+        },
+        {
+          "term": "systematic review",
+          "score": 2.301,
+          "evidence": []
+        },
+        {
+          "term": "steering group",
+          "score": 2.0902,
+          "evidence": []
+        },
+        {
+          "term": "gdg members",
+          "score": 2.0199,
+          "evidence": []
+        },
+        {
+          "term": "final guideline",
+          "score": 2.0193,
+          "evidence": []
+        },
+        {
+          "term": "evidence retrieval",
+          "score": 2.0078,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 11.4351,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 11.4351,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 8.5672,
+          "evidence": []
+        },
+        {
+          "term": "其它技术术语",
+          "score": 7.5762,
+          "evidence": []
+        },
+        {
+          "term": "大流行性流感防范生物材料或pip生物材料",
+          "score": 7.5762,
+          "evidence": []
+        },
+        {
+          "term": "怀疑可能暴露到开始调查的管理延误期",
+          "score": 7.4793,
+          "evidence": []
+        },
+        {
+          "term": "月严重急性呼吸综合征",
+          "score": 7.4793,
+          "evidence": []
+        },
+        {
+          "term": "检测不会直接使没有发病的非病例的无症状个体受益",
+          "score": 7.4793,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-005-3-recommendations-and-evidence-on-home-based-rec": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "home-based records",
+          "score": 10.6187,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "valued home-based",
+          "score": 4.0331,
+          "evidence": []
+        },
+        {
+          "term": "owning home-based",
+          "score": 4.0102,
+          "evidence": []
+        },
+        {
+          "term": "low-certainty evidence",
+          "score": 3.7575,
+          "evidence": []
+        },
+        {
+          "term": "mch handbook",
+          "score": 3.7532,
+          "evidence": []
+        },
+        {
+          "term": "mnch",
+          "score": 3.711,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "reading home-based",
+          "score": 3.6374,
+          "evidence": []
+        },
+        {
+          "term": "implementing home-based",
+          "score": 3.4683,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "home-based records",
+          "score": 1930.7037,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "valued home-based",
+          "score": 528.6737,
+          "evidence": []
+        },
+        {
+          "term": "health records",
+          "score": 526.7907,
+          "evidence": []
+        },
+        {
+          "term": "owning home-based",
+          "score": 523.1944,
+          "evidence": []
+        },
+        {
+          "term": "reading home-based",
+          "score": 516.889,
+          "evidence": []
+        },
+        {
+          "term": "implementing home-based",
+          "score": 514.2352,
+          "evidence": []
+        },
+        {
+          "term": "records versus",
+          "score": 501.6601,
+          "evidence": []
+        },
+        {
+          "term": "based records",
+          "score": 488.4195,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "home-based records",
+          "score": 11.5861,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "records versus",
+          "score": 3.9913,
+          "evidence": []
+        },
+        {
+          "term": "low-certainty evidence",
+          "score": 3.9692,
+          "evidence": []
+        },
+        {
+          "term": "women caregivers",
+          "score": 3.9553,
+          "evidence": []
+        },
+        {
+          "term": "health records",
+          "score": 3.8287,
+          "evidence": []
+        },
+        {
+          "term": "child outcomes",
+          "score": 3.6598,
+          "evidence": []
+        },
+        {
+          "term": "mch handbook",
+          "score": 3.6309,
+          "evidence": []
+        },
+        {
+          "term": "own records",
+          "score": 3.5387,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "home-based records",
+          "score": 1740.6312,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health records",
+          "score": 479.9223,
+          "evidence": []
+        },
+        {
+          "term": "valued home-based",
+          "score": 476.7658,
+          "evidence": []
+        },
+        {
+          "term": "implementing home-based",
+          "score": 461.6841,
+          "evidence": []
+        },
+        {
+          "term": "owning home-based",
+          "score": 461.6841,
+          "evidence": []
+        },
+        {
+          "term": "reading home-based",
+          "score": 461.6841,
+          "evidence": []
+        },
+        {
+          "term": "records versus",
+          "score": 461.0049,
+          "evidence": []
+        },
+        {
+          "term": "own records",
+          "score": 438.1943,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "home-based records",
+          "score": 11.5861,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "records versus",
+          "score": 3.9913,
+          "evidence": []
+        },
+        {
+          "term": "low-certainty evidence",
+          "score": 3.9692,
+          "evidence": []
+        },
+        {
+          "term": "women caregivers",
+          "score": 3.9553,
+          "evidence": []
+        },
+        {
+          "term": "health records",
+          "score": 3.8287,
+          "evidence": []
+        },
+        {
+          "term": "valued home-based",
+          "score": 3.7082,
+          "evidence": []
+        },
+        {
+          "term": "owning home-based",
+          "score": 3.6703,
+          "evidence": []
+        },
+        {
+          "term": "child outcomes",
+          "score": 3.6598,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 14.473,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 14.473,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 11.6798,
+          "evidence": []
+        },
+        {
+          "term": "疫苗储备",
+          "score": 8.7787,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 8.1096,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 7.1753,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 6.9156,
+          "evidence": []
+        },
+        {
+          "term": "见下面第",
+          "score": 6.2335,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-4-implementation-considerations": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "home-based records",
+          "score": 3.127,
+          "evidence": []
+        },
+        {
+          "term": "implementation considerations",
+          "score": 1.5964,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health workers",
+          "score": 1.0878,
+          "evidence": []
+        },
+        {
+          "term": "health areas",
+          "score": 1.037,
+          "evidence": []
+        },
+        {
+          "term": "key stakeholders",
+          "score": 0.8982,
+          "evidence": []
+        },
+        {
+          "term": "health system",
+          "score": 0.8709,
+          "evidence": []
+        },
+        {
+          "term": "advertising",
+          "score": 0.8219,
+          "evidence": []
+        },
+        {
+          "term": "durable",
+          "score": 0.7075,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "home-based records",
+          "score": 125.0858,
+          "evidence": []
+        },
+        {
+          "term": "implementation considerations",
+          "score": 25.7437,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health workers",
+          "score": 23.0128,
+          "evidence": []
+        },
+        {
+          "term": "health areas",
+          "score": 22.0373,
+          "evidence": []
+        },
+        {
+          "term": "health system",
+          "score": 17.5374,
+          "evidence": []
+        },
+        {
+          "term": "gdg",
+          "score": 13.3515,
+          "evidence": []
+        },
+        {
+          "term": "advertising",
+          "score": 13.2225,
+          "evidence": []
+        },
+        {
+          "term": "key stakeholders",
+          "score": 13.1012,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "implementation considerations",
+          "score": 0.6801,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health workers",
+          "score": 0.6312,
+          "evidence": []
+        },
+        {
+          "term": "health system",
+          "score": 0.6231,
+          "evidence": []
+        },
+        {
+          "term": "health areas",
+          "score": 0.5244,
+          "evidence": []
+        },
+        {
+          "term": "home-based records",
+          "score": 0.5207,
+          "evidence": []
+        },
+        {
+          "term": "key stakeholders",
+          "score": 0.2912,
+          "evidence": []
+        },
+        {
+          "term": "care",
+          "score": 0.2484,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.2345,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "home-based records",
+          "score": 77.6986,
+          "evidence": []
+        },
+        {
+          "term": "health system",
+          "score": 14.9523,
+          "evidence": []
+        },
+        {
+          "term": "health workers",
+          "score": 13.7008,
+          "evidence": []
+        },
+        {
+          "term": "mch",
+          "score": 12.0128,
+          "evidence": []
+        },
+        {
+          "term": "implementation considerations",
+          "score": 11.4932,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health areas",
+          "score": 11.0433,
+          "evidence": []
+        },
+        {
+          "term": "child",
+          "score": 10.1408,
+          "evidence": []
+        },
+        {
+          "term": "low-certainty",
+          "score": 9.6554,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "implementation considerations",
+          "score": 0.6801,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health workers",
+          "score": 0.6312,
+          "evidence": []
+        },
+        {
+          "term": "health system",
+          "score": 0.6231,
+          "evidence": []
+        },
+        {
+          "term": "health areas",
+          "score": 0.5244,
+          "evidence": []
+        },
+        {
+          "term": "home-based records",
+          "score": 0.5207,
+          "evidence": []
+        },
+        {
+          "term": "key stakeholders",
+          "score": 0.2912,
+          "evidence": []
+        },
+        {
+          "term": "care",
+          "score": 0.2484,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.2345,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 33.692,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 31.2809,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 31.2809,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 28.1976,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 25.9962,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 24.4973,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 24.3803,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 21.7618,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-007-5-research-gaps": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "home-based records",
+          "score": 3.6227,
+          "evidence": []
+        },
+        {
+          "term": "linking home-based",
+          "score": 2.6772,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 2.5625,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "future research",
+          "score": 1.8667,
+          "evidence": []
+        },
+        {
+          "term": "further research",
+          "score": 1.7576,
+          "evidence": []
+        },
+        {
+          "term": "child health",
+          "score": 1.3988,
+          "evidence": []
+        },
+        {
+          "term": "child development",
+          "score": 1.2951,
+          "evidence": []
+        },
+        {
+          "term": "women caregivers",
+          "score": 1.219,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "home-based records",
+          "score": 200.7423,
+          "evidence": []
+        },
+        {
+          "term": "linking home-based",
+          "score": 121.8694,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 67.969,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "future research",
+          "score": 45.9966,
+          "evidence": []
+        },
+        {
+          "term": "further research",
+          "score": 43.0594,
+          "evidence": []
+        },
+        {
+          "term": "child health",
+          "score": 33.759,
+          "evidence": []
+        },
+        {
+          "term": "health information",
+          "score": 29.2171,
+          "evidence": []
+        },
+        {
+          "term": "child development",
+          "score": 28.141,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "research",
+          "score": 1.1858,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "child health",
+          "score": 1.0365,
+          "evidence": []
+        },
+        {
+          "term": "home-based records",
+          "score": 0.9539,
+          "evidence": []
+        },
+        {
+          "term": "health information",
+          "score": 0.9149,
+          "evidence": []
+        },
+        {
+          "term": "health service",
+          "score": 0.8777,
+          "evidence": []
+        },
+        {
+          "term": "health workers",
+          "score": 0.8776,
+          "evidence": []
+        },
+        {
+          "term": "further research",
+          "score": 0.7043,
+          "evidence": []
+        },
+        {
+          "term": "child development",
+          "score": 0.6646,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "home-based records",
+          "score": 131.7162,
+          "evidence": []
+        },
+        {
+          "term": "linking home-based",
+          "score": 69.4966,
+          "evidence": []
+        },
+        {
+          "term": "child health",
+          "score": 33.6336,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 24.3937,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "women caregivers",
+          "score": 23.9943,
+          "evidence": []
+        },
+        {
+          "term": "health information",
+          "score": 22.1067,
+          "evidence": []
+        },
+        {
+          "term": "child development",
+          "score": 21.7326,
+          "evidence": []
+        },
+        {
+          "term": "mch",
+          "score": 21.4035,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "research",
+          "score": 1.1858,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "child health",
+          "score": 1.0365,
+          "evidence": []
+        },
+        {
+          "term": "home-based records",
+          "score": 0.9539,
+          "evidence": []
+        },
+        {
+          "term": "health information",
+          "score": 0.9149,
+          "evidence": []
+        },
+        {
+          "term": "health service",
+          "score": 0.8777,
+          "evidence": []
+        },
+        {
+          "term": "health workers",
+          "score": 0.8776,
+          "evidence": []
+        },
+        {
+          "term": "further research",
+          "score": 0.7043,
+          "evidence": []
+        },
+        {
+          "term": "future research",
+          "score": 0.6954,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 19.4708,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 19.4708,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 18.816,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 15.7769,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 15.4507,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 14.4564,
+          "evidence": []
+        },
+        {
+          "term": "疫苗储备",
+          "score": 11.189,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 11.1686,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-008-6-planned-dissemination-of-this-guideline": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "dissemination",
+          "score": 1.0663,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "home based",
+          "score": 0.8666,
+          "evidence": []
+        },
+        {
+          "term": "based records",
+          "score": 0.775,
+          "evidence": []
+        },
+        {
+          "term": "guideline",
+          "score": 0.744,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "priorities",
+          "score": 0.6271,
+          "evidence": []
+        },
+        {
+          "term": "planned",
+          "score": 0.6252,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "dissemination",
+          "score": 16.4065,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "home based",
+          "score": 11.8012,
+          "evidence": []
+        },
+        {
+          "term": "priorities",
+          "score": 10.6576,
+          "evidence": []
+        },
+        {
+          "term": "based records",
+          "score": 9.7738,
+          "evidence": []
+        },
+        {
+          "term": "guideline",
+          "score": 9.5376,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "meeting",
+          "score": 8.7896,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "guideline",
+          "score": 0.2944,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health",
+          "score": 0.1778,
+          "evidence": []
+        },
+        {
+          "term": "based records",
+          "score": 0.1595,
+          "evidence": []
+        },
+        {
+          "term": "group",
+          "score": 0.1594,
+          "evidence": []
+        },
+        {
+          "term": "recommendations",
+          "score": 0.1369,
+          "evidence": []
+        },
+        {
+          "term": "development",
+          "score": 0.1349,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "guideline",
+          "score": 5.3189,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "based records",
+          "score": 5.1078,
+          "evidence": []
+        },
+        {
+          "term": "home-based",
+          "score": 5.0247,
+          "evidence": []
+        },
+        {
+          "term": "gdg",
+          "score": 2.3225,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 2.3174,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 1.9692,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "guideline",
+          "score": 0.2944,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "based records",
+          "score": 0.1595,
+          "evidence": []
+        },
+        {
+          "term": "gdg",
+          "score": 0.1057,
+          "evidence": []
+        },
+        {
+          "term": "home based",
+          "score": 0.0998,
+          "evidence": []
+        },
+        {
+          "term": "implementation",
+          "score": 0.0849,
+          "evidence": []
+        },
+        {
+          "term": "meeting",
+          "score": 0.08,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 31.5477,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 29.0197,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 29.0197,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 26.0128,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 22.4718,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 22.4554,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-009-7-updating-of-the-guideline": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "updating",
+          "score": 1.3385,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "research",
+          "score": 0.7943,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 0.6158,
+          "evidence": []
+        },
+        {
+          "term": "questions",
+          "score": 0.4942,
+          "evidence": []
+        },
+        {
+          "term": "account",
+          "score": 0.4732,
+          "evidence": []
+        },
+        {
+          "term": "guideline",
+          "score": 0.4694,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "updating",
+          "score": 25.1186,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "evidence",
+          "score": 10.7846,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 9.9954,
+          "evidence": []
+        },
+        {
+          "term": "questions",
+          "score": 7.5808,
+          "evidence": []
+        },
+        {
+          "term": "account",
+          "score": 7.0678,
+          "evidence": []
+        },
+        {
+          "term": "updated",
+          "score": 6.2662,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "guideline",
+          "score": 0.3719,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "research",
+          "score": 0.2228,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 0.211,
+          "evidence": []
+        },
+        {
+          "term": "review",
+          "score": 0.1707,
+          "evidence": []
+        },
+        {
+          "term": "recommendations",
+          "score": 0.1498,
+          "evidence": []
+        },
+        {
+          "term": "group",
+          "score": 0.1451,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "guideline",
+          "score": 7.0031,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "evidence",
+          "score": 3.6978,
+          "evidence": []
+        },
+        {
+          "term": "home-based",
+          "score": 3.6125,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 3.5506,
+          "evidence": []
+        },
+        {
+          "term": "records",
+          "score": 3.2188,
+          "evidence": []
+        },
+        {
+          "term": "gdg",
+          "score": 2.74,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "guideline",
+          "score": 0.3719,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "research",
+          "score": 0.2228,
+          "evidence": []
+        },
+        {
+          "term": "evidence",
+          "score": 0.211,
+          "evidence": []
+        },
+        {
+          "term": "questions",
+          "score": 0.1018,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 0.0959,
+          "evidence": []
+        },
+        {
+          "term": "updating",
+          "score": 0.0676,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 14.3245,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 14.3245,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 13.4482,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 12.85,
+          "evidence": []
+        },
+        {
+          "term": "增强和迭代",
+          "score": 11.3048,
+          "evidence": []
+        },
+        {
+          "term": "行动框架",
+          "score": 11.3048,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-010-references": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "home-based records",
+          "score": 2.8614,
+          "evidence": []
+        },
+        {
+          "term": "accessed april",
+          "score": 2.3848,
+          "evidence": []
+        },
+        {
+          "term": "aust obstet",
+          "score": 2.1924,
+          "evidence": []
+        },
+        {
+          "term": "obstet gynaecol",
+          "score": 2.1256,
+          "evidence": []
+        },
+        {
+          "term": "controlled trial",
+          "score": 2.0929,
+          "evidence": []
+        },
+        {
+          "term": "personal child",
+          "score": 2.0724,
+          "evidence": []
+        },
+        {
+          "term": "child health",
+          "score": 1.9809,
+          "evidence": []
+        },
+        {
+          "term": "immunization card",
+          "score": 1.937,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "home-based records",
+          "score": 97.1745,
+          "evidence": []
+        },
+        {
+          "term": "child health",
+          "score": 90.3556,
+          "evidence": []
+        },
+        {
+          "term": "doi",
+          "score": 80.554,
+          "evidence": []
+        },
+        {
+          "term": "accessed april",
+          "score": 72.6783,
+          "evidence": []
+        },
+        {
+          "term": "personal child",
+          "score": 72.6223,
+          "evidence": []
+        },
+        {
+          "term": "controlled trial",
+          "score": 62.389,
+          "evidence": []
+        },
+        {
+          "term": "health handbook",
+          "score": 50.1696,
+          "evidence": []
+        },
+        {
+          "term": "randomised controlled",
+          "score": 47.2805,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "home-based records",
+          "score": 1.814,
+          "evidence": []
+        },
+        {
+          "term": "child health",
+          "score": 1.5645,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 1.2433,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 1.2325,
+          "evidence": []
+        },
+        {
+          "term": "int health",
+          "score": 1.1898,
+          "evidence": []
+        },
+        {
+          "term": "health handbook",
+          "score": 1.1731,
+          "evidence": []
+        },
+        {
+          "term": "immunization card",
+          "score": 1.1101,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 0.9285,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "home-based records",
+          "score": 92.3164,
+          "evidence": []
+        },
+        {
+          "term": "health records",
+          "score": 67.2421,
+          "evidence": []
+        },
+        {
+          "term": "child health",
+          "score": 48.0859,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 40.0319,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 40.031,
+          "evidence": []
+        },
+        {
+          "term": "doi",
+          "score": 38.1507,
+          "evidence": []
+        },
+        {
+          "term": "health handbook",
+          "score": 35.4368,
+          "evidence": []
+        },
+        {
+          "term": "int health",
+          "score": 34.4816,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "home-based records",
+          "score": 1.814,
+          "evidence": []
+        },
+        {
+          "term": "child health",
+          "score": 1.5645,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 1.2433,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 1.2325,
+          "evidence": []
+        },
+        {
+          "term": "int health",
+          "score": 1.1898,
+          "evidence": []
+        },
+        {
+          "term": "health handbook",
+          "score": 1.1731,
+          "evidence": []
+        },
+        {
+          "term": "immunization card",
+          "score": 1.1101,
+          "evidence": []
+        },
+        {
+          "term": "personal child",
+          "score": 1.0475,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 42.3647,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 35.3622,
+          "evidence": []
+        },
+        {
+          "term": "问题的讨论结束",
+          "score": 35.3622,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 31.0867,
+          "evidence": []
+        },
+        {
+          "term": "在讨论期间",
+          "score": 26.1972,
+          "evidence": []
+        },
+        {
+          "term": "法律上",
+          "score": 26.0339,
+          "evidence": []
+        },
+        {
+          "term": "关注这一事实",
+          "score": 24.0027,
+          "evidence": []
+        },
+        {
+          "term": "世界医学协会",
+          "score": 20.5818,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-011-priority-guideline-questions-and-outcomes": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "home-based records",
+          "score": 2.576,
+          "evidence": []
+        },
+        {
+          "term": "mnch outcomes",
+          "score": 1.7396,
+          "evidence": []
+        },
+        {
+          "term": "improve mnch",
+          "score": 1.6599,
+          "evidence": []
+        },
+        {
+          "term": "during pregnancy",
+          "score": 1.6331,
+          "evidence": []
+        },
+        {
+          "term": "care-seeking",
+          "score": 1.5313,
+          "evidence": []
+        },
+        {
+          "term": "women during",
+          "score": 1.4507,
+          "evidence": []
+        },
+        {
+          "term": "care visits",
+          "score": 1.1981,
+          "evidence": []
+        },
+        {
+          "term": "caregivers",
+          "score": 1.1728,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "home-based records",
+          "score": 72.6316,
+          "evidence": []
+        },
+        {
+          "term": "care-seeking",
+          "score": 41.4266,
+          "evidence": []
+        },
+        {
+          "term": "mnch outcomes",
+          "score": 39.4701,
+          "evidence": []
+        },
+        {
+          "term": "during pregnancy",
+          "score": 36.3375,
+          "evidence": []
+        },
+        {
+          "term": "improve mnch",
+          "score": 36.233,
+          "evidence": []
+        },
+        {
+          "term": "caregivers",
+          "score": 31.6356,
+          "evidence": []
+        },
+        {
+          "term": "women during",
+          "score": 28.7639,
+          "evidence": []
+        },
+        {
+          "term": "service outcomes",
+          "score": 24.3705,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "home-based records",
+          "score": 0.7802,
+          "evidence": []
+        },
+        {
+          "term": "women during",
+          "score": 0.7191,
+          "evidence": []
+        },
+        {
+          "term": "during pregnancy",
+          "score": 0.6223,
+          "evidence": []
+        },
+        {
+          "term": "outcomes",
+          "score": 0.5296,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mnch outcomes",
+          "score": 0.5084,
+          "evidence": []
+        },
+        {
+          "term": "health service",
+          "score": 0.4889,
+          "evidence": []
+        },
+        {
+          "term": "care visits",
+          "score": 0.4882,
+          "evidence": []
+        },
+        {
+          "term": "postnatal care",
+          "score": 0.4821,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "home-based records",
+          "score": 59.5125,
+          "evidence": []
+        },
+        {
+          "term": "women during",
+          "score": 17.2883,
+          "evidence": []
+        },
+        {
+          "term": "during pregnancy",
+          "score": 13.8419,
+          "evidence": []
+        },
+        {
+          "term": "outcomes",
+          "score": 12.6986,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "low-certainty",
+          "score": 12.447,
+          "evidence": []
+        },
+        {
+          "term": "child",
+          "score": 12.4343,
+          "evidence": []
+        },
+        {
+          "term": "mch",
+          "score": 12.355,
+          "evidence": []
+        },
+        {
+          "term": "mnch outcomes",
+          "score": 12.2902,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "home-based records",
+          "score": 0.7802,
+          "evidence": []
+        },
+        {
+          "term": "women during",
+          "score": 0.7191,
+          "evidence": []
+        },
+        {
+          "term": "during pregnancy",
+          "score": 0.6223,
+          "evidence": []
+        },
+        {
+          "term": "outcomes",
+          "score": 0.5296,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mnch outcomes",
+          "score": 0.5084,
+          "evidence": []
+        },
+        {
+          "term": "health service",
+          "score": 0.4889,
+          "evidence": []
+        },
+        {
+          "term": "care visits",
+          "score": 0.4882,
+          "evidence": []
+        },
+        {
+          "term": "postnatal care",
+          "score": 0.4821,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 39.4515,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 39.4515,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 32.9642,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 31.1049,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 27.8084,
+          "evidence": []
+        },
+        {
+          "term": "疫苗储备",
+          "score": 23.426,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 19.7416,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 18.8063,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-012-annex-2-who-staff-and-external-experts-involved": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "jesca nsungwa",
+          "score": 2.0403,
+          "evidence": []
+        },
+        {
+          "term": "kirana pritasari",
+          "score": 1.9906,
+          "evidence": []
+        },
+        {
+          "term": "lora shimp",
+          "score": 1.9906,
+          "evidence": []
+        },
+        {
+          "term": "japan kirana",
+          "score": 1.9626,
+          "evidence": []
+        },
+        {
+          "term": "brown consulting",
+          "score": 1.9527,
+          "evidence": []
+        },
+        {
+          "term": "nsungwa sabiiti",
+          "score": 1.9264,
+          "evidence": []
+        },
+        {
+          "term": "united kingdom",
+          "score": 1.8526,
+          "evidence": []
+        },
+        {
+          "term": "indonesia jesca",
+          "score": 1.8506,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "child health",
+          "score": 58.765,
+          "evidence": []
+        },
+        {
+          "term": "regional office",
+          "score": 52.6666,
+          "evidence": []
+        },
+        {
+          "term": "united kingdom",
+          "score": 47.4835,
+          "evidence": []
+        },
+        {
+          "term": "health consulting",
+          "score": 45.6135,
+          "evidence": []
+        },
+        {
+          "term": "newborn health",
+          "score": 42.9759,
+          "evidence": []
+        },
+        {
+          "term": "brown consulting",
+          "score": 41.6235,
+          "evidence": []
+        },
+        {
+          "term": "adolescent health",
+          "score": 38.7755,
+          "evidence": []
+        },
+        {
+          "term": "international health",
+          "score": 37.7138,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "research institute",
+          "score": 1.0541,
+          "evidence": []
+        },
+        {
+          "term": "united kingdom",
+          "score": 1.0234,
+          "evidence": []
+        },
+        {
+          "term": "international health",
+          "score": 0.9312,
+          "evidence": []
+        },
+        {
+          "term": "child health",
+          "score": 0.8958,
+          "evidence": []
+        },
+        {
+          "term": "group international",
+          "score": 0.8351,
+          "evidence": []
+        },
+        {
+          "term": "united nations",
+          "score": 0.8292,
+          "evidence": []
+        },
+        {
+          "term": "development group",
+          "score": 0.8281,
+          "evidence": []
+        },
+        {
+          "term": "newborn health",
+          "score": 0.7832,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "united kingdom",
+          "score": 30.2518,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 22.855,
+          "evidence": []
+        },
+        {
+          "term": "united nations",
+          "score": 22.0736,
+          "evidence": []
+        },
+        {
+          "term": "child health",
+          "score": 21.7901,
+          "evidence": []
+        },
+        {
+          "term": "international health",
+          "score": 19.6991,
+          "evidence": []
+        },
+        {
+          "term": "newborn health",
+          "score": 18.1795,
+          "evidence": []
+        },
+        {
+          "term": "guideline",
+          "score": 17.276,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "adolescent health",
+          "score": 16.7235,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "research institute",
+          "score": 1.0541,
+          "evidence": []
+        },
+        {
+          "term": "united kingdom",
+          "score": 1.0234,
+          "evidence": []
+        },
+        {
+          "term": "international health",
+          "score": 0.9312,
+          "evidence": []
+        },
+        {
+          "term": "child health",
+          "score": 0.8958,
+          "evidence": []
+        },
+        {
+          "term": "group international",
+          "score": 0.8351,
+          "evidence": []
+        },
+        {
+          "term": "united nations",
+          "score": 0.8292,
+          "evidence": []
+        },
+        {
+          "term": "development group",
+          "score": 0.8281,
+          "evidence": []
+        },
+        {
+          "term": "newborn health",
+          "score": 0.7832,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 145.6951,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 99.7024,
+          "evidence": []
+        },
+        {
+          "term": "以及卫生保健界",
+          "score": 89.0703,
+          "evidence": []
+        },
+        {
+          "term": "基金会和开发银行",
+          "score": 89.0703,
+          "evidence": []
+        },
+        {
+          "term": "大学和研究机构",
+          "score": 89.0703,
+          "evidence": []
+        },
+        {
+          "term": "如非政府组织和民间社会组织",
+          "score": 89.0703,
+          "evidence": []
+        },
+        {
+          "term": "宗教组织",
+          "score": 89.0703,
+          "evidence": []
+        },
+        {
+          "term": "患者和公众",
+          "score": 89.0703,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-013-annex-3-summary-of-declarations-of-interest-and": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "none declared",
+          "score": 2.9858,
+          "evidence": []
+        },
+        {
+          "term": "interest",
+          "score": 2.5389,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "interest nor",
+          "score": 2.2439,
+          "evidence": []
+        },
+        {
+          "term": "present conflict",
+          "score": 2.0684,
+          "evidence": []
+        },
+        {
+          "term": "research expert",
+          "score": 2.0488,
+          "evidence": []
+        },
+        {
+          "term": "expertise contributed",
+          "score": 2.0423,
+          "evidence": []
+        },
+        {
+          "term": "home-based records",
+          "score": 1.9718,
+          "evidence": []
+        },
+        {
+          "term": "interest related",
+          "score": 1.8977,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "none declared",
+          "score": 108.3558,
+          "evidence": []
+        },
+        {
+          "term": "interest",
+          "score": 101.9831,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "interest nor",
+          "score": 69.069,
+          "evidence": []
+        },
+        {
+          "term": "interest related",
+          "score": 68.6668,
+          "evidence": []
+        },
+        {
+          "term": "expertise contributed",
+          "score": 63.7185,
+          "evidence": []
+        },
+        {
+          "term": "present conflict",
+          "score": 58.1701,
+          "evidence": []
+        },
+        {
+          "term": "research expert",
+          "score": 47.7689,
+          "evidence": []
+        },
+        {
+          "term": "topic expert",
+          "score": 42.2511,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "guideline development",
+          "score": 0.9718,
+          "evidence": []
+        },
+        {
+          "term": "steering group",
+          "score": 0.848,
+          "evidence": []
+        },
+        {
+          "term": "interest",
+          "score": 0.8135,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "guideline topic",
+          "score": 0.7058,
+          "evidence": []
+        },
+        {
+          "term": "research expert",
+          "score": 0.5493,
+          "evidence": []
+        },
+        {
+          "term": "research support",
+          "score": 0.5101,
+          "evidence": []
+        },
+        {
+          "term": "interest related",
+          "score": 0.4994,
+          "evidence": []
+        },
+        {
+          "term": "home-based records",
+          "score": 0.4911,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "home-based records",
+          "score": 27.0867,
+          "evidence": []
+        },
+        {
+          "term": "guideline development",
+          "score": 23.7365,
+          "evidence": []
+        },
+        {
+          "term": "interest",
+          "score": 20.1481,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "steering group",
+          "score": 19.7844,
+          "evidence": []
+        },
+        {
+          "term": "guideline topic",
+          "score": 18.7445,
+          "evidence": []
+        },
+        {
+          "term": "research expert",
+          "score": 12.8936,
+          "evidence": []
+        },
+        {
+          "term": "interest related",
+          "score": 12.5851,
+          "evidence": []
+        },
+        {
+          "term": "gdg",
+          "score": 12.4839,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "guideline development",
+          "score": 0.9718,
+          "evidence": []
+        },
+        {
+          "term": "steering group",
+          "score": 0.848,
+          "evidence": []
+        },
+        {
+          "term": "interest",
+          "score": 0.8135,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "guideline topic",
+          "score": 0.7058,
+          "evidence": []
+        },
+        {
+          "term": "research expert",
+          "score": 0.5493,
+          "evidence": []
+        },
+        {
+          "term": "research support",
+          "score": 0.5101,
+          "evidence": []
+        },
+        {
+          "term": "interest related",
+          "score": 0.4994,
+          "evidence": []
+        },
+        {
+          "term": "home-based records",
+          "score": 0.4911,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 46.164,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 27.3039,
+          "evidence": []
+        },
+        {
+          "term": "潜在的利益冲突",
+          "score": 24.2994,
+          "evidence": []
+        },
+        {
+          "term": "以及卫生保健界",
+          "score": 24.0214,
+          "evidence": []
+        },
+        {
+          "term": "基金会和开发银行",
+          "score": 24.0214,
+          "evidence": []
+        },
+        {
+          "term": "大学和研究机构",
+          "score": 24.0214,
+          "evidence": []
+        },
+        {
+          "term": "如非政府组织和民间社会组织",
+          "score": 24.0214,
+          "evidence": []
+        },
+        {
+          "term": "宗教组织",
+          "score": 24.0214,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-014-knowledge-outcomes": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "home-based record",
+          "score": 2.2745,
+          "evidence": []
+        },
+        {
+          "term": "cooperation card",
+          "score": 1.7849,
+          "evidence": []
+        },
+        {
+          "term": "knowledge",
+          "score": 1.6327,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "abbreviated cooperation",
+          "score": 1.5618,
+          "evidence": []
+        },
+        {
+          "term": "study outcome",
+          "score": 1.5141,
+          "evidence": []
+        },
+        {
+          "term": "study design",
+          "score": 1.4705,
+          "evidence": []
+        },
+        {
+          "term": "danger signs",
+          "score": 1.324,
+          "evidence": []
+        },
+        {
+          "term": "control group",
+          "score": 1.2747,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "home-based record",
+          "score": 51.0108,
+          "evidence": []
+        },
+        {
+          "term": "knowledge",
+          "score": 41.5943,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cooperation card",
+          "score": 36.2084,
+          "evidence": []
+        },
+        {
+          "term": "study outcome",
+          "score": 35.0211,
+          "evidence": []
+        },
+        {
+          "term": "study design",
+          "score": 33.0978,
+          "evidence": []
+        },
+        {
+          "term": "abbreviated cooperation",
+          "score": 30.675,
+          "evidence": []
+        },
+        {
+          "term": "control group",
+          "score": 28.9988,
+          "evidence": []
+        },
+        {
+          "term": "increased knowledge",
+          "score": 27.0145,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "home-based records",
+          "score": 1.0376,
+          "evidence": []
+        },
+        {
+          "term": "child health",
+          "score": 0.7225,
+          "evidence": []
+        },
+        {
+          "term": "during pregnancy",
+          "score": 0.6594,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.5313,
+          "evidence": []
+        },
+        {
+          "term": "outcomes",
+          "score": 0.5312,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cooperation card",
+          "score": 0.5257,
+          "evidence": []
+        },
+        {
+          "term": "full pregnancy",
+          "score": 0.4972,
+          "evidence": []
+        },
+        {
+          "term": "control group",
+          "score": 0.4475,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "home-based records",
+          "score": 42.2182,
+          "evidence": []
+        },
+        {
+          "term": "child health",
+          "score": 13.9237,
+          "evidence": []
+        },
+        {
+          "term": "low-certainty",
+          "score": 12.5375,
+          "evidence": []
+        },
+        {
+          "term": "control group",
+          "score": 12.1193,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 11.3212,
+          "evidence": []
+        },
+        {
+          "term": "mch",
+          "score": 11.1887,
+          "evidence": []
+        },
+        {
+          "term": "outcomes",
+          "score": 10.7377,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "during pregnancy",
+          "score": 10.5387,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "home-based records",
+          "score": 1.0376,
+          "evidence": []
+        },
+        {
+          "term": "child health",
+          "score": 0.7225,
+          "evidence": []
+        },
+        {
+          "term": "during pregnancy",
+          "score": 0.6594,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.5313,
+          "evidence": []
+        },
+        {
+          "term": "outcomes",
+          "score": 0.5312,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cooperation card",
+          "score": 0.5257,
+          "evidence": []
+        },
+        {
+          "term": "full pregnancy",
+          "score": 0.4972,
+          "evidence": []
+        },
+        {
+          "term": "control group",
+          "score": 0.4475,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 14.8037,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 14.8037,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 11.8493,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 10.8965,
+          "evidence": []
+        },
+        {
+          "term": "可持续发展目标和世卫组织",
+          "score": 8.5985,
+          "evidence": []
+        },
+        {
+          "term": "疫苗储备",
+          "score": 8.3862,
+          "evidence": []
+        },
+        {
+          "term": "区域和全球各",
+          "score": 7.9631,
+          "evidence": []
+        },
+        {
+          "term": "方面的作用",
+          "score": 7.8854,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-015-annex-5-effects-of-using-home-based-records-on-m": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "home-based records",
+          "score": 6.3791,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "newborn outcomes",
+          "score": 5.4234,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "child outcomes",
+          "score": 5.2037,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "maternal outcomes",
+          "score": 4.9711,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cluster rct",
+          "score": 4.7137,
+          "evidence": []
+        },
+        {
+          "term": "child health",
+          "score": 4.4894,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "low-certainty evidence",
+          "score": 3.9448,
+          "evidence": []
+        },
+        {
+          "term": "newborn care-seeking",
+          "score": 3.7841,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "cluster rct",
+          "score": 415.4768,
+          "evidence": []
+        },
+        {
+          "term": "low-certainty evidence",
+          "score": 356.6962,
+          "evidence": []
+        },
+        {
+          "term": "child outcomes",
+          "score": 354.3368,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "newborn outcomes",
+          "score": 348.2457,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "rct conducted",
+          "score": 320.3913,
+          "evidence": []
+        },
+        {
+          "term": "maternal outcomes",
+          "score": 298.0102,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "child health",
+          "score": 284.3158,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "same rct",
+          "score": 279.3286,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "home-based records",
+          "score": 8.3864,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "child outcomes",
+          "score": 5.7157,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "child health",
+          "score": 5.559,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "maternal outcomes",
+          "score": 5.5164,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "newborn outcomes",
+          "score": 5.0686,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "women caregivers",
+          "score": 3.3595,
+          "evidence": []
+        },
+        {
+          "term": "child care-seeking",
+          "score": 3.1837,
+          "evidence": []
+        },
+        {
+          "term": "versus women",
+          "score": 3.1266,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "home-based records",
+          "score": 705.1918,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "child outcomes",
+          "score": 294.9298,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "low-certainty evidence",
+          "score": 277.4472,
+          "evidence": []
+        },
+        {
+          "term": "child health",
+          "score": 273.8947,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "newborn outcomes",
+          "score": 272.3815,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "maternal outcomes",
+          "score": 266.3565,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cluster rct",
+          "score": 226.9547,
+          "evidence": []
+        },
+        {
+          "term": "versus women",
+          "score": 206.9783,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "home-based records",
+          "score": 8.3864,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "child outcomes",
+          "score": 5.7157,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "child health",
+          "score": 5.559,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "maternal outcomes",
+          "score": 5.5164,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "newborn outcomes",
+          "score": 5.0686,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "women caregivers",
+          "score": 3.3595,
+          "evidence": []
+        },
+        {
+          "term": "child care-seeking",
+          "score": 3.1837,
+          "evidence": []
+        },
+        {
+          "term": "versus women",
+          "score": 3.1266,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 25.4579,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 22.051,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 22.051,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 18.5372,
+          "evidence": []
+        },
+        {
+          "term": "可持续发展目标和世卫组织",
+          "score": 18.0309,
+          "evidence": []
+        },
+        {
+          "term": "方面的作用",
+          "score": 16.2694,
+          "evidence": []
+        },
+        {
+          "term": "促进全球合作",
+          "score": 15.7737,
+          "evidence": []
+        },
+        {
+          "term": "推动数字卫生保健知识传播",
+          "score": 15.7737,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "home-based records",
+          "score": 2.2884,
+          "evidence": []
+        },
+        {
+          "term": "child health",
+          "score": 1.1741,
+          "evidence": []
+        },
+        {
+          "term": "creative commons",
+          "score": 1.1585,
+          "evidence": []
+        },
+        {
+          "term": "web annex",
+          "score": 1.1095,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 1.0331,
+          "evidence": []
+        },
+        {
+          "term": "suggested citation",
+          "score": 1.007,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.9769,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 0.957,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "home-based records",
+          "score": 54.1385,
+          "evidence": []
+        },
+        {
+          "term": "web annex",
+          "score": 22.5002,
+          "evidence": []
+        },
+        {
+          "term": "work",
+          "score": 21.6589,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 21.3471,
+          "evidence": []
+        },
+        {
+          "term": "child health",
+          "score": 21.2759,
+          "evidence": []
+        },
+        {
+          "term": "creative commons",
+          "score": 18.7294,
+          "evidence": []
+        },
+        {
+          "term": "newborn",
+          "score": 18.4673,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 17.5651,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "creative commons",
+          "score": 1.0058,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.9949,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.9399,
+          "evidence": []
+        },
+        {
+          "term": "suggested citation",
+          "score": 0.9098,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 0.842,
+          "evidence": []
+        },
+        {
+          "term": "material",
+          "score": 0.7678,
+          "evidence": []
+        },
+        {
+          "term": "igo",
+          "score": 0.6938,
+          "evidence": []
+        },
+        {
+          "term": "lines",
+          "score": 0.677,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "home-based records",
+          "score": 36.6672,
+          "evidence": []
+        },
+        {
+          "term": "child health",
+          "score": 13.4136,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 12.4051,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 12.2694,
+          "evidence": []
+        },
+        {
+          "term": "wpv",
+          "score": 10.625,
+          "evidence": []
+        },
+        {
+          "term": "web annex",
+          "score": 8.4825,
+          "evidence": []
+        },
+        {
+          "term": "mch",
+          "score": 6.1393,
+          "evidence": []
+        },
+        {
+          "term": "material",
+          "score": 5.9686,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "creative commons",
+          "score": 1.0058,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.9949,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.9399,
+          "evidence": []
+        },
+        {
+          "term": "suggested citation",
+          "score": 0.9098,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 0.842,
+          "evidence": []
+        },
+        {
+          "term": "material",
+          "score": 0.7678,
+          "evidence": []
+        },
+        {
+          "term": "igo",
+          "score": 0.6938,
+          "evidence": []
+        },
+        {
+          "term": "lines",
+          "score": 0.677,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 42.6197,
+          "evidence": []
+        },
+        {
+          "term": "增强和迭代",
+          "score": 40.7033,
+          "evidence": []
+        },
+        {
+          "term": "行动框架",
+          "score": 40.7033,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 39.7109,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 36.2179,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 36.2179,
+          "evidence": []
+        },
+        {
+          "term": "见下面第",
+          "score": 34.8681,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 32.6454,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

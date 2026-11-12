@@ -1,0 +1,37 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/cat-harness/process/Process_MergeRequest/node/Sib_Elect.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261112-1625",
+    "sha": "6ca206c84dafc1f6a11bf0c86a9c4c99eaad9882",
+    "pr": "repin-train/20261112-1625",
+    "run": "43258944433"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/cat-harness/process/Process_MergeRequest/node/Sib_Elect",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Elect the merge manager with the siblings",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/cat-harness/process/Process_MergeRequest",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/cat-harness/role/sibling-session",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/cat-harness/process/Process_MergeRequest/lane/Lane_Sibling",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/cat-harness/skill/merge-manager-watcher"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/cat-harness/process/Process_MergeRequest#flow/Flow_S4",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/cat-harness/process/Process_MergeRequest#flow/Flow_S12"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/cat-harness/process/Process_MergeRequest#flow/Flow_S6"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/node/Sib_Elect"
+    }
+  ]
+}

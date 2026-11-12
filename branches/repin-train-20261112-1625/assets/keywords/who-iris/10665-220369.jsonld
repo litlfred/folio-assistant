@@ -1,0 +1,684 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-220369",
+  "instance": "who-iris",
+  "about": "library/10665-220369",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7434,
+    "terms": 71211
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "cas oreillons",
+        "score": 3.2478,
+        "evidence": []
+      },
+      {
+        "term": "des oreillons",
+        "score": 3.1972,
+        "evidence": []
+      },
+      {
+        "term": "oreillons pendant",
+        "score": 2.9952,
+        "evidence": []
+      },
+      {
+        "term": "les complications",
+        "score": 2.9806,
+        "evidence": []
+      },
+      {
+        "term": "complications pour",
+        "score": 2.9576,
+        "evidence": []
+      },
+      {
+        "term": "étude rétrospective",
+        "score": 2.9338,
+        "evidence": []
+      },
+      {
+        "term": "incidence mumps",
+        "score": 2.7874,
+        "evidence": []
+      },
+      {
+        "term": "étude prospective",
+        "score": 2.6924,
+        "evidence": []
+      },
+      {
+        "term": "les deux",
+        "score": 2.2971,
+        "evidence": []
+      },
+      {
+        "term": "sur les",
+        "score": 2.2385,
+        "evidence": []
+      },
+      {
+        "term": "dans étude",
+        "score": 2.2259,
+        "evidence": []
+      },
+      {
+        "term": "ont été",
+        "score": 2.1402,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "les complications",
+        "score": 126.7955,
+        "evidence": []
+      },
+      {
+        "term": "complications pour",
+        "score": 124.3358,
+        "evidence": []
+      },
+      {
+        "term": "cas oreillons",
+        "score": 109.2608,
+        "evidence": []
+      },
+      {
+        "term": "des complications",
+        "score": 106.6426,
+        "evidence": []
+      },
+      {
+        "term": "incidence mumps",
+        "score": 94.1506,
+        "evidence": []
+      },
+      {
+        "term": "étude prospective",
+        "score": 89.575,
+        "evidence": []
+      },
+      {
+        "term": "oreillons pendant",
+        "score": 87.6523,
+        "evidence": []
+      },
+      {
+        "term": "étude rétrospective",
+        "score": 79.2335,
+        "evidence": []
+      },
+      {
+        "term": "ont été",
+        "score": 74.7097,
+        "evidence": []
+      },
+      {
+        "term": "taux incidence",
+        "score": 72.7682,
+        "evidence": []
+      },
+      {
+        "term": "les deux",
+        "score": 70.6145,
+        "evidence": []
+      },
+      {
+        "term": "sur les",
+        "score": 65.8274,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "pour les",
+        "score": 2.2382,
+        "evidence": []
+      },
+      {
+        "term": "sur les",
+        "score": 1.9844,
+        "evidence": []
+      },
+      {
+        "term": "chez les",
+        "score": 1.7545,
+        "evidence": []
+      },
+      {
+        "term": "les deux",
+        "score": 1.6232,
+        "evidence": []
+      },
+      {
+        "term": "les complications",
+        "score": 1.495,
+        "evidence": []
+      },
+      {
+        "term": "incidence des",
+        "score": 1.4912,
+        "evidence": []
+      },
+      {
+        "term": "les mêmes",
+        "score": 1.366,
+        "evidence": []
+      },
+      {
+        "term": "les renseignements",
+        "score": 1.366,
+        "evidence": []
+      },
+      {
+        "term": "des oreillons",
+        "score": 1.2796,
+        "evidence": []
+      },
+      {
+        "term": "pour cas",
+        "score": 1.156,
+        "evidence": []
+      },
+      {
+        "term": "dans étude",
+        "score": 0.9292,
+        "evidence": []
+      },
+      {
+        "term": "pour ensemble",
+        "score": 0.8722,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "pour les",
+        "score": 67.6501,
+        "evidence": []
+      },
+      {
+        "term": "sur les",
+        "score": 57.817,
+        "evidence": []
+      },
+      {
+        "term": "chez les",
+        "score": 52.3873,
+        "evidence": []
+      },
+      {
+        "term": "les deux",
+        "score": 50.5474,
+        "evidence": []
+      },
+      {
+        "term": "les complications",
+        "score": 49.6516,
+        "evidence": []
+      },
+      {
+        "term": "les mêmes",
+        "score": 47.3868,
+        "evidence": []
+      },
+      {
+        "term": "les renseignements",
+        "score": 47.3868,
+        "evidence": []
+      },
+      {
+        "term": "incidence des",
+        "score": 34.333,
+        "evidence": []
+      },
+      {
+        "term": "des oreillons",
+        "score": 31.3643,
+        "evidence": []
+      },
+      {
+        "term": "incidence mumps",
+        "score": 28.9232,
+        "evidence": []
+      },
+      {
+        "term": "pour cas",
+        "score": 27.0573,
+        "evidence": []
+      },
+      {
+        "term": "pour ensemble",
+        "score": 20.2632,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "pour les",
+        "score": 2.2382,
+        "evidence": []
+      },
+      {
+        "term": "sur les",
+        "score": 1.9844,
+        "evidence": []
+      },
+      {
+        "term": "chez les",
+        "score": 1.7545,
+        "evidence": []
+      },
+      {
+        "term": "les deux",
+        "score": 1.6232,
+        "evidence": []
+      },
+      {
+        "term": "les complications",
+        "score": 1.495,
+        "evidence": []
+      },
+      {
+        "term": "incidence des",
+        "score": 1.4912,
+        "evidence": []
+      },
+      {
+        "term": "les mêmes",
+        "score": 1.3946,
+        "evidence": []
+      },
+      {
+        "term": "les renseignements",
+        "score": 1.3866,
+        "evidence": []
+      },
+      {
+        "term": "des oreillons",
+        "score": 1.3157,
+        "evidence": []
+      },
+      {
+        "term": "pour cas",
+        "score": 1.156,
+        "evidence": []
+      },
+      {
+        "term": "dans étude",
+        "score": 0.9292,
+        "evidence": []
+      },
+      {
+        "term": "pour ensemble",
+        "score": 0.9148,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "科研人员",
+        "score": 27.4895,
+        "evidence": []
+      },
+      {
+        "term": "这些情况下",
+        "score": 24.7408,
+        "evidence": []
+      },
+      {
+        "term": "挑战性",
+        "score": 23.8233,
+        "evidence": []
+      },
+      {
+        "term": "十分重要",
+        "score": 22.2156,
+        "evidence": []
+      },
+      {
+        "term": "反过来",
+        "score": 22.1845,
+        "evidence": []
+      },
+      {
+        "term": "很重要",
+        "score": 22.1499,
+        "evidence": []
+      },
+      {
+        "term": "的妇女",
+        "score": 21.6898,
+        "evidence": []
+      },
+      {
+        "term": "到辩护",
+        "score": 20.8779,
+        "evidence": []
+      },
+      {
+        "term": "疫苗有关的",
+        "score": 20.3194,
+        "evidence": []
+      },
+      {
+        "term": "和其他",
+        "score": 19.0522,
+        "evidence": []
+      },
+      {
+        "term": "如有必要",
+        "score": 16.9914,
+        "evidence": []
+      },
+      {
+        "term": "还包括区域经济一体化组织",
+        "score": 16.2278,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-m-um-ps-su-r-veillan-c-e": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "cas oreillons",
+          "score": 3.2478,
+          "evidence": []
+        },
+        {
+          "term": "des oreillons",
+          "score": 3.1972,
+          "evidence": []
+        },
+        {
+          "term": "oreillons pendant",
+          "score": 2.9952,
+          "evidence": []
+        },
+        {
+          "term": "les complications",
+          "score": 2.9806,
+          "evidence": []
+        },
+        {
+          "term": "complications pour",
+          "score": 2.9576,
+          "evidence": []
+        },
+        {
+          "term": "étude rétrospective",
+          "score": 2.9338,
+          "evidence": []
+        },
+        {
+          "term": "incidence mumps",
+          "score": 2.7874,
+          "evidence": []
+        },
+        {
+          "term": "étude prospective",
+          "score": 2.6924,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "les complications",
+          "score": 126.7955,
+          "evidence": []
+        },
+        {
+          "term": "complications pour",
+          "score": 124.3358,
+          "evidence": []
+        },
+        {
+          "term": "cas oreillons",
+          "score": 109.2608,
+          "evidence": []
+        },
+        {
+          "term": "des complications",
+          "score": 106.6426,
+          "evidence": []
+        },
+        {
+          "term": "incidence mumps",
+          "score": 94.1506,
+          "evidence": []
+        },
+        {
+          "term": "étude prospective",
+          "score": 89.575,
+          "evidence": []
+        },
+        {
+          "term": "oreillons pendant",
+          "score": 87.6523,
+          "evidence": []
+        },
+        {
+          "term": "étude rétrospective",
+          "score": 79.2335,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pour les",
+          "score": 2.2382,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 1.9844,
+          "evidence": []
+        },
+        {
+          "term": "chez les",
+          "score": 1.7545,
+          "evidence": []
+        },
+        {
+          "term": "les deux",
+          "score": 1.6232,
+          "evidence": []
+        },
+        {
+          "term": "les complications",
+          "score": 1.495,
+          "evidence": []
+        },
+        {
+          "term": "incidence des",
+          "score": 1.4912,
+          "evidence": []
+        },
+        {
+          "term": "les mêmes",
+          "score": 1.366,
+          "evidence": []
+        },
+        {
+          "term": "les renseignements",
+          "score": 1.366,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "pour les",
+          "score": 67.6501,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 57.817,
+          "evidence": []
+        },
+        {
+          "term": "chez les",
+          "score": 52.3873,
+          "evidence": []
+        },
+        {
+          "term": "les deux",
+          "score": 50.5474,
+          "evidence": []
+        },
+        {
+          "term": "les complications",
+          "score": 49.6516,
+          "evidence": []
+        },
+        {
+          "term": "les mêmes",
+          "score": 47.3868,
+          "evidence": []
+        },
+        {
+          "term": "les renseignements",
+          "score": 47.3868,
+          "evidence": []
+        },
+        {
+          "term": "incidence des",
+          "score": 34.333,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pour les",
+          "score": 2.2382,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 1.9844,
+          "evidence": []
+        },
+        {
+          "term": "chez les",
+          "score": 1.7545,
+          "evidence": []
+        },
+        {
+          "term": "les deux",
+          "score": 1.6232,
+          "evidence": []
+        },
+        {
+          "term": "les complications",
+          "score": 1.495,
+          "evidence": []
+        },
+        {
+          "term": "incidence des",
+          "score": 1.4912,
+          "evidence": []
+        },
+        {
+          "term": "les mêmes",
+          "score": 1.3946,
+          "evidence": []
+        },
+        {
+          "term": "les renseignements",
+          "score": 1.3866,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "科研人员",
+          "score": 27.4895,
+          "evidence": []
+        },
+        {
+          "term": "这些情况下",
+          "score": 24.7408,
+          "evidence": []
+        },
+        {
+          "term": "挑战性",
+          "score": 23.8233,
+          "evidence": []
+        },
+        {
+          "term": "十分重要",
+          "score": 22.2156,
+          "evidence": []
+        },
+        {
+          "term": "反过来",
+          "score": 22.1845,
+          "evidence": []
+        },
+        {
+          "term": "很重要",
+          "score": 22.1499,
+          "evidence": []
+        },
+        {
+          "term": "的妇女",
+          "score": 21.6898,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 20.8779,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,684 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-44118",
+  "instance": "who-iris",
+  "about": "library/10665-44118",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7434,
+    "terms": 71211
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "investigators obligations",
+        "score": 7.2507,
+        "evidence": []
+      },
+      {
+        "term": "ethical research",
+        "score": 7.0679,
+        "evidence": []
+      },
+      {
+        "term": "researchers obligations",
+        "score": 6.9746,
+        "evidence": []
+      },
+      {
+        "term": "casebook itself",
+        "score": 6.9115,
+        "evidence": []
+      },
+      {
+        "term": "quinacrine research",
+        "score": 6.8918,
+        "evidence": []
+      },
+      {
+        "term": "research sponsors",
+        "score": 6.5198,
+        "evidence": []
+      },
+      {
+        "term": "research misconduct",
+        "score": 6.5161,
+        "evidence": []
+      },
+      {
+        "term": "ethical issues",
+        "score": 6.4741,
+        "evidence": []
+      },
+      {
+        "term": "research ethics",
+        "score": 6.4719,
+        "evidence": []
+      },
+      {
+        "term": "ethical dilemmas",
+        "score": 6.4304,
+        "evidence": []
+      },
+      {
+        "term": "microbicide research",
+        "score": 6.2275,
+        "evidence": []
+      },
+      {
+        "term": "quinacrine sterilization",
+        "score": 6.2145,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "ethical research",
+        "score": 4818.9526,
+        "evidence": []
+      },
+      {
+        "term": "research study",
+        "score": 4226.6084,
+        "evidence": []
+      },
+      {
+        "term": "research participants",
+        "score": 3965.452,
+        "evidence": []
+      },
+      {
+        "term": "research ethics",
+        "score": 3906.0636,
+        "evidence": []
+      },
+      {
+        "term": "international research",
+        "score": 3714.2269,
+        "evidence": []
+      },
+      {
+        "term": "research studies",
+        "score": 3490.0171,
+        "evidence": []
+      },
+      {
+        "term": "health research",
+        "score": 3482.6607,
+        "evidence": []
+      },
+      {
+        "term": "medical research",
+        "score": 3374.0203,
+        "evidence": []
+      },
+      {
+        "term": "scientific research",
+        "score": 3362.3207,
+        "evidence": []
+      },
+      {
+        "term": "vaccine research",
+        "score": 3289.3511,
+        "evidence": []
+      },
+      {
+        "term": "research design",
+        "score": 3281.4346,
+        "evidence": []
+      },
+      {
+        "term": "research trials",
+        "score": 3259.5175,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "investigators obligations",
+        "score": 7.271,
+        "evidence": []
+      },
+      {
+        "term": "ethical research",
+        "score": 7.0024,
+        "evidence": []
+      },
+      {
+        "term": "researchers obligations",
+        "score": 6.9671,
+        "evidence": []
+      },
+      {
+        "term": "casebook itself",
+        "score": 6.8955,
+        "evidence": []
+      },
+      {
+        "term": "quinacrine research",
+        "score": 6.7922,
+        "evidence": []
+      },
+      {
+        "term": "ethical issues",
+        "score": 6.4974,
+        "evidence": []
+      },
+      {
+        "term": "research sponsors",
+        "score": 6.4554,
+        "evidence": []
+      },
+      {
+        "term": "research misconduct",
+        "score": 6.4476,
+        "evidence": []
+      },
+      {
+        "term": "ethical dilemmas",
+        "score": 6.4174,
+        "evidence": []
+      },
+      {
+        "term": "research ethics",
+        "score": 6.345,
+        "evidence": []
+      },
+      {
+        "term": "quinacrine sterilization",
+        "score": 6.1757,
+        "evidence": []
+      },
+      {
+        "term": "study investigators",
+        "score": 6.1578,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "ethical research",
+        "score": 4823.0814,
+        "evidence": []
+      },
+      {
+        "term": "research study",
+        "score": 4230.647,
+        "evidence": []
+      },
+      {
+        "term": "research participants",
+        "score": 3969.255,
+        "evidence": []
+      },
+      {
+        "term": "research ethics",
+        "score": 3910.802,
+        "evidence": []
+      },
+      {
+        "term": "international research",
+        "score": 3718.5098,
+        "evidence": []
+      },
+      {
+        "term": "research studies",
+        "score": 3495.5822,
+        "evidence": []
+      },
+      {
+        "term": "health research",
+        "score": 3485.1341,
+        "evidence": []
+      },
+      {
+        "term": "medical research",
+        "score": 3378.6125,
+        "evidence": []
+      },
+      {
+        "term": "scientific research",
+        "score": 3364.9193,
+        "evidence": []
+      },
+      {
+        "term": "vaccine research",
+        "score": 3294.6541,
+        "evidence": []
+      },
+      {
+        "term": "research design",
+        "score": 3285.3239,
+        "evidence": []
+      },
+      {
+        "term": "research trials",
+        "score": 3264.0917,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "investigators obligations",
+        "score": 7.271,
+        "evidence": []
+      },
+      {
+        "term": "ethical research",
+        "score": 7.0024,
+        "evidence": []
+      },
+      {
+        "term": "researchers obligations",
+        "score": 6.9671,
+        "evidence": []
+      },
+      {
+        "term": "casebook itself",
+        "score": 6.8955,
+        "evidence": []
+      },
+      {
+        "term": "quinacrine research",
+        "score": 6.7922,
+        "evidence": []
+      },
+      {
+        "term": "ethical issues",
+        "score": 6.4974,
+        "evidence": []
+      },
+      {
+        "term": "research sponsors",
+        "score": 6.4554,
+        "evidence": []
+      },
+      {
+        "term": "research misconduct",
+        "score": 6.4476,
+        "evidence": []
+      },
+      {
+        "term": "ethical dilemmas",
+        "score": 6.4174,
+        "evidence": []
+      },
+      {
+        "term": "research ethics",
+        "score": 6.345,
+        "evidence": []
+      },
+      {
+        "term": "quinacrine sterilization",
+        "score": 6.1757,
+        "evidence": []
+      },
+      {
+        "term": "study investigators",
+        "score": 6.1578,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "科研人员",
+        "score": 29.3789,
+        "evidence": []
+      },
+      {
+        "term": "的材料",
+        "score": 22.4556,
+        "evidence": []
+      },
+      {
+        "term": "巴西登革热",
+        "score": 21.215,
+        "evidence": []
+      },
+      {
+        "term": "到辩护",
+        "score": 19.6602,
+        "evidence": []
+      },
+      {
+        "term": "感染者",
+        "score": 17.4794,
+        "evidence": []
+      },
+      {
+        "term": "如果没有",
+        "score": 16.9366,
+        "evidence": []
+      },
+      {
+        "term": "不治疗",
+        "score": 16.3409,
+        "evidence": []
+      },
+      {
+        "term": "在一些国家",
+        "score": 15.9739,
+        "evidence": []
+      },
+      {
+        "term": "青少年",
+        "score": 15.9739,
+        "evidence": []
+      },
+      {
+        "term": "他们的",
+        "score": 14.4189,
+        "evidence": []
+      },
+      {
+        "term": "招募了",
+        "score": 13.5058,
+        "evidence": []
+      },
+      {
+        "term": "对照组",
+        "score": 13.413,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-document": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "investigators obligations",
+          "score": 7.2507,
+          "evidence": []
+        },
+        {
+          "term": "ethical research",
+          "score": 7.0679,
+          "evidence": []
+        },
+        {
+          "term": "researchers obligations",
+          "score": 6.9746,
+          "evidence": []
+        },
+        {
+          "term": "casebook itself",
+          "score": 6.9115,
+          "evidence": []
+        },
+        {
+          "term": "quinacrine research",
+          "score": 6.8918,
+          "evidence": []
+        },
+        {
+          "term": "research sponsors",
+          "score": 6.5198,
+          "evidence": []
+        },
+        {
+          "term": "research misconduct",
+          "score": 6.5161,
+          "evidence": []
+        },
+        {
+          "term": "ethical issues",
+          "score": 6.4741,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "ethical research",
+          "score": 4818.9526,
+          "evidence": []
+        },
+        {
+          "term": "research study",
+          "score": 4226.6084,
+          "evidence": []
+        },
+        {
+          "term": "research participants",
+          "score": 3965.452,
+          "evidence": []
+        },
+        {
+          "term": "research ethics",
+          "score": 3906.0636,
+          "evidence": []
+        },
+        {
+          "term": "international research",
+          "score": 3714.2269,
+          "evidence": []
+        },
+        {
+          "term": "research studies",
+          "score": 3490.0171,
+          "evidence": []
+        },
+        {
+          "term": "health research",
+          "score": 3482.6607,
+          "evidence": []
+        },
+        {
+          "term": "medical research",
+          "score": 3374.0203,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "investigators obligations",
+          "score": 7.271,
+          "evidence": []
+        },
+        {
+          "term": "ethical research",
+          "score": 7.0024,
+          "evidence": []
+        },
+        {
+          "term": "researchers obligations",
+          "score": 6.9671,
+          "evidence": []
+        },
+        {
+          "term": "casebook itself",
+          "score": 6.8955,
+          "evidence": []
+        },
+        {
+          "term": "quinacrine research",
+          "score": 6.7922,
+          "evidence": []
+        },
+        {
+          "term": "ethical issues",
+          "score": 6.4974,
+          "evidence": []
+        },
+        {
+          "term": "research sponsors",
+          "score": 6.4554,
+          "evidence": []
+        },
+        {
+          "term": "research misconduct",
+          "score": 6.4476,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "ethical research",
+          "score": 4823.0814,
+          "evidence": []
+        },
+        {
+          "term": "research study",
+          "score": 4230.647,
+          "evidence": []
+        },
+        {
+          "term": "research participants",
+          "score": 3969.255,
+          "evidence": []
+        },
+        {
+          "term": "research ethics",
+          "score": 3910.802,
+          "evidence": []
+        },
+        {
+          "term": "international research",
+          "score": 3718.5098,
+          "evidence": []
+        },
+        {
+          "term": "research studies",
+          "score": 3495.5822,
+          "evidence": []
+        },
+        {
+          "term": "health research",
+          "score": 3485.1341,
+          "evidence": []
+        },
+        {
+          "term": "medical research",
+          "score": 3378.6125,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "investigators obligations",
+          "score": 7.271,
+          "evidence": []
+        },
+        {
+          "term": "ethical research",
+          "score": 7.0024,
+          "evidence": []
+        },
+        {
+          "term": "researchers obligations",
+          "score": 6.9671,
+          "evidence": []
+        },
+        {
+          "term": "casebook itself",
+          "score": 6.8955,
+          "evidence": []
+        },
+        {
+          "term": "quinacrine research",
+          "score": 6.7922,
+          "evidence": []
+        },
+        {
+          "term": "ethical issues",
+          "score": 6.4974,
+          "evidence": []
+        },
+        {
+          "term": "research sponsors",
+          "score": 6.4554,
+          "evidence": []
+        },
+        {
+          "term": "research misconduct",
+          "score": 6.4476,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "科研人员",
+          "score": 29.3789,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 22.4556,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 21.215,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 19.6602,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 17.4794,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 16.9366,
+          "evidence": []
+        },
+        {
+          "term": "不治疗",
+          "score": 16.3409,
+          "evidence": []
+        },
+        {
+          "term": "在一些国家",
+          "score": 15.9739,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

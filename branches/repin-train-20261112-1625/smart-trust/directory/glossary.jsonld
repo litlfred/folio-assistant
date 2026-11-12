@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/smart-trust/smart-trust.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/smart-trust/directory/glossary.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/smart-trust/smart-trust.jsonld",
+  "staging": {
+    "branch": "repin-train/20261112-1625",
+    "sha": "6ca206c84dafc1f6a11bf0c86a9c4c99eaad9882",
+    "pr": "repin-train/20261112-1625",
+    "run": "43258944433"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/smart-trust/directory/glossary",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "glossary",
+      "path": "glossary/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant-core/v0/ns/graphTypology/glossary"
+      ],
+      "description": "The primary GDHCN glossary (`gdhcn.glossary.json`, folio-glossary/v1): the 21 definitions in Section II of the GDHCN Administrative and Operational Framework 1.2, quoted from the L1 copy in `library/`. The Framework is the legal source; IG-only terms go in a separate scheme and never override it. Rendered and checked by `check:glossary`.",
+      "readmePath": "glossary/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/smart-trust/directory/glossary",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/smart-trust/directory/glossary"
+    }
+  ]
+}

@@ -1,0 +1,938 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-327942",
+  "instance": "who-iris",
+  "about": "library/10665-327942",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7434,
+    "terms": 71211
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "influenza viruses",
+        "score": 4.0564,
+        "evidence": []
+      },
+      {
+        "term": "pandemic influenza",
+        "score": 3.5402,
+        "evidence": []
+      },
+      {
+        "term": "influenza preparedness",
+        "score": 3.2321,
+        "evidence": []
+      },
+      {
+        "term": "nagoya protocol",
+        "score": 3.1682,
+        "evidence": []
+      },
+      {
+        "term": "seventy-second world",
+        "score": 3.0153,
+        "evidence": []
+      },
+      {
+        "term": "seasonal influenza",
+        "score": 2.9996,
+        "evidence": []
+      },
+      {
+        "term": "influenza virus",
+        "score": 2.9579,
+        "evidence": []
+      },
+      {
+        "term": "pip advisory",
+        "score": 2.8295,
+        "evidence": []
+      },
+      {
+        "term": "pip framework",
+        "score": 2.6929,
+        "evidence": []
+      },
+      {
+        "term": "pip biological",
+        "score": 2.2708,
+        "evidence": []
+      },
+      {
+        "term": "virus sharing",
+        "score": 2.1449,
+        "evidence": []
+      },
+      {
+        "term": "pandemic potential",
+        "score": 1.9422,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "influenza viruses",
+        "score": 82.1875,
+        "evidence": []
+      },
+      {
+        "term": "pandemic influenza",
+        "score": 73.3576,
+        "evidence": []
+      },
+      {
+        "term": "influenza preparedness",
+        "score": 67.5393,
+        "evidence": []
+      },
+      {
+        "term": "influenza virus",
+        "score": 65.6237,
+        "evidence": []
+      },
+      {
+        "term": "seasonal influenza",
+        "score": 65.3588,
+        "evidence": []
+      },
+      {
+        "term": "pip advisory",
+        "score": 60.035,
+        "evidence": []
+      },
+      {
+        "term": "pip framework",
+        "score": 58.4273,
+        "evidence": []
+      },
+      {
+        "term": "nagoya protocol",
+        "score": 58.3322,
+        "evidence": []
+      },
+      {
+        "term": "pip biological",
+        "score": 48.0124,
+        "evidence": []
+      },
+      {
+        "term": "seventy-second world",
+        "score": 47.3063,
+        "evidence": []
+      },
+      {
+        "term": "virus sharing",
+        "score": 43.2334,
+        "evidence": []
+      },
+      {
+        "term": "advisory group",
+        "score": 30.3044,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "pandemic influenza",
+        "score": 1.9775,
+        "evidence": []
+      },
+      {
+        "term": "influenza viruses",
+        "score": 1.8069,
+        "evidence": []
+      },
+      {
+        "term": "influenza preparedness",
+        "score": 1.6521,
+        "evidence": []
+      },
+      {
+        "term": "influenza virus",
+        "score": 1.4602,
+        "evidence": []
+      },
+      {
+        "term": "seasonal influenza",
+        "score": 1.2704,
+        "evidence": []
+      },
+      {
+        "term": "pandemic potential",
+        "score": 1.1147,
+        "evidence": []
+      },
+      {
+        "term": "preparedness framework",
+        "score": 0.896,
+        "evidence": []
+      },
+      {
+        "term": "world health",
+        "score": 0.8044,
+        "evidence": []
+      },
+      {
+        "term": "pip biological",
+        "score": 0.7998,
+        "evidence": []
+      },
+      {
+        "term": "member states",
+        "score": 0.751,
+        "evidence": []
+      },
+      {
+        "term": "biological materials",
+        "score": 0.7249,
+        "evidence": []
+      },
+      {
+        "term": "health organization",
+        "score": 0.7199,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "influenza viruses",
+        "score": 47.4035,
+        "evidence": []
+      },
+      {
+        "term": "pandemic influenza",
+        "score": 45.9252,
+        "evidence": []
+      },
+      {
+        "term": "influenza preparedness",
+        "score": 35.485,
+        "evidence": []
+      },
+      {
+        "term": "influenza virus",
+        "score": 34.4576,
+        "evidence": []
+      },
+      {
+        "term": "seasonal influenza",
+        "score": 31.6684,
+        "evidence": []
+      },
+      {
+        "term": "pandemic potential",
+        "score": 19.6,
+        "evidence": []
+      },
+      {
+        "term": "laboratories",
+        "score": 17.3717,
+        "evidence": []
+      },
+      {
+        "term": "gisrs",
+        "score": 16.1655,
+        "evidence": []
+      },
+      {
+        "term": "guiding",
+        "score": 12.7068,
+        "evidence": []
+      },
+      {
+        "term": "world health",
+        "score": 12.0841,
+        "evidence": []
+      },
+      {
+        "term": "health organization",
+        "score": 11.7134,
+        "evidence": []
+      },
+      {
+        "term": "public health",
+        "score": 10.8481,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "pandemic influenza",
+        "score": 1.9775,
+        "evidence": []
+      },
+      {
+        "term": "influenza viruses",
+        "score": 1.8069,
+        "evidence": []
+      },
+      {
+        "term": "influenza preparedness",
+        "score": 1.6521,
+        "evidence": []
+      },
+      {
+        "term": "influenza virus",
+        "score": 1.4602,
+        "evidence": []
+      },
+      {
+        "term": "seasonal influenza",
+        "score": 1.2704,
+        "evidence": []
+      },
+      {
+        "term": "pandemic potential",
+        "score": 1.1147,
+        "evidence": []
+      },
+      {
+        "term": "preparedness framework",
+        "score": 0.896,
+        "evidence": []
+      },
+      {
+        "term": "world health",
+        "score": 0.8044,
+        "evidence": []
+      },
+      {
+        "term": "pip biological",
+        "score": 0.7998,
+        "evidence": []
+      },
+      {
+        "term": "member states",
+        "score": 0.751,
+        "evidence": []
+      },
+      {
+        "term": "biological materials",
+        "score": 0.7249,
+        "evidence": []
+      },
+      {
+        "term": "health organization",
+        "score": 0.7199,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "见下面第",
+        "score": 140.225,
+        "evidence": []
+      },
+      {
+        "term": "在大流行间期提供疫苗供发展中国家使用",
+        "score": 139.9904,
+        "evidence": []
+      },
+      {
+        "term": "提供大流行性流感疫苗",
+        "score": 139.9904,
+        "evidence": []
+      },
+      {
+        "term": "疫苗储备",
+        "score": 135.1633,
+        "evidence": []
+      },
+      {
+        "term": "将继续寻求专家的指导建议",
+        "score": 118.2728,
+        "evidence": []
+      },
+      {
+        "term": "其它技术术语",
+        "score": 95.8709,
+        "evidence": []
+      },
+      {
+        "term": "大流行性流感防范生物材料或pip生物材料",
+        "score": 95.8709,
+        "evidence": []
+      },
+      {
+        "term": "的材料",
+        "score": 90.1109,
+        "evidence": []
+      },
+      {
+        "term": "术语的定义和使用",
+        "score": 84.2187,
+        "evidence": []
+      },
+      {
+        "term": "科研人员",
+        "score": 67.466,
+        "evidence": []
+      },
+      {
+        "term": "其它术语",
+        "score": 64.2665,
+        "evidence": []
+      },
+      {
+        "term": "在世卫组织全球流感监测",
+        "score": 63.5474,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "page-001": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "influenza viruses",
+          "score": 2.2281,
+          "evidence": []
+        },
+        {
+          "term": "nagoya protocol",
+          "score": 2.2145,
+          "evidence": []
+        },
+        {
+          "term": "seasonal influenza",
+          "score": 2.0714,
+          "evidence": []
+        },
+        {
+          "term": "influenza virus",
+          "score": 2.0298,
+          "evidence": []
+        },
+        {
+          "term": "influenza preparedness",
+          "score": 1.9264,
+          "evidence": []
+        },
+        {
+          "term": "pandemic influenza",
+          "score": 1.8956,
+          "evidence": []
+        },
+        {
+          "term": "virus sharing",
+          "score": 1.646,
+          "evidence": []
+        },
+        {
+          "term": "seventy-second world",
+          "score": 1.4708,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "influenza viruses",
+          "score": 51.516,
+          "evidence": []
+        },
+        {
+          "term": "influenza virus",
+          "score": 48.9481,
+          "evidence": []
+        },
+        {
+          "term": "seasonal influenza",
+          "score": 48.6832,
+          "evidence": []
+        },
+        {
+          "term": "nagoya protocol",
+          "score": 46.6657,
+          "evidence": []
+        },
+        {
+          "term": "influenza preparedness",
+          "score": 46.4158,
+          "evidence": []
+        },
+        {
+          "term": "pandemic influenza",
+          "score": 45.1848,
+          "evidence": []
+        },
+        {
+          "term": "virus sharing",
+          "score": 36.1656,
+          "evidence": []
+        },
+        {
+          "term": "pip advisory",
+          "score": 25.0752,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pandemic influenza",
+          "score": 0.9808,
+          "evidence": []
+        },
+        {
+          "term": "influenza viruses",
+          "score": 0.8956,
+          "evidence": []
+        },
+        {
+          "term": "influenza preparedness",
+          "score": 0.8171,
+          "evidence": []
+        },
+        {
+          "term": "influenza virus",
+          "score": 0.7434,
+          "evidence": []
+        },
+        {
+          "term": "seasonal influenza",
+          "score": 0.6352,
+          "evidence": []
+        },
+        {
+          "term": "preparedness framework",
+          "score": 0.4396,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.4027,
+          "evidence": []
+        },
+        {
+          "term": "virus sharing",
+          "score": 0.351,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "influenza viruses",
+          "score": 27.553,
+          "evidence": []
+        },
+        {
+          "term": "pandemic influenza",
+          "score": 26.6953,
+          "evidence": []
+        },
+        {
+          "term": "influenza preparedness",
+          "score": 20.6403,
+          "evidence": []
+        },
+        {
+          "term": "influenza virus",
+          "score": 20.4139,
+          "evidence": []
+        },
+        {
+          "term": "seasonal influenza",
+          "score": 18.4232,
+          "evidence": []
+        },
+        {
+          "term": "laboratories",
+          "score": 10.0165,
+          "evidence": []
+        },
+        {
+          "term": "gisrs",
+          "score": 9.4749,
+          "evidence": []
+        },
+        {
+          "term": "guiding",
+          "score": 7.338,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pandemic influenza",
+          "score": 0.9808,
+          "evidence": []
+        },
+        {
+          "term": "influenza viruses",
+          "score": 0.8956,
+          "evidence": []
+        },
+        {
+          "term": "influenza preparedness",
+          "score": 0.8171,
+          "evidence": []
+        },
+        {
+          "term": "influenza virus",
+          "score": 0.7434,
+          "evidence": []
+        },
+        {
+          "term": "seasonal influenza",
+          "score": 0.6352,
+          "evidence": []
+        },
+        {
+          "term": "preparedness framework",
+          "score": 0.4396,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.4027,
+          "evidence": []
+        },
+        {
+          "term": "virus sharing",
+          "score": 0.351,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "见下面第",
+          "score": 47.1984,
+          "evidence": []
+        },
+        {
+          "term": "疫苗储备",
+          "score": 46.406,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 44.8424,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 44.8424,
+          "evidence": []
+        },
+        {
+          "term": "其它技术术语",
+          "score": 36.3862,
+          "evidence": []
+        },
+        {
+          "term": "大流行性流感防范生物材料或pip生物材料",
+          "score": 36.3862,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 36.052,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 34.7893,
+          "evidence": []
+        }
+      ]
+    },
+    "page-002": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "influenza viruses",
+          "score": 1.8283,
+          "evidence": []
+        },
+        {
+          "term": "pip framework",
+          "score": 1.7277,
+          "evidence": []
+        },
+        {
+          "term": "pip biological",
+          "score": 1.6851,
+          "evidence": []
+        },
+        {
+          "term": "seventy-second world",
+          "score": 1.5445,
+          "evidence": []
+        },
+        {
+          "term": "genetic sequence",
+          "score": 1.2374,
+          "evidence": []
+        },
+        {
+          "term": "pandemic potential",
+          "score": 1.1551,
+          "evidence": []
+        },
+        {
+          "term": "biological materials",
+          "score": 1.0692,
+          "evidence": []
+        },
+        {
+          "term": "member states",
+          "score": 1.0514,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "pip framework",
+          "score": 44.256,
+          "evidence": []
+        },
+        {
+          "term": "pip biological",
+          "score": 39.1843,
+          "evidence": []
+        },
+        {
+          "term": "influenza viruses",
+          "score": 30.6715,
+          "evidence": []
+        },
+        {
+          "term": "seventy-second world",
+          "score": 24.6834,
+          "evidence": []
+        },
+        {
+          "term": "genetic sequence",
+          "score": 18.4104,
+          "evidence": []
+        },
+        {
+          "term": "pandemic potential",
+          "score": 18.1849,
+          "evidence": []
+        },
+        {
+          "term": "member states",
+          "score": 17.6381,
+          "evidence": []
+        },
+        {
+          "term": "biological materials",
+          "score": 15.3267,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "influenza viruses",
+          "score": 0.9114,
+          "evidence": []
+        },
+        {
+          "term": "pandemic potential",
+          "score": 0.5708,
+          "evidence": []
+        },
+        {
+          "term": "pip biological",
+          "score": 0.405,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.4017,
+          "evidence": []
+        },
+        {
+          "term": "pip framework",
+          "score": 0.4013,
+          "evidence": []
+        },
+        {
+          "term": "biological materials",
+          "score": 0.3826,
+          "evidence": []
+        },
+        {
+          "term": "member states",
+          "score": 0.3786,
+          "evidence": []
+        },
+        {
+          "term": "gisrs",
+          "score": 0.3255,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "influenza viruses",
+          "score": 19.8505,
+          "evidence": []
+        },
+        {
+          "term": "pandemic potential",
+          "score": 8.3037,
+          "evidence": []
+        },
+        {
+          "term": "laboratories",
+          "score": 7.3552,
+          "evidence": []
+        },
+        {
+          "term": "gisrs",
+          "score": 6.6906,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 6.0585,
+          "evidence": []
+        },
+        {
+          "term": "guiding",
+          "score": 5.3688,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 3.6739,
+          "evidence": []
+        },
+        {
+          "term": "data providers",
+          "score": 3.6739,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "influenza viruses",
+          "score": 0.9114,
+          "evidence": []
+        },
+        {
+          "term": "pandemic potential",
+          "score": 0.5708,
+          "evidence": []
+        },
+        {
+          "term": "pip biological",
+          "score": 0.405,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.4017,
+          "evidence": []
+        },
+        {
+          "term": "pip framework",
+          "score": 0.4013,
+          "evidence": []
+        },
+        {
+          "term": "biological materials",
+          "score": 0.3826,
+          "evidence": []
+        },
+        {
+          "term": "member states",
+          "score": 0.3786,
+          "evidence": []
+        },
+        {
+          "term": "seventy-second world",
+          "score": 0.2182,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 95.1481,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 95.1481,
+          "evidence": []
+        },
+        {
+          "term": "见下面第",
+          "score": 93.0266,
+          "evidence": []
+        },
+        {
+          "term": "疫苗储备",
+          "score": 88.7573,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 82.2208,
+          "evidence": []
+        },
+        {
+          "term": "其它技术术语",
+          "score": 59.4848,
+          "evidence": []
+        },
+        {
+          "term": "大流行性流感防范生物材料或pip生物材料",
+          "score": 59.4848,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 55.3216,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

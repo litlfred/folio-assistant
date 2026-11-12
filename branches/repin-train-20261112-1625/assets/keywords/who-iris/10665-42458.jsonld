@@ -1,0 +1,6022 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-42458",
+  "instance": "who-iris",
+  "about": "library/10665-42458",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7434,
+    "terms": 71211
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "genital hsv",
+        "score": 49.8486,
+        "evidence": []
+      },
+      {
+        "term": "hsv shedding",
+        "score": 47.5923,
+        "evidence": []
+      },
+      {
+        "term": "hsv infection",
+        "score": 45.6819,
+        "evidence": []
+      },
+      {
+        "term": "hsv transmission",
+        "score": 44.0487,
+        "evidence": []
+      },
+      {
+        "term": "hsv control",
+        "score": 42.4314,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hsv prevalence",
+        "score": 42.2984,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "subclinical hsv",
+        "score": 41.6304,
+        "evidence": []
+      },
+      {
+        "term": "hsv therapy",
+        "score": 41.6016,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hsv acquisition",
+        "score": 41.0746,
+        "evidence": []
+      },
+      {
+        "term": "hsv vaccine",
+        "score": 40.6844,
+        "evidence": []
+      },
+      {
+        "term": "hsv study",
+        "score": 40.3453,
+        "evidence": []
+      },
+      {
+        "term": "hsv disease",
+        "score": 40.3102,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "genital hsv",
+        "score": 2190.4924,
+        "evidence": []
+      },
+      {
+        "term": "hsv shedding",
+        "score": 2073.2834,
+        "evidence": []
+      },
+      {
+        "term": "hsv infection",
+        "score": 2008.5089,
+        "evidence": []
+      },
+      {
+        "term": "hsv transmission",
+        "score": 1976.5519,
+        "evidence": []
+      },
+      {
+        "term": "hsv therapy",
+        "score": 1943.483,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hsv vaccine",
+        "score": 1936.6095,
+        "evidence": []
+      },
+      {
+        "term": "hsv prevalence",
+        "score": 1935.9475,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hsv acquisition",
+        "score": 1898.0295,
+        "evidence": []
+      },
+      {
+        "term": "hsv control",
+        "score": 1896.0495,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "subclinical hsv",
+        "score": 1884.0286,
+        "evidence": []
+      },
+      {
+        "term": "hsv recurrence",
+        "score": 1863.3177,
+        "evidence": []
+      },
+      {
+        "term": "hsv study",
+        "score": 1859.519,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "hsv infection",
+        "score": 21.4925,
+        "evidence": []
+      },
+      {
+        "term": "hiv infection",
+        "score": 20.4436,
+        "evidence": []
+      },
+      {
+        "term": "genital hsv",
+        "score": 19.3986,
+        "evidence": []
+      },
+      {
+        "term": "virus infection",
+        "score": 18.1787,
+        "evidence": []
+      },
+      {
+        "term": "hsv study",
+        "score": 18.1328,
+        "evidence": []
+      },
+      {
+        "term": "hsv prevalence",
+        "score": 17.8457,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "genital herpes",
+        "score": 17.6851,
+        "evidence": []
+      },
+      {
+        "term": "hsv incidence",
+        "score": 17.6198,
+        "evidence": []
+      },
+      {
+        "term": "hiv aids",
+        "score": 17.5364,
+        "evidence": []
+      },
+      {
+        "term": "hsv transmission",
+        "score": 17.4346,
+        "evidence": []
+      },
+      {
+        "term": "hsv control",
+        "score": 16.9043,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hsv shedding",
+        "score": 16.4752,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "genital hsv",
+        "score": 2124.5735,
+        "evidence": []
+      },
+      {
+        "term": "hsv infection",
+        "score": 1980.2865,
+        "evidence": []
+      },
+      {
+        "term": "hsv shedding",
+        "score": 1956.621,
+        "evidence": []
+      },
+      {
+        "term": "hsv prevalence",
+        "score": 1924.0663,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hsv transmission",
+        "score": 1917.8087,
+        "evidence": []
+      },
+      {
+        "term": "hsv vaccine",
+        "score": 1914.8504,
+        "evidence": []
+      },
+      {
+        "term": "hsv therapy",
+        "score": 1849.2593,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hsv acquisition",
+        "score": 1827.548,
+        "evidence": []
+      },
+      {
+        "term": "hsv recurrence",
+        "score": 1824.7856,
+        "evidence": []
+      },
+      {
+        "term": "hsv seroprevalence",
+        "score": 1820.0935,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hsv incidence",
+        "score": 1819.6921,
+        "evidence": []
+      },
+      {
+        "term": "hsv study",
+        "score": 1809.1805,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "hsv infection",
+        "score": 21.4925,
+        "evidence": []
+      },
+      {
+        "term": "hiv infection",
+        "score": 20.4436,
+        "evidence": []
+      },
+      {
+        "term": "genital hsv",
+        "score": 19.3986,
+        "evidence": []
+      },
+      {
+        "term": "virus infection",
+        "score": 18.1787,
+        "evidence": []
+      },
+      {
+        "term": "hsv study",
+        "score": 18.1328,
+        "evidence": []
+      },
+      {
+        "term": "hsv prevalence",
+        "score": 17.8457,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "genital herpes",
+        "score": 17.6851,
+        "evidence": []
+      },
+      {
+        "term": "hsv incidence",
+        "score": 17.6198,
+        "evidence": []
+      },
+      {
+        "term": "hiv aids",
+        "score": 17.5364,
+        "evidence": []
+      },
+      {
+        "term": "hsv transmission",
+        "score": 17.4346,
+        "evidence": []
+      },
+      {
+        "term": "hsv control",
+        "score": 16.9043,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hsv shedding",
+        "score": 16.4752,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "个学习目标",
+        "score": 890.0891,
+        "evidence": []
+      },
+      {
+        "term": "个核心能力和",
+        "score": 890.0891,
+        "evidence": []
+      },
+      {
+        "term": "如在公共利益与个体自主权之间",
+        "score": 890.0891,
+        "evidence": []
+      },
+      {
+        "term": "严重急性呼吸综合征",
+        "score": 888.9477,
+        "evidence": []
+      },
+      {
+        "term": "突发事件和",
+        "score": 624.5308,
+        "evidence": []
+      },
+      {
+        "term": "公共卫生专家",
+        "score": 582.6163,
+        "evidence": []
+      },
+      {
+        "term": "感染者",
+        "score": 543.2978,
+        "evidence": []
+      },
+      {
+        "term": "监测和病人治疗",
+        "score": 474.0791,
+        "evidence": []
+      },
+      {
+        "term": "科研人员",
+        "score": 439.166,
+        "evidence": []
+      },
+      {
+        "term": "这些情况下",
+        "score": 430.1652,
+        "evidence": []
+      },
+      {
+        "term": "理问题",
+        "score": 424.7242,
+        "evidence": []
+      },
+      {
+        "term": "这意味着",
+        "score": 375.6598,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-001-executive-summary": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "genital ulcer",
+          "score": 2.5152,
+          "evidence": []
+        },
+        {
+          "term": "genital herpes",
+          "score": 2.4704,
+          "evidence": []
+        },
+        {
+          "term": "hsv",
+          "score": 2.0869,
+          "evidence": []
+        },
+        {
+          "term": "herpes simples",
+          "score": 1.8744,
+          "evidence": []
+        },
+        {
+          "term": "executive summary",
+          "score": 1.7444,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ulcer disease",
+          "score": 1.7287,
+          "evidence": []
+        },
+        {
+          "term": "research priorities",
+          "score": 1.6498,
+          "evidence": []
+        },
+        {
+          "term": "developing countries",
+          "score": 1.5034,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hsv",
+          "score": 107.7492,
+          "evidence": []
+        },
+        {
+          "term": "genital ulcer",
+          "score": 70.3605,
+          "evidence": []
+        },
+        {
+          "term": "genital herpes",
+          "score": 66.3324,
+          "evidence": []
+        },
+        {
+          "term": "developing countries",
+          "score": 40.5242,
+          "evidence": []
+        },
+        {
+          "term": "ulcer disease",
+          "score": 37.7348,
+          "evidence": []
+        },
+        {
+          "term": "herpes simples",
+          "score": 36.153,
+          "evidence": []
+        },
+        {
+          "term": "research priorities",
+          "score": 28.2037,
+          "evidence": []
+        },
+        {
+          "term": "executive summary",
+          "score": 26.9209,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "genital herpes",
+          "score": 0.9203,
+          "evidence": []
+        },
+        {
+          "term": "developing countries",
+          "score": 0.8993,
+          "evidence": []
+        },
+        {
+          "term": "research priorities",
+          "score": 0.863,
+          "evidence": []
+        },
+        {
+          "term": "hiv transmission",
+          "score": 0.7948,
+          "evidence": []
+        },
+        {
+          "term": "herpes simples",
+          "score": 0.7929,
+          "evidence": []
+        },
+        {
+          "term": "simples virus",
+          "score": 0.6998,
+          "evidence": []
+        },
+        {
+          "term": "virus type",
+          "score": 0.6344,
+          "evidence": []
+        },
+        {
+          "term": "hsv",
+          "score": 0.6236,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hsv",
+          "score": 92.7356,
+          "evidence": []
+        },
+        {
+          "term": "genital herpes",
+          "score": 60.8215,
+          "evidence": []
+        },
+        {
+          "term": "herpes simples",
+          "score": 51.0233,
+          "evidence": []
+        },
+        {
+          "term": "developing countries",
+          "score": 27.7634,
+          "evidence": []
+        },
+        {
+          "term": "genital ulcer",
+          "score": 24.406,
+          "evidence": []
+        },
+        {
+          "term": "hiv transmission",
+          "score": 23.8175,
+          "evidence": []
+        },
+        {
+          "term": "simples virus",
+          "score": 23.8079,
+          "evidence": []
+        },
+        {
+          "term": "virus type",
+          "score": 21.4607,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "genital herpes",
+          "score": 0.9203,
+          "evidence": []
+        },
+        {
+          "term": "developing countries",
+          "score": 0.8993,
+          "evidence": []
+        },
+        {
+          "term": "research priorities",
+          "score": 0.863,
+          "evidence": []
+        },
+        {
+          "term": "hiv transmission",
+          "score": 0.7948,
+          "evidence": []
+        },
+        {
+          "term": "herpes simples",
+          "score": 0.7929,
+          "evidence": []
+        },
+        {
+          "term": "simples virus",
+          "score": 0.6998,
+          "evidence": []
+        },
+        {
+          "term": "future research",
+          "score": 0.681,
+          "evidence": []
+        },
+        {
+          "term": "virus type",
+          "score": 0.6344,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "个学习目标",
+          "score": 29.5621,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 29.5621,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 29.5621,
+          "evidence": []
+        },
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 28.7303,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 26.7493,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 21.7874,
+          "evidence": []
+        },
+        {
+          "term": "这些情况下",
+          "score": 21.0206,
+          "evidence": []
+        },
+        {
+          "term": "突发事件和",
+          "score": 20.5531,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-002-1-introduction": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "genital herpes",
+          "score": 2.2702,
+          "evidence": []
+        },
+        {
+          "term": "genital ulcer",
+          "score": 2.0383,
+          "evidence": []
+        },
+        {
+          "term": "hsv",
+          "score": 1.809,
+          "evidence": []
+        },
+        {
+          "term": "ulcer disease",
+          "score": 1.2914,
+          "evidence": []
+        },
+        {
+          "term": "developing countries",
+          "score": 1.1909,
+          "evidence": []
+        },
+        {
+          "term": "hiv transmission",
+          "score": 1.1087,
+          "evidence": []
+        },
+        {
+          "term": "virus type",
+          "score": 0.8472,
+          "evidence": []
+        },
+        {
+          "term": "infectiousness",
+          "score": 0.755,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hsv",
+          "score": 70.037,
+          "evidence": []
+        },
+        {
+          "term": "genital herpes",
+          "score": 52.661,
+          "evidence": []
+        },
+        {
+          "term": "genital ulcer",
+          "score": 44.9506,
+          "evidence": []
+        },
+        {
+          "term": "developing countries",
+          "score": 23.4267,
+          "evidence": []
+        },
+        {
+          "term": "hiv transmission",
+          "score": 23.2145,
+          "evidence": []
+        },
+        {
+          "term": "ulcer disease",
+          "score": 21.8021,
+          "evidence": []
+        },
+        {
+          "term": "infectiousness",
+          "score": 12.1612,
+          "evidence": []
+        },
+        {
+          "term": "prevalent",
+          "score": 10.8346,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "genital herpes",
+          "score": 0.6907,
+          "evidence": []
+        },
+        {
+          "term": "developing countries",
+          "score": 0.6465,
+          "evidence": []
+        },
+        {
+          "term": "hiv transmission",
+          "score": 0.6321,
+          "evidence": []
+        },
+        {
+          "term": "virus type",
+          "score": 0.4674,
+          "evidence": []
+        },
+        {
+          "term": "hsv",
+          "score": 0.4626,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.4429,
+          "evidence": []
+        },
+        {
+          "term": "genital ulcer",
+          "score": 0.4113,
+          "evidence": []
+        },
+        {
+          "term": "infection",
+          "score": 0.378,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hsv",
+          "score": 60.7815,
+          "evidence": []
+        },
+        {
+          "term": "genital herpes",
+          "score": 39.967,
+          "evidence": []
+        },
+        {
+          "term": "developing countries",
+          "score": 17.9513,
+          "evidence": []
+        },
+        {
+          "term": "hiv transmission",
+          "score": 17.5183,
+          "evidence": []
+        },
+        {
+          "term": "genital ulcer",
+          "score": 16.082,
+          "evidence": []
+        },
+        {
+          "term": "virus type",
+          "score": 14.0746,
+          "evidence": []
+        },
+        {
+          "term": "infection",
+          "score": 8.5347,
+          "evidence": []
+        },
+        {
+          "term": "shedding",
+          "score": 7.9218,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "genital herpes",
+          "score": 0.6907,
+          "evidence": []
+        },
+        {
+          "term": "developing countries",
+          "score": 0.6465,
+          "evidence": []
+        },
+        {
+          "term": "hiv transmission",
+          "score": 0.6321,
+          "evidence": []
+        },
+        {
+          "term": "virus type",
+          "score": 0.4674,
+          "evidence": []
+        },
+        {
+          "term": "hsv",
+          "score": 0.4626,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.4429,
+          "evidence": []
+        },
+        {
+          "term": "genital ulcer",
+          "score": 0.4113,
+          "evidence": []
+        },
+        {
+          "term": "infection",
+          "score": 0.378,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 29.5493,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 27.7058,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 26.7154,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 26.7154,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 26.7154,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 26.0202,
+          "evidence": []
+        },
+        {
+          "term": "这些情况下",
+          "score": 21.2772,
+          "evidence": []
+        },
+        {
+          "term": "公共卫生专家",
+          "score": 19.3055,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-003-2-objectives": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hsv",
+          "score": 1.1032,
+          "evidence": []
+        },
+        {
+          "term": "objectives",
+          "score": 0.821,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "developing countries",
+          "score": 0.7199,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hsv",
+          "score": 21.5498,
+          "evidence": []
+        },
+        {
+          "term": "objectives",
+          "score": 12.5077,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "developing countries",
+          "score": 8.8783,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "developing countries",
+          "score": 0.2371,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.2092,
+          "evidence": []
+        },
+        {
+          "term": "hsv",
+          "score": 0.1669,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hsv",
+          "score": 17.1574,
+          "evidence": []
+        },
+        {
+          "term": "herpes",
+          "score": 7.3761,
+          "evidence": []
+        },
+        {
+          "term": "developing countries",
+          "score": 5.1255,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "developing countries",
+          "score": 0.2371,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.2092,
+          "evidence": []
+        },
+        {
+          "term": "hsv",
+          "score": 0.1669,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "感染者",
+          "score": 22.703,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 22.0802,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 19.6839,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-004-3-participants-and-methodology": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hsv shedding",
+          "score": 4.6391,
+          "evidence": []
+        },
+        {
+          "term": "hsv seroprevalence",
+          "score": 4.2393,
+          "evidence": []
+        },
+        {
+          "term": "hsv prevalence",
+          "score": 4.1809,
+          "evidence": []
+        },
+        {
+          "term": "hsv infection",
+          "score": 4.0311,
+          "evidence": []
+        },
+        {
+          "term": "hsv transmission",
+          "score": 4.0094,
+          "evidence": []
+        },
+        {
+          "term": "hsv serology",
+          "score": 3.9629,
+          "evidence": []
+        },
+        {
+          "term": "hsv acquisition",
+          "score": 3.9103,
+          "evidence": []
+        },
+        {
+          "term": "hsv incidence",
+          "score": 3.765,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hsv prevalence",
+          "score": 493.1536,
+          "evidence": []
+        },
+        {
+          "term": "hsv shedding",
+          "score": 486.0303,
+          "evidence": []
+        },
+        {
+          "term": "hsv transmission",
+          "score": 478.1049,
+          "evidence": []
+        },
+        {
+          "term": "hsv infection",
+          "score": 476.6001,
+          "evidence": []
+        },
+        {
+          "term": "hsv seroprevalence",
+          "score": 465.7306,
+          "evidence": []
+        },
+        {
+          "term": "hsv acquisition",
+          "score": 457.1853,
+          "evidence": []
+        },
+        {
+          "term": "hsv serology",
+          "score": 453.5915,
+          "evidence": []
+        },
+        {
+          "term": "hsv incidence",
+          "score": 452.0035,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hsv infection",
+          "score": 2.6134,
+          "evidence": []
+        },
+        {
+          "term": "hsv prevalence",
+          "score": 2.3395,
+          "evidence": []
+        },
+        {
+          "term": "hsv incidence",
+          "score": 2.2728,
+          "evidence": []
+        },
+        {
+          "term": "hiv prevalence",
+          "score": 2.2536,
+          "evidence": []
+        },
+        {
+          "term": "hsv transmission",
+          "score": 2.2266,
+          "evidence": []
+        },
+        {
+          "term": "genital herpes",
+          "score": 2.1318,
+          "evidence": []
+        },
+        {
+          "term": "hsv shedding",
+          "score": 2.0338,
+          "evidence": []
+        },
+        {
+          "term": "hsv acquisition",
+          "score": 1.8954,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hsv shedding",
+          "score": 426.7901,
+          "evidence": []
+        },
+        {
+          "term": "hsv infection",
+          "score": 426.5209,
+          "evidence": []
+        },
+        {
+          "term": "hsv prevalence",
+          "score": 419.8273,
+          "evidence": []
+        },
+        {
+          "term": "hsv transmission",
+          "score": 417.3797,
+          "evidence": []
+        },
+        {
+          "term": "hsv acquisition",
+          "score": 397.9124,
+          "evidence": []
+        },
+        {
+          "term": "hsv seroprevalence",
+          "score": 396.939,
+          "evidence": []
+        },
+        {
+          "term": "hsv incidence",
+          "score": 394.8455,
+          "evidence": []
+        },
+        {
+          "term": "hsv serology",
+          "score": 386.5988,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hsv infection",
+          "score": 2.6134,
+          "evidence": []
+        },
+        {
+          "term": "hsv prevalence",
+          "score": 2.3395,
+          "evidence": []
+        },
+        {
+          "term": "hsv incidence",
+          "score": 2.2728,
+          "evidence": []
+        },
+        {
+          "term": "hiv prevalence",
+          "score": 2.2536,
+          "evidence": []
+        },
+        {
+          "term": "hsv transmission",
+          "score": 2.2266,
+          "evidence": []
+        },
+        {
+          "term": "genital herpes",
+          "score": 2.1318,
+          "evidence": []
+        },
+        {
+          "term": "hsv shedding",
+          "score": 2.0338,
+          "evidence": []
+        },
+        {
+          "term": "hsv acquisition",
+          "score": 1.8954,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 37.902,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 37.2112,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 37.2112,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 37.2112,
+          "evidence": []
+        },
+        {
+          "term": "突发事件和",
+          "score": 26.5438,
+          "evidence": []
+        },
+        {
+          "term": "公共卫生专家",
+          "score": 24.8844,
+          "evidence": []
+        },
+        {
+          "term": "监测和病人治疗",
+          "score": 19.1279,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 18.5794,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-005-51-biological-and-clinical-research": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hsv shedding",
+          "score": 2.8276,
+          "evidence": []
+        },
+        {
+          "term": "hsv reactivation",
+          "score": 2.7639,
+          "evidence": []
+        },
+        {
+          "term": "hsv lesions",
+          "score": 2.6027,
+          "evidence": []
+        },
+        {
+          "term": "hiv rna",
+          "score": 1.5895,
+          "evidence": []
+        },
+        {
+          "term": "hiv seropositive",
+          "score": 1.4815,
+          "evidence": []
+        },
+        {
+          "term": "hiv transmission",
+          "score": 1.3926,
+          "evidence": []
+        },
+        {
+          "term": "plasma hiv",
+          "score": 1.3857,
+          "evidence": []
+        },
+        {
+          "term": "augenbraun",
+          "score": 1.2988,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hsv shedding",
+          "score": 109.3858,
+          "evidence": []
+        },
+        {
+          "term": "hsv reactivation",
+          "score": 108.913,
+          "evidence": []
+        },
+        {
+          "term": "hsv lesions",
+          "score": 105.7802,
+          "evidence": []
+        },
+        {
+          "term": "hiv rna",
+          "score": 42.7714,
+          "evidence": []
+        },
+        {
+          "term": "hiv transmission",
+          "score": 40.7431,
+          "evidence": []
+        },
+        {
+          "term": "hiv seropositive",
+          "score": 39.0953,
+          "evidence": []
+        },
+        {
+          "term": "plasma hiv",
+          "score": 37.2788,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 34.4081,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hiv infection",
+          "score": 0.6775,
+          "evidence": []
+        },
+        {
+          "term": "hiv transmission",
+          "score": 0.5507,
+          "evidence": []
+        },
+        {
+          "term": "hsv shedding",
+          "score": 0.468,
+          "evidence": []
+        },
+        {
+          "term": "hiv seropositive",
+          "score": 0.4283,
+          "evidence": []
+        },
+        {
+          "term": "hsv lesions",
+          "score": 0.4205,
+          "evidence": []
+        },
+        {
+          "term": "plasma hiv",
+          "score": 0.4183,
+          "evidence": []
+        },
+        {
+          "term": "hsv reactivation",
+          "score": 0.3835,
+          "evidence": []
+        },
+        {
+          "term": "hiv rna",
+          "score": 0.3728,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hsv shedding",
+          "score": 75.1906,
+          "evidence": []
+        },
+        {
+          "term": "hsv lesions",
+          "score": 67.914,
+          "evidence": []
+        },
+        {
+          "term": "hsv reactivation",
+          "score": 67.8427,
+          "evidence": []
+        },
+        {
+          "term": "herpes",
+          "score": 28.6271,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 25.8018,
+          "evidence": []
+        },
+        {
+          "term": "hiv transmission",
+          "score": 23.9533,
+          "evidence": []
+        },
+        {
+          "term": "hiv seropositive",
+          "score": 17.977,
+          "evidence": []
+        },
+        {
+          "term": "hiv rna",
+          "score": 16.4069,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hiv infection",
+          "score": 0.6775,
+          "evidence": []
+        },
+        {
+          "term": "hiv transmission",
+          "score": 0.5507,
+          "evidence": []
+        },
+        {
+          "term": "hsv shedding",
+          "score": 0.468,
+          "evidence": []
+        },
+        {
+          "term": "hiv seropositive",
+          "score": 0.4283,
+          "evidence": []
+        },
+        {
+          "term": "hsv lesions",
+          "score": 0.4205,
+          "evidence": []
+        },
+        {
+          "term": "plasma hiv",
+          "score": 0.4183,
+          "evidence": []
+        },
+        {
+          "term": "hiv rna",
+          "score": 0.4015,
+          "evidence": []
+        },
+        {
+          "term": "hsv reactivation",
+          "score": 0.3835,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 77.0338,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 73.1648,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 73.1648,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 73.1648,
+          "evidence": []
+        },
+        {
+          "term": "突发事件和",
+          "score": 53.7026,
+          "evidence": []
+        },
+        {
+          "term": "公共卫生专家",
+          "score": 51.1209,
+          "evidence": []
+        },
+        {
+          "term": "监测和病人治疗",
+          "score": 37.0282,
+          "evidence": []
+        },
+        {
+          "term": "进行研究",
+          "score": 35.0909,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-5-interaction-between-hsv2-and-hiv": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hsv",
+          "score": 3.1567,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv shedding",
+          "score": 2.1211,
+          "evidence": []
+        },
+        {
+          "term": "hiv rna",
+          "score": 1.5099,
+          "evidence": []
+        },
+        {
+          "term": "genital lesions",
+          "score": 1.4878,
+          "evidence": []
+        },
+        {
+          "term": "viral load",
+          "score": 1.156,
+          "evidence": []
+        },
+        {
+          "term": "interaction",
+          "score": 1.1253,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "developing countries",
+          "score": 1.0547,
+          "evidence": []
+        },
+        {
+          "term": "subclinical",
+          "score": 1.0132,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hsv",
+          "score": 96.9743,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv shedding",
+          "score": 57.2441,
+          "evidence": []
+        },
+        {
+          "term": "hiv rna",
+          "score": 35.0755,
+          "evidence": []
+        },
+        {
+          "term": "genital lesions",
+          "score": 27.0344,
+          "evidence": []
+        },
+        {
+          "term": "subclinical",
+          "score": 19.2867,
+          "evidence": []
+        },
+        {
+          "term": "interaction",
+          "score": 17.7916,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "developing countries",
+          "score": 17.7565,
+          "evidence": []
+        },
+        {
+          "term": "viral load",
+          "score": 16.7027,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hsv",
+          "score": 0.7814,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv",
+          "score": 0.7374,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv shedding",
+          "score": 0.5269,
+          "evidence": []
+        },
+        {
+          "term": "developing countries",
+          "score": 0.4934,
+          "evidence": []
+        },
+        {
+          "term": "hiv rna",
+          "score": 0.3687,
+          "evidence": []
+        },
+        {
+          "term": "genital lesions",
+          "score": 0.3685,
+          "evidence": []
+        },
+        {
+          "term": "herpes",
+          "score": 0.3352,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.3339,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hsv",
+          "score": 87.7639,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv",
+          "score": 22.4637,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "herpes",
+          "score": 18.9598,
+          "evidence": []
+        },
+        {
+          "term": "hiv shedding",
+          "score": 16.9821,
+          "evidence": []
+        },
+        {
+          "term": "developing countries",
+          "score": 12.9885,
+          "evidence": []
+        },
+        {
+          "term": "viral load",
+          "score": 11.674,
+          "evidence": []
+        },
+        {
+          "term": "hiv rna",
+          "score": 11.2318,
+          "evidence": []
+        },
+        {
+          "term": "genital lesions",
+          "score": 11.0457,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hsv",
+          "score": 0.7814,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv",
+          "score": 0.7374,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv shedding",
+          "score": 0.5269,
+          "evidence": []
+        },
+        {
+          "term": "developing countries",
+          "score": 0.4934,
+          "evidence": []
+        },
+        {
+          "term": "hiv rna",
+          "score": 0.4074,
+          "evidence": []
+        },
+        {
+          "term": "genital lesions",
+          "score": 0.3685,
+          "evidence": []
+        },
+        {
+          "term": "herpes",
+          "score": 0.3352,
+          "evidence": []
+        },
+        {
+          "term": "viral load",
+          "score": 0.3306,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 48.1887,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 44.7523,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 44.7523,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 44.7523,
+          "evidence": []
+        },
+        {
+          "term": "突发事件和",
+          "score": 32.7511,
+          "evidence": []
+        },
+        {
+          "term": "公共卫生专家",
+          "score": 31.9056,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 29.841,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 27.4054,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-007-52-epidemiological-research": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hsv",
+          "score": 2.0535,
+          "evidence": []
+        },
+        {
+          "term": "hiv-discordant couples",
+          "score": 1.8226,
+          "evidence": []
+        },
+        {
+          "term": "hiv acquisition",
+          "score": 1.8132,
+          "evidence": []
+        },
+        {
+          "term": "prospective studies",
+          "score": 1.6311,
+          "evidence": []
+        },
+        {
+          "term": "herpes simples",
+          "score": 1.6079,
+          "evidence": []
+        },
+        {
+          "term": "incident hiv",
+          "score": 1.5863,
+          "evidence": []
+        },
+        {
+          "term": "case-control studies",
+          "score": 1.5413,
+          "evidence": []
+        },
+        {
+          "term": "hiv transmission",
+          "score": 1.4598,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hsv",
+          "score": 102.3617,
+          "evidence": []
+        },
+        {
+          "term": "hiv acquisition",
+          "score": 58.3662,
+          "evidence": []
+        },
+        {
+          "term": "hiv transmission",
+          "score": 44.8899,
+          "evidence": []
+        },
+        {
+          "term": "prospective studies",
+          "score": 44.1478,
+          "evidence": []
+        },
+        {
+          "term": "incident hiv",
+          "score": 43.3276,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 42.6499,
+          "evidence": []
+        },
+        {
+          "term": "case-control studies",
+          "score": 38.9784,
+          "evidence": []
+        },
+        {
+          "term": "hiv-discordant couples",
+          "score": 31.4591,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hiv infection",
+          "score": 1.0516,
+          "evidence": []
+        },
+        {
+          "term": "hiv transmission",
+          "score": 0.9007,
+          "evidence": []
+        },
+        {
+          "term": "hiv acquisition",
+          "score": 0.785,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.6631,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "herpes simples",
+          "score": 0.661,
+          "evidence": []
+        },
+        {
+          "term": "developing countries",
+          "score": 0.6417,
+          "evidence": []
+        },
+        {
+          "term": "incident hiv",
+          "score": 0.5757,
+          "evidence": []
+        },
+        {
+          "term": "prospective studies",
+          "score": 0.5661,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hsv",
+          "score": 78.5139,
+          "evidence": []
+        },
+        {
+          "term": "herpes simples",
+          "score": 42.9286,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 33.4293,
+          "evidence": []
+        },
+        {
+          "term": "hiv transmission",
+          "score": 31.1153,
+          "evidence": []
+        },
+        {
+          "term": "hiv acquisition",
+          "score": 26.7289,
+          "evidence": []
+        },
+        {
+          "term": "developing countries",
+          "score": 23.9215,
+          "evidence": []
+        },
+        {
+          "term": "incident hiv",
+          "score": 21.7902,
+          "evidence": []
+        },
+        {
+          "term": "simples virus",
+          "score": 20.3869,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hiv infection",
+          "score": 1.0516,
+          "evidence": []
+        },
+        {
+          "term": "hiv transmission",
+          "score": 0.9007,
+          "evidence": []
+        },
+        {
+          "term": "hiv acquisition",
+          "score": 0.785,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.6631,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "herpes simples",
+          "score": 0.661,
+          "evidence": []
+        },
+        {
+          "term": "incident hiv",
+          "score": 0.6457,
+          "evidence": []
+        },
+        {
+          "term": "developing countries",
+          "score": 0.6417,
+          "evidence": []
+        },
+        {
+          "term": "prospective studies",
+          "score": 0.5661,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 43.376,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 41.3552,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 41.3552,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 41.3552,
+          "evidence": []
+        },
+        {
+          "term": "突发事件和",
+          "score": 29.3245,
+          "evidence": []
+        },
+        {
+          "term": "公共卫生专家",
+          "score": 28.6469,
+          "evidence": []
+        },
+        {
+          "term": "的研究中",
+          "score": 21.7749,
+          "evidence": []
+        },
+        {
+          "term": "监测和病人治疗",
+          "score": 20.0733,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-008-53-genital-ulcer-disease-in-africa-epidemiologic": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "chancroid lgv",
+          "score": 4.1013,
+          "evidence": []
+        },
+        {
+          "term": "chancroid rpr",
+          "score": 3.9424,
+          "evidence": []
+        },
+        {
+          "term": "herpes chancroid",
+          "score": 3.8296,
+          "evidence": []
+        },
+        {
+          "term": "gud aetiology",
+          "score": 3.5912,
+          "evidence": []
+        },
+        {
+          "term": "genital herpes",
+          "score": 2.2918,
+          "evidence": []
+        },
+        {
+          "term": "herpes simples",
+          "score": 2.2102,
+          "evidence": []
+        },
+        {
+          "term": "mine sti",
+          "score": 1.6714,
+          "evidence": []
+        },
+        {
+          "term": "gold mine",
+          "score": 1.596,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "chancroid rpr",
+          "score": 129.2229,
+          "evidence": []
+        },
+        {
+          "term": "chancroid lgv",
+          "score": 129.098,
+          "evidence": []
+        },
+        {
+          "term": "herpes chancroid",
+          "score": 127.7798,
+          "evidence": []
+        },
+        {
+          "term": "gud aetiology",
+          "score": 112.5656,
+          "evidence": []
+        },
+        {
+          "term": "genital herpes",
+          "score": 59.2444,
+          "evidence": []
+        },
+        {
+          "term": "herpes simples",
+          "score": 56.4077,
+          "evidence": []
+        },
+        {
+          "term": "mine sti",
+          "score": 27.3947,
+          "evidence": []
+        },
+        {
+          "term": "gold mine",
+          "score": 25.5301,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "genital herpes",
+          "score": 0.5383,
+          "evidence": []
+        },
+        {
+          "term": "herpes simples",
+          "score": 0.4529,
+          "evidence": []
+        },
+        {
+          "term": "developing countries",
+          "score": 0.4431,
+          "evidence": []
+        },
+        {
+          "term": "research priorities",
+          "score": 0.4218,
+          "evidence": []
+        },
+        {
+          "term": "simples virus",
+          "score": 0.3832,
+          "evidence": []
+        },
+        {
+          "term": "virus type",
+          "score": 0.3799,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.3555,
+          "evidence": []
+        },
+        {
+          "term": "hsv",
+          "score": 0.35,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hsv",
+          "score": 27.7776,
+          "evidence": []
+        },
+        {
+          "term": "genital herpes",
+          "score": 18.7191,
+          "evidence": []
+        },
+        {
+          "term": "herpes simples",
+          "score": 15.4539,
+          "evidence": []
+        },
+        {
+          "term": "herpes chancroid",
+          "score": 12.1279,
+          "evidence": []
+        },
+        {
+          "term": "herpes lgv",
+          "score": 12.1279,
+          "evidence": []
+        },
+        {
+          "term": "developing countries",
+          "score": 8.2338,
+          "evidence": []
+        },
+        {
+          "term": "simples virus",
+          "score": 7.39,
+          "evidence": []
+        },
+        {
+          "term": "virus type",
+          "score": 6.8559,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "genital herpes",
+          "score": 0.5383,
+          "evidence": []
+        },
+        {
+          "term": "herpes simples",
+          "score": 0.4529,
+          "evidence": []
+        },
+        {
+          "term": "developing countries",
+          "score": 0.4431,
+          "evidence": []
+        },
+        {
+          "term": "research priorities",
+          "score": 0.4218,
+          "evidence": []
+        },
+        {
+          "term": "simples virus",
+          "score": 0.3832,
+          "evidence": []
+        },
+        {
+          "term": "virus type",
+          "score": 0.3799,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.3555,
+          "evidence": []
+        },
+        {
+          "term": "hsv",
+          "score": 0.35,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "个学习目标",
+          "score": 77.067,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 77.067,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 77.067,
+          "evidence": []
+        },
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 60.9433,
+          "evidence": []
+        },
+        {
+          "term": "突发事件和",
+          "score": 50.7476,
+          "evidence": []
+        },
+        {
+          "term": "这些情况下",
+          "score": 50.5411,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 41.1933,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 40.4097,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-010-61-case-management-of-hsv2-in-areas-of-africa-wi": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hiv prevalence",
+          "score": 2.2995,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hsv",
+          "score": 1.9005,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "aciclovir",
+          "score": 1.811,
+          "evidence": []
+        },
+        {
+          "term": "herpetic ulcers",
+          "score": 1.8058,
+          "evidence": []
+        },
+        {
+          "term": "syndromic management",
+          "score": 1.7186,
+          "evidence": []
+        },
+        {
+          "term": "gud",
+          "score": 1.4465,
+          "evidence": []
+        },
+        {
+          "term": "developing countries",
+          "score": 1.1742,
+          "evidence": []
+        },
+        {
+          "term": "clinical presentation",
+          "score": 1.0864,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "aciclovir",
+          "score": 59.5011,
+          "evidence": []
+        },
+        {
+          "term": "hiv prevalence",
+          "score": 43.7766,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "syndromic management",
+          "score": 41.0703,
+          "evidence": []
+        },
+        {
+          "term": "gud",
+          "score": 34.8395,
+          "evidence": []
+        },
+        {
+          "term": "hsv",
+          "score": 32.3248,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "herpetic ulcers",
+          "score": 31.2766,
+          "evidence": []
+        },
+        {
+          "term": "developing countries",
+          "score": 22.1956,
+          "evidence": []
+        },
+        {
+          "term": "clinical presentation",
+          "score": 20.496,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hiv prevalence",
+          "score": 1.0397,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hsv",
+          "score": 0.7061,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "developing countries",
+          "score": 0.5207,
+          "evidence": []
+        },
+        {
+          "term": "clinical diagnosis",
+          "score": 0.3352,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.3192,
+          "evidence": []
+        },
+        {
+          "term": "herpes",
+          "score": 0.303,
+          "evidence": []
+        },
+        {
+          "term": "infection",
+          "score": 0.282,
+          "evidence": []
+        },
+        {
+          "term": "management",
+          "score": 0.2486,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hsv",
+          "score": 49.9628,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv prevalence",
+          "score": 19.3082,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "herpes",
+          "score": 10.8774,
+          "evidence": []
+        },
+        {
+          "term": "developing countries",
+          "score": 7.9473,
+          "evidence": []
+        },
+        {
+          "term": "genital",
+          "score": 5.7717,
+          "evidence": []
+        },
+        {
+          "term": "infection",
+          "score": 4.5053,
+          "evidence": []
+        },
+        {
+          "term": "virus",
+          "score": 3.8455,
+          "evidence": []
+        },
+        {
+          "term": "clinical diagnosis",
+          "score": 3.6736,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hiv prevalence",
+          "score": 1.0397,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hsv",
+          "score": 0.7061,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "developing countries",
+          "score": 0.5207,
+          "evidence": []
+        },
+        {
+          "term": "clinical diagnosis",
+          "score": 0.3352,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.3192,
+          "evidence": []
+        },
+        {
+          "term": "herpes",
+          "score": 0.303,
+          "evidence": []
+        },
+        {
+          "term": "management",
+          "score": 0.2486,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "clinical presentation",
+          "score": 0.2379,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 33.4935,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 33.2609,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 33.2609,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 33.2609,
+          "evidence": []
+        },
+        {
+          "term": "突发事件和",
+          "score": 22.707,
+          "evidence": []
+        },
+        {
+          "term": "公共卫生专家",
+          "score": 21.8422,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 20.4631,
+          "evidence": []
+        },
+        {
+          "term": "理问题",
+          "score": 16.0398,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-011-62-the-role-of-episodic-and-suppressive-therapy": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "episodic therapy",
+          "score": 5.94,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "suppressive therapy",
+          "score": 5.8725,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hsv control",
+          "score": 5.3173,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hsv shedding",
+          "score": 3.8851,
+          "evidence": []
+        },
+        {
+          "term": "suppressive aciclovir",
+          "score": 3.5382,
+          "evidence": []
+        },
+        {
+          "term": "hsv antiviral",
+          "score": 3.0635,
+          "evidence": []
+        },
+        {
+          "term": "hsv isolates",
+          "score": 3.0193,
+          "evidence": []
+        },
+        {
+          "term": "hsv transmission",
+          "score": 2.9556,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "suppressive therapy",
+          "score": 256.8695,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "episodic therapy",
+          "score": 251.1671,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hsv control",
+          "score": 245.7067,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hsv shedding",
+          "score": 175.1943,
+          "evidence": []
+        },
+        {
+          "term": "hsv transmission",
+          "score": 139.2121,
+          "evidence": []
+        },
+        {
+          "term": "hsv isolates",
+          "score": 132.4145,
+          "evidence": []
+        },
+        {
+          "term": "hsv antiviral",
+          "score": 128.6651,
+          "evidence": []
+        },
+        {
+          "term": "suppressive aciclovir",
+          "score": 121.8534,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hsv control",
+          "score": 2.3104,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv",
+          "score": 1.328,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "genital herpes",
+          "score": 1.2124,
+          "evidence": []
+        },
+        {
+          "term": "hsv transmission",
+          "score": 1.1738,
+          "evidence": []
+        },
+        {
+          "term": "hsv shedding",
+          "score": 1.1411,
+          "evidence": []
+        },
+        {
+          "term": "herpes treatment",
+          "score": 1.0714,
+          "evidence": []
+        },
+        {
+          "term": "herpes simples",
+          "score": 1.0301,
+          "evidence": []
+        },
+        {
+          "term": "episodic therapy",
+          "score": 1.0087,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hsv control",
+          "score": 242.0049,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hsv shedding",
+          "score": 132.365,
+          "evidence": []
+        },
+        {
+          "term": "hsv transmission",
+          "score": 130.2436,
+          "evidence": []
+        },
+        {
+          "term": "hsv antiviral",
+          "score": 116.9969,
+          "evidence": []
+        },
+        {
+          "term": "hsv isolates",
+          "score": 116.9969,
+          "evidence": []
+        },
+        {
+          "term": "genital herpes",
+          "score": 77.4121,
+          "evidence": []
+        },
+        {
+          "term": "herpes simples",
+          "score": 64.7918,
+          "evidence": []
+        },
+        {
+          "term": "herpes treatment",
+          "score": 58.7566,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hsv control",
+          "score": 2.3104,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv",
+          "score": 1.328,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "genital herpes",
+          "score": 1.2124,
+          "evidence": []
+        },
+        {
+          "term": "hsv transmission",
+          "score": 1.1738,
+          "evidence": []
+        },
+        {
+          "term": "hsv shedding",
+          "score": 1.1411,
+          "evidence": []
+        },
+        {
+          "term": "herpes treatment",
+          "score": 1.0714,
+          "evidence": []
+        },
+        {
+          "term": "herpes simples",
+          "score": 1.0301,
+          "evidence": []
+        },
+        {
+          "term": "episodic therapy",
+          "score": 1.0087,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 52.089,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 50.5756,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 50.5756,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 50.5756,
+          "evidence": []
+        },
+        {
+          "term": "突发事件和",
+          "score": 36.3963,
+          "evidence": []
+        },
+        {
+          "term": "公共卫生专家",
+          "score": 34.4438,
+          "evidence": []
+        },
+        {
+          "term": "监测和病人治疗",
+          "score": 25.1377,
+          "evidence": []
+        },
+        {
+          "term": "理问题",
+          "score": 24.1727,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-012-63-vaccine-trials": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hsv vaccine",
+          "score": 4.2167,
+          "evidence": []
+        },
+        {
+          "term": "genital hsv",
+          "score": 3.7294,
+          "evidence": []
+        },
+        {
+          "term": "subunit hsv",
+          "score": 3.6415,
+          "evidence": []
+        },
+        {
+          "term": "hsv infection",
+          "score": 3.5901,
+          "evidence": []
+        },
+        {
+          "term": "hsv infected",
+          "score": 3.3422,
+          "evidence": []
+        },
+        {
+          "term": "disc vaccine",
+          "score": 3.3179,
+          "evidence": []
+        },
+        {
+          "term": "against hsv",
+          "score": 3.2251,
+          "evidence": []
+        },
+        {
+          "term": "hsv disease",
+          "score": 3.174,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hsv vaccine",
+          "score": 320.0759,
+          "evidence": []
+        },
+        {
+          "term": "hsv infection",
+          "score": 263.336,
+          "evidence": []
+        },
+        {
+          "term": "genital hsv",
+          "score": 252.7856,
+          "evidence": []
+        },
+        {
+          "term": "subunit hsv",
+          "score": 241.3889,
+          "evidence": []
+        },
+        {
+          "term": "hsv infected",
+          "score": 238.4641,
+          "evidence": []
+        },
+        {
+          "term": "against hsv",
+          "score": 234.5342,
+          "evidence": []
+        },
+        {
+          "term": "hsv disease",
+          "score": 233.4683,
+          "evidence": []
+        },
+        {
+          "term": "hsv control",
+          "score": 233.0317,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "vaccine",
+          "score": 1.5128,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hsv vaccine",
+          "score": 1.4434,
+          "evidence": []
+        },
+        {
+          "term": "hsv infection",
+          "score": 1.422,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 1.2769,
+          "evidence": []
+        },
+        {
+          "term": "genital hsv",
+          "score": 1.1302,
+          "evidence": []
+        },
+        {
+          "term": "genital herpes",
+          "score": 1.026,
+          "evidence": []
+        },
+        {
+          "term": "hsv disease",
+          "score": 1.0129,
+          "evidence": []
+        },
+        {
+          "term": "hsv control",
+          "score": 0.9847,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hsv vaccine",
+          "score": 213.4054,
+          "evidence": []
+        },
+        {
+          "term": "genital hsv",
+          "score": 211.8281,
+          "evidence": []
+        },
+        {
+          "term": "hsv infection",
+          "score": 198.1594,
+          "evidence": []
+        },
+        {
+          "term": "hsv disease",
+          "score": 179.6915,
+          "evidence": []
+        },
+        {
+          "term": "against hsv",
+          "score": 179.5696,
+          "evidence": []
+        },
+        {
+          "term": "hsv infected",
+          "score": 178.8421,
+          "evidence": []
+        },
+        {
+          "term": "hsv control",
+          "score": 178.4791,
+          "evidence": []
+        },
+        {
+          "term": "subunit hsv",
+          "score": 173.2131,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "vaccine",
+          "score": 1.5128,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hsv vaccine",
+          "score": 1.4434,
+          "evidence": []
+        },
+        {
+          "term": "hsv infection",
+          "score": 1.422,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 1.2769,
+          "evidence": []
+        },
+        {
+          "term": "genital hsv",
+          "score": 1.1302,
+          "evidence": []
+        },
+        {
+          "term": "genital herpes",
+          "score": 1.026,
+          "evidence": []
+        },
+        {
+          "term": "hsv disease",
+          "score": 1.0129,
+          "evidence": []
+        },
+        {
+          "term": "hsv control",
+          "score": 0.9847,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 31.8653,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 29.0702,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 28.4184,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 28.4184,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 28.4184,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 23.5433,
+          "evidence": []
+        },
+        {
+          "term": "突发事件和",
+          "score": 21.8474,
+          "evidence": []
+        },
+        {
+          "term": "公共卫生专家",
+          "score": 20.863,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-013-64-other-preventive-strategies": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "against hsv",
+          "score": 2.8884,
+          "evidence": []
+        },
+        {
+          "term": "hsv seropositive",
+          "score": 2.8329,
+          "evidence": []
+        },
+        {
+          "term": "hsv control",
+          "score": 2.6587,
+          "evidence": []
+        },
+        {
+          "term": "hsv infection",
+          "score": 2.5945,
+          "evidence": []
+        },
+        {
+          "term": "hsv screening",
+          "score": 2.5262,
+          "evidence": []
+        },
+        {
+          "term": "herpes simples",
+          "score": 2.1581,
+          "evidence": []
+        },
+        {
+          "term": "herpes lesions",
+          "score": 2.0165,
+          "evidence": []
+        },
+        {
+          "term": "genital herpes",
+          "score": 1.8959,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "against hsv",
+          "score": 132.2443,
+          "evidence": []
+        },
+        {
+          "term": "hsv seropositive",
+          "score": 124.5265,
+          "evidence": []
+        },
+        {
+          "term": "hsv control",
+          "score": 122.8534,
+          "evidence": []
+        },
+        {
+          "term": "hsv infection",
+          "score": 119.8393,
+          "evidence": []
+        },
+        {
+          "term": "hsv screening",
+          "score": 118.3517,
+          "evidence": []
+        },
+        {
+          "term": "herpes simples",
+          "score": 46.634,
+          "evidence": []
+        },
+        {
+          "term": "herpes lesions",
+          "score": 43.5909,
+          "evidence": []
+        },
+        {
+          "term": "developing countries",
+          "score": 41.8422,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hsv infection",
+          "score": 1.1569,
+          "evidence": []
+        },
+        {
+          "term": "genital herpes",
+          "score": 0.9406,
+          "evidence": []
+        },
+        {
+          "term": "hsv control",
+          "score": 0.8699,
+          "evidence": []
+        },
+        {
+          "term": "developing countries",
+          "score": 0.83,
+          "evidence": []
+        },
+        {
+          "term": "hsv screening",
+          "score": 0.7917,
+          "evidence": []
+        },
+        {
+          "term": "herpes simples",
+          "score": 0.7769,
+          "evidence": []
+        },
+        {
+          "term": "against hiv",
+          "score": 0.7644,
+          "evidence": []
+        },
+        {
+          "term": "hsv seropositive",
+          "score": 0.7097,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hsv infection",
+          "score": 104.9146,
+          "evidence": []
+        },
+        {
+          "term": "against hsv",
+          "score": 95.5571,
+          "evidence": []
+        },
+        {
+          "term": "hsv control",
+          "score": 95.0586,
+          "evidence": []
+        },
+        {
+          "term": "hsv seropositive",
+          "score": 94.4696,
+          "evidence": []
+        },
+        {
+          "term": "hsv screening",
+          "score": 94.3771,
+          "evidence": []
+        },
+        {
+          "term": "genital herpes",
+          "score": 60.7417,
+          "evidence": []
+        },
+        {
+          "term": "herpes simples",
+          "score": 50.8461,
+          "evidence": []
+        },
+        {
+          "term": "herpes lesions",
+          "score": 42.2879,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hsv infection",
+          "score": 1.1569,
+          "evidence": []
+        },
+        {
+          "term": "genital herpes",
+          "score": 0.9406,
+          "evidence": []
+        },
+        {
+          "term": "hsv control",
+          "score": 0.8699,
+          "evidence": []
+        },
+        {
+          "term": "developing countries",
+          "score": 0.83,
+          "evidence": []
+        },
+        {
+          "term": "hsv screening",
+          "score": 0.7917,
+          "evidence": []
+        },
+        {
+          "term": "herpes simples",
+          "score": 0.7769,
+          "evidence": []
+        },
+        {
+          "term": "against hiv",
+          "score": 0.7644,
+          "evidence": []
+        },
+        {
+          "term": "hsv seropositive",
+          "score": 0.7097,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 29.0193,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 28.9826,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 27.4086,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 27.4086,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 27.4086,
+          "evidence": []
+        },
+        {
+          "term": "这些情况下",
+          "score": 20.7235,
+          "evidence": []
+        },
+        {
+          "term": "突发事件和",
+          "score": 19.5316,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 19.5303,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-014-7-mathematical-modelling": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "mathematical modelling",
+          "score": 3.1322,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hsv",
+          "score": 1.5784,
+          "evidence": []
+        },
+        {
+          "term": "seroprevalence",
+          "score": 0.9429,
+          "evidence": []
+        },
+        {
+          "term": "recurrences",
+          "score": 0.8811,
+          "evidence": []
+        },
+        {
+          "term": "antiviral",
+          "score": 0.7486,
+          "evidence": []
+        },
+        {
+          "term": "duration",
+          "score": 0.6667,
+          "evidence": []
+        },
+        {
+          "term": "validity",
+          "score": 0.6002,
+          "evidence": []
+        },
+        {
+          "term": "spread",
+          "score": 0.5806,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "mathematical modelling",
+          "score": 72.8468,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hsv",
+          "score": 48.4871,
+          "evidence": []
+        },
+        {
+          "term": "seroprevalence",
+          "score": 17.6079,
+          "evidence": []
+        },
+        {
+          "term": "recurrences",
+          "score": 13.9358,
+          "evidence": []
+        },
+        {
+          "term": "duration",
+          "score": 11.5919,
+          "evidence": []
+        },
+        {
+          "term": "antiviral",
+          "score": 10.3523,
+          "evidence": []
+        },
+        {
+          "term": "validity",
+          "score": 9.6389,
+          "evidence": []
+        },
+        {
+          "term": "change",
+          "score": 8.8124,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hsv",
+          "score": 0.2589,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.2188,
+          "evidence": []
+        },
+        {
+          "term": "herpes",
+          "score": 0.2142,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 0.2142,
+          "evidence": []
+        },
+        {
+          "term": "infection",
+          "score": 0.211,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.2,
+          "evidence": []
+        },
+        {
+          "term": "virus",
+          "score": 0.1851,
+          "evidence": []
+        },
+        {
+          "term": "studies",
+          "score": 0.1725,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hsv",
+          "score": 34.6785,
+          "evidence": []
+        },
+        {
+          "term": "herpes",
+          "score": 14.8435,
+          "evidence": []
+        },
+        {
+          "term": "genital",
+          "score": 7.7768,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 5.5517,
+          "evidence": []
+        },
+        {
+          "term": "infection",
+          "score": 4.8503,
+          "evidence": []
+        },
+        {
+          "term": "developing",
+          "score": 4.7955,
+          "evidence": []
+        },
+        {
+          "term": "virus",
+          "score": 4.6217,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 4.5359,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hsv",
+          "score": 0.2589,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.2188,
+          "evidence": []
+        },
+        {
+          "term": "incidence",
+          "score": 0.1503,
+          "evidence": []
+        },
+        {
+          "term": "mathematical modelling",
+          "score": 0.1402,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "risk",
+          "score": 0.1346,
+          "evidence": []
+        },
+        {
+          "term": "control",
+          "score": 0.1068,
+          "evidence": []
+        },
+        {
+          "term": "treatment",
+          "score": 0.0978,
+          "evidence": []
+        },
+        {
+          "term": "impact",
+          "score": 0.0747,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 24.204,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 21.5989,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 21.5989,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 21.5989,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 20.4035,
+          "evidence": []
+        },
+        {
+          "term": "公共卫生专家",
+          "score": 15.8037,
+          "evidence": []
+        },
+        {
+          "term": "突发事件和",
+          "score": 15.1185,
+          "evidence": []
+        },
+        {
+          "term": "这些情况下",
+          "score": 12.7447,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-015-8-hsv2-diagnosis": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hsv diagnosis",
+          "score": 4.4761,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "recurrent hsv",
+          "score": 2.2735,
+          "evidence": []
+        },
+        {
+          "term": "hsv dna",
+          "score": 2.2611,
+          "evidence": []
+        },
+        {
+          "term": "commercial assays",
+          "score": 1.5453,
+          "evidence": []
+        },
+        {
+          "term": "herpes simples",
+          "score": 1.4188,
+          "evidence": []
+        },
+        {
+          "term": "western blot",
+          "score": 1.4011,
+          "evidence": []
+        },
+        {
+          "term": "african sera",
+          "score": 1.3915,
+          "evidence": []
+        },
+        {
+          "term": "simples virus",
+          "score": 1.3011,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hsv diagnosis",
+          "score": 134.9739,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "recurrent hsv",
+          "score": 63.6161,
+          "evidence": []
+        },
+        {
+          "term": "hsv dna",
+          "score": 62.637,
+          "evidence": []
+        },
+        {
+          "term": "commercial assays",
+          "score": 34.2727,
+          "evidence": []
+        },
+        {
+          "term": "african sera",
+          "score": 23.9555,
+          "evidence": []
+        },
+        {
+          "term": "quantitative pcr",
+          "score": 21.9685,
+          "evidence": []
+        },
+        {
+          "term": "western blot",
+          "score": 21.1956,
+          "evidence": []
+        },
+        {
+          "term": "herpes simples",
+          "score": 20.962,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hsv diagnosis",
+          "score": 0.9765,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "virus type",
+          "score": 0.4505,
+          "evidence": []
+        },
+        {
+          "term": "simples virus",
+          "score": 0.4438,
+          "evidence": []
+        },
+        {
+          "term": "developing countries",
+          "score": 0.4269,
+          "evidence": []
+        },
+        {
+          "term": "herpes simples",
+          "score": 0.4213,
+          "evidence": []
+        },
+        {
+          "term": "research priorities",
+          "score": 0.4208,
+          "evidence": []
+        },
+        {
+          "term": "recurrent hsv",
+          "score": 0.4115,
+          "evidence": []
+        },
+        {
+          "term": "hsv dna",
+          "score": 0.4035,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hsv diagnosis",
+          "score": 89.1478,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "recurrent hsv",
+          "score": 44.2674,
+          "evidence": []
+        },
+        {
+          "term": "hsv dna",
+          "score": 42.7729,
+          "evidence": []
+        },
+        {
+          "term": "herpes simples",
+          "score": 23.6021,
+          "evidence": []
+        },
+        {
+          "term": "developing countries",
+          "score": 12.0886,
+          "evidence": []
+        },
+        {
+          "term": "simples virus",
+          "score": 11.9559,
+          "evidence": []
+        },
+        {
+          "term": "virus type",
+          "score": 11.4391,
+          "evidence": []
+        },
+        {
+          "term": "genital",
+          "score": 9.6732,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hsv diagnosis",
+          "score": 0.9765,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "virus type",
+          "score": 0.4505,
+          "evidence": []
+        },
+        {
+          "term": "simples virus",
+          "score": 0.4438,
+          "evidence": []
+        },
+        {
+          "term": "developing countries",
+          "score": 0.4269,
+          "evidence": []
+        },
+        {
+          "term": "herpes simples",
+          "score": 0.4213,
+          "evidence": []
+        },
+        {
+          "term": "research priorities",
+          "score": 0.4208,
+          "evidence": []
+        },
+        {
+          "term": "recurrent hsv",
+          "score": 0.4115,
+          "evidence": []
+        },
+        {
+          "term": "hsv dna",
+          "score": 0.4035,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "个学习目标",
+          "score": 41.626,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 41.626,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 41.626,
+          "evidence": []
+        },
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 39.6898,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 33.4309,
+          "evidence": []
+        },
+        {
+          "term": "突发事件和",
+          "score": 29.444,
+          "evidence": []
+        },
+        {
+          "term": "公共卫生专家",
+          "score": 25.9832,
+          "evidence": []
+        },
+        {
+          "term": "区域和全球各",
+          "score": 25.7344,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-016-9-research-and-control-programme-priorities": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hsv prevalence",
+          "score": 2.7599,
+          "evidence": []
+        },
+        {
+          "term": "obtain hsv",
+          "score": 2.5133,
+          "evidence": []
+        },
+        {
+          "term": "hsv transmission",
+          "score": 2.5021,
+          "evidence": []
+        },
+        {
+          "term": "hsv infection",
+          "score": 2.3953,
+          "evidence": []
+        },
+        {
+          "term": "natural history",
+          "score": 1.5754,
+          "evidence": []
+        },
+        {
+          "term": "priorities",
+          "score": 1.2542,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "surveillance sera",
+          "score": 1.2522,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 1.229,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hsv prevalence",
+          "score": 114.0051,
+          "evidence": []
+        },
+        {
+          "term": "hsv transmission",
+          "score": 104.7969,
+          "evidence": []
+        },
+        {
+          "term": "obtain hsv",
+          "score": 104.2765,
+          "evidence": []
+        },
+        {
+          "term": "hsv infection",
+          "score": 101.4427,
+          "evidence": []
+        },
+        {
+          "term": "natural history",
+          "score": 31.5322,
+          "evidence": []
+        },
+        {
+          "term": "prevalence data",
+          "score": 24.5024,
+          "evidence": []
+        },
+        {
+          "term": "surveillance sera",
+          "score": 22.7064,
+          "evidence": []
+        },
+        {
+          "term": "priorities",
+          "score": 21.3152,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "research",
+          "score": 0.7197,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hsv infection",
+          "score": 0.6688,
+          "evidence": []
+        },
+        {
+          "term": "hsv prevalence",
+          "score": 0.6211,
+          "evidence": []
+        },
+        {
+          "term": "hsv transmission",
+          "score": 0.591,
+          "evidence": []
+        },
+        {
+          "term": "prevalence data",
+          "score": 0.512,
+          "evidence": []
+        },
+        {
+          "term": "developing countries",
+          "score": 0.4956,
+          "evidence": []
+        },
+        {
+          "term": "obtain hsv",
+          "score": 0.3774,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.3613,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hsv infection",
+          "score": 78.083,
+          "evidence": []
+        },
+        {
+          "term": "hsv prevalence",
+          "score": 77.4509,
+          "evidence": []
+        },
+        {
+          "term": "hsv transmission",
+          "score": 76.823,
+          "evidence": []
+        },
+        {
+          "term": "obtain hsv",
+          "score": 69.4973,
+          "evidence": []
+        },
+        {
+          "term": "herpes",
+          "score": 29.6451,
+          "evidence": []
+        },
+        {
+          "term": "developing countries",
+          "score": 20.3988,
+          "evidence": []
+        },
+        {
+          "term": "genital",
+          "score": 15.4405,
+          "evidence": []
+        },
+        {
+          "term": "prevalence data",
+          "score": 14.7868,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "research",
+          "score": 0.7197,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hsv infection",
+          "score": 0.6688,
+          "evidence": []
+        },
+        {
+          "term": "hsv prevalence",
+          "score": 0.6211,
+          "evidence": []
+        },
+        {
+          "term": "hsv transmission",
+          "score": 0.591,
+          "evidence": []
+        },
+        {
+          "term": "prevalence data",
+          "score": 0.512,
+          "evidence": []
+        },
+        {
+          "term": "developing countries",
+          "score": 0.4956,
+          "evidence": []
+        },
+        {
+          "term": "obtain hsv",
+          "score": 0.3914,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.3613,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 29.1445,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 28.4963,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 28.4963,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 28.4963,
+          "evidence": []
+        },
+        {
+          "term": "突发事件和",
+          "score": 20.1255,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 20.0717,
+          "evidence": []
+        },
+        {
+          "term": "公共卫生专家",
+          "score": 19.0793,
+          "evidence": []
+        },
+        {
+          "term": "监测和病人治疗",
+          "score": 14.9188,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-017-92-biological-studies-hsv2-and-its-interaction-w": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hsv",
+          "score": 3.1567,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hsv shedding",
+          "score": 3.11,
+          "evidence": []
+        },
+        {
+          "term": "hiv shedding",
+          "score": 2.1318,
+          "evidence": []
+        },
+        {
+          "term": "hsv infection",
+          "score": 2.1306,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hsv",
+          "score": 96.9743,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hsv shedding",
+          "score": 91.9275,
+          "evidence": []
+        },
+        {
+          "term": "hsv infection",
+          "score": 57.424,
+          "evidence": []
+        },
+        {
+          "term": "hiv shedding",
+          "score": 57.2931,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hiv",
+          "score": 0.4481,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hsv",
+          "score": 0.4046,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hsv infection",
+          "score": 0.3779,
+          "evidence": []
+        },
+        {
+          "term": "studies",
+          "score": 0.3572,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hsv",
+          "score": 69.972,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hsv infection",
+          "score": 39.9093,
+          "evidence": []
+        },
+        {
+          "term": "hsv shedding",
+          "score": 39.5386,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 16.0868,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hiv",
+          "score": 0.4481,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hsv",
+          "score": 0.4046,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hsv infection",
+          "score": 0.3779,
+          "evidence": []
+        },
+        {
+          "term": "studies",
+          "score": 0.3572,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 62.6928,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 62.4769,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 62.4769,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 62.4769,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-018-93-episodic-and-suppressive-therapy": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "episodic therapy",
+          "score": 4.5908,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "suppressive therapy",
+          "score": 3.8018,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "gud aetiology",
+          "score": 2.64,
+          "evidence": []
+        },
+        {
+          "term": "episodic herpes",
+          "score": 2.5716,
+          "evidence": []
+        },
+        {
+          "term": "aciclovir",
+          "score": 1.886,
+          "evidence": []
+        },
+        {
+          "term": "herpes simples",
+          "score": 1.8744,
+          "evidence": []
+        },
+        {
+          "term": "hiv shedding",
+          "score": 1.8146,
+          "evidence": []
+        },
+        {
+          "term": "syndromic management",
+          "score": 1.6182,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "episodic therapy",
+          "score": 114.9154,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "suppressive therapy",
+          "score": 85.6504,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "aciclovir",
+          "score": 66.1123,
+          "evidence": []
+        },
+        {
+          "term": "episodic herpes",
+          "score": 58.3745,
+          "evidence": []
+        },
+        {
+          "term": "gud aetiology",
+          "score": 56.3599,
+          "evidence": []
+        },
+        {
+          "term": "hiv shedding",
+          "score": 49.4011,
+          "evidence": []
+        },
+        {
+          "term": "hiv transmission",
+          "score": 46.4291,
+          "evidence": []
+        },
+        {
+          "term": "hiv acquisition",
+          "score": 43.2645,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hiv infection",
+          "score": 0.9243,
+          "evidence": []
+        },
+        {
+          "term": "hiv prevalence",
+          "score": 0.7945,
+          "evidence": []
+        },
+        {
+          "term": "hiv transmission",
+          "score": 0.775,
+          "evidence": []
+        },
+        {
+          "term": "hiv shedding",
+          "score": 0.7149,
+          "evidence": []
+        },
+        {
+          "term": "developing countries",
+          "score": 0.6848,
+          "evidence": []
+        },
+        {
+          "term": "hiv acquisition",
+          "score": 0.6669,
+          "evidence": []
+        },
+        {
+          "term": "herpes simples",
+          "score": 0.6529,
+          "evidence": []
+        },
+        {
+          "term": "research priorities",
+          "score": 0.6481,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hsv",
+          "score": 28.7722,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 25.9771,
+          "evidence": []
+        },
+        {
+          "term": "hiv prevalence",
+          "score": 24.4388,
+          "evidence": []
+        },
+        {
+          "term": "hiv transmission",
+          "score": 23.9691,
+          "evidence": []
+        },
+        {
+          "term": "hiv shedding",
+          "score": 23.1394,
+          "evidence": []
+        },
+        {
+          "term": "hiv status",
+          "score": 22.1385,
+          "evidence": []
+        },
+        {
+          "term": "hiv acquisition",
+          "score": 21.6346,
+          "evidence": []
+        },
+        {
+          "term": "herpes therapy",
+          "score": 16.2314,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hiv infection",
+          "score": 0.9243,
+          "evidence": []
+        },
+        {
+          "term": "hiv prevalence",
+          "score": 0.7945,
+          "evidence": []
+        },
+        {
+          "term": "hiv transmission",
+          "score": 0.775,
+          "evidence": []
+        },
+        {
+          "term": "hiv shedding",
+          "score": 0.7149,
+          "evidence": []
+        },
+        {
+          "term": "developing countries",
+          "score": 0.6848,
+          "evidence": []
+        },
+        {
+          "term": "hiv acquisition",
+          "score": 0.6669,
+          "evidence": []
+        },
+        {
+          "term": "herpes simples",
+          "score": 0.6529,
+          "evidence": []
+        },
+        {
+          "term": "research priorities",
+          "score": 0.6481,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 41.4755,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 41.1397,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 41.1397,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 41.1397,
+          "evidence": []
+        },
+        {
+          "term": "突发事件和",
+          "score": 28.7048,
+          "evidence": []
+        },
+        {
+          "term": "公共卫生专家",
+          "score": 27.275,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 22.5071,
+          "evidence": []
+        },
+        {
+          "term": "理问题",
+          "score": 19.6633,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-019-94-vaccination": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "disc vaccine",
+          "score": 1.9231,
+          "evidence": []
+        },
+        {
+          "term": "hsv vaccine",
+          "score": 1.7371,
+          "evidence": []
+        },
+        {
+          "term": "vaccine development",
+          "score": 1.448,
+          "evidence": []
+        },
+        {
+          "term": "vaccine products",
+          "score": 1.3894,
+          "evidence": []
+        },
+        {
+          "term": "lobby",
+          "score": 0.9686,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "disc vaccine",
+          "score": 36.3066,
+          "evidence": []
+        },
+        {
+          "term": "hsv vaccine",
+          "score": 32.4727,
+          "evidence": []
+        },
+        {
+          "term": "vaccine development",
+          "score": 30.8752,
+          "evidence": []
+        },
+        {
+          "term": "vaccine products",
+          "score": 27.7039,
+          "evidence": []
+        },
+        {
+          "term": "prophylactic",
+          "score": 16.9672,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hsv vaccine",
+          "score": 0.3345,
+          "evidence": []
+        },
+        {
+          "term": "developing countries",
+          "score": 0.2654,
+          "evidence": []
+        },
+        {
+          "term": "vaccine development",
+          "score": 0.2401,
+          "evidence": []
+        },
+        {
+          "term": "vaccine products",
+          "score": 0.2251,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.2062,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hsv vaccine",
+          "score": 17.2927,
+          "evidence": []
+        },
+        {
+          "term": "vaccine development",
+          "score": 6.3026,
+          "evidence": []
+        },
+        {
+          "term": "vaccine products",
+          "score": 5.9682,
+          "evidence": []
+        },
+        {
+          "term": "disc vaccine",
+          "score": 5.9224,
+          "evidence": []
+        },
+        {
+          "term": "herpes",
+          "score": 5.0236,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hsv vaccine",
+          "score": 0.3345,
+          "evidence": []
+        },
+        {
+          "term": "developing countries",
+          "score": 0.2654,
+          "evidence": []
+        },
+        {
+          "term": "vaccine development",
+          "score": 0.2401,
+          "evidence": []
+        },
+        {
+          "term": "vaccine products",
+          "score": 0.2251,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.2062,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 31.5463,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 25.4794,
+          "evidence": []
+        },
+        {
+          "term": "平等主义",
+          "score": 22.1734,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 20.4538,
+          "evidence": []
+        },
+        {
+          "term": "反过来",
+          "score": 18.7613,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-020-95-behavioural-and-microbicide-studies": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hsv infection",
+          "score": 1.8831,
+          "evidence": []
+        },
+        {
+          "term": "microbicide",
+          "score": 1.1627,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "counselling strategies",
+          "score": 1.0553,
+          "evidence": []
+        },
+        {
+          "term": "young people",
+          "score": 0.8171,
+          "evidence": []
+        },
+        {
+          "term": "behavioural",
+          "score": 0.7382,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "developing countries",
+          "score": 0.7199,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hsv infection",
+          "score": 47.5681,
+          "evidence": []
+        },
+        {
+          "term": "counselling strategies",
+          "score": 17.3749,
+          "evidence": []
+        },
+        {
+          "term": "microbicides",
+          "score": 13.2225,
+          "evidence": []
+        },
+        {
+          "term": "evaluate",
+          "score": 10.5606,
+          "evidence": []
+        },
+        {
+          "term": "young people",
+          "score": 10.335,
+          "evidence": []
+        },
+        {
+          "term": "condom",
+          "score": 8.99,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hsv infection",
+          "score": 0.4084,
+          "evidence": []
+        },
+        {
+          "term": "studies",
+          "score": 0.282,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv",
+          "score": 0.2771,
+          "evidence": []
+        },
+        {
+          "term": "developing countries",
+          "score": 0.2683,
+          "evidence": []
+        },
+        {
+          "term": "herpes",
+          "score": 0.1764,
+          "evidence": []
+        },
+        {
+          "term": "counselling strategies",
+          "score": 0.169,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hsv infection",
+          "score": 34.2553,
+          "evidence": []
+        },
+        {
+          "term": "herpes",
+          "score": 12.9404,
+          "evidence": []
+        },
+        {
+          "term": "developing countries",
+          "score": 8.7418,
+          "evidence": []
+        },
+        {
+          "term": "genital",
+          "score": 6.7567,
+          "evidence": []
+        },
+        {
+          "term": "studies",
+          "score": 6.3402,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv",
+          "score": 4.4804,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hsv infection",
+          "score": 0.4084,
+          "evidence": []
+        },
+        {
+          "term": "studies",
+          "score": 0.282,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hiv",
+          "score": 0.2771,
+          "evidence": []
+        },
+        {
+          "term": "developing countries",
+          "score": 0.2683,
+          "evidence": []
+        },
+        {
+          "term": "counselling strategies",
+          "score": 0.169,
+          "evidence": []
+        },
+        {
+          "term": "behavioural",
+          "score": 0.1331,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 26.0954,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 24.6425,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 24.6425,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 24.6425,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 22.6602,
+          "evidence": []
+        },
+        {
+          "term": "突发事件和",
+          "score": 17.4922,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-021-96-mathematical-modelling": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "modelling",
+          "score": 1.034,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hsv",
+          "score": 0.7531,
+          "evidence": []
+        },
+        {
+          "term": "mathematical",
+          "score": 0.7414,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "modelling",
+          "score": 15.4816,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hsv",
+          "score": 10.7749,
+          "evidence": []
+        },
+        {
+          "term": "mathematical",
+          "score": 9.3306,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "research",
+          "score": 0.1749,
+          "evidence": []
+        },
+        {
+          "term": "hsv",
+          "score": 0.1383,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.1377,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hsv",
+          "score": 9.8485,
+          "evidence": []
+        },
+        {
+          "term": "herpes",
+          "score": 4.2504,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 2.8342,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "research",
+          "score": 0.1749,
+          "evidence": []
+        },
+        {
+          "term": "hsv",
+          "score": 0.1383,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.1377,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 27.287,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 25.9071,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 25.9071,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-022-97-diagnosis": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "herpes simples",
+          "score": 1.6079,
+          "evidence": []
+        },
+        {
+          "term": "research priorities",
+          "score": 1.2416,
+          "evidence": []
+        },
+        {
+          "term": "simples virus",
+          "score": 1.1756,
+          "evidence": []
+        },
+        {
+          "term": "current serological",
+          "score": 1.0108,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "herpes simples",
+          "score": 26.0256,
+          "evidence": []
+        },
+        {
+          "term": "research priorities",
+          "score": 16.6548,
+          "evidence": []
+        },
+        {
+          "term": "simples virus",
+          "score": 16.5487,
+          "evidence": []
+        },
+        {
+          "term": "current serological",
+          "score": 15.4803,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "research priorities",
+          "score": 0.3027,
+          "evidence": []
+        },
+        {
+          "term": "developing countries",
+          "score": 0.2697,
+          "evidence": []
+        },
+        {
+          "term": "herpes simples",
+          "score": 0.2295,
+          "evidence": []
+        },
+        {
+          "term": "simples virus",
+          "score": 0.2228,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hsv",
+          "score": 8.9171,
+          "evidence": []
+        },
+        {
+          "term": "herpes simples",
+          "score": 4.9842,
+          "evidence": []
+        },
+        {
+          "term": "developing countries",
+          "score": 3.1187,
+          "evidence": []
+        },
+        {
+          "term": "research priorities",
+          "score": 2.9605,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "research priorities",
+          "score": 0.3027,
+          "evidence": []
+        },
+        {
+          "term": "developing countries",
+          "score": 0.2697,
+          "evidence": []
+        },
+        {
+          "term": "herpes simples",
+          "score": 0.2295,
+          "evidence": []
+        },
+        {
+          "term": "simples virus",
+          "score": 0.2228,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 35.9593,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 35.1975,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 35.1975,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 35.1975,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-023-annex-1-list-of-participants": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "keppel street",
+          "score": 3.8524,
+          "evidence": []
+        },
+        {
+          "term": "london wc1e",
+          "score": 3.7722,
+          "evidence": []
+        },
+        {
+          "term": "tropical medicine",
+          "score": 2.918,
+          "evidence": []
+        },
+        {
+          "term": "herpes simplex",
+          "score": 2.8868,
+          "evidence": []
+        },
+        {
+          "term": "london school",
+          "score": 2.7966,
+          "evidence": []
+        },
+        {
+          "term": "tel",
+          "score": 2.6835,
+          "evidence": []
+        },
+        {
+          "term": "tropical diseases",
+          "score": 2.6225,
+          "evidence": []
+        },
+        {
+          "term": "genital herpes",
+          "score": 2.5821,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "tel",
+          "score": 196.2594,
+          "evidence": []
+        },
+        {
+          "term": "email",
+          "score": 179.3201,
+          "evidence": []
+        },
+        {
+          "term": "fax",
+          "score": 173.5011,
+          "evidence": []
+        },
+        {
+          "term": "london wc1e",
+          "score": 170.8655,
+          "evidence": []
+        },
+        {
+          "term": "tropical medicine",
+          "score": 152.9493,
+          "evidence": []
+        },
+        {
+          "term": "london school",
+          "score": 138.8524,
+          "evidence": []
+        },
+        {
+          "term": "keppel street",
+          "score": 137.7425,
+          "evidence": []
+        },
+        {
+          "term": "tropical diseases",
+          "score": 131.8157,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "clinical research",
+          "score": 1.3639,
+          "evidence": []
+        },
+        {
+          "term": "united kingdom",
+          "score": 1.361,
+          "evidence": []
+        },
+        {
+          "term": "research unit",
+          "score": 1.285,
+          "evidence": []
+        },
+        {
+          "term": "research priorities",
+          "score": 1.2115,
+          "evidence": []
+        },
+        {
+          "term": "genital herpes",
+          "score": 1.1426,
+          "evidence": []
+        },
+        {
+          "term": "london school",
+          "score": 1.0845,
+          "evidence": []
+        },
+        {
+          "term": "tropical medicine",
+          "score": 0.9959,
+          "evidence": []
+        },
+        {
+          "term": "herpes simples",
+          "score": 0.9945,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "tel",
+          "score": 142.7837,
+          "evidence": []
+        },
+        {
+          "term": "fax",
+          "score": 131.1694,
+          "evidence": []
+        },
+        {
+          "term": "e-mail",
+          "score": 122.461,
+          "evidence": []
+        },
+        {
+          "term": "united kingdom",
+          "score": 52.6088,
+          "evidence": []
+        },
+        {
+          "term": "avenue appia",
+          "score": 39.5872,
+          "evidence": []
+        },
+        {
+          "term": "hsv",
+          "score": 37.8153,
+          "evidence": []
+        },
+        {
+          "term": "london school",
+          "score": 37.4977,
+          "evidence": []
+        },
+        {
+          "term": "tropical medicine",
+          "score": 37.3396,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "clinical research",
+          "score": 1.3639,
+          "evidence": []
+        },
+        {
+          "term": "united kingdom",
+          "score": 1.361,
+          "evidence": []
+        },
+        {
+          "term": "research unit",
+          "score": 1.285,
+          "evidence": []
+        },
+        {
+          "term": "research priorities",
+          "score": 1.2115,
+          "evidence": []
+        },
+        {
+          "term": "genital herpes",
+          "score": 1.1426,
+          "evidence": []
+        },
+        {
+          "term": "london school",
+          "score": 1.0845,
+          "evidence": []
+        },
+        {
+          "term": "tropical medicine",
+          "score": 0.9959,
+          "evidence": []
+        },
+        {
+          "term": "herpes simples",
+          "score": 0.9945,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 180.3798,
+          "evidence": []
+        },
+        {
+          "term": "以及卫生保健界",
+          "score": 136.0162,
+          "evidence": []
+        },
+        {
+          "term": "基金会和开发银行",
+          "score": 136.0162,
+          "evidence": []
+        },
+        {
+          "term": "大学和研究机构",
+          "score": 136.0162,
+          "evidence": []
+        },
+        {
+          "term": "如非政府组织和民间社会组织",
+          "score": 136.0162,
+          "evidence": []
+        },
+        {
+          "term": "宗教组织",
+          "score": 136.0162,
+          "evidence": []
+        },
+        {
+          "term": "患者和公众",
+          "score": 136.0162,
+          "evidence": []
+        },
+        {
+          "term": "技术开发者",
+          "score": 136.0162,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-024-annex-2-references": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "herpes simplex",
+          "score": 5.0603,
+          "evidence": []
+        },
+        {
+          "term": "genital herpes",
+          "score": 4.4264,
+          "evidence": []
+        },
+        {
+          "term": "simplex virus",
+          "score": 4.0256,
+          "evidence": []
+        },
+        {
+          "term": "herpes simples",
+          "score": 3.9158,
+          "evidence": []
+        },
+        {
+          "term": "genital hsv",
+          "score": 3.5323,
+          "evidence": []
+        },
+        {
+          "term": "asymptomatic herpes",
+          "score": 3.4443,
+          "evidence": []
+        },
+        {
+          "term": "herpes infections",
+          "score": 3.3723,
+          "evidence": []
+        },
+        {
+          "term": "infect dis",
+          "score": 3.0325,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "herpes simplex",
+          "score": 418.8487,
+          "evidence": []
+        },
+        {
+          "term": "genital herpes",
+          "score": 372.175,
+          "evidence": []
+        },
+        {
+          "term": "herpes simples",
+          "score": 296.1684,
+          "evidence": []
+        },
+        {
+          "term": "asymptomatic herpes",
+          "score": 276.3247,
+          "evidence": []
+        },
+        {
+          "term": "herpes infections",
+          "score": 275.4318,
+          "evidence": []
+        },
+        {
+          "term": "simplex virus",
+          "score": 260.5977,
+          "evidence": []
+        },
+        {
+          "term": "genital hsv",
+          "score": 173.1898,
+          "evidence": []
+        },
+        {
+          "term": "virus type",
+          "score": 162.5463,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hsv infection",
+          "score": 2.612,
+          "evidence": []
+        },
+        {
+          "term": "genital hsv",
+          "score": 2.382,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 2.34,
+          "evidence": []
+        },
+        {
+          "term": "virus infection",
+          "score": 2.2857,
+          "evidence": []
+        },
+        {
+          "term": "hiv aids",
+          "score": 2.2155,
+          "evidence": []
+        },
+        {
+          "term": "hsv study",
+          "score": 2.2136,
+          "evidence": []
+        },
+        {
+          "term": "genital herpes",
+          "score": 2.2117,
+          "evidence": []
+        },
+        {
+          "term": "herpes simples",
+          "score": 1.8943,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "genital hsv",
+          "score": 238.0255,
+          "evidence": []
+        },
+        {
+          "term": "hsv infection",
+          "score": 227.4512,
+          "evidence": []
+        },
+        {
+          "term": "hsv study",
+          "score": 204.2202,
+          "evidence": []
+        },
+        {
+          "term": "genital herpes",
+          "score": 133.0658,
+          "evidence": []
+        },
+        {
+          "term": "herpes simplex",
+          "score": 114.6781,
+          "evidence": []
+        },
+        {
+          "term": "herpes simples",
+          "score": 111.3789,
+          "evidence": []
+        },
+        {
+          "term": "asymptomatic herpes",
+          "score": 94.804,
+          "evidence": []
+        },
+        {
+          "term": "virus infection",
+          "score": 76.4573,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hsv infection",
+          "score": 2.612,
+          "evidence": []
+        },
+        {
+          "term": "genital hsv",
+          "score": 2.382,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 2.34,
+          "evidence": []
+        },
+        {
+          "term": "virus infection",
+          "score": 2.2857,
+          "evidence": []
+        },
+        {
+          "term": "hiv aids",
+          "score": 2.2155,
+          "evidence": []
+        },
+        {
+          "term": "hsv study",
+          "score": 2.2136,
+          "evidence": []
+        },
+        {
+          "term": "genital herpes",
+          "score": 2.2117,
+          "evidence": []
+        },
+        {
+          "term": "herpes simples",
+          "score": 1.8943,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 71.0522,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 64.3446,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 64.3446,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 64.3446,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 50.4716,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 48.84,
+          "evidence": []
+        },
+        {
+          "term": "这意味着",
+          "score": 47.9237,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 47.0861,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "herpes simplex",
+          "score": 2.1918,
+          "evidence": []
+        },
+        {
+          "term": "unaids lshtm",
+          "score": 1.9936,
+          "evidence": []
+        },
+        {
+          "term": "herpes simples",
+          "score": 1.8744,
+          "evidence": []
+        },
+        {
+          "term": "simplex virus",
+          "score": 1.8625,
+          "evidence": []
+        },
+        {
+          "term": "research priorities",
+          "score": 1.7323,
+          "evidence": []
+        },
+        {
+          "term": "hsv",
+          "score": 1.7033,
+          "evidence": []
+        },
+        {
+          "term": "hiv aids",
+          "score": 1.4962,
+          "evidence": []
+        },
+        {
+          "term": "lshtm workshop",
+          "score": 1.4823,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hsv",
+          "score": 59.262,
+          "evidence": []
+        },
+        {
+          "term": "unaids lshtm",
+          "score": 44.8303,
+          "evidence": []
+        },
+        {
+          "term": "herpes simplex",
+          "score": 42.5257,
+          "evidence": []
+        },
+        {
+          "term": "hiv aids",
+          "score": 41.0919,
+          "evidence": []
+        },
+        {
+          "term": "herpes simples",
+          "score": 36.153,
+          "evidence": []
+        },
+        {
+          "term": "simplex virus",
+          "score": 34.3495,
+          "evidence": []
+        },
+        {
+          "term": "research priorities",
+          "score": 31.7563,
+          "evidence": []
+        },
+        {
+          "term": "virus type",
+          "score": 29.6522,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hiv aids",
+          "score": 0.9666,
+          "evidence": []
+        },
+        {
+          "term": "research priorities",
+          "score": 0.7373,
+          "evidence": []
+        },
+        {
+          "term": "developing countries",
+          "score": 0.6739,
+          "evidence": []
+        },
+        {
+          "term": "herpes simples",
+          "score": 0.6621,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.6508,
+          "evidence": []
+        },
+        {
+          "term": "herpes simplex",
+          "score": 0.6423,
+          "evidence": []
+        },
+        {
+          "term": "simples virus",
+          "score": 0.6353,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.6028,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hsv",
+          "score": 55.4032,
+          "evidence": []
+        },
+        {
+          "term": "herpes simplex",
+          "score": 31.3909,
+          "evidence": []
+        },
+        {
+          "term": "herpes simples",
+          "score": 30.9106,
+          "evidence": []
+        },
+        {
+          "term": "hiv aids",
+          "score": 25.1216,
+          "evidence": []
+        },
+        {
+          "term": "developing countries",
+          "score": 17.4007,
+          "evidence": []
+        },
+        {
+          "term": "simplex virus",
+          "score": 17.0873,
+          "evidence": []
+        },
+        {
+          "term": "virus type",
+          "score": 15.8715,
+          "evidence": []
+        },
+        {
+          "term": "genital ulcer",
+          "score": 14.7541,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hiv aids",
+          "score": 0.9666,
+          "evidence": []
+        },
+        {
+          "term": "research priorities",
+          "score": 0.7373,
+          "evidence": []
+        },
+        {
+          "term": "developing countries",
+          "score": 0.6739,
+          "evidence": []
+        },
+        {
+          "term": "herpes simples",
+          "score": 0.6621,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.6508,
+          "evidence": []
+        },
+        {
+          "term": "herpes simplex",
+          "score": 0.6423,
+          "evidence": []
+        },
+        {
+          "term": "simples virus",
+          "score": 0.6353,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.6028,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "感染者",
+          "score": 25.8282,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 25.6617,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 22.9674,
+          "evidence": []
+        },
+        {
+          "term": "问题的讨论结束",
+          "score": 22.9674,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 22.7804,
+          "evidence": []
+        },
+        {
+          "term": "世界医学协会",
+          "score": 19.3842,
+          "evidence": []
+        },
+        {
+          "term": "这意味着",
+          "score": 18.5016,
+          "evidence": []
+        },
+        {
+          "term": "以及卫生保健界",
+          "score": 17.8568,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

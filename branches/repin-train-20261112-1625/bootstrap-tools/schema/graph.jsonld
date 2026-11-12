@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/bootstrap-tools/bootstrap-tools.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/bootstrap-tools/schema/graph.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/bootstrap-tools/bootstrap-tools.jsonld",
+  "staging": {
+    "branch": "repin-train/20261112-1625",
+    "sha": "6ca206c84dafc1f6a11bf0c86a9c4c99eaad9882",
+    "pr": "repin-train/20261112-1625",
+    "run": "43258944433"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/bootstrap-tools/schema/graph",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "graph",
+      "title": "graph",
+      "summary": "bootstrap's own terms, and the shape of the file that declares a Knowledge",
+      "module": "schemas/graph.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/bootstrap-tools/directory/bootstrap-tools-schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/graph",
+      "jsonSchema": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/bootstrap-tools/schema/zod/graph/AssetSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/bootstrap-tools/schema/zod/graph/DependencySchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/bootstrap-tools/schema/zod/graph/GraphTypologySchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/bootstrap-tools/schema/zod/graph/KnowledgeGraphDeclarationSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/bootstrap-tools/schema/zod/graph/SubgraphSchema.schema.json"
+      ]
+    }
+  ]
+}

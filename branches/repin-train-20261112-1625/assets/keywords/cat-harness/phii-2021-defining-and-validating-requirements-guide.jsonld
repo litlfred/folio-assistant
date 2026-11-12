@@ -1,0 +1,1810 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "phii-2021-defining-and-validating-requirements-guide",
+  "instance": "cat-harness",
+  "about": "library/phii-2021-defining-and-validating-requirements-guide",
+  "corpus": {
+    "library": "cat-harness/library/corpus",
+    "sections": 2232,
+    "terms": 15352
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "defining requirements",
+        "score": 7.0561,
+        "evidence": []
+      },
+      {
+        "term": "system requirements",
+        "score": 6.4083,
+        "evidence": []
+      },
+      {
+        "term": "requirements guide",
+        "score": 6.2103,
+        "evidence": []
+      },
+      {
+        "term": "clear requirements",
+        "score": 5.1829,
+        "evidence": []
+      },
+      {
+        "term": "validating system",
+        "score": 5.1479,
+        "evidence": []
+      },
+      {
+        "term": "requirements tend",
+        "score": 5.1318,
+        "evidence": []
+      },
+      {
+        "term": "define audience",
+        "score": 4.3672,
+        "evidence": []
+      },
+      {
+        "term": "analyzing technical",
+        "score": 4.3486,
+        "evidence": []
+      },
+      {
+        "term": "technical options",
+        "score": 4.1711,
+        "evidence": []
+      },
+      {
+        "term": "facilitator asks",
+        "score": 3.9741,
+        "evidence": []
+      },
+      {
+        "term": "peer group",
+        "score": 3.763,
+        "evidence": []
+      },
+      {
+        "term": "allow user",
+        "score": 3.6533,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "defining requirements",
+        "score": 132.549,
+        "evidence": []
+      },
+      {
+        "term": "system requirements",
+        "score": 127.0373,
+        "evidence": []
+      },
+      {
+        "term": "define audience",
+        "score": 116.7816,
+        "evidence": []
+      },
+      {
+        "term": "requirements guide",
+        "score": 114.8342,
+        "evidence": []
+      },
+      {
+        "term": "clear requirements",
+        "score": 106.4114,
+        "evidence": []
+      },
+      {
+        "term": "requirements tend",
+        "score": 102.976,
+        "evidence": []
+      },
+      {
+        "term": "define report",
+        "score": 101.2077,
+        "evidence": []
+      },
+      {
+        "term": "define parameters",
+        "score": 84.405,
+        "evidence": []
+      },
+      {
+        "term": "allow user",
+        "score": 78.9286,
+        "evidence": []
+      },
+      {
+        "term": "peer review",
+        "score": 77.8999,
+        "evidence": []
+      },
+      {
+        "term": "peer group",
+        "score": 76.0097,
+        "evidence": []
+      },
+      {
+        "term": "validating system",
+        "score": 70.6103,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "business process",
+        "score": 1.709,
+        "evidence": []
+      },
+      {
+        "term": "system requirements",
+        "score": 1.1009,
+        "evidence": []
+      },
+      {
+        "term": "information system",
+        "score": 0.9295,
+        "evidence": []
+      },
+      {
+        "term": "clear requirements",
+        "score": 0.8807,
+        "evidence": []
+      },
+      {
+        "term": "business day",
+        "score": 0.8563,
+        "evidence": []
+      },
+      {
+        "term": "defining requirements",
+        "score": 0.8481,
+        "evidence": []
+      },
+      {
+        "term": "allow user",
+        "score": 0.7801,
+        "evidence": []
+      },
+      {
+        "term": "requirements guide",
+        "score": 0.6444,
+        "evidence": []
+      },
+      {
+        "term": "requirements tend",
+        "score": 0.6444,
+        "evidence": []
+      },
+      {
+        "term": "business analyst",
+        "score": 0.6422,
+        "evidence": []
+      },
+      {
+        "term": "document",
+        "score": 0.548,
+        "evidence": []
+      },
+      {
+        "term": "peer review",
+        "score": 0.5335,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "business process",
+        "score": 17.9023,
+        "evidence": []
+      },
+      {
+        "term": "information system",
+        "score": 11.9373,
+        "evidence": []
+      },
+      {
+        "term": "document",
+        "score": 11.747,
+        "evidence": []
+      },
+      {
+        "term": "system requirements",
+        "score": 10.931,
+        "evidence": []
+      },
+      {
+        "term": "code",
+        "score": 9.3274,
+        "evidence": []
+      },
+      {
+        "term": "allow user",
+        "score": 9.3049,
+        "evidence": []
+      },
+      {
+        "term": "peer review",
+        "score": 9.2367,
+        "evidence": []
+      },
+      {
+        "term": "meeting",
+        "score": 8.9226,
+        "evidence": []
+      },
+      {
+        "term": "lma",
+        "score": 8.8132,
+        "evidence": []
+      },
+      {
+        "term": "software",
+        "score": 8.7468,
+        "evidence": []
+      },
+      {
+        "term": "business analyst",
+        "score": 8.5823,
+        "evidence": []
+      },
+      {
+        "term": "business day",
+        "score": 8.5823,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "business process",
+        "score": 1.709,
+        "evidence": []
+      },
+      {
+        "term": "system requirements",
+        "score": 1.1009,
+        "evidence": []
+      },
+      {
+        "term": "information system",
+        "score": 0.9295,
+        "evidence": []
+      },
+      {
+        "term": "clear requirements",
+        "score": 0.8807,
+        "evidence": []
+      },
+      {
+        "term": "business day",
+        "score": 0.8563,
+        "evidence": []
+      },
+      {
+        "term": "defining requirements",
+        "score": 0.8481,
+        "evidence": []
+      },
+      {
+        "term": "requirements guide",
+        "score": 0.7874,
+        "evidence": []
+      },
+      {
+        "term": "allow user",
+        "score": 0.7801,
+        "evidence": []
+      },
+      {
+        "term": "business analyst",
+        "score": 0.687,
+        "evidence": []
+      },
+      {
+        "term": "requirements tend",
+        "score": 0.6553,
+        "evidence": []
+      },
+      {
+        "term": "peer review",
+        "score": 0.6079,
+        "evidence": []
+      },
+      {
+        "term": "validating system",
+        "score": 0.5572,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "h1n",
+        "score": 194.8459,
+        "evidence": []
+      },
+      {
+        "term": "preparedness",
+        "score": 160.8621,
+        "evidence": []
+      },
+      {
+        "term": "phii",
+        "score": 109.4452,
+        "evidence": []
+      },
+      {
+        "term": "dialects",
+        "score": 103.422,
+        "evidence": []
+      },
+      {
+        "term": "ohs",
+        "score": 97.2813,
+        "evidence": []
+      },
+      {
+        "term": "recorder",
+        "score": 92.9054,
+        "evidence": []
+      },
+      {
+        "term": "timer",
+        "score": 92.9054,
+        "evidence": []
+      },
+      {
+        "term": "anthropic-mcp",
+        "score": 90.772,
+        "evidence": []
+      },
+      {
+        "term": "smart-imz-test",
+        "score": 90.772,
+        "evidence": []
+      },
+      {
+        "term": "smart-kg-tools",
+        "score": 90.772,
+        "evidence": []
+      },
+      {
+        "term": "crdm",
+        "score": 81.0875,
+        "evidence": []
+      },
+      {
+        "term": "facilitator",
+        "score": 80.9126,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "page-001": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "report purpose",
+          "score": 2.1624,
+          "evidence": []
+        },
+        {
+          "term": "define report",
+          "score": 2.0068,
+          "evidence": []
+        },
+        {
+          "term": "system requirements",
+          "score": 1.6803,
+          "evidence": []
+        },
+        {
+          "term": "clear requirements",
+          "score": 1.6707,
+          "evidence": []
+        },
+        {
+          "term": "allow user",
+          "score": 1.5609,
+          "evidence": []
+        },
+        {
+          "term": "report types",
+          "score": 1.5102,
+          "evidence": []
+        },
+        {
+          "term": "business process",
+          "score": 1.3609,
+          "evidence": []
+        },
+        {
+          "term": "surveillance",
+          "score": 0.857,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "report purpose",
+          "score": 63.9405,
+          "evidence": []
+        },
+        {
+          "term": "define report",
+          "score": 63.4674,
+          "evidence": []
+        },
+        {
+          "term": "system requirements",
+          "score": 49.1535,
+          "evidence": []
+        },
+        {
+          "term": "clear requirements",
+          "score": 45.1959,
+          "evidence": []
+        },
+        {
+          "term": "report types",
+          "score": 42.1556,
+          "evidence": []
+        },
+        {
+          "term": "allow user",
+          "score": 34.6964,
+          "evidence": []
+        },
+        {
+          "term": "business process",
+          "score": 20.9865,
+          "evidence": []
+        },
+        {
+          "term": "information system",
+          "score": 15.9147,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "business process",
+          "score": 0.553,
+          "evidence": []
+        },
+        {
+          "term": "system requirements",
+          "score": 0.28,
+          "evidence": []
+        },
+        {
+          "term": "information system",
+          "score": 0.2567,
+          "evidence": []
+        },
+        {
+          "term": "allow user",
+          "score": 0.2044,
+          "evidence": []
+        },
+        {
+          "term": "clear requirements",
+          "score": 0.1998,
+          "evidence": []
+        },
+        {
+          "term": "support",
+          "score": 0.1459,
+          "evidence": []
+        },
+        {
+          "term": "define report",
+          "score": 0.1343,
+          "evidence": []
+        },
+        {
+          "term": "management",
+          "score": 0.1308,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "business process",
+          "score": 8.8931,
+          "evidence": []
+        },
+        {
+          "term": "information system",
+          "score": 4.1193,
+          "evidence": []
+        },
+        {
+          "term": "system requirements",
+          "score": 3.4084,
+          "evidence": []
+        },
+        {
+          "term": "software",
+          "score": 2.7476,
+          "evidence": []
+        },
+        {
+          "term": "spdx",
+          "score": 2.6098,
+          "evidence": []
+        },
+        {
+          "term": "management",
+          "score": 2.5453,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 2.4861,
+          "evidence": []
+        },
+        {
+          "term": "allow user",
+          "score": 2.395,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "business process",
+          "score": 0.553,
+          "evidence": []
+        },
+        {
+          "term": "system requirements",
+          "score": 0.28,
+          "evidence": []
+        },
+        {
+          "term": "information system",
+          "score": 0.2567,
+          "evidence": []
+        },
+        {
+          "term": "allow user",
+          "score": 0.2044,
+          "evidence": []
+        },
+        {
+          "term": "clear requirements",
+          "score": 0.1998,
+          "evidence": []
+        },
+        {
+          "term": "support",
+          "score": 0.1459,
+          "evidence": []
+        },
+        {
+          "term": "define report",
+          "score": 0.1343,
+          "evidence": []
+        },
+        {
+          "term": "report purpose",
+          "score": 0.1031,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "h1n",
+          "score": 47.5222,
+          "evidence": []
+        },
+        {
+          "term": "preparedness",
+          "score": 38.949,
+          "evidence": []
+        },
+        {
+          "term": "phii",
+          "score": 26.3805,
+          "evidence": []
+        },
+        {
+          "term": "crdm",
+          "score": 18.9903,
+          "evidence": []
+        },
+        {
+          "term": "watch",
+          "score": 15.856,
+          "evidence": []
+        },
+        {
+          "term": "ohs",
+          "score": 14.8504,
+          "evidence": []
+        },
+        {
+          "term": "anthropic-mcp",
+          "score": 13.483,
+          "evidence": []
+        },
+        {
+          "term": "smart-imz-test",
+          "score": 13.483,
+          "evidence": []
+        }
+      ]
+    },
+    "page-002": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "define audience",
+          "score": 2.4977,
+          "evidence": []
+        },
+        {
+          "term": "define parameters",
+          "score": 1.8368,
+          "evidence": []
+        },
+        {
+          "term": "allow user",
+          "score": 1.6155,
+          "evidence": []
+        },
+        {
+          "term": "types groups",
+          "score": 1.0188,
+          "evidence": []
+        },
+        {
+          "term": "user-defined",
+          "score": 0.9505,
+          "evidence": []
+        },
+        {
+          "term": "contact",
+          "score": 0.8638,
+          "evidence": []
+        },
+        {
+          "term": "pre-defined",
+          "score": 0.8517,
+          "evidence": []
+        },
+        {
+          "term": "save",
+          "score": 0.79,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "define audience",
+          "score": 78.2028,
+          "evidence": []
+        },
+        {
+          "term": "define parameters",
+          "score": 52.1831,
+          "evidence": []
+        },
+        {
+          "term": "allow user",
+          "score": 38.4352,
+          "evidence": []
+        },
+        {
+          "term": "contact",
+          "score": 13.7255,
+          "evidence": []
+        },
+        {
+          "term": "types groups",
+          "score": 13.5599,
+          "evidence": []
+        },
+        {
+          "term": "user-defined",
+          "score": 13.2241,
+          "evidence": []
+        },
+        {
+          "term": "pre-defined",
+          "score": 11.8378,
+          "evidence": []
+        },
+        {
+          "term": "save",
+          "score": 10.8161,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "allow user",
+          "score": 0.1762,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 0.1246,
+          "evidence": []
+        },
+        {
+          "term": "support",
+          "score": 0.1202,
+          "evidence": []
+        },
+        {
+          "term": "define parameters",
+          "score": 0.1178,
+          "evidence": []
+        },
+        {
+          "term": "define audience",
+          "score": 0.0991,
+          "evidence": []
+        },
+        {
+          "term": "email",
+          "score": 0.0932,
+          "evidence": []
+        },
+        {
+          "term": "tool",
+          "score": 0.091,
+          "evidence": []
+        },
+        {
+          "term": "query",
+          "score": 0.0905,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "allow user",
+          "score": 2.1093,
+          "evidence": []
+        },
+        {
+          "term": "email",
+          "score": 1.9973,
+          "evidence": []
+        },
+        {
+          "term": "chw",
+          "score": 1.7267,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 1.7019,
+          "evidence": []
+        },
+        {
+          "term": "hcw",
+          "score": 1.601,
+          "evidence": []
+        },
+        {
+          "term": "physician",
+          "score": 1.5938,
+          "evidence": []
+        },
+        {
+          "term": "support",
+          "score": 1.4727,
+          "evidence": []
+        },
+        {
+          "term": "define parameters",
+          "score": 1.3746,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "allow user",
+          "score": 0.1762,
+          "evidence": []
+        },
+        {
+          "term": "support",
+          "score": 0.1202,
+          "evidence": []
+        },
+        {
+          "term": "define parameters",
+          "score": 0.1178,
+          "evidence": []
+        },
+        {
+          "term": "define audience",
+          "score": 0.0991,
+          "evidence": []
+        },
+        {
+          "term": "requirements",
+          "score": 0.0827,
+          "evidence": []
+        },
+        {
+          "term": "types groups",
+          "score": 0.0703,
+          "evidence": []
+        },
+        {
+          "term": "system",
+          "score": 0.0668,
+          "evidence": []
+        },
+        {
+          "term": "defining",
+          "score": 0.0471,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "h1n",
+          "score": 18.1151,
+          "evidence": []
+        },
+        {
+          "term": "preparedness",
+          "score": 14.7407,
+          "evidence": []
+        },
+        {
+          "term": "menstrual",
+          "score": 13.4568,
+          "evidence": []
+        },
+        {
+          "term": "sba",
+          "score": 13.4568,
+          "evidence": []
+        },
+        {
+          "term": "bcc",
+          "score": 13.2651,
+          "evidence": []
+        },
+        {
+          "term": "dict",
+          "score": 13.26,
+          "evidence": []
+        },
+        {
+          "term": "mdg",
+          "score": 12.613,
+          "evidence": []
+        },
+        {
+          "term": "millennium",
+          "score": 12.613,
+          "evidence": []
+        }
+      ]
+    },
+    "page-003": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "defining requirements",
+          "score": 1.5582,
+          "evidence": []
+        },
+        {
+          "term": "business day",
+          "score": 1.3334,
+          "evidence": []
+        },
+        {
+          "term": "actor",
+          "score": 1.0163,
+          "evidence": []
+        },
+        {
+          "term": "basic principles",
+          "score": 1.0108,
+          "evidence": []
+        },
+        {
+          "term": "underwriting",
+          "score": 1.0079,
+          "evidence": []
+        },
+        {
+          "term": "submit",
+          "score": 0.7939,
+          "evidence": []
+        },
+        {
+          "term": "state",
+          "score": 0.7323,
+          "evidence": []
+        },
+        {
+          "term": "team",
+          "score": 0.592,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "defining requirements",
+          "score": 30.5786,
+          "evidence": []
+        },
+        {
+          "term": "business day",
+          "score": 17.9085,
+          "evidence": []
+        },
+        {
+          "term": "actor",
+          "score": 16.5403,
+          "evidence": []
+        },
+        {
+          "term": "state",
+          "score": 14.8286,
+          "evidence": []
+        },
+        {
+          "term": "underwriting",
+          "score": 14.035,
+          "evidence": []
+        },
+        {
+          "term": "basic principles",
+          "score": 13.6662,
+          "evidence": []
+        },
+        {
+          "term": "submit",
+          "score": 11.0269,
+          "evidence": []
+        },
+        {
+          "term": "done",
+          "score": 7.8529,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "process",
+          "score": 0.2191,
+          "evidence": []
+        },
+        {
+          "term": "business day",
+          "score": 0.1936,
+          "evidence": []
+        },
+        {
+          "term": "defining requirements",
+          "score": 0.1597,
+          "evidence": []
+        },
+        {
+          "term": "information",
+          "score": 0.125,
+          "evidence": []
+        },
+        {
+          "term": "basic principles",
+          "score": 0.116,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.1135,
+          "evidence": []
+        },
+        {
+          "term": "system",
+          "score": 0.1001,
+          "evidence": []
+        },
+        {
+          "term": "processes",
+          "score": 0.0984,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "lma",
+          "score": 2.166,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 1.9929,
+          "evidence": []
+        },
+        {
+          "term": "business",
+          "score": 1.9372,
+          "evidence": []
+        },
+        {
+          "term": "business day",
+          "score": 1.9372,
+          "evidence": []
+        },
+        {
+          "term": "systems",
+          "score": 1.7987,
+          "evidence": []
+        },
+        {
+          "term": "information",
+          "score": 1.688,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 1.4271,
+          "evidence": []
+        },
+        {
+          "term": "enterprise",
+          "score": 1.3975,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "business day",
+          "score": 0.1936,
+          "evidence": []
+        },
+        {
+          "term": "defining requirements",
+          "score": 0.1597,
+          "evidence": []
+        },
+        {
+          "term": "information",
+          "score": 0.125,
+          "evidence": []
+        },
+        {
+          "term": "basic principles",
+          "score": 0.116,
+          "evidence": []
+        },
+        {
+          "term": "system",
+          "score": 0.1001,
+          "evidence": []
+        },
+        {
+          "term": "team",
+          "score": 0.0666,
+          "evidence": []
+        },
+        {
+          "term": "allow",
+          "score": 0.0657,
+          "evidence": []
+        },
+        {
+          "term": "state",
+          "score": 0.0496,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "h1n",
+          "score": 55.1096,
+          "evidence": []
+        },
+        {
+          "term": "preparedness",
+          "score": 45.3254,
+          "evidence": []
+        },
+        {
+          "term": "phii",
+          "score": 30.3655,
+          "evidence": []
+        },
+        {
+          "term": "crdm",
+          "score": 21.6621,
+          "evidence": []
+        },
+        {
+          "term": "god",
+          "score": 18.8958,
+          "evidence": []
+        },
+        {
+          "term": "watch",
+          "score": 17.8681,
+          "evidence": []
+        },
+        {
+          "term": "doctor",
+          "score": 15.2985,
+          "evidence": []
+        },
+        {
+          "term": "mdg",
+          "score": 13.8475,
+          "evidence": []
+        }
+      ]
+    },
+    "page-004": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "business analyst",
+          "score": 1.3065,
+          "evidence": []
+        },
+        {
+          "term": "defects",
+          "score": 1.0998,
+          "evidence": []
+        },
+        {
+          "term": "page",
+          "score": 1.0765,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "checklist",
+          "score": 0.9297,
+          "evidence": []
+        },
+        {
+          "term": "requirements",
+          "score": 0.918,
+          "evidence": []
+        },
+        {
+          "term": "checking",
+          "score": 0.8817,
+          "evidence": []
+        },
+        {
+          "term": "walkthrough",
+          "score": 0.779,
+          "evidence": []
+        },
+        {
+          "term": "validating",
+          "score": 0.6787,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "requirements",
+          "score": 22.1521,
+          "evidence": []
+        },
+        {
+          "term": "defects",
+          "score": 18.6645,
+          "evidence": []
+        },
+        {
+          "term": "business analyst",
+          "score": 17.2647,
+          "evidence": []
+        },
+        {
+          "term": "checklist",
+          "score": 15.2148,
+          "evidence": []
+        },
+        {
+          "term": "page",
+          "score": 14.1451,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "checking",
+          "score": 13.9984,
+          "evidence": []
+        },
+        {
+          "term": "walkthrough",
+          "score": 10.8161,
+          "evidence": []
+        },
+        {
+          "term": "through",
+          "score": 10.326,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "process",
+          "score": 0.1732,
+          "evidence": []
+        },
+        {
+          "term": "document",
+          "score": 0.1387,
+          "evidence": []
+        },
+        {
+          "term": "group",
+          "score": 0.1105,
+          "evidence": []
+        },
+        {
+          "term": "requirements",
+          "score": 0.1092,
+          "evidence": []
+        },
+        {
+          "term": "walk",
+          "score": 0.1021,
+          "evidence": []
+        },
+        {
+          "term": "terms",
+          "score": 0.0994,
+          "evidence": []
+        },
+        {
+          "term": "skill",
+          "score": 0.099,
+          "evidence": []
+        },
+        {
+          "term": "review",
+          "score": 0.0984,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "defects",
+          "score": 3.4241,
+          "evidence": []
+        },
+        {
+          "term": "skills",
+          "score": 3.3547,
+          "evidence": []
+        },
+        {
+          "term": "document",
+          "score": 2.3201,
+          "evidence": []
+        },
+        {
+          "term": "pmin",
+          "score": 2.0722,
+          "evidence": []
+        },
+        {
+          "term": "terms",
+          "score": 1.8766,
+          "evidence": []
+        },
+        {
+          "term": "walk",
+          "score": 1.7848,
+          "evidence": []
+        },
+        {
+          "term": "safety",
+          "score": 1.4702,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 1.4226,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "document",
+          "score": 0.1387,
+          "evidence": []
+        },
+        {
+          "term": "group",
+          "score": 0.1105,
+          "evidence": []
+        },
+        {
+          "term": "requirements",
+          "score": 0.1092,
+          "evidence": []
+        },
+        {
+          "term": "defects",
+          "score": 0.0977,
+          "evidence": []
+        },
+        {
+          "term": "business analyst",
+          "score": 0.0912,
+          "evidence": []
+        },
+        {
+          "term": "system",
+          "score": 0.0636,
+          "evidence": []
+        },
+        {
+          "term": "through",
+          "score": 0.0541,
+          "evidence": []
+        },
+        {
+          "term": "page",
+          "score": 0.0463,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "h1n",
+          "score": 46.3637,
+          "evidence": []
+        },
+        {
+          "term": "preparedness",
+          "score": 37.9587,
+          "evidence": []
+        },
+        {
+          "term": "phii",
+          "score": 25.4943,
+          "evidence": []
+        },
+        {
+          "term": "crdm",
+          "score": 17.4616,
+          "evidence": []
+        },
+        {
+          "term": "tiers",
+          "score": 16.3362,
+          "evidence": []
+        },
+        {
+          "term": "watch",
+          "score": 15.0827,
+          "evidence": []
+        },
+        {
+          "term": "dialects",
+          "score": 14.5879,
+          "evidence": []
+        },
+        {
+          "term": "recorder",
+          "score": 14.0826,
+          "evidence": []
+        }
+      ]
+    },
+    "page-005": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "peer review",
+          "score": 2.6114,
+          "evidence": []
+        },
+        {
+          "term": "peer group",
+          "score": 2.1981,
+          "evidence": []
+        },
+        {
+          "term": "facilitator",
+          "score": 1.5203,
+          "evidence": []
+        },
+        {
+          "term": "meeting",
+          "score": 1.3849,
+          "evidence": []
+        },
+        {
+          "term": "sends out",
+          "score": 1.1906,
+          "evidence": []
+        },
+        {
+          "term": "defects",
+          "score": 0.9473,
+          "evidence": []
+        },
+        {
+          "term": "checklist",
+          "score": 0.7368,
+          "evidence": []
+        },
+        {
+          "term": "revisions",
+          "score": 0.7348,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "peer review",
+          "score": 75.3072,
+          "evidence": []
+        },
+        {
+          "term": "peer group",
+          "score": 56.0379,
+          "evidence": []
+        },
+        {
+          "term": "meeting",
+          "score": 33.7132,
+          "evidence": []
+        },
+        {
+          "term": "facilitator",
+          "score": 31.6218,
+          "evidence": []
+        },
+        {
+          "term": "sends out",
+          "score": 17.6241,
+          "evidence": []
+        },
+        {
+          "term": "defects",
+          "score": 13.9984,
+          "evidence": []
+        },
+        {
+          "term": "guidelines",
+          "score": 10.8993,
+          "evidence": []
+        },
+        {
+          "term": "checklist",
+          "score": 10.1432,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "peer review",
+          "score": 0.2264,
+          "evidence": []
+        },
+        {
+          "term": "peer group",
+          "score": 0.1809,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 0.1636,
+          "evidence": []
+        },
+        {
+          "term": "requirements",
+          "score": 0.1257,
+          "evidence": []
+        },
+        {
+          "term": "software",
+          "score": 0.1234,
+          "evidence": []
+        },
+        {
+          "term": "meeting",
+          "score": 0.1222,
+          "evidence": []
+        },
+        {
+          "term": "defects",
+          "score": 0.122,
+          "evidence": []
+        },
+        {
+          "term": "participants",
+          "score": 0.1197,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "code",
+          "score": 5.0156,
+          "evidence": []
+        },
+        {
+          "term": "peer review",
+          "score": 4.9011,
+          "evidence": []
+        },
+        {
+          "term": "meeting",
+          "score": 4.4839,
+          "evidence": []
+        },
+        {
+          "term": "document",
+          "score": 3.8333,
+          "evidence": []
+        },
+        {
+          "term": "defects",
+          "score": 3.7573,
+          "evidence": []
+        },
+        {
+          "term": "skills",
+          "score": 3.2387,
+          "evidence": []
+        },
+        {
+          "term": "email",
+          "score": 3.1223,
+          "evidence": []
+        },
+        {
+          "term": "lunch",
+          "score": 2.9093,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "peer review",
+          "score": 0.2264,
+          "evidence": []
+        },
+        {
+          "term": "peer group",
+          "score": 0.1809,
+          "evidence": []
+        },
+        {
+          "term": "requirements",
+          "score": 0.1257,
+          "evidence": []
+        },
+        {
+          "term": "meeting",
+          "score": 0.1222,
+          "evidence": []
+        },
+        {
+          "term": "defects",
+          "score": 0.122,
+          "evidence": []
+        },
+        {
+          "term": "participants",
+          "score": 0.1197,
+          "evidence": []
+        },
+        {
+          "term": "time",
+          "score": 0.0958,
+          "evidence": []
+        },
+        {
+          "term": "list",
+          "score": 0.089,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "indonesian",
+          "score": 43.0572,
+          "evidence": []
+        },
+        {
+          "term": "italian",
+          "score": 40.6685,
+          "evidence": []
+        },
+        {
+          "term": "nian",
+          "score": 37.5032,
+          "evidence": []
+        },
+        {
+          "term": "hebrew",
+          "score": 32.4992,
+          "evidence": []
+        },
+        {
+          "term": "estonian",
+          "score": 29.8526,
+          "evidence": []
+        },
+        {
+          "term": "turkish",
+          "score": 29.604,
+          "evidence": []
+        },
+        {
+          "term": "recorder",
+          "score": 28.7223,
+          "evidence": []
+        },
+        {
+          "term": "timer",
+          "score": 28.7223,
+          "evidence": []
+        }
+      ]
+    },
+    "page-006": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "facilitator asks",
+          "score": 1.8657,
+          "evidence": []
+        },
+        {
+          "term": "meeting",
+          "score": 0.8737,
+          "evidence": []
+        },
+        {
+          "term": "group",
+          "score": 0.6826,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "facilitator asks",
+          "score": 28.6136,
+          "evidence": []
+        },
+        {
+          "term": "meeting",
+          "score": 12.6424,
+          "evidence": []
+        },
+        {
+          "term": "group",
+          "score": 9.9859,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "document",
+          "score": 0.0879,
+          "evidence": []
+        },
+        {
+          "term": "group",
+          "score": 0.0758,
+          "evidence": []
+        },
+        {
+          "term": "software",
+          "score": 0.0611,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "document",
+          "score": 2.0552,
+          "evidence": []
+        },
+        {
+          "term": "meeting",
+          "score": 1.8963,
+          "evidence": []
+        },
+        {
+          "term": "notes",
+          "score": 1.3149,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "document",
+          "score": 0.0879,
+          "evidence": []
+        },
+        {
+          "term": "group",
+          "score": 0.0758,
+          "evidence": []
+        },
+        {
+          "term": "meeting",
+          "score": 0.0609,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "dialects",
+          "score": 35.5921,
+          "evidence": []
+        },
+        {
+          "term": "recorder",
+          "score": 34.8628,
+          "evidence": []
+        },
+        {
+          "term": "timer",
+          "score": 34.8628,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

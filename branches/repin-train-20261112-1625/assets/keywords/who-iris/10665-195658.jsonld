@@ -1,0 +1,434 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-195658",
+  "instance": "who-iris",
+  "about": "library/10665-195658",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7434,
+    "terms": 71211
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "htlv",
+        "score": 1.59,
+        "evidence": []
+      },
+      {
+        "term": "保持警惕",
+        "score": 0.6392,
+        "evidence": []
+      },
+      {
+        "term": "执行委员会",
+        "score": 0.6392,
+        "evidence": []
+      },
+      {
+        "term": "要求总干事",
+        "score": 0.6392,
+        "evidence": []
+      },
+      {
+        "term": "议程项目",
+        "score": 0.6392,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "htlv",
+        "score": 26.8664,
+        "evidence": []
+      },
+      {
+        "term": "保持警惕",
+        "score": 8.2207,
+        "evidence": []
+      },
+      {
+        "term": "执行委员会",
+        "score": 8.2207,
+        "evidence": []
+      },
+      {
+        "term": "要求总干事",
+        "score": 8.2207,
+        "evidence": []
+      },
+      {
+        "term": "议程项目",
+        "score": 8.2207,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "воз",
+        "score": 0.0297,
+        "evidence": []
+      },
+      {
+        "term": "гриппа",
+        "score": 0.0187,
+        "evidence": []
+      },
+      {
+        "term": "гсэго",
+        "score": 0.0156,
+        "evidence": []
+      },
+      {
+        "term": "гриппу",
+        "score": 0.0155,
+        "evidence": []
+      },
+      {
+        "term": "для",
+        "score": 0.014,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "что",
+        "score": 0.1312,
+        "evidence": []
+      },
+      {
+        "term": "исследования",
+        "score": 0.1311,
+        "evidence": []
+      },
+      {
+        "term": "ddcc",
+        "score": 0.1156,
+        "evidence": []
+      },
+      {
+        "term": "для",
+        "score": 0.1099,
+        "evidence": []
+      },
+      {
+        "term": "или",
+        "score": 0.0985,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "воз",
+        "score": 0.0297,
+        "evidence": []
+      },
+      {
+        "term": "page",
+        "score": 0.0057,
+        "evidence": []
+      },
+      {
+        "term": "lav",
+        "score": 0.0007,
+        "evidence": []
+      },
+      {
+        "term": "htlv",
+        "score": 0.0001,
+        "evidence": []
+      },
+      {
+        "term": "执行委员会",
+        "score": 0,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "议程项目",
+        "score": 47751.8235,
+        "evidence": []
+      },
+      {
+        "term": "注意到",
+        "score": 37010.6469,
+        "evidence": []
+      },
+      {
+        "term": "保持警惕",
+        "score": 32011.5688,
+        "evidence": []
+      },
+      {
+        "term": "执行委员会",
+        "score": 29764.0397,
+        "evidence": []
+      },
+      {
+        "term": "伴关系",
+        "score": 27464.2433,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "page-001": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "保持警惕",
+          "score": 0.6392,
+          "evidence": []
+        },
+        {
+          "term": "执行委员会",
+          "score": 0.6392,
+          "evidence": []
+        },
+        {
+          "term": "议程项目",
+          "score": 0.6392,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "保持警惕",
+          "score": 8.2207,
+          "evidence": []
+        },
+        {
+          "term": "执行委员会",
+          "score": 8.2207,
+          "evidence": []
+        },
+        {
+          "term": "议程项目",
+          "score": 8.2207,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "воз",
+          "score": 0.0299,
+          "evidence": []
+        },
+        {
+          "term": "гриппа",
+          "score": 0.0186,
+          "evidence": []
+        },
+        {
+          "term": "гсэго",
+          "score": 0.0156,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "что",
+          "score": 0.13,
+          "evidence": []
+        },
+        {
+          "term": "исследования",
+          "score": 0.1298,
+          "evidence": []
+        },
+        {
+          "term": "для",
+          "score": 0.1091,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "воз",
+          "score": 0.0299,
+          "evidence": []
+        },
+        {
+          "term": "执行委员会",
+          "score": 0,
+          "evidence": []
+        },
+        {
+          "term": "htlv",
+          "score": 0,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "议程项目",
+          "score": 41215.4808,
+          "evidence": []
+        },
+        {
+          "term": "注意到",
+          "score": 30693.1131,
+          "evidence": []
+        },
+        {
+          "term": "保持警惕",
+          "score": 25541.1255,
+          "evidence": []
+        }
+      ]
+    },
+    "page-002": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "htlv",
+          "score": 1.06,
+          "evidence": []
+        },
+        {
+          "term": "要求总干事",
+          "score": 0.6392,
+          "evidence": []
+        },
+        {
+          "term": "lav",
+          "score": 0.4972,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "htlv",
+          "score": 20.1498,
+          "evidence": []
+        },
+        {
+          "term": "要求总干事",
+          "score": 8.2207,
+          "evidence": []
+        },
+        {
+          "term": "lav",
+          "score": 6.1412,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "page",
+          "score": 0.0118,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ddcc",
+          "score": 0.0085,
+          "evidence": []
+        },
+        {
+          "term": "august",
+          "score": 0.0039,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "ddcc",
+          "score": 0.117,
+          "evidence": []
+        },
+        {
+          "term": "page",
+          "score": 0.0419,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "igras",
+          "score": 0.0413,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "page",
+          "score": 0.0118,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lav",
+          "score": 0.0006,
+          "evidence": []
+        },
+        {
+          "term": "htlv",
+          "score": 0.0001,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "还包括区域经济一体化组织",
+          "score": 15537.7896,
+          "evidence": []
+        },
+        {
+          "term": "适用时",
+          "score": 15537.7896,
+          "evidence": []
+        },
+        {
+          "term": "要求总干事",
+          "score": 12494.4776,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,4274 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-207050",
+  "instance": "who-iris",
+  "about": "library/10665-207050",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7434,
+    "terms": 71211
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "hmis forms",
+        "score": 14.7488,
+        "evidence": []
+      },
+      {
+        "term": "health data",
+        "score": 13.2122,
+        "evidence": []
+      },
+      {
+        "term": "hmis evaluation",
+        "score": 12.4096,
+        "evidence": []
+      },
+      {
+        "term": "data collection",
+        "score": 12.4083,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "village health",
+        "score": 12.3794,
+        "evidence": []
+      },
+      {
+        "term": "hmis development",
+        "score": 12.3278,
+        "evidence": []
+      },
+      {
+        "term": "district health",
+        "score": 11.7736,
+        "evidence": []
+      },
+      {
+        "term": "different data",
+        "score": 11.6953,
+        "evidence": []
+      },
+      {
+        "term": "epi district",
+        "score": 11.4361,
+        "evidence": []
+      },
+      {
+        "term": "district level",
+        "score": 11.3604,
+        "evidence": []
+      },
+      {
+        "term": "data utilization",
+        "score": 11.0036,
+        "evidence": []
+      },
+      {
+        "term": "health system",
+        "score": 10.8274,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "hmis forms",
+        "score": 372.5566,
+        "evidence": []
+      },
+      {
+        "term": "form data",
+        "score": 365.5609,
+        "evidence": []
+      },
+      {
+        "term": "health data",
+        "score": 333.352,
+        "evidence": []
+      },
+      {
+        "term": "data collection",
+        "score": 332.3619,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "different data",
+        "score": 325.7797,
+        "evidence": []
+      },
+      {
+        "term": "hmis evaluation",
+        "score": 320.7896,
+        "evidence": []
+      },
+      {
+        "term": "data dissemination",
+        "score": 313.7984,
+        "evidence": []
+      },
+      {
+        "term": "hmis development",
+        "score": 303.839,
+        "evidence": []
+      },
+      {
+        "term": "data utilization",
+        "score": 299.0936,
+        "evidence": []
+      },
+      {
+        "term": "data flow",
+        "score": 295.631,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "data users",
+        "score": 293.8786,
+        "evidence": []
+      },
+      {
+        "term": "data collected",
+        "score": 293.4286,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "health data",
+        "score": 10.1706,
+        "evidence": []
+      },
+      {
+        "term": "district health",
+        "score": 8.5108,
+        "evidence": []
+      },
+      {
+        "term": "health system",
+        "score": 7.9477,
+        "evidence": []
+      },
+      {
+        "term": "health information",
+        "score": 7.5563,
+        "evidence": []
+      },
+      {
+        "term": "health indicators",
+        "score": 7.4933,
+        "evidence": []
+      },
+      {
+        "term": "national health",
+        "score": 7.4659,
+        "evidence": []
+      },
+      {
+        "term": "data quality",
+        "score": 7.4565,
+        "evidence": []
+      },
+      {
+        "term": "data collection",
+        "score": 6.9324,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "health management",
+        "score": 6.7855,
+        "evidence": []
+      },
+      {
+        "term": "data sources",
+        "score": 6.6903,
+        "evidence": []
+      },
+      {
+        "term": "different data",
+        "score": 6.6071,
+        "evidence": []
+      },
+      {
+        "term": "data analysis",
+        "score": 6.5689,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "health data",
+        "score": 269.3523,
+        "evidence": []
+      },
+      {
+        "term": "data quality",
+        "score": 223.1707,
+        "evidence": []
+      },
+      {
+        "term": "data source",
+        "score": 219.6557,
+        "evidence": []
+      },
+      {
+        "term": "district health",
+        "score": 217.4187,
+        "evidence": []
+      },
+      {
+        "term": "data elements",
+        "score": 211.1779,
+        "evidence": []
+      },
+      {
+        "term": "data collection",
+        "score": 210.4191,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "different data",
+        "score": 205.4875,
+        "evidence": []
+      },
+      {
+        "term": "data analysis",
+        "score": 204.5826,
+        "evidence": []
+      },
+      {
+        "term": "form data",
+        "score": 203.5623,
+        "evidence": []
+      },
+      {
+        "term": "data collected",
+        "score": 202.5183,
+        "evidence": []
+      },
+      {
+        "term": "district level",
+        "score": 200.9233,
+        "evidence": []
+      },
+      {
+        "term": "data users",
+        "score": 199.9983,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "health data",
+        "score": 10.1706,
+        "evidence": []
+      },
+      {
+        "term": "district health",
+        "score": 8.5108,
+        "evidence": []
+      },
+      {
+        "term": "health system",
+        "score": 7.9477,
+        "evidence": []
+      },
+      {
+        "term": "health information",
+        "score": 7.5563,
+        "evidence": []
+      },
+      {
+        "term": "health indicators",
+        "score": 7.4933,
+        "evidence": []
+      },
+      {
+        "term": "national health",
+        "score": 7.4659,
+        "evidence": []
+      },
+      {
+        "term": "data quality",
+        "score": 7.4565,
+        "evidence": []
+      },
+      {
+        "term": "data collection",
+        "score": 6.9324,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "health management",
+        "score": 6.7855,
+        "evidence": []
+      },
+      {
+        "term": "data sources",
+        "score": 6.6903,
+        "evidence": []
+      },
+      {
+        "term": "different data",
+        "score": 6.6071,
+        "evidence": []
+      },
+      {
+        "term": "data analysis",
+        "score": 6.5689,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "允许进行个人反馈",
+        "score": 543.3059,
+        "evidence": []
+      },
+      {
+        "term": "并提供一",
+        "score": 407.0898,
+        "evidence": []
+      },
+      {
+        "term": "巴西登革热",
+        "score": 370.7245,
+        "evidence": []
+      },
+      {
+        "term": "询问学员这项原则如何应用于紧急情况下的研究",
+        "score": 354.9808,
+        "evidence": []
+      },
+      {
+        "term": "在大流行间期提供疫苗供发展中国家使用",
+        "score": 338.8102,
+        "evidence": []
+      },
+      {
+        "term": "提供大流行性流感疫苗",
+        "score": 338.8102,
+        "evidence": []
+      },
+      {
+        "term": "数字疗法",
+        "score": 328.2148,
+        "evidence": []
+      },
+      {
+        "term": "位置服务",
+        "score": 302.5726,
+        "evidence": []
+      },
+      {
+        "term": "在卫生系统强化",
+        "score": 302.5726,
+        "evidence": []
+      },
+      {
+        "term": "的背景下",
+        "score": 302.5726,
+        "evidence": []
+      },
+      {
+        "term": "相一致",
+        "score": 301.2813,
+        "evidence": []
+      },
+      {
+        "term": "加强全球",
+        "score": 300.8963,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-acknowledgements": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "acknowledgements",
+          "score": 0.6644,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mendoza",
+          "score": 0.6392,
+          "evidence": []
+        },
+        {
+          "term": "pre-testing",
+          "score": 0.6096,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "acknowledgements",
+          "score": 8.3906,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mendoza",
+          "score": 8.2207,
+          "evidence": []
+        },
+        {
+          "term": "developing",
+          "score": 7.6472,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "data",
+          "score": 0.1297,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.1128,
+          "evidence": []
+        },
+        {
+          "term": "system",
+          "score": 0.073,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "data",
+          "score": 3.6621,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 1.1491,
+          "evidence": []
+        },
+        {
+          "term": "system",
+          "score": 1.0395,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "data",
+          "score": 0.1297,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.1128,
+          "evidence": []
+        },
+        {
+          "term": "system",
+          "score": 0.073,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 52.7642,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 44.0475,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 38.4769,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-001-abbreviations": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "health centre",
+          "score": 1.1252,
+          "evidence": []
+        },
+        {
+          "term": "control programme",
+          "score": 1.0554,
+          "evidence": []
+        },
+        {
+          "term": "child health",
+          "score": 0.9137,
+          "evidence": []
+        },
+        {
+          "term": "disease surveillance",
+          "score": 0.7507,
+          "evidence": []
+        },
+        {
+          "term": "surveillance system",
+          "score": 0.7015,
+          "evidence": []
+        },
+        {
+          "term": "department",
+          "score": 0.6653,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "health centre",
+          "score": 20.7179,
+          "evidence": []
+        },
+        {
+          "term": "control programme",
+          "score": 18.992,
+          "evidence": []
+        },
+        {
+          "term": "child health",
+          "score": 13.5872,
+          "evidence": []
+        },
+        {
+          "term": "department",
+          "score": 12.9346,
+          "evidence": []
+        },
+        {
+          "term": "disease surveillance",
+          "score": 9.5026,
+          "evidence": []
+        },
+        {
+          "term": "surveillance system",
+          "score": 8.841,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "child health",
+          "score": 0.4002,
+          "evidence": []
+        },
+        {
+          "term": "health centre",
+          "score": 0.3457,
+          "evidence": []
+        },
+        {
+          "term": "control programme",
+          "score": 0.1752,
+          "evidence": []
+        },
+        {
+          "term": "district",
+          "score": 0.1552,
+          "evidence": []
+        },
+        {
+          "term": "disease surveillance",
+          "score": 0.1545,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.1467,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "child health",
+          "score": 6.1203,
+          "evidence": []
+        },
+        {
+          "term": "health centre",
+          "score": 5.0469,
+          "evidence": []
+        },
+        {
+          "term": "district",
+          "score": 2.8479,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 2.5253,
+          "evidence": []
+        },
+        {
+          "term": "united",
+          "score": 2.183,
+          "evidence": []
+        },
+        {
+          "term": "control programme",
+          "score": 1.7648,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "child health",
+          "score": 0.4002,
+          "evidence": []
+        },
+        {
+          "term": "health centre",
+          "score": 0.3457,
+          "evidence": []
+        },
+        {
+          "term": "control programme",
+          "score": 0.1752,
+          "evidence": []
+        },
+        {
+          "term": "disease surveillance",
+          "score": 0.1545,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.1375,
+          "evidence": []
+        },
+        {
+          "term": "surveillance system",
+          "score": 0.1328,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 66.5868,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 50.3587,
+          "evidence": []
+        },
+        {
+          "term": "政治利益",
+          "score": 44.1293,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 35.4657,
+          "evidence": []
+        },
+        {
+          "term": "数字疗法",
+          "score": 34.942,
+          "evidence": []
+        },
+        {
+          "term": "位置服务",
+          "score": 32.4431,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-002-1-introduction": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hmis development",
+          "score": 1.8249,
+          "evidence": []
+        },
+        {
+          "term": "flow chart",
+          "score": 1.1223,
+          "evidence": []
+        },
+        {
+          "term": "worksheets",
+          "score": 1.0132,
+          "evidence": []
+        },
+        {
+          "term": "manual",
+          "score": 0.9354,
+          "evidence": []
+        },
+        {
+          "term": "general overview",
+          "score": 0.8356,
+          "evidence": []
+        },
+        {
+          "term": "basic",
+          "score": 0.6217,
+          "evidence": []
+        },
+        {
+          "term": "issues",
+          "score": 0.6184,
+          "evidence": []
+        },
+        {
+          "term": "in-depth",
+          "score": 0.6008,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hmis development",
+          "score": 52.4039,
+          "evidence": []
+        },
+        {
+          "term": "manual",
+          "score": 28.5337,
+          "evidence": []
+        },
+        {
+          "term": "worksheets",
+          "score": 19.2867,
+          "evidence": []
+        },
+        {
+          "term": "flow chart",
+          "score": 17.0451,
+          "evidence": []
+        },
+        {
+          "term": "general overview",
+          "score": 11.5391,
+          "evidence": []
+        },
+        {
+          "term": "basic",
+          "score": 11.4055,
+          "evidence": []
+        },
+        {
+          "term": "in-depth",
+          "score": 9.5414,
+          "evidence": []
+        },
+        {
+          "term": "presented",
+          "score": 9.3992,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "data",
+          "score": 0.292,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.2542,
+          "evidence": []
+        },
+        {
+          "term": "district",
+          "score": 0.1928,
+          "evidence": []
+        },
+        {
+          "term": "indicators",
+          "score": 0.175,
+          "evidence": []
+        },
+        {
+          "term": "system",
+          "score": 0.16,
+          "evidence": []
+        },
+        {
+          "term": "information",
+          "score": 0.1569,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.1529,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 0.1334,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "data",
+          "score": 5.0795,
+          "evidence": []
+        },
+        {
+          "term": "district",
+          "score": 3.6542,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 2.5545,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 2.0687,
+          "evidence": []
+        },
+        {
+          "term": "level",
+          "score": 1.8562,
+          "evidence": []
+        },
+        {
+          "term": "system",
+          "score": 1.7751,
+          "evidence": []
+        },
+        {
+          "term": "information",
+          "score": 1.7628,
+          "evidence": []
+        },
+        {
+          "term": "number",
+          "score": 1.5729,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "data",
+          "score": 0.292,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.2542,
+          "evidence": []
+        },
+        {
+          "term": "indicators",
+          "score": 0.175,
+          "evidence": []
+        },
+        {
+          "term": "information",
+          "score": 0.1569,
+          "evidence": []
+        },
+        {
+          "term": "level",
+          "score": 0.1331,
+          "evidence": []
+        },
+        {
+          "term": "flow chart",
+          "score": 0.1033,
+          "evidence": []
+        },
+        {
+          "term": "staff",
+          "score": 0.1012,
+          "evidence": []
+        },
+        {
+          "term": "country",
+          "score": 0.0977,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 34.4314,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 26.9514,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 25.7193,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 25.2298,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 23.3069,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 23.3069,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 17.6011,
+          "evidence": []
+        },
+        {
+          "term": "见下面第",
+          "score": 17.2624,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-003-2-the-basic-concepts": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "data processing",
+          "score": 1.3105,
+          "evidence": []
+        },
+        {
+          "term": "information system",
+          "score": 1.1731,
+          "evidence": []
+        },
+        {
+          "term": "data collection",
+          "score": 1.1409,
+          "evidence": []
+        },
+        {
+          "term": "data flow",
+          "score": 1.0496,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 1.0141,
+          "evidence": []
+        },
+        {
+          "term": "effective data",
+          "score": 0.9899,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.944,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "information system",
+          "score": 30.9844,
+          "evidence": []
+        },
+        {
+          "term": "data processing",
+          "score": 27.6382,
+          "evidence": []
+        },
+        {
+          "term": "data collection",
+          "score": 25.6451,
+          "evidence": []
+        },
+        {
+          "term": "data flow",
+          "score": 21.8178,
+          "evidence": []
+        },
+        {
+          "term": "effective data",
+          "score": 20.1184,
+          "evidence": []
+        },
+        {
+          "term": "management information",
+          "score": 17.5805,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 17.2032,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health management",
+          "score": 0.4435,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.4075,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.4045,
+          "evidence": []
+        },
+        {
+          "term": "data collection",
+          "score": 0.3323,
+          "evidence": []
+        },
+        {
+          "term": "information system",
+          "score": 0.3282,
+          "evidence": []
+        },
+        {
+          "term": "data flow",
+          "score": 0.2809,
+          "evidence": []
+        },
+        {
+          "term": "data processing",
+          "score": 0.2537,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "data collection",
+          "score": 11.0863,
+          "evidence": []
+        },
+        {
+          "term": "data processing",
+          "score": 10.2837,
+          "evidence": []
+        },
+        {
+          "term": "data flow",
+          "score": 9.7933,
+          "evidence": []
+        },
+        {
+          "term": "effective data",
+          "score": 9.7933,
+          "evidence": []
+        },
+        {
+          "term": "health management",
+          "score": 8.3573,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 8.0062,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 7.8571,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health management",
+          "score": 0.4435,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.4075,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.4045,
+          "evidence": []
+        },
+        {
+          "term": "data collection",
+          "score": 0.3323,
+          "evidence": []
+        },
+        {
+          "term": "information system",
+          "score": 0.3282,
+          "evidence": []
+        },
+        {
+          "term": "data flow",
+          "score": 0.2809,
+          "evidence": []
+        },
+        {
+          "term": "effective data",
+          "score": 0.274,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 46.6446,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 46.1821,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 38.0393,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 33.4053,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 33.4053,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 31.7501,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 27.6863,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-004-3-reviewing-the-existing-system": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "problems encountered",
+          "score": 2.0547,
+          "evidence": []
+        },
+        {
+          "term": "fill out",
+          "score": 1.8163,
+          "evidence": []
+        },
+        {
+          "term": "data collected",
+          "score": 1.6236,
+          "evidence": []
+        },
+        {
+          "term": "existing forms",
+          "score": 1.4967,
+          "evidence": []
+        },
+        {
+          "term": "filled out",
+          "score": 1.3756,
+          "evidence": []
+        },
+        {
+          "term": "administrative levels",
+          "score": 1.3653,
+          "evidence": []
+        },
+        {
+          "term": "different levels",
+          "score": 1.3245,
+          "evidence": []
+        },
+        {
+          "term": "data elements",
+          "score": 1.2511,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "data collected",
+          "score": 56.4048,
+          "evidence": []
+        },
+        {
+          "term": "form",
+          "score": 47.4108,
+          "evidence": []
+        },
+        {
+          "term": "problems encountered",
+          "score": 47.2279,
+          "evidence": []
+        },
+        {
+          "term": "fill out",
+          "score": 44.2149,
+          "evidence": []
+        },
+        {
+          "term": "existing forms",
+          "score": 39.0738,
+          "evidence": []
+        },
+        {
+          "term": "different levels",
+          "score": 38.3874,
+          "evidence": []
+        },
+        {
+          "term": "data elements",
+          "score": 35.5325,
+          "evidence": []
+        },
+        {
+          "term": "data collection",
+          "score": 33.9919,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "data collection",
+          "score": 0.6465,
+          "evidence": []
+        },
+        {
+          "term": "data collected",
+          "score": 0.5982,
+          "evidence": []
+        },
+        {
+          "term": "data elements",
+          "score": 0.5676,
+          "evidence": []
+        },
+        {
+          "term": "system",
+          "score": 0.5232,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health workers",
+          "score": 0.3827,
+          "evidence": []
+        },
+        {
+          "term": "different levels",
+          "score": 0.265,
+          "evidence": []
+        },
+        {
+          "term": "information",
+          "score": 0.2514,
+          "evidence": []
+        },
+        {
+          "term": "district",
+          "score": 0.2506,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "data elements",
+          "score": 23.9465,
+          "evidence": []
+        },
+        {
+          "term": "data collection",
+          "score": 23.3188,
+          "evidence": []
+        },
+        {
+          "term": "data collected",
+          "score": 22.5889,
+          "evidence": []
+        },
+        {
+          "term": "system",
+          "score": 11.1263,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "district",
+          "score": 6.156,
+          "evidence": []
+        },
+        {
+          "term": "information",
+          "score": 4.931,
+          "evidence": []
+        },
+        {
+          "term": "health workers",
+          "score": 4.7267,
+          "evidence": []
+        },
+        {
+          "term": "level",
+          "score": 4.4913,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "data collection",
+          "score": 0.6465,
+          "evidence": []
+        },
+        {
+          "term": "data collected",
+          "score": 0.5982,
+          "evidence": []
+        },
+        {
+          "term": "data elements",
+          "score": 0.5676,
+          "evidence": []
+        },
+        {
+          "term": "system",
+          "score": 0.5232,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health workers",
+          "score": 0.3827,
+          "evidence": []
+        },
+        {
+          "term": "different levels",
+          "score": 0.265,
+          "evidence": []
+        },
+        {
+          "term": "existing forms",
+          "score": 0.2043,
+          "evidence": []
+        },
+        {
+          "term": "indicators",
+          "score": 0.1908,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 36.131,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 27.928,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 27.6954,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 27.5917,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 27.5917,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 22.0815,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 21.7708,
+          "evidence": []
+        },
+        {
+          "term": "见下面第",
+          "score": 18.3556,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-005-4-defining-data-needs": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "nosocomial infections",
+          "score": 1.7665,
+          "evidence": []
+        },
+        {
+          "term": "immunization conducted",
+          "score": 1.7248,
+          "evidence": []
+        },
+        {
+          "term": "education classes",
+          "score": 1.5715,
+          "evidence": []
+        },
+        {
+          "term": "records dept",
+          "score": 1.4574,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 1.406,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hospital staff",
+          "score": 1.3188,
+          "evidence": []
+        },
+        {
+          "term": "village",
+          "score": 1.2722,
+          "evidence": []
+        },
+        {
+          "term": "hospital services",
+          "score": 1.2332,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "data",
+          "score": 47.3198,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "immunization conducted",
+          "score": 44.908,
+          "evidence": []
+        },
+        {
+          "term": "submitted",
+          "score": 35.6758,
+          "evidence": []
+        },
+        {
+          "term": "nosocomial infections",
+          "score": 32.8225,
+          "evidence": []
+        },
+        {
+          "term": "village",
+          "score": 31.3496,
+          "evidence": []
+        },
+        {
+          "term": "education classes",
+          "score": 30.4907,
+          "evidence": []
+        },
+        {
+          "term": "data collected",
+          "score": 29.8297,
+          "evidence": []
+        },
+        {
+          "term": "hospital staff",
+          "score": 29.7459,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "data",
+          "score": 1.1429,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "child health",
+          "score": 0.7309,
+          "evidence": []
+        },
+        {
+          "term": "routine data",
+          "score": 0.7286,
+          "evidence": []
+        },
+        {
+          "term": "data collected",
+          "score": 0.6943,
+          "evidence": []
+        },
+        {
+          "term": "health education",
+          "score": 0.675,
+          "evidence": []
+        },
+        {
+          "term": "district",
+          "score": 0.4595,
+          "evidence": []
+        },
+        {
+          "term": "immunization conducted",
+          "score": 0.3785,
+          "evidence": []
+        },
+        {
+          "term": "hospital services",
+          "score": 0.3726,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "data",
+          "score": 32.4883,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "routine data",
+          "score": 18.5529,
+          "evidence": []
+        },
+        {
+          "term": "data collected",
+          "score": 17.6502,
+          "evidence": []
+        },
+        {
+          "term": "district",
+          "score": 16.7603,
+          "evidence": []
+        },
+        {
+          "term": "child health",
+          "score": 13.3958,
+          "evidence": []
+        },
+        {
+          "term": "health education",
+          "score": 11.4887,
+          "evidence": []
+        },
+        {
+          "term": "immunization conducted",
+          "score": 8.9601,
+          "evidence": []
+        },
+        {
+          "term": "level",
+          "score": 7.9977,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "data",
+          "score": 1.1429,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "child health",
+          "score": 0.7309,
+          "evidence": []
+        },
+        {
+          "term": "routine data",
+          "score": 0.7286,
+          "evidence": []
+        },
+        {
+          "term": "data collected",
+          "score": 0.6943,
+          "evidence": []
+        },
+        {
+          "term": "health education",
+          "score": 0.675,
+          "evidence": []
+        },
+        {
+          "term": "district",
+          "score": 0.4595,
+          "evidence": []
+        },
+        {
+          "term": "immunization conducted",
+          "score": 0.3785,
+          "evidence": []
+        },
+        {
+          "term": "hospital services",
+          "score": 0.3726,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 31.5395,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 25.9532,
+          "evidence": []
+        },
+        {
+          "term": "乌干达",
+          "score": 22.2359,
+          "evidence": []
+        },
+        {
+          "term": "精神卫生",
+          "score": 19.9966,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 18.3739,
+          "evidence": []
+        },
+        {
+          "term": "在马拉维",
+          "score": 18.0124,
+          "evidence": []
+        },
+        {
+          "term": "在世界卫生组织",
+          "score": 17.3413,
+          "evidence": []
+        },
+        {
+          "term": "澳大利亚",
+          "score": 16.9966,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-5-determining-the-data-flow": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "data flow",
+          "score": 2.7522,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "epi district",
+          "score": 2.3981,
+          "evidence": []
+        },
+        {
+          "term": "epi provincial",
+          "score": 2.3962,
+          "evidence": []
+        },
+        {
+          "term": "nurse supervisor",
+          "score": 2.0598,
+          "evidence": []
+        },
+        {
+          "term": "flow chart",
+          "score": 1.6443,
+          "evidence": []
+        },
+        {
+          "term": "summary form",
+          "score": 1.5417,
+          "evidence": []
+        },
+        {
+          "term": "mch programme",
+          "score": 1.5103,
+          "evidence": []
+        },
+        {
+          "term": "form report",
+          "score": 1.4745,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "epi district",
+          "score": 72.9878,
+          "evidence": []
+        },
+        {
+          "term": "epi provincial",
+          "score": 72.4661,
+          "evidence": []
+        },
+        {
+          "term": "data flow",
+          "score": 68.644,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "summary form",
+          "score": 48.9369,
+          "evidence": []
+        },
+        {
+          "term": "form report",
+          "score": 45.5839,
+          "evidence": []
+        },
+        {
+          "term": "nurse supervisor",
+          "score": 42.4246,
+          "evidence": []
+        },
+        {
+          "term": "flow chart",
+          "score": 35.8797,
+          "evidence": []
+        },
+        {
+          "term": "raw data",
+          "score": 25.6366,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "data flow",
+          "score": 0.9127,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "raw data",
+          "score": 0.3931,
+          "evidence": []
+        },
+        {
+          "term": "health service",
+          "score": 0.3858,
+          "evidence": []
+        },
+        {
+          "term": "district",
+          "score": 0.3419,
+          "evidence": []
+        },
+        {
+          "term": "district nurse",
+          "score": 0.3419,
+          "evidence": []
+        },
+        {
+          "term": "epi district",
+          "score": 0.3419,
+          "evidence": []
+        },
+        {
+          "term": "form report",
+          "score": 0.2342,
+          "evidence": []
+        },
+        {
+          "term": "level",
+          "score": 0.2167,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "data flow",
+          "score": 24.8908,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "district nurse",
+          "score": 13.4217,
+          "evidence": []
+        },
+        {
+          "term": "epi district",
+          "score": 12.098,
+          "evidence": []
+        },
+        {
+          "term": "raw data",
+          "score": 11.489,
+          "evidence": []
+        },
+        {
+          "term": "level",
+          "score": 5.428,
+          "evidence": []
+        },
+        {
+          "term": "health service",
+          "score": 4.6242,
+          "evidence": []
+        },
+        {
+          "term": "reports",
+          "score": 4.5842,
+          "evidence": []
+        },
+        {
+          "term": "number",
+          "score": 4.0925,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "data flow",
+          "score": 0.9127,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "raw data",
+          "score": 0.4074,
+          "evidence": []
+        },
+        {
+          "term": "health service",
+          "score": 0.3858,
+          "evidence": []
+        },
+        {
+          "term": "district nurse",
+          "score": 0.381,
+          "evidence": []
+        },
+        {
+          "term": "epi district",
+          "score": 0.38,
+          "evidence": []
+        },
+        {
+          "term": "form report",
+          "score": 0.2342,
+          "evidence": []
+        },
+        {
+          "term": "level",
+          "score": 0.2167,
+          "evidence": []
+        },
+        {
+          "term": "information",
+          "score": 0.2125,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 20.1875,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 19.0283,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 18.5256,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 17.3393,
+          "evidence": []
+        },
+        {
+          "term": "潜在受试者",
+          "score": 15.2708,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 15.209,
+          "evidence": []
+        },
+        {
+          "term": "被称为研究伦理委员会",
+          "score": 14.6803,
+          "evidence": []
+        },
+        {
+          "term": "参见学习目标",
+          "score": 13.9977,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-007-6-designing-the-data-collection-and-reporting-to": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "data collection",
+          "score": 2.349,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "reporting tools",
+          "score": 1.6351,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "immunized",
+          "score": 1.2994,
+          "evidence": []
+        },
+        {
+          "term": "year-old children",
+          "score": 1.272,
+          "evidence": []
+        },
+        {
+          "term": "lowest level",
+          "score": 1.2242,
+          "evidence": []
+        },
+        {
+          "term": "data users",
+          "score": 1.1613,
+          "evidence": []
+        },
+        {
+          "term": "designing",
+          "score": 1.115,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "computerized system",
+          "score": 1.0753,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "data collection",
+          "score": 56.2712,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "immunized",
+          "score": 31.3738,
+          "evidence": []
+        },
+        {
+          "term": "data users",
+          "score": 26.2233,
+          "evidence": []
+        },
+        {
+          "term": "reporting tools",
+          "score": 24.6118,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lowest level",
+          "score": 22.6349,
+          "evidence": []
+        },
+        {
+          "term": "year-old children",
+          "score": 18.6773,
+          "evidence": []
+        },
+        {
+          "term": "designing",
+          "score": 17.5249,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "computerized system",
+          "score": 16.462,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "data collection",
+          "score": 0.8826,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "reporting tools",
+          "score": 0.4318,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "data users",
+          "score": 0.4139,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.1929,
+          "evidence": []
+        },
+        {
+          "term": "district",
+          "score": 0.1881,
+          "evidence": []
+        },
+        {
+          "term": "computerized system",
+          "score": 0.1871,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.1672,
+          "evidence": []
+        },
+        {
+          "term": "information",
+          "score": 0.1409,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "data collection",
+          "score": 26.7406,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "data users",
+          "score": 12.855,
+          "evidence": []
+        },
+        {
+          "term": "reporting tools",
+          "score": 6.1604,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "district",
+          "score": 5.2903,
+          "evidence": []
+        },
+        {
+          "term": "level",
+          "score": 3.3727,
+          "evidence": []
+        },
+        {
+          "term": "lowest level",
+          "score": 3.3727,
+          "evidence": []
+        },
+        {
+          "term": "computerized system",
+          "score": 3.1032,
+          "evidence": []
+        },
+        {
+          "term": "reports",
+          "score": 2.9039,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "data collection",
+          "score": 0.8826,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "reporting tools",
+          "score": 0.4318,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "data users",
+          "score": 0.4139,
+          "evidence": []
+        },
+        {
+          "term": "computerized system",
+          "score": 0.211,
+          "evidence": []
+        },
+        {
+          "term": "lowest level",
+          "score": 0.1511,
+          "evidence": []
+        },
+        {
+          "term": "staff",
+          "score": 0.1185,
+          "evidence": []
+        },
+        {
+          "term": "year-old children",
+          "score": 0.11,
+          "evidence": []
+        },
+        {
+          "term": "software",
+          "score": 0.097,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 33.2325,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 22.895,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 22.0941,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 19.8369,
+          "evidence": []
+        },
+        {
+          "term": "下面统称",
+          "score": 18.3438,
+          "evidence": []
+        },
+        {
+          "term": "本协议条款适用于由提供者转让给接受者的",
+          "score": 18.3438,
+          "evidence": []
+        },
+        {
+          "term": "节中所定义",
+          "score": 18.3438,
+          "evidence": []
+        },
+        {
+          "term": "协议的主题事项",
+          "score": 18.3438,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-008-7-developing-procedures-for-data-processing": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "previous training",
+          "score": 1.3889,
+          "evidence": []
+        },
+        {
+          "term": "software",
+          "score": 1.3879,
+          "evidence": []
+        },
+        {
+          "term": "training programme",
+          "score": 1.2565,
+          "evidence": []
+        },
+        {
+          "term": "compatibility",
+          "score": 1.2504,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 1.1662,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hmis",
+          "score": 1.1501,
+          "evidence": []
+        },
+        {
+          "term": "data providers",
+          "score": 0.9823,
+          "evidence": []
+        },
+        {
+          "term": "user manual",
+          "score": 0.9222,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "software",
+          "score": 65.2192,
+          "evidence": []
+        },
+        {
+          "term": "previous training",
+          "score": 44.7125,
+          "evidence": []
+        },
+        {
+          "term": "training programme",
+          "score": 41.8139,
+          "evidence": []
+        },
+        {
+          "term": "hmis",
+          "score": 28.8177,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 27.3957,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "compatibility",
+          "score": 26.0637,
+          "evidence": []
+        },
+        {
+          "term": "interface",
+          "score": 18.9577,
+          "evidence": []
+        },
+        {
+          "term": "data providers",
+          "score": 18.8984,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "data",
+          "score": 0.7396,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "data providers",
+          "score": 0.3698,
+          "evidence": []
+        },
+        {
+          "term": "training programme",
+          "score": 0.296,
+          "evidence": []
+        },
+        {
+          "term": "system",
+          "score": 0.2633,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.2361,
+          "evidence": []
+        },
+        {
+          "term": "digital",
+          "score": 0.2251,
+          "evidence": []
+        },
+        {
+          "term": "software",
+          "score": 0.1926,
+          "evidence": []
+        },
+        {
+          "term": "requirements",
+          "score": 0.19,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "data",
+          "score": 24.0391,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "data providers",
+          "score": 13.2024,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 4.822,
+          "evidence": []
+        },
+        {
+          "term": "training programme",
+          "score": 4.3192,
+          "evidence": []
+        },
+        {
+          "term": "system",
+          "score": 4.2456,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 3.7987,
+          "evidence": []
+        },
+        {
+          "term": "digital",
+          "score": 3.6001,
+          "evidence": []
+        },
+        {
+          "term": "previous training",
+          "score": 2.903,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "data",
+          "score": 0.7396,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "data providers",
+          "score": 0.4068,
+          "evidence": []
+        },
+        {
+          "term": "training programme",
+          "score": 0.296,
+          "evidence": []
+        },
+        {
+          "term": "system",
+          "score": 0.2633,
+          "evidence": []
+        },
+        {
+          "term": "previous training",
+          "score": 0.217,
+          "evidence": []
+        },
+        {
+          "term": "software",
+          "score": 0.1926,
+          "evidence": []
+        },
+        {
+          "term": "user manual",
+          "score": 0.1887,
+          "evidence": []
+        },
+        {
+          "term": "procedures",
+          "score": 0.175,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 36.7022,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 24.7484,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 24.563,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 23.1479,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 23.1479,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 21.1185,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 19.1372,
+          "evidence": []
+        },
+        {
+          "term": "乌干达",
+          "score": 18.8841,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-009-8-developing-the-training-programme": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "training programme",
+          "score": 3.5345,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "training materials",
+          "score": 2.1923,
+          "evidence": []
+        },
+        {
+          "term": "training activities",
+          "score": 1.767,
+          "evidence": []
+        },
+        {
+          "term": "data users",
+          "score": 1.7368,
+          "evidence": []
+        },
+        {
+          "term": "data providers",
+          "score": 1.7018,
+          "evidence": []
+        },
+        {
+          "term": "data sources",
+          "score": 1.6316,
+          "evidence": []
+        },
+        {
+          "term": "data dictionary",
+          "score": 1.5609,
+          "evidence": []
+        },
+        {
+          "term": "hrs",
+          "score": 1.5569,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "training programme",
+          "score": 198.4906,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "training materials",
+          "score": 116.2765,
+          "evidence": []
+        },
+        {
+          "term": "training activities",
+          "score": 95.8995,
+          "evidence": []
+        },
+        {
+          "term": "data users",
+          "score": 80.7209,
+          "evidence": []
+        },
+        {
+          "term": "data providers",
+          "score": 78.084,
+          "evidence": []
+        },
+        {
+          "term": "data sources",
+          "score": 76.8519,
+          "evidence": []
+        },
+        {
+          "term": "data collection",
+          "score": 70.6594,
+          "evidence": []
+        },
+        {
+          "term": "health data",
+          "score": 70.4115,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health data",
+          "score": 0.9829,
+          "evidence": []
+        },
+        {
+          "term": "training programme",
+          "score": 0.8108,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "data collection",
+          "score": 0.7732,
+          "evidence": []
+        },
+        {
+          "term": "data users",
+          "score": 0.7425,
+          "evidence": []
+        },
+        {
+          "term": "data sources",
+          "score": 0.7222,
+          "evidence": []
+        },
+        {
+          "term": "routine data",
+          "score": 0.7043,
+          "evidence": []
+        },
+        {
+          "term": "health information",
+          "score": 0.679,
+          "evidence": []
+        },
+        {
+          "term": "data providers",
+          "score": 0.6715,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health data",
+          "score": 42.983,
+          "evidence": []
+        },
+        {
+          "term": "data collection",
+          "score": 34.8147,
+          "evidence": []
+        },
+        {
+          "term": "data users",
+          "score": 33.6599,
+          "evidence": []
+        },
+        {
+          "term": "data sources",
+          "score": 33.3057,
+          "evidence": []
+        },
+        {
+          "term": "routine data",
+          "score": 33.0411,
+          "evidence": []
+        },
+        {
+          "term": "data providers",
+          "score": 32.8071,
+          "evidence": []
+        },
+        {
+          "term": "data dictionary",
+          "score": 32.2476,
+          "evidence": []
+        },
+        {
+          "term": "health information",
+          "score": 19.4378,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health data",
+          "score": 0.9829,
+          "evidence": []
+        },
+        {
+          "term": "training programme",
+          "score": 0.8108,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "data collection",
+          "score": 0.7732,
+          "evidence": []
+        },
+        {
+          "term": "data users",
+          "score": 0.7425,
+          "evidence": []
+        },
+        {
+          "term": "data sources",
+          "score": 0.7222,
+          "evidence": []
+        },
+        {
+          "term": "routine data",
+          "score": 0.7043,
+          "evidence": []
+        },
+        {
+          "term": "health information",
+          "score": 0.679,
+          "evidence": []
+        },
+        {
+          "term": "data providers",
+          "score": 0.6715,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 34.0921,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 33.1661,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 30.1773,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 27.4506,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 27.4506,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 26.3493,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 20.3682,
+          "evidence": []
+        },
+        {
+          "term": "见下面第",
+          "score": 19.723,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-010-9-pre-testing-the-system": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "pre-testing",
+          "score": 4.9833,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pre-testing phase",
+          "score": 3.1509,
+          "evidence": []
+        },
+        {
+          "term": "problem referred",
+          "score": 1.4631,
+          "evidence": []
+        },
+        {
+          "term": "evaluation activities",
+          "score": 1.3528,
+          "evidence": []
+        },
+        {
+          "term": "evaluation plan",
+          "score": 1.2405,
+          "evidence": []
+        },
+        {
+          "term": "pre-tested",
+          "score": 1.0202,
+          "evidence": []
+        },
+        {
+          "term": "fic",
+          "score": 0.8919,
+          "evidence": []
+        },
+        {
+          "term": "data users",
+          "score": 0.8733,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "pre-testing",
+          "score": 222.9731,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pre-testing phase",
+          "score": 122.1022,
+          "evidence": []
+        },
+        {
+          "term": "problem referred",
+          "score": 34.8769,
+          "evidence": []
+        },
+        {
+          "term": "evaluation activities",
+          "score": 26.4937,
+          "evidence": []
+        },
+        {
+          "term": "evaluation plan",
+          "score": 20.8625,
+          "evidence": []
+        },
+        {
+          "term": "forms",
+          "score": 16.7083,
+          "evidence": []
+        },
+        {
+          "term": "pre-tested",
+          "score": 16.4413,
+          "evidence": []
+        },
+        {
+          "term": "software",
+          "score": 15.5284,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "system",
+          "score": 0.4008,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "data users",
+          "score": 0.3754,
+          "evidence": []
+        },
+        {
+          "term": "data providers",
+          "score": 0.334,
+          "evidence": []
+        },
+        {
+          "term": "evaluation plan",
+          "score": 0.2935,
+          "evidence": []
+        },
+        {
+          "term": "evaluation activities",
+          "score": 0.2883,
+          "evidence": []
+        },
+        {
+          "term": "monitoring",
+          "score": 0.1748,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.169,
+          "evidence": []
+        },
+        {
+          "term": "district",
+          "score": 0.1651,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "data providers",
+          "score": 8.2729,
+          "evidence": []
+        },
+        {
+          "term": "data users",
+          "score": 8.1609,
+          "evidence": []
+        },
+        {
+          "term": "ehealth",
+          "score": 5.1235,
+          "evidence": []
+        },
+        {
+          "term": "system",
+          "score": 5.0877,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "evaluation plan",
+          "score": 4.0907,
+          "evidence": []
+        },
+        {
+          "term": "evaluation activities",
+          "score": 3.66,
+          "evidence": []
+        },
+        {
+          "term": "district",
+          "score": 3.6112,
+          "evidence": []
+        },
+        {
+          "term": "action",
+          "score": 3.1513,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "system",
+          "score": 0.4008,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "data users",
+          "score": 0.3754,
+          "evidence": []
+        },
+        {
+          "term": "data providers",
+          "score": 0.334,
+          "evidence": []
+        },
+        {
+          "term": "evaluation plan",
+          "score": 0.2935,
+          "evidence": []
+        },
+        {
+          "term": "evaluation activities",
+          "score": 0.2883,
+          "evidence": []
+        },
+        {
+          "term": "monitoring",
+          "score": 0.1748,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.169,
+          "evidence": []
+        },
+        {
+          "term": "staff",
+          "score": 0.1379,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 42.3507,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 24.8214,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 23.5495,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 21.2985,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 20.179,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 20.179,
+          "evidence": []
+        },
+        {
+          "term": "潜在受试者",
+          "score": 17.433,
+          "evidence": []
+        },
+        {
+          "term": "在正常情况下",
+          "score": 17.3321,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-011-10-monitoring-and-evaluating-the-system": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hmis evaluation",
+          "score": 2.6031,
+          "evidence": []
+        },
+        {
+          "term": "hmis forms",
+          "score": 2.5417,
+          "evidence": []
+        },
+        {
+          "term": "informant interviews",
+          "score": 2.2461,
+          "evidence": []
+        },
+        {
+          "term": "dissemination activities",
+          "score": 2.1319,
+          "evidence": []
+        },
+        {
+          "term": "data dissemination",
+          "score": 1.998,
+          "evidence": []
+        },
+        {
+          "term": "village levels",
+          "score": 1.9325,
+          "evidence": []
+        },
+        {
+          "term": "key informant",
+          "score": 1.9029,
+          "evidence": []
+        },
+        {
+          "term": "provincial health",
+          "score": 1.7989,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hmis evaluation",
+          "score": 120.8446,
+          "evidence": []
+        },
+        {
+          "term": "hmis forms",
+          "score": 112.7672,
+          "evidence": []
+        },
+        {
+          "term": "data dissemination",
+          "score": 83.3551,
+          "evidence": []
+        },
+        {
+          "term": "dissemination activities",
+          "score": 66.9649,
+          "evidence": []
+        },
+        {
+          "term": "data generated",
+          "score": 54.2985,
+          "evidence": []
+        },
+        {
+          "term": "data entry",
+          "score": 54.234,
+          "evidence": []
+        },
+        {
+          "term": "informant interviews",
+          "score": 52.8461,
+          "evidence": []
+        },
+        {
+          "term": "provincial health",
+          "score": 49.287,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "data quality",
+          "score": 0.8925,
+          "evidence": []
+        },
+        {
+          "term": "data collection",
+          "score": 0.8092,
+          "evidence": []
+        },
+        {
+          "term": "system",
+          "score": 0.7547,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "data entry",
+          "score": 0.6882,
+          "evidence": []
+        },
+        {
+          "term": "national level",
+          "score": 0.6288,
+          "evidence": []
+        },
+        {
+          "term": "health centre",
+          "score": 0.6173,
+          "evidence": []
+        },
+        {
+          "term": "monitoring",
+          "score": 0.6049,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "data dissemination",
+          "score": 0.6008,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "data quality",
+          "score": 33.9015,
+          "evidence": []
+        },
+        {
+          "term": "data collection",
+          "score": 31.9241,
+          "evidence": []
+        },
+        {
+          "term": "data entry",
+          "score": 29.8497,
+          "evidence": []
+        },
+        {
+          "term": "data dissemination",
+          "score": 28.0799,
+          "evidence": []
+        },
+        {
+          "term": "data generated",
+          "score": 28.0799,
+          "evidence": []
+        },
+        {
+          "term": "system",
+          "score": 15.7535,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "monitoring",
+          "score": 15.0933,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "national level",
+          "score": 14.7703,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "data quality",
+          "score": 0.8925,
+          "evidence": []
+        },
+        {
+          "term": "data collection",
+          "score": 0.8092,
+          "evidence": []
+        },
+        {
+          "term": "system",
+          "score": 0.7547,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "data entry",
+          "score": 0.6882,
+          "evidence": []
+        },
+        {
+          "term": "data dissemination",
+          "score": 0.682,
+          "evidence": []
+        },
+        {
+          "term": "data generated",
+          "score": 0.6446,
+          "evidence": []
+        },
+        {
+          "term": "national level",
+          "score": 0.6288,
+          "evidence": []
+        },
+        {
+          "term": "health centre",
+          "score": 0.6173,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 32.9112,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 32.5912,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 24.7183,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 21.5401,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 21.5401,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 21.0197,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 20.5473,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 20.4418,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-012-12-enhancing-the-hmis": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hmis",
+          "score": 2.458,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "donor agency",
+          "score": 1.4976,
+          "evidence": []
+        },
+        {
+          "term": "regular budget",
+          "score": 1.4554,
+          "evidence": []
+        },
+        {
+          "term": "different activities",
+          "score": 1.2531,
+          "evidence": []
+        },
+        {
+          "term": "local consultant",
+          "score": 1.032,
+          "evidence": []
+        },
+        {
+          "term": "training materials",
+          "score": 1.0267,
+          "evidence": []
+        },
+        {
+          "term": "communication costs",
+          "score": 0.9334,
+          "evidence": []
+        },
+        {
+          "term": "resource requirements",
+          "score": 0.8981,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hmis",
+          "score": 67.2412,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "donor agency",
+          "score": 30.1037,
+          "evidence": []
+        },
+        {
+          "term": "regular budget",
+          "score": 28.9873,
+          "evidence": []
+        },
+        {
+          "term": "different activities",
+          "score": 25.2306,
+          "evidence": []
+        },
+        {
+          "term": "training materials",
+          "score": 16.5663,
+          "evidence": []
+        },
+        {
+          "term": "local consultant",
+          "score": 15.2806,
+          "evidence": []
+        },
+        {
+          "term": "honorarium",
+          "score": 13.9358,
+          "evidence": []
+        },
+        {
+          "term": "communication costs",
+          "score": 13.7166,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "training materials",
+          "score": 0.1723,
+          "evidence": []
+        },
+        {
+          "term": "communication costs",
+          "score": 0.1645,
+          "evidence": []
+        },
+        {
+          "term": "different activities",
+          "score": 0.1634,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.1469,
+          "evidence": []
+        },
+        {
+          "term": "system",
+          "score": 0.1348,
+          "evidence": []
+        },
+        {
+          "term": "resource requirements",
+          "score": 0.1337,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.133,
+          "evidence": []
+        },
+        {
+          "term": "project",
+          "score": 0.1043,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "district",
+          "score": 3.4768,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 2.4632,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 2.3902,
+          "evidence": []
+        },
+        {
+          "term": "ehealth",
+          "score": 1.9916,
+          "evidence": []
+        },
+        {
+          "term": "different activities",
+          "score": 1.773,
+          "evidence": []
+        },
+        {
+          "term": "level",
+          "score": 1.6098,
+          "evidence": []
+        },
+        {
+          "term": "action",
+          "score": 1.4965,
+          "evidence": []
+        },
+        {
+          "term": "tel",
+          "score": 1.3806,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "training materials",
+          "score": 0.1723,
+          "evidence": []
+        },
+        {
+          "term": "communication costs",
+          "score": 0.1645,
+          "evidence": []
+        },
+        {
+          "term": "different activities",
+          "score": 0.1634,
+          "evidence": []
+        },
+        {
+          "term": "resource requirements",
+          "score": 0.1337,
+          "evidence": []
+        },
+        {
+          "term": "district",
+          "score": 0.0979,
+          "evidence": []
+        },
+        {
+          "term": "implementation",
+          "score": 0.0965,
+          "evidence": []
+        },
+        {
+          "term": "regular budget",
+          "score": 0.0946,
+          "evidence": []
+        },
+        {
+          "term": "monitoring",
+          "score": 0.0922,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 33.6607,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 32.2326,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 27.8186,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 26.7611,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 26.7611,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 25.5177,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 24.8847,
+          "evidence": []
+        },
+        {
+          "term": "平等主义",
+          "score": 24.6419,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-013-examples": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "pho dof",
+          "score": 3.6303,
+          "evidence": []
+        },
+        {
+          "term": "moh dof",
+          "score": 3.4651,
+          "evidence": []
+        },
+        {
+          "term": "nso",
+          "score": 3.1985,
+          "evidence": []
+        },
+        {
+          "term": "every yrs",
+          "score": 2.7252,
+          "evidence": []
+        },
+        {
+          "term": "dhc pmc",
+          "score": 2.5734,
+          "evidence": []
+        },
+        {
+          "term": "old vaccinated",
+          "score": 2.5704,
+          "evidence": []
+        },
+        {
+          "term": "dhc phc",
+          "score": 2.5624,
+          "evidence": []
+        },
+        {
+          "term": "mortality rate",
+          "score": 2.3143,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "nso",
+          "score": 205.5168,
+          "evidence": []
+        },
+        {
+          "term": "province",
+          "score": 173.0235,
+          "evidence": []
+        },
+        {
+          "term": "moh dof",
+          "score": 116.4727,
+          "evidence": []
+        },
+        {
+          "term": "mortality rate",
+          "score": 115.9372,
+          "evidence": []
+        },
+        {
+          "term": "pho dof",
+          "score": 98.6481,
+          "evidence": []
+        },
+        {
+          "term": "percentage",
+          "score": 97.8899,
+          "evidence": []
+        },
+        {
+          "term": "old vaccinated",
+          "score": 92.279,
+          "evidence": []
+        },
+        {
+          "term": "malnutrition rate",
+          "score": 91.0266,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "children year",
+          "score": 1.0127,
+          "evidence": []
+        },
+        {
+          "term": "district",
+          "score": 0.8541,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 0.8071,
+          "evidence": []
+        },
+        {
+          "term": "data sources",
+          "score": 0.8018,
+          "evidence": []
+        },
+        {
+          "term": "health budget",
+          "score": 0.7981,
+          "evidence": []
+        },
+        {
+          "term": "mortality rate",
+          "score": 0.785,
+          "evidence": []
+        },
+        {
+          "term": "health worker",
+          "score": 0.7818,
+          "evidence": []
+        },
+        {
+          "term": "government health",
+          "score": 0.7569,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "district",
+          "score": 59.2946,
+          "evidence": []
+        },
+        {
+          "term": "children year",
+          "score": 34.8219,
+          "evidence": []
+        },
+        {
+          "term": "data sources",
+          "score": 25.831,
+          "evidence": []
+        },
+        {
+          "term": "indicator",
+          "score": 24.2496,
+          "evidence": []
+        },
+        {
+          "term": "average number",
+          "score": 23.2824,
+          "evidence": []
+        },
+        {
+          "term": "among children",
+          "score": 22.9681,
+          "evidence": []
+        },
+        {
+          "term": "corresponding data",
+          "score": 22.8296,
+          "evidence": []
+        },
+        {
+          "term": "data collection",
+          "score": 22.8296,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "children year",
+          "score": 1.0127,
+          "evidence": []
+        },
+        {
+          "term": "district",
+          "score": 0.8541,
+          "evidence": []
+        },
+        {
+          "term": "pregnant women",
+          "score": 0.8071,
+          "evidence": []
+        },
+        {
+          "term": "data sources",
+          "score": 0.8018,
+          "evidence": []
+        },
+        {
+          "term": "health budget",
+          "score": 0.7981,
+          "evidence": []
+        },
+        {
+          "term": "mortality rate",
+          "score": 0.785,
+          "evidence": []
+        },
+        {
+          "term": "health worker",
+          "score": 0.7818,
+          "evidence": []
+        },
+        {
+          "term": "government health",
+          "score": 0.7569,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 47.8071,
+          "evidence": []
+        },
+        {
+          "term": "政治利益",
+          "score": 39.6664,
+          "evidence": []
+        },
+        {
+          "term": "潜在受试者",
+          "score": 35.2532,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 33.5679,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 33.553,
+          "evidence": []
+        },
+        {
+          "term": "经济方面",
+          "score": 31.7286,
+          "evidence": []
+        },
+        {
+          "term": "被称为研究伦理委员会",
+          "score": 30.3714,
+          "evidence": []
+        },
+        {
+          "term": "非政府组织",
+          "score": 24.096,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-014-references": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "western pacific",
+          "score": 1.4709,
+          "evidence": []
+        },
+        {
+          "term": "organization regional",
+          "score": 1.197,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 1.1904,
+          "evidence": []
+        },
+        {
+          "term": "regional office",
+          "score": 1.1074,
+          "evidence": []
+        },
+        {
+          "term": "manila",
+          "score": 0.9518,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "western pacific",
+          "score": 25.2578,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 24.4161,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 24.052,
+          "evidence": []
+        },
+        {
+          "term": "organization regional",
+          "score": 23.1948,
+          "evidence": []
+        },
+        {
+          "term": "regional office",
+          "score": 18.4896,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "world health",
+          "score": 0.4443,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.4272,
+          "evidence": []
+        },
+        {
+          "term": "health information",
+          "score": 0.313,
+          "evidence": []
+        },
+        {
+          "term": "organization regional",
+          "score": 0.2732,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 0.1719,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "world health",
+          "score": 10.559,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 10.1897,
+          "evidence": []
+        },
+        {
+          "term": "health information",
+          "score": 6.8982,
+          "evidence": []
+        },
+        {
+          "term": "organization regional",
+          "score": 5.097,
+          "evidence": []
+        },
+        {
+          "term": "accessed",
+          "score": 5.0899,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "world health",
+          "score": 0.4443,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.4272,
+          "evidence": []
+        },
+        {
+          "term": "health information",
+          "score": 0.313,
+          "evidence": []
+        },
+        {
+          "term": "organization regional",
+          "score": 0.2732,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 0.1719,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 68.0824,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 60.8034,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 59.4843,
+          "evidence": []
+        },
+        {
+          "term": "关注这一事实",
+          "score": 44.4739,
+          "evidence": []
+        },
+        {
+          "term": "一致元数据和定义",
+          "score": 41.3537,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "western pacific",
+          "score": 1.4709,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 1.2117,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 1.2068,
+          "evidence": []
+        },
+        {
+          "term": "regional office",
+          "score": 1.1074,
+          "evidence": []
+        },
+        {
+          "term": "developing countries",
+          "score": 1.0566,
+          "evidence": []
+        },
+        {
+          "term": "fax",
+          "score": 0.9332,
+          "evidence": []
+        },
+        {
+          "term": "health management",
+          "score": 0.8743,
+          "evidence": []
+        },
+        {
+          "term": "practical guide",
+          "score": 0.8559,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "health organization",
+          "score": 25.6534,
+          "evidence": []
+        },
+        {
+          "term": "western pacific",
+          "score": 25.2578,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 25.2372,
+          "evidence": []
+        },
+        {
+          "term": "publications",
+          "score": 19.8481,
+          "evidence": []
+        },
+        {
+          "term": "regional office",
+          "score": 18.4896,
+          "evidence": []
+        },
+        {
+          "term": "developing countries",
+          "score": 18.4155,
+          "evidence": []
+        },
+        {
+          "term": "health management",
+          "score": 14.5965,
+          "evidence": []
+        },
+        {
+          "term": "fax",
+          "score": 14.4584,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "world health",
+          "score": 0.7704,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.7671,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 0.3422,
+          "evidence": []
+        },
+        {
+          "term": "material",
+          "score": 0.3204,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 0.319,
+          "evidence": []
+        },
+        {
+          "term": "lines",
+          "score": 0.3166,
+          "evidence": []
+        },
+        {
+          "term": "health management",
+          "score": 0.288,
+          "evidence": []
+        },
+        {
+          "term": "igo",
+          "score": 0.2574,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "world health",
+          "score": 13.7755,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 13.3791,
+          "evidence": []
+        },
+        {
+          "term": "tel",
+          "score": 8.8015,
+          "evidence": []
+        },
+        {
+          "term": "fax",
+          "score": 8.1484,
+          "evidence": []
+        },
+        {
+          "term": "e-mail",
+          "score": 7.6814,
+          "evidence": []
+        },
+        {
+          "term": "health management",
+          "score": 7.6316,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 5.5805,
+          "evidence": []
+        },
+        {
+          "term": "accessed",
+          "score": 4.4241,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "world health",
+          "score": 0.7704,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.7671,
+          "evidence": []
+        },
+        {
+          "term": "health management",
+          "score": 0.326,
+          "evidence": []
+        },
+        {
+          "term": "lines",
+          "score": 0.3166,
+          "evidence": []
+        },
+        {
+          "term": "publication",
+          "score": 0.2411,
+          "evidence": []
+        },
+        {
+          "term": "concerning",
+          "score": 0.2406,
+          "evidence": []
+        },
+        {
+          "term": "products",
+          "score": 0.2333,
+          "evidence": []
+        },
+        {
+          "term": "permission",
+          "score": 0.2297,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 56.4065,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 38.4734,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 36.8812,
+          "evidence": []
+        },
+        {
+          "term": "一致元数据和定义",
+          "score": 32.201,
+          "evidence": []
+        },
+        {
+          "term": "数字疗法",
+          "score": 30.9173,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 30.2752,
+          "evidence": []
+        },
+        {
+          "term": "问题的讨论结束",
+          "score": 30.2752,
+          "evidence": []
+        },
+        {
+          "term": "见下面第",
+          "score": 30.0756,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/work-plan/skills/work-plan/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/package/work-plan",
+      "@type": "cat-harness:SkillPackage",
+      "name": "work-plan"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/bean-blocking",
+      "@type": "bootstrap:Skill",
+      "name": "bean-blocking",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/12fe21217ea12ba4a89489db55c5452d761989fee13fc142153723d8709eaf43",
+        "bytes": 4566,
+        "sha256": "12fe21217ea12ba4a89489db55c5452d761989fee13fc142153723d8709eaf43"
+      },
+      "title": "Blocking is a claim about the work, not a mood"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/bean-coordination",
+      "@type": "bootstrap:Skill",
+      "name": "bean-coordination",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/bd36b615cb0db21554d59a401298e2fd233b2e1475bd79e2abb32c2dc02577f9",
+        "bytes": 36538,
+        "sha256": "bd36b615cb0db21554d59a401298e2fd233b2e1475bd79e2abb32c2dc02577f9"
+      },
+      "title": "Bean Coordination"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/bean-drain",
+      "@type": "bootstrap:Skill",
+      "name": "bean-drain",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e133b9faa960aa1a7d1b3155417e0b60bef48798f75d41b61973434ebbd792e7",
+        "bytes": 10180,
+        "sha256": "e133b9faa960aa1a7d1b3155417e0b60bef48798f75d41b61973434ebbd792e7"
+      },
+      "title": "Bean drain"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/idle-backlog",
+      "@type": "bootstrap:Skill",
+      "name": "idle-backlog",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1d3bab74adf9007ab3e06d844121a3aec63ff136ebb41b23f602ea96b7fde052",
+        "bytes": 2741,
+        "sha256": "1d3bab74adf9007ab3e06d844121a3aec63ff136ebb41b23f602ea96b7fde052"
+      },
+      "title": "idle-backlog"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/todo-manager",
+      "@type": "bootstrap:Skill",
+      "name": "todo-manager",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f00faa6229dad0d3383fc7a39df46f5a9eb6c48c4aca842c4110a2bede318d73",
+        "bytes": 37679,
+        "sha256": "f00faa6229dad0d3383fc7a39df46f5a9eb6c48c4aca842c4110a2bede318d73"
+      },
+      "title": "Session Task Manager (`beans`)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/work-plan-restructure",
+      "@type": "bootstrap:Skill",
+      "name": "work-plan-restructure",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8aaa19f029ae3bd444eb256d89bea048163bd4200594764634e8bd62ceaae7ee",
+        "bytes": 8688,
+        "sha256": "8aaa19f029ae3bd444eb256d89bea048163bd4200594764634e8bd62ceaae7ee"
+      },
+      "title": "Restructuring a work plan — a reviewed plan, not a bulk edit"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/work-plan-store",
+      "@type": "bootstrap:Skill",
+      "name": "work-plan-store",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f80a10bd076a17dd04def1913bb83f4028988318cee9be007c12a8a2b7e7b501",
+        "bytes": 5875,
+        "sha256": "f80a10bd076a17dd04def1913bb83f4028988318cee9be007c12a8a2b7e7b501"
+      },
+      "title": "The work plan's contract"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/work-plan-store-git-branch",
+      "@type": "bootstrap:Skill",
+      "name": "work-plan-store-git-branch",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/cbb3996900983c0fa55b0ab4434e0878888967fe350687d318fcc74546aef1a8",
+        "bytes": 3628,
+        "sha256": "cbb3996900983c0fa55b0ab4434e0878888967fe350687d318fcc74546aef1a8"
+      },
+      "title": "The work plan on a git state branch"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "work-plan/skills/work-plan",
+  "path": "work-plan/skills/work-plan/"
+}

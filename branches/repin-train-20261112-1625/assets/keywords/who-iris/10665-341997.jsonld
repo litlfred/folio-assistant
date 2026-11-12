@@ -1,0 +1,2510 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-341997",
+  "instance": "who-iris",
+  "about": "library/10665-341997",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7434,
+    "terms": 71211
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "decision-support logic",
+        "score": 13.8269,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "digital adaptation",
+        "score": 12.5078,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "requirements workflows",
+        "score": 12.0917,
+        "evidence": []
+      },
+      {
+        "term": "digital health",
+        "score": 11.9791,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "decision-support systems",
+        "score": 11.9346,
+        "evidence": []
+      },
+      {
+        "term": "contraceptive patch",
+        "score": 11.618,
+        "evidence": []
+      },
+      {
+        "term": "personas workflows",
+        "score": 11.2826,
+        "evidence": []
+      },
+      {
+        "term": "ring ecps",
+        "score": 10.8191,
+        "evidence": []
+      },
+      {
+        "term": "contraceptive method",
+        "score": 10.7769,
+        "evidence": []
+      },
+      {
+        "term": "requirements scenarios",
+        "score": 10.6864,
+        "evidence": []
+      },
+      {
+        "term": "logic overview",
+        "score": 10.6582,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "digital interventions",
+        "score": 10.6143,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "client method",
+        "score": 2345.6408,
+        "evidence": []
+      },
+      {
+        "term": "contraceptive method",
+        "score": 1771.4576,
+        "evidence": []
+      },
+      {
+        "term": "side-effects bleeding",
+        "score": 1583.1381,
+        "evidence": []
+      },
+      {
+        "term": "planning method",
+        "score": 1550.1332,
+        "evidence": []
+      },
+      {
+        "term": "client visit",
+        "score": 1392.5218,
+        "evidence": []
+      },
+      {
+        "term": "client health-care",
+        "score": 1377.7478,
+        "evidence": []
+      },
+      {
+        "term": "days method",
+        "score": 1368.0357,
+        "evidence": []
+      },
+      {
+        "term": "client medical",
+        "score": 1341.3174,
+        "evidence": []
+      },
+      {
+        "term": "method service",
+        "score": 1333.274,
+        "evidence": []
+      },
+      {
+        "term": "every client",
+        "score": 1324.4595,
+        "evidence": []
+      },
+      {
+        "term": "back-up method",
+        "score": 1315.201,
+        "evidence": []
+      },
+      {
+        "term": "method reason",
+        "score": 1312.783,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "digital health",
+        "score": 12.0982,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "digital system",
+        "score": 10.8402,
+        "evidence": []
+      },
+      {
+        "term": "digital adaptation",
+        "score": 10.8302,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "digital interventions",
+        "score": 10.282,
+        "evidence": []
+      },
+      {
+        "term": "requirements workflows",
+        "score": 9.7689,
+        "evidence": []
+      },
+      {
+        "term": "decision-support logic",
+        "score": 9.6142,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "digital tracking",
+        "score": 9.3642,
+        "evidence": []
+      },
+      {
+        "term": "client method",
+        "score": 9.219,
+        "evidence": []
+      },
+      {
+        "term": "workflows data",
+        "score": 9.155,
+        "evidence": []
+      },
+      {
+        "term": "personas workflows",
+        "score": 9.0955,
+        "evidence": []
+      },
+      {
+        "term": "indicators workflows",
+        "score": 8.4963,
+        "evidence": []
+      },
+      {
+        "term": "side-effects bleeding",
+        "score": 8.4194,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "client method",
+        "score": 2393.2806,
+        "evidence": []
+      },
+      {
+        "term": "contraceptive method",
+        "score": 1748.9855,
+        "evidence": []
+      },
+      {
+        "term": "side-effects bleeding",
+        "score": 1616.9564,
+        "evidence": []
+      },
+      {
+        "term": "planning method",
+        "score": 1545.4668,
+        "evidence": []
+      },
+      {
+        "term": "client visit",
+        "score": 1426.3606,
+        "evidence": []
+      },
+      {
+        "term": "client health-care",
+        "score": 1411.2727,
+        "evidence": []
+      },
+      {
+        "term": "days method",
+        "score": 1388.8718,
+        "evidence": []
+      },
+      {
+        "term": "client medical",
+        "score": 1366.8108,
+        "evidence": []
+      },
+      {
+        "term": "method service",
+        "score": 1361.3007,
+        "evidence": []
+      },
+      {
+        "term": "every client",
+        "score": 1359.6034,
+        "evidence": []
+      },
+      {
+        "term": "client name",
+        "score": 1337.3757,
+        "evidence": []
+      },
+      {
+        "term": "method reason",
+        "score": 1335.804,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "digital health",
+        "score": 12.0982,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "digital system",
+        "score": 10.8402,
+        "evidence": []
+      },
+      {
+        "term": "digital adaptation",
+        "score": 10.8302,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "digital interventions",
+        "score": 10.282,
+        "evidence": []
+      },
+      {
+        "term": "requirements workflows",
+        "score": 9.7689,
+        "evidence": []
+      },
+      {
+        "term": "decision-support logic",
+        "score": 9.6142,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "digital tracking",
+        "score": 9.3642,
+        "evidence": []
+      },
+      {
+        "term": "client method",
+        "score": 9.219,
+        "evidence": []
+      },
+      {
+        "term": "workflows data",
+        "score": 9.155,
+        "evidence": []
+      },
+      {
+        "term": "personas workflows",
+        "score": 9.0955,
+        "evidence": []
+      },
+      {
+        "term": "appropriate digital",
+        "score": 8.9026,
+        "evidence": []
+      },
+      {
+        "term": "digital implementations",
+        "score": 8.8933,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "允许进行个人反馈",
+        "score": 555.2634,
+        "evidence": []
+      },
+      {
+        "term": "并提供一",
+        "score": 428.4339,
+        "evidence": []
+      },
+      {
+        "term": "询问学员这项原则如何应用于紧急情况下的研究",
+        "score": 422.2746,
+        "evidence": []
+      },
+      {
+        "term": "相一致",
+        "score": 407.5531,
+        "evidence": []
+      },
+      {
+        "term": "如果没有",
+        "score": 402.8137,
+        "evidence": []
+      },
+      {
+        "term": "乌干达",
+        "score": 371.5565,
+        "evidence": []
+      },
+      {
+        "term": "精神卫生",
+        "score": 329.7243,
+        "evidence": []
+      },
+      {
+        "term": "咨询小组将由18名成员组成",
+        "score": 323.2855,
+        "evidence": []
+      },
+      {
+        "term": "汇集在流感领域中国际公认的决策者",
+        "score": 323.2855,
+        "evidence": []
+      },
+      {
+        "term": "加强全球",
+        "score": 313.9611,
+        "evidence": []
+      },
+      {
+        "term": "区域和国家各级的数字卫生保健治理",
+        "score": 313.9611,
+        "evidence": []
+      },
+      {
+        "term": "注意到",
+        "score": 313.9436,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-acknowledgements": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "regenstrief institute",
+          "score": 2.2841,
+          "evidence": []
+        },
+        {
+          "term": "independent consultant",
+          "score": 1.8868,
+          "evidence": []
+        },
+        {
+          "term": "mpower social",
+          "score": 1.8003,
+          "evidence": []
+        },
+        {
+          "term": "social enterprises",
+          "score": 1.4322,
+          "evidence": []
+        },
+        {
+          "term": "path",
+          "score": 1.424,
+          "evidence": []
+        },
+        {
+          "term": "enterprises limited",
+          "score": 1.3901,
+          "evidence": []
+        },
+        {
+          "term": "jsi",
+          "score": 1.3332,
+          "evidence": []
+        },
+        {
+          "term": "john snow",
+          "score": 1.2633,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "regenstrief institute",
+          "score": 54.5428,
+          "evidence": []
+        },
+        {
+          "term": "independent consultant",
+          "score": 44.8025,
+          "evidence": []
+        },
+        {
+          "term": "path",
+          "score": 43.3911,
+          "evidence": []
+        },
+        {
+          "term": "mpower social",
+          "score": 32.8884,
+          "evidence": []
+        },
+        {
+          "term": "jsi",
+          "score": 32.1446,
+          "evidence": []
+        },
+        {
+          "term": "unfpa",
+          "score": 31.9901,
+          "evidence": []
+        },
+        {
+          "term": "social enterprises",
+          "score": 25.8342,
+          "evidence": []
+        },
+        {
+          "term": "enterprises limited",
+          "score": 25.6995,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "united states",
+          "score": 0.5581,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.4699,
+          "evidence": []
+        },
+        {
+          "term": "states agency",
+          "score": 0.3887,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 0.3835,
+          "evidence": []
+        },
+        {
+          "term": "digital",
+          "score": 0.3789,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.3749,
+          "evidence": []
+        },
+        {
+          "term": "institute",
+          "score": 0.3666,
+          "evidence": []
+        },
+        {
+          "term": "regenstrief institute",
+          "score": 0.3666,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "united states",
+          "score": 10.6311,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 9.7584,
+          "evidence": []
+        },
+        {
+          "term": "usa",
+          "score": 6.2396,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 5.1419,
+          "evidence": []
+        },
+        {
+          "term": "digital",
+          "score": 5.1351,
+          "evidence": []
+        },
+        {
+          "term": "states agency",
+          "score": 4.8249,
+          "evidence": []
+        },
+        {
+          "term": "kingdom",
+          "score": 4.4316,
+          "evidence": []
+        },
+        {
+          "term": "switzerland",
+          "score": 3.8346,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "united states",
+          "score": 0.5581,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.4699,
+          "evidence": []
+        },
+        {
+          "term": "regenstrief institute",
+          "score": 0.4318,
+          "evidence": []
+        },
+        {
+          "term": "states agency",
+          "score": 0.3887,
+          "evidence": []
+        },
+        {
+          "term": "digital",
+          "score": 0.3789,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.3749,
+          "evidence": []
+        },
+        {
+          "term": "international",
+          "score": 0.3505,
+          "evidence": []
+        },
+        {
+          "term": "department",
+          "score": 0.2927,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 478.6529,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 286.0674,
+          "evidence": []
+        },
+        {
+          "term": "以及卫生保健界",
+          "score": 274.1587,
+          "evidence": []
+        },
+        {
+          "term": "基金会和开发银行",
+          "score": 274.1587,
+          "evidence": []
+        },
+        {
+          "term": "大学和研究机构",
+          "score": 274.1587,
+          "evidence": []
+        },
+        {
+          "term": "如非政府组织和民间社会组织",
+          "score": 274.1587,
+          "evidence": []
+        },
+        {
+          "term": "宗教组织",
+          "score": 274.1587,
+          "evidence": []
+        },
+        {
+          "term": "患者和公众",
+          "score": 274.1587,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-001-abbreviations": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "vaginal ring",
+          "score": 1.6093,
+          "evidence": []
+        },
+        {
+          "term": "transcriptase inhibitor",
+          "score": 1.6084,
+          "evidence": []
+        },
+        {
+          "term": "reverse transcriptase",
+          "score": 1.3787,
+          "evidence": []
+        },
+        {
+          "term": "contraceptive",
+          "score": 1.345,
+          "evidence": []
+        },
+        {
+          "term": "intrauterine device",
+          "score": 1.3386,
+          "evidence": []
+        },
+        {
+          "term": "thrombosis",
+          "score": 0.9491,
+          "evidence": []
+        },
+        {
+          "term": "acetate",
+          "score": 0.9028,
+          "evidence": []
+        },
+        {
+          "term": "venous",
+          "score": 0.8832,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "contraceptive",
+          "score": 29.4389,
+          "evidence": []
+        },
+        {
+          "term": "transcriptase inhibitor",
+          "score": 28.1804,
+          "evidence": []
+        },
+        {
+          "term": "reverse transcriptase",
+          "score": 21.9214,
+          "evidence": []
+        },
+        {
+          "term": "vaginal ring",
+          "score": 20.4857,
+          "evidence": []
+        },
+        {
+          "term": "intrauterine device",
+          "score": 19.4159,
+          "evidence": []
+        },
+        {
+          "term": "thrombosis",
+          "score": 15.055,
+          "evidence": []
+        },
+        {
+          "term": "combined",
+          "score": 14.5633,
+          "evidence": []
+        },
+        {
+          "term": "venous",
+          "score": 14.2441,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "vaginal ring",
+          "score": 0.333,
+          "evidence": []
+        },
+        {
+          "term": "digital",
+          "score": 0.2429,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.2334,
+          "evidence": []
+        },
+        {
+          "term": "bleeding",
+          "score": 0.1914,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.1856,
+          "evidence": []
+        },
+        {
+          "term": "contraceptive",
+          "score": 0.1739,
+          "evidence": []
+        },
+        {
+          "term": "world",
+          "score": 0.1715,
+          "evidence": []
+        },
+        {
+          "term": "pills",
+          "score": 0.1677,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "vaginal ring",
+          "score": 13.5935,
+          "evidence": []
+        },
+        {
+          "term": "method",
+          "score": 5.4164,
+          "evidence": []
+        },
+        {
+          "term": "dapivirine",
+          "score": 5.2663,
+          "evidence": []
+        },
+        {
+          "term": "bleeding",
+          "score": 5.01,
+          "evidence": []
+        },
+        {
+          "term": "she",
+          "score": 4.7076,
+          "evidence": []
+        },
+        {
+          "term": "client",
+          "score": 4.4452,
+          "evidence": []
+        },
+        {
+          "term": "digital",
+          "score": 4.2071,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 4.0348,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "vaginal ring",
+          "score": 0.333,
+          "evidence": []
+        },
+        {
+          "term": "digital",
+          "score": 0.2429,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.2334,
+          "evidence": []
+        },
+        {
+          "term": "contraceptive",
+          "score": 0.1739,
+          "evidence": []
+        },
+        {
+          "term": "intrauterine device",
+          "score": 0.1674,
+          "evidence": []
+        },
+        {
+          "term": "method",
+          "score": 0.1276,
+          "evidence": []
+        },
+        {
+          "term": "pill",
+          "score": 0.1252,
+          "evidence": []
+        },
+        {
+          "term": "medical",
+          "score": 0.115,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 49.8766,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 49.8766,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 46.779,
+          "evidence": []
+        },
+        {
+          "term": "可能性",
+          "score": 44.1481,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 42.8773,
+          "evidence": []
+        },
+        {
+          "term": "潜在受试者",
+          "score": 38.5275,
+          "evidence": []
+        },
+        {
+          "term": "平等主义",
+          "score": 35.5194,
+          "evidence": []
+        },
+        {
+          "term": "学员a",
+          "score": 34.1835,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-002-background": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "pocs patch",
+          "score": 3.5136,
+          "evidence": []
+        },
+        {
+          "term": "amenorrhoea patch",
+          "score": 3.4984,
+          "evidence": []
+        },
+        {
+          "term": "surgical sterilization",
+          "score": 3.1102,
+          "evidence": []
+        },
+        {
+          "term": "sterilization ring",
+          "score": 3.0721,
+          "evidence": []
+        },
+        {
+          "term": "coitus interruptus",
+          "score": 2.9708,
+          "evidence": []
+        },
+        {
+          "term": "sterilization intrauterine",
+          "score": 2.9067,
+          "evidence": []
+        },
+        {
+          "term": "patch female",
+          "score": 2.8992,
+          "evidence": []
+        },
+        {
+          "term": "ring ecps",
+          "score": 2.8689,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "digital health",
+          "score": 146.4977,
+          "evidence": []
+        },
+        {
+          "term": "digital tracking",
+          "score": 135.3375,
+          "evidence": []
+        },
+        {
+          "term": "digital systems",
+          "score": 135.1451,
+          "evidence": []
+        },
+        {
+          "term": "digital adaptation",
+          "score": 113.12,
+          "evidence": []
+        },
+        {
+          "term": "digital tools",
+          "score": 107.9769,
+          "evidence": []
+        },
+        {
+          "term": "digital intervention",
+          "score": 104.4346,
+          "evidence": []
+        },
+        {
+          "term": "digital forms",
+          "score": 104.1638,
+          "evidence": []
+        },
+        {
+          "term": "pocs patch",
+          "score": 93.1029,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "digital health",
+          "score": 2.7764,
+          "evidence": []
+        },
+        {
+          "term": "digital systems",
+          "score": 2.6179,
+          "evidence": []
+        },
+        {
+          "term": "digital adaptation",
+          "score": 2.3938,
+          "evidence": []
+        },
+        {
+          "term": "digital tracking",
+          "score": 2.2628,
+          "evidence": []
+        },
+        {
+          "term": "digital intervention",
+          "score": 2.1647,
+          "evidence": []
+        },
+        {
+          "term": "digital tools",
+          "score": 2.0786,
+          "evidence": []
+        },
+        {
+          "term": "digital forms",
+          "score": 1.7548,
+          "evidence": []
+        },
+        {
+          "term": "clients health",
+          "score": 1.6081,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "digital health",
+          "score": 145.162,
+          "evidence": []
+        },
+        {
+          "term": "digital systems",
+          "score": 107.6705,
+          "evidence": []
+        },
+        {
+          "term": "digital intervention",
+          "score": 97.1704,
+          "evidence": []
+        },
+        {
+          "term": "digital tracking",
+          "score": 96.6135,
+          "evidence": []
+        },
+        {
+          "term": "digital adaptation",
+          "score": 95.3172,
+          "evidence": []
+        },
+        {
+          "term": "digital tools",
+          "score": 94.7641,
+          "evidence": []
+        },
+        {
+          "term": "digital forms",
+          "score": 88.7796,
+          "evidence": []
+        },
+        {
+          "term": "health information",
+          "score": 67.588,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "digital health",
+          "score": 2.7764,
+          "evidence": []
+        },
+        {
+          "term": "digital systems",
+          "score": 2.6179,
+          "evidence": []
+        },
+        {
+          "term": "digital adaptation",
+          "score": 2.3938,
+          "evidence": []
+        },
+        {
+          "term": "digital tracking",
+          "score": 2.2628,
+          "evidence": []
+        },
+        {
+          "term": "digital intervention",
+          "score": 2.1647,
+          "evidence": []
+        },
+        {
+          "term": "digital tools",
+          "score": 2.0786,
+          "evidence": []
+        },
+        {
+          "term": "digital forms",
+          "score": 1.8646,
+          "evidence": []
+        },
+        {
+          "term": "clients health",
+          "score": 1.6081,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 50.1395,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 50.024,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 46.4849,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 39.1606,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 39.1606,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 38.2907,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 36.4229,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 31.1602,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-003-objectives": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "software developers",
+          "score": 1.2372,
+          "evidence": []
+        },
+        {
+          "term": "dak",
+          "score": 1.2215,
+          "evidence": []
+        },
+        {
+          "term": "health content",
+          "score": 1.1486,
+          "evidence": []
+        },
+        {
+          "term": "self-care interventions",
+          "score": 1.1466,
+          "evidence": []
+        },
+        {
+          "term": "digital systems",
+          "score": 1.0499,
+          "evidence": []
+        },
+        {
+          "term": "health programme",
+          "score": 0.9191,
+          "evidence": []
+        },
+        {
+          "term": "decision-support",
+          "score": 0.9087,
+          "evidence": []
+        },
+        {
+          "term": "daks",
+          "score": 0.8825,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "dak",
+          "score": 27.5631,
+          "evidence": []
+        },
+        {
+          "term": "health content",
+          "score": 22.7272,
+          "evidence": []
+        },
+        {
+          "term": "software developers",
+          "score": 19.0238,
+          "evidence": []
+        },
+        {
+          "term": "digital systems",
+          "score": 16.7782,
+          "evidence": []
+        },
+        {
+          "term": "self-care interventions",
+          "score": 16.64,
+          "evidence": []
+        },
+        {
+          "term": "daks",
+          "score": 16.2519,
+          "evidence": []
+        },
+        {
+          "term": "health programme",
+          "score": 16.0689,
+          "evidence": []
+        },
+        {
+          "term": "decision-support",
+          "score": 14.5601,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "digital systems",
+          "score": 0.751,
+          "evidence": []
+        },
+        {
+          "term": "health content",
+          "score": 0.5423,
+          "evidence": []
+        },
+        {
+          "term": "health programme",
+          "score": 0.5298,
+          "evidence": []
+        },
+        {
+          "term": "interventions",
+          "score": 0.2668,
+          "evidence": []
+        },
+        {
+          "term": "self-care interventions",
+          "score": 0.2668,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.2345,
+          "evidence": []
+        },
+        {
+          "term": "services",
+          "score": 0.2148,
+          "evidence": []
+        },
+        {
+          "term": "care",
+          "score": 0.214,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "digital systems",
+          "score": 15.3335,
+          "evidence": []
+        },
+        {
+          "term": "health content",
+          "score": 10.7088,
+          "evidence": []
+        },
+        {
+          "term": "health programme",
+          "score": 10.077,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 4.6366,
+          "evidence": []
+        },
+        {
+          "term": "client",
+          "score": 4.3996,
+          "evidence": []
+        },
+        {
+          "term": "anc",
+          "score": 3.1684,
+          "evidence": []
+        },
+        {
+          "term": "services",
+          "score": 2.9665,
+          "evidence": []
+        },
+        {
+          "term": "support",
+          "score": 2.7428,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "digital systems",
+          "score": 0.751,
+          "evidence": []
+        },
+        {
+          "term": "health content",
+          "score": 0.5423,
+          "evidence": []
+        },
+        {
+          "term": "health programme",
+          "score": 0.5298,
+          "evidence": []
+        },
+        {
+          "term": "self-care interventions",
+          "score": 0.3064,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.2345,
+          "evidence": []
+        },
+        {
+          "term": "care",
+          "score": 0.214,
+          "evidence": []
+        },
+        {
+          "term": "requirements",
+          "score": 0.2118,
+          "evidence": []
+        },
+        {
+          "term": "software developers",
+          "score": 0.2109,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 45.8587,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 42.3472,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 42.3118,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 38.1203,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 38.1203,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 34.5511,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 33.3802,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 29.3678,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-004-components-of-a-digital-adaptation-kit": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "adaptation kit",
+          "score": 3.5631,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "digital adaptation",
+          "score": 3.5567,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "decision-support logic",
+          "score": 3.0236,
+          "evidence": []
+        },
+        {
+          "term": "non-functional requirement",
+          "score": 2.3882,
+          "evidence": []
+        },
+        {
+          "term": "decision-support table",
+          "score": 2.2154,
+          "evidence": []
+        },
+        {
+          "term": "functional requirement",
+          "score": 1.9838,
+          "evidence": []
+        },
+        {
+          "term": "generic personas",
+          "score": 1.9594,
+          "evidence": []
+        },
+        {
+          "term": "existing workflows",
+          "score": 1.8897,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "decision-support logic",
+          "score": 93.6048,
+          "evidence": []
+        },
+        {
+          "term": "digital adaptation",
+          "score": 77.2457,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "adaptation kit",
+          "score": 72.7704,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "decision-support table",
+          "score": 63.5591,
+          "evidence": []
+        },
+        {
+          "term": "data elements",
+          "score": 63.0985,
+          "evidence": []
+        },
+        {
+          "term": "non-functional requirement",
+          "score": 59.1642,
+          "evidence": []
+        },
+        {
+          "term": "functional requirement",
+          "score": 48.744,
+          "evidence": []
+        },
+        {
+          "term": "data dictionary",
+          "score": 47.7877,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "digital adaptation",
+          "score": 3.7454,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "adaptation kit",
+          "score": 2.0762,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "digital system",
+          "score": 1.8269,
+          "evidence": []
+        },
+        {
+          "term": "decision-support logic",
+          "score": 1.5301,
+          "evidence": []
+        },
+        {
+          "term": "non-functional requirements",
+          "score": 1.2489,
+          "evidence": []
+        },
+        {
+          "term": "business process",
+          "score": 1.2314,
+          "evidence": []
+        },
+        {
+          "term": "data elements",
+          "score": 1.1911,
+          "evidence": []
+        },
+        {
+          "term": "health interventions",
+          "score": 1.1616,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "digital adaptation",
+          "score": 55.3767,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "data elements",
+          "score": 42.9776,
+          "evidence": []
+        },
+        {
+          "term": "digital system",
+          "score": 38.5621,
+          "evidence": []
+        },
+        {
+          "term": "data dictionary",
+          "score": 38.3346,
+          "evidence": []
+        },
+        {
+          "term": "core data",
+          "score": 37.3025,
+          "evidence": []
+        },
+        {
+          "term": "non-functional requirements",
+          "score": 20.2341,
+          "evidence": []
+        },
+        {
+          "term": "health interventions",
+          "score": 19.2027,
+          "evidence": []
+        },
+        {
+          "term": "system design",
+          "score": 19.0325,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "digital adaptation",
+          "score": 3.7454,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "adaptation kit",
+          "score": 2.0762,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "digital system",
+          "score": 1.8269,
+          "evidence": []
+        },
+        {
+          "term": "decision-support logic",
+          "score": 1.5301,
+          "evidence": []
+        },
+        {
+          "term": "non-functional requirements",
+          "score": 1.2489,
+          "evidence": []
+        },
+        {
+          "term": "business process",
+          "score": 1.2314,
+          "evidence": []
+        },
+        {
+          "term": "data elements",
+          "score": 1.1911,
+          "evidence": []
+        },
+        {
+          "term": "health interventions",
+          "score": 1.1616,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 57.8333,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 45.0828,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 44.6595,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 39.8099,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 39.8099,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 36.0853,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 31.4944,
+          "evidence": []
+        },
+        {
+          "term": "平等主义",
+          "score": 31.4059,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-005-how-to-use-this-digital-adaptation-kit": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "dtds systems",
+          "score": 2.2668,
+          "evidence": []
+        },
+        {
+          "term": "digital",
+          "score": 2.0423,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "dak",
+          "score": 1.8461,
+          "evidence": []
+        },
+        {
+          "term": "health content",
+          "score": 1.5435,
+          "evidence": []
+        },
+        {
+          "term": "data elements",
+          "score": 1.4051,
+          "evidence": []
+        },
+        {
+          "term": "content requirements",
+          "score": 1.3811,
+          "evidence": []
+        },
+        {
+          "term": "data dictionary",
+          "score": 1.3223,
+          "evidence": []
+        },
+        {
+          "term": "health programme",
+          "score": 1.3072,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "dak",
+          "score": 77.1767,
+          "evidence": []
+        },
+        {
+          "term": "dtds systems",
+          "score": 69.4026,
+          "evidence": []
+        },
+        {
+          "term": "digital",
+          "score": 64.987,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health content",
+          "score": 47.635,
+          "evidence": []
+        },
+        {
+          "term": "information systems",
+          "score": 38.1261,
+          "evidence": []
+        },
+        {
+          "term": "health programme",
+          "score": 36.8276,
+          "evidence": []
+        },
+        {
+          "term": "data elements",
+          "score": 33.7072,
+          "evidence": []
+        },
+        {
+          "term": "content requirements",
+          "score": 32.9956,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "digital",
+          "score": 1.8229,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "digital systems",
+          "score": 1.3909,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 0.9902,
+          "evidence": []
+        },
+        {
+          "term": "health information",
+          "score": 0.945,
+          "evidence": []
+        },
+        {
+          "term": "health content",
+          "score": 0.9024,
+          "evidence": []
+        },
+        {
+          "term": "data elements",
+          "score": 0.8833,
+          "evidence": []
+        },
+        {
+          "term": "health programme",
+          "score": 0.856,
+          "evidence": []
+        },
+        {
+          "term": "data dictionary",
+          "score": 0.7808,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "digital",
+          "score": 65.1403,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "digital system",
+          "score": 43.6586,
+          "evidence": []
+        },
+        {
+          "term": "health information",
+          "score": 29.0497,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 27.96,
+          "evidence": []
+        },
+        {
+          "term": "health content",
+          "score": 26.1279,
+          "evidence": []
+        },
+        {
+          "term": "health programme",
+          "score": 24.3881,
+          "evidence": []
+        },
+        {
+          "term": "data elements",
+          "score": 24.0428,
+          "evidence": []
+        },
+        {
+          "term": "primary health",
+          "score": 23.5825,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "digital",
+          "score": 1.8229,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "digital systems",
+          "score": 1.3909,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 0.9902,
+          "evidence": []
+        },
+        {
+          "term": "health information",
+          "score": 0.945,
+          "evidence": []
+        },
+        {
+          "term": "health content",
+          "score": 0.9024,
+          "evidence": []
+        },
+        {
+          "term": "data elements",
+          "score": 0.8833,
+          "evidence": []
+        },
+        {
+          "term": "health programme",
+          "score": 0.856,
+          "evidence": []
+        },
+        {
+          "term": "data dictionary",
+          "score": 0.7808,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 50.2018,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 49.6593,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 45.1014,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 38.8878,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 38.8878,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 37.1369,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 34.7326,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 31.4717,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-linkages-to-the-broader-digital-health-ecosystem": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "side-effects bleeding",
+          "score": 7.9496,
+          "evidence": []
+        },
+        {
+          "term": "bleeding irregular",
+          "score": 7.6705,
+          "evidence": []
+        },
+        {
+          "term": "bleeding headaches",
+          "score": 7.4226,
+          "evidence": []
+        },
+        {
+          "term": "ring ecps",
+          "score": 7.0541,
+          "evidence": []
+        },
+        {
+          "term": "contraceptive pills",
+          "score": 6.9657,
+          "evidence": []
+        },
+        {
+          "term": "menstrual bleeding",
+          "score": 6.9139,
+          "evidence": []
+        },
+        {
+          "term": "bleeding infrequent",
+          "score": 6.8401,
+          "evidence": []
+        },
+        {
+          "term": "vaginal bleeding",
+          "score": 6.7687,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "client method",
+          "score": 2316.5197,
+          "evidence": []
+        },
+        {
+          "term": "contraceptive method",
+          "score": 1707.5065,
+          "evidence": []
+        },
+        {
+          "term": "side-effects bleeding",
+          "score": 1583.1381,
+          "evidence": []
+        },
+        {
+          "term": "planning method",
+          "score": 1500.132,
+          "evidence": []
+        },
+        {
+          "term": "client visit",
+          "score": 1373.3804,
+          "evidence": []
+        },
+        {
+          "term": "days method",
+          "score": 1358.056,
+          "evidence": []
+        },
+        {
+          "term": "client health-care",
+          "score": 1351.2833,
+          "evidence": []
+        },
+        {
+          "term": "method service",
+          "score": 1310.6258,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "side-effects bleeding",
+          "score": 7.9122,
+          "evidence": []
+        },
+        {
+          "term": "bleeding irregular",
+          "score": 7.5832,
+          "evidence": []
+        },
+        {
+          "term": "bleeding headaches",
+          "score": 7.314,
+          "evidence": []
+        },
+        {
+          "term": "ring ecps",
+          "score": 7.1637,
+          "evidence": []
+        },
+        {
+          "term": "contraceptive pills",
+          "score": 7.1399,
+          "evidence": []
+        },
+        {
+          "term": "contraceptive method",
+          "score": 6.9331,
+          "evidence": []
+        },
+        {
+          "term": "vaginal bleeding",
+          "score": 6.9051,
+          "evidence": []
+        },
+        {
+          "term": "client method",
+          "score": 6.8815,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "client method",
+          "score": 2317.8005,
+          "evidence": []
+        },
+        {
+          "term": "contraceptive method",
+          "score": 1704.0995,
+          "evidence": []
+        },
+        {
+          "term": "side-effects bleeding",
+          "score": 1577.6206,
+          "evidence": []
+        },
+        {
+          "term": "planning method",
+          "score": 1497.8102,
+          "evidence": []
+        },
+        {
+          "term": "client visit",
+          "score": 1377.0344,
+          "evidence": []
+        },
+        {
+          "term": "days method",
+          "score": 1355.4648,
+          "evidence": []
+        },
+        {
+          "term": "client health-care",
+          "score": 1355.2047,
+          "evidence": []
+        },
+        {
+          "term": "client medical",
+          "score": 1309.4776,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "side-effects bleeding",
+          "score": 7.9122,
+          "evidence": []
+        },
+        {
+          "term": "bleeding irregular",
+          "score": 7.5832,
+          "evidence": []
+        },
+        {
+          "term": "bleeding headaches",
+          "score": 7.314,
+          "evidence": []
+        },
+        {
+          "term": "ring ecps",
+          "score": 7.1637,
+          "evidence": []
+        },
+        {
+          "term": "contraceptive pills",
+          "score": 7.1399,
+          "evidence": []
+        },
+        {
+          "term": "contraceptive method",
+          "score": 6.9331,
+          "evidence": []
+        },
+        {
+          "term": "vaginal bleeding",
+          "score": 6.9051,
+          "evidence": []
+        },
+        {
+          "term": "client method",
+          "score": 6.8815,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 32.2869,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 30.0119,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 30.0119,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 28.6775,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 24.5802,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 20.8176,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 20.4673,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 18.541,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "adaptation kit",
+          "score": 2.2356,
+          "evidence": []
+        },
+        {
+          "term": "digital adaptation",
+          "score": 2.0266,
+          "evidence": []
+        },
+        {
+          "term": "non-functional requirements",
+          "score": 1.6623,
+          "evidence": []
+        },
+        {
+          "term": "operational requirements",
+          "score": 1.5211,
+          "evidence": []
+        },
+        {
+          "term": "web annex",
+          "score": 1.4247,
+          "evidence": []
+        },
+        {
+          "term": "digital systems",
+          "score": 1.3974,
+          "evidence": []
+        },
+        {
+          "term": "decision-support logic",
+          "score": 1.3853,
+          "evidence": []
+        },
+        {
+          "term": "data elements",
+          "score": 1.303,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "adaptation kit",
+          "score": 57.5297,
+          "evidence": []
+        },
+        {
+          "term": "digital adaptation",
+          "score": 53.3639,
+          "evidence": []
+        },
+        {
+          "term": "digital systems",
+          "score": 33.9242,
+          "evidence": []
+        },
+        {
+          "term": "web annex",
+          "score": 33.3029,
+          "evidence": []
+        },
+        {
+          "term": "operational requirements",
+          "score": 31.5636,
+          "evidence": []
+        },
+        {
+          "term": "non-functional requirements",
+          "score": 30.3873,
+          "evidence": []
+        },
+        {
+          "term": "component",
+          "score": 28.8604,
+          "evidence": []
+        },
+        {
+          "term": "data elements",
+          "score": 26.2356,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health organization",
+          "score": 1.1249,
+          "evidence": []
+        },
+        {
+          "term": "creative commons",
+          "score": 1.0829,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 1.078,
+          "evidence": []
+        },
+        {
+          "term": "mediation rules",
+          "score": 0.9474,
+          "evidence": []
+        },
+        {
+          "term": "suggested citation",
+          "score": 0.9418,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 0.9299,
+          "evidence": []
+        },
+        {
+          "term": "digital adaptation",
+          "score": 0.8932,
+          "evidence": []
+        },
+        {
+          "term": "digital systems",
+          "score": 0.7926,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "digital systems",
+          "score": 25.0422,
+          "evidence": []
+        },
+        {
+          "term": "digital adaptation",
+          "score": 23.3936,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 17.2654,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 17.051,
+          "evidence": []
+        },
+        {
+          "term": "data elements",
+          "score": 13.8779,
+          "evidence": []
+        },
+        {
+          "term": "data dictionary",
+          "score": 12.6178,
+          "evidence": []
+        },
+        {
+          "term": "core data",
+          "score": 12.0691,
+          "evidence": []
+        },
+        {
+          "term": "wpv",
+          "score": 12.0322,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health organization",
+          "score": 1.1249,
+          "evidence": []
+        },
+        {
+          "term": "creative commons",
+          "score": 1.0829,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 1.078,
+          "evidence": []
+        },
+        {
+          "term": "mediation rules",
+          "score": 0.9474,
+          "evidence": []
+        },
+        {
+          "term": "suggested citation",
+          "score": 0.9418,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 0.9299,
+          "evidence": []
+        },
+        {
+          "term": "digital adaptation",
+          "score": 0.8932,
+          "evidence": []
+        },
+        {
+          "term": "digital systems",
+          "score": 0.7926,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 52.8798,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 48.9836,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 43.7708,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 39.5666,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 39.5666,
+          "evidence": []
+        },
+        {
+          "term": "平等主义",
+          "score": 36.008,
+          "evidence": []
+        },
+        {
+          "term": "见下面第",
+          "score": 35.9361,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 35.3481,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

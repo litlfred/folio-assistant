@@ -1,0 +1,2820 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-349683",
+  "instance": "who-iris",
+  "about": "library/10665-349683",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7434,
+    "terms": 71211
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "unaids laws",
+        "score": 10.0243,
+        "evidence": []
+      },
+      {
+        "term": "sexual health",
+        "score": 8.8271,
+        "evidence": []
+      },
+      {
+        "term": "married women",
+        "score": 8.7238,
+        "evidence": []
+      },
+      {
+        "term": "women men",
+        "score": 8.6375,
+        "evidence": []
+      },
+      {
+        "term": "male condom",
+        "score": 8.4963,
+        "evidence": []
+      },
+      {
+        "term": "women aged",
+        "score": 7.835,
+        "evidence": []
+      },
+      {
+        "term": "unaids estimates",
+        "score": 7.7065,
+        "evidence": []
+      },
+      {
+        "term": "sexual violence",
+        "score": 7.2091,
+        "evidence": []
+      },
+      {
+        "term": "srh care",
+        "score": 7.1692,
+        "evidence": []
+      },
+      {
+        "term": "sexual intercourse",
+        "score": 7.0471,
+        "evidence": []
+      },
+      {
+        "term": "reproductive health",
+        "score": 6.9843,
+        "evidence": []
+      },
+      {
+        "term": "people living",
+        "score": 6.8926,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "unaids laws",
+        "score": 426.2814,
+        "evidence": []
+      },
+      {
+        "term": "indicator",
+        "score": 372.7113,
+        "evidence": []
+      },
+      {
+        "term": "unaids estimates",
+        "score": 346.9102,
+        "evidence": []
+      },
+      {
+        "term": "known source",
+        "score": 332.7899,
+        "evidence": []
+      },
+      {
+        "term": "policies analytics",
+        "score": 205.9318,
+        "evidence": []
+      },
+      {
+        "term": "laws criminalizing",
+        "score": 200.327,
+        "evidence": []
+      },
+      {
+        "term": "laws requiring",
+        "score": 197.365,
+        "evidence": []
+      },
+      {
+        "term": "sexual health",
+        "score": 190.3665,
+        "evidence": []
+      },
+      {
+        "term": "women men",
+        "score": 175.8438,
+        "evidence": []
+      },
+      {
+        "term": "observatory data",
+        "score": 171.9857,
+        "evidence": []
+      },
+      {
+        "term": "sdg database",
+        "score": 160.8917,
+        "evidence": []
+      },
+      {
+        "term": "women aged",
+        "score": 156.7327,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "women men",
+        "score": 6.7744,
+        "evidence": []
+      },
+      {
+        "term": "hiv prevention",
+        "score": 5.8797,
+        "evidence": []
+      },
+      {
+        "term": "pregnant women",
+        "score": 5.861,
+        "evidence": []
+      },
+      {
+        "term": "among women",
+        "score": 5.54,
+        "evidence": []
+      },
+      {
+        "term": "hiv status",
+        "score": 5.5154,
+        "evidence": []
+      },
+      {
+        "term": "hiv infections",
+        "score": 5.4568,
+        "evidence": []
+      },
+      {
+        "term": "hiv treatment",
+        "score": 5.2841,
+        "evidence": []
+      },
+      {
+        "term": "hiv prevalence",
+        "score": 5.255,
+        "evidence": []
+      },
+      {
+        "term": "sexual health",
+        "score": 5.248,
+        "evidence": []
+      },
+      {
+        "term": "health services",
+        "score": 5.1757,
+        "evidence": []
+      },
+      {
+        "term": "hiv counselling",
+        "score": 5.1633,
+        "evidence": []
+      },
+      {
+        "term": "women aged",
+        "score": 5.0493,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "known source",
+        "score": 173.6139,
+        "evidence": []
+      },
+      {
+        "term": "women men",
+        "score": 168.7466,
+        "evidence": []
+      },
+      {
+        "term": "hiv prevalence",
+        "score": 149.7917,
+        "evidence": []
+      },
+      {
+        "term": "observatory data",
+        "score": 147.2401,
+        "evidence": []
+      },
+      {
+        "term": "hiv status",
+        "score": 146.7041,
+        "evidence": []
+      },
+      {
+        "term": "hiv counselling",
+        "score": 145.9652,
+        "evidence": []
+      },
+      {
+        "term": "hiv prevention",
+        "score": 144.4615,
+        "evidence": []
+      },
+      {
+        "term": "available data",
+        "score": 141.536,
+        "evidence": []
+      },
+      {
+        "term": "hiv infections",
+        "score": 140.5844,
+        "evidence": []
+      },
+      {
+        "term": "hiv incidence",
+        "score": 139.9478,
+        "evidence": []
+      },
+      {
+        "term": "hiv treatment",
+        "score": 137.8339,
+        "evidence": []
+      },
+      {
+        "term": "indicator",
+        "score": 136.3607,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "women men",
+        "score": 6.7744,
+        "evidence": []
+      },
+      {
+        "term": "hiv prevention",
+        "score": 5.8797,
+        "evidence": []
+      },
+      {
+        "term": "pregnant women",
+        "score": 5.861,
+        "evidence": []
+      },
+      {
+        "term": "among women",
+        "score": 5.54,
+        "evidence": []
+      },
+      {
+        "term": "hiv status",
+        "score": 5.5154,
+        "evidence": []
+      },
+      {
+        "term": "hiv infections",
+        "score": 5.4568,
+        "evidence": []
+      },
+      {
+        "term": "hiv treatment",
+        "score": 5.2841,
+        "evidence": []
+      },
+      {
+        "term": "hiv prevalence",
+        "score": 5.255,
+        "evidence": []
+      },
+      {
+        "term": "sexual health",
+        "score": 5.248,
+        "evidence": []
+      },
+      {
+        "term": "health services",
+        "score": 5.1757,
+        "evidence": []
+      },
+      {
+        "term": "hiv counselling",
+        "score": 5.1633,
+        "evidence": []
+      },
+      {
+        "term": "women aged",
+        "score": 5.0493,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "允许进行个人反馈",
+        "score": 406.9446,
+        "evidence": []
+      },
+      {
+        "term": "并提供一",
+        "score": 361.6022,
+        "evidence": []
+      },
+      {
+        "term": "相一致",
+        "score": 303.214,
+        "evidence": []
+      },
+      {
+        "term": "在大流行间期提供疫苗供发展中国家使用",
+        "score": 300.3808,
+        "evidence": []
+      },
+      {
+        "term": "提供大流行性流感疫苗",
+        "score": 300.3808,
+        "evidence": []
+      },
+      {
+        "term": "将继续寻求专家的指导建议",
+        "score": 214.7112,
+        "evidence": []
+      },
+      {
+        "term": "乌干达",
+        "score": 210.6524,
+        "evidence": []
+      },
+      {
+        "term": "疫苗储备",
+        "score": 204.388,
+        "evidence": []
+      },
+      {
+        "term": "咨询小组将由18名成员组成",
+        "score": 189.9703,
+        "evidence": []
+      },
+      {
+        "term": "汇集在流感领域中国际公认的决策者",
+        "score": 189.9703,
+        "evidence": []
+      },
+      {
+        "term": "精神卫生",
+        "score": 185.2764,
+        "evidence": []
+      },
+      {
+        "term": "的材料",
+        "score": 183.9991,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "page-001": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "srhr",
+          "score": 1.2995,
+          "evidence": []
+        },
+        {
+          "term": "snapshot",
+          "score": 1.1078,
+          "evidence": []
+        },
+        {
+          "term": "life course",
+          "score": 0.9705,
+          "evidence": []
+        },
+        {
+          "term": "community engagement",
+          "score": 0.8312,
+          "evidence": []
+        },
+        {
+          "term": "reproductive health",
+          "score": 0.7689,
+          "evidence": []
+        },
+        {
+          "term": "health systems",
+          "score": 0.6354,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "srhr",
+          "score": 31.0288,
+          "evidence": []
+        },
+        {
+          "term": "snapshot",
+          "score": 23.8775,
+          "evidence": []
+        },
+        {
+          "term": "life course",
+          "score": 13.9681,
+          "evidence": []
+        },
+        {
+          "term": "community engagement",
+          "score": 11.4859,
+          "evidence": []
+        },
+        {
+          "term": "reproductive health",
+          "score": 10.0808,
+          "evidence": []
+        },
+        {
+          "term": "health systems",
+          "score": 7.4659,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health systems",
+          "score": 0.2645,
+          "evidence": []
+        },
+        {
+          "term": "reproductive health",
+          "score": 0.1724,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.1718,
+          "evidence": []
+        },
+        {
+          "term": "services",
+          "score": 0.1132,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.1099,
+          "evidence": []
+        },
+        {
+          "term": "information",
+          "score": 0.101,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "data",
+          "score": 4.6282,
+          "evidence": []
+        },
+        {
+          "term": "health systems",
+          "score": 3.5604,
+          "evidence": []
+        },
+        {
+          "term": "reproductive health",
+          "score": 2.2848,
+          "evidence": []
+        },
+        {
+          "term": "source",
+          "score": 1.5672,
+          "evidence": []
+        },
+        {
+          "term": "care",
+          "score": 1.2507,
+          "evidence": []
+        },
+        {
+          "term": "information",
+          "score": 1.1181,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health systems",
+          "score": 0.2645,
+          "evidence": []
+        },
+        {
+          "term": "reproductive health",
+          "score": 0.1902,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.1718,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.1099,
+          "evidence": []
+        },
+        {
+          "term": "community engagement",
+          "score": 0.0798,
+          "evidence": []
+        },
+        {
+          "term": "different",
+          "score": 0.0449,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 53.1129,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 42.699,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 41.8025,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 40.209,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 40.209,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 37.687,
+          "evidence": []
+        }
+      ]
+    },
+    "page-002": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "live births",
+          "score": 1.4051,
+          "evidence": []
+        },
+        {
+          "term": "female",
+          "score": 1.0518,
+          "evidence": []
+        },
+        {
+          "term": "male",
+          "score": 1.0263,
+          "evidence": []
+        },
+        {
+          "term": "maternal mortality",
+          "score": 0.9986,
+          "evidence": []
+        },
+        {
+          "term": "challenges remain",
+          "score": 0.8331,
+          "evidence": []
+        },
+        {
+          "term": "reproductive health",
+          "score": 0.7236,
+          "evidence": []
+        },
+        {
+          "term": "uhc",
+          "score": 0.5827,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "female",
+          "score": 24.1861,
+          "evidence": []
+        },
+        {
+          "term": "male",
+          "score": 24.007,
+          "evidence": []
+        },
+        {
+          "term": "live births",
+          "score": 22.757,
+          "evidence": []
+        },
+        {
+          "term": "maternal mortality",
+          "score": 14.7885,
+          "evidence": []
+        },
+        {
+          "term": "challenges remain",
+          "score": 12.3837,
+          "evidence": []
+        },
+        {
+          "term": "rate",
+          "score": 9.3261,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 9.2351,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hiv",
+          "score": 0.3302,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.2985,
+          "evidence": []
+        },
+        {
+          "term": "reproductive health",
+          "score": 0.2768,
+          "evidence": []
+        },
+        {
+          "term": "sex",
+          "score": 0.1979,
+          "evidence": []
+        },
+        {
+          "term": "population",
+          "score": 0.1927,
+          "evidence": []
+        },
+        {
+          "term": "living",
+          "score": 0.178,
+          "evidence": []
+        },
+        {
+          "term": "maternal mortality",
+          "score": 0.1726,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hiv",
+          "score": 7.0388,
+          "evidence": []
+        },
+        {
+          "term": "people",
+          "score": 4.2441,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 3.8418,
+          "evidence": []
+        },
+        {
+          "term": "sex",
+          "score": 3.6295,
+          "evidence": []
+        },
+        {
+          "term": "men",
+          "score": 3.541,
+          "evidence": []
+        },
+        {
+          "term": "period",
+          "score": 3.0287,
+          "evidence": []
+        },
+        {
+          "term": "number",
+          "score": 3.0076,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hiv",
+          "score": 0.3302,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.2985,
+          "evidence": []
+        },
+        {
+          "term": "reproductive health",
+          "score": 0.2768,
+          "evidence": []
+        },
+        {
+          "term": "population",
+          "score": 0.1927,
+          "evidence": []
+        },
+        {
+          "term": "maternal mortality",
+          "score": 0.1726,
+          "evidence": []
+        },
+        {
+          "term": "people",
+          "score": 0.153,
+          "evidence": []
+        },
+        {
+          "term": "sexual",
+          "score": 0.1506,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 33.9849,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 33.5891,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 30.8358,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 30.3158,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 30.3158,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 23.2375,
+          "evidence": []
+        },
+        {
+          "term": "乌干达",
+          "score": 21.6527,
+          "evidence": []
+        }
+      ]
+    },
+    "page-003": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "parental consent",
+          "score": 1.7847,
+          "evidence": []
+        },
+        {
+          "term": "preserve woman",
+          "score": 1.692,
+          "evidence": []
+        },
+        {
+          "term": "criminalize",
+          "score": 1.6458,
+          "evidence": []
+        },
+        {
+          "term": "access srh",
+          "score": 1.4204,
+          "evidence": []
+        },
+        {
+          "term": "laws",
+          "score": 1.2422,
+          "evidence": []
+        },
+        {
+          "term": "srh services",
+          "score": 1.2347,
+          "evidence": []
+        },
+        {
+          "term": "srhr",
+          "score": 1.1673,
+          "evidence": []
+        },
+        {
+          "term": "people living",
+          "score": 1.1456,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "criminalize",
+          "score": 43.8263,
+          "evidence": []
+        },
+        {
+          "term": "laws",
+          "score": 38.7778,
+          "evidence": []
+        },
+        {
+          "term": "parental consent",
+          "score": 30.2465,
+          "evidence": []
+        },
+        {
+          "term": "preserve woman",
+          "score": 25.3309,
+          "evidence": []
+        },
+        {
+          "term": "access srh",
+          "score": 24.9569,
+          "evidence": []
+        },
+        {
+          "term": "srhr",
+          "score": 24.8231,
+          "evidence": []
+        },
+        {
+          "term": "srh services",
+          "score": 19.7209,
+          "evidence": []
+        },
+        {
+          "term": "yes",
+          "score": 19.6956,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "people living",
+          "score": 0.5437,
+          "evidence": []
+        },
+        {
+          "term": "srh services",
+          "score": 0.4042,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.3911,
+          "evidence": []
+        },
+        {
+          "term": "sex",
+          "score": 0.3614,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.3178,
+          "evidence": []
+        },
+        {
+          "term": "men",
+          "score": 0.3026,
+          "evidence": []
+        },
+        {
+          "term": "access srh",
+          "score": 0.3022,
+          "evidence": []
+        },
+        {
+          "term": "sexual",
+          "score": 0.2913,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "yes",
+          "score": 17.0272,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 9.6143,
+          "evidence": []
+        },
+        {
+          "term": "people living",
+          "score": 8.7232,
+          "evidence": []
+        },
+        {
+          "term": "sex",
+          "score": 5.1829,
+          "evidence": []
+        },
+        {
+          "term": "men",
+          "score": 5.1683,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 4.6736,
+          "evidence": []
+        },
+        {
+          "term": "srh services",
+          "score": 4.5315,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 4.5151,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "people living",
+          "score": 0.5437,
+          "evidence": []
+        },
+        {
+          "term": "srh services",
+          "score": 0.4042,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.3911,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.3178,
+          "evidence": []
+        },
+        {
+          "term": "access srh",
+          "score": 0.3022,
+          "evidence": []
+        },
+        {
+          "term": "sexual",
+          "score": 0.2913,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.2881,
+          "evidence": []
+        },
+        {
+          "term": "populations",
+          "score": 0.2548,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 39.6671,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 37.1794,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 28.3082,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 26.8534,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 24.8129,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 24.8129,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 22.0075,
+          "evidence": []
+        },
+        {
+          "term": "不喜欢使用卫生设施",
+          "score": 20.6229,
+          "evidence": []
+        }
+      ]
+    },
+    "page-004": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "health expenditure",
+          "score": 1.6604,
+          "evidence": []
+        },
+        {
+          "term": "universal health",
+          "score": 1.2489,
+          "evidence": []
+        },
+        {
+          "term": "health coverage",
+          "score": 1.2434,
+          "evidence": []
+        },
+        {
+          "term": "health facilities",
+          "score": 1.134,
+          "evidence": []
+        },
+        {
+          "term": "srh services",
+          "score": 1.1167,
+          "evidence": []
+        },
+        {
+          "term": "facilities delivering",
+          "score": 1.061,
+          "evidence": []
+        },
+        {
+          "term": "health systems",
+          "score": 1.0428,
+          "evidence": []
+        },
+        {
+          "term": "total health",
+          "score": 1.0401,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "health expenditure",
+          "score": 44.334,
+          "evidence": []
+        },
+        {
+          "term": "health coverage",
+          "score": 31.5711,
+          "evidence": []
+        },
+        {
+          "term": "universal health",
+          "score": 31.2573,
+          "evidence": []
+        },
+        {
+          "term": "health facilities",
+          "score": 29.0047,
+          "evidence": []
+        },
+        {
+          "term": "health systems",
+          "score": 26.9544,
+          "evidence": []
+        },
+        {
+          "term": "total health",
+          "score": 26.4381,
+          "evidence": []
+        },
+        {
+          "term": "health information",
+          "score": 25.2028,
+          "evidence": []
+        },
+        {
+          "term": "facilities delivering",
+          "score": 16.2169,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health systems",
+          "score": 0.4352,
+          "evidence": []
+        },
+        {
+          "term": "health information",
+          "score": 0.4321,
+          "evidence": []
+        },
+        {
+          "term": "health facilities",
+          "score": 0.4285,
+          "evidence": []
+        },
+        {
+          "term": "health coverage",
+          "score": 0.4161,
+          "evidence": []
+        },
+        {
+          "term": "total health",
+          "score": 0.3714,
+          "evidence": []
+        },
+        {
+          "term": "health expenditure",
+          "score": 0.368,
+          "evidence": []
+        },
+        {
+          "term": "universal health",
+          "score": 0.3579,
+          "evidence": []
+        },
+        {
+          "term": "srh services",
+          "score": 0.236,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health systems",
+          "score": 12.4216,
+          "evidence": []
+        },
+        {
+          "term": "health facilities",
+          "score": 11.9672,
+          "evidence": []
+        },
+        {
+          "term": "health information",
+          "score": 11.905,
+          "evidence": []
+        },
+        {
+          "term": "health coverage",
+          "score": 11.4254,
+          "evidence": []
+        },
+        {
+          "term": "health expenditure",
+          "score": 11.1475,
+          "evidence": []
+        },
+        {
+          "term": "total health",
+          "score": 10.904,
+          "evidence": []
+        },
+        {
+          "term": "universal health",
+          "score": 10.6651,
+          "evidence": []
+        },
+        {
+          "term": "digital",
+          "score": 4.8504,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health systems",
+          "score": 0.4352,
+          "evidence": []
+        },
+        {
+          "term": "health information",
+          "score": 0.4321,
+          "evidence": []
+        },
+        {
+          "term": "health facilities",
+          "score": 0.4285,
+          "evidence": []
+        },
+        {
+          "term": "health coverage",
+          "score": 0.4161,
+          "evidence": []
+        },
+        {
+          "term": "total health",
+          "score": 0.3714,
+          "evidence": []
+        },
+        {
+          "term": "health expenditure",
+          "score": 0.368,
+          "evidence": []
+        },
+        {
+          "term": "universal health",
+          "score": 0.3579,
+          "evidence": []
+        },
+        {
+          "term": "srh services",
+          "score": 0.236,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 50.7491,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 36.3006,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 36.3006,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 35.2289,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 35.0695,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 34.8109,
+          "evidence": []
+        },
+        {
+          "term": "乌干达",
+          "score": 32.352,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 32.3372,
+          "evidence": []
+        }
+      ]
+    },
+    "page-005": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "modern contraceptive",
+          "score": 2.3916,
+          "evidence": []
+        },
+        {
+          "term": "contraceptive methods",
+          "score": 1.6704,
+          "evidence": []
+        },
+        {
+          "term": "abortion care",
+          "score": 1.446,
+          "evidence": []
+        },
+        {
+          "term": "postnatal care",
+          "score": 1.2253,
+          "evidence": []
+        },
+        {
+          "term": "vertical transmission",
+          "score": 1.1818,
+          "evidence": []
+        },
+        {
+          "term": "challenges remain",
+          "score": 0.8331,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.8275,
+          "evidence": []
+        },
+        {
+          "term": "births",
+          "score": 0.7919,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "modern contraceptive",
+          "score": 52.7017,
+          "evidence": []
+        },
+        {
+          "term": "contraceptive methods",
+          "score": 29.4983,
+          "evidence": []
+        },
+        {
+          "term": "abortion care",
+          "score": 23.801,
+          "evidence": []
+        },
+        {
+          "term": "postnatal care",
+          "score": 20.9217,
+          "evidence": []
+        },
+        {
+          "term": "vertical transmission",
+          "score": 20.4086,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 16.0283,
+          "evidence": []
+        },
+        {
+          "term": "syphilis",
+          "score": 15.1833,
+          "evidence": []
+        },
+        {
+          "term": "births",
+          "score": 14.3121,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "women",
+          "score": 0.4751,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.3092,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy",
+          "score": 0.2819,
+          "evidence": []
+        },
+        {
+          "term": "pregnant",
+          "score": 0.2628,
+          "evidence": []
+        },
+        {
+          "term": "vertical transmission",
+          "score": 0.2617,
+          "evidence": []
+        },
+        {
+          "term": "postnatal care",
+          "score": 0.2233,
+          "evidence": []
+        },
+        {
+          "term": "maternal",
+          "score": 0.2154,
+          "evidence": []
+        },
+        {
+          "term": "abortion care",
+          "score": 0.2084,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "women",
+          "score": 8.8283,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 5.7345,
+          "evidence": []
+        },
+        {
+          "term": "pregnancy",
+          "score": 5.1863,
+          "evidence": []
+        },
+        {
+          "term": "method",
+          "score": 5.0576,
+          "evidence": []
+        },
+        {
+          "term": "bleeding",
+          "score": 4.0722,
+          "evidence": []
+        },
+        {
+          "term": "she",
+          "score": 3.7257,
+          "evidence": []
+        },
+        {
+          "term": "contraceptive methods",
+          "score": 3.6291,
+          "evidence": []
+        },
+        {
+          "term": "postnatal care",
+          "score": 3.4218,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "women",
+          "score": 0.4751,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.3092,
+          "evidence": []
+        },
+        {
+          "term": "vertical transmission",
+          "score": 0.2617,
+          "evidence": []
+        },
+        {
+          "term": "postnatal care",
+          "score": 0.2233,
+          "evidence": []
+        },
+        {
+          "term": "abortion care",
+          "score": 0.2084,
+          "evidence": []
+        },
+        {
+          "term": "syphilis",
+          "score": 0.1926,
+          "evidence": []
+        },
+        {
+          "term": "modern contraceptive",
+          "score": 0.1694,
+          "evidence": []
+        },
+        {
+          "term": "antenatal",
+          "score": 0.168,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 34.9328,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 34.9328,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 30.7572,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 28.6185,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 28.5741,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 23.2941,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 22.403,
+          "evidence": []
+        },
+        {
+          "term": "疫苗储备",
+          "score": 21.585,
+          "evidence": []
+        }
+      ]
+    },
+    "page-006": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "active syphilis",
+          "score": 1.0739,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 1.0582,
+          "evidence": []
+        },
+        {
+          "term": "syphilis among",
+          "score": 0.9843,
+          "evidence": []
+        },
+        {
+          "term": "screening programme",
+          "score": 0.9772,
+          "evidence": []
+        },
+        {
+          "term": "people living",
+          "score": 0.9632,
+          "evidence": []
+        },
+        {
+          "term": "sexual health",
+          "score": 0.9352,
+          "evidence": []
+        },
+        {
+          "term": "male",
+          "score": 0.8488,
+          "evidence": []
+        },
+        {
+          "term": "challenges remain",
+          "score": 0.8331,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "sexual health",
+          "score": 17.2491,
+          "evidence": []
+        },
+        {
+          "term": "active syphilis",
+          "score": 17.0552,
+          "evidence": []
+        },
+        {
+          "term": "male",
+          "score": 16.0047,
+          "evidence": []
+        },
+        {
+          "term": "syphilis among",
+          "score": 15.4036,
+          "evidence": []
+        },
+        {
+          "term": "screening programme",
+          "score": 15.2429,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 14.4678,
+          "evidence": []
+        },
+        {
+          "term": "people living",
+          "score": 13.6912,
+          "evidence": []
+        },
+        {
+          "term": "violence",
+          "score": 12.6674,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "people living",
+          "score": 0.5714,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 0.4881,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.4686,
+          "evidence": []
+        },
+        {
+          "term": "sexual health",
+          "score": 0.4234,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.3919,
+          "evidence": []
+        },
+        {
+          "term": "screening programme",
+          "score": 0.3283,
+          "evidence": []
+        },
+        {
+          "term": "sex",
+          "score": 0.3269,
+          "evidence": []
+        },
+        {
+          "term": "syphilis among",
+          "score": 0.3089,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hiv",
+          "score": 11.457,
+          "evidence": []
+        },
+        {
+          "term": "people living",
+          "score": 10.8939,
+          "evidence": []
+        },
+        {
+          "term": "prep",
+          "score": 7.5083,
+          "evidence": []
+        },
+        {
+          "term": "men",
+          "score": 6.49,
+          "evidence": []
+        },
+        {
+          "term": "sex",
+          "score": 6.2311,
+          "evidence": []
+        },
+        {
+          "term": "yes",
+          "score": 5.8859,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 5.6934,
+          "evidence": []
+        },
+        {
+          "term": "screening programme",
+          "score": 5.0451,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "people living",
+          "score": 0.5714,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 0.4881,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.4686,
+          "evidence": []
+        },
+        {
+          "term": "sexual health",
+          "score": 0.4234,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.3919,
+          "evidence": []
+        },
+        {
+          "term": "screening programme",
+          "score": 0.3283,
+          "evidence": []
+        },
+        {
+          "term": "sex",
+          "score": 0.3269,
+          "evidence": []
+        },
+        {
+          "term": "syphilis among",
+          "score": 0.3089,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "并提供一",
+          "score": 30.9145,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 30.8724,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 29.285,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 26.5244,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 20.2299,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 19.2823,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 19.2823,
+          "evidence": []
+        },
+        {
+          "term": "这些情况下",
+          "score": 16.7081,
+          "evidence": []
+        }
+      ]
+    },
+    "page-007": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "cse policy",
+          "score": 1.1631,
+          "evidence": []
+        },
+        {
+          "term": "challenges remain",
+          "score": 0.8331,
+          "evidence": []
+        },
+        {
+          "term": "sex",
+          "score": 0.8066,
+          "evidence": []
+        },
+        {
+          "term": "female",
+          "score": 0.7493,
+          "evidence": []
+        },
+        {
+          "term": "reproductive health",
+          "score": 0.7236,
+          "evidence": []
+        },
+        {
+          "term": "implementing national",
+          "score": 0.67,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "cse policy",
+          "score": 18.0385,
+          "evidence": []
+        },
+        {
+          "term": "sex",
+          "score": 15.5585,
+          "evidence": []
+        },
+        {
+          "term": "sexual",
+          "score": 12.3988,
+          "evidence": []
+        },
+        {
+          "term": "challenges remain",
+          "score": 12.3837,
+          "evidence": []
+        },
+        {
+          "term": "female",
+          "score": 12.0931,
+          "evidence": []
+        },
+        {
+          "term": "schools",
+          "score": 10.1704,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "sex",
+          "score": 0.2954,
+          "evidence": []
+        },
+        {
+          "term": "men",
+          "score": 0.2626,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.2307,
+          "evidence": []
+        },
+        {
+          "term": "reproductive health",
+          "score": 0.2197,
+          "evidence": []
+        },
+        {
+          "term": "people",
+          "score": 0.2108,
+          "evidence": []
+        },
+        {
+          "term": "gender",
+          "score": 0.1874,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "men",
+          "score": 7.459,
+          "evidence": []
+        },
+        {
+          "term": "sex",
+          "score": 7.1746,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 4.4244,
+          "evidence": []
+        },
+        {
+          "term": "people",
+          "score": 3.601,
+          "evidence": []
+        },
+        {
+          "term": "key",
+          "score": 3.2019,
+          "evidence": []
+        },
+        {
+          "term": "inject",
+          "score": 2.7686,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "sex",
+          "score": 0.2954,
+          "evidence": []
+        },
+        {
+          "term": "men",
+          "score": 0.2626,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.2307,
+          "evidence": []
+        },
+        {
+          "term": "reproductive health",
+          "score": 0.2197,
+          "evidence": []
+        },
+        {
+          "term": "people",
+          "score": 0.2108,
+          "evidence": []
+        },
+        {
+          "term": "sexual",
+          "score": 0.1714,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 44.4733,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 38.8252,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 30.616,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 27.6366,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 27.6366,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 23.8723,
+          "evidence": []
+        }
+      ]
+    },
+    "page-008": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "unaids laws",
+          "score": 3.2025,
+          "evidence": []
+        },
+        {
+          "term": "laws criminalizing",
+          "score": 2.6236,
+          "evidence": []
+        },
+        {
+          "term": "policies analytics",
+          "score": 2.4483,
+          "evidence": []
+        },
+        {
+          "term": "unaids estimates",
+          "score": 2.2607,
+          "evidence": []
+        },
+        {
+          "term": "laws requiring",
+          "score": 2.197,
+          "evidence": []
+        },
+        {
+          "term": "sdg database",
+          "score": 2.1277,
+          "evidence": []
+        },
+        {
+          "term": "married women",
+          "score": 2.0038,
+          "evidence": []
+        },
+        {
+          "term": "women aged",
+          "score": 1.7905,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "unaids laws",
+          "score": 165.9078,
+          "evidence": []
+        },
+        {
+          "term": "indicator",
+          "score": 123.2352,
+          "evidence": []
+        },
+        {
+          "term": "laws criminalizing",
+          "score": 109.8453,
+          "evidence": []
+        },
+        {
+          "term": "policies analytics",
+          "score": 103.3081,
+          "evidence": []
+        },
+        {
+          "term": "laws requiring",
+          "score": 102.8523,
+          "evidence": []
+        },
+        {
+          "term": "source",
+          "score": 101.6231,
+          "evidence": []
+        },
+        {
+          "term": "unaids estimates",
+          "score": 86.6912,
+          "evidence": []
+        },
+        {
+          "term": "sdg database",
+          "score": 55.7782,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "women aged",
+          "score": 0.9706,
+          "evidence": []
+        },
+        {
+          "term": "sexual health",
+          "score": 0.8792,
+          "evidence": []
+        },
+        {
+          "term": "married women",
+          "score": 0.832,
+          "evidence": []
+        },
+        {
+          "term": "nations population",
+          "score": 0.7982,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 0.7889,
+          "evidence": []
+        },
+        {
+          "term": "unaids estimates",
+          "score": 0.7366,
+          "evidence": []
+        },
+        {
+          "term": "health coverage",
+          "score": 0.7238,
+          "evidence": []
+        },
+        {
+          "term": "people living",
+          "score": 0.7095,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "source",
+          "score": 52.7489,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 39.9595,
+          "evidence": []
+        },
+        {
+          "term": "indicator",
+          "score": 37.218,
+          "evidence": []
+        },
+        {
+          "term": "unaids estimates",
+          "score": 33.9217,
+          "evidence": []
+        },
+        {
+          "term": "unaids laws",
+          "score": 33.0164,
+          "evidence": []
+        },
+        {
+          "term": "women aged",
+          "score": 29.0715,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 24.904,
+          "evidence": []
+        },
+        {
+          "term": "sexual health",
+          "score": 22.4595,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "women aged",
+          "score": 0.9706,
+          "evidence": []
+        },
+        {
+          "term": "sexual health",
+          "score": 0.8792,
+          "evidence": []
+        },
+        {
+          "term": "married women",
+          "score": 0.832,
+          "evidence": []
+        },
+        {
+          "term": "nations population",
+          "score": 0.7982,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 0.7889,
+          "evidence": []
+        },
+        {
+          "term": "unaids estimates",
+          "score": 0.7366,
+          "evidence": []
+        },
+        {
+          "term": "health coverage",
+          "score": 0.7238,
+          "evidence": []
+        },
+        {
+          "term": "people living",
+          "score": 0.7095,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 50.215,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 39.9375,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 33.1176,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 32.3412,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 32.3412,
+          "evidence": []
+        },
+        {
+          "term": "乌干达",
+          "score": 27.5423,
+          "evidence": []
+        },
+        {
+          "term": "加强全球",
+          "score": 24.7291,
+          "evidence": []
+        },
+        {
+          "term": "区域和国家各级的数字卫生保健治理",
+          "score": 24.7291,
+          "evidence": []
+        }
+      ]
+    },
+    "page-009": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "sdg database",
+          "score": 2.6151,
+          "evidence": []
+        },
+        {
+          "term": "unaids laws",
+          "score": 2.5871,
+          "evidence": []
+        },
+        {
+          "term": "unaids estimates",
+          "score": 2.5406,
+          "evidence": []
+        },
+        {
+          "term": "expenditure database",
+          "score": 2.48,
+          "evidence": []
+        },
+        {
+          "term": "modern contraceptive",
+          "score": 2.2902,
+          "evidence": []
+        },
+        {
+          "term": "observatory data",
+          "score": 2.1755,
+          "evidence": []
+        },
+        {
+          "term": "women aged",
+          "score": 2.0967,
+          "evidence": []
+        },
+        {
+          "term": "health observatory",
+          "score": 2.0448,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "indicator",
+          "score": 150.2868,
+          "evidence": []
+        },
+        {
+          "term": "source",
+          "score": 127.6803,
+          "evidence": []
+        },
+        {
+          "term": "unaids estimates",
+          "score": 106.2158,
+          "evidence": []
+        },
+        {
+          "term": "unaids laws",
+          "score": 100.9204,
+          "evidence": []
+        },
+        {
+          "term": "sdg database",
+          "score": 90.4481,
+          "evidence": []
+        },
+        {
+          "term": "expenditure database",
+          "score": 83.3282,
+          "evidence": []
+        },
+        {
+          "term": "observatory data",
+          "score": 81.4502,
+          "evidence": []
+        },
+        {
+          "term": "health expenditure",
+          "score": 72.0372,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "women aged",
+          "score": 1.1889,
+          "evidence": []
+        },
+        {
+          "term": "people living",
+          "score": 0.8905,
+          "evidence": []
+        },
+        {
+          "term": "global health",
+          "score": 0.8833,
+          "evidence": []
+        },
+        {
+          "term": "health information",
+          "score": 0.8394,
+          "evidence": []
+        },
+        {
+          "term": "health facilities",
+          "score": 0.789,
+          "evidence": []
+        },
+        {
+          "term": "health expenditure",
+          "score": 0.7625,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.7454,
+          "evidence": []
+        },
+        {
+          "term": "nations population",
+          "score": 0.72,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "source",
+          "score": 64.8089,
+          "evidence": []
+        },
+        {
+          "term": "observatory data",
+          "score": 51.3561,
+          "evidence": []
+        },
+        {
+          "term": "indicator",
+          "score": 47.7126,
+          "evidence": []
+        },
+        {
+          "term": "data repository",
+          "score": 45.5356,
+          "evidence": []
+        },
+        {
+          "term": "unaids estimates",
+          "score": 40.3225,
+          "evidence": []
+        },
+        {
+          "term": "women aged",
+          "score": 38.3067,
+          "evidence": []
+        },
+        {
+          "term": "unaids laws",
+          "score": 38.2187,
+          "evidence": []
+        },
+        {
+          "term": "global health",
+          "score": 33.1189,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "women aged",
+          "score": 1.1889,
+          "evidence": []
+        },
+        {
+          "term": "people living",
+          "score": 0.8905,
+          "evidence": []
+        },
+        {
+          "term": "global health",
+          "score": 0.8833,
+          "evidence": []
+        },
+        {
+          "term": "health information",
+          "score": 0.8394,
+          "evidence": []
+        },
+        {
+          "term": "health facilities",
+          "score": 0.789,
+          "evidence": []
+        },
+        {
+          "term": "health expenditure",
+          "score": 0.7625,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.7454,
+          "evidence": []
+        },
+        {
+          "term": "nations population",
+          "score": 0.72,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 44.9686,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 39.4215,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 34.3205,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 31.7861,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 31.7861,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 23.116,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 23.116,
+          "evidence": []
+        },
+        {
+          "term": "乌干达",
+          "score": 23.0126,
+          "evidence": []
+        }
+      ]
+    },
+    "page-010": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "unaids estimates",
+          "score": 2.9053,
+          "evidence": []
+        },
+        {
+          "term": "unaids laws",
+          "score": 2.6184,
+          "evidence": []
+        },
+        {
+          "term": "known source",
+          "score": 2.0036,
+          "evidence": []
+        },
+        {
+          "term": "sexual intercourse",
+          "score": 1.9645,
+          "evidence": []
+        },
+        {
+          "term": "women men",
+          "score": 1.9179,
+          "evidence": []
+        },
+        {
+          "term": "raped experienced",
+          "score": 1.8397,
+          "evidence": []
+        },
+        {
+          "term": "transgender people",
+          "score": 1.8186,
+          "evidence": []
+        },
+        {
+          "term": "experienced incest",
+          "score": 1.7943,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "unaids estimates",
+          "score": 154.0032,
+          "evidence": []
+        },
+        {
+          "term": "unaids laws",
+          "score": 116.3666,
+          "evidence": []
+        },
+        {
+          "term": "indicator",
+          "score": 99.1893,
+          "evidence": []
+        },
+        {
+          "term": "known source",
+          "score": 97.6539,
+          "evidence": []
+        },
+        {
+          "term": "percentage",
+          "score": 65.2599,
+          "evidence": []
+        },
+        {
+          "term": "women men",
+          "score": 47.3569,
+          "evidence": []
+        },
+        {
+          "term": "sexual intercourse",
+          "score": 46.8767,
+          "evidence": []
+        },
+        {
+          "term": "policies analytics",
+          "score": 42.0902,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "women men",
+          "score": 1.2455,
+          "evidence": []
+        },
+        {
+          "term": "hiv test",
+          "score": 0.9117,
+          "evidence": []
+        },
+        {
+          "term": "sex workers",
+          "score": 0.8922,
+          "evidence": []
+        },
+        {
+          "term": "hiv linkages",
+          "score": 0.6788,
+          "evidence": []
+        },
+        {
+          "term": "skills-based hiv",
+          "score": 0.6788,
+          "evidence": []
+        },
+        {
+          "term": "transgender people",
+          "score": 0.65,
+          "evidence": []
+        },
+        {
+          "term": "global health",
+          "score": 0.6405,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 0.6404,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "known source",
+          "score": 46.5724,
+          "evidence": []
+        },
+        {
+          "term": "women men",
+          "score": 41.2811,
+          "evidence": []
+        },
+        {
+          "term": "indicator",
+          "score": 35.1767,
+          "evidence": []
+        },
+        {
+          "term": "unaids estimates",
+          "score": 31.2671,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 31.2506,
+          "evidence": []
+        },
+        {
+          "term": "hiv linkages",
+          "score": 31.2506,
+          "evidence": []
+        },
+        {
+          "term": "hiv test",
+          "score": 31.2506,
+          "evidence": []
+        },
+        {
+          "term": "skills-based hiv",
+          "score": 31.2506,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "women men",
+          "score": 1.2455,
+          "evidence": []
+        },
+        {
+          "term": "hiv test",
+          "score": 0.9117,
+          "evidence": []
+        },
+        {
+          "term": "sex workers",
+          "score": 0.8922,
+          "evidence": []
+        },
+        {
+          "term": "skills-based hiv",
+          "score": 0.727,
+          "evidence": []
+        },
+        {
+          "term": "hiv linkages",
+          "score": 0.7176,
+          "evidence": []
+        },
+        {
+          "term": "transgender people",
+          "score": 0.65,
+          "evidence": []
+        },
+        {
+          "term": "global health",
+          "score": 0.6405,
+          "evidence": []
+        },
+        {
+          "term": "cervical cancer",
+          "score": 0.6404,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 36.4984,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 33.9465,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 26.6948,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 22.7636,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 22.7636,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 17.7103,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 16.8181,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 16.8181,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

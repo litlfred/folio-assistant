@@ -1,0 +1,2208 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-47547",
+  "instance": "who-iris",
+  "about": "library/10665-47547",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7434,
+    "terms": 71211
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "mandatory testing",
+        "score": 6.9618,
+        "evidence": []
+      },
+      {
+        "term": "world aids",
+        "score": 6.3686,
+        "evidence": []
+      },
+      {
+        "term": "forum vol",
+        "score": 5.6662,
+        "evidence": []
+      },
+      {
+        "term": "against aids",
+        "score": 5.0217,
+        "evidence": []
+      },
+      {
+        "term": "aids day",
+        "score": 4.6611,
+        "evidence": []
+      },
+      {
+        "term": "health forum",
+        "score": 4.3013,
+        "evidence": []
+      },
+      {
+        "term": "heaith forum",
+        "score": 4.0918,
+        "evidence": []
+      },
+      {
+        "term": "justice kirby",
+        "score": 3.7723,
+        "evidence": []
+      },
+      {
+        "term": "infected people",
+        "score": 3.7512,
+        "evidence": []
+      },
+      {
+        "term": "think",
+        "score": 3.7061,
+        "evidence": []
+      },
+      {
+        "term": "ethical issues",
+        "score": 3.5198,
+        "evidence": []
+      },
+      {
+        "term": "human rights",
+        "score": 3.3821,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "mandatory testing",
+        "score": 134.6934,
+        "evidence": []
+      },
+      {
+        "term": "world aids",
+        "score": 108.8172,
+        "evidence": []
+      },
+      {
+        "term": "against aids",
+        "score": 92.896,
+        "evidence": []
+      },
+      {
+        "term": "aids day",
+        "score": 84.113,
+        "evidence": []
+      },
+      {
+        "term": "human rights",
+        "score": 77.2902,
+        "evidence": []
+      },
+      {
+        "term": "forum vol",
+        "score": 75.4699,
+        "evidence": []
+      },
+      {
+        "term": "think",
+        "score": 73.0779,
+        "evidence": []
+      },
+      {
+        "term": "infected people",
+        "score": 59.6564,
+        "evidence": []
+      },
+      {
+        "term": "heaith forum",
+        "score": 53.9958,
+        "evidence": []
+      },
+      {
+        "term": "health forum",
+        "score": 51.5594,
+        "evidence": []
+      },
+      {
+        "term": "systematic screening",
+        "score": 48.7202,
+        "evidence": []
+      },
+      {
+        "term": "dawson",
+        "score": 48.1876,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "hiv infection",
+        "score": 2.1923,
+        "evidence": []
+      },
+      {
+        "term": "world health",
+        "score": 2.0621,
+        "evidence": []
+      },
+      {
+        "term": "world aids",
+        "score": 2.014,
+        "evidence": []
+      },
+      {
+        "term": "ethical issues",
+        "score": 2.0085,
+        "evidence": []
+      },
+      {
+        "term": "health organization",
+        "score": 1.9315,
+        "evidence": []
+      },
+      {
+        "term": "infected people",
+        "score": 1.7154,
+        "evidence": []
+      },
+      {
+        "term": "against aids",
+        "score": 1.6113,
+        "evidence": []
+      },
+      {
+        "term": "human rights",
+        "score": 1.3835,
+        "evidence": []
+      },
+      {
+        "term": "medical treatment",
+        "score": 1.3316,
+        "evidence": []
+      },
+      {
+        "term": "united nations",
+        "score": 1.1947,
+        "evidence": []
+      },
+      {
+        "term": "health forum",
+        "score": 1.1828,
+        "evidence": []
+      },
+      {
+        "term": "aids day",
+        "score": 1.1347,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "hiv infection",
+        "score": 51.0254,
+        "evidence": []
+      },
+      {
+        "term": "world health",
+        "score": 28.2384,
+        "evidence": []
+      },
+      {
+        "term": "health organization",
+        "score": 27.8426,
+        "evidence": []
+      },
+      {
+        "term": "research",
+        "score": 26.0048,
+        "evidence": []
+      },
+      {
+        "term": "world aids",
+        "score": 25.3552,
+        "evidence": []
+      },
+      {
+        "term": "ethical issues",
+        "score": 24.399,
+        "evidence": []
+      },
+      {
+        "term": "against aids",
+        "score": 19.6595,
+        "evidence": []
+      },
+      {
+        "term": "health forum",
+        "score": 19.2024,
+        "evidence": []
+      },
+      {
+        "term": "infected people",
+        "score": 18.5176,
+        "evidence": []
+      },
+      {
+        "term": "medical treatment",
+        "score": 17.9432,
+        "evidence": []
+      },
+      {
+        "term": "mandatory testing",
+        "score": 17.6911,
+        "evidence": []
+      },
+      {
+        "term": "aids day",
+        "score": 16.3192,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "hiv infection",
+        "score": 2.1923,
+        "evidence": []
+      },
+      {
+        "term": "world health",
+        "score": 2.0621,
+        "evidence": []
+      },
+      {
+        "term": "world aids",
+        "score": 2.014,
+        "evidence": []
+      },
+      {
+        "term": "ethical issues",
+        "score": 2.0085,
+        "evidence": []
+      },
+      {
+        "term": "health organization",
+        "score": 1.9315,
+        "evidence": []
+      },
+      {
+        "term": "infected people",
+        "score": 1.7154,
+        "evidence": []
+      },
+      {
+        "term": "against aids",
+        "score": 1.6113,
+        "evidence": []
+      },
+      {
+        "term": "human rights",
+        "score": 1.3835,
+        "evidence": []
+      },
+      {
+        "term": "aids day",
+        "score": 1.3651,
+        "evidence": []
+      },
+      {
+        "term": "medical treatment",
+        "score": 1.3316,
+        "evidence": []
+      },
+      {
+        "term": "health forum",
+        "score": 1.2746,
+        "evidence": []
+      },
+      {
+        "term": "united nations",
+        "score": 1.1947,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "科研人员",
+        "score": 146.2201,
+        "evidence": []
+      },
+      {
+        "term": "感染者",
+        "score": 101.1052,
+        "evidence": []
+      },
+      {
+        "term": "到辩护",
+        "score": 74.4977,
+        "evidence": []
+      },
+      {
+        "term": "不治疗",
+        "score": 70.5962,
+        "evidence": []
+      },
+      {
+        "term": "怀疑可能暴露到开始调查的管理延误期",
+        "score": 69.3005,
+        "evidence": []
+      },
+      {
+        "term": "月严重急性呼吸综合征",
+        "score": 69.3005,
+        "evidence": []
+      },
+      {
+        "term": "检测不会直接使没有发病的非病例的无症状个体受益",
+        "score": 69.3005,
+        "evidence": []
+      },
+      {
+        "term": "潜在病例",
+        "score": 69.3005,
+        "evidence": []
+      },
+      {
+        "term": "病例及其密切接触者中发生的这些病例",
+        "score": 69.3005,
+        "evidence": []
+      },
+      {
+        "term": "的可能潜伏期",
+        "score": 69.3005,
+        "evidence": []
+      },
+      {
+        "term": "经过一系列努力",
+        "score": 69.3005,
+        "evidence": []
+      },
+      {
+        "term": "而检测仅显示他们可能已经被感染",
+        "score": 69.3005,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "page-001": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "ethical issues",
+          "score": 1.6978,
+          "evidence": []
+        },
+        {
+          "term": "united nations",
+          "score": 1.2197,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 1.0132,
+          "evidence": []
+        },
+        {
+          "term": "health forum",
+          "score": 1.0096,
+          "evidence": []
+        },
+        {
+          "term": "dawson",
+          "score": 0.9526,
+          "evidence": []
+        },
+        {
+          "term": "professor",
+          "score": 0.9364,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.8763,
+          "evidence": []
+        },
+        {
+          "term": "sartorius",
+          "score": 0.8218,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "ethical issues",
+          "score": 24.5878,
+          "evidence": []
+        },
+        {
+          "term": "united nations",
+          "score": 22.3499,
+          "evidence": []
+        },
+        {
+          "term": "aids",
+          "score": 21.0824,
+          "evidence": []
+        },
+        {
+          "term": "dawson",
+          "score": 18.0703,
+          "evidence": []
+        },
+        {
+          "term": "professor",
+          "score": 17.335,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 16.4298,
+          "evidence": []
+        },
+        {
+          "term": "health forum",
+          "score": 15.5158,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 13.5564,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "world health",
+          "score": 0.5946,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.5698,
+          "evidence": []
+        },
+        {
+          "term": "united nations",
+          "score": 0.4253,
+          "evidence": []
+        },
+        {
+          "term": "ethical issues",
+          "score": 0.3911,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 0.355,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.3356,
+          "evidence": []
+        },
+        {
+          "term": "health forum",
+          "score": 0.2851,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 0.273,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "world health",
+          "score": 10.5316,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 10.118,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 9.2337,
+          "evidence": []
+        },
+        {
+          "term": "united nations",
+          "score": 8.6035,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 6.4258,
+          "evidence": []
+        },
+        {
+          "term": "health forum",
+          "score": 5.9318,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 5.8098,
+          "evidence": []
+        },
+        {
+          "term": "ethical issues",
+          "score": 5.8063,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "world health",
+          "score": 0.5946,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.5698,
+          "evidence": []
+        },
+        {
+          "term": "united nations",
+          "score": 0.4253,
+          "evidence": []
+        },
+        {
+          "term": "ethical issues",
+          "score": 0.3911,
+          "evidence": []
+        },
+        {
+          "term": "hiv infection",
+          "score": 0.355,
+          "evidence": []
+        },
+        {
+          "term": "health forum",
+          "score": 0.3032,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 0.273,
+          "evidence": []
+        },
+        {
+          "term": "aids",
+          "score": 0.2486,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 54.8916,
+          "evidence": []
+        },
+        {
+          "term": "这意味着",
+          "score": 39.6543,
+          "evidence": []
+        },
+        {
+          "term": "以及卫生保健界",
+          "score": 39.1402,
+          "evidence": []
+        },
+        {
+          "term": "基金会和开发银行",
+          "score": 39.1402,
+          "evidence": []
+        },
+        {
+          "term": "大学和研究机构",
+          "score": 39.1402,
+          "evidence": []
+        },
+        {
+          "term": "如非政府组织和民间社会组织",
+          "score": 39.1402,
+          "evidence": []
+        },
+        {
+          "term": "宗教组织",
+          "score": 39.1402,
+          "evidence": []
+        },
+        {
+          "term": "患者和公众",
+          "score": 39.1402,
+          "evidence": []
+        }
+      ]
+    },
+    "page-002": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "marriage licences",
+          "score": 1.7388,
+          "evidence": []
+        },
+        {
+          "term": "mandatory testing",
+          "score": 1.6553,
+          "evidence": []
+        },
+        {
+          "term": "applicants",
+          "score": 1.5191,
+          "evidence": []
+        },
+        {
+          "term": "consent",
+          "score": 1.1254,
+          "evidence": []
+        },
+        {
+          "term": "going",
+          "score": 0.9754,
+          "evidence": []
+        },
+        {
+          "term": "anonymous",
+          "score": 0.9577,
+          "evidence": []
+        },
+        {
+          "term": "possibility",
+          "score": 0.876,
+          "evidence": []
+        },
+        {
+          "term": "money",
+          "score": 0.7858,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "mandatory testing",
+          "score": 39.8766,
+          "evidence": []
+        },
+        {
+          "term": "applicants",
+          "score": 32.8827,
+          "evidence": []
+        },
+        {
+          "term": "marriage licences",
+          "score": 30.6766,
+          "evidence": []
+        },
+        {
+          "term": "going",
+          "score": 23.3266,
+          "evidence": []
+        },
+        {
+          "term": "consent",
+          "score": 21.9693,
+          "evidence": []
+        },
+        {
+          "term": "anonymous",
+          "score": 20.088,
+          "evidence": []
+        },
+        {
+          "term": "possibility",
+          "score": 18.5486,
+          "evidence": []
+        },
+        {
+          "term": "individual",
+          "score": 14.8756,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "test",
+          "score": 0.2474,
+          "evidence": []
+        },
+        {
+          "term": "consent",
+          "score": 0.2261,
+          "evidence": []
+        },
+        {
+          "term": "ethical",
+          "score": 0.2249,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.2102,
+          "evidence": []
+        },
+        {
+          "term": "people",
+          "score": 0.2027,
+          "evidence": []
+        },
+        {
+          "term": "mandatory testing",
+          "score": 0.1939,
+          "evidence": []
+        },
+        {
+          "term": "some",
+          "score": 0.179,
+          "evidence": []
+        },
+        {
+          "term": "individuals",
+          "score": 0.1664,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hiv",
+          "score": 6.2996,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 4.7731,
+          "evidence": []
+        },
+        {
+          "term": "mandatory testing",
+          "score": 4.0871,
+          "evidence": []
+        },
+        {
+          "term": "test",
+          "score": 4.0115,
+          "evidence": []
+        },
+        {
+          "term": "ethical",
+          "score": 3.1481,
+          "evidence": []
+        },
+        {
+          "term": "study",
+          "score": 2.9902,
+          "evidence": []
+        },
+        {
+          "term": "cost",
+          "score": 2.7086,
+          "evidence": []
+        },
+        {
+          "term": "people",
+          "score": 2.6732,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "test",
+          "score": 0.2474,
+          "evidence": []
+        },
+        {
+          "term": "mandatory testing",
+          "score": 0.2336,
+          "evidence": []
+        },
+        {
+          "term": "consent",
+          "score": 0.2261,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.2102,
+          "evidence": []
+        },
+        {
+          "term": "blood",
+          "score": 0.1301,
+          "evidence": []
+        },
+        {
+          "term": "cost",
+          "score": 0.1206,
+          "evidence": []
+        },
+        {
+          "term": "individual",
+          "score": 0.1183,
+          "evidence": []
+        },
+        {
+          "term": "screening",
+          "score": 0.1145,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "科研人员",
+          "score": 21.2635,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 12.1403,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 11.1983,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 9.173,
+          "evidence": []
+        },
+        {
+          "term": "怀疑可能暴露到开始调查的管理延误期",
+          "score": 8.5278,
+          "evidence": []
+        },
+        {
+          "term": "月严重急性呼吸综合征",
+          "score": 8.5278,
+          "evidence": []
+        },
+        {
+          "term": "检测不会直接使没有发病的非病例的无症状个体受益",
+          "score": 8.5278,
+          "evidence": []
+        },
+        {
+          "term": "潜在病例",
+          "score": 8.5278,
+          "evidence": []
+        }
+      ]
+    },
+    "page-003": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "infected people",
+          "score": 1.3349,
+          "evidence": []
+        },
+        {
+          "term": "mandatory testing",
+          "score": 1.1394,
+          "evidence": []
+        },
+        {
+          "term": "dawson",
+          "score": 0.9526,
+          "evidence": []
+        },
+        {
+          "term": "blood",
+          "score": 0.9003,
+          "evidence": []
+        },
+        {
+          "term": "anyway",
+          "score": 0.885,
+          "evidence": []
+        },
+        {
+          "term": "quality control",
+          "score": 0.7753,
+          "evidence": []
+        },
+        {
+          "term": "think",
+          "score": 0.7132,
+          "evidence": []
+        },
+        {
+          "term": "like",
+          "score": 0.6907,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "infected people",
+          "score": 25.8868,
+          "evidence": []
+        },
+        {
+          "term": "blood",
+          "score": 20.2589,
+          "evidence": []
+        },
+        {
+          "term": "mandatory testing",
+          "score": 19.34,
+          "evidence": []
+        },
+        {
+          "term": "dawson",
+          "score": 18.0703,
+          "evidence": []
+        },
+        {
+          "term": "anyway",
+          "score": 14.2441,
+          "evidence": []
+        },
+        {
+          "term": "like",
+          "score": 14.1173,
+          "evidence": []
+        },
+        {
+          "term": "aids",
+          "score": 13.1765,
+          "evidence": []
+        },
+        {
+          "term": "think",
+          "score": 12.8961,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "infected people",
+          "score": 0.2862,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.2288,
+          "evidence": []
+        },
+        {
+          "term": "test",
+          "score": 0.2215,
+          "evidence": []
+        },
+        {
+          "term": "patients",
+          "score": 0.2,
+          "evidence": []
+        },
+        {
+          "term": "mandatory testing",
+          "score": 0.184,
+          "evidence": []
+        },
+        {
+          "term": "care",
+          "score": 0.1755,
+          "evidence": []
+        },
+        {
+          "term": "aids",
+          "score": 0.1721,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.1606,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hiv",
+          "score": 4.8768,
+          "evidence": []
+        },
+        {
+          "term": "infected people",
+          "score": 4.2906,
+          "evidence": []
+        },
+        {
+          "term": "mandatory testing",
+          "score": 3.376,
+          "evidence": []
+        },
+        {
+          "term": "test",
+          "score": 3.1192,
+          "evidence": []
+        },
+        {
+          "term": "patients",
+          "score": 2.7312,
+          "evidence": []
+        },
+        {
+          "term": "infection",
+          "score": 2.4135,
+          "evidence": []
+        },
+        {
+          "term": "care",
+          "score": 2.3988,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 2.3132,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "infected people",
+          "score": 0.2862,
+          "evidence": []
+        },
+        {
+          "term": "mandatory testing",
+          "score": 0.2145,
+          "evidence": []
+        },
+        {
+          "term": "patients",
+          "score": 0.2,
+          "evidence": []
+        },
+        {
+          "term": "aids",
+          "score": 0.1721,
+          "evidence": []
+        },
+        {
+          "term": "quality control",
+          "score": 0.1454,
+          "evidence": []
+        },
+        {
+          "term": "blood",
+          "score": 0.1291,
+          "evidence": []
+        },
+        {
+          "term": "tested",
+          "score": 0.1049,
+          "evidence": []
+        },
+        {
+          "term": "laboratory",
+          "score": 0.1028,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "科研人员",
+          "score": 12.9912,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 9.3818,
+          "evidence": []
+        },
+        {
+          "term": "这意味着",
+          "score": 7.5089,
+          "evidence": []
+        },
+        {
+          "term": "不治疗",
+          "score": 7.4614,
+          "evidence": []
+        },
+        {
+          "term": "根据约翰斯",
+          "score": 7.1889,
+          "evidence": []
+        },
+        {
+          "term": "案例改编",
+          "score": 7.1889,
+          "evidence": []
+        },
+        {
+          "term": "霍普金斯大学彭博公共卫",
+          "score": 7.1889,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 6.9108,
+          "evidence": []
+        }
+      ]
+    },
+    "page-004": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "medical profession",
+          "score": 1.4801,
+          "evidence": []
+        },
+        {
+          "term": "systematic screening",
+          "score": 1.032,
+          "evidence": []
+        },
+        {
+          "term": "seropositivity",
+          "score": 0.9705,
+          "evidence": []
+        },
+        {
+          "term": "rumours",
+          "score": 0.825,
+          "evidence": []
+        },
+        {
+          "term": "pressures",
+          "score": 0.8208,
+          "evidence": []
+        },
+        {
+          "term": "trust",
+          "score": 0.7731,
+          "evidence": []
+        },
+        {
+          "term": "think",
+          "score": 0.7132,
+          "evidence": []
+        },
+        {
+          "term": "compulsory",
+          "score": 0.7045,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "medical profession",
+          "score": 25.7574,
+          "evidence": []
+        },
+        {
+          "term": "systematic screening",
+          "score": 17.4297,
+          "evidence": []
+        },
+        {
+          "term": "trust",
+          "score": 16.0342,
+          "evidence": []
+        },
+        {
+          "term": "seropositivity",
+          "score": 15.6304,
+          "evidence": []
+        },
+        {
+          "term": "pressures",
+          "score": 13.2225,
+          "evidence": []
+        },
+        {
+          "term": "rumours",
+          "score": 13.2225,
+          "evidence": []
+        },
+        {
+          "term": "think",
+          "score": 12.8961,
+          "evidence": []
+        },
+        {
+          "term": "compulsory",
+          "score": 11.093,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "people",
+          "score": 0.2191,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.1957,
+          "evidence": []
+        },
+        {
+          "term": "test",
+          "score": 0.1932,
+          "evidence": []
+        },
+        {
+          "term": "some",
+          "score": 0.1865,
+          "evidence": []
+        },
+        {
+          "term": "patients",
+          "score": 0.1823,
+          "evidence": []
+        },
+        {
+          "term": "because",
+          "score": 0.1631,
+          "evidence": []
+        },
+        {
+          "term": "aids",
+          "score": 0.1618,
+          "evidence": []
+        },
+        {
+          "term": "care",
+          "score": 0.1602,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hiv",
+          "score": 4.561,
+          "evidence": []
+        },
+        {
+          "term": "people",
+          "score": 3.3611,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 3.3551,
+          "evidence": []
+        },
+        {
+          "term": "test",
+          "score": 2.8346,
+          "evidence": []
+        },
+        {
+          "term": "testing",
+          "score": 2.7174,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 2.7019,
+          "evidence": []
+        },
+        {
+          "term": "patients",
+          "score": 2.6157,
+          "evidence": []
+        },
+        {
+          "term": "screening",
+          "score": 2.4184,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "people",
+          "score": 0.2191,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.1957,
+          "evidence": []
+        },
+        {
+          "term": "test",
+          "score": 0.1932,
+          "evidence": []
+        },
+        {
+          "term": "some",
+          "score": 0.1865,
+          "evidence": []
+        },
+        {
+          "term": "patients",
+          "score": 0.1823,
+          "evidence": []
+        },
+        {
+          "term": "aids",
+          "score": 0.1618,
+          "evidence": []
+        },
+        {
+          "term": "testing",
+          "score": 0.1437,
+          "evidence": []
+        },
+        {
+          "term": "individuals",
+          "score": 0.1384,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "科研人员",
+          "score": 23.6858,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 17.8524,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 17.8524,
+          "evidence": []
+        },
+        {
+          "term": "疫苗储备",
+          "score": 14.1127,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 13.7548,
+          "evidence": []
+        },
+        {
+          "term": "这些情况下",
+          "score": 13.5412,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 13.3618,
+          "evidence": []
+        },
+        {
+          "term": "见下面第",
+          "score": 11.6673,
+          "evidence": []
+        }
+      ]
+    },
+    "page-005": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "human rights",
+          "score": 1.784,
+          "evidence": []
+        },
+        {
+          "term": "mandatory testing",
+          "score": 1.6553,
+          "evidence": []
+        },
+        {
+          "term": "persons infected",
+          "score": 1.1785,
+          "evidence": []
+        },
+        {
+          "term": "responsibility towards",
+          "score": 1.0759,
+          "evidence": []
+        },
+        {
+          "term": "keilau",
+          "score": 1.0202,
+          "evidence": []
+        },
+        {
+          "term": "medical treatment",
+          "score": 0.9164,
+          "evidence": []
+        },
+        {
+          "term": "dignity",
+          "score": 0.7698,
+          "evidence": []
+        },
+        {
+          "term": "seems",
+          "score": 0.7615,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "human rights",
+          "score": 54.9529,
+          "evidence": []
+        },
+        {
+          "term": "mandatory testing",
+          "score": 39.8766,
+          "evidence": []
+        },
+        {
+          "term": "persons infected",
+          "score": 22.6967,
+          "evidence": []
+        },
+        {
+          "term": "responsibility towards",
+          "score": 17.5696,
+          "evidence": []
+        },
+        {
+          "term": "keilau",
+          "score": 16.4413,
+          "evidence": []
+        },
+        {
+          "term": "medical treatment",
+          "score": 13.0876,
+          "evidence": []
+        },
+        {
+          "term": "dignity",
+          "score": 12.2825,
+          "evidence": []
+        },
+        {
+          "term": "seems",
+          "score": 12.0469,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "human rights",
+          "score": 0.289,
+          "evidence": []
+        },
+        {
+          "term": "ethical",
+          "score": 0.2715,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.2673,
+          "evidence": []
+        },
+        {
+          "term": "medical treatment",
+          "score": 0.2282,
+          "evidence": []
+        },
+        {
+          "term": "consent",
+          "score": 0.2272,
+          "evidence": []
+        },
+        {
+          "term": "people",
+          "score": 0.2032,
+          "evidence": []
+        },
+        {
+          "term": "ethics",
+          "score": 0.195,
+          "evidence": []
+        },
+        {
+          "term": "aids",
+          "score": 0.1666,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hiv",
+          "score": 7.7057,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 5.4401,
+          "evidence": []
+        },
+        {
+          "term": "ethical",
+          "score": 4.1236,
+          "evidence": []
+        },
+        {
+          "term": "medical treatment",
+          "score": 3.6743,
+          "evidence": []
+        },
+        {
+          "term": "mandatory testing",
+          "score": 3.0621,
+          "evidence": []
+        },
+        {
+          "term": "human rights",
+          "score": 2.73,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 2.6738,
+          "evidence": []
+        },
+        {
+          "term": "ethics",
+          "score": 2.6544,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "human rights",
+          "score": 0.289,
+          "evidence": []
+        },
+        {
+          "term": "ethical",
+          "score": 0.2715,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.2673,
+          "evidence": []
+        },
+        {
+          "term": "medical treatment",
+          "score": 0.2282,
+          "evidence": []
+        },
+        {
+          "term": "aids",
+          "score": 0.1666,
+          "evidence": []
+        },
+        {
+          "term": "individuals",
+          "score": 0.1663,
+          "evidence": []
+        },
+        {
+          "term": "mandatory testing",
+          "score": 0.1491,
+          "evidence": []
+        },
+        {
+          "term": "persons infected",
+          "score": 0.1444,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "科研人员",
+          "score": 30.7226,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 24.0321,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 21.7901,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 16.7109,
+          "evidence": []
+        },
+        {
+          "term": "不治疗",
+          "score": 14.7435,
+          "evidence": []
+        },
+        {
+          "term": "这两种hpv",
+          "score": 13.8578,
+          "evidence": []
+        },
+        {
+          "term": "他们的",
+          "score": 13.4812,
+          "evidence": []
+        },
+        {
+          "term": "怀疑可能暴露到开始调查的管理延误期",
+          "score": 13.3475,
+          "evidence": []
+        }
+      ]
+    },
+    "page-006": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "think",
+          "score": 1.0012,
+          "evidence": []
+        },
+        {
+          "term": "whole population",
+          "score": 0.9031,
+          "evidence": []
+        },
+        {
+          "term": "going",
+          "score": 0.8761,
+          "evidence": []
+        },
+        {
+          "term": "tremendous",
+          "score": 0.7956,
+          "evidence": []
+        },
+        {
+          "term": "legal",
+          "score": 0.7257,
+          "evidence": []
+        },
+        {
+          "term": "pressure",
+          "score": 0.673,
+          "evidence": []
+        },
+        {
+          "term": "decrease",
+          "score": 0.6609,
+          "evidence": []
+        },
+        {
+          "term": "aids",
+          "score": 0.6592,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "think",
+          "score": 25.7922,
+          "evidence": []
+        },
+        {
+          "term": "going",
+          "score": 18.6613,
+          "evidence": []
+        },
+        {
+          "term": "legal",
+          "score": 16.431,
+          "evidence": []
+        },
+        {
+          "term": "whole population",
+          "score": 13.8622,
+          "evidence": []
+        },
+        {
+          "term": "aids",
+          "score": 13.1765,
+          "evidence": []
+        },
+        {
+          "term": "tremendous",
+          "score": 12.8578,
+          "evidence": []
+        },
+        {
+          "term": "decrease",
+          "score": 12.4294,
+          "evidence": []
+        },
+        {
+          "term": "question",
+          "score": 11.801,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "people",
+          "score": 0.2427,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.2091,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.1962,
+          "evidence": []
+        },
+        {
+          "term": "some",
+          "score": 0.1801,
+          "evidence": []
+        },
+        {
+          "term": "test",
+          "score": 0.1663,
+          "evidence": []
+        },
+        {
+          "term": "because",
+          "score": 0.1511,
+          "evidence": []
+        },
+        {
+          "term": "treatment",
+          "score": 0.1448,
+          "evidence": []
+        },
+        {
+          "term": "care",
+          "score": 0.1365,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hiv",
+          "score": 5.702,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 3.2295,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 2.8257,
+          "evidence": []
+        },
+        {
+          "term": "testing",
+          "score": 2.4947,
+          "evidence": []
+        },
+        {
+          "term": "people",
+          "score": 2.4312,
+          "evidence": []
+        },
+        {
+          "term": "test",
+          "score": 2.3767,
+          "evidence": []
+        },
+        {
+          "term": "screening",
+          "score": 2.2684,
+          "evidence": []
+        },
+        {
+          "term": "patients",
+          "score": 2.0659,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "people",
+          "score": 0.2427,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.1962,
+          "evidence": []
+        },
+        {
+          "term": "test",
+          "score": 0.1663,
+          "evidence": []
+        },
+        {
+          "term": "because",
+          "score": 0.1511,
+          "evidence": []
+        },
+        {
+          "term": "whole population",
+          "score": 0.1391,
+          "evidence": []
+        },
+        {
+          "term": "aids",
+          "score": 0.1289,
+          "evidence": []
+        },
+        {
+          "term": "rights",
+          "score": 0.1224,
+          "evidence": []
+        },
+        {
+          "term": "work",
+          "score": 0.1167,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 24.1524,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 20.7349,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 12.9472,
+          "evidence": []
+        },
+        {
+          "term": "不治疗",
+          "score": 12.4894,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 11.9491,
+          "evidence": []
+        },
+        {
+          "term": "他们的",
+          "score": 10.7055,
+          "evidence": []
+        },
+        {
+          "term": "对照组",
+          "score": 10.2768,
+          "evidence": []
+        },
+        {
+          "term": "不安全",
+          "score": 9.8469,
+          "evidence": []
+        }
+      ]
+    },
+    "page-007": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "fight against",
+          "score": 1.4232,
+          "evidence": []
+        },
+        {
+          "term": "global fight",
+          "score": 1.3993,
+          "evidence": []
+        },
+        {
+          "term": "mandatory testing",
+          "score": 1.0259,
+          "evidence": []
+        },
+        {
+          "term": "prisoners",
+          "score": 0.8517,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.7388,
+          "evidence": []
+        },
+        {
+          "term": "aids",
+          "score": 0.5922,
+          "evidence": []
+        },
+        {
+          "term": "great",
+          "score": 0.5736,
+          "evidence": []
+        },
+        {
+          "term": "own",
+          "score": 0.5056,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "fight against",
+          "score": 27.6025,
+          "evidence": []
+        },
+        {
+          "term": "global fight",
+          "score": 27.3429,
+          "evidence": []
+        },
+        {
+          "term": "prisoners",
+          "score": 15.8287,
+          "evidence": []
+        },
+        {
+          "term": "mandatory testing",
+          "score": 15.574,
+          "evidence": []
+        },
+        {
+          "term": "aids",
+          "score": 10.5412,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 8.8075,
+          "evidence": []
+        },
+        {
+          "term": "great",
+          "score": 8.6577,
+          "evidence": []
+        },
+        {
+          "term": "own",
+          "score": 7.0957,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "world health",
+          "score": 0.2516,
+          "evidence": []
+        },
+        {
+          "term": "aids",
+          "score": 0.117,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.1157,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.0953,
+          "evidence": []
+        },
+        {
+          "term": "global",
+          "score": 0.0945,
+          "evidence": []
+        },
+        {
+          "term": "global fight",
+          "score": 0.0945,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 0.0942,
+          "evidence": []
+        },
+        {
+          "term": "serious",
+          "score": 0.0905,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "world health",
+          "score": 3.4515,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 2.7819,
+          "evidence": []
+        },
+        {
+          "term": "serious",
+          "score": 2.6529,
+          "evidence": []
+        },
+        {
+          "term": "aids",
+          "score": 1.7481,
+          "evidence": []
+        },
+        {
+          "term": "organization",
+          "score": 1.2835,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 1.2513,
+          "evidence": []
+        },
+        {
+          "term": "united",
+          "score": 1.1933,
+          "evidence": []
+        },
+        {
+          "term": "men",
+          "score": 1.1254,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "world health",
+          "score": 0.2516,
+          "evidence": []
+        },
+        {
+          "term": "aids",
+          "score": 0.117,
+          "evidence": []
+        },
+        {
+          "term": "global fight",
+          "score": 0.1168,
+          "evidence": []
+        },
+        {
+          "term": "fight against",
+          "score": 0.0684,
+          "evidence": []
+        },
+        {
+          "term": "country",
+          "score": 0.0684,
+          "evidence": []
+        },
+        {
+          "term": "mandatory testing",
+          "score": 0.0466,
+          "evidence": []
+        },
+        {
+          "term": "necessary",
+          "score": 0.0296,
+          "evidence": []
+        },
+        {
+          "term": "efforts",
+          "score": 0.0293,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "科研人员",
+          "score": 18.4133,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 14.2391,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 12.8515,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 12.839,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 12.8095,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 12.8095,
+          "evidence": []
+        },
+        {
+          "term": "疫苗储备",
+          "score": 11.4345,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 11.1462,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

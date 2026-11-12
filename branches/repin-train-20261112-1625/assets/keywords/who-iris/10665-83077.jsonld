@@ -1,0 +1,481 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-83077",
+  "instance": "who-iris",
+  "about": "library/10665-83077",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7434,
+    "terms": 71211
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "drafba",
+        "score": 1.2785,
+        "evidence": []
+      },
+      {
+        "term": "控制结核行动",
+        "score": 1.2785,
+        "evidence": []
+      },
+      {
+        "term": "第五十三届世界卫生大会",
+        "score": 1.2785,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "drafba",
+        "score": 16.4413,
+        "evidence": []
+      },
+      {
+        "term": "控制结核行动",
+        "score": 16.4413,
+        "evidence": []
+      },
+      {
+        "term": "第五十三届世界卫生大会",
+        "score": 16.4413,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "воз",
+        "score": 0,
+        "evidence": []
+      },
+      {
+        "term": "influenza",
+        "score": 0,
+        "evidence": []
+      },
+      {
+        "term": "гриппа",
+        "score": 0,
+        "evidence": []
+      },
+      {
+        "term": "гсэго",
+        "score": 0,
+        "evidence": []
+      },
+      {
+        "term": "гриппу",
+        "score": 0,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "исследования",
+        "score": 0,
+        "evidence": []
+      },
+      {
+        "term": "спид",
+        "score": 0,
+        "evidence": []
+      },
+      {
+        "term": "что",
+        "score": 0,
+        "evidence": []
+      },
+      {
+        "term": "consejo",
+        "score": 0,
+        "evidence": []
+      },
+      {
+        "term": "del",
+        "score": 0,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "drafba",
+        "score": 0,
+        "evidence": []
+      },
+      {
+        "term": "控制结核行动",
+        "score": 0,
+        "evidence": []
+      },
+      {
+        "term": "第五十三届世界卫生大会",
+        "score": 0,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "捐助者",
+        "score": 993486.8562,
+        "evidence": []
+      },
+      {
+        "term": "drafba",
+        "score": 493300.5894,
+        "evidence": []
+      },
+      {
+        "term": "控制结核行动",
+        "score": 493300.5894,
+        "evidence": []
+      },
+      {
+        "term": "第五十三届世界卫生大会",
+        "score": 493300.5894,
+        "evidence": []
+      },
+      {
+        "term": "文件a",
+        "score": 283032.4393,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "page-001": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "drafba",
+          "score": 0.6392,
+          "evidence": []
+        },
+        {
+          "term": "控制结核行动",
+          "score": 0.6392,
+          "evidence": []
+        },
+        {
+          "term": "文件a",
+          "score": 0.6392,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "drafba",
+          "score": 8.2207,
+          "evidence": []
+        },
+        {
+          "term": "控制结核行动",
+          "score": 8.2207,
+          "evidence": []
+        },
+        {
+          "term": "文件a",
+          "score": 8.2207,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "wha",
+          "score": 0,
+          "evidence": []
+        },
+        {
+          "term": "handle",
+          "score": 0,
+          "evidence": []
+        },
+        {
+          "term": "influenza",
+          "score": 0,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "consultado",
+          "score": 0,
+          "evidence": []
+        },
+        {
+          "term": "consejo",
+          "score": 0,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "page",
+          "score": 0,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "文件a",
+          "score": 0,
+          "evidence": []
+        },
+        {
+          "term": "drafba",
+          "score": 0,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "drafba",
+          "score": 272534.3837,
+          "evidence": []
+        },
+        {
+          "term": "控制结核行动",
+          "score": 272534.3837,
+          "evidence": []
+        },
+        {
+          "term": "第五十三届世界卫生大会",
+          "score": 272534.3837,
+          "evidence": []
+        }
+      ]
+    },
+    "page-002": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "drafba",
+          "score": 0.6392,
+          "evidence": []
+        },
+        {
+          "term": "伴关系",
+          "score": 0.6392,
+          "evidence": []
+        },
+        {
+          "term": "尤其在发展中国家",
+          "score": 0.6392,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "drafba",
+          "score": 8.2207,
+          "evidence": []
+        },
+        {
+          "term": "伴关系",
+          "score": 8.2207,
+          "evidence": []
+        },
+        {
+          "term": "尤其在发展中国家",
+          "score": 8.2207,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "воз",
+          "score": 0,
+          "evidence": []
+        },
+        {
+          "term": "гриппа",
+          "score": 0,
+          "evidence": []
+        },
+        {
+          "term": "гсэго",
+          "score": 0,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "исследования",
+          "score": 0,
+          "evidence": []
+        },
+        {
+          "term": "что",
+          "score": 0,
+          "evidence": []
+        },
+        {
+          "term": "спид",
+          "score": 0,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "议程项目",
+          "score": 0,
+          "evidence": []
+        },
+        {
+          "term": "尤其在发展中国家",
+          "score": 0,
+          "evidence": []
+        },
+        {
+          "term": "伴关系",
+          "score": 0,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "drafba",
+          "score": 223938.8051,
+          "evidence": []
+        },
+        {
+          "term": "控制结核行动",
+          "score": 223938.8051,
+          "evidence": []
+        },
+        {
+          "term": "第五十三届世界卫生大会",
+          "score": 223938.8051,
+          "evidence": []
+        }
+      ]
+    },
+    "page-003": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "捐助者",
+          "score": 0.6392,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "捐助者",
+          "score": 8.2207,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "influenza",
+          "score": 0,
+          "evidence": []
+        },
+        {
+          "term": "gisrs",
+          "score": 0,
+          "evidence": []
+        },
+        {
+          "term": "pandemic",
+          "score": 0,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "receptor",
+          "score": 0,
+          "evidence": []
+        },
+        {
+          "term": "consultado",
+          "score": 0,
+          "evidence": []
+        },
+        {
+          "term": "artículo",
+          "score": 0,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "page",
+          "score": 0,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "捐助者",
+          "score": 0,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 996543.6249,
+          "evidence": []
+        },
+        {
+          "term": "大流行性流感防范疫苗储备",
+          "score": 177068.9018,
+          "evidence": []
+        },
+        {
+          "term": "抗病毒药物储备",
+          "score": 177068.9018,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

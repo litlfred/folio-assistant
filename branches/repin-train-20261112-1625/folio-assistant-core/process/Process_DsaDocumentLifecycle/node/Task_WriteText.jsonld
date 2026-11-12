@@ -1,0 +1,38 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_WriteText.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "repin-train/20261112-1625",
+    "sha": "6ca206c84dafc1f6a11bf0c86a9c4c99eaad9882",
+    "pr": "repin-train/20261112-1625",
+    "run": "43258944433"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_WriteText",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "P1.2 · Write the legal text",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Author",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/folio-assistant-core/skill/document-authoring",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/folio-assistant-core/skill/normative-statements",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/folio-assistant-core/skill/document-structure"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F06"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F07"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/folio-assistant-core/directory/dsa",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_WriteText"
+    }
+  ]
+}

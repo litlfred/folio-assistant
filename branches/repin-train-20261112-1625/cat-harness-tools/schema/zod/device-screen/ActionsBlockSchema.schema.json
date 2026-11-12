@@ -1,0 +1,141 @@
+{
+  "$ref": "#/definitions/ActionsBlock",
+  "definitions": {
+    "ActionsBlock": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "actions"
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*$"
+        },
+        "column": {
+          "type": "string",
+          "enum": [
+            "main",
+            "side"
+          ]
+        },
+        "only": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9-]*$"
+          }
+        },
+        "buttons": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string",
+                "minLength": 1
+              },
+              "style": {
+                "default": "primary",
+                "type": "string",
+                "enum": [
+                  "primary",
+                  "secondary",
+                  "danger",
+                  "success"
+                ]
+              },
+              "icon": {
+                "type": "string",
+                "enum": [
+                  "baby",
+                  "person",
+                  "family",
+                  "clinician",
+                  "health-worker",
+                  "hospital",
+                  "clinic",
+                  "home",
+                  "phone",
+                  "tablet",
+                  "qr",
+                  "paper",
+                  "wifi-off",
+                  "wifi",
+                  "shield-check",
+                  "calendar-check",
+                  "stethoscope",
+                  "link",
+                  "transfer",
+                  "globe",
+                  "key",
+                  "lock",
+                  "database",
+                  "tent",
+                  "bus",
+                  "plane",
+                  "scale",
+                  "coins",
+                  "shuffle",
+                  "syringe",
+                  "pill",
+                  "pill-off",
+                  "pen",
+                  "heart",
+                  "eye",
+                  "unlock",
+                  "check",
+                  "cross",
+                  "question",
+                  "hash",
+                  "printer",
+                  "camera",
+                  "alert",
+                  "clock",
+                  "user",
+                  "users",
+                  "building",
+                  "scan",
+                  "send",
+                  "layers",
+                  "shield",
+                  "shield-alert",
+                  "monitor",
+                  "kiosk",
+                  "scanner",
+                  "calendar",
+                  "file",
+                  "baby-new"
+                ]
+              }
+            },
+            "required": [
+              "label"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "caption": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "type",
+        "buttons"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/device-screen/ActionsBlockSchema.schema.json",
+  "title": "ActionsBlockSchema",
+  "description": "Generated from `ActionsBlockSchema` in schemas/process/device-screen.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261112-1625",
+    "sha": "6ca206c84dafc1f6a11bf0c86a9c4c99eaad9882",
+    "pr": "repin-train/20261112-1625",
+    "run": "43258944433"
+  }
+}

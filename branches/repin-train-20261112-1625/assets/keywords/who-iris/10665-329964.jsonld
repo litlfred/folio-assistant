@@ -1,0 +1,1192 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-329964",
+  "instance": "who-iris",
+  "about": "library/10665-329964",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7434,
+    "terms": 71211
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "social network-based",
+        "score": 8.2258,
+        "evidence": []
+      },
+      {
+        "term": "network-based approaches",
+        "score": 7.7864,
+        "evidence": []
+      },
+      {
+        "term": "network-based hiv",
+        "score": 7.0645,
+        "evidence": []
+      },
+      {
+        "term": "voluntary hts",
+        "score": 5.41,
+        "evidence": []
+      },
+      {
+        "term": "social contacts",
+        "score": 5.2629,
+        "evidence": []
+      },
+      {
+        "term": "partner services",
+        "score": 4.9441,
+        "evidence": []
+      },
+      {
+        "term": "voluntary provider-assisted",
+        "score": 4.7013,
+        "evidence": []
+      },
+      {
+        "term": "social networks",
+        "score": 4.4358,
+        "evidence": []
+      },
+      {
+        "term": "key populations",
+        "score": 4.1459,
+        "evidence": []
+      },
+      {
+        "term": "recommends social",
+        "score": 4.0791,
+        "evidence": []
+      },
+      {
+        "term": "provider-assisted referral",
+        "score": 3.8696,
+        "evidence": []
+      },
+      {
+        "term": "testing approaches",
+        "score": 3.8696,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "social network-based",
+        "score": 299.0887,
+        "evidence": []
+      },
+      {
+        "term": "network-based approaches",
+        "score": 265.7485,
+        "evidence": []
+      },
+      {
+        "term": "network-based hiv",
+        "score": 229.565,
+        "evidence": []
+      },
+      {
+        "term": "social contacts",
+        "score": 164.3248,
+        "evidence": []
+      },
+      {
+        "term": "social networks",
+        "score": 146.6956,
+        "evidence": []
+      },
+      {
+        "term": "hiv partner",
+        "score": 143.887,
+        "evidence": []
+      },
+      {
+        "term": "recommends social",
+        "score": 142.845,
+        "evidence": []
+      },
+      {
+        "term": "partner services",
+        "score": 134.315,
+        "evidence": []
+      },
+      {
+        "term": "social media",
+        "score": 131.1233,
+        "evidence": []
+      },
+      {
+        "term": "testing approaches",
+        "score": 118.2996,
+        "evidence": []
+      },
+      {
+        "term": "key populations",
+        "score": 109.0358,
+        "evidence": []
+      },
+      {
+        "term": "approaches among",
+        "score": 102.1036,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "hiv testing",
+        "score": 1.863,
+        "evidence": []
+      },
+      {
+        "term": "hiv partner",
+        "score": 1.7532,
+        "evidence": []
+      },
+      {
+        "term": "testing services",
+        "score": 1.6911,
+        "evidence": []
+      },
+      {
+        "term": "key populations",
+        "score": 1.5767,
+        "evidence": []
+      },
+      {
+        "term": "transgender people",
+        "score": 1.4924,
+        "evidence": []
+      },
+      {
+        "term": "sex workers",
+        "score": 1.4283,
+        "evidence": []
+      },
+      {
+        "term": "services package",
+        "score": 1.282,
+        "evidence": []
+      },
+      {
+        "term": "among key",
+        "score": 1.2716,
+        "evidence": []
+      },
+      {
+        "term": "network-based hiv",
+        "score": 1.2505,
+        "evidence": []
+      },
+      {
+        "term": "young key",
+        "score": 1.1317,
+        "evidence": []
+      },
+      {
+        "term": "prep",
+        "score": 1.0979,
+        "evidence": []
+      },
+      {
+        "term": "testing approaches",
+        "score": 0.9274,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "hiv testing",
+        "score": 68.734,
+        "evidence": []
+      },
+      {
+        "term": "hiv partner",
+        "score": 60.3667,
+        "evidence": []
+      },
+      {
+        "term": "network-based hiv",
+        "score": 49.7537,
+        "evidence": []
+      },
+      {
+        "term": "key populations",
+        "score": 41.6277,
+        "evidence": []
+      },
+      {
+        "term": "testing services",
+        "score": 41.0509,
+        "evidence": []
+      },
+      {
+        "term": "sex workers",
+        "score": 29.8614,
+        "evidence": []
+      },
+      {
+        "term": "among key",
+        "score": 29.86,
+        "evidence": []
+      },
+      {
+        "term": "young key",
+        "score": 29.6977,
+        "evidence": []
+      },
+      {
+        "term": "transgender people",
+        "score": 25.7288,
+        "evidence": []
+      },
+      {
+        "term": "services package",
+        "score": 24.8498,
+        "evidence": []
+      },
+      {
+        "term": "men",
+        "score": 22.392,
+        "evidence": []
+      },
+      {
+        "term": "testing approaches",
+        "score": 22.3283,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "hiv testing",
+        "score": 1.863,
+        "evidence": []
+      },
+      {
+        "term": "hiv partner",
+        "score": 1.7532,
+        "evidence": []
+      },
+      {
+        "term": "testing services",
+        "score": 1.6911,
+        "evidence": []
+      },
+      {
+        "term": "key populations",
+        "score": 1.5767,
+        "evidence": []
+      },
+      {
+        "term": "transgender people",
+        "score": 1.4924,
+        "evidence": []
+      },
+      {
+        "term": "sex workers",
+        "score": 1.4283,
+        "evidence": []
+      },
+      {
+        "term": "network-based hiv",
+        "score": 1.3828,
+        "evidence": []
+      },
+      {
+        "term": "services package",
+        "score": 1.282,
+        "evidence": []
+      },
+      {
+        "term": "among key",
+        "score": 1.2716,
+        "evidence": []
+      },
+      {
+        "term": "young key",
+        "score": 1.1317,
+        "evidence": []
+      },
+      {
+        "term": "testing approaches",
+        "score": 0.9274,
+        "evidence": []
+      },
+      {
+        "term": "men",
+        "score": 0.8529,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "允许进行个人反馈",
+        "score": 104.6105,
+        "evidence": []
+      },
+      {
+        "term": "并提供一",
+        "score": 94.1225,
+        "evidence": []
+      },
+      {
+        "term": "相一致",
+        "score": 75.3506,
+        "evidence": []
+      },
+      {
+        "term": "在大流行间期提供疫苗供发展中国家使用",
+        "score": 65.871,
+        "evidence": []
+      },
+      {
+        "term": "提供大流行性流感疫苗",
+        "score": 65.871,
+        "evidence": []
+      },
+      {
+        "term": "科研人员",
+        "score": 62.467,
+        "evidence": []
+      },
+      {
+        "term": "乌干达",
+        "score": 58.5705,
+        "evidence": []
+      },
+      {
+        "term": "在马拉维",
+        "score": 51.5657,
+        "evidence": []
+      },
+      {
+        "term": "精神卫生",
+        "score": 50.7017,
+        "evidence": []
+      },
+      {
+        "term": "感染者",
+        "score": 50.5056,
+        "evidence": []
+      },
+      {
+        "term": "将继续寻求专家的指导建议",
+        "score": 48.8177,
+        "evidence": []
+      },
+      {
+        "term": "疫苗储备",
+        "score": 46.3248,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "page-002": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "social network-based",
+          "score": 2.8392,
+          "evidence": []
+        },
+        {
+          "term": "network-based approaches",
+          "score": 2.6683,
+          "evidence": []
+        },
+        {
+          "term": "network-based hiv",
+          "score": 2.6425,
+          "evidence": []
+        },
+        {
+          "term": "provider-assisted referral",
+          "score": 2.0932,
+          "evidence": []
+        },
+        {
+          "term": "voluntary hts",
+          "score": 2.0788,
+          "evidence": []
+        },
+        {
+          "term": "hiv partner",
+          "score": 1.7945,
+          "evidence": []
+        },
+        {
+          "term": "social contacts",
+          "score": 1.7334,
+          "evidence": []
+        },
+        {
+          "term": "key populations",
+          "score": 1.552,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "social network-based",
+          "score": 106.6215,
+          "evidence": []
+        },
+        {
+          "term": "network-based hiv",
+          "score": 98.149,
+          "evidence": []
+        },
+        {
+          "term": "network-based approaches",
+          "score": 91.7977,
+          "evidence": []
+        },
+        {
+          "term": "hiv partner",
+          "score": 60.6057,
+          "evidence": []
+        },
+        {
+          "term": "hiv testing",
+          "score": 56.114,
+          "evidence": []
+        },
+        {
+          "term": "social contacts",
+          "score": 55.0365,
+          "evidence": []
+        },
+        {
+          "term": "key populations",
+          "score": 46.8833,
+          "evidence": []
+        },
+        {
+          "term": "voluntary hts",
+          "score": 43.36,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hiv testing",
+          "score": 0.7116,
+          "evidence": []
+        },
+        {
+          "term": "hiv partner",
+          "score": 0.6602,
+          "evidence": []
+        },
+        {
+          "term": "key populations",
+          "score": 0.6309,
+          "evidence": []
+        },
+        {
+          "term": "partner services",
+          "score": 0.5201,
+          "evidence": []
+        },
+        {
+          "term": "among key",
+          "score": 0.5106,
+          "evidence": []
+        },
+        {
+          "term": "people",
+          "score": 0.5014,
+          "evidence": []
+        },
+        {
+          "term": "network-based hiv",
+          "score": 0.4933,
+          "evidence": []
+        },
+        {
+          "term": "prep",
+          "score": 0.4364,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hiv testing",
+          "score": 35.6679,
+          "evidence": []
+        },
+        {
+          "term": "hiv partner",
+          "score": 29.829,
+          "evidence": []
+        },
+        {
+          "term": "network-based hiv",
+          "score": 26.2356,
+          "evidence": []
+        },
+        {
+          "term": "key populations",
+          "score": 19.3594,
+          "evidence": []
+        },
+        {
+          "term": "among key",
+          "score": 14.3425,
+          "evidence": []
+        },
+        {
+          "term": "partner services",
+          "score": 10.8422,
+          "evidence": []
+        },
+        {
+          "term": "testing approaches",
+          "score": 10.5981,
+          "evidence": []
+        },
+        {
+          "term": "people",
+          "score": 10.3224,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hiv testing",
+          "score": 0.7116,
+          "evidence": []
+        },
+        {
+          "term": "hiv partner",
+          "score": 0.6602,
+          "evidence": []
+        },
+        {
+          "term": "key populations",
+          "score": 0.6309,
+          "evidence": []
+        },
+        {
+          "term": "network-based hiv",
+          "score": 0.5439,
+          "evidence": []
+        },
+        {
+          "term": "partner services",
+          "score": 0.5201,
+          "evidence": []
+        },
+        {
+          "term": "among key",
+          "score": 0.5106,
+          "evidence": []
+        },
+        {
+          "term": "people",
+          "score": 0.5014,
+          "evidence": []
+        },
+        {
+          "term": "sex",
+          "score": 0.3783,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "并提供一",
+          "score": 29.0584,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 28.6709,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 26.644,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 24.1469,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 21.4236,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 21.4236,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 16.5985,
+          "evidence": []
+        },
+        {
+          "term": "可能性",
+          "score": 15.769,
+          "evidence": []
+        }
+      ]
+    },
+    "page-003": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "social network-based",
+          "score": 2.9863,
+          "evidence": []
+        },
+        {
+          "term": "network-based approaches",
+          "score": 2.9052,
+          "evidence": []
+        },
+        {
+          "term": "provider-assisted referral",
+          "score": 1.7765,
+          "evidence": []
+        },
+        {
+          "term": "social networks",
+          "score": 1.6726,
+          "evidence": []
+        },
+        {
+          "term": "partner services",
+          "score": 1.6636,
+          "evidence": []
+        },
+        {
+          "term": "assisted referral",
+          "score": 1.5786,
+          "evidence": []
+        },
+        {
+          "term": "social media",
+          "score": 1.5491,
+          "evidence": []
+        },
+        {
+          "term": "key populations",
+          "score": 1.4711,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "social network-based",
+          "score": 121.9132,
+          "evidence": []
+        },
+        {
+          "term": "network-based approaches",
+          "score": 115.9672,
+          "evidence": []
+        },
+        {
+          "term": "social networks",
+          "score": 58.2662,
+          "evidence": []
+        },
+        {
+          "term": "social media",
+          "score": 54.3439,
+          "evidence": []
+        },
+        {
+          "term": "partner services",
+          "score": 45.2122,
+          "evidence": []
+        },
+        {
+          "term": "key populations",
+          "score": 40.6465,
+          "evidence": []
+        },
+        {
+          "term": "index clients",
+          "score": 34.3229,
+          "evidence": []
+        },
+        {
+          "term": "provider-assisted referral",
+          "score": 30.958,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "partner services",
+          "score": 0.5622,
+          "evidence": []
+        },
+        {
+          "term": "key populations",
+          "score": 0.5234,
+          "evidence": []
+        },
+        {
+          "term": "among key",
+          "score": 0.426,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.3827,
+          "evidence": []
+        },
+        {
+          "term": "people",
+          "score": 0.3774,
+          "evidence": []
+        },
+        {
+          "term": "prep",
+          "score": 0.3646,
+          "evidence": []
+        },
+        {
+          "term": "young key",
+          "score": 0.3623,
+          "evidence": []
+        },
+        {
+          "term": "sex",
+          "score": 0.3144,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "key populations",
+          "score": 13.154,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 12.4906,
+          "evidence": []
+        },
+        {
+          "term": "partner services",
+          "score": 11.7658,
+          "evidence": []
+        },
+        {
+          "term": "young key",
+          "score": 9.5239,
+          "evidence": []
+        },
+        {
+          "term": "among key",
+          "score": 9.1246,
+          "evidence": []
+        },
+        {
+          "term": "index clients",
+          "score": 8.9455,
+          "evidence": []
+        },
+        {
+          "term": "men",
+          "score": 7.7152,
+          "evidence": []
+        },
+        {
+          "term": "sex",
+          "score": 7.1342,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "partner services",
+          "score": 0.5622,
+          "evidence": []
+        },
+        {
+          "term": "key populations",
+          "score": 0.5234,
+          "evidence": []
+        },
+        {
+          "term": "among key",
+          "score": 0.426,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.3827,
+          "evidence": []
+        },
+        {
+          "term": "people",
+          "score": 0.3774,
+          "evidence": []
+        },
+        {
+          "term": "young key",
+          "score": 0.3623,
+          "evidence": []
+        },
+        {
+          "term": "index clients",
+          "score": 0.3151,
+          "evidence": []
+        },
+        {
+          "term": "sex",
+          "score": 0.3144,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 35.5596,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 31.6464,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 24.7452,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 17.8532,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 17.8532,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 17.1794,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 16.7027,
+          "evidence": []
+        },
+        {
+          "term": "乌干达",
+          "score": 16.4777,
+          "evidence": []
+        }
+      ]
+    },
+    "page-004": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "social network-based",
+          "score": 2.4002,
+          "evidence": []
+        },
+        {
+          "term": "network-based approaches",
+          "score": 2.2129,
+          "evidence": []
+        },
+        {
+          "term": "partner services",
+          "score": 1.7569,
+          "evidence": []
+        },
+        {
+          "term": "social contacts",
+          "score": 1.4894,
+          "evidence": []
+        },
+        {
+          "term": "key populations",
+          "score": 1.1228,
+          "evidence": []
+        },
+        {
+          "term": "hts",
+          "score": 0.9726,
+          "evidence": []
+        },
+        {
+          "term": "hiv testing",
+          "score": 0.8494,
+          "evidence": []
+        },
+        {
+          "term": "clients",
+          "score": 0.8208,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "social network-based",
+          "score": 70.554,
+          "evidence": []
+        },
+        {
+          "term": "network-based approaches",
+          "score": 57.9836,
+          "evidence": []
+        },
+        {
+          "term": "partner services",
+          "score": 52.4134,
+          "evidence": []
+        },
+        {
+          "term": "social contacts",
+          "score": 40.3472,
+          "evidence": []
+        },
+        {
+          "term": "key populations",
+          "score": 21.506,
+          "evidence": []
+        },
+        {
+          "term": "hts",
+          "score": 16.8539,
+          "evidence": []
+        },
+        {
+          "term": "clients",
+          "score": 15.8701,
+          "evidence": []
+        },
+        {
+          "term": "hiv testing",
+          "score": 14.5403,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hiv testing",
+          "score": 0.5463,
+          "evidence": []
+        },
+        {
+          "term": "partner services",
+          "score": 0.4989,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.4538,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.4441,
+          "evidence": []
+        },
+        {
+          "term": "key populations",
+          "score": 0.4224,
+          "evidence": []
+        },
+        {
+          "term": "people",
+          "score": 0.3218,
+          "evidence": []
+        },
+        {
+          "term": "prep",
+          "score": 0.2969,
+          "evidence": []
+        },
+        {
+          "term": "client",
+          "score": 0.2452,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hiv testing",
+          "score": 15.2065,
+          "evidence": []
+        },
+        {
+          "term": "partner services",
+          "score": 10.0757,
+          "evidence": []
+        },
+        {
+          "term": "key populations",
+          "score": 9.1142,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 7.5523,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 7.0054,
+          "evidence": []
+        },
+        {
+          "term": "counselling",
+          "score": 5.455,
+          "evidence": []
+        },
+        {
+          "term": "clients",
+          "score": 5.1731,
+          "evidence": []
+        },
+        {
+          "term": "social contacts",
+          "score": 4.9923,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hiv testing",
+          "score": 0.5463,
+          "evidence": []
+        },
+        {
+          "term": "partner services",
+          "score": 0.4989,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 0.4538,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.4441,
+          "evidence": []
+        },
+        {
+          "term": "key populations",
+          "score": 0.4224,
+          "evidence": []
+        },
+        {
+          "term": "people",
+          "score": 0.3218,
+          "evidence": []
+        },
+        {
+          "term": "clients",
+          "score": 0.2354,
+          "evidence": []
+        },
+        {
+          "term": "social contacts",
+          "score": 0.2214,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 75.6347,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 40.38,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 33.4178,
+          "evidence": []
+        },
+        {
+          "term": "乌干达",
+          "score": 27.0116,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 26.5941,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 26.5941,
+          "evidence": []
+        },
+        {
+          "term": "在马拉维",
+          "score": 26.0806,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 23.9614,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

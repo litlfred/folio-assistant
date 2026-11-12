@@ -1,0 +1,33 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/folio-assistant-core/schema/glossary.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "repin-train/20261112-1625",
+    "sha": "6ca206c84dafc1f6a11bf0c86a9c4c99eaad9882",
+    "pr": "repin-train/20261112-1625",
+    "run": "43258944433"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/folio-assistant-core/schema/glossary",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "glossary",
+      "title": "glossary",
+      "summary": "`folio-glossary/v1`: a glossary as W3C SKOS. Core's `glossary` graph typology",
+      "module": "schemas/glossary.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/folio-assistant-core/directory/core-schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/glossary",
+      "jsonSchema": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/folio-assistant-core/schema/zod/glossary/ArchimateFocusSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/folio-assistant-core/schema/zod/glossary/ArchimateRelationshipSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/folio-assistant-core/schema/zod/glossary/FocusSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/folio-assistant-core/schema/zod/glossary/GlossarySchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/folio-assistant-core/schema/zod/glossary/LangTextSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/folio-assistant-core/schema/zod/glossary/OrgFocusSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/folio-assistant-core/schema/zod/glossary/SubjectSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/folio-assistant-core/schema/zod/glossary/TermSchema.schema.json"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/cat-harness/package/content-lifecycle.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261112-1625",
+    "sha": "6ca206c84dafc1f6a11bf0c86a9c4c99eaad9882",
+    "pr": "repin-train/20261112-1625",
+    "run": "43258944433"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/cat-harness/package/content-lifecycle",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/SkillPackage",
+      "name": "content-lifecycle",
+      "version": "0.1.0",
+      "description": "General content lifecycle methods the harness's own processes call: validate, review, test and feedback. Planning, authoring, publication and retirement are operational and belong to the content layer above (content split step 1).",
+      "path": "skills/authoring/content-lifecycle",
+      "hasManifest": true,
+      "declaresSkill": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/cat-harness/skill/content-feedback",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/cat-harness/skill/content-review",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/cat-harness/skill/content-test",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/cat-harness/skill/content-validate",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/cat-harness/skill/evidence-appraisal",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/cat-harness/skill/feedback-deep-links"
+      ],
+      "providesCapability": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/cat-harness/capability/git-push",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/cat-harness/capability/python3",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/cat-harness/capability/node-runtime"
+      ],
+      "requiresCapability": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/package/content-lifecycle"
+    }
+  ]
+}

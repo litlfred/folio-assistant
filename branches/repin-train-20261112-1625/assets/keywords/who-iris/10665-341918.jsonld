@@ -1,0 +1,1296 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-341918",
+  "instance": "who-iris",
+  "about": "library/10665-341918",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7434,
+    "terms": 71211
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "contactos los",
+        "score": 13.8175,
+        "evidence": []
+      },
+      {
+        "term": "parejas compañeros",
+        "score": 13.5593,
+        "evidence": []
+      },
+      {
+        "term": "las parejas",
+        "score": 13.2863,
+        "evidence": []
+      },
+      {
+        "term": "consumo contactos",
+        "score": 12.9183,
+        "evidence": []
+      },
+      {
+        "term": "las redes",
+        "score": 12.0641,
+        "evidence": []
+      },
+      {
+        "term": "contactos para",
+        "score": 11.805,
+        "evidence": []
+      },
+      {
+        "term": "los enfoques",
+        "score": 11.699,
+        "evidence": []
+      },
+      {
+        "term": "los servicios",
+        "score": 11.426,
+        "evidence": []
+      },
+      {
+        "term": "pruebas contactos",
+        "score": 11.2197,
+        "evidence": []
+      },
+      {
+        "term": "contactos sociales",
+        "score": 11.0792,
+        "evidence": []
+      },
+      {
+        "term": "los grupos",
+        "score": 10.6267,
+        "evidence": []
+      },
+      {
+        "term": "que los",
+        "score": 10.1701,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "contactos los",
+        "score": 666.6711,
+        "evidence": []
+      },
+      {
+        "term": "los compañeros",
+        "score": 598.2145,
+        "evidence": []
+      },
+      {
+        "term": "las parejas",
+        "score": 549.9272,
+        "evidence": []
+      },
+      {
+        "term": "los servicios",
+        "score": 521.884,
+        "evidence": []
+      },
+      {
+        "term": "consumo contactos",
+        "score": 519.5299,
+        "evidence": []
+      },
+      {
+        "term": "los enfoques",
+        "score": 514.2301,
+        "evidence": []
+      },
+      {
+        "term": "las redes",
+        "score": 488.5747,
+        "evidence": []
+      },
+      {
+        "term": "para los",
+        "score": 482.3025,
+        "evidence": []
+      },
+      {
+        "term": "que los",
+        "score": 474.6531,
+        "evidence": []
+      },
+      {
+        "term": "los grupos",
+        "score": 474.4279,
+        "evidence": []
+      },
+      {
+        "term": "los usuarios",
+        "score": 440.7789,
+        "evidence": []
+      },
+      {
+        "term": "con los",
+        "score": 423.2379,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "para los",
+        "score": 10.791,
+        "evidence": []
+      },
+      {
+        "term": "que los",
+        "score": 10.7337,
+        "evidence": []
+      },
+      {
+        "term": "para las",
+        "score": 9.9504,
+        "evidence": []
+      },
+      {
+        "term": "con los",
+        "score": 9.7092,
+        "evidence": []
+      },
+      {
+        "term": "como los",
+        "score": 8.6523,
+        "evidence": []
+      },
+      {
+        "term": "los servicios",
+        "score": 8.6297,
+        "evidence": []
+      },
+      {
+        "term": "los grupos",
+        "score": 7.4126,
+        "evidence": []
+      },
+      {
+        "term": "las personas",
+        "score": 7.3231,
+        "evidence": []
+      },
+      {
+        "term": "todos los",
+        "score": 7.2494,
+        "evidence": []
+      },
+      {
+        "term": "los trabajadores",
+        "score": 7.1493,
+        "evidence": []
+      },
+      {
+        "term": "los miembros",
+        "score": 7.112,
+        "evidence": []
+      },
+      {
+        "term": "los usuarios",
+        "score": 7.0576,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "que los",
+        "score": 435.5506,
+        "evidence": []
+      },
+      {
+        "term": "para los",
+        "score": 424.5379,
+        "evidence": []
+      },
+      {
+        "term": "con los",
+        "score": 384.5558,
+        "evidence": []
+      },
+      {
+        "term": "los trabajadores",
+        "score": 350.0344,
+        "evidence": []
+      },
+      {
+        "term": "los servicios",
+        "score": 348.3484,
+        "evidence": []
+      },
+      {
+        "term": "para las",
+        "score": 341.2826,
+        "evidence": []
+      },
+      {
+        "term": "como los",
+        "score": 335.8363,
+        "evidence": []
+      },
+      {
+        "term": "los miembros",
+        "score": 318.8674,
+        "evidence": []
+      },
+      {
+        "term": "los grupos",
+        "score": 313.7905,
+        "evidence": []
+      },
+      {
+        "term": "todos los",
+        "score": 313.4658,
+        "evidence": []
+      },
+      {
+        "term": "contactos los",
+        "score": 313.054,
+        "evidence": []
+      },
+      {
+        "term": "los usuarios",
+        "score": 312.1195,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "para los",
+        "score": 10.791,
+        "evidence": []
+      },
+      {
+        "term": "que los",
+        "score": 10.7337,
+        "evidence": []
+      },
+      {
+        "term": "para las",
+        "score": 9.9504,
+        "evidence": []
+      },
+      {
+        "term": "con los",
+        "score": 9.7092,
+        "evidence": []
+      },
+      {
+        "term": "como los",
+        "score": 8.6523,
+        "evidence": []
+      },
+      {
+        "term": "los servicios",
+        "score": 8.6297,
+        "evidence": []
+      },
+      {
+        "term": "los grupos",
+        "score": 7.4126,
+        "evidence": []
+      },
+      {
+        "term": "las personas",
+        "score": 7.3231,
+        "evidence": []
+      },
+      {
+        "term": "todos los",
+        "score": 7.2494,
+        "evidence": []
+      },
+      {
+        "term": "los trabajadores",
+        "score": 7.1493,
+        "evidence": []
+      },
+      {
+        "term": "los miembros",
+        "score": 7.112,
+        "evidence": []
+      },
+      {
+        "term": "los usuarios",
+        "score": 7.0576,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "重点人群",
+        "score": 350.0705,
+        "evidence": []
+      },
+      {
+        "term": "捐助者",
+        "score": 271.9336,
+        "evidence": []
+      },
+      {
+        "term": "对非自愿重新安置行动的研究",
+        "score": 220.7425,
+        "evidence": []
+      },
+      {
+        "term": "非同寻常",
+        "score": 208.3187,
+        "evidence": []
+      },
+      {
+        "term": "免使用费许可证",
+        "score": 189.5474,
+        "evidence": []
+      },
+      {
+        "term": "输精管结扎术与前列腺癌的病例对照研究",
+        "score": 183.911,
+        "evidence": []
+      },
+      {
+        "term": "被称为研究伦理委员会",
+        "score": 180.7255,
+        "evidence": []
+      },
+      {
+        "term": "与撒哈拉以南非洲的家庭童工的访谈",
+        "score": 176.3231,
+        "evidence": []
+      },
+      {
+        "term": "利用世卫组织流感病毒追踪机制记录接受和转让pip生物材料的情况",
+        "score": 168.9902,
+        "evidence": []
+      },
+      {
+        "term": "同行评议者或杂志编辑",
+        "score": 160.6608,
+        "evidence": []
+      },
+      {
+        "term": "如果出版偏倚降低了基于数据作出决策之证据的可信性",
+        "score": 160.6608,
+        "evidence": []
+      },
+      {
+        "term": "或一些其他单位",
+        "score": 160.6608,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "page-001": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "sinopsis",
+          "score": 0.6392,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.6029,
+          "evidence": []
+        },
+        {
+          "term": "parejas",
+          "score": 0.5882,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "sinopsis",
+          "score": 8.2207,
+          "evidence": []
+        },
+        {
+          "term": "parejas",
+          "score": 7.1221,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 6.6382,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "los",
+          "score": 0.3225,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.2814,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 0.2149,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "los",
+          "score": 4.4045,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 3.7674,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 2.492,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "los",
+          "score": 0.3225,
+          "evidence": []
+        },
+        {
+          "term": "las",
+          "score": 0.2814,
+          "evidence": []
+        },
+        {
+          "term": "para",
+          "score": 0.2149,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 78.8815,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 59.6628,
+          "evidence": []
+        },
+        {
+          "term": "对非自愿重新安置行动的研究",
+          "score": 57.1735,
+          "evidence": []
+        }
+      ]
+    },
+    "page-002": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "los contactos",
+          "score": 4.1649,
+          "evidence": []
+        },
+        {
+          "term": "parejas compañeros",
+          "score": 3.8651,
+          "evidence": []
+        },
+        {
+          "term": "las parejas",
+          "score": 3.8227,
+          "evidence": []
+        },
+        {
+          "term": "las redes",
+          "score": 3.5544,
+          "evidence": []
+        },
+        {
+          "term": "los enfoques",
+          "score": 3.5037,
+          "evidence": []
+        },
+        {
+          "term": "los servicios",
+          "score": 3.4957,
+          "evidence": []
+        },
+        {
+          "term": "parejas sexuales",
+          "score": 3.4851,
+          "evidence": []
+        },
+        {
+          "term": "contactos para",
+          "score": 3.441,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "los contactos",
+          "score": 195.681,
+          "evidence": []
+        },
+        {
+          "term": "los servicios",
+          "score": 158.4373,
+          "evidence": []
+        },
+        {
+          "term": "los compañeros",
+          "score": 157.8301,
+          "evidence": []
+        },
+        {
+          "term": "las parejas",
+          "score": 154.1983,
+          "evidence": []
+        },
+        {
+          "term": "los grupos",
+          "score": 153.2519,
+          "evidence": []
+        },
+        {
+          "term": "los enfoques",
+          "score": 150.6098,
+          "evidence": []
+        },
+        {
+          "term": "las redes",
+          "score": 145.6221,
+          "evidence": []
+        },
+        {
+          "term": "contactos para",
+          "score": 126.4586,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "los servicios",
+          "score": 2.7679,
+          "evidence": []
+        },
+        {
+          "term": "como los",
+          "score": 2.7642,
+          "evidence": []
+        },
+        {
+          "term": "los grupos",
+          "score": 2.3783,
+          "evidence": []
+        },
+        {
+          "term": "las personas",
+          "score": 2.3522,
+          "evidence": []
+        },
+        {
+          "term": "los enfoques",
+          "score": 2.2607,
+          "evidence": []
+        },
+        {
+          "term": "los contactos",
+          "score": 2.2357,
+          "evidence": []
+        },
+        {
+          "term": "los compañeros",
+          "score": 2.2138,
+          "evidence": []
+        },
+        {
+          "term": "las parejas",
+          "score": 1.9692,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "los servicios",
+          "score": 107.1465,
+          "evidence": []
+        },
+        {
+          "term": "como los",
+          "score": 102.9578,
+          "evidence": []
+        },
+        {
+          "term": "los grupos",
+          "score": 96.3941,
+          "evidence": []
+        },
+        {
+          "term": "los contactos",
+          "score": 96.1827,
+          "evidence": []
+        },
+        {
+          "term": "los compañeros",
+          "score": 95.4086,
+          "evidence": []
+        },
+        {
+          "term": "los enfoques",
+          "score": 95.3024,
+          "evidence": []
+        },
+        {
+          "term": "las personas",
+          "score": 77.4529,
+          "evidence": []
+        },
+        {
+          "term": "las redes",
+          "score": 73.5069,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "los servicios",
+          "score": 2.7679,
+          "evidence": []
+        },
+        {
+          "term": "como los",
+          "score": 2.7642,
+          "evidence": []
+        },
+        {
+          "term": "los grupos",
+          "score": 2.3783,
+          "evidence": []
+        },
+        {
+          "term": "las personas",
+          "score": 2.3522,
+          "evidence": []
+        },
+        {
+          "term": "los enfoques",
+          "score": 2.2607,
+          "evidence": []
+        },
+        {
+          "term": "los contactos",
+          "score": 2.2357,
+          "evidence": []
+        },
+        {
+          "term": "los compañeros",
+          "score": 2.2138,
+          "evidence": []
+        },
+        {
+          "term": "las parejas",
+          "score": 1.9692,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 85.5397,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 72.2782,
+          "evidence": []
+        },
+        {
+          "term": "对非自愿重新安置行动的研究",
+          "score": 57.4851,
+          "evidence": []
+        },
+        {
+          "term": "非同寻常",
+          "score": 53.5177,
+          "evidence": []
+        },
+        {
+          "term": "免使用费许可证",
+          "score": 50.4865,
+          "evidence": []
+        },
+        {
+          "term": "输精管结扎术与前列腺癌的病例对照研究",
+          "score": 46.4439,
+          "evidence": []
+        },
+        {
+          "term": "与撒哈拉以南非洲的家庭童工的访谈",
+          "score": 45.557,
+          "evidence": []
+        },
+        {
+          "term": "被称为研究伦理委员会",
+          "score": 44.8142,
+          "evidence": []
+        }
+      ]
+    },
+    "page-003": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "parejas compañeros",
+          "score": 4.4852,
+          "evidence": []
+        },
+        {
+          "term": "las parejas",
+          "score": 4.1459,
+          "evidence": []
+        },
+        {
+          "term": "los usuarios",
+          "score": 3.9376,
+          "evidence": []
+        },
+        {
+          "term": "contactos sociales",
+          "score": 3.9059,
+          "evidence": []
+        },
+        {
+          "term": "pruebas contactos",
+          "score": 3.905,
+          "evidence": []
+        },
+        {
+          "term": "las redes",
+          "score": 3.8189,
+          "evidence": []
+        },
+        {
+          "term": "sus contactos",
+          "score": 3.7833,
+          "evidence": []
+        },
+        {
+          "term": "los enfoques",
+          "score": 3.7231,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "las parejas",
+          "score": 192.6439,
+          "evidence": []
+        },
+        {
+          "term": "parejas compañeros",
+          "score": 185.6761,
+          "evidence": []
+        },
+        {
+          "term": "los enfoques",
+          "score": 181.1217,
+          "evidence": []
+        },
+        {
+          "term": "contactos sociales",
+          "score": 179.477,
+          "evidence": []
+        },
+        {
+          "term": "las redes",
+          "score": 178.3592,
+          "evidence": []
+        },
+        {
+          "term": "sus contactos",
+          "score": 170.4781,
+          "evidence": []
+        },
+        {
+          "term": "los usuarios",
+          "score": 168.3289,
+          "evidence": []
+        },
+        {
+          "term": "pruebas contactos",
+          "score": 167.9748,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "para los",
+          "score": 3.1309,
+          "evidence": []
+        },
+        {
+          "term": "que los",
+          "score": 3.108,
+          "evidence": []
+        },
+        {
+          "term": "para las",
+          "score": 2.8825,
+          "evidence": []
+        },
+        {
+          "term": "con los",
+          "score": 2.7855,
+          "evidence": []
+        },
+        {
+          "term": "los servicios",
+          "score": 2.5044,
+          "evidence": []
+        },
+        {
+          "term": "los grupos",
+          "score": 2.1367,
+          "evidence": []
+        },
+        {
+          "term": "las personas",
+          "score": 2.1238,
+          "evidence": []
+        },
+        {
+          "term": "los usuarios",
+          "score": 2.043,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "que los",
+          "score": 139.4886,
+          "evidence": []
+        },
+        {
+          "term": "para los",
+          "score": 136.5259,
+          "evidence": []
+        },
+        {
+          "term": "con los",
+          "score": 124.9926,
+          "evidence": []
+        },
+        {
+          "term": "los servicios",
+          "score": 113.3039,
+          "evidence": []
+        },
+        {
+          "term": "para las",
+          "score": 108.3034,
+          "evidence": []
+        },
+        {
+          "term": "los grupos",
+          "score": 102.283,
+          "evidence": []
+        },
+        {
+          "term": "los usuarios",
+          "score": 101.913,
+          "evidence": []
+        },
+        {
+          "term": "incluidos los",
+          "score": 101.157,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "para los",
+          "score": 3.1309,
+          "evidence": []
+        },
+        {
+          "term": "que los",
+          "score": 3.108,
+          "evidence": []
+        },
+        {
+          "term": "para las",
+          "score": 2.8825,
+          "evidence": []
+        },
+        {
+          "term": "con los",
+          "score": 2.7855,
+          "evidence": []
+        },
+        {
+          "term": "los servicios",
+          "score": 2.5044,
+          "evidence": []
+        },
+        {
+          "term": "los grupos",
+          "score": 2.1367,
+          "evidence": []
+        },
+        {
+          "term": "las personas",
+          "score": 2.1238,
+          "evidence": []
+        },
+        {
+          "term": "los usuarios",
+          "score": 2.043,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 84.953,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 68.4455,
+          "evidence": []
+        },
+        {
+          "term": "对非自愿重新安置行动的研究",
+          "score": 65.5563,
+          "evidence": []
+        },
+        {
+          "term": "非同寻常",
+          "score": 64.9689,
+          "evidence": []
+        },
+        {
+          "term": "输精管结扎术与前列腺癌的病例对照研究",
+          "score": 55.3949,
+          "evidence": []
+        },
+        {
+          "term": "免使用费许可证",
+          "score": 54.0173,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 52.6107,
+          "evidence": []
+        },
+        {
+          "term": "被称为研究伦理委员会",
+          "score": 51.9145,
+          "evidence": []
+        }
+      ]
+    },
+    "page-004": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "parejas compañeros",
+          "score": 4.6208,
+          "evidence": []
+        },
+        {
+          "term": "las parejas",
+          "score": 4.1266,
+          "evidence": []
+        },
+        {
+          "term": "consumo contactos",
+          "score": 4.1056,
+          "evidence": []
+        },
+        {
+          "term": "los usuarios",
+          "score": 3.8516,
+          "evidence": []
+        },
+        {
+          "term": "los servicios",
+          "score": 3.6786,
+          "evidence": []
+        },
+        {
+          "term": "los enfoques",
+          "score": 3.6157,
+          "evidence": []
+        },
+        {
+          "term": "las redes",
+          "score": 3.5951,
+          "evidence": []
+        },
+        {
+          "term": "que los",
+          "score": 3.3258,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "parejas compañeros",
+          "score": 201.3065,
+          "evidence": []
+        },
+        {
+          "term": "los servicios",
+          "score": 189.6253,
+          "evidence": []
+        },
+        {
+          "term": "las parejas",
+          "score": 189.3248,
+          "evidence": []
+        },
+        {
+          "term": "los enfoques",
+          "score": 173.8958,
+          "evidence": []
+        },
+        {
+          "term": "que los",
+          "score": 168.3073,
+          "evidence": []
+        },
+        {
+          "term": "los usuarios",
+          "score": 165.9997,
+          "evidence": []
+        },
+        {
+          "term": "consumo contactos",
+          "score": 165.312,
+          "evidence": []
+        },
+        {
+          "term": "los grupos",
+          "score": 158.3095,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "que los",
+          "score": 3.6826,
+          "evidence": []
+        },
+        {
+          "term": "para las",
+          "score": 3.4031,
+          "evidence": []
+        },
+        {
+          "term": "los servicios",
+          "score": 2.9341,
+          "evidence": []
+        },
+        {
+          "term": "los grupos",
+          "score": 2.5346,
+          "evidence": []
+        },
+        {
+          "term": "las personas",
+          "score": 2.4878,
+          "evidence": []
+        },
+        {
+          "term": "los miembros",
+          "score": 2.4538,
+          "evidence": []
+        },
+        {
+          "term": "los usuarios",
+          "score": 2.4188,
+          "evidence": []
+        },
+        {
+          "term": "los enfoques",
+          "score": 2.3963,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "que los",
+          "score": 154.1567,
+          "evidence": []
+        },
+        {
+          "term": "los servicios",
+          "score": 123.0188,
+          "evidence": []
+        },
+        {
+          "term": "para las",
+          "score": 120.3217,
+          "evidence": []
+        },
+        {
+          "term": "los miembros",
+          "score": 111.9887,
+          "evidence": []
+        },
+        {
+          "term": "los usuarios",
+          "score": 111.0639,
+          "evidence": []
+        },
+        {
+          "term": "los grupos",
+          "score": 110.5612,
+          "evidence": []
+        },
+        {
+          "term": "incluidos los",
+          "score": 109.5195,
+          "evidence": []
+        },
+        {
+          "term": "los enfoques",
+          "score": 109.39,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "que los",
+          "score": 3.6826,
+          "evidence": []
+        },
+        {
+          "term": "para las",
+          "score": 3.4031,
+          "evidence": []
+        },
+        {
+          "term": "los servicios",
+          "score": 2.9341,
+          "evidence": []
+        },
+        {
+          "term": "los grupos",
+          "score": 2.5346,
+          "evidence": []
+        },
+        {
+          "term": "las personas",
+          "score": 2.4878,
+          "evidence": []
+        },
+        {
+          "term": "los miembros",
+          "score": 2.4538,
+          "evidence": []
+        },
+        {
+          "term": "los usuarios",
+          "score": 2.4188,
+          "evidence": []
+        },
+        {
+          "term": "los enfoques",
+          "score": 2.3963,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 117.2038,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 55.0396,
+          "evidence": []
+        },
+        {
+          "term": "对非自愿重新安置行动的研究",
+          "score": 40.5275,
+          "evidence": []
+        },
+        {
+          "term": "非同寻常",
+          "score": 37.4145,
+          "evidence": []
+        },
+        {
+          "term": "被称为研究伦理委员会",
+          "score": 36.4037,
+          "evidence": []
+        },
+        {
+          "term": "输精管结扎术与前列腺癌的病例对照研究",
+          "score": 35.5338,
+          "evidence": []
+        },
+        {
+          "term": "利用世卫组织流感病毒追踪机制记录接受和转让pip生物材料的情况",
+          "score": 35.177,
+          "evidence": []
+        },
+        {
+          "term": "免使用费许可证",
+          "score": 34.7334,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

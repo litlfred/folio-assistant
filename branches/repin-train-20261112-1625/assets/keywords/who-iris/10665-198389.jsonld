@@ -1,0 +1,414 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-198389",
+  "instance": "who-iris",
+  "about": "library/10665-198389",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7434,
+    "terms": 71211
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "乌干达",
+        "score": 1.0202,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "乌干达",
+        "score": 16.4413,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "hiv",
+        "score": 0.0281,
+        "evidence": []
+      },
+      {
+        "term": "aids",
+        "score": 0.0122,
+        "evidence": []
+      },
+      {
+        "term": "art",
+        "score": 0.0104,
+        "evidence": []
+      },
+      {
+        "term": "women",
+        "score": 0.0088,
+        "evidence": []
+      },
+      {
+        "term": "infection",
+        "score": 0.0081,
+        "evidence": []
+      },
+      {
+        "term": "treatment",
+        "score": 0.008,
+        "evidence": []
+      },
+      {
+        "term": "testing",
+        "score": 0.0079,
+        "evidence": []
+      },
+      {
+        "term": "prevention",
+        "score": 0.0078,
+        "evidence": []
+      },
+      {
+        "term": "people",
+        "score": 0.0076,
+        "evidence": []
+      },
+      {
+        "term": "living",
+        "score": 0.0074,
+        "evidence": []
+      },
+      {
+        "term": "unaids",
+        "score": 0.0067,
+        "evidence": []
+      },
+      {
+        "term": "transmission",
+        "score": 0.0066,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "hiv",
+        "score": 0.7186,
+        "evidence": []
+      },
+      {
+        "term": "aids",
+        "score": 0.22,
+        "evidence": []
+      },
+      {
+        "term": "doi",
+        "score": 0.186,
+        "evidence": []
+      },
+      {
+        "term": "testing",
+        "score": 0.1437,
+        "evidence": []
+      },
+      {
+        "term": "living",
+        "score": 0.1329,
+        "evidence": []
+      },
+      {
+        "term": "art",
+        "score": 0.1305,
+        "evidence": []
+      },
+      {
+        "term": "june",
+        "score": 0.1016,
+        "evidence": []
+      },
+      {
+        "term": "surveillance",
+        "score": 0.0928,
+        "evidence": []
+      },
+      {
+        "term": "unaids",
+        "score": 0.0911,
+        "evidence": []
+      },
+      {
+        "term": "prevention",
+        "score": 0.0871,
+        "evidence": []
+      },
+      {
+        "term": "incidence",
+        "score": 0.0867,
+        "evidence": []
+      },
+      {
+        "term": "hiv-positive",
+        "score": 0.0758,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "乌干达",
+        "score": 0,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "乌干达",
+        "score": 38516.2824,
+        "evidence": []
+      },
+      {
+        "term": "精神卫生",
+        "score": 33718.5112,
+        "evidence": []
+      },
+      {
+        "term": "注意到",
+        "score": 33436.9741,
+        "evidence": []
+      },
+      {
+        "term": "在马拉维",
+        "score": 31109.6068,
+        "evidence": []
+      },
+      {
+        "term": "在世界卫生组织",
+        "score": 30321.2063,
+        "evidence": []
+      },
+      {
+        "term": "澳大利亚",
+        "score": 29347.35,
+        "evidence": []
+      },
+      {
+        "term": "重点人群",
+        "score": 28271.1627,
+        "evidence": []
+      },
+      {
+        "term": "议程项目",
+        "score": 16412.1704,
+        "evidence": []
+      },
+      {
+        "term": "保持警惕",
+        "score": 16357.8561,
+        "evidence": []
+      },
+      {
+        "term": "执行委员会",
+        "score": 15144.6123,
+        "evidence": []
+      },
+      {
+        "term": "不幸的是",
+        "score": 14322.6006,
+        "evidence": []
+      },
+      {
+        "term": "询问学员这项原则如何应用于紧急情况下的研究",
+        "score": 13283.2717,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-非洲区域主任关于区域关键性-业务和管理改革问题战略和进展的报告": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "乌干达",
+          "score": 1.0202,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "乌干达",
+          "score": 16.4413,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hiv",
+          "score": 0.0281,
+          "evidence": []
+        },
+        {
+          "term": "aids",
+          "score": 0.0122,
+          "evidence": []
+        },
+        {
+          "term": "art",
+          "score": 0.0104,
+          "evidence": []
+        },
+        {
+          "term": "women",
+          "score": 0.0088,
+          "evidence": []
+        },
+        {
+          "term": "infection",
+          "score": 0.0081,
+          "evidence": []
+        },
+        {
+          "term": "treatment",
+          "score": 0.008,
+          "evidence": []
+        },
+        {
+          "term": "testing",
+          "score": 0.0079,
+          "evidence": []
+        },
+        {
+          "term": "prevention",
+          "score": 0.0078,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hiv",
+          "score": 0.7186,
+          "evidence": []
+        },
+        {
+          "term": "aids",
+          "score": 0.22,
+          "evidence": []
+        },
+        {
+          "term": "doi",
+          "score": 0.186,
+          "evidence": []
+        },
+        {
+          "term": "testing",
+          "score": 0.1437,
+          "evidence": []
+        },
+        {
+          "term": "living",
+          "score": 0.1329,
+          "evidence": []
+        },
+        {
+          "term": "art",
+          "score": 0.1305,
+          "evidence": []
+        },
+        {
+          "term": "june",
+          "score": 0.1016,
+          "evidence": []
+        },
+        {
+          "term": "surveillance",
+          "score": 0.0928,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "乌干达",
+          "score": 0,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "乌干达",
+          "score": 38516.2824,
+          "evidence": []
+        },
+        {
+          "term": "精神卫生",
+          "score": 33718.5112,
+          "evidence": []
+        },
+        {
+          "term": "注意到",
+          "score": 33436.9741,
+          "evidence": []
+        },
+        {
+          "term": "在马拉维",
+          "score": 31109.6068,
+          "evidence": []
+        },
+        {
+          "term": "在世界卫生组织",
+          "score": 30321.2063,
+          "evidence": []
+        },
+        {
+          "term": "澳大利亚",
+          "score": 29347.35,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 28271.1627,
+          "evidence": []
+        },
+        {
+          "term": "议程项目",
+          "score": 16412.1704,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

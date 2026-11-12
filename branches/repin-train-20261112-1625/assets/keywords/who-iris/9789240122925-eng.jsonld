@@ -1,0 +1,6132 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "9789240122925-eng",
+  "instance": "who-iris",
+  "about": "library/9789240122925-eng",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7434,
+    "terms": 71211
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "health workforce",
+        "score": 28.4952,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hwf data",
+        "score": 28.1325,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hwf density",
+        "score": 28.0103,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "workforce accounts",
+        "score": 27.6195,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "nhwa data",
+        "score": 27.5346,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "national hwf",
+        "score": 27.3487,
+        "evidence": []
+      },
+      {
+        "term": "hwf stock",
+        "score": 26.9984,
+        "evidence": []
+      },
+      {
+        "term": "global hwf",
+        "score": 26.153,
+        "evidence": []
+      },
+      {
+        "term": "hwf ageing",
+        "score": 25.8969,
+        "evidence": []
+      },
+      {
+        "term": "nhwa focal",
+        "score": 25.7861,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "projected hwf",
+        "score": 24.3951,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "workforce levels",
+        "score": 23.9912,
+        "evidence": [
+          "heading"
+        ]
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "nhwa data",
+        "score": 1025.1976,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hwf data",
+        "score": 1009.2827,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hwf density",
+        "score": 920.7672,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "workforce data",
+        "score": 895.7008,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hwf stock",
+        "score": 882.1745,
+        "evidence": []
+      },
+      {
+        "term": "health workforce",
+        "score": 852.7913,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "nhwa focal",
+        "score": 790.1613,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "national hwf",
+        "score": 786.8544,
+        "evidence": []
+      },
+      {
+        "term": "global hwf",
+        "score": 785.8052,
+        "evidence": []
+      },
+      {
+        "term": "projected hwf",
+        "score": 777.0368,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hwf ageing",
+        "score": 762.9993,
+        "evidence": []
+      },
+      {
+        "term": "nhwa platform",
+        "score": 753.968,
+        "evidence": [
+          "heading"
+        ]
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "health workforce",
+        "score": 24.8003,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "national workforce",
+        "score": 22.5414,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "workforce data",
+        "score": 20.5646,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "workforce accounts",
+        "score": 19.7707,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "workforce global",
+        "score": 19.0535,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "health workers",
+        "score": 17.1917,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "workforce stock",
+        "score": 17.1076,
+        "evidence": []
+      },
+      {
+        "term": "health labour",
+        "score": 17.0969,
+        "evidence": []
+      },
+      {
+        "term": "world health",
+        "score": 16.8443,
+        "evidence": []
+      },
+      {
+        "term": "nhwa data",
+        "score": 16.7316,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "workforce policies",
+        "score": 16.6942,
+        "evidence": []
+      },
+      {
+        "term": "national hwf",
+        "score": 16.1448,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "workforce data",
+        "score": 763.8157,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "health data",
+        "score": 728.2778,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "nhwa data",
+        "score": 664.9266,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hwf data",
+        "score": 540.7407,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "stock data",
+        "score": 499.9198,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "national workforce",
+        "score": 495.0079,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "workforce global",
+        "score": 483.186,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "available data",
+        "score": 466.1163,
+        "evidence": []
+      },
+      {
+        "term": "workforce accounts",
+        "score": 463.2378,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "data reporting",
+        "score": 462.0111,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "country data",
+        "score": 455.1471,
+        "evidence": []
+      },
+      {
+        "term": "health workers",
+        "score": 448.986,
+        "evidence": [
+          "heading"
+        ]
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "health workforce",
+        "score": 24.8003,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "national workforce",
+        "score": 22.5414,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "workforce data",
+        "score": 20.5646,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "workforce accounts",
+        "score": 19.7707,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "workforce global",
+        "score": 19.0535,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "health workers",
+        "score": 17.1917,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "workforce stock",
+        "score": 17.1076,
+        "evidence": []
+      },
+      {
+        "term": "health labour",
+        "score": 17.0969,
+        "evidence": []
+      },
+      {
+        "term": "world health",
+        "score": 16.8443,
+        "evidence": []
+      },
+      {
+        "term": "nhwa data",
+        "score": 16.7316,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "workforce policies",
+        "score": 16.6942,
+        "evidence": []
+      },
+      {
+        "term": "national hwf",
+        "score": 16.1448,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "询问学员这项原则如何应用于紧急情况下的研究",
+        "score": 1336.9145,
+        "evidence": []
+      },
+      {
+        "term": "提供hpv",
+        "score": 1120.6999,
+        "evidence": []
+      },
+      {
+        "term": "感染者",
+        "score": 1060.4778,
+        "evidence": []
+      },
+      {
+        "term": "如果没有",
+        "score": 1034.1905,
+        "evidence": []
+      },
+      {
+        "term": "关注这一事实",
+        "score": 991.0966,
+        "evidence": []
+      },
+      {
+        "term": "这意味着",
+        "score": 965.8712,
+        "evidence": []
+      },
+      {
+        "term": "引进hpv",
+        "score": 963.3219,
+        "evidence": []
+      },
+      {
+        "term": "以及卫生保健界",
+        "score": 943.7403,
+        "evidence": []
+      },
+      {
+        "term": "基金会和开发银行",
+        "score": 943.7403,
+        "evidence": []
+      },
+      {
+        "term": "大学和研究机构",
+        "score": 943.7403,
+        "evidence": []
+      },
+      {
+        "term": "如非政府组织和民间社会组织",
+        "score": 943.7403,
+        "evidence": []
+      },
+      {
+        "term": "宗教组织",
+        "score": 943.7403,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-acknowledgements": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "health workforce",
+          "score": 1.3072,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 1.3064,
+          "evidence": []
+        },
+        {
+          "term": "workforce policies",
+          "score": 1.2082,
+          "evidence": []
+        },
+        {
+          "term": "workforce data",
+          "score": 1.1985,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 0.8729,
+          "evidence": []
+        },
+        {
+          "term": "ireland",
+          "score": 0.8451,
+          "evidence": []
+        },
+        {
+          "term": "academy",
+          "score": 0.8119,
+          "evidence": []
+        },
+        {
+          "term": "headquarters",
+          "score": 0.809,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "health workforce",
+          "score": 29.1399,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 27.549,
+          "evidence": []
+        },
+        {
+          "term": "workforce policies",
+          "score": 25.9564,
+          "evidence": []
+        },
+        {
+          "term": "workforce data",
+          "score": 25.3679,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 17.2748,
+          "evidence": []
+        },
+        {
+          "term": "ireland",
+          "score": 15.3889,
+          "evidence": []
+        },
+        {
+          "term": "headquarters",
+          "score": 14.5601,
+          "evidence": []
+        },
+        {
+          "term": "academy",
+          "score": 12.6977,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health workforce",
+          "score": 0.6559,
+          "evidence": []
+        },
+        {
+          "term": "national health",
+          "score": 0.6435,
+          "evidence": []
+        },
+        {
+          "term": "workforce data",
+          "score": 0.4816,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 0.4582,
+          "evidence": []
+        },
+        {
+          "term": "workforce policies",
+          "score": 0.3974,
+          "evidence": []
+        },
+        {
+          "term": "global",
+          "score": 0.205,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 0.2047,
+          "evidence": []
+        },
+        {
+          "term": "regional",
+          "score": 0.1991,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health workforce",
+          "score": 14.4991,
+          "evidence": []
+        },
+        {
+          "term": "workforce data",
+          "score": 12.205,
+          "evidence": []
+        },
+        {
+          "term": "national health",
+          "score": 10.2311,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 9.3015,
+          "evidence": []
+        },
+        {
+          "term": "workforce policies",
+          "score": 8.8322,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 5.1184,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 4.1513,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 3.8423,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health workforce",
+          "score": 0.6559,
+          "evidence": []
+        },
+        {
+          "term": "national health",
+          "score": 0.6435,
+          "evidence": []
+        },
+        {
+          "term": "workforce data",
+          "score": 0.4816,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 0.4582,
+          "evidence": []
+        },
+        {
+          "term": "workforce policies",
+          "score": 0.3974,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 0.2047,
+          "evidence": []
+        },
+        {
+          "term": "united",
+          "score": 0.1813,
+          "evidence": []
+        },
+        {
+          "term": "development",
+          "score": 0.1486,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "这意味着",
+          "score": 100.6987,
+          "evidence": []
+        },
+        {
+          "term": "以及卫生保健界",
+          "score": 97.8749,
+          "evidence": []
+        },
+        {
+          "term": "基金会和开发银行",
+          "score": 97.8749,
+          "evidence": []
+        },
+        {
+          "term": "大学和研究机构",
+          "score": 97.8749,
+          "evidence": []
+        },
+        {
+          "term": "如非政府组织和民间社会组织",
+          "score": 97.8749,
+          "evidence": []
+        },
+        {
+          "term": "宗教组织",
+          "score": 97.8749,
+          "evidence": []
+        },
+        {
+          "term": "患者和公众",
+          "score": 97.8749,
+          "evidence": []
+        },
+        {
+          "term": "技术开发者",
+          "score": 97.8749,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-001-abbreviations": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "health workforce",
+          "score": 1.2425,
+          "evidence": []
+        },
+        {
+          "term": "global health",
+          "score": 1.0243,
+          "evidence": []
+        },
+        {
+          "term": "middle-income countries",
+          "score": 0.9665,
+          "evidence": []
+        },
+        {
+          "term": "human resources",
+          "score": 0.8757,
+          "evidence": []
+        },
+        {
+          "term": "offices",
+          "score": 0.5803,
+          "evidence": []
+        },
+        {
+          "term": "united",
+          "score": 0.407,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "health workforce",
+          "score": 25.941,
+          "evidence": []
+        },
+        {
+          "term": "global health",
+          "score": 19.3084,
+          "evidence": []
+        },
+        {
+          "term": "middle-income countries",
+          "score": 14.958,
+          "evidence": []
+        },
+        {
+          "term": "human resources",
+          "score": 13.0436,
+          "evidence": []
+        },
+        {
+          "term": "offices",
+          "score": 8.828,
+          "evidence": []
+        },
+        {
+          "term": "development",
+          "score": 5.5064,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health workforce",
+          "score": 0.7755,
+          "evidence": []
+        },
+        {
+          "term": "global health",
+          "score": 0.6046,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.2743,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 0.2422,
+          "evidence": []
+        },
+        {
+          "term": "middle-income countries",
+          "score": 0.2366,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 0.2222,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health workforce",
+          "score": 15.6312,
+          "evidence": []
+        },
+        {
+          "term": "global health",
+          "score": 10.561,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 5.4351,
+          "evidence": []
+        },
+        {
+          "term": "training",
+          "score": 3.6639,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 3.1278,
+          "evidence": []
+        },
+        {
+          "term": "workers",
+          "score": 2.9857,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health workforce",
+          "score": 0.7755,
+          "evidence": []
+        },
+        {
+          "term": "global health",
+          "score": 0.6046,
+          "evidence": []
+        },
+        {
+          "term": "middle-income countries",
+          "score": 0.2366,
+          "evidence": []
+        },
+        {
+          "term": "human resources",
+          "score": 0.2188,
+          "evidence": []
+        },
+        {
+          "term": "international",
+          "score": 0.1742,
+          "evidence": []
+        },
+        {
+          "term": "workers",
+          "score": 0.1732,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 57.0567,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 56.7298,
+          "evidence": []
+        },
+        {
+          "term": "关注这一事实",
+          "score": 40.8619,
+          "evidence": []
+        },
+        {
+          "term": "位置服务",
+          "score": 38.2557,
+          "evidence": []
+        },
+        {
+          "term": "在卫生系统强化",
+          "score": 38.2557,
+          "evidence": []
+        },
+        {
+          "term": "的背景下",
+          "score": 38.2557,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-002-executive-summary": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hwf density",
+          "score": 3.1245,
+          "evidence": []
+        },
+        {
+          "term": "hwf data",
+          "score": 2.3688,
+          "evidence": []
+        },
+        {
+          "term": "hwf topics",
+          "score": 2.169,
+          "evidence": []
+        },
+        {
+          "term": "key hwf",
+          "score": 2.0645,
+          "evidence": []
+        },
+        {
+          "term": "nhwa platform",
+          "score": 1.9809,
+          "evidence": []
+        },
+        {
+          "term": "nhwa implementation",
+          "score": 1.6517,
+          "evidence": []
+        },
+        {
+          "term": "health workforce",
+          "score": 1.6494,
+          "evidence": []
+        },
+        {
+          "term": "aged years",
+          "score": 1.6098,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hwf density",
+          "score": 124.8444,
+          "evidence": []
+        },
+        {
+          "term": "hwf data",
+          "score": 99.3234,
+          "evidence": []
+        },
+        {
+          "term": "hwf topics",
+          "score": 82.5262,
+          "evidence": []
+        },
+        {
+          "term": "key hwf",
+          "score": 80.225,
+          "evidence": []
+        },
+        {
+          "term": "nhwa data",
+          "score": 63.7735,
+          "evidence": []
+        },
+        {
+          "term": "nhwa platform",
+          "score": 55.7507,
+          "evidence": []
+        },
+        {
+          "term": "health workforce",
+          "score": 54.7944,
+          "evidence": []
+        },
+        {
+          "term": "nhwa implementation",
+          "score": 46.0096,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health workforce",
+          "score": 1.8206,
+          "evidence": []
+        },
+        {
+          "term": "national health",
+          "score": 1.5773,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 1.4696,
+          "evidence": []
+        },
+        {
+          "term": "health workers",
+          "score": 1.2986,
+          "evidence": []
+        },
+        {
+          "term": "nhwa data",
+          "score": 1.2264,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 1.1152,
+          "evidence": []
+        },
+        {
+          "term": "care workforce",
+          "score": 1.1042,
+          "evidence": []
+        },
+        {
+          "term": "hwf data",
+          "score": 1.0447,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "nhwa data",
+          "score": 46.2489,
+          "evidence": []
+        },
+        {
+          "term": "health workforce",
+          "score": 45.289,
+          "evidence": []
+        },
+        {
+          "term": "hwf data",
+          "score": 37.3576,
+          "evidence": []
+        },
+        {
+          "term": "stock data",
+          "score": 34.3585,
+          "evidence": []
+        },
+        {
+          "term": "data available",
+          "score": 31.5461,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 30.9853,
+          "evidence": []
+        },
+        {
+          "term": "national health",
+          "score": 30.3186,
+          "evidence": []
+        },
+        {
+          "term": "reported data",
+          "score": 30.1231,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health workforce",
+          "score": 1.8206,
+          "evidence": []
+        },
+        {
+          "term": "national health",
+          "score": 1.5773,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 1.4696,
+          "evidence": []
+        },
+        {
+          "term": "health workers",
+          "score": 1.2986,
+          "evidence": []
+        },
+        {
+          "term": "nhwa data",
+          "score": 1.2264,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 1.1152,
+          "evidence": []
+        },
+        {
+          "term": "care workforce",
+          "score": 1.1042,
+          "evidence": []
+        },
+        {
+          "term": "hwf data",
+          "score": 1.0447,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 40.1195,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 32.989,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 32.989,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 29.5811,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 25.9794,
+          "evidence": []
+        },
+        {
+          "term": "位置服务",
+          "score": 25.1756,
+          "evidence": []
+        },
+        {
+          "term": "在卫生系统强化",
+          "score": 25.1756,
+          "evidence": []
+        },
+        {
+          "term": "的背景下",
+          "score": 25.1756,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-004-11-historical-overview-of-health-workforce-data": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "health workforce",
+          "score": 3.5819,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hwf data",
+          "score": 2.002,
+          "evidence": []
+        },
+        {
+          "term": "nhwa handbook",
+          "score": 1.8018,
+          "evidence": []
+        },
+        {
+          "term": "hrh data",
+          "score": 1.6388,
+          "evidence": []
+        },
+        {
+          "term": "workforce statistics",
+          "score": 1.5942,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 1.5801,
+          "evidence": []
+        },
+        {
+          "term": "report published",
+          "score": 1.5045,
+          "evidence": []
+        },
+        {
+          "term": "global health",
+          "score": 1.4516,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "health workforce",
+          "score": 139.8906,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hwf data",
+          "score": 61.4545,
+          "evidence": []
+        },
+        {
+          "term": "workforce statistics",
+          "score": 51.3385,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 50.8483,
+          "evidence": []
+        },
+        {
+          "term": "global health",
+          "score": 48.065,
+          "evidence": []
+        },
+        {
+          "term": "nhwa data",
+          "score": 45.174,
+          "evidence": []
+        },
+        {
+          "term": "nhwa handbook",
+          "score": 44.3209,
+          "evidence": []
+        },
+        {
+          "term": "report published",
+          "score": 42.8032,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health workforce",
+          "score": 2.9076,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "national health",
+          "score": 1.3427,
+          "evidence": []
+        },
+        {
+          "term": "global health",
+          "score": 1.2102,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 1.1114,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 1.0642,
+          "evidence": []
+        },
+        {
+          "term": "health report",
+          "score": 0.9523,
+          "evidence": []
+        },
+        {
+          "term": "nhwa data",
+          "score": 0.8731,
+          "evidence": []
+        },
+        {
+          "term": "workforce statistics",
+          "score": 0.8553,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health workforce",
+          "score": 83.4393,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "data",
+          "score": 32.0364,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "national health",
+          "score": 29.5144,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 28.3052,
+          "evidence": []
+        },
+        {
+          "term": "nhwa data",
+          "score": 28.1712,
+          "evidence": []
+        },
+        {
+          "term": "global health",
+          "score": 28.1373,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 25.495,
+          "evidence": []
+        },
+        {
+          "term": "health report",
+          "score": 24.1455,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health workforce",
+          "score": 2.9076,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "national health",
+          "score": 1.3427,
+          "evidence": []
+        },
+        {
+          "term": "global health",
+          "score": 1.2102,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 1.1114,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 1.0642,
+          "evidence": []
+        },
+        {
+          "term": "health report",
+          "score": 0.9523,
+          "evidence": []
+        },
+        {
+          "term": "nhwa data",
+          "score": 0.8731,
+          "evidence": []
+        },
+        {
+          "term": "workforce statistics",
+          "score": 0.8553,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 48.8025,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 46.117,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 36.6354,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 36.6354,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 35.6203,
+          "evidence": []
+        },
+        {
+          "term": "数字疗法",
+          "score": 35.3104,
+          "evidence": []
+        },
+        {
+          "term": "关注这一事实",
+          "score": 32.9908,
+          "evidence": []
+        },
+        {
+          "term": "位置服务",
+          "score": 32.1137,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-005-12-what-is-the-nhwa": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "nhwa",
+          "score": 3.6147,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nhwa indicators",
+          "score": 2.8338,
+          "evidence": []
+        },
+        {
+          "term": "nhwa focal",
+          "score": 2.607,
+          "evidence": []
+        },
+        {
+          "term": "nhwa data",
+          "score": 2.5218,
+          "evidence": []
+        },
+        {
+          "term": "nhwa implementation",
+          "score": 2.3278,
+          "evidence": []
+        },
+        {
+          "term": "hwf data",
+          "score": 2.2554,
+          "evidence": []
+        },
+        {
+          "term": "global hwf",
+          "score": 2.0855,
+          "evidence": []
+        },
+        {
+          "term": "wisn",
+          "score": 1.5512,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "nhwa",
+          "score": 233.2098,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nhwa indicators",
+          "score": 148.206,
+          "evidence": []
+        },
+        {
+          "term": "nhwa data",
+          "score": 141.5101,
+          "evidence": []
+        },
+        {
+          "term": "nhwa focal",
+          "score": 131.2172,
+          "evidence": []
+        },
+        {
+          "term": "nhwa implementation",
+          "score": 129.1022,
+          "evidence": []
+        },
+        {
+          "term": "hwf data",
+          "score": 85.37,
+          "evidence": []
+        },
+        {
+          "term": "global hwf",
+          "score": 70.3766,
+          "evidence": []
+        },
+        {
+          "term": "wisn",
+          "score": 41.0063,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "national health",
+          "score": 1.3662,
+          "evidence": []
+        },
+        {
+          "term": "nhwa data",
+          "score": 1.2072,
+          "evidence": []
+        },
+        {
+          "term": "nhwa indicators",
+          "score": 1.0633,
+          "evidence": []
+        },
+        {
+          "term": "health information",
+          "score": 1.048,
+          "evidence": []
+        },
+        {
+          "term": "hwf data",
+          "score": 1.0329,
+          "evidence": []
+        },
+        {
+          "term": "health labour",
+          "score": 1.0327,
+          "evidence": []
+        },
+        {
+          "term": "national level",
+          "score": 0.9557,
+          "evidence": []
+        },
+        {
+          "term": "nhwa implementation",
+          "score": 0.8621,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "nhwa data",
+          "score": 53.5054,
+          "evidence": []
+        },
+        {
+          "term": "hwf data",
+          "score": 44.163,
+          "evidence": []
+        },
+        {
+          "term": "nhwa indicators",
+          "score": 28.7815,
+          "evidence": []
+        },
+        {
+          "term": "nhwa implementation",
+          "score": 22.6165,
+          "evidence": []
+        },
+        {
+          "term": "nhwa focal",
+          "score": 22.0769,
+          "evidence": []
+        },
+        {
+          "term": "national health",
+          "score": 21.6323,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 20.3679,
+          "evidence": []
+        },
+        {
+          "term": "health information",
+          "score": 16.8888,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "national health",
+          "score": 1.3662,
+          "evidence": []
+        },
+        {
+          "term": "nhwa data",
+          "score": 1.2072,
+          "evidence": []
+        },
+        {
+          "term": "nhwa indicators",
+          "score": 1.0633,
+          "evidence": []
+        },
+        {
+          "term": "health information",
+          "score": 1.048,
+          "evidence": []
+        },
+        {
+          "term": "hwf data",
+          "score": 1.0329,
+          "evidence": []
+        },
+        {
+          "term": "health labour",
+          "score": 1.0327,
+          "evidence": []
+        },
+        {
+          "term": "national level",
+          "score": 0.9557,
+          "evidence": []
+        },
+        {
+          "term": "nhwa implementation",
+          "score": 0.8621,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 48.6173,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 41.3282,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 41.0509,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 40.548,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 40.548,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 32.1997,
+          "evidence": []
+        },
+        {
+          "term": "位置服务",
+          "score": 29.9713,
+          "evidence": []
+        },
+        {
+          "term": "在卫生系统强化",
+          "score": 29.9713,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-13-about-this-report": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "thematic topic",
+          "score": 1.2111,
+          "evidence": []
+        },
+        {
+          "term": "selected thematic",
+          "score": 1.1195,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 0.9718,
+          "evidence": []
+        },
+        {
+          "term": "hwf",
+          "score": 0.9398,
+          "evidence": []
+        },
+        {
+          "term": "report",
+          "score": 0.8931,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "nhwa",
+          "score": 21.5935,
+          "evidence": []
+        },
+        {
+          "term": "thematic topic",
+          "score": 18.6859,
+          "evidence": []
+        },
+        {
+          "term": "hwf",
+          "score": 18.6046,
+          "evidence": []
+        },
+        {
+          "term": "selected thematic",
+          "score": 17.1256,
+          "evidence": []
+        },
+        {
+          "term": "report",
+          "score": 14.1252,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health workforce",
+          "score": 0.5316,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.2088,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 0.208,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.1938,
+          "evidence": []
+        },
+        {
+          "term": "hwf",
+          "score": 0.1474,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health workforce",
+          "score": 8.1651,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 6.0352,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 4.2007,
+          "evidence": []
+        },
+        {
+          "term": "indicator",
+          "score": 3.085,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 2.9039,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health workforce",
+          "score": 0.5316,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.2088,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 0.208,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.1938,
+          "evidence": []
+        },
+        {
+          "term": "hwf",
+          "score": 0.1474,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 47.7765,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 40.5653,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 33.6033,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 33.6033,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 33.3518,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-008-21-nhwa-data-process": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "nhwa data",
+          "score": 4.2594,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "focal points",
+          "score": 1.8697,
+          "evidence": []
+        },
+        {
+          "term": "hwf data",
+          "score": 1.5914,
+          "evidence": []
+        },
+        {
+          "term": "data portal",
+          "score": 1.4491,
+          "evidence": []
+        },
+        {
+          "term": "data release",
+          "score": 1.339,
+          "evidence": []
+        },
+        {
+          "term": "validated data",
+          "score": 1.3301,
+          "evidence": []
+        },
+        {
+          "term": "through data",
+          "score": 1.221,
+          "evidence": []
+        },
+        {
+          "term": "data quality",
+          "score": 1.1734,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "nhwa data",
+          "score": 162.2553,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hwf data",
+          "score": 47.5754,
+          "evidence": []
+        },
+        {
+          "term": "focal points",
+          "score": 44.6933,
+          "evidence": []
+        },
+        {
+          "term": "data portal",
+          "score": 43.8812,
+          "evidence": []
+        },
+        {
+          "term": "validated data",
+          "score": 42.2594,
+          "evidence": []
+        },
+        {
+          "term": "data release",
+          "score": 41.9424,
+          "evidence": []
+        },
+        {
+          "term": "through data",
+          "score": 41.4778,
+          "evidence": []
+        },
+        {
+          "term": "data quality",
+          "score": 39.4037,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "nhwa data",
+          "score": 1.5932,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health workforce",
+          "score": 1.002,
+          "evidence": []
+        },
+        {
+          "term": "global health",
+          "score": 0.7395,
+          "evidence": []
+        },
+        {
+          "term": "hwf data",
+          "score": 0.6846,
+          "evidence": []
+        },
+        {
+          "term": "through data",
+          "score": 0.5284,
+          "evidence": []
+        },
+        {
+          "term": "data quality",
+          "score": 0.5244,
+          "evidence": []
+        },
+        {
+          "term": "data release",
+          "score": 0.4809,
+          "evidence": []
+        },
+        {
+          "term": "data portal",
+          "score": 0.4348,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "nhwa data",
+          "score": 68.5378,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hwf data",
+          "score": 29.1461,
+          "evidence": []
+        },
+        {
+          "term": "data quality",
+          "score": 25.9818,
+          "evidence": []
+        },
+        {
+          "term": "data release",
+          "score": 25.278,
+          "evidence": []
+        },
+        {
+          "term": "through data",
+          "score": 24.7119,
+          "evidence": []
+        },
+        {
+          "term": "data portal",
+          "score": 23.5912,
+          "evidence": []
+        },
+        {
+          "term": "validated data",
+          "score": 23.5912,
+          "evidence": []
+        },
+        {
+          "term": "health workforce",
+          "score": 17.5641,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "nhwa data",
+          "score": 1.5932,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health workforce",
+          "score": 1.002,
+          "evidence": []
+        },
+        {
+          "term": "global health",
+          "score": 0.7395,
+          "evidence": []
+        },
+        {
+          "term": "hwf data",
+          "score": 0.6846,
+          "evidence": []
+        },
+        {
+          "term": "through data",
+          "score": 0.5284,
+          "evidence": []
+        },
+        {
+          "term": "data quality",
+          "score": 0.5244,
+          "evidence": []
+        },
+        {
+          "term": "data release",
+          "score": 0.4809,
+          "evidence": []
+        },
+        {
+          "term": "data portal",
+          "score": 0.4576,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 46.0459,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 37.213,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 29.9518,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 29.9518,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 29.16,
+          "evidence": []
+        },
+        {
+          "term": "位置服务",
+          "score": 28.3891,
+          "evidence": []
+        },
+        {
+          "term": "在卫生系统强化",
+          "score": 28.3891,
+          "evidence": []
+        },
+        {
+          "term": "的背景下",
+          "score": 28.3891,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-009-22-status-of-nhwa-focal-points-in-2025": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "focal points",
+          "score": 2.1837,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nhwa",
+          "score": 1.5038,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "workforce accounts",
+          "score": 0.9193,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "focal points",
+          "score": 31.858,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nhwa",
+          "score": 25.9122,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "workforce accounts",
+          "score": 12.987,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health workforce",
+          "score": 0.4251,
+          "evidence": []
+        },
+        {
+          "term": "national health",
+          "score": 0.3814,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 0.3449,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health workforce",
+          "score": 6.5306,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 5.1098,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "workforce accounts",
+          "score": 4.7556,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health workforce",
+          "score": 0.4251,
+          "evidence": []
+        },
+        {
+          "term": "national health",
+          "score": 0.3814,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 0.3449,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 58.3847,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 57.2763,
+          "evidence": []
+        },
+        {
+          "term": "关注这一事实",
+          "score": 41.1401,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-010-23-status-of-health-workforce-data-in-2025": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "health workforce",
+          "score": 3.7122,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nhwa focal",
+          "score": 3.0023,
+          "evidence": []
+        },
+        {
+          "term": "nhwa data",
+          "score": 2.9719,
+          "evidence": []
+        },
+        {
+          "term": "hwf data",
+          "score": 2.9478,
+          "evidence": []
+        },
+        {
+          "term": "hwf topics",
+          "score": 2.9344,
+          "evidence": []
+        },
+        {
+          "term": "nhwa platform",
+          "score": 2.9277,
+          "evidence": []
+        },
+        {
+          "term": "gho data",
+          "score": 2.8768,
+          "evidence": []
+        },
+        {
+          "term": "stock data",
+          "score": 2.7597,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "nhwa data",
+          "score": 263.3865,
+          "evidence": []
+        },
+        {
+          "term": "hwf data",
+          "score": 236.4831,
+          "evidence": []
+        },
+        {
+          "term": "stock data",
+          "score": 233.0756,
+          "evidence": []
+        },
+        {
+          "term": "data release",
+          "score": 196.0705,
+          "evidence": []
+        },
+        {
+          "term": "gho data",
+          "score": 180.6375,
+          "evidence": []
+        },
+        {
+          "term": "nhwa platform",
+          "score": 174.3975,
+          "evidence": []
+        },
+        {
+          "term": "data availability",
+          "score": 172.9352,
+          "evidence": []
+        },
+        {
+          "term": "data available",
+          "score": 165.0854,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health workforce",
+          "score": 4.8903,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "workforce accounts",
+          "score": 2.1159,
+          "evidence": []
+        },
+        {
+          "term": "national health",
+          "score": 2.0795,
+          "evidence": []
+        },
+        {
+          "term": "nhwa data",
+          "score": 1.9159,
+          "evidence": []
+        },
+        {
+          "term": "workforce levels",
+          "score": 1.7184,
+          "evidence": []
+        },
+        {
+          "term": "global health",
+          "score": 1.6778,
+          "evidence": []
+        },
+        {
+          "term": "hwf data",
+          "score": 1.6422,
+          "evidence": []
+        },
+        {
+          "term": "workforce statistics",
+          "score": 1.6242,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "data",
+          "score": 222.1677,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health workforce",
+          "score": 177.6861,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nhwa data",
+          "score": 168.2551,
+          "evidence": []
+        },
+        {
+          "term": "hwf data",
+          "score": 141.4342,
+          "evidence": []
+        },
+        {
+          "term": "stock data",
+          "score": 131.4569,
+          "evidence": []
+        },
+        {
+          "term": "data reporting",
+          "score": 127.0507,
+          "evidence": []
+        },
+        {
+          "term": "data available",
+          "score": 123.7012,
+          "evidence": []
+        },
+        {
+          "term": "data points",
+          "score": 120.6393,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health workforce",
+          "score": 4.8903,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "workforce accounts",
+          "score": 2.1159,
+          "evidence": []
+        },
+        {
+          "term": "national health",
+          "score": 2.0795,
+          "evidence": []
+        },
+        {
+          "term": "nhwa data",
+          "score": 1.9159,
+          "evidence": []
+        },
+        {
+          "term": "workforce levels",
+          "score": 1.7184,
+          "evidence": []
+        },
+        {
+          "term": "global health",
+          "score": 1.6778,
+          "evidence": []
+        },
+        {
+          "term": "hwf data",
+          "score": 1.6422,
+          "evidence": []
+        },
+        {
+          "term": "workforce statistics",
+          "score": 1.6242,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 42.0238,
+          "evidence": []
+        },
+        {
+          "term": "数字疗法",
+          "score": 29.1473,
+          "evidence": []
+        },
+        {
+          "term": "位置服务",
+          "score": 28.6213,
+          "evidence": []
+        },
+        {
+          "term": "在卫生系统强化",
+          "score": 28.6213,
+          "evidence": []
+        },
+        {
+          "term": "的背景下",
+          "score": 28.6213,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 27.4966,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 27.4966,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 26.8246,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-012-31-global-and-regional-estimates": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "regional estimates",
+          "score": 3.5502,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nursing personnel",
+          "score": 2.9873,
+          "evidence": []
+        },
+        {
+          "term": "midwifery personnel",
+          "score": 2.9726,
+          "evidence": []
+        },
+        {
+          "term": "african region",
+          "score": 2.8507,
+          "evidence": []
+        },
+        {
+          "term": "european region",
+          "score": 2.7377,
+          "evidence": []
+        },
+        {
+          "term": "health occupations",
+          "score": 2.7103,
+          "evidence": []
+        },
+        {
+          "term": "lowest density",
+          "score": 2.6789,
+          "evidence": []
+        },
+        {
+          "term": "prosthetic technicians",
+          "score": 2.6767,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "nursing personnel",
+          "score": 142.8568,
+          "evidence": []
+        },
+        {
+          "term": "midwifery personnel",
+          "score": 137.9635,
+          "evidence": []
+        },
+        {
+          "term": "health occupations",
+          "score": 135.6457,
+          "evidence": []
+        },
+        {
+          "term": "african region",
+          "score": 135.3853,
+          "evidence": []
+        },
+        {
+          "term": "european region",
+          "score": 128.8283,
+          "evidence": []
+        },
+        {
+          "term": "pacific region",
+          "score": 123.3012,
+          "evidence": []
+        },
+        {
+          "term": "asia region",
+          "score": 118.0903,
+          "evidence": []
+        },
+        {
+          "term": "medical doctors",
+          "score": 117.7745,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health workforce",
+          "score": 2.2662,
+          "evidence": []
+        },
+        {
+          "term": "national health",
+          "score": 1.9901,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 1.8947,
+          "evidence": []
+        },
+        {
+          "term": "workforce global",
+          "score": 1.8258,
+          "evidence": []
+        },
+        {
+          "term": "health workers",
+          "score": 1.5967,
+          "evidence": []
+        },
+        {
+          "term": "workforce levels",
+          "score": 1.5364,
+          "evidence": []
+        },
+        {
+          "term": "nhwa data",
+          "score": 1.4806,
+          "evidence": []
+        },
+        {
+          "term": "health occupations",
+          "score": 1.4715,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health workforce",
+          "score": 85.9245,
+          "evidence": []
+        },
+        {
+          "term": "nhwa data",
+          "score": 77.1974,
+          "evidence": []
+        },
+        {
+          "term": "workforce global",
+          "score": 61.6598,
+          "evidence": []
+        },
+        {
+          "term": "health workers",
+          "score": 59.5107,
+          "evidence": []
+        },
+        {
+          "term": "stock data",
+          "score": 58.6616,
+          "evidence": []
+        },
+        {
+          "term": "national health",
+          "score": 58.4785,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 56.7684,
+          "evidence": []
+        },
+        {
+          "term": "health occupations",
+          "score": 56.6588,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health workforce",
+          "score": 2.2662,
+          "evidence": []
+        },
+        {
+          "term": "national health",
+          "score": 1.9901,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 1.8947,
+          "evidence": []
+        },
+        {
+          "term": "workforce global",
+          "score": 1.8258,
+          "evidence": []
+        },
+        {
+          "term": "health workers",
+          "score": 1.5967,
+          "evidence": []
+        },
+        {
+          "term": "workforce levels",
+          "score": 1.5364,
+          "evidence": []
+        },
+        {
+          "term": "nhwa data",
+          "score": 1.4806,
+          "evidence": []
+        },
+        {
+          "term": "health occupations",
+          "score": 1.4715,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 42.9282,
+          "evidence": []
+        },
+        {
+          "term": "abeba",
+          "score": 34.8724,
+          "evidence": []
+        },
+        {
+          "term": "ad-dawhah",
+          "score": 34.8724,
+          "evidence": []
+        },
+        {
+          "term": "al-iskandariyah",
+          "score": 34.8724,
+          "evidence": []
+        },
+        {
+          "term": "al-qahirah",
+          "score": 34.8724,
+          "evidence": []
+        },
+        {
+          "term": "alexandria",
+          "score": 34.8724,
+          "evidence": []
+        },
+        {
+          "term": "alma-ata",
+          "score": 34.8724,
+          "evidence": []
+        },
+        {
+          "term": "antwerpen",
+          "score": 34.8724,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-013-32-global-and-regional-trends": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hwf density",
+          "score": 1.908,
+          "evidence": []
+        },
+        {
+          "term": "data release",
+          "score": 1.4489,
+          "evidence": []
+        },
+        {
+          "term": "midwifery personnel",
+          "score": 1.4258,
+          "evidence": []
+        },
+        {
+          "term": "region",
+          "score": 1.1421,
+          "evidence": []
+        },
+        {
+          "term": "health statistics",
+          "score": 1.0975,
+          "evidence": []
+        },
+        {
+          "term": "statistics world",
+          "score": 1.0882,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 1.0328,
+          "evidence": []
+        },
+        {
+          "term": "medical doctors",
+          "score": 0.9965,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hwf density",
+          "score": 39.1665,
+          "evidence": []
+        },
+        {
+          "term": "data release",
+          "score": 32.0085,
+          "evidence": []
+        },
+        {
+          "term": "region",
+          "score": 27.4322,
+          "evidence": []
+        },
+        {
+          "term": "midwifery personnel",
+          "score": 23.5999,
+          "evidence": []
+        },
+        {
+          "term": "health statistics",
+          "score": 19.3564,
+          "evidence": []
+        },
+        {
+          "term": "statistics world",
+          "score": 17.6602,
+          "evidence": []
+        },
+        {
+          "term": "health workforce",
+          "score": 16.615,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 15.8994,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health workforce",
+          "score": 0.7772,
+          "evidence": []
+        },
+        {
+          "term": "national health",
+          "score": 0.6377,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 0.627,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.5042,
+          "evidence": []
+        },
+        {
+          "term": "health statistics",
+          "score": 0.457,
+          "evidence": []
+        },
+        {
+          "term": "global",
+          "score": 0.3676,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hwf density",
+          "score": 0.3573,
+          "evidence": []
+        },
+        {
+          "term": "trends",
+          "score": 0.2938,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health workforce",
+          "score": 13.3057,
+          "evidence": []
+        },
+        {
+          "term": "data release",
+          "score": 10.2947,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 9.1808,
+          "evidence": []
+        },
+        {
+          "term": "national health",
+          "score": 8.8175,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 8.0714,
+          "evidence": []
+        },
+        {
+          "term": "health statistics",
+          "score": 7.0051,
+          "evidence": []
+        },
+        {
+          "term": "global",
+          "score": 6.043,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nhwa",
+          "score": 5.4963,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health workforce",
+          "score": 0.7772,
+          "evidence": []
+        },
+        {
+          "term": "national health",
+          "score": 0.6377,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 0.627,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.5042,
+          "evidence": []
+        },
+        {
+          "term": "health statistics",
+          "score": 0.457,
+          "evidence": []
+        },
+        {
+          "term": "global",
+          "score": 0.3676,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hwf density",
+          "score": 0.3573,
+          "evidence": []
+        },
+        {
+          "term": "trends",
+          "score": 0.2938,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 32.2179,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 22.2447,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 22.2447,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 19.4541,
+          "evidence": []
+        },
+        {
+          "term": "见下面第",
+          "score": 18.744,
+          "evidence": []
+        },
+        {
+          "term": "位置服务",
+          "score": 17.77,
+          "evidence": []
+        },
+        {
+          "term": "在卫生系统强化",
+          "score": 17.77,
+          "evidence": []
+        },
+        {
+          "term": "的背景下",
+          "score": 17.77,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-014-4-thematic-analysis-population-and-health-workfo": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "health workforce",
+          "score": 1.9235,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ageing",
+          "score": 1.8745,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "population",
+          "score": 0.8987,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "ageing",
+          "score": 34.9367,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health workforce",
+          "score": 30.3017,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "population",
+          "score": 15.3444,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health workforce",
+          "score": 0.709,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "population",
+          "score": 0.1297,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "national",
+          "score": 0.1182,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health workforce",
+          "score": 13.027,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "education",
+          "score": 2.5589,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 1.7736,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health workforce",
+          "score": 0.709,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "population",
+          "score": 0.1297,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "national",
+          "score": 0.1182,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 39.5186,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 33.1327,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 33.1327,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-015-41-global-population-demographic-changes-2024203": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "million inhabitants",
+          "score": 1.6621,
+          "evidence": []
+        },
+        {
+          "term": "population",
+          "score": 1.6139,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "population aged",
+          "score": 1.6086,
+          "evidence": []
+        },
+        {
+          "term": "income group",
+          "score": 1.6039,
+          "evidence": []
+        },
+        {
+          "term": "aged years",
+          "score": 1.4575,
+          "evidence": []
+        },
+        {
+          "term": "income level",
+          "score": 1.3652,
+          "evidence": []
+        },
+        {
+          "term": "hics",
+          "score": 1.3285,
+          "evidence": []
+        },
+        {
+          "term": "fiscal year",
+          "score": 1.319,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "population",
+          "score": 65.2138,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "population aged",
+          "score": 47.719,
+          "evidence": []
+        },
+        {
+          "term": "total population",
+          "score": 40.7529,
+          "evidence": []
+        },
+        {
+          "term": "population age",
+          "score": 40.2645,
+          "evidence": []
+        },
+        {
+          "term": "income group",
+          "score": 39.9514,
+          "evidence": []
+        },
+        {
+          "term": "income level",
+          "score": 32.2776,
+          "evidence": []
+        },
+        {
+          "term": "hics",
+          "score": 31.0288,
+          "evidence": []
+        },
+        {
+          "term": "aged years",
+          "score": 28.9958,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "aged years",
+          "score": 0.2947,
+          "evidence": []
+        },
+        {
+          "term": "population",
+          "score": 0.2569,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "total population",
+          "score": 0.2389,
+          "evidence": []
+        },
+        {
+          "term": "population age",
+          "score": 0.2373,
+          "evidence": []
+        },
+        {
+          "term": "global",
+          "score": 0.196,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health",
+          "score": 0.1648,
+          "evidence": []
+        },
+        {
+          "term": "group country",
+          "score": 0.1637,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 0.1636,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "aged years",
+          "score": 4.7691,
+          "evidence": []
+        },
+        {
+          "term": "population aged",
+          "score": 3.42,
+          "evidence": []
+        },
+        {
+          "term": "total population",
+          "score": 3.0253,
+          "evidence": []
+        },
+        {
+          "term": "global",
+          "score": 3.0014,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "workforce",
+          "score": 2.8998,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 2.8935,
+          "evidence": []
+        },
+        {
+          "term": "population age",
+          "score": 2.8754,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 2.8653,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "aged years",
+          "score": 0.2947,
+          "evidence": []
+        },
+        {
+          "term": "population",
+          "score": 0.2569,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "total population",
+          "score": 0.2389,
+          "evidence": []
+        },
+        {
+          "term": "population age",
+          "score": 0.2373,
+          "evidence": []
+        },
+        {
+          "term": "global",
+          "score": 0.196,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "fiscal year",
+          "score": 0.1656,
+          "evidence": []
+        },
+        {
+          "term": "group country",
+          "score": 0.1637,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 0.162,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 13.8989,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 13.8989,
+          "evidence": []
+        },
+        {
+          "term": "可能性",
+          "score": 11.9928,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 10.9325,
+          "evidence": []
+        },
+        {
+          "term": "乌干达",
+          "score": 10.4299,
+          "evidence": []
+        },
+        {
+          "term": "见下面第",
+          "score": 9.2178,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 9.0951,
+          "evidence": []
+        },
+        {
+          "term": "精神卫生",
+          "score": 8.9077,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-016-42-health-workforce-ageing-by-occupation": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "workforce ageing",
+          "score": 3.7676,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health workforce",
+          "score": 3.1469,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "upper-middle-income countries",
+          "score": 2.3487,
+          "evidence": []
+        },
+        {
+          "term": "aged years",
+          "score": 2.1671,
+          "evidence": []
+        },
+        {
+          "term": "lower-middle-income countries",
+          "score": 2.161,
+          "evidence": []
+        },
+        {
+          "term": "percentage aged",
+          "score": 2.1341,
+          "evidence": []
+        },
+        {
+          "term": "workers aged",
+          "score": 2.0699,
+          "evidence": []
+        },
+        {
+          "term": "nursing personnel",
+          "score": 2.0144,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "health workforce",
+          "score": 95.011,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "workforce ageing",
+          "score": 93.1848,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "aged years",
+          "score": 75.4176,
+          "evidence": []
+        },
+        {
+          "term": "upper-middle-income countries",
+          "score": 70.9521,
+          "evidence": []
+        },
+        {
+          "term": "workers aged",
+          "score": 70.1079,
+          "evidence": []
+        },
+        {
+          "term": "lower-middle-income countries",
+          "score": 67.0288,
+          "evidence": []
+        },
+        {
+          "term": "percentage aged",
+          "score": 63.464,
+          "evidence": []
+        },
+        {
+          "term": "low-income countries",
+          "score": 59.2451,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health workforce",
+          "score": 2.1629,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "workforce ageing",
+          "score": 1.1973,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "workforce accounts",
+          "score": 0.9218,
+          "evidence": []
+        },
+        {
+          "term": "national health",
+          "score": 0.8743,
+          "evidence": []
+        },
+        {
+          "term": "health workers",
+          "score": 0.7527,
+          "evidence": []
+        },
+        {
+          "term": "health labour",
+          "score": 0.7238,
+          "evidence": []
+        },
+        {
+          "term": "workforce levels",
+          "score": 0.7165,
+          "evidence": []
+        },
+        {
+          "term": "occupation",
+          "score": 0.4845,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health workforce",
+          "score": 67.9056,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "workforce ageing",
+          "score": 35.4126,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health workers",
+          "score": 23.4095,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 22.6401,
+          "evidence": []
+        },
+        {
+          "term": "national health",
+          "score": 22.1417,
+          "evidence": []
+        },
+        {
+          "term": "health labour",
+          "score": 20.8909,
+          "evidence": []
+        },
+        {
+          "term": "workforce levels",
+          "score": 19.333,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 12.4164,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health workforce",
+          "score": 2.1629,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "workforce ageing",
+          "score": 1.2944,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "workforce accounts",
+          "score": 0.9218,
+          "evidence": []
+        },
+        {
+          "term": "national health",
+          "score": 0.8743,
+          "evidence": []
+        },
+        {
+          "term": "health workers",
+          "score": 0.7527,
+          "evidence": []
+        },
+        {
+          "term": "health labour",
+          "score": 0.7238,
+          "evidence": []
+        },
+        {
+          "term": "workforce levels",
+          "score": 0.7165,
+          "evidence": []
+        },
+        {
+          "term": "occupation",
+          "score": 0.4845,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 23.7308,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 23.7308,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 23.1757,
+          "evidence": []
+        },
+        {
+          "term": "见下面第",
+          "score": 17.6471,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 17.2876,
+          "evidence": []
+        },
+        {
+          "term": "乌干达",
+          "score": 15.7282,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 15.5519,
+          "evidence": []
+        },
+        {
+          "term": "位置服务",
+          "score": 15.5233,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-017-43-health-workforce-gap-due-to-population-and-he": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hwf density",
+          "score": 2.7743,
+          "evidence": []
+        },
+        {
+          "term": "hwf stock",
+          "score": 2.6111,
+          "evidence": []
+        },
+        {
+          "term": "projected stock",
+          "score": 2.4955,
+          "evidence": []
+        },
+        {
+          "term": "health workforce",
+          "score": 2.2191,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ageing",
+          "score": 2.1763,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "european region",
+          "score": 2.1076,
+          "evidence": []
+        },
+        {
+          "term": "gap",
+          "score": 1.643,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "double standardization",
+          "score": 1.2309,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hwf density",
+          "score": 95.3717,
+          "evidence": []
+        },
+        {
+          "term": "hwf stock",
+          "score": 91.0081,
+          "evidence": []
+        },
+        {
+          "term": "projected stock",
+          "score": 73.6183,
+          "evidence": []
+        },
+        {
+          "term": "european region",
+          "score": 56.1673,
+          "evidence": []
+        },
+        {
+          "term": "ageing",
+          "score": 46.5822,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health workforce",
+          "score": 43.7336,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "gap",
+          "score": 35.0498,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "population",
+          "score": 30.6889,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health workforce",
+          "score": 1.8239,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health workers",
+          "score": 0.6956,
+          "evidence": []
+        },
+        {
+          "term": "hwf stock",
+          "score": 0.4415,
+          "evidence": []
+        },
+        {
+          "term": "hwf density",
+          "score": 0.4243,
+          "evidence": []
+        },
+        {
+          "term": "population",
+          "score": 0.399,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "national",
+          "score": 0.3211,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 0.3206,
+          "evidence": []
+        },
+        {
+          "term": "european region",
+          "score": 0.3128,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health workforce",
+          "score": 42.7115,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health workers",
+          "score": 15.6561,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 8.369,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 7.5382,
+          "evidence": []
+        },
+        {
+          "term": "hwf stock",
+          "score": 7.4214,
+          "evidence": []
+        },
+        {
+          "term": "european region",
+          "score": 7.3263,
+          "evidence": []
+        },
+        {
+          "term": "hwf density",
+          "score": 7.283,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 6.7229,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health workforce",
+          "score": 1.8239,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health workers",
+          "score": 0.6956,
+          "evidence": []
+        },
+        {
+          "term": "hwf stock",
+          "score": 0.4415,
+          "evidence": []
+        },
+        {
+          "term": "hwf density",
+          "score": 0.4243,
+          "evidence": []
+        },
+        {
+          "term": "population",
+          "score": 0.399,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "national",
+          "score": 0.3211,
+          "evidence": []
+        },
+        {
+          "term": "european region",
+          "score": 0.3128,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 0.288,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 27.1121,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 21.7337,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 21.7337,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 18.0212,
+          "evidence": []
+        },
+        {
+          "term": "位置服务",
+          "score": 17.812,
+          "evidence": []
+        },
+        {
+          "term": "在卫生系统强化",
+          "score": 17.812,
+          "evidence": []
+        },
+        {
+          "term": "的背景下",
+          "score": 17.812,
+          "evidence": []
+        },
+        {
+          "term": "见下面第",
+          "score": 16.6171,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-018-5-conclusion": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hwf density",
+          "score": 2.3009,
+          "evidence": []
+        },
+        {
+          "term": "hwf data",
+          "score": 1.9913,
+          "evidence": []
+        },
+        {
+          "term": "stock data",
+          "score": 1.3374,
+          "evidence": []
+        },
+        {
+          "term": "focal points",
+          "score": 1.0919,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 1.0554,
+          "evidence": []
+        },
+        {
+          "term": "health workers",
+          "score": 0.9802,
+          "evidence": []
+        },
+        {
+          "term": "efforts towards",
+          "score": 0.9106,
+          "evidence": []
+        },
+        {
+          "term": "health workforce",
+          "score": 0.9007,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hwf density",
+          "score": 66.2904,
+          "evidence": []
+        },
+        {
+          "term": "hwf data",
+          "score": 62.3699,
+          "evidence": []
+        },
+        {
+          "term": "stock data",
+          "score": 26.0029,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 25.9122,
+          "evidence": []
+        },
+        {
+          "term": "health workers",
+          "score": 16.8856,
+          "evidence": []
+        },
+        {
+          "term": "focal points",
+          "score": 15.929,
+          "evidence": []
+        },
+        {
+          "term": "efforts towards",
+          "score": 14.7648,
+          "evidence": []
+        },
+        {
+          "term": "health workforce",
+          "score": 13.7026,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health workforce",
+          "score": 1.0383,
+          "evidence": []
+        },
+        {
+          "term": "health workers",
+          "score": 0.7329,
+          "evidence": []
+        },
+        {
+          "term": "hwf data",
+          "score": 0.6206,
+          "evidence": []
+        },
+        {
+          "term": "stock data",
+          "score": 0.5276,
+          "evidence": []
+        },
+        {
+          "term": "hwf density",
+          "score": 0.4508,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.405,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 0.402,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 0.3107,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health workforce",
+          "score": 18.1499,
+          "evidence": []
+        },
+        {
+          "term": "hwf data",
+          "score": 17.7922,
+          "evidence": []
+        },
+        {
+          "term": "stock data",
+          "score": 16.4505,
+          "evidence": []
+        },
+        {
+          "term": "health workers",
+          "score": 11.7428,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 8.528,
+          "evidence": []
+        },
+        {
+          "term": "hwf density",
+          "score": 6.7372,
+          "evidence": []
+        },
+        {
+          "term": "indicator",
+          "score": 6.1409,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 5.9706,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health workforce",
+          "score": 1.0383,
+          "evidence": []
+        },
+        {
+          "term": "health workers",
+          "score": 0.7329,
+          "evidence": []
+        },
+        {
+          "term": "hwf data",
+          "score": 0.6206,
+          "evidence": []
+        },
+        {
+          "term": "stock data",
+          "score": 0.5276,
+          "evidence": []
+        },
+        {
+          "term": "hwf density",
+          "score": 0.4508,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.405,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 0.402,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 0.3107,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 41.1951,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 34.8325,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 34.8325,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 31.8922,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 25.8524,
+          "evidence": []
+        },
+        {
+          "term": "位置服务",
+          "score": 25.7289,
+          "evidence": []
+        },
+        {
+          "term": "在卫生系统强化",
+          "score": 25.7289,
+          "evidence": []
+        },
+        {
+          "term": "的背景下",
+          "score": 25.7289,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-019-references": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "workforce accounts",
+          "score": 2.2747,
+          "evidence": []
+        },
+        {
+          "term": "health workforce",
+          "score": 2.2726,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 2.1509,
+          "evidence": []
+        },
+        {
+          "term": "world nursing",
+          "score": 2.1127,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 2.0734,
+          "evidence": []
+        },
+        {
+          "term": "care workforce",
+          "score": 1.9159,
+          "evidence": []
+        },
+        {
+          "term": "workforce data",
+          "score": 1.8711,
+          "evidence": []
+        },
+        {
+          "term": "by-nc-sa",
+          "score": 1.8623,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "health workforce",
+          "score": 167.0251,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 164.1343,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 149.3667,
+          "evidence": []
+        },
+        {
+          "term": "by-nc-sa",
+          "score": 117.4357,
+          "evidence": []
+        },
+        {
+          "term": "igo",
+          "score": 116.879,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 115.2746,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 112.4398,
+          "evidence": []
+        },
+        {
+          "term": "global health",
+          "score": 107.4058,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "world health",
+          "score": 2.1098,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 1.9838,
+          "evidence": []
+        },
+        {
+          "term": "health workforce",
+          "score": 1.9415,
+          "evidence": []
+        },
+        {
+          "term": "national health",
+          "score": 1.7561,
+          "evidence": []
+        },
+        {
+          "term": "global health",
+          "score": 1.7339,
+          "evidence": []
+        },
+        {
+          "term": "accounts health",
+          "score": 1.5826,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 1.4761,
+          "evidence": []
+        },
+        {
+          "term": "universal health",
+          "score": 1.3759,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "world health",
+          "score": 109.4738,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 105.4878,
+          "evidence": []
+        },
+        {
+          "term": "health workforce",
+          "score": 101.2706,
+          "evidence": []
+        },
+        {
+          "term": "global health",
+          "score": 82.2055,
+          "evidence": []
+        },
+        {
+          "term": "national health",
+          "score": 74.2702,
+          "evidence": []
+        },
+        {
+          "term": "accounts health",
+          "score": 73.5998,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 71.3605,
+          "evidence": []
+        },
+        {
+          "term": "health coverage",
+          "score": 69.7255,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "world health",
+          "score": 2.1098,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 1.9838,
+          "evidence": []
+        },
+        {
+          "term": "health workforce",
+          "score": 1.9415,
+          "evidence": []
+        },
+        {
+          "term": "national health",
+          "score": 1.7561,
+          "evidence": []
+        },
+        {
+          "term": "global health",
+          "score": 1.7339,
+          "evidence": []
+        },
+        {
+          "term": "accounts health",
+          "score": 1.5826,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 1.4761,
+          "evidence": []
+        },
+        {
+          "term": "universal health",
+          "score": 1.3759,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 61.7878,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 60.856,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 52.5914,
+          "evidence": []
+        },
+        {
+          "term": "关注这一事实",
+          "score": 46.1827,
+          "evidence": []
+        },
+        {
+          "term": "一致元数据和定义",
+          "score": 45.8523,
+          "evidence": []
+        },
+        {
+          "term": "数字疗法",
+          "score": 44.0933,
+          "evidence": []
+        },
+        {
+          "term": "加强全球",
+          "score": 40.0933,
+          "evidence": []
+        },
+        {
+          "term": "区域和国家各级的数字卫生保健治理",
+          "score": 40.0933,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-021-annex-1-list-of-occupations-covered-by-the-nhwa": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "medical practitioners",
+          "score": 2.2011,
+          "evidence": []
+        },
+        {
+          "term": "associate professionals",
+          "score": 2.1317,
+          "evidence": []
+        },
+        {
+          "term": "technicians medical",
+          "score": 2.1201,
+          "evidence": []
+        },
+        {
+          "term": "occupations",
+          "score": 2.1174,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prosthetic technicians",
+          "score": 2.0837,
+          "evidence": []
+        },
+        {
+          "term": "specialists practitioners",
+          "score": 2.0737,
+          "evidence": []
+        },
+        {
+          "term": "isco code",
+          "score": 2.0009,
+          "evidence": []
+        },
+        {
+          "term": "occupational title",
+          "score": 1.9064,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "medical practitioners",
+          "score": 71.6147,
+          "evidence": []
+        },
+        {
+          "term": "technicians medical",
+          "score": 63.6984,
+          "evidence": []
+        },
+        {
+          "term": "specialists practitioners",
+          "score": 56.2028,
+          "evidence": []
+        },
+        {
+          "term": "associate professionals",
+          "score": 55.5767,
+          "evidence": []
+        },
+        {
+          "term": "prosthetic technicians",
+          "score": 47.3668,
+          "evidence": []
+        },
+        {
+          "term": "isco code",
+          "score": 46.896,
+          "evidence": []
+        },
+        {
+          "term": "occupational title",
+          "score": 46.7716,
+          "evidence": []
+        },
+        {
+          "term": "occupational health",
+          "score": 42.4886,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health workforce",
+          "score": 0.9308,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 0.6056,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 0.5837,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "occupational health",
+          "score": 0.5191,
+          "evidence": []
+        },
+        {
+          "term": "health service",
+          "score": 0.5111,
+          "evidence": []
+        },
+        {
+          "term": "care workers",
+          "score": 0.438,
+          "evidence": []
+        },
+        {
+          "term": "occupations",
+          "score": 0.3767,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "medical doctors",
+          "score": 0.3451,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health workforce",
+          "score": 20.6292,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 12.699,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 12.1827,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "occupational health",
+          "score": 10.5304,
+          "evidence": []
+        },
+        {
+          "term": "health service",
+          "score": 9.8219,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 8.1963,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 8.01,
+          "evidence": []
+        },
+        {
+          "term": "care workers",
+          "score": 7.3866,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health workforce",
+          "score": 0.9308,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 0.6056,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 0.5837,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "occupational health",
+          "score": 0.5191,
+          "evidence": []
+        },
+        {
+          "term": "health service",
+          "score": 0.5111,
+          "evidence": []
+        },
+        {
+          "term": "care workers",
+          "score": 0.438,
+          "evidence": []
+        },
+        {
+          "term": "occupations",
+          "score": 0.3767,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "medical doctors",
+          "score": 0.3451,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 42.903,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 42.4457,
+          "evidence": []
+        },
+        {
+          "term": "关注这一事实",
+          "score": 30.4272,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 26.7479,
+          "evidence": []
+        },
+        {
+          "term": "位置服务",
+          "score": 25.7665,
+          "evidence": []
+        },
+        {
+          "term": "在卫生系统强化",
+          "score": 25.7665,
+          "evidence": []
+        },
+        {
+          "term": "的背景下",
+          "score": 25.7665,
+          "evidence": []
+        },
+        {
+          "term": "数字疗法",
+          "score": 25.7495,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-022-annex-2-nhwa-methodology": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "nhwa",
+          "score": 3.3026,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nhwa secretariat",
+          "score": 2.6188,
+          "evidence": []
+        },
+        {
+          "term": "nhwa data",
+          "score": 2.5785,
+          "evidence": []
+        },
+        {
+          "term": "hwf data",
+          "score": 2.1414,
+          "evidence": []
+        },
+        {
+          "term": "data platform",
+          "score": 1.7768,
+          "evidence": []
+        },
+        {
+          "term": "data hub",
+          "score": 1.7523,
+          "evidence": []
+        },
+        {
+          "term": "data entry",
+          "score": 1.6915,
+          "evidence": []
+        },
+        {
+          "term": "focal points",
+          "score": 1.6756,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "nhwa",
+          "score": 172.748,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nhwa data",
+          "score": 149.8822,
+          "evidence": []
+        },
+        {
+          "term": "nhwa secretariat",
+          "score": 111.0328,
+          "evidence": []
+        },
+        {
+          "term": "hwf data",
+          "score": 96.0661,
+          "evidence": []
+        },
+        {
+          "term": "data platform",
+          "score": 87.1436,
+          "evidence": []
+        },
+        {
+          "term": "data entry",
+          "score": 79.3684,
+          "evidence": []
+        },
+        {
+          "term": "data points",
+          "score": 78.9769,
+          "evidence": []
+        },
+        {
+          "term": "data hub",
+          "score": 76.366,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health workforce",
+          "score": 1.4152,
+          "evidence": []
+        },
+        {
+          "term": "national health",
+          "score": 1.2388,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 1.1804,
+          "evidence": []
+        },
+        {
+          "term": "nhwa data",
+          "score": 1.1037,
+          "evidence": []
+        },
+        {
+          "term": "workforce levels",
+          "score": 0.9508,
+          "evidence": []
+        },
+        {
+          "term": "hwf data",
+          "score": 0.9499,
+          "evidence": []
+        },
+        {
+          "term": "health workers",
+          "score": 0.9386,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.9305,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "nhwa data",
+          "score": 64.5215,
+          "evidence": []
+        },
+        {
+          "term": "hwf data",
+          "score": 54.8806,
+          "evidence": []
+        },
+        {
+          "term": "data quality",
+          "score": 48.5482,
+          "evidence": []
+        },
+        {
+          "term": "data points",
+          "score": 47.7445,
+          "evidence": []
+        },
+        {
+          "term": "data sharing",
+          "score": 47.1863,
+          "evidence": []
+        },
+        {
+          "term": "data platform",
+          "score": 47.1344,
+          "evidence": []
+        },
+        {
+          "term": "data entry",
+          "score": 46.4353,
+          "evidence": []
+        },
+        {
+          "term": "data processing",
+          "score": 45.787,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health workforce",
+          "score": 1.4152,
+          "evidence": []
+        },
+        {
+          "term": "national health",
+          "score": 1.2388,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 1.1804,
+          "evidence": []
+        },
+        {
+          "term": "nhwa data",
+          "score": 1.1037,
+          "evidence": []
+        },
+        {
+          "term": "workforce levels",
+          "score": 0.9508,
+          "evidence": []
+        },
+        {
+          "term": "hwf data",
+          "score": 0.9499,
+          "evidence": []
+        },
+        {
+          "term": "health workers",
+          "score": 0.9386,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.9305,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 43.7111,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 34.1607,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 30.8384,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 30.8384,
+          "evidence": []
+        },
+        {
+          "term": "位置服务",
+          "score": 27.3659,
+          "evidence": []
+        },
+        {
+          "term": "在卫生系统强化",
+          "score": 27.3659,
+          "evidence": []
+        },
+        {
+          "term": "的背景下",
+          "score": 27.3659,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 26.4595,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-023-annex-3-methodology-to-estimate-health-workforce": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "age-specific hwf",
+          "score": 3.623,
+          "evidence": []
+        },
+        {
+          "term": "hwf density",
+          "score": 3.5214,
+          "evidence": []
+        },
+        {
+          "term": "age-specific weights",
+          "score": 3.5094,
+          "evidence": []
+        },
+        {
+          "term": "projected hwf",
+          "score": 3.3309,
+          "evidence": []
+        },
+        {
+          "term": "hwf stock",
+          "score": 3.0195,
+          "evidence": []
+        },
+        {
+          "term": "health workforce",
+          "score": 2.3411,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hwf size",
+          "score": 2.3132,
+          "evidence": []
+        },
+        {
+          "term": "standard curve",
+          "score": 1.9058,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hwf density",
+          "score": 174.0962,
+          "evidence": []
+        },
+        {
+          "term": "age-specific hwf",
+          "score": 156.6351,
+          "evidence": []
+        },
+        {
+          "term": "projected hwf",
+          "score": 146.7036,
+          "evidence": []
+        },
+        {
+          "term": "hwf stock",
+          "score": 132.7583,
+          "evidence": []
+        },
+        {
+          "term": "age-specific weights",
+          "score": 115.2796,
+          "evidence": []
+        },
+        {
+          "term": "hwf size",
+          "score": 98.6837,
+          "evidence": []
+        },
+        {
+          "term": "population age",
+          "score": 77.2833,
+          "evidence": []
+        },
+        {
+          "term": "age structure",
+          "score": 59.5854,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health workforce",
+          "score": 1.6839,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health workers",
+          "score": 0.6418,
+          "evidence": []
+        },
+        {
+          "term": "hwf stock",
+          "score": 0.4,
+          "evidence": []
+        },
+        {
+          "term": "population age",
+          "score": 0.3986,
+          "evidence": []
+        },
+        {
+          "term": "hwf density",
+          "score": 0.3904,
+          "evidence": []
+        },
+        {
+          "term": "aged years",
+          "score": 0.3572,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.311,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 0.2811,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health workforce",
+          "score": 49.4485,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health workers",
+          "score": 18.1202,
+          "evidence": []
+        },
+        {
+          "term": "hwf density",
+          "score": 10.3996,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 9.9927,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 9.7366,
+          "evidence": []
+        },
+        {
+          "term": "hwf stock",
+          "score": 9.612,
+          "evidence": []
+        },
+        {
+          "term": "indicator",
+          "score": 9.0207,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 8.0073,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health workforce",
+          "score": 1.6839,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health workers",
+          "score": 0.6418,
+          "evidence": []
+        },
+        {
+          "term": "hwf stock",
+          "score": 0.4,
+          "evidence": []
+        },
+        {
+          "term": "population age",
+          "score": 0.3986,
+          "evidence": []
+        },
+        {
+          "term": "hwf density",
+          "score": 0.3904,
+          "evidence": []
+        },
+        {
+          "term": "aged years",
+          "score": 0.3572,
+          "evidence": []
+        },
+        {
+          "term": "projected hwf",
+          "score": 0.2701,
+          "evidence": []
+        },
+        {
+          "term": "hwf size",
+          "score": 0.266,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 22.0192,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 22.0192,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 17.4359,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 17.2734,
+          "evidence": []
+        },
+        {
+          "term": "潜在受试者",
+          "score": 17.0027,
+          "evidence": []
+        },
+        {
+          "term": "可能性",
+          "score": 16.7644,
+          "evidence": []
+        },
+        {
+          "term": "见下面第",
+          "score": 15.905,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 14.8331,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-024-annex-4-nhwa-focal-points-at-national-level-who": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "nhwa focal",
+          "score": 3.0134,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "focal points",
+          "score": 2.1837,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "national level",
+          "score": 1.5487,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mohamed",
+          "score": 1.4076,
+          "evidence": []
+        },
+        {
+          "term": "verification",
+          "score": 1.3036,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "reyes",
+          "score": 1.2385,
+          "evidence": []
+        },
+        {
+          "term": "moses",
+          "score": 1.2223,
+          "evidence": []
+        },
+        {
+          "term": "silva",
+          "score": 1.1947,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "nhwa focal",
+          "score": 54.0327,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mohamed",
+          "score": 40.1504,
+          "evidence": []
+        },
+        {
+          "term": "silva",
+          "score": 31.9818,
+          "evidence": []
+        },
+        {
+          "term": "focal points",
+          "score": 31.858,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ali",
+          "score": 28.0899,
+          "evidence": []
+        },
+        {
+          "term": "moses",
+          "score": 26.4449,
+          "evidence": []
+        },
+        {
+          "term": "paul",
+          "score": 25.4259,
+          "evidence": []
+        },
+        {
+          "term": "maria",
+          "score": 24.8129,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "nhwa focal",
+          "score": 1.4441,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "national level",
+          "score": 1.303,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health workforce",
+          "score": 0.8872,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 0.8723,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.6573,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "focal points",
+          "score": 0.6326,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "regional",
+          "score": 0.447,
+          "evidence": []
+        },
+        {
+          "term": "region",
+          "score": 0.3987,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "data",
+          "score": 11.1623,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nhwa focal",
+          "score": 9.9896,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health workforce",
+          "score": 9.9271,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 8.5136,
+          "evidence": []
+        },
+        {
+          "term": "national level",
+          "score": 7.8655,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "workforce accounts",
+          "score": 7.0592,
+          "evidence": []
+        },
+        {
+          "term": "united",
+          "score": 6.0808,
+          "evidence": []
+        },
+        {
+          "term": "usa",
+          "score": 5.5182,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "nhwa focal",
+          "score": 1.4441,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "national level",
+          "score": 1.303,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health workforce",
+          "score": 0.8872,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 0.8723,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.6573,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "focal points",
+          "score": 0.6326,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "region",
+          "score": 0.3987,
+          "evidence": []
+        },
+        {
+          "term": "david",
+          "score": 0.3739,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 551.6996,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 536.6218,
+          "evidence": []
+        },
+        {
+          "term": "这意味着",
+          "score": 479.6761,
+          "evidence": []
+        },
+        {
+          "term": "以及卫生保健界",
+          "score": 453.6614,
+          "evidence": []
+        },
+        {
+          "term": "基金会和开发银行",
+          "score": 453.6614,
+          "evidence": []
+        },
+        {
+          "term": "大学和研究机构",
+          "score": 453.6614,
+          "evidence": []
+        },
+        {
+          "term": "如非政府组织和民间社会组织",
+          "score": 453.6614,
+          "evidence": []
+        },
+        {
+          "term": "宗教组织",
+          "score": 453.6614,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-025-annex-5-staff-at-who-country-offices-regional-of": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "regional offices",
+          "score": 2.517,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "country offices",
+          "score": 2.4032,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "masahiro zakoji",
+          "score": 2.0403,
+          "evidence": []
+        },
+        {
+          "term": "tomas zapata",
+          "score": 1.6534,
+          "evidence": []
+        },
+        {
+          "term": "headquarters",
+          "score": 1.618,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "maria",
+          "score": 1.056,
+          "evidence": []
+        },
+        {
+          "term": "paul",
+          "score": 1.0512,
+          "evidence": []
+        },
+        {
+          "term": "ramirez",
+          "score": 1.0434,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "regional offices",
+          "score": 46.5215,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "country offices",
+          "score": 43.454,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "masahiro zakoji",
+          "score": 32.8827,
+          "evidence": []
+        },
+        {
+          "term": "headquarters",
+          "score": 29.1203,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "tomas zapata",
+          "score": 26.7006,
+          "evidence": []
+        },
+        {
+          "term": "paul",
+          "score": 25.4259,
+          "evidence": []
+        },
+        {
+          "term": "maria",
+          "score": 24.8129,
+          "evidence": []
+        },
+        {
+          "term": "region",
+          "score": 20.5741,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "regional offices",
+          "score": 0.656,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health workforce",
+          "score": 0.4931,
+          "evidence": []
+        },
+        {
+          "term": "country offices",
+          "score": 0.32,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "national",
+          "score": 0.2261,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 0.2246,
+          "evidence": []
+        },
+        {
+          "term": "region",
+          "score": 0.2236,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 0.2021,
+          "evidence": []
+        },
+        {
+          "term": "united",
+          "score": 0.1818,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health workforce",
+          "score": 5.7448,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 4.5323,
+          "evidence": []
+        },
+        {
+          "term": "regional offices",
+          "score": 3.9647,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hepatitis",
+          "score": 3.3763,
+          "evidence": []
+        },
+        {
+          "term": "united",
+          "score": 3.3107,
+          "evidence": []
+        },
+        {
+          "term": "hcv",
+          "score": 3.0026,
+          "evidence": []
+        },
+        {
+          "term": "usa",
+          "score": 2.8274,
+          "evidence": []
+        },
+        {
+          "term": "hbv",
+          "score": 2.8241,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "regional offices",
+          "score": 0.656,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health workforce",
+          "score": 0.4931,
+          "evidence": []
+        },
+        {
+          "term": "country offices",
+          "score": 0.32,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "region",
+          "score": 0.2236,
+          "evidence": []
+        },
+        {
+          "term": "headquarters",
+          "score": 0.1792,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "maria",
+          "score": 0.1359,
+          "evidence": []
+        },
+        {
+          "term": "annex",
+          "score": 0.1182,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "paul",
+          "score": 0.0888,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "这意味着",
+          "score": 554.8826,
+          "evidence": []
+        },
+        {
+          "term": "以及卫生保健界",
+          "score": 534.4299,
+          "evidence": []
+        },
+        {
+          "term": "基金会和开发银行",
+          "score": 534.4299,
+          "evidence": []
+        },
+        {
+          "term": "大学和研究机构",
+          "score": 534.4299,
+          "evidence": []
+        },
+        {
+          "term": "如非政府组织和民间社会组织",
+          "score": 534.4299,
+          "evidence": []
+        },
+        {
+          "term": "宗教组织",
+          "score": 534.4299,
+          "evidence": []
+        },
+        {
+          "term": "患者和公众",
+          "score": 534.4299,
+          "evidence": []
+        },
+        {
+          "term": "技术开发者",
+          "score": 534.4299,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "workforce ageing",
+          "score": 2.0557,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 1.8298,
+          "evidence": []
+        },
+        {
+          "term": "nhwa focal",
+          "score": 1.7616,
+          "evidence": []
+        },
+        {
+          "term": "health workforce",
+          "score": 1.726,
+          "evidence": []
+        },
+        {
+          "term": "workforce levels",
+          "score": 1.6873,
+          "evidence": []
+        },
+        {
+          "term": "workforce data",
+          "score": 1.575,
+          "evidence": []
+        },
+        {
+          "term": "creative commons",
+          "score": 1.1585,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 1.1389,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "workforce ageing",
+          "score": 64.0668,
+          "evidence": []
+        },
+        {
+          "term": "health workforce",
+          "score": 63.2293,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 60.9229,
+          "evidence": []
+        },
+        {
+          "term": "workforce levels",
+          "score": 59.1003,
+          "evidence": []
+        },
+        {
+          "term": "workforce data",
+          "score": 54.07,
+          "evidence": []
+        },
+        {
+          "term": "nhwa focal",
+          "score": 39.9724,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 24.8729,
+          "evidence": []
+        },
+        {
+          "term": "national health",
+          "score": 24.6505,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "world health",
+          "score": 1.1855,
+          "evidence": []
+        },
+        {
+          "term": "creative commons",
+          "score": 1.0157,
+          "evidence": []
+        },
+        {
+          "term": "health workforce",
+          "score": 0.9502,
+          "evidence": []
+        },
+        {
+          "term": "suggested citation",
+          "score": 0.8987,
+          "evidence": []
+        },
+        {
+          "term": "workforce data",
+          "score": 0.8687,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 0.8608,
+          "evidence": []
+        },
+        {
+          "term": "national health",
+          "score": 0.7746,
+          "evidence": []
+        },
+        {
+          "term": "material",
+          "score": 0.7521,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health workforce",
+          "score": 30.3976,
+          "evidence": []
+        },
+        {
+          "term": "workforce data",
+          "score": 25.9976,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 21.8125,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 20.8116,
+          "evidence": []
+        },
+        {
+          "term": "national health",
+          "score": 19.2045,
+          "evidence": []
+        },
+        {
+          "term": "workforce levels",
+          "score": 17.5602,
+          "evidence": []
+        },
+        {
+          "term": "workforce ageing",
+          "score": 16.2763,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 11.1944,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "world health",
+          "score": 1.1855,
+          "evidence": []
+        },
+        {
+          "term": "creative commons",
+          "score": 1.0157,
+          "evidence": []
+        },
+        {
+          "term": "health workforce",
+          "score": 0.9502,
+          "evidence": []
+        },
+        {
+          "term": "suggested citation",
+          "score": 0.8987,
+          "evidence": []
+        },
+        {
+          "term": "workforce data",
+          "score": 0.8687,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 0.8608,
+          "evidence": []
+        },
+        {
+          "term": "national health",
+          "score": 0.7746,
+          "evidence": []
+        },
+        {
+          "term": "material",
+          "score": 0.7521,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 45.5428,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 42.8163,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 42.7802,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 39.2927,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 39.2927,
+          "evidence": []
+        },
+        {
+          "term": "见下面第",
+          "score": 38.7609,
+          "evidence": []
+        },
+        {
+          "term": "疫苗储备",
+          "score": 34.3039,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 33.4841,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

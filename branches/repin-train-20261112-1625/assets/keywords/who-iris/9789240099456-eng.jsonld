@@ -1,0 +1,2592 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "9789240099456-eng",
+  "instance": "who-iris",
+  "about": "library/9789240099456-eng",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7434,
+    "terms": 71211
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "digital adaptation",
+        "score": 15.4708,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "digital health",
+        "score": 13.3321,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "decision-support logic",
+        "score": 13.3165,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "adaptation kit",
+        "score": 13.2234,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "digital vaccination",
+        "score": 12.5166,
+        "evidence": []
+      },
+      {
+        "term": "digital systems",
+        "score": 12.4815,
+        "evidence": []
+      },
+      {
+        "term": "process immz",
+        "score": 12.2863,
+        "evidence": []
+      },
+      {
+        "term": "immunization data",
+        "score": 12.2397,
+        "evidence": []
+      },
+      {
+        "term": "workflows data",
+        "score": 11.8238,
+        "evidence": []
+      },
+      {
+        "term": "digital interventions",
+        "score": 11.5873,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "logic personas",
+        "score": 11.2229,
+        "evidence": []
+      },
+      {
+        "term": "decision logic",
+        "score": 11.1712,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "process immz",
+        "score": 3541.2405,
+        "evidence": []
+      },
+      {
+        "term": "vaccination schedule",
+        "score": 1678.8326,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "client record",
+        "score": 1663.2113,
+        "evidence": []
+      },
+      {
+        "term": "vaccine schedule",
+        "score": 1591.0891,
+        "evidence": []
+      },
+      {
+        "term": "client health",
+        "score": 1522.5866,
+        "evidence": []
+      },
+      {
+        "term": "digital vaccination",
+        "score": 1438.285,
+        "evidence": []
+      },
+      {
+        "term": "immunization schedule",
+        "score": 1377.7691,
+        "evidence": []
+      },
+      {
+        "term": "duplicate client",
+        "score": 1321.1427,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "dose vaccination",
+        "score": 1304.9826,
+        "evidence": []
+      },
+      {
+        "term": "client information",
+        "score": 1277.0573,
+        "evidence": []
+      },
+      {
+        "term": "measles vaccination",
+        "score": 1265.8804,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "update client",
+        "score": 1257.1131,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "digital health",
+        "score": 13.7409,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "digital adaptation",
+        "score": 13.4201,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "digital system",
+        "score": 12.6867,
+        "evidence": []
+      },
+      {
+        "term": "digital vaccination",
+        "score": 12.4613,
+        "evidence": []
+      },
+      {
+        "term": "decision-support logic",
+        "score": 11.658,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "digital interventions",
+        "score": 11.3415,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "workflows data",
+        "score": 11.1114,
+        "evidence": []
+      },
+      {
+        "term": "vaccine business",
+        "score": 10.9919,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "client health",
+        "score": 10.8319,
+        "evidence": []
+      },
+      {
+        "term": "workflows personas",
+        "score": 10.7559,
+        "evidence": []
+      },
+      {
+        "term": "digital home-based",
+        "score": 10.6864,
+        "evidence": []
+      },
+      {
+        "term": "digital tracking",
+        "score": 10.5387,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "process immz",
+        "score": 3535.9507,
+        "evidence": []
+      },
+      {
+        "term": "vaccination schedule",
+        "score": 1746.0408,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "client record",
+        "score": 1698.0217,
+        "evidence": []
+      },
+      {
+        "term": "vaccine schedule",
+        "score": 1671.5244,
+        "evidence": []
+      },
+      {
+        "term": "client health",
+        "score": 1566.3016,
+        "evidence": []
+      },
+      {
+        "term": "digital vaccination",
+        "score": 1451.713,
+        "evidence": []
+      },
+      {
+        "term": "duplicate client",
+        "score": 1362.7589,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "dose vaccination",
+        "score": 1358.5287,
+        "evidence": []
+      },
+      {
+        "term": "immunization schedule",
+        "score": 1333.8488,
+        "evidence": []
+      },
+      {
+        "term": "client information",
+        "score": 1327.9866,
+        "evidence": []
+      },
+      {
+        "term": "measles vaccination",
+        "score": 1299.9927,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "update client",
+        "score": 1299.0632,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "digital health",
+        "score": 13.7409,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "digital adaptation",
+        "score": 13.4201,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "digital system",
+        "score": 12.6867,
+        "evidence": []
+      },
+      {
+        "term": "digital vaccination",
+        "score": 12.4613,
+        "evidence": []
+      },
+      {
+        "term": "decision-support logic",
+        "score": 11.658,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "digital interventions",
+        "score": 11.3415,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "workflows data",
+        "score": 11.1114,
+        "evidence": []
+      },
+      {
+        "term": "vaccine business",
+        "score": 10.9919,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "client health",
+        "score": 10.8319,
+        "evidence": []
+      },
+      {
+        "term": "workflows personas",
+        "score": 10.7559,
+        "evidence": []
+      },
+      {
+        "term": "digital home-based",
+        "score": 10.6864,
+        "evidence": []
+      },
+      {
+        "term": "digital tracking",
+        "score": 10.5387,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "允许进行个人反馈",
+        "score": 364.6908,
+        "evidence": []
+      },
+      {
+        "term": "并提供一",
+        "score": 307.1309,
+        "evidence": []
+      },
+      {
+        "term": "巴西登革热",
+        "score": 299.314,
+        "evidence": []
+      },
+      {
+        "term": "在大流行间期提供疫苗供发展中国家使用",
+        "score": 250.8448,
+        "evidence": []
+      },
+      {
+        "term": "提供大流行性流感疫苗",
+        "score": 250.8448,
+        "evidence": []
+      },
+      {
+        "term": "询问学员这项原则如何应用于紧急情况下的研究",
+        "score": 242.3362,
+        "evidence": []
+      },
+      {
+        "term": "相一致",
+        "score": 230.4135,
+        "evidence": []
+      },
+      {
+        "term": "的材料",
+        "score": 229.0377,
+        "evidence": []
+      },
+      {
+        "term": "数字疗法",
+        "score": 227.423,
+        "evidence": []
+      },
+      {
+        "term": "平等主义",
+        "score": 215.8273,
+        "evidence": []
+      },
+      {
+        "term": "乌干达",
+        "score": 209.2392,
+        "evidence": []
+      },
+      {
+        "term": "加强全球",
+        "score": 189.8457,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-digital-health-interventions-incorporated-into-t": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "digital adaptation",
+          "score": 2.675,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "digital tracking",
+          "score": 1.4643,
+          "evidence": []
+        },
+        {
+          "term": "smart guidelines",
+          "score": 1.3714,
+          "evidence": []
+        },
+        {
+          "term": "manage person-centred",
+          "score": 1.1135,
+          "evidence": []
+        },
+        {
+          "term": "health status",
+          "score": 1.0853,
+          "evidence": []
+        },
+        {
+          "term": "daks",
+          "score": 1.0246,
+          "evidence": []
+        },
+        {
+          "term": "clients health",
+          "score": 1.0235,
+          "evidence": []
+        },
+        {
+          "term": "clinical records",
+          "score": 0.8825,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "digital adaptation",
+          "score": 45.9668,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "digital tracking",
+          "score": 28.9298,
+          "evidence": []
+        },
+        {
+          "term": "smart guidelines",
+          "score": 27.5291,
+          "evidence": []
+        },
+        {
+          "term": "daks",
+          "score": 21.6692,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 21.0074,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health status",
+          "score": 20.0355,
+          "evidence": []
+        },
+        {
+          "term": "manage person-centred",
+          "score": 18.1015,
+          "evidence": []
+        },
+        {
+          "term": "clients health",
+          "score": 16.8517,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "digital adaptation",
+          "score": 1.6321,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health",
+          "score": 0.8456,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "digital tracking",
+          "score": 0.8153,
+          "evidence": []
+        },
+        {
+          "term": "clients health",
+          "score": 0.6478,
+          "evidence": []
+        },
+        {
+          "term": "interventions",
+          "score": 0.5663,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health status",
+          "score": 0.5507,
+          "evidence": []
+        },
+        {
+          "term": "decision support",
+          "score": 0.3999,
+          "evidence": []
+        },
+        {
+          "term": "clinical records",
+          "score": 0.3658,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "digital adaptation",
+          "score": 34.7468,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health",
+          "score": 24.9043,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "digital tracking",
+          "score": 18.356,
+          "evidence": []
+        },
+        {
+          "term": "health status",
+          "score": 15.967,
+          "evidence": []
+        },
+        {
+          "term": "clients health",
+          "score": 15.2995,
+          "evidence": []
+        },
+        {
+          "term": "interventions",
+          "score": 6.3348,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "decision support",
+          "score": 5.0559,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 4.3248,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "digital adaptation",
+          "score": 1.6321,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health",
+          "score": 0.8456,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "digital tracking",
+          "score": 0.8153,
+          "evidence": []
+        },
+        {
+          "term": "clients health",
+          "score": 0.6478,
+          "evidence": []
+        },
+        {
+          "term": "interventions",
+          "score": 0.5663,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health status",
+          "score": 0.5507,
+          "evidence": []
+        },
+        {
+          "term": "decision support",
+          "score": 0.3999,
+          "evidence": []
+        },
+        {
+          "term": "clinical records",
+          "score": 0.3658,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 49.6753,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 47.9633,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 45.4506,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 37.9057,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 36.2927,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 36.2927,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 33.7258,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 30.2325,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-001-objectives": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "digital adaptation",
+          "score": 2.0584,
+          "evidence": []
+        },
+        {
+          "term": "adaptation kits",
+          "score": 1.6929,
+          "evidence": []
+        },
+        {
+          "term": "functional requirements",
+          "score": 1.5119,
+          "evidence": []
+        },
+        {
+          "term": "digital health",
+          "score": 1.4644,
+          "evidence": []
+        },
+        {
+          "term": "software developers",
+          "score": 1.4193,
+          "evidence": []
+        },
+        {
+          "term": "machine readable",
+          "score": 1.3469,
+          "evidence": []
+        },
+        {
+          "term": "digital systems",
+          "score": 1.3051,
+          "evidence": []
+        },
+        {
+          "term": "health content",
+          "score": 1.1776,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "digital adaptation",
+          "score": 55.1075,
+          "evidence": []
+        },
+        {
+          "term": "adaptation kits",
+          "score": 39.8178,
+          "evidence": []
+        },
+        {
+          "term": "digital health",
+          "score": 36.0829,
+          "evidence": []
+        },
+        {
+          "term": "digital systems",
+          "score": 29.7756,
+          "evidence": []
+        },
+        {
+          "term": "functional requirements",
+          "score": 28.0126,
+          "evidence": []
+        },
+        {
+          "term": "software developers",
+          "score": 25.2351,
+          "evidence": []
+        },
+        {
+          "term": "health content",
+          "score": 24.4778,
+          "evidence": []
+        },
+        {
+          "term": "machine readable",
+          "score": 21.4585,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "digital health",
+          "score": 1.3486,
+          "evidence": []
+        },
+        {
+          "term": "digital systems",
+          "score": 1.2267,
+          "evidence": []
+        },
+        {
+          "term": "digital adaptation",
+          "score": 1.2095,
+          "evidence": []
+        },
+        {
+          "term": "health content",
+          "score": 0.6928,
+          "evidence": []
+        },
+        {
+          "term": "health programme",
+          "score": 0.6309,
+          "evidence": []
+        },
+        {
+          "term": "functional requirements",
+          "score": 0.6286,
+          "evidence": []
+        },
+        {
+          "term": "adaptation kits",
+          "score": 0.478,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.3751,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "digital health",
+          "score": 36.4326,
+          "evidence": []
+        },
+        {
+          "term": "digital systems",
+          "score": 29.2616,
+          "evidence": []
+        },
+        {
+          "term": "digital adaptation",
+          "score": 26.2382,
+          "evidence": []
+        },
+        {
+          "term": "health content",
+          "score": 15.1159,
+          "evidence": []
+        },
+        {
+          "term": "health programme",
+          "score": 14.069,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 9.1487,
+          "evidence": []
+        },
+        {
+          "term": "functional requirements",
+          "score": 5.2665,
+          "evidence": []
+        },
+        {
+          "term": "support",
+          "score": 4.0162,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "digital health",
+          "score": 1.3486,
+          "evidence": []
+        },
+        {
+          "term": "digital systems",
+          "score": 1.2267,
+          "evidence": []
+        },
+        {
+          "term": "digital adaptation",
+          "score": 1.2095,
+          "evidence": []
+        },
+        {
+          "term": "health content",
+          "score": 0.6928,
+          "evidence": []
+        },
+        {
+          "term": "health programme",
+          "score": 0.6309,
+          "evidence": []
+        },
+        {
+          "term": "functional requirements",
+          "score": 0.6286,
+          "evidence": []
+        },
+        {
+          "term": "adaptation kits",
+          "score": 0.478,
+          "evidence": []
+        },
+        {
+          "term": "software developers",
+          "score": 0.4147,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 57.3432,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 50.2774,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 44.2422,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 37.4475,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 36.5194,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 36.5194,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 34.6481,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 33.016,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-002-components-of-a-digital-adaptation-kit": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "adaptation kit",
+          "score": 3.4027,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "digital adaptation",
+          "score": 3.3963,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "decision-support logic",
+          "score": 2.9448,
+          "evidence": []
+        },
+        {
+          "term": "immz",
+          "score": 2.8838,
+          "evidence": []
+        },
+        {
+          "term": "non-functional requirement",
+          "score": 2.3558,
+          "evidence": []
+        },
+        {
+          "term": "generic business",
+          "score": 2.2305,
+          "evidence": []
+        },
+        {
+          "term": "functional requirement",
+          "score": 2.2258,
+          "evidence": []
+        },
+        {
+          "term": "generic personas",
+          "score": 2.1455,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "immz",
+          "score": 147.9721,
+          "evidence": []
+        },
+        {
+          "term": "decision-support logic",
+          "score": 88.4051,
+          "evidence": []
+        },
+        {
+          "term": "digital adaptation",
+          "score": 69.426,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "adaptation kit",
+          "score": 64.9506,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "functional requirement",
+          "score": 64.5579,
+          "evidence": []
+        },
+        {
+          "term": "data elements",
+          "score": 63.0985,
+          "evidence": []
+        },
+        {
+          "term": "non-functional requirement",
+          "score": 57.8617,
+          "evidence": []
+        },
+        {
+          "term": "generic business",
+          "score": 53.2666,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "digital adaptation",
+          "score": 3.7716,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "adaptation kit",
+          "score": 2.2975,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "digital system",
+          "score": 1.774,
+          "evidence": []
+        },
+        {
+          "term": "decision-support logic",
+          "score": 1.6367,
+          "evidence": []
+        },
+        {
+          "term": "functional requirements",
+          "score": 1.3525,
+          "evidence": []
+        },
+        {
+          "term": "non-functional requirements",
+          "score": 1.3227,
+          "evidence": []
+        },
+        {
+          "term": "business process",
+          "score": 1.3034,
+          "evidence": []
+        },
+        {
+          "term": "generic business",
+          "score": 1.2464,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "immz",
+          "score": 117.8161,
+          "evidence": []
+        },
+        {
+          "term": "digital adaptation",
+          "score": 63.4339,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "data elements",
+          "score": 43.9568,
+          "evidence": []
+        },
+        {
+          "term": "digital system",
+          "score": 39.3827,
+          "evidence": []
+        },
+        {
+          "term": "data dictionary",
+          "score": 38.8923,
+          "evidence": []
+        },
+        {
+          "term": "core data",
+          "score": 37.5602,
+          "evidence": []
+        },
+        {
+          "term": "adaptation kit",
+          "score": 33.3817,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "client",
+          "score": 30.9743,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "digital adaptation",
+          "score": 3.7716,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "adaptation kit",
+          "score": 2.2975,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "digital system",
+          "score": 1.774,
+          "evidence": []
+        },
+        {
+          "term": "decision-support logic",
+          "score": 1.6367,
+          "evidence": []
+        },
+        {
+          "term": "functional requirements",
+          "score": 1.3525,
+          "evidence": []
+        },
+        {
+          "term": "non-functional requirements",
+          "score": 1.3227,
+          "evidence": []
+        },
+        {
+          "term": "business process",
+          "score": 1.3034,
+          "evidence": []
+        },
+        {
+          "term": "generic business",
+          "score": 1.2464,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 63.4241,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 49.2268,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 48.7479,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 40.6822,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 40.6822,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 36.7524,
+          "evidence": []
+        },
+        {
+          "term": "平等主义",
+          "score": 35.5149,
+          "evidence": []
+        },
+        {
+          "term": "潜在受试者",
+          "score": 32.0553,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-003-how-this-digital-adaptation-kit-was-developed": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "dak",
+          "score": 1.4979,
+          "evidence": []
+        },
+        {
+          "term": "guidance documents",
+          "score": 1.262,
+          "evidence": []
+        },
+        {
+          "term": "immunizations",
+          "score": 1.1792,
+          "evidence": []
+        },
+        {
+          "term": "clinical guidelines",
+          "score": 1.0451,
+          "evidence": []
+        },
+        {
+          "term": "data elements",
+          "score": 0.9258,
+          "evidence": []
+        },
+        {
+          "term": "digital",
+          "score": 0.8092,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "digital systems",
+          "score": 0.7136,
+          "evidence": []
+        },
+        {
+          "term": "daks",
+          "score": 0.6994,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "dak",
+          "score": 44.101,
+          "evidence": []
+        },
+        {
+          "term": "guidance documents",
+          "score": 28.4248,
+          "evidence": []
+        },
+        {
+          "term": "immunizations",
+          "score": 24.0147,
+          "evidence": []
+        },
+        {
+          "term": "clinical guidelines",
+          "score": 23.0661,
+          "evidence": []
+        },
+        {
+          "term": "data elements",
+          "score": 13.1178,
+          "evidence": []
+        },
+        {
+          "term": "relevant",
+          "score": 11.3632,
+          "evidence": []
+        },
+        {
+          "term": "teams",
+          "score": 10.8615,
+          "evidence": []
+        },
+        {
+          "term": "daks",
+          "score": 10.8346,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "digital",
+          "score": 0.5602,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "digital systems",
+          "score": 0.4215,
+          "evidence": []
+        },
+        {
+          "term": "data elements",
+          "score": 0.3575,
+          "evidence": []
+        },
+        {
+          "term": "adaptation",
+          "score": 0.3328,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "clinical guidelines",
+          "score": 0.2776,
+          "evidence": []
+        },
+        {
+          "term": "recommendations",
+          "score": 0.2246,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 0.2034,
+          "evidence": []
+        },
+        {
+          "term": "requirements",
+          "score": 0.1787,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "digital",
+          "score": 12.0845,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "digital systems",
+          "score": 8.1912,
+          "evidence": []
+        },
+        {
+          "term": "data elements",
+          "score": 7.6512,
+          "evidence": []
+        },
+        {
+          "term": "immz",
+          "score": 4.2172,
+          "evidence": []
+        },
+        {
+          "term": "guideline",
+          "score": 3.5418,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 3.3595,
+          "evidence": []
+        },
+        {
+          "term": "recommendations",
+          "score": 2.9147,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 2.8582,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "digital",
+          "score": 0.5602,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "digital systems",
+          "score": 0.4215,
+          "evidence": []
+        },
+        {
+          "term": "data elements",
+          "score": 0.3575,
+          "evidence": []
+        },
+        {
+          "term": "adaptation",
+          "score": 0.3328,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "clinical guidelines",
+          "score": 0.2776,
+          "evidence": []
+        },
+        {
+          "term": "guidance documents",
+          "score": 0.1708,
+          "evidence": []
+        },
+        {
+          "term": "review",
+          "score": 0.1604,
+          "evidence": []
+        },
+        {
+          "term": "logic",
+          "score": 0.1487,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 38.1371,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 32.3248,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 32.3248,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 31.1104,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 29.2431,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 29.1477,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 28.3243,
+          "evidence": []
+        },
+        {
+          "term": "平等主义",
+          "score": 25.2763,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-004-how-to-use-this-digital-adaptation-kit": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "adaptation kit",
+          "score": 8.0995,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "digital adaptation",
+          "score": 7.6032,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "process immz",
+          "score": 7.2955,
+          "evidence": []
+        },
+        {
+          "term": "measles contraindications",
+          "score": 6.3342,
+          "evidence": []
+        },
+        {
+          "term": "measles schedule",
+          "score": 6.2369,
+          "evidence": []
+        },
+        {
+          "term": "vaccine schedule",
+          "score": 6.014,
+          "evidence": []
+        },
+        {
+          "term": "booster schedule",
+          "score": 5.883,
+          "evidence": []
+        },
+        {
+          "term": "duplicate client",
+          "score": 5.7938,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "process immz",
+          "score": 3355.3226,
+          "evidence": []
+        },
+        {
+          "term": "vaccination schedule",
+          "score": 1620.6177,
+          "evidence": []
+        },
+        {
+          "term": "client record",
+          "score": 1591.9349,
+          "evidence": []
+        },
+        {
+          "term": "vaccines client",
+          "score": 1553.8139,
+          "evidence": []
+        },
+        {
+          "term": "duplicate client",
+          "score": 1298.3782,
+          "evidence": []
+        },
+        {
+          "term": "dose vaccination",
+          "score": 1251.587,
+          "evidence": []
+        },
+        {
+          "term": "update client",
+          "score": 1228.6868,
+          "evidence": []
+        },
+        {
+          "term": "client name",
+          "score": 1217.8151,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "adaptation kit",
+          "score": 8.5275,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "digital adaptation",
+          "score": 7.2847,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "process immz",
+          "score": 7.1084,
+          "evidence": []
+        },
+        {
+          "term": "vaccine schedule",
+          "score": 6.7603,
+          "evidence": []
+        },
+        {
+          "term": "measles schedule",
+          "score": 6.6902,
+          "evidence": []
+        },
+        {
+          "term": "immunization schedule",
+          "score": 6.5288,
+          "evidence": []
+        },
+        {
+          "term": "vaccination schedule",
+          "score": 6.3514,
+          "evidence": []
+        },
+        {
+          "term": "dose schedule",
+          "score": 6.2684,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "process immz",
+          "score": 3353.7572,
+          "evidence": []
+        },
+        {
+          "term": "vaccination schedule",
+          "score": 1620.1552,
+          "evidence": []
+        },
+        {
+          "term": "client record",
+          "score": 1592.5878,
+          "evidence": []
+        },
+        {
+          "term": "vaccines client",
+          "score": 1555.4686,
+          "evidence": []
+        },
+        {
+          "term": "duplicate client",
+          "score": 1298.7978,
+          "evidence": []
+        },
+        {
+          "term": "dose vaccination",
+          "score": 1252.6429,
+          "evidence": []
+        },
+        {
+          "term": "update client",
+          "score": 1229.7443,
+          "evidence": []
+        },
+        {
+          "term": "client name",
+          "score": 1219.1776,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "adaptation kit",
+          "score": 8.5275,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "digital adaptation",
+          "score": 7.2847,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "process immz",
+          "score": 7.1084,
+          "evidence": []
+        },
+        {
+          "term": "vaccine schedule",
+          "score": 6.7603,
+          "evidence": []
+        },
+        {
+          "term": "measles schedule",
+          "score": 6.6902,
+          "evidence": []
+        },
+        {
+          "term": "immunization schedule",
+          "score": 6.5288,
+          "evidence": []
+        },
+        {
+          "term": "vaccination schedule",
+          "score": 6.3514,
+          "evidence": []
+        },
+        {
+          "term": "dose schedule",
+          "score": 6.2684,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 46.9432,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 35.4743,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 35.2805,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 31.9295,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 31.9295,
+          "evidence": []
+        },
+        {
+          "term": "平等主义",
+          "score": 27.3589,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 24.8399,
+          "evidence": []
+        },
+        {
+          "term": "乌干达",
+          "score": 23.5831,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-005-references": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "digital health",
+          "score": 1.8841,
+          "evidence": []
+        },
+        {
+          "term": "digit health",
+          "score": 1.8457,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 1.8254,
+          "evidence": []
+        },
+        {
+          "term": "digital square",
+          "score": 1.7862,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 1.7764,
+          "evidence": []
+        },
+        {
+          "term": "digital adaptation",
+          "score": 1.6929,
+          "evidence": []
+        },
+        {
+          "term": "digital strategy",
+          "score": 1.6641,
+          "evidence": []
+        },
+        {
+          "term": "digital interventions",
+          "score": 1.6368,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "world health",
+          "score": 86.2154,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 81.1262,
+          "evidence": []
+        },
+        {
+          "term": "digital health",
+          "score": 80.0876,
+          "evidence": []
+        },
+        {
+          "term": "world bank",
+          "score": 57.5145,
+          "evidence": []
+        },
+        {
+          "term": "digit health",
+          "score": 57.266,
+          "evidence": []
+        },
+        {
+          "term": "digital strategy",
+          "score": 54.4769,
+          "evidence": []
+        },
+        {
+          "term": "digital square",
+          "score": 53.7252,
+          "evidence": []
+        },
+        {
+          "term": "digital interventions",
+          "score": 51.2972,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "digital health",
+          "score": 1.7555,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 1.7273,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 1.7013,
+          "evidence": []
+        },
+        {
+          "term": "digital interventions",
+          "score": 1.1992,
+          "evidence": []
+        },
+        {
+          "term": "digital strategy",
+          "score": 1.1925,
+          "evidence": []
+        },
+        {
+          "term": "digital adaptation",
+          "score": 1.1783,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 1.139,
+          "evidence": []
+        },
+        {
+          "term": "world bank",
+          "score": 1.1297,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "digital health",
+          "score": 74.6943,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 61.7795,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 60.2443,
+          "evidence": []
+        },
+        {
+          "term": "digital strategy",
+          "score": 42.7294,
+          "evidence": []
+        },
+        {
+          "term": "digital interventions",
+          "score": 42.3604,
+          "evidence": []
+        },
+        {
+          "term": "digital adaptation",
+          "score": 41.8539,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 41.2994,
+          "evidence": []
+        },
+        {
+          "term": "digital age",
+          "score": 38.2717,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "digital health",
+          "score": 1.7555,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 1.7273,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 1.7013,
+          "evidence": []
+        },
+        {
+          "term": "digital interventions",
+          "score": 1.1992,
+          "evidence": []
+        },
+        {
+          "term": "digital strategy",
+          "score": 1.1925,
+          "evidence": []
+        },
+        {
+          "term": "digital adaptation",
+          "score": 1.1783,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 1.139,
+          "evidence": []
+        },
+        {
+          "term": "world bank",
+          "score": 1.1297,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 77.0303,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 60.1368,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 55.9641,
+          "evidence": []
+        },
+        {
+          "term": "数字疗法",
+          "score": 46.9921,
+          "evidence": []
+        },
+        {
+          "term": "关注这一事实",
+          "score": 40.6206,
+          "evidence": []
+        },
+        {
+          "term": "加强全球",
+          "score": 39.449,
+          "evidence": []
+        },
+        {
+          "term": "区域和国家各级的数字卫生保健治理",
+          "score": 39.449,
+          "evidence": []
+        },
+        {
+          "term": "一致元数据和定义",
+          "score": 38.9745,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-annex-guidance-for-adding-data-elements-to-or-am": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "data elements",
+          "score": 4.4216,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "data dictionary",
+          "score": 3.3088,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "element label",
+          "score": 3.277,
+          "evidence": []
+        },
+        {
+          "term": "element contributes",
+          "score": 2.6419,
+          "evidence": []
+        },
+        {
+          "term": "multiple-choice data",
+          "score": 2.6078,
+          "evidence": []
+        },
+        {
+          "term": "column blank",
+          "score": 2.5409,
+          "evidence": []
+        },
+        {
+          "term": "quantity subtype",
+          "score": 2.537,
+          "evidence": []
+        },
+        {
+          "term": "data field",
+          "score": 2.1587,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "data elements",
+          "score": 261.4354,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "data dictionary",
+          "score": 190.9924,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "element label",
+          "score": 145.8293,
+          "evidence": []
+        },
+        {
+          "term": "data field",
+          "score": 128.3299,
+          "evidence": []
+        },
+        {
+          "term": "multiple-choice data",
+          "score": 124.9989,
+          "evidence": []
+        },
+        {
+          "term": "element contributes",
+          "score": 123.1026,
+          "evidence": []
+        },
+        {
+          "term": "data types",
+          "score": 103.2216,
+          "evidence": []
+        },
+        {
+          "term": "data entry",
+          "score": 97.818,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "data elements",
+          "score": 2.9061,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "data dictionary",
+          "score": 2.4342,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "data collection",
+          "score": 1.2225,
+          "evidence": []
+        },
+        {
+          "term": "data type",
+          "score": 1.2103,
+          "evidence": []
+        },
+        {
+          "term": "data entry",
+          "score": 1.1511,
+          "evidence": []
+        },
+        {
+          "term": "data fields",
+          "score": 1.1396,
+          "evidence": []
+        },
+        {
+          "term": "digital system",
+          "score": 1.1294,
+          "evidence": []
+        },
+        {
+          "term": "additional data",
+          "score": 0.9376,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "data elements",
+          "score": 160.3638,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "data dictionary",
+          "score": 144.3486,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "data collection",
+          "score": 75.1849,
+          "evidence": []
+        },
+        {
+          "term": "data type",
+          "score": 71.5577,
+          "evidence": []
+        },
+        {
+          "term": "data entry",
+          "score": 71.545,
+          "evidence": []
+        },
+        {
+          "term": "data field",
+          "score": 70.8967,
+          "evidence": []
+        },
+        {
+          "term": "additional data",
+          "score": 67.9931,
+          "evidence": []
+        },
+        {
+          "term": "duplicate data",
+          "score": 67.9931,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "data elements",
+          "score": 2.9061,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "data dictionary",
+          "score": 2.4342,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "data collection",
+          "score": 1.2225,
+          "evidence": []
+        },
+        {
+          "term": "data type",
+          "score": 1.2103,
+          "evidence": []
+        },
+        {
+          "term": "data entry",
+          "score": 1.1511,
+          "evidence": []
+        },
+        {
+          "term": "data fields",
+          "score": 1.1396,
+          "evidence": []
+        },
+        {
+          "term": "digital system",
+          "score": 1.1294,
+          "evidence": []
+        },
+        {
+          "term": "additional data",
+          "score": 1.0512,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 37.0651,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 33.915,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 30.4887,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 27.8953,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 27.8953,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 27.6942,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 21.547,
+          "evidence": []
+        },
+        {
+          "term": "见下面第",
+          "score": 20.2038,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "adaptation kit",
+          "score": 3.287,
+          "evidence": []
+        },
+        {
+          "term": "digital adaptation",
+          "score": 3.2338,
+          "evidence": []
+        },
+        {
+          "term": "record immunization",
+          "score": 3.0582,
+          "evidence": []
+        },
+        {
+          "term": "immunization doses",
+          "score": 2.7406,
+          "evidence": []
+        },
+        {
+          "term": "supplementary immunization",
+          "score": 2.6655,
+          "evidence": []
+        },
+        {
+          "term": "immunization activities",
+          "score": 2.6497,
+          "evidence": []
+        },
+        {
+          "term": "electronic immunization",
+          "score": 2.5587,
+          "evidence": []
+        },
+        {
+          "term": "adaptation kits",
+          "score": 2.5501,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "digital health",
+          "score": 259.255,
+          "evidence": []
+        },
+        {
+          "term": "digital adaptation",
+          "score": 245.8958,
+          "evidence": []
+        },
+        {
+          "term": "digital systems",
+          "score": 211.4745,
+          "evidence": []
+        },
+        {
+          "term": "digital application",
+          "score": 179.8853,
+          "evidence": []
+        },
+        {
+          "term": "record immunization",
+          "score": 173.9128,
+          "evidence": []
+        },
+        {
+          "term": "digital tracking",
+          "score": 173.1765,
+          "evidence": []
+        },
+        {
+          "term": "digital interventions",
+          "score": 169.9208,
+          "evidence": []
+        },
+        {
+          "term": "digital tools",
+          "score": 169.0893,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "digital health",
+          "score": 3.7268,
+          "evidence": []
+        },
+        {
+          "term": "digital systems",
+          "score": 3.333,
+          "evidence": []
+        },
+        {
+          "term": "digital adaptation",
+          "score": 3.3274,
+          "evidence": []
+        },
+        {
+          "term": "digital interventions",
+          "score": 2.9522,
+          "evidence": []
+        },
+        {
+          "term": "digital tracking",
+          "score": 2.7471,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 2.7357,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 2.6732,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 2.6278,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "digital health",
+          "score": 255.4406,
+          "evidence": []
+        },
+        {
+          "term": "digital systems",
+          "score": 187.3397,
+          "evidence": []
+        },
+        {
+          "term": "digital adaptation",
+          "score": 166.4164,
+          "evidence": []
+        },
+        {
+          "term": "digital interventions",
+          "score": 165.0667,
+          "evidence": []
+        },
+        {
+          "term": "digital tools",
+          "score": 160.6899,
+          "evidence": []
+        },
+        {
+          "term": "digital tracking",
+          "score": 159.5592,
+          "evidence": []
+        },
+        {
+          "term": "digital technology",
+          "score": 158.8696,
+          "evidence": []
+        },
+        {
+          "term": "digital application",
+          "score": 158.8448,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "digital health",
+          "score": 3.7268,
+          "evidence": []
+        },
+        {
+          "term": "digital systems",
+          "score": 3.333,
+          "evidence": []
+        },
+        {
+          "term": "digital adaptation",
+          "score": 3.3274,
+          "evidence": []
+        },
+        {
+          "term": "digital interventions",
+          "score": 2.9522,
+          "evidence": []
+        },
+        {
+          "term": "digital tracking",
+          "score": 2.7471,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 2.7357,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 2.6732,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 2.6278,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 51.4682,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 39.0418,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 38.1147,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 36.4407,
+          "evidence": []
+        },
+        {
+          "term": "数字疗法",
+          "score": 31.5159,
+          "evidence": []
+        },
+        {
+          "term": "加强全球",
+          "score": 29.1351,
+          "evidence": []
+        },
+        {
+          "term": "区域和国家各级的数字卫生保健治理",
+          "score": 29.1351,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 28.307,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

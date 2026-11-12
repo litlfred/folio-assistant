@@ -1,0 +1,61 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Inform Client Input",
+  "type": "object",
+  "required": [
+    "about",
+    "facts",
+    "language"
+  ],
+  "properties": {
+    "about": {
+      "enum": [
+        "referral",
+        "return-visit",
+        "result",
+        "decision",
+        "other"
+      ]
+    },
+    "facts": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1,
+      "description": "What the client needs to know: where, when, why."
+    },
+    "language": {
+      "type": "string",
+      "description": "BCP 47 tag of the language the client understands."
+    },
+    "handout": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "What the DAK gives the client to keep: a referral slip, a card."
+    },
+    "subject": {
+      "type": "object",
+      "description": "A FHIR R4 Reference.",
+      "properties": {
+        "reference": {
+          "type": "string"
+        },
+        "display": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "additionalProperties": false,
+  "$id": "http://smart.who.int/base/schema/skills/inform-client/input.schema.json",
+  "staging": {
+    "branch": "repin-train/20261112-1625",
+    "sha": "6ca206c84dafc1f6a11bf0c86a9c4c99eaad9882",
+    "pr": "repin-train/20261112-1625",
+    "run": "43258944433"
+  }
+}

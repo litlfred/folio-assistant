@@ -1,0 +1,684 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-353150",
+  "instance": "who-iris",
+  "about": "library/10665-353150",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7434,
+    "terms": 71211
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "santé numérique",
+        "score": 9.3436,
+        "evidence": []
+      },
+      {
+        "term": "système numérique",
+        "score": 9.1566,
+        "evidence": []
+      },
+      {
+        "term": "d'informations numérique",
+        "score": 8.9818,
+        "evidence": []
+      },
+      {
+        "term": "œuvre numérique",
+        "score": 8.9468,
+        "evidence": []
+      },
+      {
+        "term": "vous pouvez",
+        "score": 8.8709,
+        "evidence": []
+      },
+      {
+        "term": "finaux frais",
+        "score": 8.859,
+        "evidence": []
+      },
+      {
+        "term": "système logiciel",
+        "score": 8.6984,
+        "evidence": []
+      },
+      {
+        "term": "numérique travers",
+        "score": 8.6096,
+        "evidence": []
+      },
+      {
+        "term": "utilisateurs finaux",
+        "score": 8.5889,
+        "evidence": []
+      },
+      {
+        "term": "numérique des",
+        "score": 8.5194,
+        "evidence": []
+      },
+      {
+        "term": "pour vous",
+        "score": 8.467,
+        "evidence": []
+      },
+      {
+        "term": "l'application numérique",
+        "score": 8.3113,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "santé des",
+        "score": 12602.4527,
+        "evidence": []
+      },
+      {
+        "term": "numérique des",
+        "score": 10654.5556,
+        "evidence": []
+      },
+      {
+        "term": "pour les",
+        "score": 9996.8489,
+        "evidence": []
+      },
+      {
+        "term": "les données",
+        "score": 9071.6035,
+        "evidence": []
+      },
+      {
+        "term": "œuvre les",
+        "score": 8620.7009,
+        "evidence": []
+      },
+      {
+        "term": "dans les",
+        "score": 8384.0835,
+        "evidence": []
+      },
+      {
+        "term": "qui les",
+        "score": 8241.8577,
+        "evidence": []
+      },
+      {
+        "term": "sur les",
+        "score": 8121.8351,
+        "evidence": []
+      },
+      {
+        "term": "que les",
+        "score": 8048.0689,
+        "evidence": []
+      },
+      {
+        "term": "les processus",
+        "score": 8023.8873,
+        "evidence": []
+      },
+      {
+        "term": "par les",
+        "score": 7921.5806,
+        "evidence": []
+      },
+      {
+        "term": "sont les",
+        "score": 7725.2819,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "santé numérique",
+        "score": 9.0223,
+        "evidence": []
+      },
+      {
+        "term": "système numérique",
+        "score": 9.013,
+        "evidence": []
+      },
+      {
+        "term": "vous pouvez",
+        "score": 8.8794,
+        "evidence": []
+      },
+      {
+        "term": "finaux frais",
+        "score": 8.8314,
+        "evidence": []
+      },
+      {
+        "term": "d'informations numérique",
+        "score": 8.8298,
+        "evidence": []
+      },
+      {
+        "term": "œuvre numérique",
+        "score": 8.817,
+        "evidence": []
+      },
+      {
+        "term": "système logiciel",
+        "score": 8.7041,
+        "evidence": []
+      },
+      {
+        "term": "utilisateurs finaux",
+        "score": 8.5567,
+        "evidence": []
+      },
+      {
+        "term": "numérique travers",
+        "score": 8.4635,
+        "evidence": []
+      },
+      {
+        "term": "pour vous",
+        "score": 8.4392,
+        "evidence": []
+      },
+      {
+        "term": "peut vous",
+        "score": 8.3398,
+        "evidence": []
+      },
+      {
+        "term": "peuvent vous",
+        "score": 8.3045,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "santé des",
+        "score": 12601.2651,
+        "evidence": []
+      },
+      {
+        "term": "numérique des",
+        "score": 10652.8097,
+        "evidence": []
+      },
+      {
+        "term": "pour les",
+        "score": 9999.0322,
+        "evidence": []
+      },
+      {
+        "term": "les données",
+        "score": 9073.3831,
+        "evidence": []
+      },
+      {
+        "term": "œuvre les",
+        "score": 8624.257,
+        "evidence": []
+      },
+      {
+        "term": "dans les",
+        "score": 8386.8451,
+        "evidence": []
+      },
+      {
+        "term": "qui les",
+        "score": 8244.3197,
+        "evidence": []
+      },
+      {
+        "term": "sur les",
+        "score": 8123.3319,
+        "evidence": []
+      },
+      {
+        "term": "que les",
+        "score": 8050.1897,
+        "evidence": []
+      },
+      {
+        "term": "les processus",
+        "score": 8025.1438,
+        "evidence": []
+      },
+      {
+        "term": "par les",
+        "score": 7923.1048,
+        "evidence": []
+      },
+      {
+        "term": "sont les",
+        "score": 7727.8122,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "santé numérique",
+        "score": 9.0223,
+        "evidence": []
+      },
+      {
+        "term": "système numérique",
+        "score": 9.013,
+        "evidence": []
+      },
+      {
+        "term": "vous pouvez",
+        "score": 8.8794,
+        "evidence": []
+      },
+      {
+        "term": "finaux frais",
+        "score": 8.8314,
+        "evidence": []
+      },
+      {
+        "term": "d'informations numérique",
+        "score": 8.8298,
+        "evidence": []
+      },
+      {
+        "term": "œuvre numérique",
+        "score": 8.817,
+        "evidence": []
+      },
+      {
+        "term": "système logiciel",
+        "score": 8.7041,
+        "evidence": []
+      },
+      {
+        "term": "utilisateurs finaux",
+        "score": 8.5567,
+        "evidence": []
+      },
+      {
+        "term": "numérique travers",
+        "score": 8.4635,
+        "evidence": []
+      },
+      {
+        "term": "pour vous",
+        "score": 8.4392,
+        "evidence": []
+      },
+      {
+        "term": "peut vous",
+        "score": 8.3398,
+        "evidence": []
+      },
+      {
+        "term": "peuvent vous",
+        "score": 8.3045,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "如果没有",
+        "score": 39.2649,
+        "evidence": []
+      },
+      {
+        "term": "的材料",
+        "score": 32.3218,
+        "evidence": []
+      },
+      {
+        "term": "并提供一",
+        "score": 31.9716,
+        "evidence": []
+      },
+      {
+        "term": "风险最小化",
+        "score": 27.9079,
+        "evidence": []
+      },
+      {
+        "term": "相一致",
+        "score": 26.1348,
+        "evidence": []
+      },
+      {
+        "term": "中所讨论的一样",
+        "score": 25.3028,
+        "evidence": []
+      },
+      {
+        "term": "咨询小组将由18名成员组成",
+        "score": 25.1571,
+        "evidence": []
+      },
+      {
+        "term": "汇集在流感领域中国际公认的决策者",
+        "score": 25.1571,
+        "evidence": []
+      },
+      {
+        "term": "dedougou",
+        "score": 24.1519,
+        "evidence": []
+      },
+      {
+        "term": "dori",
+        "score": 24.1519,
+        "evidence": []
+      },
+      {
+        "term": "gaoua",
+        "score": 24.1519,
+        "evidence": []
+      },
+      {
+        "term": "kaya",
+        "score": 24.1519,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-document": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "santé numérique",
+          "score": 9.3436,
+          "evidence": []
+        },
+        {
+          "term": "système numérique",
+          "score": 9.1566,
+          "evidence": []
+        },
+        {
+          "term": "d'informations numérique",
+          "score": 8.9818,
+          "evidence": []
+        },
+        {
+          "term": "œuvre numérique",
+          "score": 8.9468,
+          "evidence": []
+        },
+        {
+          "term": "vous pouvez",
+          "score": 8.8709,
+          "evidence": []
+        },
+        {
+          "term": "finaux frais",
+          "score": 8.859,
+          "evidence": []
+        },
+        {
+          "term": "système logiciel",
+          "score": 8.6984,
+          "evidence": []
+        },
+        {
+          "term": "numérique travers",
+          "score": 8.6096,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "santé des",
+          "score": 12602.4527,
+          "evidence": []
+        },
+        {
+          "term": "numérique des",
+          "score": 10654.5556,
+          "evidence": []
+        },
+        {
+          "term": "pour les",
+          "score": 9996.8489,
+          "evidence": []
+        },
+        {
+          "term": "les données",
+          "score": 9071.6035,
+          "evidence": []
+        },
+        {
+          "term": "œuvre les",
+          "score": 8620.7009,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 8384.0835,
+          "evidence": []
+        },
+        {
+          "term": "qui les",
+          "score": 8241.8577,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 8121.8351,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "santé numérique",
+          "score": 9.0223,
+          "evidence": []
+        },
+        {
+          "term": "système numérique",
+          "score": 9.013,
+          "evidence": []
+        },
+        {
+          "term": "vous pouvez",
+          "score": 8.8794,
+          "evidence": []
+        },
+        {
+          "term": "finaux frais",
+          "score": 8.8314,
+          "evidence": []
+        },
+        {
+          "term": "d'informations numérique",
+          "score": 8.8298,
+          "evidence": []
+        },
+        {
+          "term": "œuvre numérique",
+          "score": 8.817,
+          "evidence": []
+        },
+        {
+          "term": "système logiciel",
+          "score": 8.7041,
+          "evidence": []
+        },
+        {
+          "term": "utilisateurs finaux",
+          "score": 8.5567,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "santé des",
+          "score": 12601.2651,
+          "evidence": []
+        },
+        {
+          "term": "numérique des",
+          "score": 10652.8097,
+          "evidence": []
+        },
+        {
+          "term": "pour les",
+          "score": 9999.0322,
+          "evidence": []
+        },
+        {
+          "term": "les données",
+          "score": 9073.3831,
+          "evidence": []
+        },
+        {
+          "term": "œuvre les",
+          "score": 8624.257,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 8386.8451,
+          "evidence": []
+        },
+        {
+          "term": "qui les",
+          "score": 8244.3197,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 8123.3319,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "santé numérique",
+          "score": 9.0223,
+          "evidence": []
+        },
+        {
+          "term": "système numérique",
+          "score": 9.013,
+          "evidence": []
+        },
+        {
+          "term": "vous pouvez",
+          "score": 8.8794,
+          "evidence": []
+        },
+        {
+          "term": "finaux frais",
+          "score": 8.8314,
+          "evidence": []
+        },
+        {
+          "term": "d'informations numérique",
+          "score": 8.8298,
+          "evidence": []
+        },
+        {
+          "term": "œuvre numérique",
+          "score": 8.817,
+          "evidence": []
+        },
+        {
+          "term": "système logiciel",
+          "score": 8.7041,
+          "evidence": []
+        },
+        {
+          "term": "utilisateurs finaux",
+          "score": 8.5567,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 39.2649,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 32.3218,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 31.9716,
+          "evidence": []
+        },
+        {
+          "term": "风险最小化",
+          "score": 27.9079,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 26.1348,
+          "evidence": []
+        },
+        {
+          "term": "中所讨论的一样",
+          "score": 25.3028,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 25.1571,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 25.1571,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

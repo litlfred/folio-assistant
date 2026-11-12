@@ -1,0 +1,239 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "PHW.F",
+ "markers": [
+  {
+   "id": "PHW.F.1",
+   "name": "F1. Collect inputs: verified requester, agreement version, grant, request",
+   "left": 19.29,
+   "top": 22.11,
+   "box": {
+    "left": 15.2,
+    "top": 27.89,
+    "width": 1.01,
+    "height": 2.53
+   }
+  },
+  {
+   "id": "PHW.F.2",
+   "name": "F2. Verify the grant with smart-trust-tools against the accepted trust anchor",
+   "left": 27.88,
+   "top": 22.11,
+   "box": {
+    "left": 23.79,
+    "top": 27.89,
+    "width": 1.01,
+    "height": 2.53
+   }
+  },
+  {
+   "id": "PHW.F.3",
+   "name": "F3. Return trust list (DID document, X.509 roots or local list)",
+   "left": 27.88,
+   "top": 40,
+   "box": {
+    "left": 23.79,
+    "top": 45.79,
+    "width": 1.01,
+    "height": 2.53
+   }
+  },
+  {
+   "id": "PHW.F.4",
+   "name": "F4. Check grant status in the Bitstring Status List",
+   "left": 36.48,
+   "top": 22.11,
+   "box": {
+    "left": 32.39,
+    "top": 27.89,
+    "width": 1.01,
+    "height": 2.53
+   }
+  },
+  {
+   "id": "PHW.F.5",
+   "name": "F5. Return status list credential",
+   "left": 36.48,
+   "top": 55.79,
+   "box": {
+    "left": 32.39,
+    "top": 61.58,
+    "width": 1.01,
+    "height": 2.53
+   }
+  },
+  {
+   "id": "PHW.F.6",
+   "name": "F6. Fetch the agreement at its fixed-version URL; check SHA-256 and status",
+   "left": 45.07,
+   "top": 22.11,
+   "box": {
+    "left": 40.99,
+    "top": 27.89,
+    "width": 1.01,
+    "height": 2.53
+   }
+  },
+  {
+   "id": "PHW.F.7",
+   "name": "F7. Return DCAT distribution with spdx:checksum and status",
+   "left": 45.07,
+   "top": 71.58,
+   "box": {
+    "left": 40.99,
+    "top": 77.37,
+    "width": 1.01,
+    "height": 2.53
+   }
+  },
+  {
+   "id": "PHW.F.8",
+   "name": "F8. Search active Consents for this agreement [ITI-108] Access Consent: Search",
+   "left": 62.26,
+   "top": 22.11,
+   "box": {
+    "left": 58.18,
+    "top": 27.89,
+    "width": 1.01,
+    "height": 2.53
+   }
+  },
+  {
+   "id": "PHW.F.9",
+   "name": "F9. Return matching Consents [ITI-108] Access Consent",
+   "left": 62.26,
+   "top": 87.37,
+   "box": {
+    "left": 58.18,
+    "top": 93.16,
+    "width": 1.01,
+    "height": 2.53
+   }
+  },
+  {
+   "id": "PHW.F.11",
+   "name": "F11. Receive permit, deny or unknown; hand the decision to audit (process G)",
+   "left": 88.05,
+   "top": 4.21,
+   "box": {
+    "left": 83.96,
+    "top": 10,
+    "width": 1.01,
+    "height": 2.53
+   }
+  }
+ ],
+ "processHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.F",
+ "tasks": {
+  "PHW.F.1": {
+   "id": "PHW.F.1",
+   "name": "F1. Collect inputs: verified requester, agreement version, grant, request",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.F/node/PHW.F.1",
+   "stepHref": "PHW.F.html#step-PHW.F.1",
+   "lane": "Policy Decision Point (permits())",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.F/lane/PHW.Lane.DecisionPoint",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.F.2": {
+   "id": "PHW.F.2",
+   "name": "F2. Verify the grant with smart-trust-tools against the accepted trust anchor",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.F/node/PHW.F.2",
+   "stepHref": "PHW.F.html#step-PHW.F.2",
+   "lane": "Policy Decision Point (permits())",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.F/lane/PHW.Lane.DecisionPoint",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.F.3": {
+   "id": "PHW.F.3",
+   "name": "F3. Return trust list (DID document, X.509 roots or local list)",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.F/node/PHW.F.3",
+   "stepHref": "PHW.F.html#step-PHW.F.3",
+   "lane": "Trust Anchor (GDHCN or another accepted anchor)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.F/lane/PHW.Lane.TrustAnchor",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.F.4": {
+   "id": "PHW.F.4",
+   "name": "F4. Check grant status in the Bitstring Status List",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.F/node/PHW.F.4",
+   "stepHref": "PHW.F.html#step-PHW.F.4",
+   "lane": "Policy Decision Point (permits())",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.F/lane/PHW.Lane.DecisionPoint",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.F.5": {
+   "id": "PHW.F.5",
+   "name": "F5. Return status list credential",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.F/node/PHW.F.5",
+   "stepHref": "PHW.F.html#step-PHW.F.5",
+   "lane": "Grant Issuer Status List (W3C Bitstring Status List)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.F/lane/PHW.Lane.StatusList",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.F.6": {
+   "id": "PHW.F.6",
+   "name": "F6. Fetch the agreement at its fixed-version URL; check SHA-256 and status",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.F/node/PHW.F.6",
+   "stepHref": "PHW.F.html#step-PHW.F.6",
+   "lane": "Policy Decision Point (permits())",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.F/lane/PHW.Lane.DecisionPoint",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.F.7": {
+   "id": "PHW.F.7",
+   "name": "F7. Return DCAT distribution with spdx:checksum and status",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.F/node/PHW.F.7",
+   "stepHref": "PHW.F.html#step-PHW.F.7",
+   "lane": "Agreement Publisher (DCAT catalogue)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.F/lane/PHW.Lane.AgreementPublisher",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.F.8": {
+   "id": "PHW.F.8",
+   "name": "F8. Search active Consents for this agreement [ITI-108] Access Consent: Search",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.F/node/PHW.F.8",
+   "stepHref": "PHW.F.html#step-PHW.F.8",
+   "lane": "Policy Decision Point (permits())",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.F/lane/PHW.Lane.DecisionPoint",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.F.9": {
+   "id": "PHW.F.9",
+   "name": "F9. Return matching Consents [ITI-108] Access Consent",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.F/node/PHW.F.9",
+   "stepHref": "PHW.F.html#step-PHW.F.9",
+   "lane": "PCF Consent Registry",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.F/lane/PHW.Lane.ConsentRegistry",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.F.11": {
+   "id": "PHW.F.11",
+   "name": "F11. Receive permit, deny or unknown; hand the decision to audit (process G)",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.F/node/PHW.F.11",
+   "stepHref": "PHW.F.html#step-PHW.F.11",
+   "lane": "Policy Enforcement Point (authorization server, resource server or VHL Sharer)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.F/lane/PHW.Lane.EnforcementPoint",
+   "skills": [],
+   "binding": "unbound"
+  }
+ }
+}

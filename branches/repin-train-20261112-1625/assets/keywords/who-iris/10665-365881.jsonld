@@ -1,0 +1,1212 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-365881",
+  "instance": "who-iris",
+  "about": "library/10665-365881",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7434,
+    "terms": 71211
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "stories somalia",
+        "score": 11.5408,
+        "evidence": []
+      },
+      {
+        "term": "somalia health",
+        "score": 11.4565,
+        "evidence": []
+      },
+      {
+        "term": "supported somalia",
+        "score": 11.0274,
+        "evidence": []
+      },
+      {
+        "term": "somalia documents",
+        "score": 10.3391,
+        "evidence": []
+      },
+      {
+        "term": "covid pandemic",
+        "score": 10.0141,
+        "evidence": []
+      },
+      {
+        "term": "covid information-note",
+        "score": 8.9827,
+        "evidence": []
+      },
+      {
+        "term": "covid response",
+        "score": 8.7081,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "covid vaccines",
+        "score": 8.3606,
+        "evidence": []
+      },
+      {
+        "term": "fragile country",
+        "score": 7.8658,
+        "evidence": []
+      },
+      {
+        "term": "managing covid",
+        "score": 7.7949,
+        "evidence": []
+      },
+      {
+        "term": "out covid",
+        "score": 7.6337,
+        "evidence": []
+      },
+      {
+        "term": "covid vaccination",
+        "score": 7.577,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "somalia health",
+        "score": 978.7844,
+        "evidence": []
+      },
+      {
+        "term": "covid pandemic",
+        "score": 892.6,
+        "evidence": []
+      },
+      {
+        "term": "covid response",
+        "score": 862.4137,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "stories somalia",
+        "score": 860.1245,
+        "evidence": []
+      },
+      {
+        "term": "supported somalia",
+        "score": 837.455,
+        "evidence": []
+      },
+      {
+        "term": "covid vaccines",
+        "score": 833.0781,
+        "evidence": []
+      },
+      {
+        "term": "somalia documents",
+        "score": 816.5803,
+        "evidence": []
+      },
+      {
+        "term": "covid information-note",
+        "score": 802.9039,
+        "evidence": []
+      },
+      {
+        "term": "covid patients",
+        "score": 765.239,
+        "evidence": []
+      },
+      {
+        "term": "covid cases",
+        "score": 756.0761,
+        "evidence": []
+      },
+      {
+        "term": "out covid",
+        "score": 752.9345,
+        "evidence": []
+      },
+      {
+        "term": "covid testing",
+        "score": 752.0187,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "covid pandemic",
+        "score": 7.5471,
+        "evidence": []
+      },
+      {
+        "term": "covid response",
+        "score": 6.6619,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "covid vaccine",
+        "score": 6.4864,
+        "evidence": []
+      },
+      {
+        "term": "covid vaccination",
+        "score": 5.8717,
+        "evidence": []
+      },
+      {
+        "term": "somalia health",
+        "score": 5.8493,
+        "evidence": []
+      },
+      {
+        "term": "covid cases",
+        "score": 5.7906,
+        "evidence": []
+      },
+      {
+        "term": "pandemic emergency",
+        "score": 5.7334,
+        "evidence": []
+      },
+      {
+        "term": "during covid",
+        "score": 5.7187,
+        "evidence": []
+      },
+      {
+        "term": "covid information-note",
+        "score": 5.6989,
+        "evidence": []
+      },
+      {
+        "term": "covid infection",
+        "score": 5.2764,
+        "evidence": []
+      },
+      {
+        "term": "covid testing",
+        "score": 5.2182,
+        "evidence": []
+      },
+      {
+        "term": "covid prevention",
+        "score": 5.1782,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "covid pandemic",
+        "score": 906.1185,
+        "evidence": []
+      },
+      {
+        "term": "covid response",
+        "score": 893.733,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "somalia health",
+        "score": 890.1207,
+        "evidence": []
+      },
+      {
+        "term": "covid vaccines",
+        "score": 877.6925,
+        "evidence": []
+      },
+      {
+        "term": "covid information-note",
+        "score": 836.637,
+        "evidence": []
+      },
+      {
+        "term": "covid patients",
+        "score": 805.499,
+        "evidence": []
+      },
+      {
+        "term": "stories somalia",
+        "score": 797.3594,
+        "evidence": []
+      },
+      {
+        "term": "documents covid",
+        "score": 791.7855,
+        "evidence": []
+      },
+      {
+        "term": "covid cases",
+        "score": 787.1096,
+        "evidence": []
+      },
+      {
+        "term": "covid information",
+        "score": 784.6095,
+        "evidence": []
+      },
+      {
+        "term": "covid testing",
+        "score": 780.0614,
+        "evidence": []
+      },
+      {
+        "term": "out covid",
+        "score": 777.2712,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "covid pandemic",
+        "score": 7.5471,
+        "evidence": []
+      },
+      {
+        "term": "covid response",
+        "score": 6.6619,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "covid vaccine",
+        "score": 6.4864,
+        "evidence": []
+      },
+      {
+        "term": "covid vaccination",
+        "score": 5.8717,
+        "evidence": []
+      },
+      {
+        "term": "somalia health",
+        "score": 5.8493,
+        "evidence": []
+      },
+      {
+        "term": "covid cases",
+        "score": 5.7906,
+        "evidence": []
+      },
+      {
+        "term": "pandemic emergency",
+        "score": 5.7334,
+        "evidence": []
+      },
+      {
+        "term": "during covid",
+        "score": 5.7187,
+        "evidence": []
+      },
+      {
+        "term": "covid information-note",
+        "score": 5.6989,
+        "evidence": []
+      },
+      {
+        "term": "covid infection",
+        "score": 5.2764,
+        "evidence": []
+      },
+      {
+        "term": "covid testing",
+        "score": 5.2182,
+        "evidence": []
+      },
+      {
+        "term": "covid prevention",
+        "score": 5.1782,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "允许进行个人反馈",
+        "score": 98.1493,
+        "evidence": []
+      },
+      {
+        "term": "询问学员这项原则如何应用于紧急情况下的研究",
+        "score": 69.7703,
+        "evidence": []
+      },
+      {
+        "term": "在大流行间期提供疫苗供发展中国家使用",
+        "score": 68.7631,
+        "evidence": []
+      },
+      {
+        "term": "提供大流行性流感疫苗",
+        "score": 68.7631,
+        "evidence": []
+      },
+      {
+        "term": "数字疗法",
+        "score": 67.3116,
+        "evidence": []
+      },
+      {
+        "term": "巴西登革热",
+        "score": 64.0414,
+        "evidence": []
+      },
+      {
+        "term": "位置服务",
+        "score": 61.4883,
+        "evidence": []
+      },
+      {
+        "term": "在卫生系统强化",
+        "score": 61.4883,
+        "evidence": []
+      },
+      {
+        "term": "的背景下",
+        "score": 61.4883,
+        "evidence": []
+      },
+      {
+        "term": "加强全球",
+        "score": 60.0085,
+        "evidence": []
+      },
+      {
+        "term": "区域和国家各级的数字卫生保健治理",
+        "score": 60.0085,
+        "evidence": []
+      },
+      {
+        "term": "并提供一",
+        "score": 59.9866,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-introduction": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "stories somalia",
+          "score": 5.8542,
+          "evidence": []
+        },
+        {
+          "term": "covid information-note",
+          "score": 5.0158,
+          "evidence": []
+        },
+        {
+          "term": "somalia documents",
+          "score": 4.9912,
+          "evidence": []
+        },
+        {
+          "term": "oxygen plants",
+          "score": 4.8941,
+          "evidence": []
+        },
+        {
+          "term": "covid pandemic",
+          "score": 4.5067,
+          "evidence": []
+        },
+        {
+          "term": "covid vaccines",
+          "score": 4.3921,
+          "evidence": []
+        },
+        {
+          "term": "medical oxygen",
+          "score": 4.2518,
+          "evidence": []
+        },
+        {
+          "term": "covid response",
+          "score": 4.0403,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "covid pandemic",
+          "score": 681.0648,
+          "evidence": []
+        },
+        {
+          "term": "covid response",
+          "score": 676.2353,
+          "evidence": []
+        },
+        {
+          "term": "covid vaccines",
+          "score": 668.6918,
+          "evidence": []
+        },
+        {
+          "term": "covid information-note",
+          "score": 640.6342,
+          "evidence": []
+        },
+        {
+          "term": "stories somalia",
+          "score": 636.6519,
+          "evidence": []
+        },
+        {
+          "term": "covid patients",
+          "score": 611.19,
+          "evidence": []
+        },
+        {
+          "term": "documents covid",
+          "score": 601.4318,
+          "evidence": []
+        },
+        {
+          "term": "covid cases",
+          "score": 596.8977,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "covid pandemic",
+          "score": 4.9996,
+          "evidence": []
+        },
+        {
+          "term": "covid vaccine",
+          "score": 4.4029,
+          "evidence": []
+        },
+        {
+          "term": "covid response",
+          "score": 4.3617,
+          "evidence": []
+        },
+        {
+          "term": "covid vaccination",
+          "score": 3.9239,
+          "evidence": []
+        },
+        {
+          "term": "covid cases",
+          "score": 3.9081,
+          "evidence": []
+        },
+        {
+          "term": "covid information-note",
+          "score": 3.8323,
+          "evidence": []
+        },
+        {
+          "term": "pandemic emergency",
+          "score": 3.7555,
+          "evidence": []
+        },
+        {
+          "term": "covid infection",
+          "score": 3.655,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "covid pandemic",
+          "score": 703.0732,
+          "evidence": []
+        },
+        {
+          "term": "covid response",
+          "score": 692.7386,
+          "evidence": []
+        },
+        {
+          "term": "covid vaccines",
+          "score": 681.6373,
+          "evidence": []
+        },
+        {
+          "term": "covid information-note",
+          "score": 650.2364,
+          "evidence": []
+        },
+        {
+          "term": "covid patients",
+          "score": 625.4306,
+          "evidence": []
+        },
+        {
+          "term": "stories somalia",
+          "score": 619.7258,
+          "evidence": []
+        },
+        {
+          "term": "documents covid",
+          "score": 614.3048,
+          "evidence": []
+        },
+        {
+          "term": "covid cases",
+          "score": 611.9687,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "covid pandemic",
+          "score": 4.9996,
+          "evidence": []
+        },
+        {
+          "term": "covid vaccine",
+          "score": 4.4029,
+          "evidence": []
+        },
+        {
+          "term": "covid response",
+          "score": 4.3617,
+          "evidence": []
+        },
+        {
+          "term": "covid vaccination",
+          "score": 3.9239,
+          "evidence": []
+        },
+        {
+          "term": "covid cases",
+          "score": 3.9081,
+          "evidence": []
+        },
+        {
+          "term": "covid information-note",
+          "score": 3.8323,
+          "evidence": []
+        },
+        {
+          "term": "pandemic emergency",
+          "score": 3.7555,
+          "evidence": []
+        },
+        {
+          "term": "covid infection",
+          "score": 3.655,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 23.2131,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 18.3852,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 17.5888,
+          "evidence": []
+        },
+        {
+          "term": "数字疗法",
+          "score": 17.3896,
+          "evidence": []
+        },
+        {
+          "term": "位置服务",
+          "score": 16.8487,
+          "evidence": []
+        },
+        {
+          "term": "在卫生系统强化",
+          "score": 16.8487,
+          "evidence": []
+        },
+        {
+          "term": "的背景下",
+          "score": 16.8487,
+          "evidence": []
+        },
+        {
+          "term": "乌干达",
+          "score": 16.5863,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-001-promoting-science-evidence-and-knowledge-transla": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "stories somalia",
+          "score": 3.0276,
+          "evidence": []
+        },
+        {
+          "term": "covid pandemic",
+          "score": 2.81,
+          "evidence": []
+        },
+        {
+          "term": "somalia documents",
+          "score": 2.6888,
+          "evidence": []
+        },
+        {
+          "term": "covid response",
+          "score": 2.3598,
+          "evidence": []
+        },
+        {
+          "term": "covid vaccination",
+          "score": 2.3244,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 2.274,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "fragile setting",
+          "score": 2.243,
+          "evidence": []
+        },
+        {
+          "term": "publishable research",
+          "score": 2.1572,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "covid pandemic",
+          "score": 111.535,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 98.0344,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "covid response",
+          "score": 96.9404,
+          "evidence": []
+        },
+        {
+          "term": "stories somalia",
+          "score": 91.9937,
+          "evidence": []
+        },
+        {
+          "term": "covid vaccination",
+          "score": 91.387,
+          "evidence": []
+        },
+        {
+          "term": "somalia documents",
+          "score": 86.9642,
+          "evidence": []
+        },
+        {
+          "term": "covid information",
+          "score": 86.4696,
+          "evidence": []
+        },
+        {
+          "term": "country health",
+          "score": 81.5851,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health",
+          "score": 1.865,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "public health",
+          "score": 1.4656,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 1.4469,
+          "evidence": []
+        },
+        {
+          "term": "covid pandemic",
+          "score": 1.444,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 1.3872,
+          "evidence": []
+        },
+        {
+          "term": "health workers",
+          "score": 1.3624,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 1.3535,
+          "evidence": []
+        },
+        {
+          "term": "health system",
+          "score": 1.3302,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "covid pandemic",
+          "score": 96.2166,
+          "evidence": []
+        },
+        {
+          "term": "covid response",
+          "score": 95.284,
+          "evidence": []
+        },
+        {
+          "term": "covid information",
+          "score": 85.9769,
+          "evidence": []
+        },
+        {
+          "term": "stories somalia",
+          "score": 83.4455,
+          "evidence": []
+        },
+        {
+          "term": "covid vaccination",
+          "score": 83.0292,
+          "evidence": []
+        },
+        {
+          "term": "somalia documents",
+          "score": 79.2122,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 78.3059,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "country health",
+          "score": 59.9549,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health",
+          "score": 1.865,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "public health",
+          "score": 1.4656,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 1.4469,
+          "evidence": []
+        },
+        {
+          "term": "covid pandemic",
+          "score": 1.444,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 1.3872,
+          "evidence": []
+        },
+        {
+          "term": "health workers",
+          "score": 1.3624,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 1.3535,
+          "evidence": []
+        },
+        {
+          "term": "health system",
+          "score": 1.3302,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 37.0001,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 27.5993,
+          "evidence": []
+        },
+        {
+          "term": "数字疗法",
+          "score": 23.6018,
+          "evidence": []
+        },
+        {
+          "term": "位置服务",
+          "score": 22.7105,
+          "evidence": []
+        },
+        {
+          "term": "在卫生系统强化",
+          "score": 22.7105,
+          "evidence": []
+        },
+        {
+          "term": "的背景下",
+          "score": 22.7105,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 22.6777,
+          "evidence": []
+        },
+        {
+          "term": "加强全球",
+          "score": 22.1813,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "somalia health",
+          "score": 3.4825,
+          "evidence": []
+        },
+        {
+          "term": "covid pandemic",
+          "score": 2.6975,
+          "evidence": []
+        },
+        {
+          "term": "inclusive recovery",
+          "score": 2.3299,
+          "evidence": []
+        },
+        {
+          "term": "covid vaccines",
+          "score": 2.2939,
+          "evidence": []
+        },
+        {
+          "term": "fragile setting",
+          "score": 2.2498,
+          "evidence": []
+        },
+        {
+          "term": "health crisis",
+          "score": 2.1278,
+          "evidence": []
+        },
+        {
+          "term": "eastern mediterranean",
+          "score": 2.1222,
+          "evidence": []
+        },
+        {
+          "term": "covid cases",
+          "score": 2.006,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "somalia health",
+          "score": 181.3714,
+          "evidence": []
+        },
+        {
+          "term": "covid pandemic",
+          "score": 100.0002,
+          "evidence": []
+        },
+        {
+          "term": "health crisis",
+          "score": 90.2335,
+          "evidence": []
+        },
+        {
+          "term": "covid vaccines",
+          "score": 83.5105,
+          "evidence": []
+        },
+        {
+          "term": "covid cases",
+          "score": 78.3026,
+          "evidence": []
+        },
+        {
+          "term": "out covid",
+          "score": 78.2305,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 76.6793,
+          "evidence": []
+        },
+        {
+          "term": "health system",
+          "score": 76.3864,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "world health",
+          "score": 1.4063,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 1.3607,
+          "evidence": []
+        },
+        {
+          "term": "covid pandemic",
+          "score": 1.1035,
+          "evidence": []
+        },
+        {
+          "term": "somalia health",
+          "score": 1.0947,
+          "evidence": []
+        },
+        {
+          "term": "health authorities",
+          "score": 1.0542,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 0.9963,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 0.9376,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 0.8873,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "somalia health",
+          "score": 115.7027,
+          "evidence": []
+        },
+        {
+          "term": "covid pandemic",
+          "score": 106.8288,
+          "evidence": []
+        },
+        {
+          "term": "covid vaccines",
+          "score": 103.2006,
+          "evidence": []
+        },
+        {
+          "term": "covid cases",
+          "score": 92.7179,
+          "evidence": []
+        },
+        {
+          "term": "out covid",
+          "score": 91.8486,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 47.1162,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 46.7482,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 44.523,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "world health",
+          "score": 1.4063,
+          "evidence": []
+        },
+        {
+          "term": "health organization",
+          "score": 1.3607,
+          "evidence": []
+        },
+        {
+          "term": "covid pandemic",
+          "score": 1.1035,
+          "evidence": []
+        },
+        {
+          "term": "somalia health",
+          "score": 1.0947,
+          "evidence": []
+        },
+        {
+          "term": "health authorities",
+          "score": 1.0542,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 0.9963,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 0.9376,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 0.8873,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "允许进行个人反馈",
+          "score": 37.9361,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 31.3265,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 31.3265,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 28.8705,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 28.7965,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 27.5297,
+          "evidence": []
+        },
+        {
+          "term": "平等主义",
+          "score": 27.114,
+          "evidence": []
+        },
+        {
+          "term": "见下面第",
+          "score": 27.0382,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

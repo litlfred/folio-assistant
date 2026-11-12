@@ -1,0 +1,37 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/cat-harness/process/Process_HumanTranslation/node/Task_ExtractPOT.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261112-1625",
+    "sha": "6ca206c84dafc1f6a11bf0c86a9c4c99eaad9882",
+    "pr": "repin-train/20261112-1625",
+    "run": "43258944433"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/cat-harness/process/Process_HumanTranslation/node/Task_ExtractPOT",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Extract the POT",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/cat-harness/process/Process_HumanTranslation",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/cat-harness/process/Process_HumanTranslation/lane/Lane_Pipeline",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/cat-harness/skill/translation-manager"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/cat-harness/globalTask/GT_ExtractPot",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/cat-harness/process/Process_HumanTranslation#flow/F02"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/cat-harness/process/Process_HumanTranslation#flow/F03"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261112-1625/cat-harness/directory/library-graph",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_ExtractPOT"
+    }
+  ]
+}

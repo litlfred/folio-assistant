@@ -1,0 +1,67 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/who-iris/library/10665-239877/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/who-iris/source/10665-239877",
+      "@type": "cat-harness:SourceDocument",
+      "path": "library/10665-239877/manifest.jsonld",
+      "title": "INOCULATION AND VACCINATION CERTIFICATES REQUIRED BY VARIOUS COUNTRIES = CERTIFICATS DE VACCINATION EXIGÉS_x000D_ PAR LES DIVERS PAYS"
+    }
+  ],
+  "hasSubgraph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/who-iris/library/10665-239877/blocks/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio/library/10665-239877/blocks/prose-sec-000",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/10665-239877/blocks/prose-sec-000.jsonld",
+          "title": "CERTIFICATS DE VACCINATION EXIGÉS PAR LES DIVERS PAYS"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/10665-239877/blocks/prose-sec-001",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/10665-239877/blocks/prose-sec-001.jsonld",
+          "title": "INOCULATION AND VACCINATION CERTIFICATES REQUIRED BY VARIOUS COUNTRIES"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "name": "library/10665-239877/blocks",
+      "path": "library/10665-239877/blocks/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/who-iris/library/10665-239877/sections/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio/library/10665-239877/sections/sec-000",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/10665-239877/sections/sec-000.jsonld",
+          "title": "CERTIFICATS DE VACCINATION EXIGÉS PAR LES DIVERS PAYS"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/10665-239877/sections/sec-001",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/10665-239877/sections/sec-001.jsonld",
+          "title": "INOCULATION AND VACCINATION CERTIFICATES REQUIRED BY VARIOUS COUNTRIES"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "name": "library/10665-239877/sections",
+      "path": "library/10665-239877/sections/"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/library"
+  ],
+  "name": "library/10665-239877",
+  "path": "library/10665-239877/"
+}
