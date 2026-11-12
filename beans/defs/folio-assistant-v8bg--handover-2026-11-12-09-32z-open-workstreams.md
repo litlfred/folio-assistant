@@ -6,8 +6,7 @@ status: in-progress
 type: epic
 priority: high
 created_at: 2026-11-12T09:45:00Z
-updated_at: 2026-11-12T09:45:00Z
-parent: folio-assistant-n6ny
+updated_at: 2026-11-12T10:55:00Z
 tags:
     - project-memory
     - handover
@@ -21,3 +20,5 @@ Standing rules for this window (full list folio-assistant-php1): litlfred forks 
 Children: folio-assistant-um0y merge cascade · folio-assistant-sdd0 game page check · folio-assistant-rk1e ArchiMate → smart-ra links · folio-assistant-m9ev tools#1952 · folio-assistant-0qos demo right rail · folio-assistant-oiah biblio standing re-pin · folio-assistant-98p4 owner to-do (auto-merge + REPIN_TOKEN) · folio-assistant-34c1 open questions.
 
 _2026-11-12T09:45:00Z_ — Filed by thread "Record handover in beans" (https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G9E8Y9ccXJsk3qvGEie1X5Pr), session https://claude.ai/code/session_01Qmmkt7NmLVnjA5oNtkbv3f.
+
+_2026-11-12T10:55:00Z_ — Parent link to the n6ny epic removed: an epic may only sit under a milestone (check-bean-parents), and it was turning cat-harness-tools#1945 red. n6ny still lists this bean as a child in its body.

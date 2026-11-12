@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: critical
 created_at: 2026-11-12T09:45:00Z
-updated_at: 2026-11-12T09:58:00Z
+updated_at: 2026-11-12T10:55:00Z
 parent: folio-assistant-n6ny
 tags:
     - project-memory
@@ -17,7 +17,7 @@ Every agent follows these. Newest rule wins where two disagree; the owner's mess
 - WHO MIGRATION (user 16:10Z 11-11): smart-* and dth-* repos move to WorldHealthOrganization. Q-MIG-1 = A (draft PRs removing hard-coded owner: tools#1918, smart-base#351). Q-MIG-3 = B: IRIs use staging root worldhealthorganization.github.io/<repo>/ now, scripted rewrite to smart.who.int at publish (both roots in smart-base site-roots.ts). Q-WHO-1 = C: move starts after 04:05Z 11-12 regardless. Move = PRs from litlfred forks into WorldHealthOrganization/<repo>:main only, no direct pushes (user 16:42Z). Order smart-base → smart-ra → IGs → dth-*. Secrets optional. Runbook: who-migration-2026-11-11/migration-runbook.md. Thread …AUsbwQds8zeTj52BZYspkj.
 - MERGE WINDOW (user 16:05Z 11-11, extended "+12hrs window" 06:04Z 11-12): merge manager may repin + merge green non-content PRs without cards until ~18:05Z 11-12.
 - RED-MAIN WATCH = MERGE MANAGER DUTY (user 21:56Z 11-10): merge manager watches red mains/failing runs in all harness repos and dispatches an agent to fix each; written into its process + skill. User wants failures fixed, not silenced (Q-CI-1 = B: tools#1812 not merged).
-- RE-RUN POLICY Q-RERUN-1 = B (user 06:31Z 11-12): re-run CI only right before merging; never held content; wait for GitHub healthy after outages; refresh re-pin pins before re-running. [rerun-policy](folio-assistant-h5ud)
+- RE-RUN POLICY Q-RERUN-1 = B (user 06:31Z 11-12): re-run CI only right before merging; never held content; wait for GitHub healthy after outages; refresh re-pin pins before re-running. rerun-policy (former memory record h5ud)
 - VERSION BUMPS/RELEASE TAGS = GOVERNANCE (user 21:23Z 11-10): never bump versions or cut tags on our own. si tagged v0.2.0 by user (Q-REL-2 A); release process has tag step + catch-up check.
 - GH-PAGES FIRST (user 20:22Z 11-10): create gh-pages branch first, THEN ask for Pages settings (check live per repo). bootstrap#49.
 - PUBLISH STANDARD: reuse platform gh-pages route; deviations are a card first. Sites publish on merge. Size review is part of authoring.
@@ -38,7 +38,7 @@ Every agent follows these. Newest rule wins where two disagree; the owner's mess
 - Code.gs: never ask for updateFromGitHub; ff855ec7 not yet pasted. Workflows permission NOT granted.
 - FICTIONAL COUNTRIES (11-11): Onesa = XXK (home), Taifafeki = XXR (visited), defined in smart-trust-demo scenarios/countries; replace Thailand/Malaysia/KSA/Lao; smart-trust value set uses the fake names (#180). Pilgrimage Q-FIC-3 = C: CONSENT-XXK/XXR added to IPS.HAJJ.CONSENT in smart-ips-pilgrimage only (never smart-trust); real codes + Malaysia ref impl stay.
 - VaxLink retired; "narrative" renamed "journeys" (smart-trust-demo #112).
-- GDHCN game: lives in smart-trust as web-app kind (tools#1864, cat-harness#1237 merged). Joiners pick 0..n trust domains. All 6 UN languages; translation thread owns ar/es/ru/zh. Narration: Q-VO-1 = A Chatterbox Multilingual, Q-VO-2 = B beat-04 en/fr only, smart-trust#191 merged [voiceover-chatterbox](folio-assistant-dwf1). User 09:08Z 11-12: merge smart-trust#199 (Play links) + re-pin #198 ASAP, gates overridden. Live URL: smart-trust/en/cat-harness/apps/onboarding-game/; private preview https://claude.ai/artifact/CguaB6822KSEWXCDLXSXzw.
+- GDHCN game: lives in smart-trust as web-app kind (tools#1864, cat-harness#1237 merged). Joiners pick 0..n trust domains. All 6 UN languages; translation thread owns ar/es/ru/zh. Narration: Q-VO-1 = A Chatterbox Multilingual, Q-VO-2 = B beat-04 en/fr only, smart-trust#191 merged voiceover-chatterbox (former memory record dwf1). User 09:08Z 11-12: merge smart-trust#199 (Play links) + re-pin #198 ASAP, gates overridden. Live URL: smart-trust/en/cat-harness/apps/onboarding-game/; private preview https://claude.ai/artifact/CguaB6822KSEWXCDLXSXzw.
 - STANDING RE-PIN (Q-BIBNAV-2 = B, 09:07Z 11-12): re-pin all IGs once, then enable 6-hourly standing-repin.yml per IG (first: smart-trust#200; tracking tools#1948). Biblio thread owns.
 
 - PROJECT MEMORY → BEANS (owner Q-MEM-1 = A 09:33Z, Q-MEM-2 = A+B 09:34Z, 2026-11-12): shared state lives in beans on `cat/cat-harness/beans`, not in Claude project memory (which excludes other agents). Project memory keeps only a pointer here plus the thread ids list.

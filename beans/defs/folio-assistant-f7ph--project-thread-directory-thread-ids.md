@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-11-12T09:45:00Z
-updated_at: 2026-11-12T09:45:00Z
+updated_at: 2026-11-12T10:55:00Z
 parent: folio-assistant-n6ny
 tags:
     - project-memory
@@ -20,16 +20,16 @@ Full thread link: https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?t
 - PR wrap-up siblings (11-11): publish-on-push …GSmgusK4K8TCWBQfu5rM7S; tools#1715 …43AtUQ8QatBRm1UxwqTukG; fa#3075 …PbWitDFoMA8PsoXrCfeqpx; dth-* prep …485GDkaugFAYVaNMpCMzaR; smart-ra prep …E6HFb4KEYDjMgq6a8AyeRu.
 - 11-12 siblings: Green tools PR queue …4UB5EYmCsnRRgSrAY3jYwq; Green smart-ra drafts …6fbDk8ZG5kaLTpD1m7m7RP; HRH split (dth-hrh#69/#119) …P2GGAjGMvE2u8HqJwVqJE8; BPMN labels phw …RNhrJzoJY1rEuGLF6ojzbx; Demo ArchiMate → smart-ra links …RBRzWsBEvv2Z19MPdrGVRt.
 - Detail files in Library (*.md, e.g. who-forks-harness-2026-11-10.md, ig-qa-json-carry-2026-11-10.md, subgraph-groupings-2026-11-10.md, thin-html-node-linking-2026-11-10/analysis.md, iris-summaries-2026-11-11/source-oddities.md).
-- [IG Contents card on the right + </br> fix (fhir-harness#361, PR #362 merged; layout C) thread …AHPLQzwq76eDZbcNy1iDiT](folio-assistant-yz7s)
-- [QA email spam + red mains root cause 11-10 (tools#1812, core#721, cat-harness#1216)](folio-assistant-bzry)
-- [GDHCN onboarding game in smart-trust: PRs #178/#1864/#1237, web-app kind, translations](folio-assistant-jjwk)
-- [Raw markdown on IG artefact pages: fhir-harness#374 / PR #375 (description() subset)](folio-assistant-plv2)
-- [smart-ra library pages old layout: stale pins + publish by hand (smart-ra#240, Q-RAL-1) thread …Xrda1M625EH8d7XqK3sPDC](folio-assistant-xpla)
-- [ITB deployment page (cat-harness#1175 merged; Q-ITB-1..4 on hold)](folio-assistant-n915)
-- [Dead self-address links: fhir-harness#381 index layout, cat-harness-tools#1895 link check; J3 retrieve-pki-material card Q-LNK-1](folio-assistant-3c99)
-- [smart-trust-demo right rail off-screen at 64rem+ (tools#1897/#1898, cat-harness#1244) + stale fhir-harness pin](folio-assistant-apim)
-- [BPMN label tidy pass (bootstrap-tools#86/#87) + phw square tasks (phw#61); Q-SQ-1 = C square = task boxes](folio-assistant-6uqk)
-- [WHO migration: hard-coded litlfred review 11-11 (report, Q-MIG-1/2)](folio-assistant-iiwa)
-- [Green the smart-ra drafts 11-12: red causes, #195 conflict card Q-RA-MRG-1, #199 resolved locally; waits on smart-ra re-pin](folio-assistant-n4w8)
+- IG Contents card on the right + </br> fix (fhir-harness#361, PR #362 merged; layout C) thread …AHPLQzwq76eDZbcNy1iDiT (former memory record yz7s)
+- QA email spam + red mains root cause 11-10 (tools#1812, core#721, cat-harness#1216) (former memory record bzry)
+- GDHCN onboarding game in smart-trust: PRs #178/#1864/#1237, web-app kind, translations (former memory record jjwk)
+- Raw markdown on IG artefact pages: fhir-harness#374 / PR #375 (description() subset) (former memory record plv2)
+- smart-ra library pages old layout: stale pins + publish by hand (smart-ra#240, Q-RAL-1) thread …Xrda1M625EH8d7XqK3sPDC (former memory record xpla)
+- ITB deployment page (cat-harness#1175 merged; Q-ITB-1..4 on hold) (former memory record n915)
+- Dead self-address links: fhir-harness#381 index layout, cat-harness-tools#1895 link check; J3 retrieve-pki-material card Q-LNK-1 (former memory record 3c99)
+- smart-trust-demo right rail off-screen at 64rem+ (tools#1897/#1898, cat-harness#1244) + stale fhir-harness pin (former memory record apim)
+- BPMN label tidy pass (bootstrap-tools#86/#87) + phw square tasks (phw#61); Q-SQ-1 = C square = task boxes (former memory record 6uqk)
+- WHO migration: hard-coded litlfred review 11-11 (report, Q-MIG-1/2) (former memory record iiwa)
+- Green the smart-ra drafts 11-12: red causes, #195 conflict card Q-RA-MRG-1, #199 resolved locally; waits on smart-ra re-pin (former memory record n4w8)
 
 _2026-11-12T09:45:00Z_ — Filed by thread "Record handover in beans" (https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G9E8Y9ccXJsk3qvGEie1X5Pr), session https://claude.ai/code/session_01Qmmkt7NmLVnjA5oNtkbv3f.
