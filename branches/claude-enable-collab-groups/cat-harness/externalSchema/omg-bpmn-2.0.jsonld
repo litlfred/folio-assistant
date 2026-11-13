@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/cat-harness/externalSchema/omg-bpmn-2.0.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/enable-collab-groups",
+    "sha": "8c7db33dcfdc51f39571522587a063011c516b1c",
+    "pr": "3107/merge",
+    "run": "43395941497"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/cat-harness/externalSchema/omg-bpmn-2.0",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/ExternalSchema",
+      "name": "omg-bpmn-2.0",
+      "title": "Business Process Model and Notation (BPMN)",
+      "authority": "OMG",
+      "specVersion": "2.0",
+      "specUse": "conforms",
+      "specUrl": "https://www.omg.org/spec/BPMN/2.0/",
+      "namespace": [
+        "http://www.omg.org/spec/BPMN/20100524/MODEL",
+        "http://www.omg.org/spec/BPMN/20100524/MODEL#",
+        "http://www.omg.org/spec/BPMN/20100524/DI"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-bpmn-2.0"
+    }
+  ]
+}

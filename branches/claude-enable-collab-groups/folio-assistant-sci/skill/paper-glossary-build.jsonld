@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/folio-assistant-sci/skill/paper-glossary-build.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "claude/enable-collab-groups",
+    "sha": "8c7db33dcfdc51f39571522587a063011c516b1c",
+    "pr": "3107/merge",
+    "run": "43395941497"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/folio-assistant-sci/skill/paper-glossary-build",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "paper-glossary-build",
+      "title": "Paper glossary build",
+      "description": "The paper half of core's glossary-build: the typeset glossary chapter, the defined-term markers in `.tex`, and the formal synonyms module a paper with a Lean pipeline regenerates from `glossary.json`.",
+      "instructionsPath": "skills/content/folio-paper-adapter/paper-glossary-build.md",
+      "instructionLines": 58,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/folio-assistant-sci/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/paper-glossary-build"
+    }
+  ]
+}

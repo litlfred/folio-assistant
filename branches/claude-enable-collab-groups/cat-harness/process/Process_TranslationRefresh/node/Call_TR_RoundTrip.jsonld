@@ -1,0 +1,35 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/cat-harness/process/Process_TranslationRefresh/node/Call_TR_RoundTrip.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/enable-collab-groups",
+    "sha": "8c7db33dcfdc51f39571522587a063011c516b1c",
+    "pr": "3107/merge",
+    "run": "43395941497"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/cat-harness/process/Process_TranslationRefresh/node/Call_TR_RoundTrip",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Round trip on the changed strings",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/cat-harness/process/Process_TranslationRefresh",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/cat-harness/role/locale-translator",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/cat-harness/process/Process_TranslationRefresh/lane/Lane_TR_Translator",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/cat-harness/process/Process_TranslationRoundTrip",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_GatesYes"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_8"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/cat-harness/directory/library-graph",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRefresh/node/Call_TR_RoundTrip"
+    }
+  ]
+}

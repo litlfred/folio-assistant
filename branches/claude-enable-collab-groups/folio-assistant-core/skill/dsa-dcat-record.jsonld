@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/folio-assistant-core/skill/dsa-dcat-record.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/enable-collab-groups",
+    "sha": "8c7db33dcfdc51f39571522587a063011c516b1c",
+    "pr": "3107/merge",
+    "run": "43395941497"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/folio-assistant-core/skill/dsa-dcat-record",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "dsa-dcat-record",
+      "title": "`dsa-dcat-record` — Write the DCAT 3 record and link versions (P2.4–5)",
+      "description": "Write the W3C DCAT 3 `dcat:Resource` and `dcat:Distribution` catalogue record for a Data Sharing Agreement (`dcat:downloadURL`, `spdx:checksum`, `odrl:hasPolicy`) and link versions with `dcat:version` and `dcat:previousVersion` (DSA building block B3, process step P2.4–5 `Task_Catalogue`).",
+      "instructionsPath": "dsa/skills/dsa/dsa-dcat-record.md",
+      "instructionLines": 65,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/folio-assistant-core/directory/dsa",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/dsa-dcat-record"
+    }
+  ]
+}

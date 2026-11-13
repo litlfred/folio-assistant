@@ -1,0 +1,33 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/cat-harness/process/Process_RefreshMaterialized/node/EndEvent_Diverged.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/enable-collab-groups",
+    "sha": "8c7db33dcfdc51f39571522587a063011c516b1c",
+    "pr": "3107/merge",
+    "run": "43395941497"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/cat-harness/process/Process_RefreshMaterialized/node/EndEvent_Diverged",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Diverged on purpose, and the record says why",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/cat-harness/process/Process_RefreshMaterialized",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/cat-harness/role/ingestion-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/cat-harness/process/Process_RefreshMaterialized/lane/Lane_1",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/cat-harness/process/Process_RefreshMaterialized#flow/Flow_Kept",
+        "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/cat-harness/process/Process_RefreshMaterialized#flow/Flow_Deferred"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/cat-harness/directory/library-graph",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RefreshMaterialized/node/EndEvent_Diverged"
+    }
+  ]
+}

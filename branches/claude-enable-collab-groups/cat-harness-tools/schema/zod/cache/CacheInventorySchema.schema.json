@@ -1,0 +1,119 @@
+{
+  "$ref": "#/definitions/CacheInventory",
+  "definitions": {
+    "CacheInventory": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "cache-inventory/1.0.0"
+        },
+        "takenAt": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}"
+        },
+        "method": {
+          "type": "string",
+          "minLength": 1
+        },
+        "repositories": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "entries": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "repo": {
+                "type": "string",
+                "minLength": 1
+              },
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "actions-cache",
+                  "artifact-reuse",
+                  "ghcr-image",
+                  "git-ref",
+                  "branch-store",
+                  "on-disk",
+                  "setup-action-cache"
+                ]
+              },
+              "locations": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "key": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "restoreKeys": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "holds": {
+                "type": "string"
+              },
+              "producer": {
+                "type": "string"
+              },
+              "consumers": {
+                "type": "string"
+              },
+              "savePolicy": {
+                "type": "string"
+              },
+              "keyDerivation": {
+                "type": "string"
+              },
+              "notes": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "repo",
+              "id",
+              "kind",
+              "locations"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "$schema",
+        "takenAt",
+        "method",
+        "repositories",
+        "entries"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/cache/CacheInventorySchema.schema.json",
+  "title": "CacheInventorySchema",
+  "description": "Generated from `CacheInventorySchema` in schemas/sdlc/cache.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/enable-collab-groups",
+    "sha": "8c7db33dcfdc51f39571522587a063011c516b1c",
+    "pr": "3107/merge",
+    "run": "43395941497"
+  }
+}

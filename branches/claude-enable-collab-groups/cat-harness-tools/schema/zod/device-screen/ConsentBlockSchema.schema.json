@@ -1,0 +1,131 @@
+{
+  "$ref": "#/definitions/ConsentBlock",
+  "definitions": {
+    "ConsentBlock": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "consent"
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*$"
+        },
+        "column": {
+          "type": "string",
+          "enum": [
+            "main",
+            "side"
+          ]
+        },
+        "only": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9-]*$"
+          }
+        },
+        "who": {
+          "type": "string",
+          "minLength": 1
+        },
+        "what": {
+          "type": "string",
+          "minLength": 1
+        },
+        "until": {
+          "type": "string",
+          "minLength": 1
+        },
+        "granted": {
+          "type": "boolean"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "icon": {
+          "type": "string",
+          "enum": [
+            "baby",
+            "person",
+            "family",
+            "clinician",
+            "health-worker",
+            "hospital",
+            "clinic",
+            "home",
+            "phone",
+            "tablet",
+            "qr",
+            "paper",
+            "wifi-off",
+            "wifi",
+            "shield-check",
+            "calendar-check",
+            "stethoscope",
+            "link",
+            "transfer",
+            "globe",
+            "key",
+            "lock",
+            "database",
+            "tent",
+            "bus",
+            "plane",
+            "scale",
+            "coins",
+            "shuffle",
+            "syringe",
+            "pill",
+            "pill-off",
+            "pen",
+            "heart",
+            "eye",
+            "unlock",
+            "check",
+            "cross",
+            "question",
+            "hash",
+            "printer",
+            "camera",
+            "alert",
+            "clock",
+            "user",
+            "users",
+            "building",
+            "scan",
+            "send",
+            "layers",
+            "shield",
+            "shield-alert",
+            "monitor",
+            "kiosk",
+            "scanner",
+            "calendar",
+            "file",
+            "baby-new"
+          ]
+        }
+      },
+      "required": [
+        "type",
+        "who",
+        "what",
+        "granted"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/device-screen/ConsentBlockSchema.schema.json",
+  "title": "ConsentBlockSchema",
+  "description": "Generated from `ConsentBlockSchema` in schemas/process/device-screen.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/enable-collab-groups",
+    "sha": "8c7db33dcfdc51f39571522587a063011c516b1c",
+    "pr": "3107/merge",
+    "run": "43395941497"
+  }
+}

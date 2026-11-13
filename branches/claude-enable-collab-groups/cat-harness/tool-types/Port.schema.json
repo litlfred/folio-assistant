@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/cat-harness/tool-types/Port.schema.json",
+  "title": "Port",
+  "type": "integer",
+  "minimum": 0,
+  "maximum": 65535,
+  "description": "TCP port for a locally bound server; 0 asks the OS for a free one.",
+  "staging": {
+    "branch": "claude/enable-collab-groups",
+    "sha": "8c7db33dcfdc51f39571522587a063011c516b1c",
+    "pr": "3107/merge",
+    "run": "43395941497"
+  }
+}

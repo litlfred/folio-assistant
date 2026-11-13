@@ -1,0 +1,34 @@
+{
+  "$ref": "#/definitions/InvocationAuthority",
+  "definitions": {
+    "InvocationAuthority": {
+      "type": "object",
+      "properties": {
+        "actor": {
+          "type": "string",
+          "minLength": 1
+        },
+        "role": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "actor",
+        "role"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-invocation/InvocationAuthoritySchema.schema.json",
+  "title": "InvocationAuthoritySchema",
+  "description": "Generated from `InvocationAuthoritySchema` in schemas/tools/tool-invocation.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/enable-collab-groups",
+    "sha": "8c7db33dcfdc51f39571522587a063011c516b1c",
+    "pr": "3107/merge",
+    "run": "43395941497"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/cat-harness/role/work-plan.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/enable-collab-groups",
+    "sha": "8c7db33dcfdc51f39571522587a063011c516b1c",
+    "pr": "3107/merge",
+    "run": "43395941497"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/cat-harness/role/work-plan",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "Work plan (beans)",
+      "title": "Work plan (beans)",
+      "notation": "work-plan",
+      "description": "The shared store. A MECHANICAL role: tasks act ON it and a reader needs to see where the plan is touched, and its skills are the contract the store is held to.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "system"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/cat-harness/skill/todo-manager",
+        "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/cat-harness/skill/content-feedback",
+        "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/cat-harness/skill/work-plan-store"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/role/work-plan"
+    }
+  ]
+}

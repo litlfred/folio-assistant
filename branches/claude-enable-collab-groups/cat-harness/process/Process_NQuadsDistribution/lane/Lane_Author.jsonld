@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/cat-harness/process/Process_NQuadsDistribution/lane/Lane_Author.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/enable-collab-groups",
+    "sha": "8c7db33dcfdc51f39571522587a063011c516b1c",
+    "pr": "3107/merge",
+    "run": "43395941497"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/cat-harness/process/Process_NQuadsDistribution/lane/Lane_Author",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "Knowledge Graph Engineer",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/cat-harness/process/Process_NQuadsDistribution",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/cat-harness/role/platform-authoring-agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/cat-harness/directory/kg-ops",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/lane/Lane_Author"
+    }
+  ]
+}

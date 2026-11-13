@@ -1,0 +1,28 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/folio-assistant-core/schema/review-comment.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/enable-collab-groups",
+    "sha": "8c7db33dcfdc51f39571522587a063011c516b1c",
+    "pr": "3107/merge",
+    "run": "43395941497"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/folio-assistant-core/schema/review-comment",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "review-comment",
+      "title": "review-comment",
+      "summary": "A reviewer's comment on one block of a folio: a todo with more structure",
+      "module": "schemas/review-comment.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/folio-assistant-core/directory/core-schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/review-comment",
+      "jsonSchema": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/folio-assistant-core/schema/zod/review-comment/ReviewCommentSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/folio-assistant-core/schema/zod/review-comment/ReviewCommentsFileSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/folio-assistant-core/schema/zod/review-comment/ReviewFieldsSchema.schema.json"
+      ]
+    }
+  ]
+}

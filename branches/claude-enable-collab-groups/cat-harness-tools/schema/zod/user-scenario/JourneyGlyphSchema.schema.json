@@ -1,0 +1,48 @@
+{
+  "$ref": "#/definitions/JourneyGlyph",
+  "definitions": {
+    "JourneyGlyph": {
+      "type": "string",
+      "enum": [
+        "baby",
+        "person",
+        "family",
+        "clinician",
+        "health-worker",
+        "hospital",
+        "clinic",
+        "home",
+        "phone",
+        "tablet",
+        "qr",
+        "paper",
+        "wifi-off",
+        "wifi",
+        "shield-check",
+        "calendar-check",
+        "stethoscope",
+        "link",
+        "transfer",
+        "globe",
+        "key",
+        "lock",
+        "database",
+        "tent",
+        "bus",
+        "plane",
+        "scale",
+        "coins",
+        "shuffle"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/user-scenario/JourneyGlyphSchema.schema.json",
+  "title": "JourneyGlyphSchema",
+  "description": "Generated from `JourneyGlyphSchema` in schemas/process/user-scenario.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/enable-collab-groups",
+    "sha": "8c7db33dcfdc51f39571522587a063011c516b1c",
+    "pr": "3107/merge",
+    "run": "43395941497"
+  }
+}

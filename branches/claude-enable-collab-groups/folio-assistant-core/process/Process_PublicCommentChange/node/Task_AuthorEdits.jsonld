@@ -1,0 +1,37 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/folio-assistant-core/process/Process_PublicCommentChange/node/Task_AuthorEdits.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/enable-collab-groups",
+    "sha": "8c7db33dcfdc51f39571522587a063011c516b1c",
+    "pr": "3107/merge",
+    "run": "43395941497"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/folio-assistant-core/process/Process_PublicCommentChange/node/Task_AuthorEdits",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Edit the document as decided, on a feature branch",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/folio-assistant-core/process/Process_PublicCommentChange",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/folio-assistant-core/process/Process_PublicCommentChange/lane/Lane_Author",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/folio-assistant-core/skill/public-comment"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/folio-assistant-core/process/Process_PublicCommentChange#flow/Flow_ToAuthor",
+        "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/folio-assistant-core/process/Process_PublicCommentChange#flow/Flow_QaFailed"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/folio-assistant-core/process/Process_PublicCommentChange#flow/Flow_ToChangeSet"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-enable-collab-groups/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentChange/node/Task_AuthorEdits"
+    }
+  ]
+}
