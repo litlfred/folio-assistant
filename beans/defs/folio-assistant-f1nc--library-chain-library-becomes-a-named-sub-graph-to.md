@@ -84,3 +84,5 @@ _2026-11-08T13:45:00Z_ — Completed (`R7-Lane-2`). All library sub-graph chain 
 - `litlfred/folio-assistant#3016` (`Re-pin cat-harness and folio-assistant-core for the library sub-graph (stacked)`) — merged at `c00df6bfa29626e089cb4d4ae29d671bae1b6bec` (`2026-11-08T13:25:47Z`).
 - `litlfred/smart-base#326` (`Respell the code-lists skill link after cat-harness#1032`) — merged at `065308270b64d8cbb5bee19031e38567960097bb` (`2026-11-08T13:25:50Z`), closing `litlfred/smart-base#325` (`2026-11-08T13:25:52Z`).
 Status set to `completed`.
+
+_2026-11-13T17:14Z_ — Chain landed: tools#1631 (c0374a8), fa#2985 (2026-11-08 06:42Z), cat-harness#1032 (a13adf2), core#639 (9d2bc54), fa#3016 (2026-11-08 13:25Z). fa main now pins ch a107d8e / core 437eee5, both containing the merges. Open follow-up: agent-memory link fix (tools 5b9510a, reverted from #1479) still not re-landed; it cherry-picks cleanly onto tools main. Owner decision pending on whether to land it.
