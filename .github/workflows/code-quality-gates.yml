@@ -909,6 +909,10 @@ jobs:
       # each time (268 s on run 42012108138).
       - name: Digest of what the QA working copy is built from (bundle cache)
         id: digest
+        env:
+          # The qa-reports main/ subtree and index are read through the API.
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
         run: echo "digest=$(bash .github/scripts/bundle-cache.sh digest qa-working-copy)" >> "$GITHUB_OUTPUT"
 
       - name: Reuse a QA working copy already built from this digest (bundle cache)
@@ -1062,6 +1066,9 @@ jobs:
         id: pages-digest
         env:
           QA_MANIFEST: ${{ steps.cache.outputs.manifest || steps.pack.outputs.manifest }}
+          # The qa-reports main/ subtree and index are read through the API.
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
         run: |
           [ -n "$QA_MANIFEST" ] || { echo "no QA working copy manifest: no digest, so the pages are built"; exit 0; }
           site=$(git ls-remote origin refs/heads/gh-pages | cut -f1)
