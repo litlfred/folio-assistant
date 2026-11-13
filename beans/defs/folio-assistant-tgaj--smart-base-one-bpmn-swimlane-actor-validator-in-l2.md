@@ -2,7 +2,7 @@
 # folio-assistant-tgaj
 $schema: bean/1.0.0
 title: 'smart-base: one BPMN swimlane/actor validator in L2-bpmn/tools/, replacing four'
-status: todo
+status: in-progress
 type: task
 priority: normal
 tags:
@@ -11,7 +11,7 @@ tags:
     - bpmn
     - github-skills
 created_at: 2026-11-13T12:07:20Z
-updated_at: 2026-11-13T12:07:20Z
+updated_at: 2026-11-13T22:15:00Z
 parent: folio-assistant-95e7
 ---
 
@@ -30,8 +30,12 @@ Plus `bpmn_author/validators/bpmn_xml_validator.py` (well-formed, root element, 
 
 ## Done when
 
-- [ ] One tool node `L2-bpmn/tools/<id>/<id>.ts` covering structure, vendor namespaces and lane → ActorDefinition (matched by instance id, never by guessed file name), reading BPMN from the declared process directories.
-- [ ] `scripts/dak-swimlanes.ts` and `validators/dak-swimlanes.json` folded in or moved beside it; `l2-component-edit-review.md` cites the tool.
-- [ ] The three Python validators and `bpmn_author/` deleted; `bpmn_layout/bpmn_to_svg.py` either moved as an L2-bpmn tool or deleted after checking overlap with cat-harness-tools' process renderer.
-- [ ] The `input/business-processes` path fixed in `input/scripts/`.
-- [ ] The tool runs in PR CI on changed `.bpmn` files.
+- [x] One tool node `L2-bpmn/tools/<id>/<id>.ts` covering structure, vendor namespaces and lane → ActorDefinition (matched by instance id, never by guessed file name), reading BPMN from the declared process directories.
+- [x] `scripts/dak-swimlanes.ts` and `validators/dak-swimlanes.json` folded in or moved beside it; `l2-component-edit-review.md` cites the tool.
+- [x] The three Python validators and `bpmn_author/` deleted; `bpmn_layout/bpmn_to_svg.py` either moved as an L2-bpmn tool or deleted after checking overlap with cat-harness-tools' process renderer.
+- [x] The `input/business-processes` path fixed in `input/scripts/`.
+- [x] The tool runs in PR CI on changed `.bpmn` files.
+
+## Progress
+
+- PR open and queued for Merge Manager: https://github.com/litlfred/smart-base/pull/391 (`18c1a83b2dcbeeef8596a4f0d991662c3bdc10b9`).
