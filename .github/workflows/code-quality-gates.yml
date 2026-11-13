@@ -4887,7 +4887,10 @@ jobs:
           PLAYWRIGHT_JUNIT_OUTPUT_FILE: ${{ runner.temp }}/cqg/e2e-junit.xml
           PLAYWRIGHT_HTML_OUTPUT_DIR: ${{ github.workspace }}/playwright-report
           PLAYWRIGHT_HTML_OPEN: never
-        run: bunx playwright test -c cat-harness-tools/playwright.config.ts --reporter=list,html,junit
+        # The index's config: the tools config plus each mounted layer's own
+        # *.e2e.ts (fhir-harness's ig-page-render-qa scan; owner card
+        # 2026-11-13, Q1 A). The bun-test shards stay browser-free.
+        run: bunx playwright test -c .github/playwright.config.ts --reporter=list,html,junit
 
       # KEEP THE REPORT WHEN THE JOB GOES RED — bean `yqc4`.
       #
