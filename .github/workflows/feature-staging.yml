@@ -526,10 +526,37 @@ jobs:
           PR_HEAD: ${{ github.event.pull_request.head.sha }}
           WAIT_SECONDS: '0'
         run: |
+          echo "tree=$(git rev-parse 'HEAD^{tree}')" >> "$GITHUB_OUTPUT"
           bash .github/scripts/qa-copy-reuse.sh
-          status=$(bun run cat qa:working-copy -- --status 2>&1 | tail -1)
+          # `--status` exits 0 current, 1 stale, 2 undetermined.
+          current=false
+          status=$(bun run cat qa:working-copy -- --status 2>&1) && current=true
+          status=$(printf '%s\n' "$status" | tail -1)
           echo "after the restore: $status"
           printf '\n**tv20 measurement:** `%s`\n' "$status" >> "$GITHUB_STEP_SUMMARY"
+          echo "current=$current" >> "$GITHUB_OUTPUT"
+
+      # The restore above keeps its own transport (the gates run's artifact,
+      # found by `qa-copy-reuse.sh`'s tested-tree rule), so it reports its
+      # decision through `cached-step` rather than caching through it: the
+      # daily hit-rate report then counts it with every other cache
+      # (`.github/actions/cached-step/README.md`, "Hit-rate reporting").
+      # hit: restored and read `current`, so the build reuses it as is.
+      # warm: restored but not `current`, so it is a head start the build
+      # runs over. miss: nothing finished for this tree yet, or the restore
+      # broke. Keyed by the tree the copy is recorded under. Skipped with the
+      # restore (a draft, or not a pull request).
+      - name: Report the QA working copy restore to the hit-rate report
+        if: always() && steps.qa_reuse.outcome != 'skipped'
+        continue-on-error: true
+        uses: ./.github/actions/cached-step
+        with:
+          phase: report
+          step: qa-working-copy-preview
+          trust: exact
+          key: ${{ steps.qa_reuse.outputs.tree }}
+          result: ${{ steps.qa_reuse.outputs.reused == 'true' && (steps.qa_reuse.outputs.current == 'true' && 'hit' || 'warm') || 'miss' }}
+          why: ${{ steps.qa_reuse.outcome == 'failure' && 'the restore of the gates copy broke after extracting' || (steps.qa_reuse.outputs.reused == 'true' && (steps.qa_reuse.outputs.current == 'true' && 'restored the gates run''s copy for this tree and it read current' || 'restored the gates run''s copy for this tree but it did not read current, so the build runs over it') || 'no finished gates copy recorded for this tree yet, so the build makes its own') }}
 
       - name: Build the derived artefacts kept off the commit (bean 0b8c)
         env:
