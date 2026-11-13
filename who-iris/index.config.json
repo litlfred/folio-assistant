@@ -1,0 +1,161 @@
+{
+  "$schema": "folio-index-config/v1",
+  "layers": [
+    {
+      "name": "who-iris",
+      "source": {
+        "local": {
+          "at": "."
+        }
+      },
+      "site": {
+        "build": {
+          "home": "docs/site-home.md",
+          "sourceSteps": [
+            "site:catalogue",
+            "site:home"
+          ],
+          "keep": [
+            "ns"
+          ]
+        }
+      }
+    },
+    {
+      "name": "folio-assistant-core",
+      "source": {
+        "remote": {
+          "repository": "litlfred/folio-assistant-core",
+          "ref": "b2cec2562a7e3a5de3e8702813cf706537814996",
+          "overrides": {
+            "folio-assistant-core": {
+              "whole": true
+            },
+            "cat-harness": {
+              "skip": true
+            },
+            "cat-harness-tools": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-12",
+              "ref": "b2cec2562a7e3a5de3e8702813cf706537814996",
+              "evidence": "owner litlfred, 2026-11-12: decision 'a, b, then c' on litlfred/smart-ra#242 (step c: full bottom-up re-pin to mains); Q-CONSENT-1 A; Q-WIN-1 C (window to ~21:05Z 2026-11-12)"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "cat-harness",
+      "source": {
+        "remote": {
+          "repository": "litlfred/cat-harness",
+          "ref": "edaa380219fbc4f949db2c1f2e08c9a45e6a26ad",
+          "overrides": {
+            "cat-harness": {
+              "whole": true
+            },
+            "bootstrap": {
+              "skip": true
+            },
+            "bootstrap-tools": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-12",
+              "ref": "edaa380219fbc4f949db2c1f2e08c9a45e6a26ad",
+              "evidence": "owner litlfred, 2026-11-12: decision 'a, b, then c' on litlfred/smart-ra#242 (step c: full bottom-up re-pin to mains); Q-CONSENT-1 A; Q-WIN-1 C (window to ~21:05Z 2026-11-12)"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "cat-harness-tools",
+      "source": {
+        "remote": {
+          "repository": "litlfred/cat-harness-tools",
+          "ref": "49b2eb15b14b52ae19422876bcc825607ebe22f4",
+          "overrides": {
+            "cat-harness-tools": {
+              "whole": true
+            },
+            "cat-harness": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-12",
+              "ref": "49b2eb15b14b52ae19422876bcc825607ebe22f4",
+              "evidence": "owner litlfred, 2026-11-12: decision 'a, b, then c' on litlfred/smart-ra#242 (step c: full bottom-up re-pin to mains); Q-CONSENT-1 A; Q-WIN-1 C (window to ~21:05Z 2026-11-12)"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "bootstrap",
+      "source": {
+        "remote": {
+          "repository": "litlfred/bootstrap",
+          "ref": "17204fe9ed49e87b165bf0a8b626b6c69329a2a6",
+          "overrides": {
+            "bootstrap": {
+              "whole": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-12",
+              "ref": "17204fe9ed49e87b165bf0a8b626b6c69329a2a6",
+              "evidence": "owner litlfred, 2026-11-12: decision 'a, b, then c' on litlfred/smart-ra#242 (step c: full bottom-up re-pin to mains); Q-CONSENT-1 A; Q-WIN-1 C (window to ~21:05Z 2026-11-12)"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "bootstrap-tools",
+      "source": {
+        "remote": {
+          "repository": "litlfred/bootstrap-tools",
+          "ref": "bbdaffb757007bf0c4fe0ce4d21018491df308a9",
+          "overrides": {
+            "bootstrap-tools": {
+              "whole": true
+            },
+            "bootstrap": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-12",
+              "ref": "bbdaffb757007bf0c4fe0ce4d21018491df308a9",
+              "evidence": "owner litlfred, 2026-11-12: decision 'a, b, then c' on litlfred/smart-ra#242 (step c: full bottom-up re-pin to mains); Q-CONSENT-1 A; Q-WIN-1 C (window to ~21:05Z 2026-11-12)"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "harnesses": [
+    {
+      "name": "who-iris"
+    }
+  ],
+  "site": {
+    "landing": "who-iris"
+  }
+}

@@ -1,0 +1,124 @@
+n-gram a, the values é(6) and c(b) are revised:
+i(b) = t(b) + (n(a) — t(a))
+
+o(b) = e(b) + 1.
+
+In the initial stage, (a) is set to the frequency of
+@ appearing on its own, and é(a) and c(a) are set
+
+to 0.
+
+Table 2: n-graims extracted by C-valuc containing
+“Wall Street”
+
+[CV TF ] Jandidate Collocations ]
+4 19 | Staff Reporter of
+The Wall Street Journal
+37.34 | 26 | Wall Street Journal
+36 22 | The Wall Strect Journal
+33 38 | Wall Street
+31.34 | 23 | The Wall Street
+6 3 Wall Strect analysts
+4 20 | of The Wall Street Journal
+0 19 | Reporter of The Wall Street.
+0 19 | Reporter of he Wall Street Journal
+0 19 | Staff Reporter of The Wall Street
+0 20 | of ‘The Wall Street
+
+Street”. Table 2 shows all the strings that appear
+more that twice, and that contain “Wall Street”.
+1. The analysis starts from the longest string, the
+7-gram “Stall Roporter of The Wall Street. Jour-
+nal”. Its C-value is calculated from Equation 2.
+Vor cach substrings contained in the 7-gram, the
+number 19 (the frequency of the 7-gram) is kept,
+as its (till now) frequency of occurrence in longer
+strings. For cach of them, the fact. that they have
+been already found in a longer string is kept as
+well. ‘Therefore, £(“Wall Street? )=L9 and c(“Wall
+Street” )=1.
+
+2. We continue with the two 6-grams. Both of
+than, “Reporter of The Wall Street Journal” and
+“Staff Reporter of Phe Wall Street” got C-value=0
+since they appear with the same lrequency as
+the 7-gram that contains them, Therefore, they
+do not form candidate collocations and they do
+not. change the t(“Wall Street”) and the ¢(“Wall
+Street”) values.
+
+3. Por the 5-prams, there is one appearing with
+a frequency bigger than that of the 7-gram it
+is contained in, “of The Wall Street Journal”.
+This gets its C-value from Mquation 3. Its sub-
+strings increase their frequency of occurrence (as
+substrings) by 20 -19=1 (20 is the frequency of
+the 5-gram and 19 the frequency it appeared
+in longer candidate collocations), aud the num-
+ber of occurrence as substring by 1. There-
+fore, ¢(“Wall Street”’)=19+1=20 and ¢(“Wall
+Street” )=14+1=2, The other 5-gram is not a can-
+
+44
+
+didate collocations (it gets C-value=0).
+
+4, Vor the 4-grams, the “Che Wall Street Jour-
+nal” occurs in two longer n-grams and therefore
+gets its C-value from Equation 3. From this
+string, ¢(“Wall Street” )=20+2=22 and c(“Wall
+Street” )=2+-1=3. The “of The Wall Strect” is
+not accepted as a candidate collocations since it
+appears with the same frequency as the “of The
+Wall Street Journal”.
+
+3 “Wall Street analysts” appears for the
+first time so it gets its C-value from Equa-
+tion 2. “Wall Street Journal” and “The Wall
+Street” appearing in longer extracted n-grams
+get their values from Equation 3. They make
+t(“Wall Street” )=22+34+4+1=30 and (“Wall
+Street” )=3--1+1+1=6.
+
+6. Iinally, we evaluate the C-value for “Wall
+Street” from Equation 3. We find C-value(*Wall
+Streot” )=33.
+
+4 Experiments - Comparison
+
+‘The corpus used for the experiments is quite small
+(40,000 words) and consists of material from the
+Wall Street Journal newswire. Vor these exper-
+iments we used u-grams of maximum length 10.
+Longer n-grams appear once only (because of the
+size of the corpus), ‘Che maximum length of the
+n-grams to be extracted is variable and depends
+on the size of the corpus and the application.
+
+From the extracted n-grams, those with a fre-
+quency of 3 or more were kept (other approaches
+get rid of n-grams of such low frequencies (Smadja,
+1993)}. These u-grams were forwarded into the
+implementation of our algorithm as well as our
+implementation of the algorithm by (Kita ct al.,
+L994).
+
+The Cost-Criteria algorithm needs a second
+threshold (besides the one for the frequency of the
+n-grams): for every n-gram a, (a) is evaluated,
+and only those n-grams with this value greater
+than the preset threshold will take part to the rest
+of the algorithm. We set this threshold to 3 again
+for the same reason as above (the gain we would
+get for precision if we had set a higher threshold
+would be lost. on recall).
+
+‘fable 3 shows the candidate collocations with
+the higher values, extracted with C-value. A lot of
+candidate collocations extracted may seem unim-
+portant. This is because the algorithm extracts
+the word sequences that are frequent. Which of
+these candidate collocations we should keep de-
+pends on the application. Brill’s part-of-speech
+tagger, (Brill, 1992), was used to remove the n-
+grams that had an article as their last word.
