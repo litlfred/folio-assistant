@@ -1,0 +1,100 @@
+{
+  "$ref": "#/definitions/JourneyPersona",
+  "definitions": {
+    "JourneyPersona": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "role": {
+          "type": "string",
+          "minLength": 1
+        },
+        "country": {
+          "type": "string",
+          "minLength": 1
+        },
+        "goal": {
+          "type": "string",
+          "minLength": 1
+        },
+        "needs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "frustrations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "initials": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 3
+        },
+        "color": {
+          "type": "string",
+          "pattern": "^#[0-9a-fA-F]{6}$"
+        },
+        "icon": {
+          "type": "string",
+          "enum": [
+            "baby",
+            "person",
+            "family",
+            "clinician",
+            "health-worker",
+            "hospital",
+            "clinic",
+            "home",
+            "phone",
+            "tablet",
+            "qr",
+            "paper",
+            "wifi-off",
+            "wifi",
+            "shield-check",
+            "calendar-check",
+            "stethoscope",
+            "link",
+            "transfer",
+            "globe",
+            "key",
+            "lock",
+            "database",
+            "tent",
+            "bus",
+            "plane",
+            "scale",
+            "coins",
+            "shuffle"
+          ]
+        },
+        "avatar": {
+          "type": "string",
+          "pattern": "^[^/][^\\\\]*\\.(?:webp|png|jpe?g|svg)$"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "additionalProperties": {}
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/user-scenario/JourneyPersonaSchema.schema.json",
+  "title": "JourneyPersonaSchema",
+  "description": "Generated from `JourneyPersonaSchema` in schemas/process/user-scenario.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261113-1424",
+    "sha": "115a5947a46455b9bc4e115d78b6ae989c29c054",
+    "pr": "3111/merge",
+    "run": "43447091019"
+  }
+}

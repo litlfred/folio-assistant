@@ -1,0 +1,44 @@
+{
+  "@context": {
+    "fhir": "http://hl7.org/fhir/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "schema": "https://schema.org/",
+    "prov": "http://www.w3.org/ns/prov#"
+  },
+  "$schema": "folio-ig-artifact-jsonld/v1",
+  "@id": "StructureDefinition-KGCqlLibrary",
+  "@type": "fhir:StructureDefinition",
+  "dcterms:identifier": "StructureDefinition/KGCqlLibrary",
+  "schema:name": "KGCqlLibrary",
+  "dcterms:title": "Knowledge graph L3: CQL File",
+  "dcterms:description": "A .cql file on disk, as opposed to the FHIR Library resource that wraps it. A node so that the mapping table's four CQL rows -- CQL Concepts and CQL Data Elements under Elements, CQL under Decision Tables, CQL IndicatorLogic under Indicators -- do not dead-end. It carries a name, a path and a hash and NOTHING about the logic: no expressions, no comment tags, no data requirements. 279 in the immunizations IG. The l3-cql subgraph is where that content belongs, and it is not built yet. No canonical, because a .cql file is not a FHIR resource and has no canonical URL. It is reached through the Library that wraps it. Class IRI: http://smart.who.int/kg/cql-library.",
+  "schema:version": "0.3.0",
+  "dcterms:type": "Structures: Logical Models",
+  "schema:sameAs": {
+    "@id": "http://smart.who.int/base/StructureDefinition/KGCqlLibrary"
+  },
+  "schema:creativeWorkStatus": "materialized",
+  "schema:encoding": [
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "../../ast-data/resources/StructureDefinition/KGCqlLibrary.json"
+      },
+      "schema:encodingFormat": "application/fhir+json",
+      "dcterms:source": "local"
+    }
+  ],
+  "prov:wasGeneratedBy": {
+    "@type": "prov:Activity",
+    "schema:instrument": "ig-publisher 3.0.0 / core 7.0.1",
+    "prov:used": "5b702b9cfd89c3edfc4e4306bf31e2415a89294e"
+  },
+  "dcterms:isPartOf": {
+    "@type": "fhir:ImplementationGuide",
+    "dcterms:identifier": "smart.who.int.base",
+    "schema:version": "0.3.0",
+    "schema:sameAs": {
+      "@id": "http://smart.who.int/base"
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-1424/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-1424/cat-harness/skill/session-intent.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-1424/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261113-1424",
+    "sha": "115a5947a46455b9bc4e115d78b6ae989c29c054",
+    "pr": "3111/merge",
+    "run": "43447091019"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-1424/cat-harness/skill/session-intent",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "session-intent",
+      "title": "/session-intent — durable session intent + results",
+      "description": "Session-start intent declaration + session-end results recording, against the work plan's goals (milestone work items) and their open work items. Enforces the durable-handoff discipline so any agent can pick up another's thread.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-1424/cat-harness/package/sdlc-core"
+      ],
+      "instructionsPath": "sdlc/skills/sdlc-core/session-intent.md",
+      "instructionLines": 254,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-1424/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/session-intent"
+    }
+  ]
+}

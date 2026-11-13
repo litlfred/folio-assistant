@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-1424/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-1424/cat-harness/skill/web-apps.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-1424/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261113-1424",
+    "sha": "115a5947a46455b9bc4e115d78b6ae989c29c054",
+    "pr": "3111/merge",
+    "run": "43447091019"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-1424/cat-harness/skill/web-apps",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "web-apps",
+      "title": "Web apps — an app is content, the harness publishes it",
+      "description": "Interactive web apps as knowledge-graph content: a layer holds an app's source in a directory of kind `web-app` (one `web-app.json`), its UI strings go through the harness's translation process like any template, and the harness's `apps` visualiser (Tool `web-app-build`) builds it at publish and writes it to its own route with no site chrome, loaded only when a reader opens it. Read before adding an app to any layer, before writing a publish script for one (do not), and when an app's build or translations fail.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-1424/cat-harness/package/ui-core"
+      ],
+      "instructionsPath": "skills/ui/ui-core/web-apps.md",
+      "instructionLines": 120,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-1424/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/web-apps"
+    }
+  ]
+}

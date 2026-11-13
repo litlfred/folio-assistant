@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-1424/cat-harness-tools/cat-harness-tools.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-1424/cat-harness-tools/directory/folio-templates.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-1424/cat-harness-tools/cat-harness-tools.jsonld",
+  "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/folio-templates.jsonld",
+  "staging": {
+    "branch": "repin-train/20261113-1424",
+    "sha": "115a5947a46455b9bc4e115d78b6ae989c29c054",
+    "pr": "3111/merge",
+    "run": "43447091019"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/folio-templates",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "folio-templates",
+      "path": "templates/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/code"
+      ],
+      "description": "Files `folio_init` WRITES INTO a new folio, kept as real files rather than strings inside `scripts/init-folio.ts`. `init-folio.ts` looks the directory up by this id (`TEMPLATES_ID`), so the id must not change.",
+      "readmePath": "templates/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/folio-templates"
+    }
+  ]
+}

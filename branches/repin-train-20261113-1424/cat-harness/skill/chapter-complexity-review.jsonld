@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-1424/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-1424/cat-harness/skill/chapter-complexity-review.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-1424/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261113-1424",
+    "sha": "115a5947a46455b9bc4e115d78b6ae989c29c054",
+    "pr": "3111/merge",
+    "run": "43447091019"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-1424/cat-harness/skill/chapter-complexity-review",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "chapter-complexity-review",
+      "title": "Chapter Complexity Review",
+      "description": "Analyse a chapter's internal dependency graph to find backward edges (blocks that reference something defined later), compute graph energy, and suggest section/block reorderings that minimise complexity. Uses Graphviz for visualisation and brute-force permutation search for optimal section ordering.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-1424/cat-harness/package/editorial-audits"
+      ],
+      "instructionsPath": "editorial/skills/editorial-audits/chapter-complexity-review.md",
+      "instructionLines": 223,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-1424/cat-harness/directory/editorial",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/chapter-complexity-review"
+    }
+  ]
+}

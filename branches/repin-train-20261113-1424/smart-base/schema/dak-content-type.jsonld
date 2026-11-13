@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-1424/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-1424/smart-base/schema/dak-content-type.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-1424/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/schema/dak-content-type.jsonld",
+  "staging": {
+    "branch": "repin-train/20261113-1424",
+    "sha": "115a5947a46455b9bc4e115d78b6ae989c29c054",
+    "pr": "3111/merge",
+    "run": "43447091019"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/schema/dak-content-type",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "dak-content-type",
+      "title": "dak-content-type",
+      "summary": "The `dak` and `sushi` content types — registered by the WHO layer, not by core.",
+      "module": "schemas/dak-content-type.ts",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-schemas"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-1424/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-1424/folio-assistant-core/skill/folio-content-lifecycle.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-1424/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "repin-train/20261113-1424",
+    "sha": "115a5947a46455b9bc4e115d78b6ae989c29c054",
+    "pr": "3111/merge",
+    "run": "43447091019"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-1424/folio-assistant-core/skill/folio-content-lifecycle",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "folio-content-lifecycle",
+      "title": "Folio content lifecycle and evidence appraisal",
+      "description": "The content-folio half of the content-lifecycle skills (the harness's content-feedback, content-review, content-test, content-validate and evidence-appraisal; this layer's content-plan, content-author, content-publish and content-retire): binds core lifecycle diagrams, quality-control and review-comments gates, and empirical vs. formal evidence rules.",
+      "instructionsPath": "skills/content/folio-document-adapter/folio-content-lifecycle.md",
+      "instructionLines": 59,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-1424/folio-assistant-core/directory/core-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/folio-content-lifecycle"
+    }
+  ]
+}

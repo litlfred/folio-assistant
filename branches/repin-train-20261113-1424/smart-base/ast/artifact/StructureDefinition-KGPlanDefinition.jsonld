@@ -1,0 +1,44 @@
+{
+  "@context": {
+    "fhir": "http://hl7.org/fhir/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "schema": "https://schema.org/",
+    "prov": "http://www.w3.org/ns/prov#"
+  },
+  "$schema": "folio-ig-artifact-jsonld/v1",
+  "@id": "StructureDefinition-KGPlanDefinition",
+  "@type": "fhir:StructureDefinition",
+  "dcterms:identifier": "StructureDefinition/KGPlanDefinition",
+  "schema:name": "KGPlanDefinition",
+  "dcterms:title": "Knowledge graph L3: Plan Definition",
+  "dcterms:description": "A FHIR PlanDefinition. The published mapping gives it two sources -- Processes and Decision Tables -- so a PlanDefinition alone does not say which it came from; the implementedBy edge does. 138 in the immunizations IG, all declaring cpg-recommendationdefinition, all decision tables. Shares its IRI with the l1:external-artifact for the same canonical. Class IRI: http://smart.who.int/kg/plan-definition.",
+  "schema:version": "0.3.0",
+  "dcterms:type": "Structures: Logical Models",
+  "schema:sameAs": {
+    "@id": "http://smart.who.int/base/StructureDefinition/KGPlanDefinition"
+  },
+  "schema:creativeWorkStatus": "materialized",
+  "schema:encoding": [
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "../../ast-data/resources/StructureDefinition/KGPlanDefinition.json"
+      },
+      "schema:encodingFormat": "application/fhir+json",
+      "dcterms:source": "local"
+    }
+  ],
+  "prov:wasGeneratedBy": {
+    "@type": "prov:Activity",
+    "schema:instrument": "ig-publisher 3.0.0 / core 7.0.1",
+    "prov:used": "5b702b9cfd89c3edfc4e4306bf31e2415a89294e"
+  },
+  "dcterms:isPartOf": {
+    "@type": "fhir:ImplementationGuide",
+    "dcterms:identifier": "smart.who.int.base",
+    "schema:version": "0.3.0",
+    "schema:sameAs": {
+      "@id": "http://smart.who.int/base"
+    }
+  }
+}
