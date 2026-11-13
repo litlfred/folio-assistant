@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/smart-base/directory/smart-base-skills.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/directory/smart-base-skills.jsonld",
+  "staging": {
+    "branch": "repin-train/20261113-0043",
+    "sha": "a6aeff07d3f55444961346d15f2079e458c07aad",
+    "pr": "repin-train/20261113-0043",
+    "run": "43339525303"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/directory/smart-base-skills",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "smart-base-skills",
+      "path": "skills/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/bootstrap/v0/ns/graphTypology/skills"
+      ],
+      "description": "The authoring-who-smart-guidelines skill package, its skill definitions and the two WHO voices; `skills/skills.json` declares the subgroups.",
+      "readmePath": "skills/README.md",
+      "fileCount": 0,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/fhir-harness/fhir-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/fhir-harness/skill/fhir-questionnaire-wireframe.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/fhir-harness/fhir-harness.jsonld",
+  "sameAs": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/fhir-questionnaire-wireframe.jsonld",
+  "staging": {
+    "branch": "repin-train/20261113-0043",
+    "sha": "a6aeff07d3f55444961346d15f2079e458c07aad",
+    "pr": "repin-train/20261113-0043",
+    "run": "43339525303"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/fhir-questionnaire-wireframe",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "fhir-questionnaire-wireframe",
+      "title": "fhir-questionnaire-wireframe",
+      "instructionsPath": "skills/content/fhir-ig-authoring/fhir-questionnaire-wireframe.md",
+      "instructionLines": 268,
+      "inputSchema": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/skills/fhir-questionnaire-wireframe/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/skills/fhir-questionnaire-wireframe/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-ig-skills"
+    }
+  ]
+}

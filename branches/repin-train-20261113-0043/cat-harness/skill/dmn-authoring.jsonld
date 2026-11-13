@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness/skill/dmn-authoring.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261113-0043",
+    "sha": "a6aeff07d3f55444961346d15f2079e458c07aad",
+    "pr": "repin-train/20261113-0043",
+    "run": "43339525303"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness/skill/dmn-authoring",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "dmn-authoring",
+      "title": "dmn-authoring",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness/package/workflow"
+      ],
+      "instructionsPath": "skills/process/workflow/dmn-authoring.md",
+      "instructionLines": 68,
+      "inputSchema": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness/skills/dmn-authoring/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness/skills/dmn-authoring/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/dmn-authoring"
+    }
+  ]
+}

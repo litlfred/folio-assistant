@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness/skill/crdm-recorded-walkthrough.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261113-0043",
+    "sha": "a6aeff07d3f55444961346d15f2079e458c07aad",
+    "pr": "repin-train/20261113-0043",
+    "run": "43339525303"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness/skill/crdm-recorded-walkthrough",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "crdm-recorded-walkthrough",
+      "title": "Requirements from a recorded walkthrough",
+      "description": "Turn a recorded requirements walkthrough (a video call where a business analyst demonstrates a feature and a stakeholder asks for changes) into CRDM Phase 3 requirements with evidence: transcripts compared, an independent transcript where one can be made, screenshots cut at the moments the speakers point at the screen, and every requirement traced to a timestamp. Use when someone uploads a meeting recording, a Teams/Zoom transcript (.vtt, .docx) or both, and asks for requirements from it.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness/package/crdm"
+      ],
+      "instructionsPath": "skills/process/crdm/crdm-recorded-walkthrough.md",
+      "instructionLines": 84,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/crdm-recorded-walkthrough"
+    }
+  ]
+}

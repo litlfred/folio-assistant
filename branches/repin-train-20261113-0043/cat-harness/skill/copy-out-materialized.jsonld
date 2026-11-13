@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness/skill/copy-out-materialized.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261113-0043",
+    "sha": "a6aeff07d3f55444961346d15f2079e458c07aad",
+    "pr": "repin-train/20261113-0043",
+    "run": "43339525303"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness/skill/copy-out-materialized",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "copy-out-materialized",
+      "title": "Working on materialized content — copy it out",
+      "description": "Materialized content is read-only. To work on it you take a copy into your own folio/, and the copy records what it is a copy of — the local-provenance edge, which is not the upstream one.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness/package/large-datasets"
+      ],
+      "instructionsPath": "library/skills/large-datasets/copy-out-materialized.md",
+      "instructionLines": 111,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness/directory/library-graph",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/copy-out-materialized"
+    }
+  ]
+}

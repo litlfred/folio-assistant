@@ -1,0 +1,36 @@
+{
+  "$ref": "#/definitions/IgMetadataSource",
+  "definitions": {
+    "IgMetadataSource": {
+      "type": "object",
+      "properties": {
+        "harvestedFrom": {
+          "type": "string",
+          "minLength": 1
+        },
+        "harvestedAt": {
+          "type": "string",
+          "minLength": 1
+        },
+        "runUrl": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "required": [
+        "harvestedFrom",
+        "harvestedAt"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/ig-metadata-index/IgMetadataSourceSchema.schema.json",
+  "title": "IgMetadataSourceSchema",
+  "description": "Generated from `IgMetadataSourceSchema` in schemas/ig-metadata-index.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261113-0043",
+    "sha": "a6aeff07d3f55444961346d15f2079e458c07aad",
+    "pr": "repin-train/20261113-0043",
+    "run": "43339525303"
+  }
+}

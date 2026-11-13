@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness/skill/bpmn-authoring.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261113-0043",
+    "sha": "a6aeff07d3f55444961346d15f2079e458c07aad",
+    "pr": "repin-train/20261113-0043",
+    "run": "43339525303"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness/skill/bpmn-authoring",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "bpmn-authoring",
+      "title": "bpmn-authoring",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness/package/workflow"
+      ],
+      "instructionsPath": "skills/process/workflow/bpmn-authoring.md",
+      "instructionLines": 246,
+      "inputSchema": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness/skills/bpmn-authoring/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness/skills/bpmn-authoring/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/bpmn-authoring"
+    }
+  ]
+}

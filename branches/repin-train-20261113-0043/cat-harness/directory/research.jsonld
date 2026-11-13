@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness/directory/research.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261113-0043",
+    "sha": "a6aeff07d3f55444961346d15f2079e458c07aad",
+    "pr": "repin-train/20261113-0043",
+    "run": "43339525303"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness/directory/research",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "research",
+      "path": "research/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/cat-harness"
+      ],
+      "description": "The research sub-graph — a NAMED SUB-GRAPH of the harness, OPT-IN like `sdlc`: off in every layer unless that layer lists `cat-harness.research` in its own `enableSubgraphs` (owner, 2026-11-10, card Q-SG-1 C, wave 1). It holds the methodologies derived from the research literature on agentic software engineering (`sdlc-agentic-landscape`, `agentic-se-literature-synthesis`, `agentic-pre-merge-review`, `verifiable-ai-guideline-evaluation`), which only `sdlc` and the docs cite. The graph inside it, `research-methodologies`, is declared FROM WITHIN, in `research/graph.json`. Methodologies an on-by-default skill cites stay in `methodologies/`.",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness/directory/research",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/directory/research"
+    }
+  ]
+}

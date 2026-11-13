@@ -1,0 +1,198 @@
+{
+  "$ref": "#/definitions/KeywordsGraph",
+  "definitions": {
+    "KeywordsGraph": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "folio-keywords/v2"
+        },
+        "@type": {
+          "type": "string",
+          "const": "cat-harness:DerivedKeywords"
+        },
+        "entry": {
+          "type": "string",
+          "minLength": 1
+        },
+        "instance": {
+          "type": "string",
+          "minLength": 1
+        },
+        "about": {
+          "type": "string",
+          "minLength": 1
+        },
+        "corpus": {
+          "type": "object",
+          "properties": {
+            "library": {
+              "type": "string"
+            },
+            "sections": {
+              "type": "integer",
+              "minimum": -9007199254740991,
+              "maximum": 9007199254740991
+            },
+            "terms": {
+              "type": "integer",
+              "minimum": -9007199254740991,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "library",
+            "sections",
+            "terms"
+          ],
+          "additionalProperties": false
+        },
+        "variants": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "method": {
+                "type": "string",
+                "minLength": 1
+              },
+              "weighting": {
+                "type": "string",
+                "enum": [
+                  "log-entropy",
+                  "tfidf",
+                  "raw"
+                ]
+              },
+              "space": {
+                "type": "string",
+                "enum": [
+                  "surface",
+                  "latent",
+                  "latent-rerank"
+                ]
+              },
+              "k": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 9007199254740991
+              }
+            },
+            "required": [
+              "id",
+              "method",
+              "weighting",
+              "space"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "document": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "term": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "score": {
+                  "type": "number"
+                },
+                "evidence": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "heading"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "term",
+                "score",
+                "evidence"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "sections": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "propertyNames": {
+              "type": "string"
+            },
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "term": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "score": {
+                    "type": "number"
+                  },
+                  "evidence": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "heading"
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "term",
+                  "score",
+                  "evidence"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        }
+      },
+      "required": [
+        "$schema",
+        "@type",
+        "entry",
+        "instance",
+        "about",
+        "corpus",
+        "variants",
+        "document",
+        "sections"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/library-keywords/KeywordsGraphSchema.schema.json",
+  "title": "KeywordsGraphSchema",
+  "description": "Generated from `KeywordsGraphSchema` in schemas/library/library-keywords.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261113-0043",
+    "sha": "a6aeff07d3f55444961346d15f2079e458c07aad",
+    "pr": "repin-train/20261113-0043",
+    "run": "43339525303"
+  }
+}

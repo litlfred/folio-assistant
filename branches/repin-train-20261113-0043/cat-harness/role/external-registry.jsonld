@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness/role/external-registry.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261113-0043",
+    "sha": "a6aeff07d3f55444961346d15f2079e458c07aad",
+    "pr": "repin-train/20261113-0043",
+    "run": "43339525303"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness/role/external-registry",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "External registry",
+      "title": "External registry",
+      "notation": "external-registry",
+      "description": "Trusted registries and observatories outside this layer's control. Nothing here instructs it; its skill is the contract the diagrams rely on it for.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "external"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness/skill/external-registry-contract"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/role/external-registry"
+    }
+  ]
+}

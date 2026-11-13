@@ -1,0 +1,40 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness-tools/cat-harness-tools.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness-tools/schema/test-data.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness-tools/cat-harness-tools.jsonld",
+  "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/test-data.jsonld",
+  "staging": {
+    "branch": "repin-train/20261113-0043",
+    "sha": "a6aeff07d3f55444961346d15f2079e458c07aad",
+    "pr": "repin-train/20261113-0043",
+    "run": "43339525303"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/test-data",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "test-data",
+      "title": "test-data",
+      "summary": "Test data sets (fixed and generated) and SME review case/verdict pairs.",
+      "module": "schemas/sdlc/test-data.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-schemas",
+      "jsonSchema": [
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-data/DecisionSupportWorkedCaseSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-data/FixedSetReviewMetadataSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-data/FixedTestDataRecordSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-data/FixedTestDataSetSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-data/GeneratedTestDataSetSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-data/IndicatorCohortCaseSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-data/ReviewedAtSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-data/SmeReviewerIdentitySchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-data/SmeSubjectKindSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-data/SmeTestCaseVerdictSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-data/SmeVerdictOutcomeSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-data/TestDataContentTypeSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-data/TestDataSetIdSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-data/TestDataSetSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-data/TestDataSpecialisationSchema.schema.json"
+      ]
+    }
+  ]
+}

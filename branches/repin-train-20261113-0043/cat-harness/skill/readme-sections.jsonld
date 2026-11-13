@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness/skill/readme-sections.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261113-0043",
+    "sha": "a6aeff07d3f55444961346d15f2079e458c07aad",
+    "pr": "repin-train/20261113-0043",
+    "run": "43339525303"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness/skill/readme-sections",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "readme-sections",
+      "title": "A folio's README — the folio owns the file, the platform owns the markers",
+      "description": "A folio's README is the author's file; the platform owns only the marked regions it generates. How the sync/audit split works, why the platform never generates a folio's prose, and the third state both tools must report.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness/package/ui-core"
+      ],
+      "instructionsPath": "skills/ui/ui-core/readme-sections.md",
+      "instructionLines": 272,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/readme-sections"
+    }
+  ]
+}

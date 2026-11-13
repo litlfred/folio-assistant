@@ -1,0 +1,28 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/smart-trust-phw/smart-trust-phw.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/smart-trust-phw/role/certificate-verifier.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/smart-trust-phw/smart-trust-phw.jsonld",
+  "staging": {
+    "branch": "repin-train/20261113-0043",
+    "sha": "a6aeff07d3f55444961346d15f2079e458c07aad",
+    "pr": "repin-train/20261113-0043",
+    "run": "43339525303"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/smart-trust-phw/role/certificate-verifier",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "Verifier",
+      "title": "Verifier",
+      "notation": "certificate-verifier",
+      "description": "Checks a certificate and its status, with or without a status checking application. Specializes the ActorDefinition Receiver (input/fsh/actors/actors.fsh).",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person",
+        "system"
+      ],
+      "hasSkill": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/smart-trust-phw/role/certificate-verifier"
+    }
+  ]
+}

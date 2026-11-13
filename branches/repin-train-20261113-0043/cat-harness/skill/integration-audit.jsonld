@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness/skill/integration-audit.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261113-0043",
+    "sha": "a6aeff07d3f55444961346d15f2079e458c07aad",
+    "pr": "repin-train/20261113-0043",
+    "run": "43339525303"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness/skill/integration-audit",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "integration-audit",
+      "title": "/integration-audit — invalidate + re-audit the sidecar pipeline",
+      "description": "Sidecar-invalidation utility for the integration-watcher pipeline. Adds mechanical QA fields (script-reviewer entries) to per-block `.qa.json` sidecars and marks the existing entries stale so the next `qa-sweep` re-evaluates them. Use when a checker bug is fixed in a QA checker module (downstream \"fresh\" entries are now incorrect) or when a registry update adds a criterion the block hasn't been audited under.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness/package/editorial-audits"
+      ],
+      "instructionsPath": "editorial/skills/editorial-audits/integration-audit.md",
+      "instructionLines": 149,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness/directory/editorial",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/integration-audit"
+    }
+  ]
+}

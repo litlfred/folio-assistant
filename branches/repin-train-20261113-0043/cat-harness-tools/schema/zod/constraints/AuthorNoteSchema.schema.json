@@ -1,0 +1,42 @@
+{
+  "$ref": "#/definitions/AuthorNote",
+  "definitions": {
+    "AuthorNote": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "status",
+            "caveat",
+            "note",
+            "refined-framing",
+            "deprecated"
+          ]
+        },
+        "date": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
+        },
+        "see": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "body"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/AuthorNoteSchema.schema.json",
+  "title": "AuthorNoteSchema",
+  "description": "Generated from `AuthorNoteSchema` in schemas/constraints.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261113-0043",
+    "sha": "a6aeff07d3f55444961346d15f2079e458c07aad",
+    "pr": "repin-train/20261113-0043",
+    "run": "43339525303"
+  }
+}

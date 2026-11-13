@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness-tools/cat-harness-tools.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness-tools/directory/cat-harness-tools-schemas.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness-tools/cat-harness-tools.jsonld",
+  "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-schemas.jsonld",
+  "staging": {
+    "branch": "repin-train/20261113-0043",
+    "sha": "a6aeff07d3f55444961346d15f2079e458c07aad",
+    "pr": "repin-train/20261113-0043",
+    "run": "43339525303"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-schemas",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "cat-harness-tools-schemas",
+      "path": "schemas/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/bootstrap/v0/ns/graphTypology/schemas",
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/code"
+      ],
+      "description": "The harness's Zod schema corpus and the tests that exercise it, so this directory is typed `schemas` as well as `code`. cat-harness keeps the schemas that are data: the per-skill JSON Schemas in `schemas/skills/`, `staging-comparison.schema.json` and the PlantUML model.",
+      "readmePath": "schemas/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-schemas"
+    }
+  ]
+}

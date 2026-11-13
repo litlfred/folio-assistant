@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/smart-base/directory/smart-base-findings.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/directory/smart-base-findings.jsonld",
+  "staging": {
+    "branch": "repin-train/20261113-0043",
+    "sha": "a6aeff07d3f55444961346d15f2079e458c07aad",
+    "pr": "repin-train/20261113-0043",
+    "run": "43339525303"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/directory/smart-base-findings",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "smart-base-findings",
+      "path": "findings/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/docs"
+      ],
+      "description": "Findings about the WHO digital-health corpus recorded for the owner rather than adopted: where sources disagree, each version is kept as an alternative with its citation. `dth-term-alternatives.json` is authored (the DIIG phase figure and its reproductions, and what \"actor\" means in the RA, SMART Guidelines and folio-assistant, with one proposal per layer); `dth-terms.md` is generated from it and the DTH candidate list by `smart-base:dth-terms` (`smart-base/scripts/gen-dth-term-findings.ts`), and `smart-base:dth-terms:check` fails on a stale page or a quote that no longer matches its source. `wireframes/` holds the as-is wireframes of this instance's visualisers with their review findings (`check:wireframes` reads the `wireframes/` of every declared `docs` directory). Separate from `docs/`, which `smart-base:pages` wholly generates.",
+      "readmePath": "findings/README.md",
+      "fileCount": 0,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-findings"
+    }
+  ]
+}

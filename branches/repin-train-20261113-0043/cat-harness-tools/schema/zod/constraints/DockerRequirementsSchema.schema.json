@@ -1,0 +1,74 @@
+{
+  "$ref": "#/definitions/DockerRequirements",
+  "definitions": {
+    "DockerRequirements": {
+      "type": "object",
+      "properties": {
+        "baseImage": {
+          "default": "ubuntu:24.04",
+          "type": "string"
+        },
+        "aptPackages": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "pipPackages": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "npmPackages": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "setupCommands": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "exposePorts": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "env": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "labels": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "aptPackages"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/DockerRequirementsSchema.schema.json",
+  "title": "DockerRequirementsSchema",
+  "description": "Generated from `DockerRequirementsSchema` in schemas/constraints.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261113-0043",
+    "sha": "a6aeff07d3f55444961346d15f2079e458c07aad",
+    "pr": "repin-train/20261113-0043",
+    "run": "43339525303"
+  }
+}

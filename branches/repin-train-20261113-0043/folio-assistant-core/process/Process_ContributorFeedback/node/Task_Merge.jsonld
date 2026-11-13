@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/folio-assistant-core/process/Process_ContributorFeedback/node/Task_Merge.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "repin-train/20261113-0043",
+    "sha": "a6aeff07d3f55444961346d15f2079e458c07aad",
+    "pr": "repin-train/20261113-0043",
+    "run": "43339525303"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/folio-assistant-core/process/Process_ContributorFeedback/node/Task_Merge",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Merge the pull request",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/folio-assistant-core/process/Process_ContributorFeedback",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/folio-assistant-core/process/Process_ContributorFeedback/lane/Lane_Agent",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/folio-assistant-core/skill/review-sheet-script"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/folio-assistant-core/process/Process_ContributorFeedback#flow/CF09"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/folio-assistant-core/process/Process_ContributorFeedback#flow/CF10"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/Task_Merge"
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Lean Formalization Output",
+  "description": "Output schema for the lean-formalization skill.",
+  "type": "object",
+  "required": [
+    "leanFiles",
+    "buildStatus"
+  ],
+  "properties": {
+    "leanFiles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "path",
+          "module"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "module": {
+            "type": "string"
+          },
+          "sorryCount": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      }
+    },
+    "buildStatus": {
+      "type": "string",
+      "enum": [
+        "success",
+        "warnings",
+        "errors"
+      ]
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "file": {
+            "type": "string"
+          },
+          "line": {
+            "type": "integer"
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "error",
+              "warning",
+              "info"
+            ]
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/folio-assistant-sci/schema/skills/lean-formalization/output.schema.json",
+  "staging": {
+    "branch": "repin-train/20261113-0043",
+    "sha": "a6aeff07d3f55444961346d15f2079e458c07aad",
+    "pr": "repin-train/20261113-0043",
+    "run": "43339525303"
+  }
+}

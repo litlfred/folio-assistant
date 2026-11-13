@@ -1,0 +1,31 @@
+{
+  "$ref": "#/definitions/ArchimateProperty",
+  "definitions": {
+    "ArchimateProperty": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "key",
+        "value"
+      ],
+      "additionalProperties": false,
+      "description": "Property"
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/archimate/ArchimatePropertySchema.schema.json",
+  "title": "ArchimatePropertySchema",
+  "description": "Generated from `ArchimatePropertySchema` in archimate/schemas/archimate.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261113-0043",
+    "sha": "a6aeff07d3f55444961346d15f2079e458c07aad",
+    "pr": "repin-train/20261113-0043",
+    "run": "43339525303"
+  }
+}

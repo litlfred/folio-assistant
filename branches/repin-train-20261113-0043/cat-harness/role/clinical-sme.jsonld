@@ -1,0 +1,28 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness/role/clinical-sme.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261113-0043",
+    "sha": "a6aeff07d3f55444961346d15f2079e458c07aad",
+    "pr": "repin-train/20261113-0043",
+    "run": "43339525303"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0043/cat-harness/role/clinical-sme",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "Clinical / scientific SME",
+      "title": "Clinical / scientific SME",
+      "notation": "clinical-sme",
+      "description": "Reviewer whose judgement is about the subject matter rather than the artefact. Acts by domain judgement (`judgementOnly`: no procedure yields the answer, which is why a person is in the lane; bean `vljz`).",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "judgementOnly": true,
+      "hasSkill": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/role/clinical-sme"
+    }
+  ]
+}
