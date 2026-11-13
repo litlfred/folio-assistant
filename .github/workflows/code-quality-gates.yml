@@ -516,6 +516,12 @@ jobs:
       - name: tsc --noEmit
         run: bun run cat typecheck:instances
 
+      # Every mounted layer that declares an ArchiMate directory, its models
+      # checked against the declaration (cat-harness-tools#1997). `--repo .`
+      # names the index root, so it never depends on where the mount resolves.
+      - name: ArchiMate models, every layer that declares one
+        run: bun cat-harness-tools/archimate/scripts/check-archimate.ts --repo .
+
   verdict-reuse:
     # bpmn-node: Task_VerdictReuse
     name: Verdict reuse — was this tree already judged green? (not a gate)
