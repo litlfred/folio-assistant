@@ -9,7 +9,7 @@ tags:
     - smart-base
     - subgraphs
 created_at: 2026-11-13T12:07:20Z
-updated_at: 2026-11-13T22:46:00Z
+updated_at: 2026-11-13T22:54:00Z
 parent: folio-assistant-95e7
 ---
 
@@ -44,8 +44,8 @@ Harness-wide items stay at the root: `skills/content/authoring-who-smart-guideli
 - **L2 subgraph slice + L1→L2→L3 `requires` chain (`litlfred/smart-base#384`, branch `claude/l2-scripts-into-subgraph`, head `00db30e0e6d60dd9982ad6f09aff4fc07d972408`, merged to `main` at `6df978c`, and `litlfred/smart-base#387`, branch `claude/l-chain-requires`, head `26fc00ddbf724da8b4a4bc12720436812bf78fdc`, merged to `main` at `2c67ff1`; supersedes `#390`, which was closed):**
   - `#384`: Moved L2-only scripts (`dak-data-dictionary.{ts,test.ts,feature}`, `dak-data-dictionary-diff.{ts,test.ts,feature}`, `dth/check-l2-dth.{ts,test.ts,feature}`) into `smart-base/L2/scripts/` (`l2-scripts` in `smart-base/L2/graph.json`) and moved `skills/skill-definitions/l2-dak-authoring.json` into `smart-base/L2/skills/skill-definitions/l2-dak-authoring.json` (`package: "smart-l2"`). Documented why `extractors/dak-requirements.py` (`extract-candidates.py` discovery), `gen-dak-components-figure.*` (pinned SVG header in `cat-harness`), `l1-recommendation-scenarios.*` / `l1-scenario-vocabulary.ts` / `l2-program-indicators.py` (reached by L1 skills/tests), and `SGAuthoring.DAKLifecycle.*` (already in root `collab/processes/content/` from `#357`) remain outside `L2/scripts/`.
   - `#387`: Added `requires: ["smart-base.smart-base-L1"]` on `smart-base-L2` and `requires: ["smart-base.smart-base-L2"]` on `smart-base-L3` in `smart-base/smart-base.json`, and moved `recommendation-scenarios.md` and `schemas/skills/recommendation-scenarios/` from `L2/` into `L1/` (resolving `check:optin-refs` for `L1/processes/classify-and-code-content.bpmn`).
-- **L2-bpmn / L2-dmn subgraph slice (`litlfred/smart-base#385`, branch `claude/l2-bpmn-dmn-scripts-into-subgraph`, head `56210a1240bd51fce581aa2be814df9fde508867`):**
+- **L2-bpmn / L2-dmn subgraph slice (`litlfred/smart-base#385`, branch `claude/l2-bpmn-dmn-scripts-into-subgraph`, head `56210a1240bd51fce581aa2be814df9fde508867`, merged to `main` at `8ae44b240b`):**
   - Moved `visio-svg-bpmn.{ts,test.ts,feature}` into `smart-base/L2-bpmn/scripts/` (`l2-bpmn-scripts` in `smart-base/L2-bpmn/graph.json`). Documented why `qa-checkers/dak-bpmn-has-process.json`, `qa-checkers/dak-dmn-has-decision-table.json` (`loadContributions` reads instance-root `qa-checkers/` only) and `scripts/smart-base-transform.py` (coupled CLI invoked by `dak-pre-export.sh`) remain in place.
-- **L3 subgraph slice (`litlfred/smart-base#389`, branch `claude/l3-scripts-and-tools-subgraph`, head `c2c07f8d59231a2ed5fa120e7cbeef08a135cda6`):**
+- **L3 subgraph slice (`litlfred/smart-base#389`, branch `claude/l3-scripts-and-tools-subgraph`, head `ca4afb040da359dfa5fa3e3ef22835fd44002fe0`):**
   - Moved `terminology-lookup.ts` (+ `.test.ts` + `.feature`), `ig-site-sidecars.ts` (+ `.test.ts` + `.feature`), `ig-dak-metadata.ts` (+ `.test.ts` + `.feature`), `check-ig-citations.ts` (+ `.test.ts` + `.feature`), and `dak-pre-export.sh` from `smart-base/scripts/` into `smart-base/L3/scripts/` (`l3-scripts` in `smart-base/L3/graph.json`), and moved `smart-fhir-cache-seed.ts` into `smart-base/L3/tools/smart-fhir-cache-seed/`.
-- `#383` (`3b24de2`), `#384` (`6df978c`), and `#387` (`2c67ff1`) are merged to `main`; `#385` and `#389` are green on fast-tier CI, have `ready-to-merge` + `ready: <sha>` + `merge-guard: success`, and are queued for the Merge Manager.
+- `#383` (`3b24de2`), `#384` (`6df978c`), `#385` (`8ae44b240b`), and `#387` (`2c67ff1`) are merged to `main`; `#389` (`ca4afb040da359dfa5fa3e3ef22835fd44002fe0`) is green on fast-tier CI, has `ready-to-merge` + `ready: ca4afb040da359dfa5fa3e3ef22835fd44002fe0` + `merge-guard: success` (8/8 checks passing), and is queued for the Merge Manager.
