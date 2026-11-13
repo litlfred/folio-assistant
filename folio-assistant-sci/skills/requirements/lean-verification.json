@@ -1,0 +1,49 @@
+{
+  "id": "req:lean-verification",
+  "title": "Lean Proof Verification Requirements",
+  "description": "Formal mathematics content must have verified Lean 4 proofs with proper sorry tracking.",
+  "derivedFrom": ["req:content-lifecycle"],
+  "actors": ["author"],
+  "statements": [
+    {
+      "key": "lean-compiles",
+      "label": "Lean project compiles",
+      "conformance": "SHALL",
+      "requirement": "The Lean 4 project SHALL compile with `lake build` without errors.",
+      "successCriteria": [
+        {
+          "key": "lake-build-zero-errors",
+          "criterion": "Running lake build terminates with exit code 0 and emits no compilation errors.",
+          "verification": "test"
+        }
+      ]
+    },
+    {
+      "key": "sorry-tracking",
+      "label": "Sorry annotations tracked",
+      "conformance": "SHALL",
+      "requirement": "All `sorry` placeholders SHALL be annotated with reference to the corresponding proof obligation.",
+      "successCriteria": [
+        {
+          "key": "sorry-annotations-complete",
+          "criterion": "Every sorry occurrence in Lean source files includes a comment referencing its specific proof obligation ID.",
+          "verification": "inspection"
+        }
+      ]
+    },
+    {
+      "key": "citation-match",
+      "label": "Citations match bibliography",
+      "conformance": "SHALL",
+      "requirement": "All citations in LaTeX documents SHALL have corresponding bibliography entries.",
+      "successCriteria": [
+        {
+          "key": "citations-in-bib",
+          "criterion": "Every citation key in LaTeX documents matches an entry in the bibliography .bib file.",
+          "verification": "test"
+        }
+      ]
+    }
+  ],
+  "tags": ["math", "lean"]
+}
