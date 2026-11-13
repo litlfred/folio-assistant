@@ -86,3 +86,5 @@ _2026-11-08T13:45:00Z_ — Completed (`R7-Lane-2`). All library sub-graph chain 
 Status set to `completed`.
 
 _2026-11-13T17:14Z_ — Chain landed: tools#1631 (c0374a8), fa#2985 (2026-11-08 06:42Z), cat-harness#1032 (a13adf2), core#639 (9d2bc54), fa#3016 (2026-11-08 13:25Z). fa main now pins ch a107d8e / core 437eee5, both containing the merges. Open follow-up: agent-memory link fix (tools 5b9510a, reverted from #1479) still not re-landed; it cherry-picks cleanly onto tools main. Owner decision pending on whether to land it.
+
+_2026-11-13T17:18Z_ — Owner card "Link fix" option 1 (land now, pair, one red). Opened drafts: cat-harness-tools#2029 (f68b8c3, re-applies 5b9510a; 35/35 tests) first, then cat-harness#1298 (4c50bff, regenerates 4 per-agent memory files; 8 links rebased, targets verified). fa root copies regenerate with the re-pin of #2029.
