@@ -1,0 +1,17 @@
+# Moves a layers cache commit an agent sandbox left on
+# claude/cat-layers/<key> to refs/cat/layers/<key> (owner, 2026-11-10, card
+# "B. Branch + small mover"). The logic is the harness's; see
+# litlfred/cat-harness-tools .github/workflows/layer-layers-move.yml.
+name: Move a sandbox's layers cache ref
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths: [index.lock.json]
+
+permissions:
+  contents: write
+
+jobs:
+  move:
+    uses: litlfred/cat-harness-tools/.github/workflows/layer-layers-move.yml@4880a5c0a33dc739ef0d05bc21ba05fbf6ca0a91 # index.lock.json
