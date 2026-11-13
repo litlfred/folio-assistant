@@ -1,0 +1,249 @@
+From e6e6bc31d9ba21b215f4cc9cecf803615c6ef245 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Fri, 13 Nov 2026 21:13:37 +0000
+Subject: [PATCH] Labels for agents that cannot message the merge manager
+
+Owner, 2026-11-13 (about 20:58Z): "need a way to mark this for agents not
+able to communicate... label PR?" and "update process and tools".
+ready-to-merge (green) and needs-repin (green except for a re-pin) on the
+agent's own PR; a label is a request and only the merge manager acts on it.
+merge-manager-watcher, merge-queue, the merge-manager actor and
+merge-manager-watch.bpmn's wake step; checklist and .pot regenerated. The
+tools follow-ups are listed in "What this does not do yet".
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01VQDpPc2tT1vUufdyDbQTBz
+---
+ scenarios/actors/merge-manager.json           |  2 +-
+ sdlc/processes/merge-manager-watch.bpmn       |  2 +-
+ .../skills/sdlc-core/merge-manager-watcher.md | 48 ++++++++++++++-----
+ sdlc/skills/sdlc-core/merge-queue.md          |  6 +++
+ .../ar/processes/merge-manager-watch.pot      |  4 +-
+ .../es/processes/merge-manager-watch.pot      |  4 +-
+ .../fr/processes/merge-manager-watch.pot      |  4 +-
+ .../ru/processes/merge-manager-watch.pot      |  4 +-
+ .../zh/processes/merge-manager-watch.pot      |  4 +-
+ 9 files changed, 53 insertions(+), 25 deletions(-)
+
+diff --git a/scenarios/actors/merge-manager.json b/scenarios/actors/merge-manager.json
+index b4863ba..f6b8d56 100644
+--- a/scenarios/actors/merge-manager.json
++++ b/scenarios/actors/merge-manager.json
+@@ -2,7 +2,7 @@
+   "id": "merge-manager",
+   "title": "Merge manager",
+   "kind": "agent",
+-  "description": "The agent session that holds the merge-steward lane on one or more repositories and runs its watch loop (`merge-manager-watcher`, Process_MergeManagerWatch): it wakes on a timer, on PR events, when a main run finishes, or on a sibling's message; it reads the open PRs, the runner queue, main's verdict and the PR owners live; and it routes each reading to the merge train, a saturation meta-merge, or a stalled-agent takeover. It is the only session that merges or re-pins, in any repository (owner rulings, 2026-11-13); siblings send it the six-line request, or repin+merge: for a PR that is green except for a re-pin. One live session holds the lane per repository, and announces `merge manager: <session id>` to every sibling and the owner when it takes the lane, and to whom when it hands it over. When none is active the siblings elect one (the owner of the P0 PR, else the earliest-created active session), and a lone session is its own merge manager. Siblings send it a six-line merge request (PR and head SHA, session URL, explanation, rendered preview, what to look for, the CI verdict on that head), which it posts in its chat before asking the owner by card. An agent with no chat to it, such as a local agent, signals on the PR instead: ready for review, the label `ready-to-merge`, and a signed `ready: <head sha>` comment; every sweep reads the PRs carrying that label. It acknowledges each request within about 10 minutes and posts a heartbeat with each sweep (every 10-15 minutes while a P0 is in flight, 30 otherwise); like any agent it may stall, and a sibling whose request goes unacknowledged for about 30 minutes, or whose merge manager's session is inactive, re-elects without it. It merges only on the owner's explicit OK, given in its own session as one card per batch, holds and releases the swarm around every batch landing, and reports what landed and main's verdict.",
++  "description": "The agent session that holds the merge-steward lane on one or more repositories and runs its watch loop (`merge-manager-watcher`, Process_MergeManagerWatch): it wakes on a timer, on PR events, when a main run finishes, or on a sibling's message; it reads the open PRs, the runner queue, main's verdict and the PR owners live; and it routes each reading to the merge train, a saturation meta-merge, or a stalled-agent takeover. It is the only session that merges or re-pins, in any repository (owner rulings, 2026-11-13); siblings send it the six-line request, or repin+merge: for a PR that is green except for a re-pin. One live session holds the lane per repository, and announces `merge manager: <session id>` to every sibling and the owner when it takes the lane, and to whom when it hands it over. When none is active the siblings elect one (the owner of the P0 PR, else the earliest-created active session), and a lone session is its own merge manager. Siblings send it a six-line merge request (PR and head SHA, session URL, explanation, rendered preview, what to look for, the CI verdict on that head), which it posts in its chat before asking the owner by card. An agent with no chat to it, such as a local agent, signals on its own PR instead: ready for review and the label `ready-to-merge` (green) or `needs-repin` (green except for a re-pin); every sweep reads the PRs carrying either label, and only the merge manager acts on them. It acknowledges each request within about 10 minutes and posts a heartbeat with each sweep (every 10-15 minutes while a P0 is in flight, 30 otherwise); like any agent it may stall, and a sibling whose request goes unacknowledged for about 30 minutes, or whose merge manager's session is inactive, re-elects without it. It merges only on the owner's explicit OK, given in its own session as one card per batch, holds and releases the swarm around every batch landing, and reports what landed and main's verdict.",
+   "roles": [
+     "merge-steward"
+   ],
+diff --git a/sdlc/processes/merge-manager-watch.bpmn b/sdlc/processes/merge-manager-watch.bpmn
+index a276dd3..0da27b5 100644
+--- a/sdlc/processes/merge-manager-watch.bpmn
++++ b/sdlc/processes/merge-manager-watch.bpmn
+@@ -57,7 +57,7 @@
+       <bpmn:outgoing>Flow_22</bpmn:outgoing>
+     </bpmn:task>
+     <bpmn:startEvent id="Start_Wake" name="Timer, PR event, request, main run, or sibling message">
+-      <bpmn:documentation>The sweep cadence, as a backstop: every 10-15 minutes while a P0 PR is in flight, every 30 minutes otherwise. Otherwise a subscribed PR event, a sibling's merge request, a main run finishing, or a sibling's message wakes it. An agent with no chat to the merge manager (a local agent such as agy) signals on the PR itself: ready for review, the label ready-to-merge, and a signed ready: &lt;head sha&gt; comment; each sweep reads every open PR labelled ready-to-merge in the repositories it watches. Never a polling loop inside a turn.</bpmn:documentation>
++      <bpmn:documentation>The sweep cadence, as a backstop: every 10-15 minutes while a P0 PR is in flight, every 30 minutes otherwise. Otherwise a subscribed PR event, a sibling's merge request, a main run finishing, or a sibling's message wakes it. An agent with no chat to the merge manager (a local agent such as agy) signals on its own PR: ready for review and the label ready-to-merge (green) or needs-repin (green except for a re-pin; the merge manager re-pins, then merges), with a signed ready: &lt;head sha&gt; comment until merge:guard accepts the label; each sweep reads every open PR carrying either label in the repositories it watches, and only the merge manager acts on them (owner, 2026-11-13). Never a polling loop inside a turn.</bpmn:documentation>
+       <bpmn:outgoing>Flow_1</bpmn:outgoing>
+       <bpmn:timerEventDefinition id="Timer_Wake"/>
+     </bpmn:startEvent>
+diff --git a/sdlc/skills/sdlc-core/merge-manager-watcher.md b/sdlc/skills/sdlc-core/merge-manager-watcher.md
+index a240fa1..18d80db 100644
+--- a/sdlc/skills/sdlc-core/merge-manager-watcher.md
++++ b/sdlc/skills/sdlc-core/merge-manager-watcher.md
+@@ -75,15 +75,28 @@ manager exists. It checks, in this order:
+    while no merge manager holds the lane.
+ 
+ **An agent with no chat to the merge manager** (a local agent such as
+-agy, or any tool that only reaches GitHub) signals on the PR, because the
+-PR is the message ([`merge-queue`](merge-queue.md) §"The PR is the message"):
+-it marks the PR ready for review, adds the label `ready-to-merge`, and
+-comments `ready: <full head sha>` with what signs it. It still asks the
+-owner first (§"Ask the user before submitting" in `merge-queue`). Every
+-sweep reads the open PRs labelled `ready-to-merge` in the repositories the
+-merge manager watches, and treats each as a merge request; one with no
+-preview or no `ready:` comment goes back with a comment saying what is
+-missing.
++agy, a GitHub Actions job, a scheduled routine, or any tool that only
++reaches GitHub) signals on its own PR with a label, because the PR is the
++message ([`merge-queue`](merge-queue.md) §"The PR is the message"; owner,
++2026-11-13: "need a way to mark this for agents not able to
++communicate... label PR?"). It marks the PR ready for review and adds one
++of two labels:
++
++- `ready-to-merge`: green; the merge manager merges it.
++- `needs-repin`: green except for a re-pin, or for being behind its pins;
++  the merge manager re-pins, then merges. This is the label form of
++  `repin+merge:`.
++
++A label is a request, never a merge: only the merge manager acts on
++either label (§"Only the merge manager merges and re-pins"). The agent
++puts the six lines in the PR body or a comment, and still asks the owner
++first (§"Ask the user before submitting" in `merge-queue`). Every sweep
++reads the open PRs carrying either label in the repositories the merge
++manager watches, and treats each as a request. One with no preview, or no
++six lines, goes back with a comment saying what is missing. Until the
++tools layer's `merge:guard` accepts the label in place of a signed
++`ready: <full head sha>` comment (§"What this does not do yet"), the agent
++also posts that comment on its own PR.
+ 
+ **Where the announcement lives, so all can use it.** The holder sends
+ `merge manager: <session id>` to every sibling and the owner, and notes it
+@@ -498,10 +511,19 @@ These come from the role; the watcher is the step that acts on them:
+   post the marker on its own PR, and then sends the six lines to the merge
+   manager. What it cannot cover is a PR whose session can neither post nor
+   reach GitHub, because nobody else may post the marker for it (rule 1).
+-  Follow-up for the tools layer: check 3 also accepts a marker posted by
+-  the active merge manager that names the PR's own session and quotes its
+-  request (`relayed for <session>`), and `--no-merge-manager` is renamed to
+-  say what it now means: the merge manager landing a PR of its own.
++  Follow-up for the tools layer (owner, 2026-11-13: "update process and
++  tools"):
++  - check 3 accepts the `ready-to-merge` label, alone or with a pinned
++    head, in place of the `ready:` comment, so sessions stop posting ready
++    comments;
++  - `merge:watch` lists the PRs labelled `ready-to-merge` and `needs-repin`
++    as the merge manager's queue, each with its CI verdict;
++  - every merge path (`merge:guard --merge`, any standing re-pin
++    auto-merge) says that only the merge manager runs it;
++  - `--no-merge-manager` is renamed to say what it now means: the merge
++    manager landing a PR of its own.
++- The `needs-repin` label must exist in each repository the merge manager
++  watches before an agent can use it.
+ 
+ - The timer is each session's own scheduled check-in. No workflow wakes the
+   merge manager yet.
+diff --git a/sdlc/skills/sdlc-core/merge-queue.md b/sdlc/skills/sdlc-core/merge-queue.md
+index 0a1285f..a16cdf9 100644
+--- a/sdlc/skills/sdlc-core/merge-queue.md
++++ b/sdlc/skills/sdlc-core/merge-queue.md
+@@ -46,6 +46,12 @@ The steward reads open PRs labelled `ready-to-merge`, and nothing else. A
+ comment posted anywhere else reaches nobody: not on a PR you believe is the
+ steward's, and not on an issue.
+ 
++
++A session that cannot message the merge manager labels its own PR
++instead: `ready-to-merge` when it is green, `needs-repin` when it is green
++except for a re-pin. Only the merge manager acts on either label
++([`merge-manager-watcher`](merge-manager-watcher.md) §"The sibling's side:
++find the merge manager first"; owner, 2026-11-13).
+ ### Ask the user before submitting
+ 
+ **When you finish your work and are ready to merge, ask the user before submitting to the merge queue.** Do not apply `ready-to-merge` or post the `ready:` marker autonomously without asking the user if you should submit. Submitting to the queue requests landing the code on `main`; the user or owner confirms the submission.
+diff --git a/translations/ar/processes/merge-manager-watch.pot b/translations/ar/processes/merge-manager-watch.pot
+index 97504b4..155aa8c 100644
+--- a/translations/ar/processes/merge-manager-watch.pot
++++ b/translations/ar/processes/merge-manager-watch.pot
+@@ -5,7 +5,7 @@
+ msgid ""
+ msgstr ""
+ "Project-Id-Version: merge-manager-watch\n"
+-"POT-Creation-Date: 2026-11-13T21:00:04.451Z\n"
++"POT-Creation-Date: 2026-11-13T21:12:58.294Z\n"
+ "PO-Revision-Date: \n"
+ "Last-Translator: \n"
+ "Language: ar\n"
+@@ -281,7 +281,7 @@ msgstr ""
+ 
+ #: sdlc/processes/merge-manager-watch.bpmn:60
+ #. Diagram element documentation
+-msgid "The sweep cadence, as a backstop: every 10-15 minutes while a P0 PR is in flight, every 30 minutes otherwise. Otherwise a subscribed PR event, a sibling's merge request, a main run finishing, or a sibling's message wakes it. An agent with no chat to the merge manager (a local agent such as agy) signals on the PR itself: ready for review, the label ready-to-merge, and a signed ready: <head sha> comment; each sweep reads every open PR labelled ready-to-merge in the repositories it watches. Never a polling loop inside a turn."
++msgid "The sweep cadence, as a backstop: every 10-15 minutes while a P0 PR is in flight, every 30 minutes otherwise. Otherwise a subscribed PR event, a sibling's merge request, a main run finishing, or a sibling's message wakes it. An agent with no chat to the merge manager (a local agent such as agy) signals on its own PR: ready for review and the label ready-to-merge (green) or needs-repin (green except for a re-pin; the merge manager re-pins, then merges), with a signed ready: <head sha> comment until merge:guard accepts the label; each sweep reads every open PR carrying either label in the repositories it watches, and only the merge manager acts on them (owner, 2026-11-13). Never a polling loop inside a turn."
+ msgstr ""
+ 
+ #: sdlc/processes/merge-manager-watch.bpmn:59
+diff --git a/translations/es/processes/merge-manager-watch.pot b/translations/es/processes/merge-manager-watch.pot
+index c5a0610..c671fc1 100644
+--- a/translations/es/processes/merge-manager-watch.pot
++++ b/translations/es/processes/merge-manager-watch.pot
+@@ -5,7 +5,7 @@
+ msgid ""
+ msgstr ""
+ "Project-Id-Version: merge-manager-watch\n"
+-"POT-Creation-Date: 2026-11-13T21:00:04.451Z\n"
++"POT-Creation-Date: 2026-11-13T21:12:58.294Z\n"
+ "PO-Revision-Date: \n"
+ "Last-Translator: \n"
+ "Language: es\n"
+@@ -281,7 +281,7 @@ msgstr ""
+ 
+ #: sdlc/processes/merge-manager-watch.bpmn:60
+ #. Diagram element documentation
+-msgid "The sweep cadence, as a backstop: every 10-15 minutes while a P0 PR is in flight, every 30 minutes otherwise. Otherwise a subscribed PR event, a sibling's merge request, a main run finishing, or a sibling's message wakes it. An agent with no chat to the merge manager (a local agent such as agy) signals on the PR itself: ready for review, the label ready-to-merge, and a signed ready: <head sha> comment; each sweep reads every open PR labelled ready-to-merge in the repositories it watches. Never a polling loop inside a turn."
++msgid "The sweep cadence, as a backstop: every 10-15 minutes while a P0 PR is in flight, every 30 minutes otherwise. Otherwise a subscribed PR event, a sibling's merge request, a main run finishing, or a sibling's message wakes it. An agent with no chat to the merge manager (a local agent such as agy) signals on its own PR: ready for review and the label ready-to-merge (green) or needs-repin (green except for a re-pin; the merge manager re-pins, then merges), with a signed ready: <head sha> comment until merge:guard accepts the label; each sweep reads every open PR carrying either label in the repositories it watches, and only the merge manager acts on them (owner, 2026-11-13). Never a polling loop inside a turn."
+ msgstr ""
+ 
+ #: sdlc/processes/merge-manager-watch.bpmn:59
+diff --git a/translations/fr/processes/merge-manager-watch.pot b/translations/fr/processes/merge-manager-watch.pot
+index 74c9131..745c342 100644
+--- a/translations/fr/processes/merge-manager-watch.pot
++++ b/translations/fr/processes/merge-manager-watch.pot
+@@ -5,7 +5,7 @@
+ msgid ""
+ msgstr ""
+ "Project-Id-Version: merge-manager-watch\n"
+-"POT-Creation-Date: 2026-11-13T21:00:04.452Z\n"
++"POT-Creation-Date: 2026-11-13T21:12:58.294Z\n"
+ "PO-Revision-Date: \n"
+ "Last-Translator: \n"
+ "Language: fr\n"
+@@ -281,7 +281,7 @@ msgstr ""
+ 
+ #: sdlc/processes/merge-manager-watch.bpmn:60
+ #. Diagram element documentation
+-msgid "The sweep cadence, as a backstop: every 10-15 minutes while a P0 PR is in flight, every 30 minutes otherwise. Otherwise a subscribed PR event, a sibling's merge request, a main run finishing, or a sibling's message wakes it. An agent with no chat to the merge manager (a local agent such as agy) signals on the PR itself: ready for review, the label ready-to-merge, and a signed ready: <head sha> comment; each sweep reads every open PR labelled ready-to-merge in the repositories it watches. Never a polling loop inside a turn."
++msgid "The sweep cadence, as a backstop: every 10-15 minutes while a P0 PR is in flight, every 30 minutes otherwise. Otherwise a subscribed PR event, a sibling's merge request, a main run finishing, or a sibling's message wakes it. An agent with no chat to the merge manager (a local agent such as agy) signals on its own PR: ready for review and the label ready-to-merge (green) or needs-repin (green except for a re-pin; the merge manager re-pins, then merges), with a signed ready: <head sha> comment until merge:guard accepts the label; each sweep reads every open PR carrying either label in the repositories it watches, and only the merge manager acts on them (owner, 2026-11-13). Never a polling loop inside a turn."
+ msgstr ""
+ 
+ #: sdlc/processes/merge-manager-watch.bpmn:59
+diff --git a/translations/ru/processes/merge-manager-watch.pot b/translations/ru/processes/merge-manager-watch.pot
+index 716f050..016522d 100644
+--- a/translations/ru/processes/merge-manager-watch.pot
++++ b/translations/ru/processes/merge-manager-watch.pot
+@@ -5,7 +5,7 @@
+ msgid ""
+ msgstr ""
+ "Project-Id-Version: merge-manager-watch\n"
+-"POT-Creation-Date: 2026-11-13T21:00:04.452Z\n"
++"POT-Creation-Date: 2026-11-13T21:12:58.295Z\n"
+ "PO-Revision-Date: \n"
+ "Last-Translator: \n"
+ "Language: ru\n"
+@@ -281,7 +281,7 @@ msgstr ""
+ 
+ #: sdlc/processes/merge-manager-watch.bpmn:60
+ #. Diagram element documentation
+-msgid "The sweep cadence, as a backstop: every 10-15 minutes while a P0 PR is in flight, every 30 minutes otherwise. Otherwise a subscribed PR event, a sibling's merge request, a main run finishing, or a sibling's message wakes it. An agent with no chat to the merge manager (a local agent such as agy) signals on the PR itself: ready for review, the label ready-to-merge, and a signed ready: <head sha> comment; each sweep reads every open PR labelled ready-to-merge in the repositories it watches. Never a polling loop inside a turn."
++msgid "The sweep cadence, as a backstop: every 10-15 minutes while a P0 PR is in flight, every 30 minutes otherwise. Otherwise a subscribed PR event, a sibling's merge request, a main run finishing, or a sibling's message wakes it. An agent with no chat to the merge manager (a local agent such as agy) signals on its own PR: ready for review and the label ready-to-merge (green) or needs-repin (green except for a re-pin; the merge manager re-pins, then merges), with a signed ready: <head sha> comment until merge:guard accepts the label; each sweep reads every open PR carrying either label in the repositories it watches, and only the merge manager acts on them (owner, 2026-11-13). Never a polling loop inside a turn."
+ msgstr ""
+ 
+ #: sdlc/processes/merge-manager-watch.bpmn:59
+diff --git a/translations/zh/processes/merge-manager-watch.pot b/translations/zh/processes/merge-manager-watch.pot
+index 3118db6..4c9b6ce 100644
+--- a/translations/zh/processes/merge-manager-watch.pot
++++ b/translations/zh/processes/merge-manager-watch.pot
+@@ -5,7 +5,7 @@
+ msgid ""
+ msgstr ""
+ "Project-Id-Version: merge-manager-watch\n"
+-"POT-Creation-Date: 2026-11-13T21:00:04.452Z\n"
++"POT-Creation-Date: 2026-11-13T21:12:58.295Z\n"
+ "PO-Revision-Date: \n"
+ "Last-Translator: \n"
+ "Language: zh\n"
+@@ -281,7 +281,7 @@ msgstr ""
+ 
+ #: sdlc/processes/merge-manager-watch.bpmn:60
+ #. Diagram element documentation
+-msgid "The sweep cadence, as a backstop: every 10-15 minutes while a P0 PR is in flight, every 30 minutes otherwise. Otherwise a subscribed PR event, a sibling's merge request, a main run finishing, or a sibling's message wakes it. An agent with no chat to the merge manager (a local agent such as agy) signals on the PR itself: ready for review, the label ready-to-merge, and a signed ready: <head sha> comment; each sweep reads every open PR labelled ready-to-merge in the repositories it watches. Never a polling loop inside a turn."
++msgid "The sweep cadence, as a backstop: every 10-15 minutes while a P0 PR is in flight, every 30 minutes otherwise. Otherwise a subscribed PR event, a sibling's merge request, a main run finishing, or a sibling's message wakes it. An agent with no chat to the merge manager (a local agent such as agy) signals on its own PR: ready for review and the label ready-to-merge (green) or needs-repin (green except for a re-pin; the merge manager re-pins, then merges), with a signed ready: <head sha> comment until merge:guard accepts the label; each sweep reads every open PR carrying either label in the repositories it watches, and only the merge manager acts on them (owner, 2026-11-13). Never a polling loop inside a turn."
+ msgstr ""
+ 
+ #: sdlc/processes/merge-manager-watch.bpmn:59
+-- 
+2.43.0
+
