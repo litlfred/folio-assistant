@@ -297,9 +297,17 @@ jobs:
         with:
           workspaces: tools/hecke-engine-wasm -> target
       - name: Install wasm-pack
-        uses: jetli/wasm-pack-action@0d096b08b4e5a7de8c28de67e11e945404e9eefa # v0.4.0
-        with:
-          version: 'v0.13.0'
+        # jetli/wasm-pack-action has no node24 release; fetch the same v0.13.0
+        # binary directly, checked against its sha256.
+        env:
+          WASM_PACK_SHA256: 1da923cf0ebbbe335bf60795e192b34d6de9076703391e76c9df6fbcf0737d18
+        run: |
+          set -euo pipefail
+          v=v0.13.0; n=wasm-pack-$v-x86_64-unknown-linux-musl
+          curl -sSfL -o "$RUNNER_TEMP/$n.tar.gz" "https://github.com/rustwasm/wasm-pack/releases/download/$v/$n.tar.gz"
+          echo "$WASM_PACK_SHA256  $RUNNER_TEMP/$n.tar.gz" | sha256sum -c -
+          tar -xzf "$RUNNER_TEMP/$n.tar.gz" -C "$RUNNER_TEMP"
+          echo "$RUNNER_TEMP/$n" >> "$GITHUB_PATH"
       - name: wasm-pack build
         run: cd tools/hecke-engine-wasm && wasm-pack build --target nodejs --release
 
