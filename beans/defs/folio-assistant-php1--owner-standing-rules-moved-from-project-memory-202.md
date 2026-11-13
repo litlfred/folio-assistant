@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: critical
 created_at: 2026-11-12T09:45:00Z
-updated_at: 2026-11-12T10:55:00Z
+updated_at: 2026-11-13T20:49:00Z
 parent: folio-assistant-n6ny
 tags:
     - project-memory
@@ -49,3 +49,7 @@ _2026-11-12T09:45:00Z_ — Filed by thread "Record handover in beans" (https://c
 - FUNCTIONAL ONLY FOR smart-ra / dth-* (owner 09:57Z 11-12): never merge smart-ra or dth-* content PRs that need committee or author review; merge only functional PRs (code, CI, pins). Supersedes any earlier card that queued content drafts for merge (e.g. Q-RA-VAL-2 A).
 
 _2026-11-12T09:58:00Z_ — Rule added by https://claude.ai/code/session_01EucfRpkvK7d4FJyuqypQzm.
+
+- NO DIRECT MERGES — SEND TO MERGE MANAGER (owner 20:44Z 11-13): "dont direct merge, just send to merge manager https://claude.ai/code/cshk_01VQDpPffYARDQ8juksAZScfEsSBcoJKmS94Kt8kP8nCnb". Never call `mergePinned`, `mergePullRequest`, or `gh pr merge` directly from worker/lane sessions; instead prepare the PR (mark ready for review, post session-signed `ready: <full-40-char-sha>` comment, add `ready-to-merge` label, and run `evaluate` + `postStatus` from `merge-guard.ts` to 8/8 PASS) and hand it off to Merge Manager https://claude.ai/code/cshk_01VQDpPffYARDQ8juksAZScfEsSBcoJKmS94Kt8kP8nCnb.
+
+_2026-11-13T20:49:00Z_ — Rule added per owner instruction (`2026-11-13T21:44:32+01:00`).
