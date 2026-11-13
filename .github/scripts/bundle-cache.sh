@@ -31,8 +31,15 @@
 #   instances (found on #2966, run 42035462008: a page built from an older
 #   `beans` tip than the test read). So the digest is taken AFTER
 #   `state:mount`, and a marker that cannot be read is no digest at all.
-# - the head of `cat/cat-harness/qa-reports` (`QA_BRANCH`): the QA working copy build reads the
-#   qa-reports store (`qa-working-copy.ts`, `input-site: traced`).
+# - what the QA working copy build can READ of `cat/cat-harness/qa-reports`
+#   (`qa-working-copy.ts`, `input-site: traced`): the `main/` subtree, and the
+#   `index.json` main pointer with the skip chain that starts from it. Every
+#   build-time read resolves `main` (or `main/<sha>`) through those
+#   (`qa-store.ts` `resolveSpec`, `findSkippedTarget`). NOT the branch head:
+#   a PR run's own publish job pushes `pr/<n>/<sha>` (and an index update)
+#   AFTER it records its bundle, so a head-keyed digest could never match the
+#   merge push. Measured 2026-11-13: 19 main pushes since 2026-11-08, 0
+#   reuses, each key differing from its PR run's only in that head.
 #
 # Measured cost of that honesty (2026-11-05): `cat/cat-harness/beans` took 10
 # commits between 14:06Z and 14:25Z, so two runs rarely see one tip. A hit
@@ -92,6 +99,31 @@ output() { [ -n "${GITHUB_OUTPUT:-}" ] && echo "$1=$2" >> "$GITHUB_OUTPUT"; echo
 summary() { if [ -n "${GITHUB_STEP_SUMMARY:-}" ]; then printf '%s\n' "$@" >> "$GITHUB_STEP_SUMMARY"; fi; printf '%s\n' "$@" >&2; }
 
 ver() { "$@" 2>/dev/null | head -1 || true; }
+
+# The skip chain from the index's main pointer, as `qa-store.ts` follows it
+# (`skipped["main/<sha>"] ?? skipped["<sha>"]`, a value either form). Bounded,
+# so a cycle cannot hang the job. Reads index.json on stdin.
+QA_MAIN_CHAIN_JQ='def norm: if type == "string" then sub("^main/"; "") else tostring end;
+  (.skipped // {}) as $s
+  | ((.main.sha? // .main) | if . == null then empty else norm end) as $m
+  | [limit(20; $m | recurse(($s["main/" + .] // $s[.]) | if . == null then empty else norm end))]'
+
+# What the QA working copy build can read of the qa-reports branch: the
+# `main/` subtree and the main pointer's skip chain, never `pr/`. One line,
+# or a non-zero exit (no digest) when any of it cannot be read.
+qa_reports_read_state() {
+  local repo="${REPO:-${GITHUB_REPOSITORY:-}}" tip root trees main idx chain
+  [ -n "$repo" ] || return 1
+  tip=$(git ls-remote origin refs/heads/cat/cat-harness/qa-reports 2>/dev/null | cut -f1)
+  [ -n "$tip" ] || return 1
+  root=$(gh api "repos/$repo/git/commits/$tip" --jq .tree.sha 2>/dev/null) || return 1
+  trees=$(gh api "repos/$repo/git/trees/$root" --jq '[(.tree[] | select(.path == "main" and .type == "tree") | .sha), (.tree[] | select(.path == "index.json" and .type == "blob") | .sha)] | join(" ")' 2>/dev/null) || return 1
+  read -r main idx <<< "$trees"
+  [ -n "$main" ] && [ -n "$idx" ] || return 1
+  chain=$(gh api "repos/$repo/git/blobs/$idx" --jq .content 2>/dev/null | base64 -d | jq -c "$QA_MAIN_CHAIN_JQ") || return 1
+  [ -n "$chain" ] && [ "$chain" != "[]" ] || return 1
+  echo "main-tree $main chain $chain"
+}
 # This commit's parents, space-separated, from the API (a depth-1 checkout has none).
 parents_of() { gh api "repos/$REPO/commits/$1" --jq '[.parents[].sha] | join(" ")' 2>/dev/null; }
 # The head this run is for: SHA, or the PR head (second parent) on a pull_request.
@@ -127,10 +159,9 @@ case "$cmd" in
           jq -er '"state \(.key // .id) \(.repository // "origin") \(.branch) \(.tip)"' "$m" || exit 1
         done
       fi
-      qr=$(git ls-remote origin refs/heads/cat/cat-harness/qa-reports 2>/dev/null | cut -f1)
-      [ -n "$qr" ] || exit 1
+      qr=$(qa_reports_read_state) || exit 1
       echo "qa-reports $qr"
-    ) || { echo "digest: a state mount marker or the qa-reports head could not be read: no digest" >&2; exit 1; }
+    ) || { echo "digest: a state mount marker or the qa-reports state could not be read: no digest" >&2; exit 1; }
     printf '%s\n' "$inputs" | sed 's/^/digest input: /' >&2
     printf '%s\n' "$inputs" | sha256sum | cut -d' ' -f1
     ;;
