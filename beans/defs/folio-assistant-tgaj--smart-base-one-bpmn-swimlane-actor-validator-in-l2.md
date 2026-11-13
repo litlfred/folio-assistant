@@ -38,5 +38,5 @@ Plus `bpmn_author/validators/bpmn_xml_validator.py` (well-formed, root element, 
 
 ## Progress
 
-- PR open and queued for Merge Manager (`ready-to-merge` + `merge-guard: success`): https://github.com/litlfred/smart-base/pull/386 (`e27e38de2baf9eee4f1f51cfba208bdee8d81881`, `smart-base/L2-bpmn/tools/bpmn-validate/`, `smart-base/L2-bpmn/tools/bpmn-graphviz-layout/`, `.github/workflows/bpmn-validate.yml`, and `input/bpmn/` path fixes, coordinated with `#385`).
+- PR open and queued for Merge Manager (`ready-to-merge` + `merge-guard: success`): https://github.com/litlfred/smart-base/pull/386 (`86a857b604c8a0325f07fee61e593203be6bdeeb`, merged with `main` `8ae44b240b`; `smart-base/L2-bpmn/tools/bpmn-validate/`, `smart-base/L2-bpmn/tools/bpmn-graphviz-layout/`, `.github/workflows/bpmn-validate.yml`, and `input/bpmn/` path fixes, coordinated with `#385`).
 - Duplicate PR https://github.com/litlfred/smart-base/pull/391 closed and `ready-to-merge` removed in favor of `#386` so the Merge Manager queue has no conflict.
