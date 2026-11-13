@@ -1,0 +1,97 @@
+{
+  "$schema": "translation-qa/v1",
+  "label": "trans:fr/agent-onboarding",
+  "block": "Agent onboarding",
+  "locale": "fr",
+  "paths": {
+    "md": "docs/guides/agent-onboarding.md"
+  },
+  "po": "translations/fr/guides/agent-onboarding.po",
+  "source_hashes": {
+    "md": "614eb0b7b03b",
+    "po": "3b54167c7bf5"
+  },
+  "criteria": {
+    "translation-coverage": [
+      {
+        "field_hash": {
+          "md": "614eb0b7b03b",
+          "po": "3b54167c7bf5"
+        },
+        "result": "pass",
+        "reviewer": {
+          "kind": "script",
+          "id": "pipeline/translation-block-qa.ts",
+          "actor": "ci-pipeline",
+          "version": "v1",
+          "script_hash": "218e592ac437",
+          "script_commit_sha": "unknown"
+        },
+        "reviewed_tree": "41d9dd0b016cc2c8f14ac0a1e8ecff7110234a11",
+        "metrics": {
+          "translated": 73,
+          "total": 73,
+          "pct": 100
+        }
+      }
+    ],
+    "translation-terms-preserved": [
+      {
+        "field_hash": {
+          "md": "614eb0b7b03b",
+          "po": "3b54167c7bf5"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "pipeline/translation-block-qa.ts",
+          "actor": "ci-pipeline",
+          "version": "v1",
+          "script_hash": "218e592ac437",
+          "script_commit_sha": "unknown"
+        },
+        "reviewed_tree": "41d9dd0b016cc2c8f14ac0a1e8ecff7110234a11",
+        "severity": "minor",
+        "evidence": [
+          {
+            "text": "ANY — absent from: \"Réservez avant de travailler pour que deux sessions ne prennent pas le même élém\""
+          }
+        ],
+        "metrics": {
+          "checked": 73,
+          "missing": 1,
+          "missing_strict": 0,
+          "missing_acronyms": 1,
+          "glossary_broken": 0,
+          "glossary_resolved": 0
+        },
+        "notes": "1 acronym(s) from the source do not appear verbatim in the translation and no glossary entry speaks for them. That is right for one the target language localises — WHO is OMS in French — and wrong for one silently dropped, and this check cannot tell the two apart. Add them to translations/fr/glossary.po: a pinned msgstr says what the term must become, and a \"#, localised\" flag says it is rendered in the target language without pinning how."
+      }
+    ],
+    "translation-not-echo": [
+      {
+        "field_hash": {
+          "md": "614eb0b7b03b",
+          "po": "3b54167c7bf5"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "pipeline/translation-block-qa.ts",
+          "actor": "ci-pipeline",
+          "version": "v1",
+          "script_hash": "218e592ac437",
+          "script_commit_sha": "unknown"
+        },
+        "reviewed_tree": "41d9dd0b016cc2c8f14ac0a1e8ecff7110234a11",
+        "severity": "minor",
+        "metrics": {
+          "echoed": 1,
+          "translated": 73
+        },
+        "notes": "1 string(s) are byte-identical to the source. That is right for a proper noun and wrong for a sentence, which is why this warns rather than fails."
+      }
+    ],
+    "translation-semantic-roundtrip": []
+  }
+}
