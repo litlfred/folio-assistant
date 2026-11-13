@@ -1,0 +1,95 @@
+{
+  "@context": [
+    "https://litlfred.github.io/cat-harness/ns/context/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/",
+      "folio-assistant-core": "https://litlfred.github.io/folio-assistant-core/v0/ns/"
+    }
+  ],
+  "@id": "library/omg-2024-spdx-3-0/blocks/figure-img-p205-1",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../images/img-p205-1.png",
+  "pageStart": 205,
+  "pageEnd": 205,
+  "narrative": [
+    {
+      "text": "Historical UML class diagram of the 3T-SBOM group's draft core model (circa September 2020). Identity (Id, name, aliases, comment), specialised by Tool (user-agent), Organization and Person (a Person may belong to 0..1 Organization), is linked to Artifact (Id, artifact-url, name, comment) as supplier and as originator (each 0..1); a callout reads 'Need to capture contacts on supplier and originator links'. Artifact has Hashes (algorithm, value), ExternalReferences (type, locator, comment) and takes part in Relationship (type, completeness, comment) as from and to. DocumentMetadata has creators (1..* Identity); a Tool links to 0..1 ExternalDocumentReference (namespace, document-url, comment) by 'bill-of-materials', and that reference carries Hashes.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+      },
+      "drafted_at": "2026-10-03",
+      "lang": "en"
+    },
+    {
+      "text": "Diagramme de classes UML historique du modèle Core provisoire du groupe 3T-SBOM (vers septembre 2020). Identity (Id, name, aliases, comment), spécialisée par Tool (user-agent), Organization et Person (une Person peut appartenir à 0..1 Organization), est reliée à Artifact (Id, artifact-url, name, comment) comme supplier et comme originator (chacun 0..1) ; une bulle indique « Need to capture contacts on supplier and originator links ». Artifact a des Hashes (algorithm, value) et des ExternalReferences (type, locator, comment), et participe à Relationship (type, completeness, comment) comme from et to. DocumentMetadata a des creators (1..* Identity) ; un Tool est relié à 0..1 ExternalDocumentReference (namespace, document-url, comment) par « bill-of-materials », et cette référence porte des Hashes.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+      },
+      "drafted_at": "2026-10-24",
+      "lang": "fr"
+    },
+    {
+      "text": "Diagrama de clases UML histórico del modelo Core provisional del grupo 3T-SBOM (hacia septiembre de 2020). Identity (Id, name, aliases, comment), especializada por Tool (user-agent), Organization y Person (una Person puede pertenecer a 0..1 Organization), se vincula con Artifact (Id, artifact-url, name, comment) como supplier y como originator (cada uno 0..1); una nota dice «Need to capture contacts on supplier and originator links». Artifact tiene Hashes (algorithm, value) y ExternalReferences (type, locator, comment) y participa en Relationship (type, completeness, comment) como from y to. DocumentMetadata tiene creators (1..* Identity); un Tool se vincula con 0..1 ExternalDocumentReference (namespace, document-url, comment) mediante «bill-of-materials», y esa referencia lleva Hashes.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+      },
+      "drafted_at": "2026-10-24",
+      "lang": "es"
+    },
+    {
+      "text": "مخطط أصناف UML تاريخي للنموذج الأساسي المبدئي لمجموعة 3T-SBOM (نحو سبتمبر 2020). الصنف Identity (Id، name، aliases، comment)، الذي تخصّصه Tool (user-agent) وOrganization وPerson (يمكن أن تنتمي Person إلى 0..1 Organization)، مرتبط بـ Artifact (Id، artifact-url، name، comment) بوصفه supplier وoriginator (لكلٍّ منهما 0..1)؛ وتقول ملاحظة: «Need to capture contacts on supplier and originator links». ولـ Artifact قيم Hashes (algorithm، value) وExternalReferences (type، locator، comment)، ويشارك في Relationship (type، completeness، comment) بوصفه from وto. ولـ DocumentMetadata قيمة creators (1..* Identity)؛ ويرتبط Tool بـ 0..1 ExternalDocumentReference (namespace، document-url، comment) عبر «bill-of-materials»، ويحمل هذا المرجع Hashes.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+      },
+      "drafted_at": "2026-10-24",
+      "lang": "ar"
+    },
+    {
+      "text": "Историческая диаграмма классов UML черновой базовой модели группы 3T-SBOM (около сентября 2020 г.). Identity (Id, name, aliases, comment), специализированный Tool (user-agent), Organization и Person (Person может принадлежать 0..1 Organization), связан с Artifact (Id, artifact-url, name, comment) как supplier и как originator (каждый 0..1); выноска гласит «Need to capture contacts on supplier and originator links». У Artifact есть Hashes (algorithm, value) и ExternalReferences (type, locator, comment), и он участвует в Relationship (type, completeness, comment) как from и to. У DocumentMetadata есть creators (1..* Identity); Tool связан с 0..1 ExternalDocumentReference (namespace, document-url, comment) через «bill-of-materials», и эта ссылка несёт Hashes.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+      },
+      "drafted_at": "2026-10-24",
+      "lang": "ru"
+    },
+    {
+      "text": "3T-SBOM 小组核心模型草案的历史 UML 类图（约 2020 年 9 月）。Identity（Id、name、aliases、comment）由 Tool（user-agent）、Organization 和 Person 特化（一个 Person 可属于 0..1 个 Organization），它作为 supplier 和 originator（各 0..1）与 Artifact（Id、artifact-url、name、comment）相连；一个标注写着“Need to capture contacts on supplier and originator links”。Artifact 有 Hashes（algorithm、value）和 ExternalReferences（type、locator、comment），并作为 from 和 to 参与 Relationship（type、completeness、comment）。DocumentMetadata 有 creators（1..* Identity）；一个 Tool 通过“bill-of-materials”连接 0..1 个 ExternalDocumentReference（namespace、document-url、comment），该引用带有 Hashes。",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+      },
+      "drafted_at": "2026-10-24",
+      "lang": "zh"
+    }
+  ],
+  "derivedFrom": "library/omg-2024-spdx-3-0/sections/sec-397",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/source/omg-2024-spdx-3-0",
+  "provenance": "ingested"
+}

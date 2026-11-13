@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="PHW.I.Definitions" targetNamespace="http://smart.who.int/trust-phw/bpmn">
+  <bpmn:collaboration id="PHW.I.Collaboration">
+    <bpmn:participant id="PHW.I.Participant" name="I. Decide a Verifiable Health Link Request under an Existing Data Sharing Agreement" processRef="PHW.I" />
+  </bpmn:collaboration>
+  <bpmn:dataStore id="PHW.DataStore.AuditRecordRepository" name="ATNA Audit Record Repository">
+    <bpmn:documentation>IHE ATNA Audit Record Repository, receiving `[ITI-20]` Record Audit Event and storing each event. ATNA is Final Text in the IHE ITI Technical Framework (ITI TF-1: 9 (section from standing knowledge, unverified)). A store, not a lane: it only keeps what the sender writes (WorldHealthOrganization/smart-trust-phw#22).</bpmn:documentation>
+  </bpmn:dataStore>
+  <bpmn:process id="PHW.I" name="I. Decide a Verifiable Health Link Request under an Existing Data Sharing Agreement" isExecutable="false">
+    <bpmn:documentation>The VHL Sharer and the receiving organisation may already hold a data sharing agreement. When the receiver resolves a VHL (`[ITI-YY5]` Retrieve Manifest, then `[ITI-68]`), the Sharer authenticates it with the VHL option in use: HTTP Message Signatures (RFC 9421), the Verifiable Credential Option, or OAuth with SSRAA (the HL7 profile of UDAP, approved by the owner on 2026-10-30 20:28Z). With SSRAA, the purpose of use can come from the `purpose_of_use` of the `hl7-b2b` extension in the receiver's token request. The Sharer finds the agreement from that verified identity, decides under it with process F, and records an IHE ATNA audit event (`[ITI-20]`) citing the agreement's fixed-version URL, the receiver, the purpose and the documents released. Revocation is process H. The VHL carries no agreement reference, and the person sharing binds the receiver to nothing. Without a verified identity, or without an agreement, the normal VHL rules govern. Owner rulings, 2026-10-30 20:01Z and 20:04Z (option A, identity lookup). Several agreements and Consents can be in force with one receiver at once (owner decision D, card Q-DRAIN-4, 2026-11-01 07:54Z): each is evaluated, one that does not cover the request is not applicable (not a deny), and the results are combined by the DMN decision `PHW.DT.AgreementAccess` (`input/dmn/PHW.DT.AgreementAccess.dmn`). Its default is ODRL 2.2 `odrl:prohibit`: permit if at least one applicable policy permits and none prohibits. The policies' own `odrl:conflict`, or a deployer's replacement DMN decision with the same inputs and outputs, overrides it (owner, 07:55Z). The receiver MAY name one or more agreements to narrow what it acts under. Open point: no existing element names the identity-to-agreement mapping. Trust-anchor neutral, with no IUA claim.</bpmn:documentation>
+    <bpmn:laneSet id="PHW.I.LaneSet">
+      <bpmn:lane id="PHW.Lane.VHLReceiver" name="VHL Receiver (receiving organisation or application)">
+        <bpmn:documentation>System Actor: IHE VHL Receiver (`https://profiles.ihe.net/ITI/VHL/CapabilityStatement/IHE.VHL.VHLReceiver`), run by an organisation that may hold a data sharing agreement with the VHL Sharer.</bpmn:documentation>
+        <bpmn:flowNodeRef>PHW.I.Start</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.I.1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.I.11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.I.End</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="PHW.Lane.VHLSharer" name="VHL Sharer (enforcement and decision point)">
+        <bpmn:documentation>System Actor: IHE VHL Sharer (`https://profiles.ihe.net/ITI/VHL/CapabilityStatement/IHE.VHL.VHLSharer`), the organisation or system that holds the documents. It acts as the policy enforcement point and calls process F.</bpmn:documentation>
+        <bpmn:flowNodeRef>PHW.I.2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.I.Gateway1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.I.4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.I.Gateway2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.I.5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.I.Gateway3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.I.6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.I.7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.I.8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.I.9</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="PHW.Lane.TrustAnchor" name="Trust Anchor (GDHCN or another anchor)">
+        <bpmn:documentation>System Actor: IHE VHL Trust Anchor (`https://profiles.ihe.net/ITI/VHL/CapabilityStatement/IHE.VHL.TrustAnchor`). Trust-anchor neutral: WHO GDHCN is one possible Trust Anchor among others.</bpmn:documentation>
+        <bpmn:flowNodeRef>PHW.I.3</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="PHW.I.Start" name="Receiver holds a verified VHL">
+      <bpmn:documentation>The VHL Receiver has received and verified a VHL (process C, steps C1-C4: `[ITI-YY4]` Provide VHL, `[ITI-YY2]` Retrieve Trust List with DID). The VHL carries no reference to any agreement, and the person who shared it does not bind the receiver to anything (owner, 2026-10-30 20:01Z).</bpmn:documentation>
+      <bpmn:outgoing>PHW.I.Flow1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="PHW.I.1" name="I1. Send Retrieve Manifest authenticated by the VHL option in use [ITI-YY5]">
+      <bpmn:documentation>The receiver authenticates `[ITI-YY5]` Retrieve Manifest with one of VHL's options. (a) HTTP Message Signatures (RFC 9421): ITI-YY5 §2:3.YY5.4.1.3 and §2:3.YY5.5.2, and the Sign Manifest Request Option (Volume 1 §1:XX.2.1). `keyid` identifies the receiver's key in the trust list. (b) Verifiable Credential Option: ITI-YY5 §2:3.YY5.4.1.5. The receiver self-issues a W3C VC whose DataIntegrityProof is signed with its trust-network key. (c) OAuth with SSRAA Option: ITI-YY5 §2:3.YY5.4.1.4 and §2:3.YY5.5.3. SSRAA is the HL7 Security for Scalable Registration, Authentication, and Authorization IG, the FHIR profile of UDAP, approved by the owner on 2026-10-30 20:28Z. Once per receiver and Sharer pair, the receiver completes SSRAA Discovery and Dynamic Client Registration (SSRAA §2 and §3, the UDAP route of process D, steps D9 and D10). It then obtains an access token with the `client_credentials` grant, authenticating with a JWT client assertion (`private_key_jwt`) whose `x5c` header carries its X.509 certificate from the trust community PKI, and whose `extensions` carry the `hl7-b2b` object (SSRAA §5.2.1.1) with `organization_id` and `purpose_of_use`. It sends Retrieve Manifest with the access token as a Bearer token. The plain OAuth of process E is not a VHL option. Naming an agreement is optional (owner decision D, 2026-11-01 07:54Z): with SSRAA, the receiver MAY list the fixed-version URLs of one or more agreements in `consent_policy` of the `hl7-b2b` extension (SSRAA §5.2.1.1, an array of policy URIs). HTTP Message Signatures and the Verifiable Credential Option name none, and still work. Sections are those of the IHE/ITI.VHL source at commit 48201473, as snapshotted in litlfred/smart-trust-tools `library/`.</bpmn:documentation>
+      <bpmn:incoming>PHW.I.Flow1</bpmn:incoming>
+      <bpmn:outgoing>PHW.I.Flow2</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="PHW.I.2" name="I2. Authenticate the receiver against the trust list [ITI-YY5]">
+      <bpmn:documentation>The VHL Sharer authenticates the receiver as ITI-YY5 §2:3.YY5.4.1.7 step 2 requires. HTTP signatures: `keyid`, the signature base, `Content-Digest`, and freshness. VC: the DID URL in `proof.verificationMethod`, `proofValue` and `proofPurpose`. SSRAA (ITI-YY5 §2:3.YY5.5.3): before issuing the token, the authorization server validates the JWT client assertion signature, checks that the `x5c` certificate chains to a trust anchor of the trust community, and checks `jti` against replay; the Sharer then validates the access token's signature, expiration and scope.</bpmn:documentation>
+      <bpmn:incoming>PHW.I.Flow2</bpmn:incoming>
+      <bpmn:outgoing>PHW.I.Flow3</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="PHW.I.3" name="I3. Return receiver key [ITI-YY2] Retrieve Trust List with DID">
+      <bpmn:documentation>The Trust Anchor serves the receiver's public key through `[ITI-YY2]`. With the SSRAA option, the receiver's `x5c` certificate is validated against the trust community's anchor; ITI-YY5 §2:3.YY5.5.3 also says the receiver's public key is obtained from the trust list. A national X.509 PKI can be that anchor.</bpmn:documentation>
+      <bpmn:incoming>PHW.I.Flow3</bpmn:incoming>
+      <bpmn:outgoing>PHW.I.Flow4</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="PHW.I.Gateway1" name="Receiver identity verified?">
+      <bpmn:documentation>Owner rule (20:04Z): if the Sharer cannot verify the receiver's identity, no data sharing agreement applies, and the normal VHL rules govern.</bpmn:documentation>
+      <bpmn:incoming>PHW.I.Flow4</bpmn:incoming>
+      <bpmn:outgoing>PHW.I.Flow5</bpmn:outgoing>
+      <bpmn:outgoing>PHW.I.Flow6</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:businessRuleTask id="PHW.I.4" name="I4. Find the agreements and Consents in force; mark which apply">
+      <bpmn:documentation>The Sharer maps the verified identity (the HTTP signature `keyid`, the VC issuer DID, or, with SSRAA, the registered `client_id` and the certificate's Subject Alternative Name URI that SSRAA §3.1 and §3.4 make the client's lasting identity) to the fixed-version URLs of ALL the agreements it holds with that receiver. This is the same server configuration as process D step D6, keyed by the ODRL `uid`. Each one counts only if its target, purpose and assignee cover the request; any other is not applicable, which is not a deny (owner decision D, 2026-11-01 07:54Z). If the receiver named agreements (SSRAA `consent_policy`, or RFC 9396 `authorization_details[].identifier` on the route of process E), the permissions it acts under are narrowed to the named ones held with it; naming never removes another applicable agreement's prohibition. Where Consents carry the policy, as in the Hajj example, the Consents themselves are the policy (`Consent.policyRule`) and no separate agreement lookup is needed (owner, Q-DRAIN-5, 07:44Z). OPEN POINT: no existing VHL, OAuth or VC element names the identity-to-agreement mapping, so it is the Sharer's own configuration. No field is invented.</bpmn:documentation>
+      <bpmn:incoming>PHW.I.Flow5</bpmn:incoming>
+      <bpmn:outgoing>PHW.I.Flow7</bpmn:outgoing>
+    </bpmn:businessRuleTask>
+    <bpmn:exclusiveGateway id="PHW.I.Gateway2" name="Any agreement or Consent applies?">
+      <bpmn:documentation>Yes when at least one agreement or Consent found at I4 is current, not terminated (DSA P14), and covers the request's target, purpose and assignee. No: the DMN outcome would be `not-applicable`, and the normal VHL rules govern (I8).</bpmn:documentation>
+      <bpmn:incoming>PHW.I.Flow7</bpmn:incoming>
+      <bpmn:outgoing>PHW.I.Flow8</bpmn:outgoing>
+      <bpmn:outgoing>PHW.I.Flow9</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:callActivity id="PHW.I.5" name="I5. Decide under every applicable agreement (process F)" calledElement="PHW.F">
+      <bpmn:documentation>Calls process F with the verified receiver, the URLs of every applicable agreement (and Consent), the receiver's grant if any, and the request. Process F decides each one, then combines the results with the DMN decision `PHW.DT.AgreementAccess` (or the deployer's replacement): any deny gives deny, else any unknown gives unknown, else any permit gives permit, unless the policies declare another ODRL `odrl:conflict` strategy. The duties of every permitting agreement apply. A consent-based agreement still needs a matching active PCF Consent. VHL's own authorisation checks (ITI-YY5 §2:3.YY5.4.1.7 step 3) still apply: folder id, VHL signature, `exp`, revocation, and passcode.</bpmn:documentation>
+      <bpmn:incoming>PHW.I.Flow8</bpmn:incoming>
+      <bpmn:outgoing>PHW.I.Flow10</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:exclusiveGateway id="PHW.I.Gateway3" name="Combined decision = permit?">
+      <bpmn:documentation>The outcome of `PHW.DT.AgreementAccess`. `permit` releases documents. `deny` (a prohibition applies) or `unknown` refuses them with 403 (I7). `not-applicable` cannot reach here: Gateway 2 already sent it to I8.</bpmn:documentation>
+      <bpmn:incoming>PHW.I.Flow10</bpmn:incoming>
+      <bpmn:outgoing>PHW.I.Flow11</bpmn:outgoing>
+      <bpmn:outgoing>PHW.I.Flow12</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="PHW.I.6" name="I6. Return manifest and documents [ITI-YY5] / [ITI-68]">
+      <bpmn:documentation>`[ITI-YY5]` 200 OK `Bundle` of the authorised `DocumentReference` entries. The document binaries are served by an MHD Document Responder (`[ITI-68]`; VHL Volume 1 §1:XX.3).</bpmn:documentation>
+      <bpmn:incoming>PHW.I.Flow11</bpmn:incoming>
+      <bpmn:outgoing>PHW.I.Flow13</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="PHW.I.7" name="I7. Refuse with OperationOutcome [ITI-YY5] (deny or unknown)">
+      <bpmn:documentation>HTTP 403 with an `OperationOutcome`.</bpmn:documentation>
+      <bpmn:incoming>PHW.I.Flow12</bpmn:incoming>
+      <bpmn:outgoing>PHW.I.Flow14</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="PHW.I.8" name="I8. Apply the normal VHL rules (no agreement applies)">
+      <bpmn:documentation>With no verified identity, ITI-YY5 §2:3.YY5.4.1.7 refuses with 401. With a verified receiver but no agreement, the request continues as in process C from step C5 (PCF consent). Auditing then follows VHL alone: ITI-YY5 §2:3.YY5.5.6 says SHOULD log, and §2:3.YY5.4.1.7 lists Audit Event - Accessed Health Data as MAY.</bpmn:documentation>
+      <bpmn:incoming>PHW.I.Flow6</bpmn:incoming>
+      <bpmn:incoming>PHW.I.Flow9</bpmn:incoming>
+      <bpmn:outgoing>PHW.I.Flow16</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sendTask id="PHW.I.9" name="I9. Send ATNA audit event citing the agreement [ITI-20] Record Audit Event">
+      <bpmn:documentation>The VHL profile requires the VHL Sharer and the VHL Receiver to be grouped with ATNA Secure Node or Secure Application for ITI-YY5. See VHL Volume 1 §1:XX.3, Table XX.3-1, and §1:XX.6.1 "ATNA - Audit Trail and Node Authentication", which covers secure channel per [ITI-19] and audit logging. Data servers in processes E and G use the same grouping. The event goes to the Audit Record Repository (a data store) by `[ITI-20]` Record Audit Event (ITI TF-2: 3.20 (section from standing knowledge, unverified)). It cites the fixed-version URL of every agreement and Consent evaluated, which of them permitted, the combining decision used (`PHW.DT.AgreementAccess`, or the deployer's replacement, by its DMN namespace and decision id and its file's fixed-version URL and SHA-256), the receiver or requester, the purpose of use, the documents or data released, and the decision. With the SSRAA option, the purpose of use can be taken from `purpose_of_use` in the `hl7-b2b` extension of the receiver's token request (SSRAA §5.2.1.1); which source the event records is an open point. IHE BALP (Basic Audit Log Patterns) AuditEvent patterns are Trial Implementation and need owner approval before this IG names them as conformance. The harness PROV-O record (G1) cites the same agreement URL, so the two logs agree. This is the same event as process G step G3. The PROV-O record of process G step G1 is written too, citing the same agreement.</bpmn:documentation>
+      <bpmn:incoming>PHW.I.Flow13</bpmn:incoming>
+      <bpmn:incoming>PHW.I.Flow14</bpmn:incoming>
+      <bpmn:outgoing>PHW.I.Flow15</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="PHW.I.9.WritesAuditRecordRepository">
+        <bpmn:targetRef>PHW.I.AuditRecordRepository</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:sendTask>
+    <bpmn:serviceTask id="PHW.I.11" name="I11. Process documents or refusal [ITI-YY5] response">
+      <bpmn:documentation>The receiver processes the documents, which it decrypts with the VHL `key`, or the refusal.</bpmn:documentation>
+      <bpmn:incoming>PHW.I.Flow15</bpmn:incoming>
+      <bpmn:incoming>PHW.I.Flow16</bpmn:incoming>
+      <bpmn:outgoing>PHW.I.Flow17</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="PHW.I.End" name="VHL request decided">
+      <bpmn:documentation>The VHL request is decided, under the agreement or under the normal VHL rules.</bpmn:documentation>
+      <bpmn:incoming>PHW.I.Flow17</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="PHW.I.Flow1" sourceRef="PHW.I.Start" targetRef="PHW.I.1" />
+    <bpmn:sequenceFlow id="PHW.I.Flow2" name="[ITI-YY5]" sourceRef="PHW.I.1" targetRef="PHW.I.2" />
+    <bpmn:sequenceFlow id="PHW.I.Flow3" name="[ITI-YY2]" sourceRef="PHW.I.2" targetRef="PHW.I.3" />
+    <bpmn:sequenceFlow id="PHW.I.Flow4" sourceRef="PHW.I.3" targetRef="PHW.I.Gateway1" />
+    <bpmn:sequenceFlow id="PHW.I.Flow5" name="yes" sourceRef="PHW.I.Gateway1" targetRef="PHW.I.4" />
+    <bpmn:sequenceFlow id="PHW.I.Flow6" name="no" sourceRef="PHW.I.Gateway1" targetRef="PHW.I.8" />
+    <bpmn:sequenceFlow id="PHW.I.Flow7" sourceRef="PHW.I.4" targetRef="PHW.I.Gateway2" />
+    <bpmn:sequenceFlow id="PHW.I.Flow8" name="yes" sourceRef="PHW.I.Gateway2" targetRef="PHW.I.5" />
+    <bpmn:sequenceFlow id="PHW.I.Flow9" name="no" sourceRef="PHW.I.Gateway2" targetRef="PHW.I.8" />
+    <bpmn:sequenceFlow id="PHW.I.Flow10" sourceRef="PHW.I.5" targetRef="PHW.I.Gateway3" />
+    <bpmn:sequenceFlow id="PHW.I.Flow11" name="permit" sourceRef="PHW.I.Gateway3" targetRef="PHW.I.6" />
+    <bpmn:sequenceFlow id="PHW.I.Flow12" name="deny / unknown" sourceRef="PHW.I.Gateway3" targetRef="PHW.I.7" />
+    <bpmn:sequenceFlow id="PHW.I.Flow13" sourceRef="PHW.I.6" targetRef="PHW.I.9" />
+    <bpmn:sequenceFlow id="PHW.I.Flow14" sourceRef="PHW.I.7" targetRef="PHW.I.9" />
+    <bpmn:dataStoreReference id="PHW.I.AuditRecordRepository" name="ATNA Audit Record Repository" dataStoreRef="PHW.DataStore.AuditRecordRepository" />
+    <bpmn:sequenceFlow id="PHW.I.Flow15" sourceRef="PHW.I.9" targetRef="PHW.I.11" />
+    <bpmn:sequenceFlow id="PHW.I.Flow16" sourceRef="PHW.I.8" targetRef="PHW.I.11" />
+    <bpmn:sequenceFlow id="PHW.I.Flow17" sourceRef="PHW.I.11" targetRef="PHW.I.End" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="PHW.I.Diagram">
+    <bpmndi:BPMNPlane id="PHW.I.Plane" bpmnElement="PHW.I.Collaboration">
+      <bpmndi:BPMNShape id="PHW.I.Participant_di" bpmnElement="PHW.I.Participant" isHorizontal="true"><dc:Bounds x="120" y="60" width="2580" height="570" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.Lane.VHLReceiver_di" bpmnElement="PHW.Lane.VHLReceiver" isHorizontal="true"><dc:Bounds x="150" y="60" width="2550" height="150" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.Lane.VHLSharer_di" bpmnElement="PHW.Lane.VHLSharer" isHorizontal="true"><dc:Bounds x="150" y="210" width="2550" height="270" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.Lane.TrustAnchor_di" bpmnElement="PHW.Lane.TrustAnchor" isHorizontal="true"><dc:Bounds x="150" y="480" width="2550" height="150" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.I.Start_di" bpmnElement="PHW.I.Start"><dc:Bounds x="267" y="117" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.I.1_di" bpmnElement="PHW.I.1"><dc:Bounds x="405" y="95" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.I.2_di" bpmnElement="PHW.I.2"><dc:Bounds x="610" y="305" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.I.3_di" bpmnElement="PHW.I.3"><dc:Bounds x="610" y="515" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.I.Gateway1_di" bpmnElement="PHW.I.Gateway1" isMarkerVisible="true"><dc:Bounds x="875" y="320" width="50" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.I.4_di" bpmnElement="PHW.I.4"><dc:Bounds x="1020" y="240" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.I.Gateway2_di" bpmnElement="PHW.I.Gateway2" isMarkerVisible="true"><dc:Bounds x="1285" y="255" width="50" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.I.5_di" bpmnElement="PHW.I.5"><dc:Bounds x="1430" y="240" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.I.Gateway3_di" bpmnElement="PHW.I.Gateway3" isMarkerVisible="true"><dc:Bounds x="1695" y="255" width="50" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.I.6_di" bpmnElement="PHW.I.6"><dc:Bounds x="1840" y="240" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.I.7_di" bpmnElement="PHW.I.7"><dc:Bounds x="1840" y="370" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.I.8_di" bpmnElement="PHW.I.8"><dc:Bounds x="1430" y="370" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.I.9_di" bpmnElement="PHW.I.9"><dc:Bounds x="2045" y="305" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.I.AuditRecordRepository_di" bpmnElement="PHW.I.AuditRecordRepository"><dc:Bounds x="2240" y="320" width="50" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.I.11_di" bpmnElement="PHW.I.11"><dc:Bounds x="2250" y="95" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.I.End_di" bpmnElement="PHW.I.End"><dc:Bounds x="2522" y="117" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="PHW.I.Flow1_di" bpmnElement="PHW.I.Flow1">
+        <di:waypoint x="303" y="135" />
+        <di:waypoint x="405" y="135" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.I.Flow2_di" bpmnElement="PHW.I.Flow2">
+        <di:waypoint x="575" y="135" />
+        <di:waypoint x="595" y="135" />
+        <di:waypoint x="595" y="345" />
+        <di:waypoint x="610" y="345" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.I.Flow3_di" bpmnElement="PHW.I.Flow3">
+        <di:waypoint x="695" y="385" />
+        <di:waypoint x="695" y="515" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.I.Flow4_di" bpmnElement="PHW.I.Flow4">
+        <di:waypoint x="780" y="555" />
+        <di:waypoint x="860" y="555" />
+        <di:waypoint x="860" y="345" />
+        <di:waypoint x="875" y="345" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.I.Flow5_di" bpmnElement="PHW.I.Flow5">
+        <di:waypoint x="925" y="345" />
+        <di:waypoint x="1005" y="345" />
+        <di:waypoint x="1005" y="280" />
+        <di:waypoint x="1020" y="280" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.I.Flow6_di" bpmnElement="PHW.I.Flow6">
+        <di:waypoint x="925" y="345" />
+        <di:waypoint x="1415" y="345" />
+        <di:waypoint x="1415" y="410" />
+        <di:waypoint x="1430" y="410" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.I.Flow7_di" bpmnElement="PHW.I.Flow7">
+        <di:waypoint x="1190" y="280" />
+        <di:waypoint x="1285" y="280" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.I.Flow8_di" bpmnElement="PHW.I.Flow8">
+        <di:waypoint x="1335" y="280" />
+        <di:waypoint x="1430" y="280" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.I.Flow9_di" bpmnElement="PHW.I.Flow9">
+        <di:waypoint x="1335" y="280" />
+        <di:waypoint x="1415" y="280" />
+        <di:waypoint x="1415" y="410" />
+        <di:waypoint x="1430" y="410" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.I.Flow10_di" bpmnElement="PHW.I.Flow10">
+        <di:waypoint x="1600" y="280" />
+        <di:waypoint x="1695" y="280" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.I.Flow11_di" bpmnElement="PHW.I.Flow11">
+        <di:waypoint x="1745" y="280" />
+        <di:waypoint x="1840" y="280" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.I.Flow12_di" bpmnElement="PHW.I.Flow12">
+        <di:waypoint x="1745" y="280" />
+        <di:waypoint x="1825" y="280" />
+        <di:waypoint x="1825" y="410" />
+        <di:waypoint x="1840" y="410" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.I.Flow13_di" bpmnElement="PHW.I.Flow13">
+        <di:waypoint x="2010" y="280" />
+        <di:waypoint x="2030" y="280" />
+        <di:waypoint x="2030" y="345" />
+        <di:waypoint x="2045" y="345" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.I.Flow14_di" bpmnElement="PHW.I.Flow14">
+        <di:waypoint x="2010" y="410" />
+        <di:waypoint x="2030" y="410" />
+        <di:waypoint x="2030" y="345" />
+        <di:waypoint x="2045" y="345" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.I.Flow15_di" bpmnElement="PHW.I.Flow15">
+        <di:waypoint x="2130" y="305" />
+        <di:waypoint x="2130" y="135" />
+        <di:waypoint x="2250" y="135" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.I.Flow16_di" bpmnElement="PHW.I.Flow16">
+        <di:waypoint x="1515" y="450" />
+        <di:waypoint x="1515" y="465" />
+        <di:waypoint x="2335" y="465" />
+        <di:waypoint x="2335" y="175" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.I.Flow17_di" bpmnElement="PHW.I.Flow17">
+        <di:waypoint x="2420" y="135" />
+        <di:waypoint x="2522" y="135" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.I.9.WritesAuditRecordRepository_di" bpmnElement="PHW.I.9.WritesAuditRecordRepository">
+        <di:waypoint x="2215" y="345" />
+        <di:waypoint x="2240" y="345" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

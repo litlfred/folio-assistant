@@ -1,0 +1,279 @@
+{
+ "_schema": "pdf-structure/v1",
+ "doc_id": "arxiv-1603.07466v1",
+ "source": {
+  "file": "arxiv-1603-07466v1.pdf",
+  "sha256": "0a0fd1ae1ced5efcf95576f39cb3ccd9ee09bda1fad8fa98723f6f45875d27d5",
+  "bytes": 504651,
+  "pages": 16,
+  "text_source": "embedded",
+  "extractor": "pymupdf",
+  "mtime": "2026-10-31T11:36:42Z",
+  "mimetype_sniffed": "application/pdf",
+  "mimetype_source": "magic-bytes"
+ },
+ "metadata": {
+  "arxiv": {
+   "id": "1603.07466",
+   "version": "1",
+   "primary_class": "cs.SE",
+   "stamp_date": "24 Mar 2016"
+  },
+  "doi": null,
+  "title": "Semantics and Analysis of DMN Decision Tables",
+  "authors_raw": "Diego Calvanese1, Marlon Dumas2, \u00dclari Laurson2",
+  "title_lines": [
+   "Semantics and Analysis of DMN Decision Tables"
+  ],
+  "abstract": "The Decision Model and Notation (DMN) is a standard no- tation to capture decision logic in business applications in general and business processes in particular. A central construct in DMN is that of a decision table. The increasing use of DMN decision tables to capture critical business knowledge raises the need to support analysis tasks on these tables such as correctness and completeness checking. This paper provides a formal semantics for DMN tables, a formal de\ufb01nition of key analysis tasks and scalable algorithms to tackle two such tasks, i.e., de- tection of overlapping rules and of missing rules. The algorithms are based on a geometric interpretation of decision tables that can be used to support other analysis tasks by tapping into geometric algorithms. The algorithms have been implemented in an open-source DMN editor and tested on large decision tables derived from a credit lending dataset.",
+  "docinfo": {
+   "Producer": "pdfTeX-1.40.12",
+   "Creator": "LaTeX with hyperref package",
+   "CreationDate": "D:20160325002838Z"
+  },
+  "title_raw": "Semantics and Analysis of DMN Decision Tables",
+  "title_source": "heading",
+  "title_verified": true,
+  "title_evidence": {
+   "heading": "Semantics and Analysis of DMN Decision Tables",
+   "outline": "Semantics and Analysis of DMN Decision Tables",
+   "text": "Semantics and Analysis of DMN Decision Tables",
+   "corroborated_by": [
+    "outline",
+    "text"
+   ],
+   "browser_print": false
+  }
+ },
+ "toc": [
+  {
+   "level": 1,
+   "title": "Semantics and Analysis of DMN Decision Tables",
+   "page": 1,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  }
+ ],
+ "toc_source": "outline",
+ "toc_undetermined_reason": null,
+ "figures": [
+  {
+   "kind": "table",
+   "number": "1",
+   "title": "Sample decision table with its constitutive elements Given an input con\ufb01guration consisting of a vector of values (one entry per column), if every input entry of a row holds true for this input vector, then the vector matches the row and the output entries of the row are evaluated. For",
+   "page": 2,
+   "confidence": 0.8,
+   "evidence": [
+    "referenced",
+    "in-sequence"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "figure",
+   "number": "1",
+   "title": "Geometric representation of the DMN table shown in Table 1",
+   "page": 10,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "algorithm",
+   "number": "1",
+   "title": "Procedure \ufb01ndOverlappingRules",
+   "page": 12,
+   "confidence": 0.8,
+   "evidence": [
+    "referenced",
+    "in-sequence"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "algorithm",
+   "number": "2",
+   "title": "Procedure \ufb01ndMissingRules",
+   "page": 14,
+   "confidence": 0.8,
+   "evidence": [
+    "referenced",
+    "in-sequence"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "table",
+   "number": "2",
+   "title": "Execution times for missing rules detection are under 2 seconds, except for the 7-columns tables with 1000-1500 rules. The detection of overlapping rules leads to higher execution times, due to the need to detect sets of overlapping rules and ensure maximality. The execution times for overlapping ru",
+   "page": 15,
+   "confidence": 0.8,
+   "evidence": [
+    "referenced",
+    "in-sequence"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "table",
+   "number": "3",
+   "title": "Number of reported errors of type \u201coverlapping rules\u201d & \u201cmissing rule\u201d",
+   "page": 16,
+   "confidence": 0.8,
+   "evidence": [
+    "referenced",
+    "in-sequence"
+   ],
+   "page_label": null
+  }
+ ],
+ "pages": [
+  {
+   "physical": 1,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 2,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 3,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 4,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 5,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 6,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 7,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 8,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 9,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 10,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 11,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 12,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 13,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 14,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 15,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 16,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  }
+ ],
+ "sections": [
+  {
+   "id": "sec-000-semantics-and-analysis-of-dmn-decision-tables",
+   "number": null,
+   "title": "Semantics and Analysis of DMN Decision Tables",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 16,
+   "n_chars": 44035,
+   "n_words": 7396,
+   "label_start": null,
+   "label_end": null
+  }
+ ],
+ "diagnostics": {
+  "pages_without_text": 0,
+  "likely_scanned": false,
+  "toc_entries": 1,
+  "toc_inferred_entries": 0,
+  "figure_entries": 6,
+  "figure_sequence_gaps": [],
+  "page_label_conflicts": {
+   "count": 0,
+   "items": []
+  },
+  "sections": 1,
+  "chars_total": 44035
+ }
+}
