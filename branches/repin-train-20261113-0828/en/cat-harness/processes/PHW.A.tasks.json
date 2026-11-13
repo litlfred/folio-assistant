@@ -1,0 +1,147 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "PHW.A",
+ "markers": [
+  {
+   "id": "PHW.A.1",
+   "name": "A1. Select base policy & disclosure scope (PCF Basic / Intermediate Consent)",
+   "left": 27.14,
+   "top": 3.71,
+   "box": {
+    "left": 21.86,
+    "top": 15.64,
+    "width": 1.37,
+    "height": 2.12
+   }
+  },
+  {
+   "id": "PHW.A.2",
+   "name": "A2. Construct FHIR Consent & Provenance (IHE.PCF.consentBasic / Intermediate)",
+   "left": 27.14,
+   "top": 42.93,
+   "box": {
+    "left": 21.86,
+    "top": 54.86,
+    "width": 1.37,
+    "height": 2.12
+   }
+  },
+  {
+   "id": "PHW.A.3",
+   "name": "A3. Create consent directive [ITI-108] Access Consent: Post",
+   "left": 58,
+   "top": 24.38,
+   "box": {
+    "left": 52.71,
+    "top": 36.31,
+    "width": 1.37,
+    "height": 2.12
+   }
+  },
+  {
+   "id": "PHW.A.4",
+   "name": "A4. Update or revoke directive [ITI-108] Access Consent: Put / Delete",
+   "left": 58,
+   "top": 61.48,
+   "box": {
+    "left": 52.71,
+    "top": 73.41,
+    "width": 1.37,
+    "height": 2.12
+   }
+  },
+  {
+   "id": "PHW.A.5",
+   "name": "A5. Validate, version & persist Consent + Provenance [ITI-108] Access Consent",
+   "left": 70.57,
+   "top": 82.16,
+   "box": {
+    "left": 65.29,
+    "top": 94.08,
+    "width": 1.37,
+    "height": 2.12
+   }
+  },
+  {
+   "id": "PHW.A.6",
+   "name": "A6. Confirm recorded Consent.id & versionId [ITI-108] Access Consent response",
+   "left": 83.14,
+   "top": 3.71,
+   "box": {
+    "left": 77.86,
+    "top": 15.64,
+    "width": 1.37,
+    "height": 2.12
+   }
+  }
+ ],
+ "processHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.A",
+ "tasks": {
+  "PHW.A.1": {
+   "id": "PHW.A.1",
+   "name": "A1. Select base policy & disclosure scope (PCF Basic / Intermediate Consent)",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.A/node/PHW.A.1",
+   "stepHref": "PHW.A.html#step-PHW.A.1",
+   "lane": "VHL Holder (Patient / Personal Health Wallet)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.A/lane/PHW.Lane.Holder",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.A.2": {
+   "id": "PHW.A.2",
+   "name": "A2. Construct FHIR Consent & Provenance (IHE.PCF.consentBasic / Intermediate)",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.A/node/PHW.A.2",
+   "stepHref": "PHW.A.html#step-PHW.A.2",
+   "lane": "PCF Consent Recorder (Wallet / VHL Sharer)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.A/lane/PHW.Lane.ConsentRecorder",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.A.3": {
+   "id": "PHW.A.3",
+   "name": "A3. Create consent directive [ITI-108] Access Consent: Post",
+   "type": "bpmn:SendTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.A/node/PHW.A.3",
+   "stepHref": "PHW.A.html#step-PHW.A.3",
+   "lane": "PCF Consent Recorder (Wallet / VHL Sharer)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.A/lane/PHW.Lane.ConsentRecorder",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.A.4": {
+   "id": "PHW.A.4",
+   "name": "A4. Update or revoke directive [ITI-108] Access Consent: Put / Delete",
+   "type": "bpmn:SendTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.A/node/PHW.A.4",
+   "stepHref": "PHW.A.html#step-PHW.A.4",
+   "lane": "PCF Consent Recorder (Wallet / VHL Sharer)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.A/lane/PHW.Lane.ConsentRecorder",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.A.5": {
+   "id": "PHW.A.5",
+   "name": "A5. Validate, version & persist Consent + Provenance [ITI-108] Access Consent",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.A/node/PHW.A.5",
+   "stepHref": "PHW.A.html#step-PHW.A.5",
+   "lane": "PCF Consent Registry",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.A/lane/PHW.Lane.ConsentRegistry",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.A.6": {
+   "id": "PHW.A.6",
+   "name": "A6. Confirm recorded Consent.id & versionId [ITI-108] Access Consent response",
+   "type": "bpmn:ReceiveTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.A/node/PHW.A.6",
+   "stepHref": "PHW.A.html#step-PHW.A.6",
+   "lane": "VHL Holder (Patient / Personal Health Wallet)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.A/lane/PHW.Lane.Holder",
+   "skills": [],
+   "binding": "unbound"
+  }
+ }
+}

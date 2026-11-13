@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0828/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0828/smart-base/schema/dak-blocks.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0828/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/schema/dak-blocks.jsonld",
+  "staging": {
+    "branch": "repin-train/20261113-0828",
+    "sha": "5344cd2493398b0c97f96e0ef5b40281e2eb6325",
+    "pr": "repin-train/20261113-0828",
+    "run": "43393606705"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/schema/dak-blocks",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "dak-blocks",
+      "title": "dak-blocks",
+      "summary": "WHO SMART Guidelines content blocks — the `dak` adapter.",
+      "module": "schemas/dak-blocks.ts",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-schemas"
+    }
+  ]
+}

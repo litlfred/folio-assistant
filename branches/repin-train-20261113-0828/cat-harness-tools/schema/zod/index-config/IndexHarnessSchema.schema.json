@@ -1,0 +1,34 @@
+{
+  "$ref": "#/definitions/IndexHarness",
+  "definitions": {
+    "IndexHarness": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*$"
+        },
+        "definedBy": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*$"
+        },
+        "_comment": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/index-config/IndexHarnessSchema.schema.json",
+  "title": "IndexHarnessSchema",
+  "description": "Generated from `IndexHarnessSchema` in schemas/kg/index-config.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261113-0828",
+    "sha": "5344cd2493398b0c97f96e0ef5b40281e2eb6325",
+    "pr": "repin-train/20261113-0828",
+    "run": "43393606705"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0828/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0828/cat-harness/schema/sticky-contribution.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0828/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261113-0828",
+    "sha": "5344cd2493398b0c97f96e0ef5b40281e2eb6325",
+    "pr": "repin-train/20261113-0828",
+    "run": "43393606705"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0828/cat-harness/schema/sticky-contribution",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "sticky-contribution",
+      "title": "sticky-contribution",
+      "summary": "A sticky is a CONTRIBUTION from a layer, declared by that layer.",
+      "module": "schemas/content/sticky-contribution.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0828/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/sticky-contribution"
+    }
+  ]
+}

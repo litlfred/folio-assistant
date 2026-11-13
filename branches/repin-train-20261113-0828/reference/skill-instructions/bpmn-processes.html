@@ -1,0 +1,327 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="../../assets/css/just-the-docs-default.css"><link rel="stylesheet" href="../../assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><script src="../../assets/js/vendor/lunr.min.js"></script><script src="../../assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>Processes are BPMN, and the diagrams are executable | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="Processes are BPMN, and the diagrams are executable" /><meta property="og:locale" content="en_US" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="Processes are BPMN, and the diagrams are executable" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "reference-skill-instructions-bpmn-processes",
+    "src": "../../assets/qa/reference-skill-instructions-bpmn-processes/page.translation.json",
+    "index": "../../assets/qa/reference-skill-instructions-bpmn-processes/qa-index.json",
+    "list": "../../assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"../../assets/translation-status/index.json"
+}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"../../folio-assistant-core/","jsonld":"../../folio-assistant-core/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="../../assets/harness/site.json"><meta name="fa-todo-src" content="../../assets/todos/index.json"><meta name="fa-todo-graph" content="../../todos.jsonld"><meta name="fa-zoom-src" content="../../assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="../.."><meta name="fa-staging" content="preview"><meta name="fa-search-index" content="published"><meta name="fa-beans-src" content="../../assets/beans/index.json"><meta name="fa-processes-src" content="../../subgraph/index.jsonld"><meta name="fa-build-src" content="../../build.json"><meta name="fa-fsh-guts-src" content="../../fsh-guts.json"><link rel="stylesheet" href="../../assets/css/navbar-row.css?v=7d7d00921e0f"><link rel="stylesheet" href="../../assets/css/docs-ui.css?v=1eebbbe844d9"><link rel="stylesheet" href="../../assets/css/narrow-viewport.css?v=173ef819dbf2"><link rel="stylesheet" href="../../assets/css/work-plan.css?v=63b259829c69"><link rel="stylesheet" href="../../assets/css/themes.css?v=37c8ab192a5f"><link rel="stylesheet" href="../../assets/css/uml.css?v=e677f91cbf66"><link rel="stylesheet" href="../../assets/css/avatars.css?v=20cca864903d"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","scenarios","schemas","skills","software-library","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="../../assets/js/harness-data.js" defer></script><script src="../../assets/js/vendor/qrcode.js" defer></script><script src="../../assets/js/vendor/qrcode_UTF8.js" defer></script><script src="../../assets/js/kg-render.js" defer></script><script src="../../assets/js/navbar-row.js?v=cc1885e41c70" defer></script><script src="../../assets/js/docs-ui.js?v=829c614a8b9d" defer></script><script src="../../assets/js/edit-links.js?v=ee68944d6d0b" defer></script><script src="../../assets/js/code-highlight.js?v=0f94772226c3" defer></script><script src="../../assets/js/work-plan.js" defer></script><script src="../../assets/js/process-index.js" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><style id="fa-page-ground" data-instance="cat-harness">
+  /* Grumpy cyborg agents, the theme of cat-harness. */
+  :root { --fa-page-scrim: rgba(39, 38, 43, 0.85); --fa-text-scrim: rgba(39, 38, 43, 0.96); }
+  :root[data-fa-scheme="light"] { --fa-page-scrim: rgba(255, 255, 255, 0.85); --fa-text-scrim: rgba(255, 255, 255, 0.96); }
+  /* The root carries the art, so it covers the whole viewport however short
+     the page; the body is made see-through so the art is not painted over. */
+  html:root body { background-color: transparent; }
+  html body .main-content { background-color: var(--fa-text-scrim); border-radius: 6px; }
+  html:root {
+    background-image:
+      linear-gradient(var(--fa-page-scrim), var(--fa-page-scrim)),
+      url("../../assets/img/harness/landing-grumpy-cyborg-agents-laptop.webp");
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: cover;
+    background-attachment: fixed;
+  }
+  @media (max-width: 48rem) {
+    html:root {
+      background-image:
+        linear-gradient(var(--fa-page-scrim), var(--fa-page-scrim)),
+        url("../../assets/img/harness/landing-grumpy-cyborg-agents-card.webp");
+    }
+  }
+  @media (max-width: 30rem) {
+    html:root {
+      background-image:
+        linear-gradient(var(--fa-page-scrim), var(--fa-page-scrim)),
+        url("../../assets/img/harness/landing-grumpy-cyborg-agents-mobile.webp");
+    }
+  }
+  /* Print and forced colours get the plain page: art is decoration. */
+  @media print, (forced-colors: active) {
+    html:root { background-image: none; }
+  }
+</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-giobbw31pa.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-giobbw31pa","here":"/reference/skill-instructions/bpmn-processes.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#authoring-if-it-has-actors-activities-and-a-control-flow-it-is-a-process","label":"Authoring: if it has actors, activities and a control flow, it is a process","children":[{"href":"#there-is-no-tool-element-and-that-is-a-decision","label":"There is no tool element, and that is a decision","depth":1},{"href":"#a-tools-own-procedure-is-the-tools-subprocess-not-the-skills-prose","label":"A Tool’s OWN procedure is the Tool’s subprocess, not the skill’s prose","depth":1},{"href":"#processes-are-grouped-by-concern-from-within","label":"Processes are grouped by concern, from within","depth":1},{"href":"#a-process-binds-only-skills-its-layer-can-reach-strict","label":"A process binds only skills its layer can reach (STRICT)","depth":1},{"href":"#binding-the-extension-namespaces","label":"Binding the extension namespaces","depth":1}],"fold":"5 sub-sections"},{"href":"#edge-routing-rectilinear-and-never-over-a-task","label":"Edge routing: rectilinear, and never over a task"},{"href":"#rendering-what-a-reader-can-click-and-what-must-not-collide","label":"Rendering: what a reader can click, and what must not collide"},{"href":"#running-one-the-engine-refuses-work-claimed-out-of-order","label":"Running one: the engine refuses work claimed out of order"},{"href":"#strict-by-default-and-what-a-package-may-never-relax","label":"Strict by default, and what a package may never relax"},{"href":"#the-commit-boundary-enforces-what-the-diagram-decided","label":"The commit boundary enforces what the diagram decided"},{"href":"#some-gateways-are-computed-not-chosen","label":"Some gateways are computed, not chosen"},{"href":"#a-bean-marked-step-performs-the-operation-not-a-note-about-it","label":"A bean-marked step performs the operation, not a note about it"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:var(--fa-font-sans,system-ui,sans-serif)">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+var b=document.querySelector('[data-fa-staging-banner]'),d=document.querySelector('[data-fa-staging-detail]');
+if(b)document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');
+var m=location.pathname.match(/^(.*\/(?:branches|STAGING)\/[^/]+\/)/);
+if(!m){if(d)d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+var s=document.createElement('script');s.src=m[1]+'staging-banner.js';
+s.onerror=function(){if(d)d.textContent='\u2014 build details unavailable';};
+(document.head||document.documentElement).appendChild(s);
+})();</script><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><nav aria-label="Breadcrumb" class="breadcrumb-nav"><ol class="breadcrumb-nav-list"><li class="breadcrumb-nav-list-item"><a href="../../reference/">Reference</a></li><li class="breadcrumb-nav-list-item"><a href="../../reference/skill-instructions/">Skill instructions</a></li><li class="breadcrumb-nav-list-item"><span>Processes are BPMN, and the diagrams are executable</span></li></ol></nav><div id="main-content" class="main-content"><main><blockquote class="note"><p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/workflow/bpmn-processes.md"><code class="language-plaintext highlighter-rouge">cat-harness/skills/process/workflow/bpmn-processes.md</code></a> — do not edit here.</p><p><a href="https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/process/workflow/bpmn-processes.md" class="fa-edit-source" data-fa-link="edit" data-src="cat-harness/skills/process/workflow/bpmn-processes.md" data-repo="litlfred/folio-assistant">✎ Edit this page’s source</a></p></blockquote><h1 id="processes-are-bpmn-and-the-diagrams-are-executable"><a href="#processes-are-bpmn-and-the-diagrams-are-executable" class="anchor-heading" aria-labelledby="processes-are-bpmn-and-the-diagrams-are-executable"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Processes are BPMN, and the diagrams are executable
+  
+  
+</h1><p><strong>The <code class="language-plaintext highlighter-rouge">.bpmn</code> file is the source of truth.</strong> The rendered SVGs are generated —
+regenerate after editing one, and the staleness check fails the build if you
+forget. Never hand-edit a rendered diagram.</p><p><strong>Do not quote a count of diagrams from prose.</strong> Count the directory.</p><h2 id="authoring-if-it-has-actors-activities-and-a-control-flow-it-is-a-process"><a href="#authoring-if-it-has-actors-activities-and-a-control-flow-it-is-a-process" class="anchor-heading" aria-labelledby="authoring-if-it-has-actors-activities-and-a-control-flow-it-is-a-process"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Authoring: if it has actors, activities and a control flow, it is a process
+  
+  
+</h2><p>Author it as <strong>BPMN</strong>, not as a diagram-in-a-fence. Fenced diagrams stay for the
+things that are <em>not</em> processes — component maps, an inheritance lattice, a
+navigation graph.</p><p>Every activity carries <strong><code class="language-plaintext highlighter-rouge">&lt;bootstrap.processes:skill ref="…"&gt;</code></strong> naming the skill that
+implements it, and <strong><code class="language-plaintext highlighter-rouge">&lt;cat-harness.processes:bean …&gt;</code></strong> where it touches the work plan. Add both
+when you add an activity; the audit reports an activity that names no skill, and
+the exemptions for the legitimate cases are <em>declarations</em>, not silence — see
+<a href="../../reference/skill-instructions/role-model.html"><code class="language-plaintext highlighter-rouge">role-model</code></a>.</p><p>Lanes bind roles, not people. A lane is the role; an actor <strong>takes it on</strong> for
+the duration. <a href="../../reference/skill-instructions/role-model.html"><code class="language-plaintext highlighter-rouge">role-model</code></a> carries that model.</p><h3 id="there-is-no-tool-element-and-that-is-a-decision"><a href="#there-is-no-tool-element-and-that-is-a-decision" class="anchor-heading" aria-labelledby="there-is-no-tool-element-and-that-is-a-decision"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> There is no <code class="language-plaintext highlighter-rouge">tool</code> element, and that is a decision
+  
+  
+</h3><p>An activity names a <strong>skill</strong>. A Tool declares <code class="language-plaintext highlighter-rouge">satisfies: ["&lt;skill&gt;"]</code>. So the
+activity→Tool join <strong>already exists and is derivable</strong> — <code class="language-plaintext highlighter-rouge">activity → skill →
+Tool</code> — and a <code class="language-plaintext highlighter-rouge">&lt;…:tool ref&gt;</code> on an activity would be a second, independent edge
+answering the same question, free to disagree with the first.</p><p>It would also put the edge on the wrong side. <code class="language-plaintext highlighter-rouge">satisfies</code> is owned by the Tool,
+which knows what it implements and is versioned with it; a <code class="language-plaintext highlighter-rouge">tool</code> ref would be
+owned by the diagram author, who would have to track Tools across every
+layer: Tools are discovered from the <code class="language-plaintext highlighter-rouge">tools/</code> graphs of several layers,
+so a diagram in one layer would be asserting facts about others.</p><p><strong>The join is not fully populated</strong>, and that is reported rather than gated:
+<code class="language-plaintext highlighter-rouge">activity-skill-has-tool</code> (<code class="language-plaintext highlighter-rouge">minor</code>) locates each activity whose skill no Tool
+satisfies, and <code class="language-plaintext highlighter-rouge">check:tools</code> carries the corpus-wide count. A skill with no
+Tool is <strong>not</strong> an error, since plenty of skills are pure judgement. Read
+counts from a run of <code class="language-plaintext highlighter-rouge">tools/discover.ts</code> (never a grep); <code class="language-plaintext highlighter-rouge">check:tools</code> and the
+per-activity criterion count different sets, so their totals differ. Both are
+needed: a corpus total cannot say <em>which</em> activity hands a performer a skill
+whose mechanism is still inlined in its prose.</p><h3 id="a-tools-own-procedure-is-the-tools-subprocess-not-the-skills-prose"><a href="#a-tools-own-procedure-is-the-tools-subprocess-not-the-skills-prose" class="anchor-heading" aria-labelledby="a-tools-own-procedure-is-the-tools-subprocess-not-the-skills-prose"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A Tool’s OWN procedure is the Tool’s subprocess, not the skill’s prose
+  
+  
+</h3><p>A Tool may describe its own specific subprocess, so the general skill and
+process stay general. The direction of the edge stays the one above — the Tool owns it. A Tool
+whose way of exercising a skill has steps of its own (a retry loop, a staging
+directory, a two-pass mode) names that diagram in <strong><code class="language-plaintext highlighter-rouge">subprocesses</code></strong>, a list
+of process ids on its Tool node; <code class="language-plaintext highlighter-rouge">check:tools</code> refuses one no <code class="language-plaintext highlighter-rouge">.bpmn</code> in the
+checkout has as its stem. The general process stays general and reaches the
+detail by <code class="language-plaintext highlighter-rouge">calledElement</code> only where it has chosen that Tool. By convention
+the diagram sits in the declaring layer’s <code class="language-plaintext highlighter-rouge">processes/tools/</code> concern
+group, beside other tools’ procedures rather than among the general
+processes.</p><h3 id="processes-are-grouped-by-concern-from-within"><a href="#processes-are-grouped-by-concern-from-within" class="anchor-heading" aria-labelledby="processes-are-grouped-by-concern-from-within"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Processes are grouped by concern, from within
+  
+  
+</h3><p><code class="language-plaintext highlighter-rouge">processes/processes.json</code> (<code class="language-plaintext highlighter-rouge">"$schema": "concern-groups/v1"</code>) names the
+groups — codes of <code class="language-plaintext highlighter-rouge">code-lists/concern-group.json</code> — and each is
+<code class="language-plaintext highlighter-rouge">processes/&lt;group&gt;/</code>, a DMN under <code class="language-plaintext highlighter-rouge">processes/&lt;group&gt;/decisions/</code>. A higher
+layer’s same-named <code class="language-plaintext highlighter-rouge">processes/&lt;group&gt;/</code> is a member of the harness’s group
+and declares none of its own. <code class="language-plaintext highlighter-rouge">workflowFiles</code> walks recursively, so grouping
+moves no diagram out of reach; the rules are in
+<a href="../../reference/skill-instructions/directory-conventions.html"><code class="language-plaintext highlighter-rouge">directory-conventions</code></a> §”Concern
+groups”, checked by <code class="language-plaintext highlighter-rouge">check:concern-groups</code>.</p><h3 id="a-process-binds-only-skills-its-layer-can-reach-strict"><a href="#a-process-binds-only-skills-its-layer-can-reach-strict" class="anchor-heading" aria-labelledby="a-process-binds-only-skills-its-layer-can-reach-strict"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A process binds only skills its layer can reach (STRICT)
+  
+  
+</h3><p>A process may bind only skills (and, through them, Tools) from <strong>its own
+layer or one it <code class="language-plaintext highlighter-rouge">needs</code></strong>, transitively. A <code class="language-plaintext highlighter-rouge">&lt;bootstrap.processes:skill ref&gt;</code> to a skill that only
+a HIGHER layer holds is a wrong-direction edge, the same as an upward
+import: the diagram cannot be lifted into its own repository without the layer
+above it.</p><p><code class="language-plaintext highlighter-rouge">bun run cat check:process-bindings</code> gates it, with the same <code class="language-plaintext highlighter-rouge">allowedFromNeeds</code>
+direction as <code class="language-plaintext highlighter-rouge">check:import-direction</code> and <code class="language-plaintext highlighter-rouge">check:reference-direction</code>.
+<strong><code class="language-plaintext highlighter-rouge">skill-ref-resolves</code> does not catch this:</strong> it resolves against
+<code class="language-plaintext highlighter-rouge">knownSkills(root)</code>, which in a multi-layer checkout is checkout-scoped, so
+“resolves” means “exists somewhere”. <code class="language-plaintext highlighter-rouge">skill-ref-resolves</code> is existence only,
+and its own summary names this gate as the answer on direction, so there is
+one implementation of “may this process bind this skill”, not two free to
+disagree. Existing
+wrong-direction bindings are held in a ratchet baseline.</p><p>When it fires there are two fixes, and choosing between them is a placement
+decision, not a mechanical one:</p><ul><li><strong>move the process up</strong> to the layer that holds the skill, when the
+process is about that layer’s concern;</li><li><strong>move the skill down</strong>, when the skill is generic and only happens to live
+too high.</li></ul><p>Never widen the baseline to admit a new binding.</p><h3 id="binding-the-extension-namespaces"><a href="#binding-the-extension-namespaces" class="anchor-heading" aria-labelledby="binding-the-extension-namespaces"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Binding the extension namespaces
+  
+  
+</h3><p><strong>An element’s prefix names the Subgraph that declares it.</strong> A diagram binds one address per vocabulary it uses:</p><div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>xmlns:bootstrap.processes="https://litlfred.github.io/bootstrap/v0/processes/ns/"
+xmlns:cat-harness.processes="https://litlfred.github.io/cat-harness/v0/processes/ns/"
+</code></pre></div></div><ul><li><code class="language-plaintext highlighter-rouge">bootstrap.processes:</code> for <code class="language-plaintext highlighter-rouge">skill</code>, <code class="language-plaintext highlighter-rouge">role</code> and <code class="language-plaintext highlighter-rouge">precondition</code>, which bootstrap
+declares in <code class="language-plaintext highlighter-rouge">bootstrap/processes/ns.jsonld</code>.</li><li><code class="language-plaintext highlighter-rouge">cat-harness.processes:</code> for every other element (<code class="language-plaintext highlighter-rouge">bean</code>, <code class="language-plaintext highlighter-rouge">policy</code>,
+<code class="language-plaintext highlighter-rouge">adjudication</code>, <code class="language-plaintext highlighter-rouge">raci</code>, …), declared in <code class="language-plaintext highlighter-rouge">cat-harness/processes/ns.jsonld</code>.</li></ul><p>Readers match <strong>the address, never the prefix text</strong>, so a diagram that binds a
+different prefix to the same address reads identically, and <code class="language-plaintext highlighter-rouge">folio:</code> bound to
+anyone else’s address is not ours. The address <code class="language-plaintext highlighter-rouge">…/folio-assistant/bpmn</code> is
+<strong>retired</strong>: an element under it is not read, and <code class="language-plaintext highlighter-rouge">external-schemas</code> reports a
+diagram that still binds it as drift. A test fails if an element is written under an address whose
+vocabulary does not define it.</p><h2 id="edge-routing-rectilinear-and-never-over-a-task"><a href="#edge-routing-rectilinear-and-never-over-a-task" class="anchor-heading" aria-labelledby="edge-routing-rectilinear-and-never-over-a-task"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Edge routing: rectilinear, and never over a task
+  
+  
+</h2><p><strong>Rectilinear.</strong> A sequence flow turns at right angles. A diagonal reads as a
+different kind of edge, and the notation has no such kind, so a reader spends
+attention deciding whether the difference means something.</p><p><strong>Never over a task, a lane label or another edge.</strong></p><p>A loop-back belongs in the <strong>channel below the lane’s tasks</strong> — out of the row,
+back along it, and up into its target. That is where a reader already looks for
+one, and it crosses nothing.</p><p><strong>A flow in and a flow out never share a point.</strong> Where one flow ends on a
+shape, no flow leaves from that same point, and where one leaves, none ends.
+Two arrowheads on one spot, or a line that both arrives and departs there,
+reads as one edge passing through, and the reader cannot tell which way the
+work goes. Give the outgoing flow another side: a loop-back that enters a
+task on its right leaves that task’s next flow from its top or bottom, and a
+gateway that is entered on its left leaves on its other three sides (owner,
+2026-11-08). Flows that only arrive may share a point, as a join does.</p><p><strong>Rows sit evenly in their lane.</strong> A lane holds its steps in rows, and its
+height follows the row count: n rows make a lane n times one row’s height,
+so lanes with the same number of rows are the same height. Row k of n has
+its centre at k/(n+1) of the lane: one row in the middle, two rows at one
+third and two thirds, and so on. A step is never pushed to the top or
+bottom of its lane (owner, 2026-11-08).</p><p><strong>This is about the DIAGRAM, not the process.</strong> <code class="language-plaintext highlighter-rouge">BPMNDiagram</code> carries where a
+thing was drawn and the process carries what is true, so a routing fix changes
+no semantics and needs no re-validation of the flow — the same split
+<code class="language-plaintext highlighter-rouge">board-diagram-interchange</code> draws one level up. What it changes is whether
+somebody can read the diagram.</p><p><strong>Check it by looking at the rendered SVG, not the XML.</strong> Waypoints that look
+orderly in source can still emit a diagonal, and <code class="language-plaintext highlighter-rouge">render:bpmn</code> is what a reader
+sees; <code class="language-plaintext highlighter-rouge">preview:site</code> shows the rendered page, which is the artefact under
+review, and a green gate set does not show it.</p><h2 id="rendering-what-a-reader-can-click-and-what-must-not-collide"><a href="#rendering-what-a-reader-can-click-and-what-must-not-collide" class="anchor-heading" aria-labelledby="rendering-what-a-reader-can-click-and-what-must-not-collide"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Rendering: what a reader can click, and what must not collide
+  
+  
+</h2><p><code class="language-plaintext highlighter-rouge">render:bpmn</code>
+(<code class="language-plaintext highlighter-rouge">cat-harness-tools/src/workflow/diagram-links.ts</code>) draws the links; the
+layout rules are checked by <code class="language-plaintext highlighter-rouge">bpmn:detangle</code>
+(<a href="../../reference/skill-instructions/bpmn-detangle.html"><code class="language-plaintext highlighter-rouge">bpmn-detangle</code></a>).</p><p><strong>Links.</strong></p><ul><li>A step’s <strong>title</strong> links to the step’s own page (<code class="language-plaintext highlighter-rouge">process/P/node/T</code>), or,
+on a site that publishes no step pages, to its process’s page in the
+processes viewer. The link wraps the title’s text only, never the box, so
+a badge or the ⓘ drawn on the box is a target of its own.</li><li>A call activity’s <strong>[+]</strong> links to the process it calls. The link is the
+marker and a 24 × 24 hit area around it, never the box.</li><li>Every link is focusable, shows a focus ring the size of the link, and has
+an accessible name: “Open step: …” or “Open subprocess: …”.</li><li>An overlay drawn over the picture (the process page’s <code class="language-plaintext highlighter-rouge">.pt-go</code>) follows
+the same rule: it covers the [+] only.</li></ul><p><strong>One way to show a drawing, on any page.</strong> A process page, a guide’s
+business-processes page and a journey’s step show the same drawing through
+the same parts: <code class="language-plaintext highlighter-rouge">render:bpmn</code>’s SVG at <code class="language-plaintext highlighter-rouge">assets/img/workflows/&lt;stem&gt;.svg</code>,
+inlined and framed by the site’s <code class="language-plaintext highlighter-rouge">docs-ui.js</code>, and the ⓘ task panel. A page
+other than a process page writes</p><div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;figure class="bpmn-figure pt-diagram" data-panel="&lt;processes route&gt;/&lt;stem&gt;.tasks.json"&gt;
+  &lt;img src="assets/img/workflows/&lt;stem&gt;.svg" alt="BPMN diagram: …"&gt;&lt;/figure&gt;
+</code></pre></div></div><p>and loads <code class="language-plaintext highlighter-rouge">task-panel.js</code> and <code class="language-plaintext highlighter-rouge">task-panel.css</code> from the processes route. The
+panel draws its markers from the sidecar and resolves its links against it.
+<code class="language-plaintext highlighter-rouge">data-pt-highlight="Task_A Task_B"</code> picks out steps. Do not embed a drawing
+as a data URI or a copy of the SVG: its links stay inert and it drifts from
+the site’s.</p><p><strong>Skills in the panel are the site’s switch.</strong> <code class="language-plaintext highlighter-rouge">site.taskSkills</code> in the
+checkout’s <code class="language-plaintext highlighter-rouge">index.config.json</code>: absent or <code class="language-plaintext highlighter-rouge">true</code> shows the skills a task
+requires and its role has; <code class="language-plaintext highlighter-rouge">false</code> hides them, for a site whose processes
+are not modelled with skills (an implementation guide’s business
+processes). The rest of the panel (the step, its lane and role, the
+process, a called process) is shown either way, so a site that later models
+skills turns them on with that one line.</p><p><strong>Layout.</strong> The picture is the <code class="language-plaintext highlighter-rouge">BPMNDiagram</code> as written: bpmn-js lays
+nothing out, so every rule below is fixed in the DI.</p><ul><li><strong>No flow through a box</strong>: not a box it skips, and not its own source or
+target. A flow starts on the side of the box it leaves and ends on the side
+of the box it enters. When a box is resized (every task is 120 × 120), move
+the waypoints with it: a flow laid for the old size runs through the new
+box (<code class="language-plaintext highlighter-rouge">edge-through-own-end</code>).</li><li><strong>No two labels on each other, and no label on a flow, a box or a lane
+line</strong>, a pool’s right edge included. A word wider than its <code class="language-plaintext highlighter-rouge">BPMNLabel</code>
+width breaks mid-word, so give the label the width of its longest word.</li><li><strong>Every step inside its pool</strong> (<code class="language-plaintext highlighter-rouge">shape-outside-pool</code>). Only data stores,
+data objects, annotations and groups may sit outside.</li><li><strong>Labels inside the picture.</strong> The SVG’s <code class="language-plaintext highlighter-rouge">viewBox</code> is bpmn-js’s bounding
+box of everything drawn, labels included, so a label never falls outside
+it. A label that looks cut off at the edge is cut off by the page, not by
+the SVG.</li></ul><h2 id="running-one-the-engine-refuses-work-claimed-out-of-order"><a href="#running-one-the-engine-refuses-work-claimed-out-of-order" class="anchor-heading" aria-labelledby="running-one-the-engine-refuses-work-claimed-out-of-order"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Running one: the engine refuses work claimed out of order
+  
+  
+</h2><p>The list / start / next / complete calls run a process from its diagram.
+<strong>“What is enabled now”</strong> is the useful one: it reports the enabled step, the
+lane that owns it, <strong>and the skill that implements it</strong> — so the answer is
+something to act on rather than a bare step name.</p><p><strong>Completion refuses a step that is not enabled.</strong> That is what makes the
+diagram a control rather than a picture.</p><p><strong>Completion also checks WHO.</strong> Before any task or decision is recorded, the
+engine asks four questions: is the actor authenticated, eligible for the role
+the lane binds (<code class="language-plaintext highlighter-rouge">roleRef</code>), permitted by an ODRL policy to <code class="language-plaintext highlighter-rouge">perform-task</code> in
+this process and task, and allowed to touch the target content? This is
+generic engine behaviour, so <strong>do not draw an authorization task into a
+diagram</strong>: a check drawn into some processes is a check missing from the rest.
+What a diagram owes the check is a lane bound to a declared role. See
+<a href="../../reference/skill-instructions/task-authorization.html"><code class="language-plaintext highlighter-rouge">task-authorization</code></a>.</p><p><strong>Instance state is committed</strong>, alongside the work plan, so a sibling session
+sees the same position. Do not hand-roll a second tracker: a second answer to
+<em>where are we</em> is free to disagree with the first.</p><h2 id="strict-by-default-and-what-a-package-may-never-relax"><a href="#strict-by-default-and-what-a-package-may-never-relax" class="anchor-heading" aria-labelledby="strict-by-default-and-what-a-package-may-never-relax"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Strict by default, and what a package may never relax
+  
+  
+</h2><p>Base processes carry <strong><code class="language-plaintext highlighter-rouge">&lt;cat-harness.processes:policy enforcement="strict"/&gt;</code></strong> — the gate
+refuses a step that is not enabled. Per-content-type processes are <strong>advisory</strong>:
+their package owns what <em>adequate</em> means in that domain. <strong>Absent policy means
+strict.</strong></p><p>To relax a base step, a package <strong>declares</strong> it with a <strong>reason</strong>. No reason, no
+load — silencing a gate must cost more than satisfying it.</p><p><strong>Some steps are marked unrelaxable and no package may touch them</strong>: the editor
+<em>seeing</em> the findings, the decision itself, the write, and release
+authorisation. Those four are the gate; everything else is procedure around it.</p><p>A validator checks every declared relaxation and runs in CI, so a relaxation
+naming a step that no longer exists fails rather than sitting in the file
+looking like policy while permitting nothing.</p><h2 id="the-commit-boundary-enforces-what-the-diagram-decided"><a href="#the-commit-boundary-enforces-what-the-diagram-decided" class="anchor-heading" aria-labelledby="the-commit-boundary-enforces-what-the-diagram-decided"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The commit boundary enforces what the diagram decided
+  
+  
+</h2><p>A corpus gate, run from a pre-commit hook or CI in a folio, <strong>refuses a changed
+block that no instance records the editor having authorised</strong> — no instance, not
+past the decision, or discarded.</p><p><strong>It refuses when it cannot tell, too.</strong> A file that reads as a manifest but
+will not import is refused rather than waved through: <em>could not determine</em> is
+never rendered as a pass. Sweep-written sidecars are excluded, and a warn-only
+mode exists for gradual adoption.</p><h2 id="some-gateways-are-computed-not-chosen"><a href="#some-gateways-are-computed-not-chosen" class="anchor-heading" aria-labelledby="some-gateways-are-computed-not-chosen"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Some gateways are computed, not chosen
+  
+  
+</h2><p>A gateway carrying <strong><code class="language-plaintext highlighter-rouge">&lt;cat-harness.processes:decision/&gt;</code></strong> is backed by a decision table. Pass
+the facts — the counts a QA sweep already produced — and the table returns the
+branch.</p><p><strong>Completion refuses a hand-supplied outcome there</strong>, and that refusal is the
+point: asserting the answer would defeat having a table. Adding one means adding
+the table and the reference and nothing else; the loader checks that every
+outcome the table can return names a real branch.</p><h2 id="a-bean-marked-step-performs-the-operation-not-a-note-about-it"><a href="#a-bean-marked-step-performs-the-operation-not-a-note-about-it" class="anchor-heading" aria-labelledby="a-bean-marked-step-performs-the-operation-not-a-note-about-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A bean-marked step performs the operation, not a note about it
+  
+  
+</h2><p>An activity carrying a work item operation <strong>does it</strong> when you complete the step:</p><div class="table-wrapper"><table><thead><tr><th>op</th><th>what happens</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">claim</code></td><td>sets in-progress, idempotent</td></tr><tr><td><code class="language-plaintext highlighter-rouge">note</code></td><td>appends what you pass</td></tr><tr><td><code class="language-plaintext highlighter-rouge">resolve</code></td><td>completes the work item <strong>only once the instance itself has completed</strong> (or has nothing left but archive steps)</td></tr><tr><td><code class="language-plaintext highlighter-rouge">archive</code></td><td>moves a completed or scrapped work item into the archive, <strong>only once the instance has completed</strong></td></tr></tbody></table></div><p><strong>The <code class="language-plaintext highlighter-rouge">resolve</code> row is a judgement guard.</strong> A still-running
+process gets a note instead, because whether work is done is a judgement and a
+work item is never closed on someone else’s say-so — the same rule that stops you
+resolving a sibling’s.</p><p><strong>You do not draw <code class="language-plaintext highlighter-rouge">claim</code>, <code class="language-plaintext highlighter-rouge">resolve</code> or <code class="language-plaintext highlighter-rouge">archive</code> yourself.</strong> They live in two
+called processes and nowhere else: <code class="language-plaintext highlighter-rouge">Process_BeanOpen</code> (<code class="language-plaintext highlighter-rouge">sdlc/processes/bean-open.bpmn</code>: check,
+create, whose work item, claim or leave alone) and <code class="language-plaintext highlighter-rouge">Process_BeanClose</code>
+(<code class="language-plaintext highlighter-rouge">sdlc/processes/bean-close.bpmn</code>: complete or scrap, then one shared archive
+step; or record the blocker and hand back). A process that works on a work item
+calls OPEN where the work item becomes its own, follows it with a <code class="language-plaintext highlighter-rouge">claimed</code> /
+<code class="language-plaintext highlighter-rouge">not yours</code> gateway, and calls CLOSE straight before each end it reaches from
+there. <code class="language-plaintext highlighter-rouge">note</code> stays on the steps where the work happens. <code class="language-plaintext highlighter-rouge">check:bean-calls</code>
+(run inside <code class="language-plaintext highlighter-rouge">check:workflow-refs</code>) refuses the three ops anywhere else, and a
+process that calls one of the pair without the other, because claim and close
+drawn ad hoc leave work items resolved and never archived, and processes that claim
+and never close. See
+<code class="language-plaintext highlighter-rouge">todo-manager</code> (opt-in <code class="language-plaintext highlighter-rouge">cat-harness.work-plan</code>) §”Archiving — two dispositions”.</p><p>Work-plan priming reports every instance’s position next to its work item, so the
+plan and the process are one answer rather than two.</p></main><hr><footer><details class="fa-provenance" id="fa-provenance" data-fa-provenance-count="14"><summary class="fa-provenance-summary">Provenance (14)</summary><p class="fa-provenance-lead">Who decided, when, and under which work item. This record was moved out of the text of the page.</p><h3 class="fa-provenance-section">Processes are BPMN, and the diagrams are executable</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="history"><span class="fa-provenance-kind">history</span><div class="fa-provenance-text"><strong>Do not quote a count of diagrams from prose.</strong> This repository&#39;s own <code>AGENTS.md</code> said &quot;six <code>.bpmn</code> files&quot; long after there were far more, in a file that elsewhere warns against exactly that. Count the directory.</div></li></ul><h3 class="fa-provenance-section">There is no <code>tool</code> element, and that is a decision</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="date"><span class="fa-provenance-kind">date</span> <span class="fa-provenance-refs"><code>2026-09-26</code></span><div class="fa-provenance-text">It would also put the edge on the wrong side. <code>satisfies</code> is owned by the Tool, which knows what it implements and is versioned with it; a <code>tool</code> ref would be owned by the diagram author, who would have to track Tools across every instance — measured 2026-09-26, <strong>116</strong> Tools are discovered from four <code>tools/</code> graphs (<code>cat-harness</code>, the DAK layer, the content core, the FHIR IG layer), so a diagram in one instance would be asserting facts about three others.</div></li><li class="fa-provenance-entry" data-fa-provenance-kind="history"><span class="fa-provenance-kind">history</span><div class="fa-provenance-text"><strong>What is NOT being claimed</strong> is that the join is well populated. Measured the same day over the authoritative registry (<code>tools/discover.ts</code>, never a grep):</div></li></ul><h3 class="fa-provenance-section">A Tool&#39;s OWN procedure is the Tool&#39;s subprocess, not the skill&#39;s prose</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="owner-decision"><span class="fa-provenance-kind">owner-decision</span> <span class="fa-provenance-refs"><code>2026-09-30</code></span><div class="fa-provenance-text">Owner, 2026-09-30 (placement ruling 6): <em>&quot;in general tools can describe their own specific subprocesses if needed to not bog down general skills&quot;</em>. The direction of the edge stays the one above — the Tool owns it. A Tool whose way of exercising a skill has steps of its own (a retry loop, a staging directory, a two-pass mode) names that diagram in **<code>subprocesses</code>**, a list of process ids on its Tool node; <code>check:tools</code> refuses one no <code>.bpmn</code> in the checkout has as its stem. The general process stays general and reaches the detail by <code>calledElement</code> only where it has chosen that Tool. By convention the diagram sits in the declaring instance&#39;s <code>processes/tools/</code> concern group, beside other tools&#39; procedures rather than among the general processes.</div></li></ul><h3 class="fa-provenance-section">A process binds only skills its instance can reach (STRICT)</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="owner-decision"><span class="fa-provenance-kind">owner-decision</span> <span class="fa-provenance-refs"><code>2026-10-03</code></span><div class="fa-provenance-text">Owner, 2026-10-03: a process may bind only skills (and, through them, Tools) from **its own instance or one it <code>needs</code>**, transitively, <em>&quot;general rule, not just fhir-harness&quot;</em>. A <code>&lt;bootstrap.processes:skill ref&gt;</code> to a skill that only a HIGHER instance holds is a wrong-direction edge, the same as an upward import: the diagram cannot be lifted into its own repository without the layer above it.</div></li><li class="fa-provenance-entry" data-fa-provenance-kind="bean"><span class="fa-provenance-kind">bean</span> <span class="fa-provenance-refs"><code>bean mlux</code> <code>2026-10-03</code></span><div class="fa-provenance-text"><code>bun run cat check:process-bindings</code> gates it, with the same <code>allowedFromNeeds</code> direction as <code>check:import-direction</code> and <code>check:reference-direction</code>. **<code>skill-ref-resolves</code> does not catch this, and that is why the gate exists:** it resolves against <code>knownSkills(root)</code>, which in a pre-split checkout is checkout-scoped, so &quot;resolves&quot; means &quot;exists somewhere&quot;. On 2026-10-03 that hid 33 wrong-direction bindings in 9 diagrams behind a green audit. They are in a ratchet baseline, cleared under bean <code>mlux</code>.</div></li><li class="fa-provenance-entry" data-fa-provenance-kind="owner-decision"><span class="fa-provenance-kind">owner-decision</span> <span class="fa-provenance-refs"><code>2026-10-04</code></span><div class="fa-provenance-text"><strong>The two say so about each other</strong> (owner, 2026-10-04, option 1 of 3): <code>skill-ref-resolves</code> is existence only, and its own summary names this gate as the answer on direction. That leaves one implementation of &quot;may this process bind this skill&quot;, not two free to disagree.</div></li></ul><h3 class="fa-provenance-section">Binding the extension namespaces</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="owner-decision"><span class="fa-provenance-kind">owner-decision</span> <span class="fa-provenance-refs"><code>bean 12s9</code> <code>2026-09-24</code></span><div class="fa-provenance-text"><strong>An element&#39;s prefix names the Subgraph that declares it</strong> (owner, 2026-09-24, bean <code>12s9</code>). A diagram binds one address per vocabulary it uses:</div></li><li class="fa-provenance-entry" data-fa-provenance-kind="date"><span class="fa-provenance-kind">date</span> <span class="fa-provenance-refs"><code>2026-09-24</code></span><div class="fa-provenance-text">Readers match <strong>the address, never the prefix text</strong>, so a diagram that binds a different prefix to the same address reads identically, and <code>folio:</code> bound to anyone else&#39;s address is not ours. The older single address, <code>…/folio-assistant/bpmn</code>, is <strong>retired</strong> (2026-09-24). An element under it is no longer read, and <code>external-schemas</code> reports a diagram that still binds it as drift. A test fails if an element is written under an address whose vocabulary does not define it.</div></li></ul><h3 class="fa-provenance-section">Edge routing: rectilinear, and never over a task</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="owner-decision"><span class="fa-provenance-kind">owner-decision</span> <span class="fa-provenance-refs"><code>2026-09-23</code></span><div class="fa-provenance-text">Owner, 2026-09-23, on <code>document-ingestion</code>&#39;s rendered diagram: <strong>&quot;keep rectilinear if possible, no overlapping.&quot;</strong> Two rules, and the second is the one that actually bites.</div></li><li class="fa-provenance-entry" data-fa-provenance-kind="history"><span class="fa-provenance-kind">history</span><div class="fa-provenance-text"><strong>Never over a task, a lane label or another edge.</strong> The case that prompted this: the <code>gap</code> flow from <em>Record the gap as a bean</em> back to <em>Derive content from the assets</em> was drawn as one long diagonal crossing the full width of the process, passing under every task in the lane. It is a perfectly ordinary loop-back and it was the hardest edge on the page to follow.</div></li><li class="fa-provenance-entry" data-fa-provenance-kind="history"><span class="fa-provenance-kind">history</span><div class="fa-provenance-text"><strong>Check it by looking at the rendered SVG, not the XML.</strong> Waypoints that look orderly in source can still emit a diagonal, and <code>render:bpmn</code> is what a reader sees. The rendered page is the artefact under review — <code>preview:site</code> exists for exactly this reason, after a generator shipped 22 headings with one anchor and every gate was green across it.</div></li></ul><h3 class="fa-provenance-section">Rendering: what a reader can click, and what must not collide</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="issue"><span class="fa-provenance-kind">issue</span> <span class="fa-provenance-refs"><code>cat-harness#991</code> <code>2026-11-03</code></span><div class="fa-provenance-text">Owner, 2026-11-03 (cat-harness#991), on the published diagrams: <em>&quot;linked tasks should be on the task title only, not the whole box. the subprocess should be opened by the [+] not the whole box.&quot;</em> <code>render:bpmn</code> (<code>cat-harness-tools/src/workflow/diagram-links.ts</code>) draws the links; the layout rules are checked by <code>bpmn:detangle</code> ([<code>bpmn-detangle</code>](bpmn-detangle.md)).</div></li></ul><h3 class="fa-provenance-section">A bean-marked step performs the operation, not a note about it</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="owner-decision"><span class="fa-provenance-kind">owner-decision</span> <span class="fa-provenance-refs"><code>bean m8gz</code> <code>2026-10-24</code></span><div class="fa-provenance-text">**You do not draw <code>claim</code>, <code>resolve</code> or <code>archive</code> yourself.** They live in two called processes and nowhere else (bean <code>folio-assistant-m8gz</code>, owner 2026-10-24): <code>Process_BeanOpen</code> (<code>sdlc/processes/bean-open.bpmn</code>: check, create, whose bean, claim or leave alone) and <code>Process_BeanClose</code> (<code>sdlc/processes/bean-close.bpmn</code>: complete or scrap, then one shared archive step; or record the blocker and hand back). A process that works on a bean calls OPEN where the bean becomes its own, follows it with a <code>claimed</code> / <code>not yours</code> gateway, and calls CLOSE straight before each end it reaches from there. <code>note</code> stays on the steps where the work happens. <code>check:bean-calls</code> (run inside <code>check:workflow-refs</code>) refuses the three ops anywhere else, and a process that calls one of the pair without the other. Why: 219 beans resolved and never archived, and 7 processes that claimed and never closed — [<code>todo-manager</code>](../../../work-plan/skills/work-plan/todo-manager.md) §&quot;Archiving — two dispositions&quot;.</div></li></ul></details><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

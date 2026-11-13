@@ -1,0 +1,38 @@
+{
+  "$ref": "#/definitions/KindAvatar",
+  "definitions": {
+    "KindAvatar": {
+      "type": "object",
+      "properties": {
+        "glyph": {
+          "type": "string",
+          "minLength": 1
+        },
+        "tone": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 359
+        },
+        "reads": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "glyph",
+        "tone",
+        "reads"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/graph-typology-node/KindAvatarSchema.schema.json",
+  "title": "KindAvatarSchema",
+  "description": "Generated from `KindAvatarSchema` in schemas/kg/graph-typology-node.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261113-0828",
+    "sha": "5344cd2493398b0c97f96e0ef5b40281e2eb6325",
+    "pr": "repin-train/20261113-0828",
+    "run": "43393606705"
+  }
+}

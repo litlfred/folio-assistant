@@ -1,0 +1,18 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0828/bootstrap/bootstrap.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0828/bootstrap/role/logger.jsonld",
+  "isPartOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0828/bootstrap/bootstrap.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0828/bootstrap/role/logger",
+      "@type": "bootstrap:Role",
+      "label": "Logger",
+      "description": "A machine that accepts log messages and puts them somewhere a person can read. It receives and records, and takes no part in what happens next. Its skill is its contract, `logger`: record a complete message unchanged and attributed to its actor. Composing the message is `log-message`, the skill of whoever is doing the thing being logged.",
+      "source": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0828/bootstrap/scenarios/roles.json",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0828/bootstrap/directory/scenarios",
+      "flowNodeRef": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-0828/bootstrap/process/Process_LogMessage/node/A_Record"
+      ]
+    }
+  ]
+}
