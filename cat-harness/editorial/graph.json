@@ -1,0 +1,15 @@
+{
+  "_comment": "The graphs inside cat-harness's `editorial` sub-graph, declared FROM WITHIN (#980) on the pattern of `work-plan/graph.json`. Paths are relative to THIS directory. OPT-IN (`optIn: true` on its entry): off in every layer unless that layer lists `cat-harness.editorial` in its own `enableSubgraphs` (owner, 2026-11-10, card Q-SG-1 C, wave 2).",
+  "name": "editorial",
+  "directories": [
+    {
+      "id": "editorial-skills",
+      "path": "skills/",
+      "subgraph": true,
+      "description": "The `editorial-audits` skill package.",
+      "graphTypologies": [
+        "skills"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,4599 @@
+{
+  "$schema": "folio-vector-labels/v1",
+  "doc_id": "arxiv-2601.04544v1",
+  "pages": [
+    {
+      "page": 2,
+      "rotation": 0,
+      "drawings": 1,
+      "rasterImagesOnPage": 2,
+      "captionCandidates": [
+        "Figure 1: (a) performance router, which balances latency and cost across models of different sizes. (b) task router, which assigns queries to domain-specific experts to improve accuracy."
+      ],
+      "labels": [
+        {
+          "text": "TCAndon-Router",
+          "bbox": [
+            452.22,
+            36.28,
+            523.28,
+            45.25
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman9-Regular"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "Figure 1: (a) performance router, which balances latency and cost across models of different sizes. (b)",
+          "bbox": [
+            72.0,
+            221.4,
+            523.27,
+            231.36
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "task router, which assigns queries to domain-specific experts to improve accuracy.",
+          "bbox": [
+            72.0,
+            233.35,
+            428.7,
+            243.32
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "are appropriate. This leads to routing errors, brittle behavior under ambiguous queries, and reduced",
+          "bbox": [
+            72.0,
+            266.43,
+            523.27,
+            276.39
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "system reliability. Furthermore, most routers support only static routing, making them diﬀicult to adapt",
+          "bbox": [
+            72.0,
+            278.38,
+            523.27,
+            288.34
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "to dynamic category changes in enterprise environments. The lack of explicit reasoning during routing",
+          "bbox": [
+            72.0,
+            290.34,
+            523.27,
+            300.3
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "also limits interpretability and robustness.",
+          "bbox": [
+            72.0,
+            302.29,
+            256.41,
+            312.25
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "To address these challenges, we propose TCAR, adaptive reasoning router for multi-agent collaboration.",
+          "bbox": [
+            72.0,
+            320.02,
+            523.27,
+            329.98
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "Unlike existing routers that can only output a single label, TCAR generates structured natural language",
+          "bbox": [
+            72.0,
+            331.98,
+            523.27,
+            341.94
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "reasoning [10] and identifies all expert agents that may be relevant to the current problem. This design",
+          "bbox": [
+            72.0,
+            343.93,
+            523.27,
+            353.9
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "transforms routing from a traditional black-box classification task into a transparent and interpretable",
+          "bbox": [
+            72.0,
+            355.89,
+            523.28,
+            365.85
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "reasoning process, enabling the system to articulate when and why multiple agents might be applicable.",
+          "bbox": [
+            72.0,
+            367.84,
+            523.27,
+            377.81
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "Beyond the agent selection mechanism, we further introduce a novel collaborative execution pipeline.",
+          "bbox": [
+            72.0,
+            379.8,
+            523.27,
+            389.76
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "Each selected expert agent first produces a domain-specific response, after which a Refining Agent [11]",
+          "bbox": [
+            72.0,
+            391.75,
+            523.28,
+            401.72
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "aggregates and reconciles these outputs to form a logically coherent final answer.",
+          "bbox": [
+            72.0,
+            403.71,
+            439.15,
+            413.67
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "This architecture",
+          "bbox": [
+            447.43,
+            403.71,
+            523.28,
+            413.67
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "aligns with recent advances in collaborative multi-agent LLM systems, where domain experts provide",
+          "bbox": [
+            72.0,
+            415.66,
+            523.28,
+            425.63
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "complementary perspectives and a coordinator synthesizes the final decision [12, 13].This paradigm also",
+          "bbox": [
+            72.0,
+            427.62,
+            523.27,
+            437.58
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "mirrors human organizational workflows: multiple subject-matter experts contribute their insights, and",
+          "bbox": [
+            72.0,
+            439.57,
+            523.27,
+            449.54
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "a senior analyst ultimately integrates them into a unified conclusion.",
+          "bbox": [
+            72.0,
+            451.53,
+            371.71,
+            461.49
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "We evaluate TCAR on public benchmarks (CLINC150 [14], HWU64 [15], MINDS14 [16], and SGD",
+          "bbox": [
+            72.0,
+            469.26,
+            523.27,
+            479.22
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "[17]) as well as on a private dataset from real-world cloud computing scenarios. Experimental results",
+          "bbox": [
+            72.0,
+            481.22,
+            523.27,
+            491.18
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "demonstrate that combining multi-agent routing with a refinement mechanism significantly improves",
+          "bbox": [
+            72.0,
+            493.17,
+            523.28,
+            503.13
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "accuracy, reduces routing conflicts, and enhances system robustness when handling ambiguous or cross-",
+          "bbox": [
+            72.0,
+            505.13,
+            523.27,
+            515.09
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "domain queries.",
+          "bbox": [
+            72.0,
+            517.08,
+            140.44,
+            527.04
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "The main contributions of this work are as follows:",
+          "bbox": [
+            72.0,
+            534.81,
+            294.26,
+            544.77
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "• A reasoning-centric multi-agent routing system. We introduce TCAR, the first domain router that",
+          "bbox": [
+            84.17,
+            554.33,
+            523.27,
+            564.3
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "outputs natural-language decision rationales and supports flexible multi-agent selection.",
+          "bbox": [
+            96.91,
+            566.29,
+            480.36,
+            576.25
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "• Conflict resolution through collaborative execution: We propose an innovative ”multi-agent gener-",
+          "bbox": [
+            84.17,
+            586.01,
+            523.27,
+            595.98
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "ation and refinement” pipeline that mitigates agent conflicts and effectively integrates complemen-",
+          "bbox": [
+            96.91,
+            597.97,
+            523.27,
+            607.93
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "tary domain expertise.",
+          "bbox": [
+            96.91,
+            609.92,
+            195.26,
+            619.89
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "• An open-source collaborative routing framework. We release the model and associated resources",
+          "bbox": [
+            84.17,
+            629.65,
+            523.27,
+            639.61
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "to advance research in interpretable multi-agent routing and reasoning-driven LLM collaboration.",
+          "bbox": [
+            96.91,
+            641.6,
+            522.89,
+            651.56
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "2",
+          "bbox": [
+            72.0,
+            670.94,
+            80.08,
+            685.29
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman12-Bold"
+          ],
+          "sizes": [
+            14.35
+          ]
+        },
+        {
+          "text": "Related Work",
+          "bbox": [
+            94.42,
+            670.94,
+            192.68,
+            685.29
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman12-Bold"
+          ],
+          "sizes": [
+            14.35
+          ]
+        },
+        {
+          "text": "Performance based routing selects among models of different sizes to balance cost and latency. Hybrid",
+          "bbox": [
+            72.0,
+            696.31,
+            523.27,
+            706.27
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "LLM[18] proposes a model based on the BERT architecture to assess the diﬀiculty of a query and make",
+          "bbox": [
+            72.0,
+            708.26,
+            523.28,
+            718.23
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "routing decisions. Self-REF[19] uses an LLM to output a confidence score, For low confidence, it uses an",
+          "bbox": [
+            72.0,
+            720.22,
+            523.27,
+            730.18
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "LLM or rejects the answer, while for high confidence, it uses an SLM.",
+          "bbox": [
+            72.0,
+            732.17,
+            376.32,
+            742.14
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "Task based routing assigns queries to domain-specific expert agents to achieve higher accuracy. This",
+          "bbox": [
+            72.0,
+            749.91,
+            523.27,
+            759.87
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "work focuses on task based routing, whose methodological landscape can be grouped into several major",
+          "bbox": [
+            72.0,
+            761.86,
+            523.27,
+            771.82
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "2",
+          "bbox": [
+            295.15,
+            791.75,
+            300.13,
+            801.71
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        }
+      ]
+    },
+    {
+      "page": 5,
+      "rotation": 0,
+      "drawings": 4,
+      "rasterImagesOnPage": 2,
+      "captionCandidates": [
+        "Figure 2: (a) Solo Agent: the router outputs a single agent, and that agent directly responds to the user’s query.(b) Refining Agent: the router outputs a set of candidate agents, and the refining agent integrates their outputs into a final answer."
+      ],
+      "labels": [
+        {
+          "text": "TCAndon-Router",
+          "bbox": [
+            452.22,
+            36.28,
+            523.28,
+            45.25
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman9-Regular"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "Figure 2: (a) Solo Agent: the router outputs a single agent, and that agent directly responds to the",
+          "bbox": [
+            72.0,
+            188.95,
+            523.27,
+            198.91
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "user’s query.(b) Refining Agent: the router outputs a set of candidate agents, and the refining agent",
+          "bbox": [
+            72.0,
+            200.91,
+            523.28,
+            210.87
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "integrates their outputs into a final answer.",
+          "bbox": [
+            72.0,
+            212.86,
+            261.28,
+            222.82
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "language modeling loss:",
+          "bbox": [
+            72.0,
+            246.33,
+            174.78,
+            256.3
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "T",
+          "bbox": [
+            279.41,
+            257.72,
+            284.11,
+            264.7
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI7"
+          ],
+          "sizes": [
+            6.97
+          ]
+        },
+        {
+          "text": "∑",
+          "bbox": [
+            275.1,
+            258.19,
+            289.49,
+            268.16
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMEX10"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "LSFT(θ) = −",
+          "bbox": [
+            217.11,
+            267.66,
+            273.43,
+            278.65
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMR10",
+            "CMR7",
+            "CMSY10"
+          ],
+          "sizes": [
+            6.97,
+            9.96
+          ]
+        },
+        {
+          "text": "log pθ(yt | y<t, q, A),",
+          "bbox": [
+            291.15,
+            267.66,
+            378.16,
+            279.11
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMMI7",
+            "CMR10",
+            "CMSY10"
+          ],
+          "sizes": [
+            6.97,
+            9.96
+          ]
+        },
+        {
+          "text": "t=1",
+          "bbox": [
+            275.75,
+            281.81,
+            288.84,
+            288.79
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI7",
+            "CMR7"
+          ],
+          "sizes": [
+            6.97
+          ]
+        },
+        {
+          "text": "{y1, . . . , yT } = (Cq, Aq).",
+          "bbox": [
+            245.52,
+            294.73,
+            349.75,
+            306.19
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMMI7",
+            "CMR10",
+            "CMR7",
+            "CMSY10"
+          ],
+          "sizes": [
+            6.97,
+            9.96
+          ]
+        },
+        {
+          "text": "However, SFT also has its limitations: the model may overfit to annotation templates or generate",
+          "bbox": [
+            72.0,
+            312.61,
+            523.27,
+            322.57
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "reasoning in a mechanical manner, making it necessary to further improve both the quality of reasoning",
+          "bbox": [
+            72.0,
+            324.56,
+            523.27,
+            334.52
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "and the accuracy of agent selection.",
+          "bbox": [
+            72.0,
+            336.52,
+            227.87,
+            346.48
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "Reinforcement Learning. To improve the robustness of routing decisions and the soundness of the",
+          "bbox": [
+            72.0,
+            354.45,
+            523.27,
+            364.41
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Bold",
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "generated reasoning, we introduce a reinforcement learning stage on top of SFT. Here, we adopt the",
+          "bbox": [
+            72.0,
+            366.41,
+            523.27,
+            376.37
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "DAPO method to train the model, with the training objective formulated as:",
+          "bbox": [
+            72.0,
+            378.36,
+            408.68,
+            388.32
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "JDAPO(θ) = E(q,a)∼D,{oi}G",
+          "bbox": [
+            137.88,
+            399.8,
+            253.27,
+            412.59
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMMI5",
+            "CMMI7",
+            "CMR10",
+            "CMR7",
+            "CMSY10",
+            "CMSY7",
+            "MSBM10"
+          ],
+          "sizes": [
+            4.98,
+            6.97,
+            9.96
+          ]
+        },
+        {
+          "text": "i=1∼πθold (·|q)",
+          "bbox": [
+            247.97,
+            404.93,
+            301.24,
+            414.83
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI5",
+            "CMMI7",
+            "CMR5",
+            "CMR7",
+            "CMSY7",
+            "LMRoman5-Regular"
+          ],
+          "sizes": [
+            4.98,
+            6.97
+          ]
+        },
+        {
+          "text": "",
+          "bbox": [
+            137.88,
+            409.78,
+            144.52,
+            419.74
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMEX10"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "",
+          "bbox": [
+            450.75,
+            409.78,
+            457.39,
+            419.74
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMEX10"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "(",
+          "bbox": [
+            238.2,
+            418.74,
+            244.15,
+            428.71
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMEX10"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": ")",
+          "bbox": [
+            444.8,
+            418.74,
+            450.75,
+            428.71
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMEX10"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "|oi|",
+          "bbox": [
+            205.17,
+            418.88,
+            216.99,
+            426.55
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI5",
+            "CMMI7",
+            "CMSY7"
+          ],
+          "sizes": [
+            4.98,
+            6.97
+          ]
+        },
+        {
+          "text": "G",
+          "bbox": [
+            191.93,
+            419.87,
+            198.13,
+            426.84
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI7"
+          ],
+          "sizes": [
+            6.97
+          ]
+        },
+        {
+          "text": "∑",
+          "bbox": [
+            187.84,
+            420.34,
+            202.22,
+            430.3
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMEX10"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "∑",
+          "bbox": [
+            203.89,
+            420.34,
+            218.27,
+            430.3
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMEX10"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "1",
+          "bbox": [
+            162.86,
+            423.25,
+            167.84,
+            433.21
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMR10"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "ri,t(θ) ˆAi,t, clip (ri,t(θ), 1 −εlow , 1 + εhigh ) ˆAi,t",
+          "bbox": [
+            244.15,
+            427.47,
+            444.3,
+            441.44
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMMI7",
+            "CMR10",
+            "CMSY10",
+            "LMRoman7-Regular"
+          ],
+          "sizes": [
+            6.97,
+            9.96
+          ]
+        },
+        {
+          "text": "",
+          "bbox": [
+            137.88,
+            427.71,
+            144.52,
+            437.67
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMEX10"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "",
+          "bbox": [
+            450.75,
+            427.71,
+            457.39,
+            437.67
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMEX10"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "min",
+          "bbox": [
+            219.94,
+            429.99,
+            236.53,
+            439.95
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMR10"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "∑G",
+          "bbox": [
+            145.72,
+            431.01,
+            162.43,
+            442.96
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMEX10",
+            "CMMI7"
+          ],
+          "sizes": [
+            6.97,
+            9.96
+          ]
+        },
+        {
+          "text": "i=1 |oi|",
+          "bbox": [
+            156.24,
+            438.48,
+            184.97,
+            451.43
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMMI7",
+            "CMR7",
+            "CMSY10"
+          ],
+          "sizes": [
+            6.97,
+            9.96
+          ]
+        },
+        {
+          "text": "t=1",
+          "bbox": [
+            204.53,
+            443.96,
+            217.63,
+            450.93
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI7",
+            "CMR7"
+          ],
+          "sizes": [
+            6.97
+          ]
+        },
+        {
+          "text": "i=1",
+          "bbox": [
+            188.58,
+            444.08,
+            201.48,
+            451.05
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI7",
+            "CMR7"
+          ],
+          "sizes": [
+            6.97
+          ]
+        },
+        {
+          "text": "s.t. 0 < |{oi| is_equivalent (a, oi)}| < G.",
+          "bbox": [
+            141.2,
+            457.54,
+            317.89,
+            468.59
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMMI7",
+            "CMR10",
+            "CMSY10",
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            6.97,
+            9.96
+          ]
+        },
+        {
+          "text": "For reward design[31], since the SFT stage already enables the model to produce well-formatted outputs",
+          "bbox": [
+            72.0,
+            479.56,
+            523.27,
+            489.52
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "with a reasonable reasoning length Cq, we apply the reward only to the final agent set Aq. Because Aq is",
+          "bbox": [
+            72.0,
+            491.51,
+            523.28,
+            502.97
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMMI7",
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            6.97,
+            9.96
+          ]
+        },
+        {
+          "text": "a set that may contain one or multiple agents, we decompose the routing reward into two parts. Let A∗",
+          "bbox": [
+            72.0,
+            502.3,
+            522.78,
+            513.67
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMSY7",
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            6.97,
+            9.96
+          ]
+        },
+        {
+          "text": "denote the gold agent set and Aq the predicted candidate agent set. The first reward focuses on whether",
+          "bbox": [
+            72.0,
+            515.42,
+            523.27,
+            526.88
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMMI7",
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            6.97,
+            9.96
+          ]
+        },
+        {
+          "text": "each element in Aq belongs to A∗(analogous to precision), while the second reward evaluates whether",
+          "bbox": [
+            72.0,
+            526.21,
+            523.27,
+            538.83
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMMI7",
+            "CMSY7",
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            6.97,
+            9.96
+          ]
+        },
+        {
+          "text": "Aq covers all correct agents (analogous to recall or a coverage constraint). Formally, the rewards are",
+          "bbox": [
+            72.0,
+            539.33,
+            523.27,
+            550.79
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMMI7",
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            6.97,
+            9.96
+          ]
+        },
+        {
+          "text": "defined as follows:",
+          "bbox": [
+            72.0,
+            551.29,
+            150.71,
+            561.25
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "First, we define a local reward based on the degree of set overlap, which measures the proportion of",
+          "bbox": [
+            72.0,
+            569.22,
+            523.27,
+            579.18
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "agents in the predicted set Aq that are correct. This reward encourages the model to reduce irrelevant",
+          "bbox": [
+            72.0,
+            581.17,
+            523.28,
+            592.63
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMMI7",
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            6.97,
+            9.96
+          ]
+        },
+        {
+          "text": "or incorrect agent predictions.",
+          "bbox": [
+            72.0,
+            593.13,
+            203.07,
+            603.09
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "|Aq ∩A∗|",
+          "bbox": [
+            306.7,
+            602.48,
+            347.22,
+            615.17
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMMI7",
+            "CMSY10",
+            "CMSY7"
+          ],
+          "sizes": [
+            6.97,
+            9.96
+          ]
+        },
+        {
+          "text": "R1(Aq, A∗) =",
+          "bbox": [
+            237.8,
+            608.73,
+            296.42,
+            621.44
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMMI7",
+            "CMR10",
+            "CMR7",
+            "CMSY7"
+          ],
+          "sizes": [
+            6.97,
+            9.96
+          ]
+        },
+        {
+          "text": "max(1, |Aq|),",
+          "bbox": [
+            300.41,
+            610.63,
+            357.47,
+            628.27
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMMI7",
+            "CMR10",
+            "CMSY10"
+          ],
+          "sizes": [
+            6.97,
+            9.96
+          ]
+        },
+        {
+          "text": "Second, we introduce a coverage reward to penalize missing correct agents.",
+          "bbox": [
+            72.0,
+            640.05,
+            413.14,
+            650.01
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "The model receives an",
+          "bbox": [
+            421.81,
+            640.05,
+            523.27,
+            650.01
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "additional reward if and only if its predicted set Aq fully contains the ground-truth set A∗; otherwise,",
+          "bbox": [
+            72.0,
+            650.84,
+            523.27,
+            663.46
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMMI7",
+            "CMSY7",
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            6.97,
+            9.96
+          ]
+        },
+        {
+          "text": "this reward is zero.",
+          "bbox": [
+            72.0,
+            663.96,
+            154.93,
+            673.92
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "|Aq ∩A∗|",
+          "bbox": [
+            306.7,
+            671.37,
+            347.22,
+            684.05
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMMI7",
+            "CMSY10",
+            "CMSY7"
+          ],
+          "sizes": [
+            6.97,
+            9.96
+          ]
+        },
+        {
+          "text": "R2(Aq, A∗) =",
+          "bbox": [
+            237.71,
+            677.61,
+            296.33,
+            690.32
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMMI7",
+            "CMR10",
+            "CMR7",
+            "CMSY7"
+          ],
+          "sizes": [
+            6.97,
+            9.96
+          ]
+        },
+        {
+          "text": "max(1, |A∗|),",
+          "bbox": [
+            300.32,
+            679.52,
+            357.56,
+            696.32
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMR10",
+            "CMSY10",
+            "CMSY7"
+          ],
+          "sizes": [
+            6.97,
+            9.96
+          ]
+        },
+        {
+          "text": "To prevent the model from generating excessively long outputs or endlessly listing agents, we introduce",
+          "bbox": [
+            72.0,
+            708.58,
+            523.27,
+            718.54
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "an additional length-penalty term[32]. Combining all three components, we define the final reward as:",
+          "bbox": [
+            72.0,
+            720.53,
+            517.24,
+            730.49
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "R(Aq, A∗) = α R1(Aq, A∗) + (1 −α)R2(Aq, A∗) −βmax(|Aq| −|A∗|, 0)",
+          "bbox": [
+            144.02,
+            740.79,
+            451.24,
+            753.5
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMMI7",
+            "CMR10",
+            "CMR7",
+            "CMSY10",
+            "CMSY7"
+          ],
+          "sizes": [
+            6.97,
+            9.96
+          ]
+        },
+        {
+          "text": "5",
+          "bbox": [
+            295.15,
+            791.75,
+            300.13,
+            801.71
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        }
+      ]
+    },
+    {
+      "page": 8,
+      "rotation": 0,
+      "drawings": 30,
+      "rasterImagesOnPage": 1,
+      "captionCandidates": [
+        "Figure 3: In scenarios where consultation-type and troubleshooting-type queries create conflicts among candidate agents, we compare two strategies: randomly selecting a single agent to respond versus allowing multiple agents to answer followed by aggregation by the Refining Agent. The results show that the Refin- ing Agent achieves a significantly higher human preference win rate, particularly for troubleshooting-type queries."
+      ],
+      "labels": [
+        {
+          "text": "TCAndon-Router",
+          "bbox": [
+            452.22,
+            36.28,
+            523.28,
+            45.25
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman9-Regular"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "Win",
+          "bbox": [
+            270.32,
+            76.4,
+            278.57,
+            83.84
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            4.39
+          ]
+        },
+        {
+          "text": "Tie",
+          "bbox": [
+            299.62,
+            76.4,
+            306.08,
+            83.84
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            4.39
+          ]
+        },
+        {
+          "text": "Lose",
+          "bbox": [
+            327.17,
+            76.4,
+            337.21,
+            83.84
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            4.39
+          ]
+        },
+        {
+          "text": "Consultation",
+          "bbox": [
+            156.3,
+            103.31,
+            194.98,
+            113.73
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            6.14
+          ]
+        },
+        {
+          "text": "27.0%",
+          "bbox": [
+            222.98,
+            103.51,
+            239.7,
+            112.44
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            5.26
+          ]
+        },
+        {
+          "text": "Troubleshooting",
+          "bbox": [
+            146.14,
+            148.9,
+            194.95,
+            159.31
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            6.14
+          ]
+        },
+        {
+          "text": "63.0%",
+          "bbox": [
+            267.39,
+            149.1,
+            284.11,
+            158.03
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            5.26
+          ]
+        },
+        {
+          "text": "0",
+          "bbox": [
+            196.65,
+            177.46,
+            199.44,
+            184.91
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            4.39
+          ]
+        },
+        {
+          "text": "20",
+          "bbox": [
+            244.6,
+            177.46,
+            250.18,
+            184.91
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            4.39
+          ]
+        },
+        {
+          "text": "40",
+          "bbox": [
+            293.94,
+            177.46,
+            299.52,
+            184.91
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            4.39
+          ]
+        },
+        {
+          "text": "60",
+          "bbox": [
+            343.28,
+            177.46,
+            348.86,
+            184.91
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            4.39
+          ]
+        },
+        {
+          "text": "80",
+          "bbox": [
+            392.62,
+            177.46,
+            398.2,
+            184.91
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            4.39
+          ]
+        },
+        {
+          "text": "100",
+          "bbox": [
+            440.57,
+            177.46,
+            448.94,
+            184.91
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            4.39
+          ]
+        },
+        {
+          "text": "Refining Agent Win Rate (%)",
+          "bbox": [
+            277.73,
+            182.64,
+            365.02,
+            193.05
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            6.14
+          ]
+        },
+        {
+          "text": "Figure 3: In scenarios where consultation-type and troubleshooting-type queries create conflicts among",
+          "bbox": [
+            72.0,
+            208.66,
+            523.27,
+            218.62
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "candidate agents, we compare two strategies: randomly selecting a single agent to respond versus allowing",
+          "bbox": [
+            72.0,
+            220.61,
+            523.28,
+            230.57
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "multiple agents to answer followed by aggregation by the Refining Agent. The results show that the Refin-",
+          "bbox": [
+            72.0,
+            232.57,
+            523.27,
+            242.53
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "ing Agent achieves a significantly higher human preference win rate, particularly for troubleshooting-type",
+          "bbox": [
+            72.0,
+            244.52,
+            523.27,
+            254.48
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "queries.",
+          "bbox": [
+            72.0,
+            256.48,
+            105.02,
+            266.44
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "Reasoning Setting",
+          "bbox": [
+            125.04,
+            283.84,
+            202.5,
+            291.81
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman8-Bold"
+          ],
+          "sizes": [
+            7.97
+          ]
+        },
+        {
+          "text": "CLINC150",
+          "bbox": [
+            240.5,
+            283.84,
+            286.39,
+            291.81
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman8-Bold"
+          ],
+          "sizes": [
+            7.97
+          ]
+        },
+        {
+          "text": "HWU64",
+          "bbox": [
+            298.34,
+            283.84,
+            333.28,
+            291.81
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman8-Bold"
+          ],
+          "sizes": [
+            7.97
+          ]
+        },
+        {
+          "text": "MINDS14",
+          "bbox": [
+            345.23,
+            283.84,
+            388.41,
+            291.81
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman8-Bold"
+          ],
+          "sizes": [
+            7.97
+          ]
+        },
+        {
+          "text": "SGD",
+          "bbox": [
+            401.21,
+            283.84,
+            421.78,
+            291.81
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman8-Bold"
+          ],
+          "sizes": [
+            7.97
+          ]
+        },
+        {
+          "text": "QCloud",
+          "bbox": [
+            434.58,
+            283.84,
+            467.41,
+            291.81
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman8-Bold"
+          ],
+          "sizes": [
+            7.97
+          ]
+        },
+        {
+          "text": "TCAR (without Reasoning)",
+          "bbox": [
+            125.04,
+            298.31,
+            228.54,
+            306.28
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman8-Regular"
+          ],
+          "sizes": [
+            7.97
+          ]
+        },
+        {
+          "text": "89.65",
+          "bbox": [
+            253.8,
+            298.31,
+            273.08,
+            306.28
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman8-Regular"
+          ],
+          "sizes": [
+            7.97
+          ]
+        },
+        {
+          "text": "87.83",
+          "bbox": [
+            306.17,
+            298.31,
+            325.45,
+            306.28
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman8-Regular"
+          ],
+          "sizes": [
+            7.97
+          ]
+        },
+        {
+          "text": "96.45",
+          "bbox": [
+            357.18,
+            298.31,
+            376.46,
+            306.28
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman8-Regular"
+          ],
+          "sizes": [
+            7.97
+          ]
+        },
+        {
+          "text": "84.96",
+          "bbox": [
+            401.85,
+            298.31,
+            421.13,
+            306.28
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman8-Regular"
+          ],
+          "sizes": [
+            7.97
+          ]
+        },
+        {
+          "text": "91.33",
+          "bbox": [
+            441.35,
+            298.31,
+            460.63,
+            306.28
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman8-Regular"
+          ],
+          "sizes": [
+            7.97
+          ]
+        },
+        {
+          "text": "TCAR (with Reasoning)",
+          "bbox": [
+            125.04,
+            307.77,
+            216.31,
+            315.74
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman8-Regular"
+          ],
+          "sizes": [
+            7.97
+          ]
+        },
+        {
+          "text": "91.25",
+          "bbox": [
+            252.32,
+            307.77,
+            274.57,
+            315.74
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman8-Bold"
+          ],
+          "sizes": [
+            7.97
+          ]
+        },
+        {
+          "text": "91.63",
+          "bbox": [
+            304.68,
+            307.77,
+            326.94,
+            315.74
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman8-Bold"
+          ],
+          "sizes": [
+            7.97
+          ]
+        },
+        {
+          "text": "96.70",
+          "bbox": [
+            355.7,
+            307.77,
+            377.95,
+            315.74
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman8-Bold"
+          ],
+          "sizes": [
+            7.97
+          ]
+        },
+        {
+          "text": "91.58",
+          "bbox": [
+            400.37,
+            307.77,
+            422.62,
+            315.74
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman8-Bold"
+          ],
+          "sizes": [
+            7.97
+          ]
+        },
+        {
+          "text": "93.98",
+          "bbox": [
+            439.87,
+            307.77,
+            462.12,
+            315.74
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman8-Bold"
+          ],
+          "sizes": [
+            7.97
+          ]
+        },
+        {
+          "text": "Table 2: Comparison of the performance with and without reasoning output",
+          "bbox": [
+            130.91,
+            329.85,
+            464.36,
+            339.82
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "SFT-Only vs. SFT+RL This experiment evaluates the improvements brought by applying DAPO",
+          "bbox": [
+            72.0,
+            363.33,
+            523.28,
+            373.29
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Bold",
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "during the RL stage.",
+          "bbox": [
+            72.0,
+            375.28,
+            162.58,
+            385.25
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "• SFT-only: The model is trained using supervised fine-tuning only.",
+          "bbox": [
+            84.17,
+            397.2,
+            391.02,
+            407.16
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Bold",
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "• SFT+RL: After SFT, we further filter the training set and retain only high-entropy tokens for",
+          "bbox": [
+            84.17,
+            417.13,
+            523.27,
+            427.09
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Bold",
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "RL.",
+          "bbox": [
+            96.91,
+            429.08,
+            113.24,
+            439.04
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "We compare the performance of the SFT-only model with the model further optimized through RL.",
+          "bbox": [
+            72.0,
+            451.0,
+            523.27,
+            460.96
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "Experimental results show that RL leads to consistent and significant improvements.",
+          "bbox": [
+            72.0,
+            462.95,
+            455.56,
+            472.92
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "In particular,",
+          "bbox": [
+            464.01,
+            462.95,
+            523.27,
+            472.92
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "on the QCloud dataset, RL enhances recall while maintaining high precision, effectively mitigating the",
+          "bbox": [
+            72.0,
+            474.91,
+            523.27,
+            484.87
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "common issue of SFT-only models being overly conservative and outputting only a single agent.",
+          "bbox": [
+            72.0,
+            486.87,
+            490.91,
+            496.83
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "Training Method",
+          "bbox": [
+            129.34,
+            512.93,
+            208.31,
+            521.9
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman9-Bold"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "CLINC150",
+          "bbox": [
+            220.27,
+            512.93,
+            270.19,
+            521.9
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman9-Bold"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "HWU64",
+          "bbox": [
+            282.14,
+            512.93,
+            320.15,
+            521.9
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman9-Bold"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "MINDS14",
+          "bbox": [
+            332.11,
+            512.93,
+            379.1,
+            521.9
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman9-Bold"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "SGD",
+          "bbox": [
+            391.95,
+            512.93,
+            414.32,
+            521.9
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman9-Bold"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "QCloud",
+          "bbox": [
+            427.18,
+            512.93,
+            462.86,
+            521.9
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman9-Bold"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "SFT-Only",
+          "bbox": [
+            129.34,
+            528.9,
+            169.91,
+            537.87
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman9-Regular"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "91.32",
+          "bbox": [
+            233.14,
+            528.9,
+            257.33,
+            537.87
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman9-Bold"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "90.30",
+          "bbox": [
+            290.65,
+            528.9,
+            311.65,
+            537.87
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman9-Regular"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "96.69",
+          "bbox": [
+            345.1,
+            528.9,
+            366.1,
+            537.87
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman9-Regular"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "86.30",
+          "bbox": [
+            392.63,
+            528.9,
+            413.63,
+            537.87
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman9-Regular"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "93.77",
+          "bbox": [
+            434.52,
+            528.9,
+            455.52,
+            537.87
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman9-Regular"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "SFT+RL",
+          "bbox": [
+            129.34,
+            539.86,
+            166.82,
+            548.83
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman9-Regular"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "91.25",
+          "bbox": [
+            234.73,
+            539.86,
+            255.73,
+            548.83
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman9-Regular"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "91.63",
+          "bbox": [
+            289.06,
+            539.86,
+            313.24,
+            548.83
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman9-Bold"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "96.70",
+          "bbox": [
+            343.51,
+            539.86,
+            367.69,
+            548.83
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman9-Bold"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "91.58",
+          "bbox": [
+            391.04,
+            539.86,
+            415.22,
+            548.83
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman9-Bold"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "93.98",
+          "bbox": [
+            432.93,
+            539.86,
+            457.12,
+            548.83
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman9-Bold"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "Table 3: Comparison between SFT-only training and SFT followed by RL.",
+          "bbox": [
+            134.57,
+            563.19,
+            460.7,
+            573.15
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "RL Initialization: SFT-Only vs. SFT+Slerp Since the initialization point of RL has a substantial",
+          "bbox": [
+            72.0,
+            594.61,
+            523.28,
+            604.57
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Bold",
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "impact on the final performance, we compare two different SFT models used for RL initialization:",
+          "bbox": [
+            72.0,
+            606.57,
+            499.39,
+            616.53
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "• SFT-Only: RL initialized from the SFT model.",
+          "bbox": [
+            84.17,
+            628.48,
+            308.8,
+            638.45
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Bold",
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "• SFT+Slerp): RL initialized from the model obtained via SFT-Slerp merging.",
+          "bbox": [
+            84.17,
+            648.41,
+            441.05,
+            658.37
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Bold",
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "Slerp is a model-merging technique [39, 40] that effectively enhances model generalization. We trained",
+          "bbox": [
+            72.0,
+            670.33,
+            523.27,
+            680.29
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "five different SFT models on five distinct datasets and then merged them using Slerp. The resulting",
+          "bbox": [
+            72.0,
+            682.28,
+            523.27,
+            692.25
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "merged model exhibits higher exploration capability in the early stages of RL, reflected by a higher",
+          "bbox": [
+            72.0,
+            694.24,
+            523.27,
+            704.2
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "pass@k score.",
+          "bbox": [
+            72.0,
+            706.19,
+            132.44,
+            716.16
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "We aim for the model in the RL phase to transition from achieving high pass@k to",
+          "bbox": [
+            140.84,
+            706.19,
+            523.27,
+            716.16
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "achieving high pass@1[41]. We conducted RL training using both the SFT model and the Slerp-merged",
+          "bbox": [
+            72.0,
+            718.15,
+            523.27,
+            728.11
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "model. As shown in Table 4, the Slerp-based model does not exhibit a significant improvement in the final",
+          "bbox": [
+            72.0,
+            730.1,
+            523.27,
+            740.07
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "metrics. However, from Figure 4b, we observe that although the reward curves of the two initialization",
+          "bbox": [
+            72.0,
+            742.06,
+            523.27,
+            752.02
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "strategies are similar, the Slerp model maintains a higher entropy, indicating stronger exploration. This",
+          "bbox": [
+            72.0,
+            754.01,
+            523.27,
+            763.98
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "8",
+          "bbox": [
+            295.15,
+            791.75,
+            300.13,
+            801.71
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        }
+      ]
+    },
+    {
+      "page": 9,
+      "rotation": 0,
+      "drawings": 58,
+      "rasterImagesOnPage": 1,
+      "captionCandidates": [
+        "Figure 4: Comparing RL initialized from the SFT model and from the Slerp-merged model, we observe that both approaches achieve almost the same reward throughout training. In contrast, the Slerp- initialized model maintains higher entropy, suggesting that it explores a broader solution space."
+      ],
+      "labels": [
+        {
+          "text": "TCAndon-Router",
+          "bbox": [
+            452.22,
+            36.28,
+            523.28,
+            45.25
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman9-Regular"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "RL Initialization",
+          "bbox": [
+            131.25,
+            76.03,
+            208.23,
+            85.0
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman9-Bold"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "CLINC150",
+          "bbox": [
+            220.18,
+            76.03,
+            270.09,
+            85.0
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman9-Bold"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "HWU64",
+          "bbox": [
+            282.05,
+            76.03,
+            320.06,
+            85.0
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman9-Bold"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "MINDS14",
+          "bbox": [
+            332.02,
+            76.03,
+            379.0,
+            85.0
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman9-Bold"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "SGD",
+          "bbox": [
+            390.95,
+            76.03,
+            413.32,
+            85.0
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman9-Bold"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "QCloud",
+          "bbox": [
+            425.27,
+            76.03,
+            460.94,
+            85.0
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman9-Bold"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "SFT-Only",
+          "bbox": [
+            131.25,
+            92.0,
+            171.82,
+            100.96
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman9-Regular"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "91.25",
+          "bbox": [
+            234.64,
+            92.0,
+            255.64,
+            100.96
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman9-Regular"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "91.63",
+          "bbox": [
+            290.56,
+            92.0,
+            311.56,
+            100.96
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman9-Regular"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "96.70",
+          "bbox": [
+            345.01,
+            92.0,
+            366.01,
+            100.96
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman9-Regular"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "91.58",
+          "bbox": [
+            391.63,
+            92.0,
+            412.63,
+            100.96
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman9-Regular"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "93.97",
+          "bbox": [
+            432.61,
+            92.0,
+            453.61,
+            100.96
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman9-Regular"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "SFT+Slerp",
+          "bbox": [
+            131.25,
+            102.96,
+            176.71,
+            111.92
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman9-Regular"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "90.43",
+          "bbox": [
+            234.64,
+            102.96,
+            255.64,
+            111.92
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman9-Regular"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "91.45",
+          "bbox": [
+            290.56,
+            102.96,
+            311.56,
+            111.92
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman9-Regular"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "96.82",
+          "bbox": [
+            345.01,
+            102.96,
+            366.01,
+            111.92
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman9-Regular"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "91.53",
+          "bbox": [
+            391.63,
+            102.96,
+            412.63,
+            111.92
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman9-Regular"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "93.20",
+          "bbox": [
+            432.61,
+            102.96,
+            453.61,
+            111.92
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman9-Regular"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "Table 4: Comparison between initializing the RL stage with the SFT model and initializing it with the",
+          "bbox": [
+            72.0,
+            126.29,
+            523.27,
+            136.25
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "Slerp-merged model.",
+          "bbox": [
+            72.0,
+            138.24,
+            161.44,
+            148.2
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "0.9",
+          "bbox": [
+            313.94,
+            165.07,
+            320.04,
+            171.58
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.84
+          ]
+        },
+        {
+          "text": "SFT+Slerp",
+          "bbox": [
+            106.79,
+            168.43,
+            126.81,
+            174.94
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.84
+          ]
+        },
+        {
+          "text": "SFT+Slerp",
+          "bbox": [
+            336.93,
+            168.56,
+            356.96,
+            175.08
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.84
+          ]
+        },
+        {
+          "text": "SFT-Only",
+          "bbox": [
+            106.79,
+            174.06,
+            123.65,
+            180.57
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.84
+          ]
+        },
+        {
+          "text": "SFT-Only",
+          "bbox": [
+            336.93,
+            174.2,
+            353.79,
+            180.71
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.84
+          ]
+        },
+        {
+          "text": "0.9",
+          "bbox": [
+            83.79,
+            174.22,
+            89.89,
+            180.73
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.84
+          ]
+        },
+        {
+          "text": "0.8",
+          "bbox": [
+            313.94,
+            179.89,
+            320.04,
+            186.4
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.84
+          ]
+        },
+        {
+          "text": "0.8",
+          "bbox": [
+            83.79,
+            187.34,
+            89.89,
+            193.85
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.84
+          ]
+        },
+        {
+          "text": "0.7",
+          "bbox": [
+            313.94,
+            194.71,
+            320.04,
+            201.22
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.84
+          ]
+        },
+        {
+          "text": "Entropy",
+          "bbox": [
+            74.51,
+            199.98,
+            83.63,
+            220.87
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            5.37
+          ]
+        },
+        {
+          "text": "Entropy",
+          "bbox": [
+            304.66,
+            200.05,
+            313.77,
+            220.94
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            5.37
+          ]
+        },
+        {
+          "text": "0.7",
+          "bbox": [
+            83.79,
+            200.45,
+            89.89,
+            206.96
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.84
+          ]
+        },
+        {
+          "text": "0.6",
+          "bbox": [
+            313.94,
+            209.53,
+            320.04,
+            216.04
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.84
+          ]
+        },
+        {
+          "text": "0.6",
+          "bbox": [
+            83.79,
+            213.57,
+            89.89,
+            220.08
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.84
+          ]
+        },
+        {
+          "text": "0.5",
+          "bbox": [
+            313.94,
+            224.35,
+            320.04,
+            230.86
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.84
+          ]
+        },
+        {
+          "text": "0.5",
+          "bbox": [
+            83.79,
+            226.68,
+            89.89,
+            233.2
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.84
+          ]
+        },
+        {
+          "text": "0.4",
+          "bbox": [
+            313.94,
+            239.17,
+            320.04,
+            245.68
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.84
+          ]
+        },
+        {
+          "text": "0.4",
+          "bbox": [
+            83.79,
+            239.8,
+            89.89,
+            246.31
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.84
+          ]
+        },
+        {
+          "text": "0",
+          "bbox": [
+            100.15,
+            254.93,
+            102.59,
+            261.44
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.84
+          ]
+        },
+        {
+          "text": "250",
+          "bbox": [
+            123.43,
+            254.93,
+            130.75,
+            261.44
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.84
+          ]
+        },
+        {
+          "text": "500",
+          "bbox": [
+            149.15,
+            254.93,
+            156.48,
+            261.44
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.84
+          ]
+        },
+        {
+          "text": "750",
+          "bbox": [
+            174.87,
+            254.93,
+            182.2,
+            261.44
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.84
+          ]
+        },
+        {
+          "text": "1000",
+          "bbox": [
+            199.37,
+            254.93,
+            209.14,
+            261.44
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.84
+          ]
+        },
+        {
+          "text": "1250",
+          "bbox": [
+            225.1,
+            254.93,
+            234.86,
+            261.44
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.84
+          ]
+        },
+        {
+          "text": "1500",
+          "bbox": [
+            250.82,
+            254.93,
+            260.58,
+            261.44
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.84
+          ]
+        },
+        {
+          "text": "1750",
+          "bbox": [
+            276.54,
+            254.93,
+            286.31,
+            261.44
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.84
+          ]
+        },
+        {
+          "text": "0",
+          "bbox": [
+            330.3,
+            254.93,
+            332.74,
+            261.44
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.84
+          ]
+        },
+        {
+          "text": "250",
+          "bbox": [
+            353.55,
+            254.93,
+            360.87,
+            261.44
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.84
+          ]
+        },
+        {
+          "text": "500",
+          "bbox": [
+            379.24,
+            254.93,
+            386.56,
+            261.44
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.84
+          ]
+        },
+        {
+          "text": "750",
+          "bbox": [
+            404.93,
+            254.93,
+            412.26,
+            261.44
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.84
+          ]
+        },
+        {
+          "text": "1000",
+          "bbox": [
+            429.4,
+            254.93,
+            439.17,
+            261.44
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.84
+          ]
+        },
+        {
+          "text": "1250",
+          "bbox": [
+            455.1,
+            254.93,
+            464.86,
+            261.44
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.84
+          ]
+        },
+        {
+          "text": "1500",
+          "bbox": [
+            480.79,
+            254.93,
+            490.55,
+            261.44
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.84
+          ]
+        },
+        {
+          "text": "1750",
+          "bbox": [
+            506.48,
+            254.93,
+            516.25,
+            261.44
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            3.84
+          ]
+        },
+        {
+          "text": "Step",
+          "bbox": [
+            184.25,
+            259.45,
+            196.49,
+            268.57
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            5.37
+          ]
+        },
+        {
+          "text": "Step",
+          "bbox": [
+            414.4,
+            259.45,
+            426.63,
+            268.57
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            5.37
+          ]
+        },
+        {
+          "text": "(a) RL Reward",
+          "bbox": [
+            152.03,
+            278.8,
+            213.1,
+            287.76
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman9-Regular"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "(b) RL Entropy",
+          "bbox": [
+            380.9,
+            278.8,
+            444.53,
+            287.76
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman9-Regular"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "Figure 4: Comparing RL initialized from the SFT model and from the Slerp-merged model, we observe",
+          "bbox": [
+            72.0,
+            299.61,
+            523.28,
+            309.58
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "that both approaches achieve almost the same reward throughout training.",
+          "bbox": [
+            72.0,
+            311.57,
+            413.0,
+            321.53
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "In contrast, the Slerp-",
+          "bbox": [
+            421.95,
+            311.57,
+            523.27,
+            321.53
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "initialized model maintains higher entropy, suggesting that it explores a broader solution space.",
+          "bbox": [
+            72.0,
+            323.52,
+            488.98,
+            333.49
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "enhanced exploration leads to better generalization and provides greater potential for further fine-tuning",
+          "bbox": [
+            72.0,
+            357.0,
+            523.27,
+            366.96
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "based on the merged model.",
+          "bbox": [
+            72.0,
+            368.95,
+            194.67,
+            378.92
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "Summary of Ablation Findings",
+          "bbox": [
+            72.0,
+            386.89,
+            227.25,
+            396.85
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Bold"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "Based on the ablation results, we summarize the following conclusions:",
+          "bbox": [
+            72.0,
+            398.84,
+            380.79,
+            408.8
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "• Reasoning capability is a key factor for improving routing interpretability and robustness.",
+          "bbox": [
+            84.17,
+            418.77,
+            489.41,
+            428.73
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "• RL is an essential training stage that enhances recall while maintaining high precision.",
+          "bbox": [
+            84.17,
+            438.69,
+            475.07,
+            448.65
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "• The choice of RL initialization point is crucial; Slerp-based models offer stronger generalization",
+          "bbox": [
+            84.17,
+            458.62,
+            523.27,
+            468.58
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "and are less prone to entropy collapse during RL.",
+          "bbox": [
+            96.91,
+            470.57,
+            312.48,
+            480.54
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "5",
+          "bbox": [
+            72.0,
+            500.0,
+            80.08,
+            514.35
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman12-Bold"
+          ],
+          "sizes": [
+            14.35
+          ]
+        },
+        {
+          "text": "Analysis",
+          "bbox": [
+            94.42,
+            500.0,
+            153.67,
+            514.35
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman12-Bold"
+          ],
+          "sizes": [
+            14.35
+          ]
+        },
+        {
+          "text": "After validating the overall effectiveness of TCAR through the main results and ablation studies, we",
+          "bbox": [
+            72.0,
+            525.37,
+            523.28,
+            535.33
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "further analyze its behavioral characteristics and internal mechanisms from multiple perspectives. This",
+          "bbox": [
+            72.0,
+            537.32,
+            523.27,
+            547.28
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "section provides an in-depth examination of error types, reasoning quality, multi-agent collaboration",
+          "bbox": [
+            72.0,
+            549.28,
+            523.27,
+            559.24
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "effects, and system eﬀiciency, offering a more comprehensive understanding of the model’s strengths and",
+          "bbox": [
+            72.0,
+            561.23,
+            523.27,
+            571.19
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "limitations.",
+          "bbox": [
+            72.0,
+            573.19,
+            121.32,
+            583.15
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "5.1",
+          "bbox": [
+            72.0,
+            599.48,
+            89.2,
+            611.44
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman12-Bold"
+          ],
+          "sizes": [
+            11.96
+          ]
+        },
+        {
+          "text": "Error Analysis",
+          "bbox": [
+            101.16,
+            599.48,
+            187.07,
+            611.44
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman12-Bold"
+          ],
+          "sizes": [
+            11.96
+          ]
+        },
+        {
+          "text": "To systematically understand the major sources of routing errors, we categorize the mistakes and observe",
+          "bbox": [
+            72.0,
+            619.49,
+            523.28,
+            629.45
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "that TCAR’s errors primarily fall into three types: (1) Incomplete problem descriptions.",
+          "bbox": [
+            72.0,
+            631.44,
+            495.45,
+            641.4
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Bold",
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "User",
+          "bbox": [
+            503.54,
+            631.44,
+            523.27,
+            641.4
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "queries may lack key information. For example, in “What should I do if my webpage loads slowly?”,",
+          "bbox": [
+            72.0,
+            643.4,
+            523.28,
+            653.36
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "although TCAR’s reasoning often infers that multiple agents are needed, the lack of essential context",
+          "bbox": [
+            72.0,
+            655.35,
+            523.28,
+            665.31
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "may still lead to deviations; see Appendix B. (2) Insuﬀicient understanding of highly domain-",
+          "bbox": [
+            72.0,
+            667.31,
+            523.27,
+            677.27
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Bold",
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "specific scenarios. In Tencent Cloud use cases, the model sometimes struggles with understanding",
+          "bbox": [
+            72.0,
+            679.26,
+            523.27,
+            689.22
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Bold",
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "specialized terminology, leading to incorrect routing decisions; see Appendix B. (3) Mismatch between",
+          "bbox": [
+            72.0,
+            691.22,
+            523.28,
+            701.18
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Bold",
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "reasoning and final prediction. Some cases exhibit reasonable reasoning steps but produce agent",
+          "bbox": [
+            72.0,
+            703.17,
+            523.28,
+            713.13
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Bold",
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "outputs inconsistent with the reasoning itself. How to further improve the alignment and consistency of",
+          "bbox": [
+            72.0,
+            715.13,
+            523.27,
+            725.09
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "the reasoning chain remains an open problem.",
+          "bbox": [
+            72.0,
+            727.08,
+            273.11,
+            737.04
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "9",
+          "bbox": [
+            295.15,
+            791.75,
+            300.13,
+            801.71
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LMRoman10-Regular"
+          ],
+          "sizes": [
+            9.96
+          ]
+        }
+      ]
+    }
+  ]
+}
