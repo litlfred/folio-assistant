@@ -1,0 +1,131 @@
+{
+  "$schema": "folio-index-config/v1",
+  "layers": [
+    {
+      "name": "folio-assistant-core",
+      "source": {
+        "local": {
+          "at": "."
+        }
+      },
+      "site": {
+        "build": {
+          "home": "docs/index.md",
+          "keep": [
+            "v0",
+            "ns",
+            "0.1.0"
+          ]
+        }
+      }
+    },
+    {
+      "name": "cat-harness",
+      "source": {
+        "remote": {
+          "repository": "litlfred/cat-harness",
+          "ref": "026a6d919add39221387dd0fba0faccf998be9ac",
+          "overrides": {
+            "cat-harness": {
+              "whole": true
+            },
+            "bootstrap": {
+              "skip": true
+            },
+            "bootstrap-tools": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-13",
+              "ref": "026a6d919add39221387dd0fba0faccf998be9ac",
+              "evidence": "litlfred, 2026-11-13: owner told the re-pin session directly 'do the core re-pin' and 'run the seed yourself, don't wait'; Q-ORDER A (core first, then the rest in parallel); Q-BT-PIN A (~10:02Z, bootstrap-tools at main 0f88368d); Q-CASCADE-FREEZE B (mains read at re-pin). Re-pin session session_01EucfRnyGuuzo9anc8umZDB; coordinator session session_01EucfRpkvK7d4FJyuqypQzm."
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "cat-harness-tools",
+      "source": {
+        "remote": {
+          "repository": "litlfred/cat-harness-tools",
+          "ref": "9991a7751abccbfef99dc1e6cbbc3015269b274f",
+          "overrides": {
+            "cat-harness-tools": {
+              "whole": true
+            },
+            "cat-harness": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-13",
+              "ref": "9991a7751abccbfef99dc1e6cbbc3015269b274f",
+              "evidence": "litlfred, 2026-11-13: owner told the re-pin session directly 'do the core re-pin' and 'run the seed yourself, don't wait'; re-seed of cat-harness-tools to the main that carries #2007 (site JSON-LD sourceDocument fix). Q-ORDER A, Q-BT-PIN A, Q-CASCADE-FREEZE B. Re-pin session session_01EucfRnyGuuzo9anc8umZDB."
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "bootstrap",
+      "source": {
+        "remote": {
+          "repository": "litlfred/bootstrap",
+          "ref": "17204fe9ed49e87b165bf0a8b626b6c69329a2a6",
+          "overrides": {
+            "bootstrap": {
+              "whole": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-12",
+              "ref": "17204fe9ed49e87b165bf0a8b626b6c69329a2a6",
+              "evidence": "litlfred, 2026-11-12, merge-manager thread: owner card Q-CONSENT-1 = A (re-pin + merge window to ~21:05Z 11-12, Q-WIN-1 C); bottom-up re-pin T2 (smart-ra#242), follow-up to Q-RA-241 A (Q-CASCADE-FREEZE B: mains read at re-pin). Coordinator session session_01EucfRpkvK7d4FJyuqypQzm."
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "bootstrap-tools",
+      "source": {
+        "remote": {
+          "repository": "litlfred/bootstrap-tools",
+          "ref": "0f88368db7560afac6d3e16fd905cbb974350f82",
+          "overrides": {
+            "bootstrap-tools": {
+              "whole": true
+            },
+            "bootstrap": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-13",
+              "ref": "0f88368db7560afac6d3e16fd905cbb974350f82",
+              "evidence": "litlfred, 2026-11-13: owner told the re-pin session directly 'do the core re-pin' and 'run the seed yourself, don't wait'; Q-ORDER A (core first, then the rest in parallel); Q-BT-PIN A (~10:02Z, bootstrap-tools at main 0f88368d); Q-CASCADE-FREEZE B (mains read at re-pin). Re-pin session session_01EucfRnyGuuzo9anc8umZDB; coordinator session session_01EucfRpkvK7d4FJyuqypQzm."
+            }
+          }
+        }
+      }
+    }
+  ],
+  "harnesses": [
+    {
+      "name": "folio-assistant-core"
+    }
+  ],
+  "site": {
+    "landing": "folio-assistant-core"
+  }
+}
