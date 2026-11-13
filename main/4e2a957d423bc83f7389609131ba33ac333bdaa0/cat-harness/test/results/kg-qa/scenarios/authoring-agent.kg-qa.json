@@ -1,0 +1,102 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "role",
+    "id": "authoring-agent",
+    "path": "scenarios/roles.json"
+  },
+  "source_hash": "sha256:06bb206fe631ab96a0a2f04acb5bce85138520e94064104bd59942c7c7091449",
+  "criteria": {
+    "role-skills-resolve": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "dak-l1-library",
+          "detail": "role \"authoring-agent\" carries skill \"dak-l1-library\", which resolves to no skill in this instance or anything it `needs`."
+        },
+        {
+          "where": "recommendation-extraction",
+          "detail": "role \"authoring-agent\" carries skill \"recommendation-extraction\", which resolves to no skill in this instance or anything it `needs`."
+        },
+        {
+          "where": "recommendation-scenarios",
+          "detail": "role \"authoring-agent\" carries skill \"recommendation-scenarios\", which resolves to no skill in this instance or anything it `needs`."
+        },
+        {
+          "where": "classify-and-code-content",
+          "detail": "role \"authoring-agent\" carries skill \"classify-and-code-content\", which resolves to no skill in this instance or anything it `needs`."
+        },
+        {
+          "where": "l2-dak-authoring",
+          "detail": "role \"authoring-agent\" carries skill \"l2-dak-authoring\", which resolves to no skill in this instance or anything it `needs`."
+        },
+        {
+          "where": "dak-preprocessing",
+          "detail": "role \"authoring-agent\" carries skill \"dak-preprocessing\", which resolves to no skill in this instance or anything it `needs`."
+        },
+        {
+          "where": "dak-postprocessing",
+          "detail": "role \"authoring-agent\" carries skill \"dak-postprocessing\", which resolves to no skill in this instance or anything it `needs`."
+        },
+        {
+          "where": "ig-artifact-ingestion",
+          "detail": "role \"authoring-agent\" carries skill \"ig-artifact-ingestion\", which resolves to no skill in this instance or anything it `needs`."
+        },
+        {
+          "where": "l2-component-edit-review",
+          "detail": "role \"authoring-agent\" carries skill \"l2-component-edit-review\", which resolves to no skill in this instance or anything it `needs`."
+        },
+        {
+          "where": "l2-dependency-choice",
+          "detail": "role \"authoring-agent\" carries skill \"l2-dependency-choice\", which resolves to no skill in this instance or anything it `needs`."
+        },
+        {
+          "where": "l3-dependency-choice",
+          "detail": "role \"authoring-agent\" carries skill \"l3-dependency-choice\", which resolves to no skill in this instance or anything it `needs`."
+        },
+        {
+          "where": "l4-application-brief",
+          "detail": "role \"authoring-agent\" carries skill \"l4-application-brief\", which resolves to no skill in this instance or anything it `needs`."
+        },
+        {
+          "where": "l4-application-build",
+          "detail": "role \"authoring-agent\" carries skill \"l4-application-build\", which resolves to no skill in this instance or anything it `needs`."
+        }
+      ]
+    },
+    "role-inherits-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-binds-a-lane": {
+      "result": "pass",
+      "findings": []
+    },
+    "mechanical-role-untested": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-has-persona": {
+      "result": "pass",
+      "findings": []
+    },
+    "role-has-story": {
+      "result": "pass",
+      "findings": []
+    },
+    "role-has-actor": {
+      "result": "pass",
+      "findings": []
+    },
+    "actor-kind-fits-role": {
+      "result": "pass",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 5,
+    "fail": 1,
+    "n/a": 2,
+    "unknown": 0
+  }
+}
