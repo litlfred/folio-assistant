@@ -1,0 +1,98 @@
+From 917ed962a67add29c8cf47560a41cddf9d961f55 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Fri, 13 Nov 2026 21:23:57 +0000
+Subject: [PATCH] Standing re-pins, site repositories, held runs and one-time
+ consents
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Owner rulings, 2026-11-13 (cards in the merge manager's session, about
+21:24Z; "update processes / skills / tools"):
+- "A. MM dispatches, auto-merge OK": only the merge manager dispatches a
+  standing re-pin; its auto-merge on green is the merge manager's merge;
+  a cron or repository_dispatch trigger, if kept, only opens the PR.
+- "A. Give MM access": the merge manager attaches each site repository
+  and runs its re-pin (dispatch, approve held bot runs, merge when green).
+- A one-time consent is quoted in the re-pin PR body and in trust.consent
+  evidence (folio-assistant#3119, "A. Re-point to main").
+- Held bot-pushed re-pin runs (action_required) are approved by the merge
+  manager.
+In merge-manager-watcher §"Only the merge manager merges and re-pins"
+(items 4-6) and remote-mount (§"Standing consent", §"Trust").
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01VQDpPc2tT1vUufdyDbQTBz
+---
+ .../skills/sdlc-core/merge-manager-watcher.md | 16 +++++++++++++++
+ skills/kg/kg-core/remote-mount.md             | 20 +++++++++++++++++++
+ 2 files changed, 36 insertions(+)
+
+diff --git a/sdlc/skills/sdlc-core/merge-manager-watcher.md b/sdlc/skills/sdlc-core/merge-manager-watcher.md
+index 18d80db..b5f0dd1 100644
+--- a/sdlc/skills/sdlc-core/merge-manager-watcher.md
++++ b/sdlc/skills/sdlc-core/merge-manager-watcher.md
+@@ -57,6 +57,22 @@ repin so you can handle trains and CI".
+ 3. **A scheduled routine never merges.** A routine or check-in that finds a
+    green PR reports a `ready:` line to the merge manager, and does nothing
+    else.
++4. **Standing re-pins and site repositories are the merge manager's**
++   (owner cards, 2026-11-13: "A. MM dispatches, auto-merge OK" and "A. Give
++   MM access"). Only the merge manager dispatches a standing re-pin; its
++   auto-merge on green counts as the merge manager's merge. The merge
++   manager attaches each site repository and runs its re-pin: it
++   dispatches the run, approves the held bot runs, and merges when green.
++   A `cron` or `repository_dispatch` trigger, if kept, only opens the PR
++   ([`remote-mount`](../../../skills/kg/kg-core/remote-mount.md)
++   §"Standing consent").
++5. **Held runs are approved by the merge manager.** A re-pin commit pushed
++   by a bot gets runs held at `action_required`, and the merge manager
++   approves them before judging the PR. A held run executed nothing, so it
++   is neither red nor green.
++6. **A one-time consent is quoted where it acts.** The owner's card, with
++   its date, goes in the re-pin PR's body and in `trust.consent`'s evidence
++   in `index.config.json` (`remote-mount` §"Trust").
+ 
+ ## The sibling's side: find the merge manager first
+ 
+diff --git a/skills/kg/kg-core/remote-mount.md b/skills/kg/kg-core/remote-mount.md
+index 89ca80a..f349b8d 100644
+--- a/skills/kg/kg-core/remote-mount.md
++++ b/skills/kg/kg-core/remote-mount.md
+@@ -500,6 +500,11 @@ things to know:
+   0, but never shown as clean. A checkout whose mounts `index.config.json`
+   lists declares the list there, as its top-level `mountApprovers`; declaring
+   it on the layer declaration as well is an error.
++- **A one-time consent is recorded where it acts** (owner ruling,
++  2026-11-13). Quote the owner's card, with its date, in the re-pin PR's
++  body and in `trust.consent`'s evidence in `index.config.json`. Example:
++  folio-assistant#3119 re-pointed a content layer's pin to that layer's
++  main under the card "A. Re-point to main".
+ - **A refused mount is not current.** Its old bytes stay on disk (an agent
+   does not delete them). The lock records them under `unmounted` as
+   `leftOnDisk`, and the check reports them as not mounted.
+@@ -516,6 +521,21 @@ branch's newest (green) commit and writes `trust.consent` for the new pin,
+ same rule is still declared: withdraw or edit it and those pins ask again.
+ A pin moved by hand still asks again, rule or not.
+ 
++**Only the merge manager starts a standing re-pin** (owner ruling,
++2026-11-13, card "A. MM dispatches, auto-merge OK"). The merge manager runs
++`standing-repin.yml` by `workflow_dispatch`, and the run's auto-merge on
++green counts as the merge manager's merge. A `cron` or
++`repository_dispatch` trigger, if kept, is only a fallback: it opens the
++re-pin PR and never merges, and the merge manager lands it. The tools layer
++decides the mechanism. A re-pin commit pushed by a bot gets runs held at
++`action_required`, and the merge manager approves them, so the re-pin is
++judged on runs that executed (`github-state-inspection`).
++
++**Site repositories** (owner ruling, 2026-11-13, card "A. Give MM access").
++The merge manager attaches each site repository and runs its re-pin: it
++dispatches the run, approves the held bot runs, and merges when green. A
++site's own sessions do not re-pin it.
++
+ ## Publishing a remote-mounted downstream — provision `gh-pages` first
+ 
+ A mount brings layers into a checkout; it provisions **nothing** on the
+-- 
+2.43.0
+
