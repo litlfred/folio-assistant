@@ -22,7 +22,10 @@
 # line as a gate to run locally, and this is not a gate.
 set -uo pipefail
 
-if [ "${GITHUB_EVENT_NAME:-}" = "push" ] && [ "${GITHUB_REF:-}" = "refs/heads/main" ] && ! command -v strace >/dev/null; then
+# A dispatch on main records as a push does (ci-cone.ts recordsOnMain): a
+# train's merge, made with GITHUB_TOKEN, starts no push run (bean hd58).
+case "${GITHUB_EVENT_NAME:-}" in push|workflow_dispatch) on_main_run=1 ;; *) on_main_run=0 ;; esac
+if [ "$on_main_run" = 1 ] && [ "${GITHUB_REF:-}" = "refs/heads/main" ] && ! command -v strace >/dev/null; then
   # Recording needs strace; the runner image does not carry it.
   sudo apt-get install -y -qq --no-install-recommends strace >/dev/null 2>&1 \
     || (sudo apt-get update -qq >/dev/null 2>&1 && sudo apt-get install -y -qq --no-install-recommends strace >/dev/null 2>&1) \
