@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="PHW.L.Definitions" targetNamespace="http://smart.who.int/trust-phw/bpmn">
+  <bpmn:collaboration id="PHW.L.Collaboration">
+    <bpmn:participant id="PHW.L.Participant" name="L. Record Explicit Consent" processRef="PHW.L" />
+  </bpmn:collaboration>
+  <bpmn:process id="PHW.L" name="L. Record Explicit Consent" isExecutable="false">
+    <bpmn:documentation>The holder gives explicit consent by their own act (owner, 2026-11-07). The wallet, or a health worker acting as IHE PCF Consent Recorder, shows the trust domain's consent text: a code in the domain's terms-of-use ValueSet (TrustDomain.termsOfUse in the GDHCN Trust IG), at a stated code system version. When the holder agrees, the act is recorded as evidence and a PHWExplicitConsent is posted to the Consent Registry with IHE PCF [ITI-108] Access Consent. When the holder does not agree, no explicit consent exists and the trust domain's default policy applies (implied consent, PHWImpliedConsent). Trust-anchor neutral; no IUA claim.</bpmn:documentation>
+    <bpmn:laneSet id="PHW.L.LaneSet">
+      <bpmn:lane id="PHW.Lane.Holder" name="Holder (person / Personal Health Wallet)">
+        <bpmn:documentation>The person who gives or declines consent, on their own wallet or in person.</bpmn:documentation>
+        <bpmn:flowNodeRef>PHW.L.2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.L.Gateway1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.L.EndImplied</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.L.6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.L.End</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="PHW.Lane.ConsentRecorder" name="PCF Consent Recorder (wallet or health worker)">
+        <bpmn:documentation>Shows the consent text and records the holder's act: the wallet itself, or a health worker on the holder's behalf.</bpmn:documentation>
+        <bpmn:flowNodeRef>PHW.L.Start</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.L.1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.L.3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.L.4</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="PHW.Lane.ConsentRegistry" name="PCF Consent Registry">
+        <bpmn:documentation>Holds consent directives; answers [ITI-108] Access Consent.</bpmn:documentation>
+        <bpmn:flowNodeRef>PHW.L.5</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="PHW.L.Start" name="Consent needed">
+      <bpmn:documentation>Before a document is shared or issued under a trust domain whose terms of use ask for explicit consent.</bpmn:documentation>
+      <bpmn:outgoing>PHW.L.Flow1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="PHW.L.1" name="L1. Show the trust domain's consent text (code and version)">
+      <bpmn:documentation>The text is the definition of the consent code in the trust domain's terms-of-use code system, at the version shown, in the holder's language. For Hajj: IPS.HAJJ.CONSENT, for example CONSENT-MYS at 2.1.0.</bpmn:documentation>
+      <bpmn:incoming>PHW.L.Flow1</bpmn:incoming>
+      <bpmn:outgoing>PHW.L.Flow2</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="PHW.L.2" name="L2. Read the text and decide">
+      <bpmn:documentation>The holder decides who may see what, for what purpose and for how long (provision.actor, provision.purpose, provision.period).</bpmn:documentation>
+      <bpmn:incoming>PHW.L.Flow2</bpmn:incoming>
+      <bpmn:outgoing>PHW.L.Flow3</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="PHW.L.Gateway1" name="Holder agrees?" default="PHW.L.Flow4">
+      <bpmn:documentation>Only the holder's own act makes consent explicit.</bpmn:documentation>
+      <bpmn:incoming>PHW.L.Flow3</bpmn:incoming>
+      <bpmn:outgoing>PHW.L.Flow4</bpmn:outgoing>
+      <bpmn:outgoing>PHW.L.Flow5</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="PHW.L.EndImplied" name="Implied: the default policy applies">
+      <bpmn:documentation>Nothing is recorded. The trust domain's default policy, normally an IHE PCF implicit policy (Policy-deny for opt-in, Policy-basic-normal or Policy-all-normal for opt-out), governs; a document may carry it as a PHWImpliedConsent.</bpmn:documentation>
+      <bpmn:incoming>PHW.L.Flow4</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="PHW.L.3" name="L3. Record the holder's act as evidence">
+      <bpmn:documentation>The wallet confirmation or the signed form (a DocumentReference or QuestionnaireResponse): the Consent's source[x].</bpmn:documentation>
+      <bpmn:incoming>PHW.L.Flow5</bpmn:incoming>
+      <bpmn:outgoing>PHW.L.Flow6</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sendTask id="PHW.L.4" name="L4. Post the explicit Consent [ITI-108] Access Consent">
+      <bpmn:documentation>A PHWExplicitConsent: policyRule = the trust domain's consent code with the version shown; source = the evidence of L3; status active.</bpmn:documentation>
+      <bpmn:incoming>PHW.L.Flow6</bpmn:incoming>
+      <bpmn:outgoing>PHW.L.Flow7</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:serviceTask id="PHW.L.5" name="L5. Store the Consent; return Consent.id and versionId [ITI-108]">
+      <bpmn:documentation>The registry copy is the one enforced (processes C, F, I).</bpmn:documentation>
+      <bpmn:incoming>PHW.L.Flow7</bpmn:incoming>
+      <bpmn:outgoing>PHW.L.Flow8</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:task id="PHW.L.6" name="L6. Keep a copy in the wallet">
+      <bpmn:documentation>So the holder can read back what they agreed to and withdraw it (process A, Delete or Put).</bpmn:documentation>
+      <bpmn:incoming>PHW.L.Flow8</bpmn:incoming>
+      <bpmn:outgoing>PHW.L.Flow9</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="PHW.L.End" name="Explicit consent recorded">
+      <bpmn:documentation>Process M can add it to a document that is shared or issued.</bpmn:documentation>
+      <bpmn:incoming>PHW.L.Flow9</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="PHW.L.Flow1" sourceRef="PHW.L.Start" targetRef="PHW.L.1" />
+    <bpmn:sequenceFlow id="PHW.L.Flow2" sourceRef="PHW.L.1" targetRef="PHW.L.2" />
+    <bpmn:sequenceFlow id="PHW.L.Flow3" sourceRef="PHW.L.2" targetRef="PHW.L.Gateway1" />
+    <bpmn:sequenceFlow id="PHW.L.Flow4" name="No" sourceRef="PHW.L.Gateway1" targetRef="PHW.L.EndImplied" />
+    <bpmn:sequenceFlow id="PHW.L.Flow5" name="Yes" sourceRef="PHW.L.Gateway1" targetRef="PHW.L.3" />
+    <bpmn:sequenceFlow id="PHW.L.Flow6" sourceRef="PHW.L.3" targetRef="PHW.L.4" />
+    <bpmn:sequenceFlow id="PHW.L.Flow7" sourceRef="PHW.L.4" targetRef="PHW.L.5" />
+    <bpmn:sequenceFlow id="PHW.L.Flow8" sourceRef="PHW.L.5" targetRef="PHW.L.6" />
+    <bpmn:sequenceFlow id="PHW.L.Flow9" sourceRef="PHW.L.6" targetRef="PHW.L.End" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="PHW.L.Diagram">
+    <bpmndi:BPMNPlane id="PHW.L.Plane" bpmnElement="PHW.L.Collaboration">
+      <bpmndi:BPMNShape id="PHW.L.Participant_di" bpmnElement="PHW.L.Participant" isHorizontal="true"><dc:Bounds x="120" y="60" width="1820" height="582" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.Lane.Holder_di" bpmnElement="PHW.Lane.Holder" isHorizontal="true"><dc:Bounds x="150" y="60" width="1790" height="194" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.Lane.ConsentRecorder_di" bpmnElement="PHW.Lane.ConsentRecorder" isHorizontal="true"><dc:Bounds x="150" y="254" width="1790" height="194" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.Lane.ConsentRegistry_di" bpmnElement="PHW.Lane.ConsentRegistry" isHorizontal="true"><dc:Bounds x="150" y="448" width="1790" height="194" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.L.Start_di" bpmnElement="PHW.L.Start"><dc:Bounds x="252" y="333" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.L.1_di" bpmnElement="PHW.L.1"><dc:Bounds x="390" y="291" width="120" height="120" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.L.2_di" bpmnElement="PHW.L.2"><dc:Bounds x="570" y="97" width="120" height="120" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.L.Gateway1_di" bpmnElement="PHW.L.Gateway1" isMarkerVisible="true"><dc:Bounds x="835" y="132" width="50" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.L.EndImplied_di" bpmnElement="PHW.L.EndImplied"><dc:Bounds x="1072" y="139" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.L.3_di" bpmnElement="PHW.L.3"><dc:Bounds x="1030" y="291" width="120" height="120" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.L.4_di" bpmnElement="PHW.L.4"><dc:Bounds x="1210" y="291" width="120" height="120" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.L.5_di" bpmnElement="PHW.L.5"><dc:Bounds x="1390" y="485" width="120" height="120" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.L.6_di" bpmnElement="PHW.L.6"><dc:Bounds x="1570" y="97" width="120" height="120" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.L.End_di" bpmnElement="PHW.L.End"><dc:Bounds x="1792" y="139" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="PHW.L.Flow1_di" bpmnElement="PHW.L.Flow1">
+        <di:waypoint x="288" y="351" />
+        <di:waypoint x="390" y="351" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.L.Flow2_di" bpmnElement="PHW.L.Flow2">
+        <di:waypoint x="450" y="291" />
+        <di:waypoint x="450" y="157" />
+        <di:waypoint x="570" y="157" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.L.Flow3_di" bpmnElement="PHW.L.Flow3">
+        <di:waypoint x="690" y="157" />
+        <di:waypoint x="835" y="157" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.L.Flow4_di" bpmnElement="PHW.L.Flow4">
+        <di:waypoint x="885" y="157" />
+        <di:waypoint x="1072" y="157" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.L.Flow5_di" bpmnElement="PHW.L.Flow5">
+        <di:waypoint x="860" y="182" />
+        <di:waypoint x="860" y="351" />
+        <di:waypoint x="1030" y="351" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.L.Flow6_di" bpmnElement="PHW.L.Flow6">
+        <di:waypoint x="1150" y="351" />
+        <di:waypoint x="1210" y="351" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.L.Flow7_di" bpmnElement="PHW.L.Flow7">
+        <di:waypoint x="1270" y="411" />
+        <di:waypoint x="1270" y="545" />
+        <di:waypoint x="1390" y="545" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.L.Flow8_di" bpmnElement="PHW.L.Flow8">
+        <di:waypoint x="1450" y="485" />
+        <di:waypoint x="1450" y="157" />
+        <di:waypoint x="1570" y="157" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.L.Flow9_di" bpmnElement="PHW.L.Flow9">
+        <di:waypoint x="1690" y="157" />
+        <di:waypoint x="1792" y="157" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
