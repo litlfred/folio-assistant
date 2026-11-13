@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-1024/cat-harness-tools/cat-harness-tools.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-1024/cat-harness-tools/schema/glossary-sense.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-1024/cat-harness-tools/cat-harness-tools.jsonld",
+  "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/glossary-sense.jsonld",
+  "staging": {
+    "branch": "repin-train/20261113-1024",
+    "sha": "34ecde66106296e5cee0ea660b7ebdf9892a1b4d",
+    "pr": "3109/merge",
+    "run": "43413872766"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/glossary-sense",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "glossary-sense",
+      "title": "glossary-sense",
+      "summary": "**The glossary sense verdicts** of a layer: for a use of a glossary term",
+      "module": "schemas/kg/glossary-sense.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-schemas",
+      "jsonSchema": [
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/glossary-sense/GlossarySenseStoreSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/glossary-sense/GlossarySenseVerdictSchema.schema.json"
+      ]
+    }
+  ]
+}

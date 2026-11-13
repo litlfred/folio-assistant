@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-1024/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-1024/cat-harness/skill/readability-editing.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-1024/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261113-1024",
+    "sha": "34ecde66106296e5cee0ea660b7ebdf9892a1b4d",
+    "pr": "3109/merge",
+    "run": "43413872766"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-1024/cat-harness/skill/readability-editing",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "readability-editing",
+      "title": "Readability Editing Skill",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-1024/cat-harness/package/editorial-audits"
+      ],
+      "instructionsPath": "editorial/skills/editorial-audits/readability-editing.md",
+      "instructionLines": 118,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-1024/cat-harness/directory/editorial",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/readability-editing"
+    }
+  ]
+}

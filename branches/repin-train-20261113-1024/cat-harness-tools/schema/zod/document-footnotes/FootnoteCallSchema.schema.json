@@ -1,0 +1,32 @@
+{
+  "$ref": "#/definitions/FootnoteCall",
+  "definitions": {
+    "FootnoteCall": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "context": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "page",
+        "context"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/document-footnotes/FootnoteCallSchema.schema.json",
+  "title": "FootnoteCallSchema",
+  "description": "Generated from `FootnoteCallSchema` in schemas/content/document-footnotes.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261113-1024",
+    "sha": "34ecde66106296e5cee0ea660b7ebdf9892a1b4d",
+    "pr": "3109/merge",
+    "run": "43413872766"
+  }
+}

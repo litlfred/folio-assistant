@@ -1,0 +1,177 @@
+{
+  "$ref": "#/definitions/DocumentFootnotes",
+  "definitions": {
+    "DocumentFootnotes": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "folio-document-footnotes/v1"
+        },
+        "entry": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "determined",
+            "undetermined"
+          ]
+        },
+        "pages_unread": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        "body_size": {
+          "type": "number",
+          "minimum": 0
+        },
+        "footnotes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^fn-p\\d{3,}-\\d+$"
+              },
+              "page": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 9007199254740991
+              },
+              "mark": {
+                "type": "string",
+                "minLength": 1
+              },
+              "text": {
+                "type": "string",
+                "minLength": 1
+              },
+              "block": {
+                "type": "string",
+                "minLength": 1
+              },
+              "marks": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "page": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 9007199254740991
+                    },
+                    "context": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "page",
+                    "context"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": [
+              "id",
+              "page",
+              "mark",
+              "text",
+              "marks"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "uncalled_notes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^fn-p\\d{3,}-\\d+$"
+              },
+              "page": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 9007199254740991
+              },
+              "mark": {
+                "type": "string",
+                "minLength": 1
+              },
+              "text": {
+                "type": "string",
+                "minLength": 1
+              },
+              "block": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "id",
+              "page",
+              "mark",
+              "text"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "unlinked_marks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "page": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 9007199254740991
+              },
+              "mark": {
+                "type": "string",
+                "minLength": 1
+              },
+              "context": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "page",
+              "mark",
+              "context"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "$schema",
+        "entry",
+        "status",
+        "body_size",
+        "footnotes",
+        "uncalled_notes",
+        "unlinked_marks"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/document-footnotes/DocumentFootnotesSchema.schema.json",
+  "title": "DocumentFootnotesSchema",
+  "description": "Generated from `DocumentFootnotesSchema` in schemas/content/document-footnotes.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261113-1024",
+    "sha": "34ecde66106296e5cee0ea660b7ebdf9892a1b4d",
+    "pr": "3109/merge",
+    "run": "43413872766"
+  }
+}
