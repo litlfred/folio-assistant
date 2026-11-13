@@ -1,0 +1,122 @@
+From 46e49c3fe47c47916f7da1cba73ef3649feafd7e Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Fri, 13 Nov 2026 21:30:29 +0000
+Subject: [PATCH] Standing re-pins never merge; merge-guard required; red index
+ main pauses the train
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Owner cards, 2026-11-13 (about 21:35Z):
+- "C. No auto-merge", replacing "A. MM dispatches, auto-merge OK": a
+  standing re-pin run opens or updates its PR, labels it needs-repin, and
+  never merges itself; the merge manager judges it once CI is green and
+  merges. Measured: the self-merges landed 3-4 s after opening, before any
+  check.
+- "A. merge-guard required status": once the tools workflow posts the
+  merge-guard status, the merge manager requires it on main in the layer
+  repositories.
+- "A. #3119, fix main, pause": while the index main is red, the merge
+  manager disables the re-pin train, and re-enables it once green.
+In merge-manager-watcher (§"Only the merge manager merges and re-pins"
+items 4, 6, 7; the main-red row; the tools follow-ups) and remote-mount
+§"Standing consent".
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01VQDpPc2tT1vUufdyDbQTBz
+---
+ .../skills/sdlc-core/merge-manager-watcher.md | 34 +++++++++++++------
+ skills/kg/kg-core/remote-mount.md             | 12 +++----
+ 2 files changed, 30 insertions(+), 16 deletions(-)
+
+diff --git a/sdlc/skills/sdlc-core/merge-manager-watcher.md b/sdlc/skills/sdlc-core/merge-manager-watcher.md
+index b5f0dd1..3cc1e31 100644
+--- a/sdlc/skills/sdlc-core/merge-manager-watcher.md
++++ b/sdlc/skills/sdlc-core/merge-manager-watcher.md
+@@ -58,19 +58,30 @@ repin so you can handle trains and CI".
+    green PR reports a `ready:` line to the merge manager, and does nothing
+    else.
+ 4. **Standing re-pins and site repositories are the merge manager's**
+-   (owner cards, 2026-11-13: "A. MM dispatches, auto-merge OK" and "A. Give
+-   MM access"). Only the merge manager dispatches a standing re-pin; its
+-   auto-merge on green counts as the merge manager's merge. The merge
+-   manager attaches each site repository and runs its re-pin: it
+-   dispatches the run, approves the held bot runs, and merges when green.
+-   A `cron` or `repository_dispatch` trigger, if kept, only opens the PR
++   (owner cards, 2026-11-13: "C. No auto-merge", replacing "A. MM
++   dispatches, auto-merge OK", and "A. Give MM access"). A standing re-pin
++   run opens or updates its PR, labels it `needs-repin`, and never merges
++   itself: the merge manager judges it once CI is green and merges it. The
++   merge manager attaches each site repository and runs its re-pin: it
++   dispatches the run, approves the held bot runs, and merges when green
+    ([`remote-mount`](../../../skills/kg/kg-core/remote-mount.md)
+    §"Standing consent").
+ 5. **Held runs are approved by the merge manager.** A re-pin commit pushed
+    by a bot gets runs held at `action_required`, and the merge manager
+    approves them before judging the PR. A held run executed nothing, so it
+    is neither red nor green.
+-6. **A one-time consent is quoted where it acts.** The owner's card, with
++6. **`merge-guard` becomes a required check** (owner card, 2026-11-13,
++   "A. merge-guard required status"). Once the tools layer's workflow
++   posts the `merge-guard` commit status (full tier, plus ready), the merge
++   manager makes it a required status check on `main` in the layer
++   repositories, through branch protection. Until then, `merge-queue`
++   §"A PR lands only through `merge:guard`" holds as written.
++7. **A red index main pauses the re-pin train** (owner card, 2026-11-13,
++   "A. #3119, fix main, pause"). While the index repository's main is red,
++   the merge manager disables the re-pin train workflow, so no re-pin lands
++   on a red base. It re-enables the workflow once main is green, and says
++   so to the siblings and the owner both times.
++8. **A one-time consent is quoted where it acts.** The owner's card, with
+    its date, goes in the re-pin PR's body and in `trust.consent`'s evidence
+    in `index.config.json` (`remote-mount` §"Trust").
+ 
+@@ -392,7 +403,7 @@ ledger entry.
+ | An approved, all-green PR that changes `.github/workflows/`, or is in a repository with no train | Merge it directly through `merge:guard`. A workflow PR needs no approval beyond the batch card (owner ruling, 2026-11-07, card "Workflow PRs", A) |
+ | Queued runs 60+ minutes old with nothing landed, or the owner says runners are full | First relieve the runners (§"Runner relief"). Then `saturation-meta-merge`: offer the card, never run without the owner's tap |
+ | A PR whose owner has not pushed or answered for 2+ hours | `stalled-agent-triage`: tell the owner and take it over |
+-| main red, in any harness repository | §"Red mains and failing runs": sort the cause, dispatch a fixer. The fix goes to main as its own PR first; when a dispatched `post-merge-regen` verify run says main is stale, a regen dispatched for the next PR commits the fix and that PR lands with priority (`merge-queue` §"Merge steward procedure: post-merge verification"). Trains wait for main to be green |
++| main red, in any harness repository | §"Red mains and failing runs": sort the cause, dispatch a fixer. The fix goes to main as its own PR first; when a dispatched `post-merge-regen` verify run says main is stale, a regen dispatched for the next PR commits the fix and that PR lands with priority (`merge-queue` §"Merge steward procedure: post-merge verification"). Trains wait for main to be green  If it is the index repository's main, disable the re-pin train until it is green (rule 7 of §"Only the merge manager merges and re-pins") |
+ | Nothing to do | End the turn with no message |
+ 
+ ## Merge-sweep rules (STRICT)
+@@ -534,8 +545,11 @@ These come from the role; the watcher is the step that acts on them:
+     comments;
+   - `merge:watch` lists the PRs labelled `ready-to-merge` and `needs-repin`
+     as the merge manager's queue, each with its CI verdict;
+-  - every merge path (`merge:guard --merge`, any standing re-pin
+-    auto-merge) says that only the merge manager runs it;
++  - every merge path (`merge:guard --merge`) says that only the merge
++    manager runs it, and a standing re-pin run opens a `needs-repin` PR
++    and never merges (card "C. No auto-merge");
++  - a workflow posts the `merge-guard` status, so that it can be required
++    on `main` (card "A. merge-guard required status");
+   - `--no-merge-manager` is renamed to say what it now means: the merge
+     manager landing a PR of its own.
+ - The `needs-repin` label must exist in each repository the merge manager
+diff --git a/skills/kg/kg-core/remote-mount.md b/skills/kg/kg-core/remote-mount.md
+index f349b8d..23f7b66 100644
+--- a/skills/kg/kg-core/remote-mount.md
++++ b/skills/kg/kg-core/remote-mount.md
+@@ -521,12 +521,12 @@ branch's newest (green) commit and writes `trust.consent` for the new pin,
+ same rule is still declared: withdraw or edit it and those pins ask again.
+ A pin moved by hand still asks again, rule or not.
+ 
+-**Only the merge manager starts a standing re-pin** (owner ruling,
+-2026-11-13, card "A. MM dispatches, auto-merge OK"). The merge manager runs
+-`standing-repin.yml` by `workflow_dispatch`, and the run's auto-merge on
+-green counts as the merge manager's merge. A `cron` or
+-`repository_dispatch` trigger, if kept, is only a fallback: it opens the
+-re-pin PR and never merges, and the merge manager lands it. The tools layer
++**A standing re-pin never merges itself** (owner ruling, 2026-11-13, card
++"C. No auto-merge", which replaces "A. MM dispatches, auto-merge OK"). A
++standing re-pin run, however it is triggered, opens or updates its PR,
++labels it `needs-repin`, and stops. The merge manager judges it once CI is
++green and merges it. The reason was measured: the self-merges landed 3-4
++seconds after the PR opened, before any check had run. The tools layer
+ decides the mechanism. A re-pin commit pushed by a bot gets runs held at
+ `action_required`, and the merge manager approves them, so the re-pin is
+ judged on runs that executed (`github-state-inspection`).
+-- 
+2.43.0
+
