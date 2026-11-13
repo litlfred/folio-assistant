@@ -1,0 +1,37 @@
+---
+# folio-assistant-tgaj
+$schema: bean/1.0.0
+title: 'smart-base: one BPMN swimlane/actor validator in L2-bpmn/tools/, replacing four'
+status: todo
+type: task
+priority: normal
+tags:
+    - smart-base
+    - subgraphs
+    - bpmn
+    - github-skills
+created_at: 2026-11-13T12:07:20Z
+updated_at: 2026-11-13T12:07:20Z
+parent: folio-assistant-95e7
+---
+
+## Why
+
+Parent: `folio-assistant-95e7`. Four overlapping validators, none wired into CI:
+
+| validator | checks | defect |
+|---|---|---|
+| `.github/skills/bpmn_author/validators/swimlane_validator.py` | laneSet present, orphan nodes, duplicate/FSH-invalid lane ids | callers are CLI-only |
+| `.github/skills/bpmn_import/validators/swimlane_actor_validator.py` | lane → actor | expects `input/fsh/actors/ActorDefinition-DAK.<laneId>.fsh`; real files are `DAK.Persona.*.fsh` / `SGAuthoring.Persona.*.fsh`, so every lane fails |
+| `.github/skills/bpmn_layout/validate_swimlanes.py` | lane/participant → ActorDefinition by `Instance:` id, fuzzy suggestions | no caller; stdlib `ET.parse` (no safe parser) |
+| `smart-base/scripts/dak-swimlanes.ts` + `validators/dak-swimlanes.json` | declared persona ↔ lane mapping | the only one a skill cites (`l2-component-edit-review.md:54`) |
+
+Plus `bpmn_author/validators/bpmn_xml_validator.py` (well-formed, root element, no Camunda/Zeebe namespaces, duplicate ids). The actions glob `input/business-processes/*.bpmn`, which does not exist (WHO main: `input/bpmn/`; this fork: `smart-base/**/processes/`). The same wrong path is in `input/scripts/bpmn_extractor.py:63`, `svg_extractor.py:65` and the scripts README.
+
+## Done when
+
+- [ ] One tool node `L2-bpmn/tools/<id>/<id>.ts` covering structure, vendor namespaces and lane → ActorDefinition (matched by instance id, never by guessed file name), reading BPMN from the declared process directories.
+- [ ] `scripts/dak-swimlanes.ts` and `validators/dak-swimlanes.json` folded in or moved beside it; `l2-component-edit-review.md` cites the tool.
+- [ ] The three Python validators and `bpmn_author/` deleted; `bpmn_layout/bpmn_to_svg.py` either moved as an L2-bpmn tool or deleted after checking overlap with cat-harness-tools' process renderer.
+- [ ] The `input/business-processes` path fixed in `input/scripts/`.
+- [ ] The tool runs in PR CI on changed `.bpmn` files.
