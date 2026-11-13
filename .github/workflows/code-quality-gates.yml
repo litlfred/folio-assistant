@@ -2555,6 +2555,12 @@ jobs:
       - name: named-subgraph JSON-LD is current
         run: bun run cat subgraph:jsonld:check
 
+      # Every layer renders to the JSON-LD it publishes (cat-harness-tools
+      # `jsonld:site:check`, new at 4ac36f3f); without a step here the
+      # "no check script is unrun" ratchet fails.
+      - name: every layer renders to its published JSON-LD
+        run: bun run cat jsonld:site:check
+
       # The per-slice SQLite files (bean `q8ar`): beans, todos, library and the
       # whole-repo kg. No binary is committed: each is built at deploy from the
       # tree being published, in the same way as `assets/beans/index.json` and
