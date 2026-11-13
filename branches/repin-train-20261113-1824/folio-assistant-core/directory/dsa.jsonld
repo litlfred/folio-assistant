@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-1824/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-1824/folio-assistant-core/directory/dsa.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-1824/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "repin-train/20261113-1824",
+    "sha": "52a43e2c36b8535d3050b3296cdb6cdf57d1c5f1",
+    "pr": "repin-train/20261113-1824",
+    "run": "43482709703"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-1824/folio-assistant-core/directory/dsa",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "dsa",
+      "path": "dsa/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/cat-harness"
+      ],
+      "description": "The Data Sharing Agreement sub-graph — a NAMED SUB-GRAPH of this layer on the pattern of cat-harness's `work-plan/`, and OPT-IN: off in every layer, this one included, unless that layer lists `folio-assistant-core.dsa` in its own `enableSubgraphs` (owner, 2026-11-10, card Q-SG-1 C, wave 1). It holds the four DSA skills and the DSA document life cycle; the graphs inside it are declared FROM WITHIN, in `dsa/graph.json`. The `dsa` typology and `check:dsa-hash` stay outside it.",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-1824/folio-assistant-core/directory/dsa",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa"
+    }
+  ]
+}

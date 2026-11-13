@@ -1,0 +1,147 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "PHW.L",
+ "markers": [
+  {
+   "id": "PHW.L.1",
+   "name": "L1. Show the trust domain's consent text (code and version)",
+   "left": 21.58,
+   "top": 39.86,
+   "box": {
+    "left": 17.62,
+    "top": 55.91,
+    "width": 1.31,
+    "height": 4.05
+   }
+  },
+  {
+   "id": "PHW.L.2",
+   "name": "L2. Read the text and decide",
+   "left": 31.42,
+   "top": 7.09,
+   "box": {
+    "left": 27.46,
+    "top": 23.14,
+    "width": 1.31,
+    "height": 4.05
+   }
+  },
+  {
+   "id": "PHW.L.3",
+   "name": "L3. Record the holder's act as evidence",
+   "left": 56.56,
+   "top": 39.86,
+   "box": {
+    "left": 52.6,
+    "top": 55.91,
+    "width": 1.31,
+    "height": 4.05
+   }
+  },
+  {
+   "id": "PHW.L.4",
+   "name": "L4. Post the explicit Consent [ITI-108] Access Consent",
+   "left": 66.39,
+   "top": 39.86,
+   "box": {
+    "left": 62.43,
+    "top": 55.91,
+    "width": 1.31,
+    "height": 4.05
+   }
+  },
+  {
+   "id": "PHW.L.5",
+   "name": "L5. Store the Consent; return Consent.id and versionId",
+   "left": 76.23,
+   "top": 72.64,
+   "box": {
+    "left": 72.27,
+    "top": 88.68,
+    "width": 1.31,
+    "height": 4.05
+   }
+  },
+  {
+   "id": "PHW.L.6",
+   "name": "L6. Keep a copy in the wallet",
+   "left": 86.07,
+   "top": 7.09,
+   "box": {
+    "left": 82.1,
+    "top": 23.14,
+    "width": 1.31,
+    "height": 4.05
+   }
+  }
+ ],
+ "processHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.L",
+ "tasks": {
+  "PHW.L.1": {
+   "id": "PHW.L.1",
+   "name": "L1. Show the trust domain's consent text (code and version)",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.L/node/PHW.L.1",
+   "stepHref": "PHW.L.html#step-PHW.L.1",
+   "lane": "PCF Consent Recorder (wallet or health worker)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.L/lane/PHW.Lane.ConsentRecorder",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.L.2": {
+   "id": "PHW.L.2",
+   "name": "L2. Read the text and decide",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.L/node/PHW.L.2",
+   "stepHref": "PHW.L.html#step-PHW.L.2",
+   "lane": "Holder (person / Personal Health Wallet)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.L/lane/PHW.Lane.Holder",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.L.3": {
+   "id": "PHW.L.3",
+   "name": "L3. Record the holder's act as evidence",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.L/node/PHW.L.3",
+   "stepHref": "PHW.L.html#step-PHW.L.3",
+   "lane": "PCF Consent Recorder (wallet or health worker)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.L/lane/PHW.Lane.ConsentRecorder",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.L.4": {
+   "id": "PHW.L.4",
+   "name": "L4. Post the explicit Consent [ITI-108] Access Consent",
+   "type": "bpmn:SendTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.L/node/PHW.L.4",
+   "stepHref": "PHW.L.html#step-PHW.L.4",
+   "lane": "PCF Consent Recorder (wallet or health worker)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.L/lane/PHW.Lane.ConsentRecorder",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.L.5": {
+   "id": "PHW.L.5",
+   "name": "L5. Store the Consent; return Consent.id and versionId",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.L/node/PHW.L.5",
+   "stepHref": "PHW.L.html#step-PHW.L.5",
+   "lane": "PCF Consent Registry",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.L/lane/PHW.Lane.ConsentRegistry",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.L.6": {
+   "id": "PHW.L.6",
+   "name": "L6. Keep a copy in the wallet",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.L/node/PHW.L.6",
+   "stepHref": "PHW.L.html#step-PHW.L.6",
+   "lane": "Holder (person / Personal Health Wallet)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.L/lane/PHW.Lane.Holder",
+   "skills": [],
+   "binding": "unbound"
+  }
+ }
+}

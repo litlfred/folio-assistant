@@ -1,0 +1,62 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/sdlc/tools/ci-standing-repin/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/ci-standing-repin.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Dispatch a layer's `standing-repin.yml`: move the pins that carry a standing consent to their newest `main`. Started with the standard GitHub CLI; the run is watched with `gh run watch`.",
+      "install": {
+        "cli": "gh"
+      },
+      "invoke": {
+        "shell": "gh workflow run standing-repin.yml"
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "flag": "--repo"
+            },
+            "description": "The repository whose workflow is run. Default: the current one.",
+            "name": "repo",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoFullName"
+          },
+          {
+            "arg": {
+              "flag": "--ref"
+            },
+            "description": "The branch to run it on. Default: the default branch.",
+            "name": "ref",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Branch"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "The dispatched run; its outcome is read with `gh run watch` or `gh run view`.",
+            "name": "run",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          }
+        ]
+      },
+      "name": "ci-standing-repin",
+      "requirements": {
+        "network": true,
+        "runtime": [
+          "gh"
+        ]
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/remote-mount",
+      "title": "Run a layer's standing re-pin"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "sdlc/tools/ci-standing-repin",
+  "path": "sdlc/tools/ci-standing-repin/"
+}

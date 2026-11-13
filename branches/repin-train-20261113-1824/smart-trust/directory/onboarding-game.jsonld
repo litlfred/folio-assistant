@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-1824/smart-trust/smart-trust.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-1824/smart-trust/directory/onboarding-game.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-1824/smart-trust/smart-trust.jsonld",
+  "staging": {
+    "branch": "repin-train/20261113-1824",
+    "sha": "52a43e2c36b8535d3050b3296cdb6cdf57d1c5f1",
+    "pr": "repin-train/20261113-1824",
+    "run": "43482709703"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-1824/smart-trust/directory/onboarding-game",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "onboarding-game",
+      "path": "onboarding-game/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/web-app"
+      ],
+      "description": "The GDHCN onboarding game, \"Join the Network\" (Vite, TypeScript, three.js; Apache-2.0, from carlsbox/gdhcn-onboarding-game, see NOTICE). Declared by web-app.json and built and published by the harness's `apps` visualiser (Tool web-app-build) at <locale>/<harness>/apps/onboarding-game/, with no site chrome; nothing else on the site loads it. Its UI strings are translated through translations/<locale>/apps/ (smart-trust#176, Q-GAME-5).",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261113-1824/smart-trust/directory/onboarding-game",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/smart-trust/directory/onboarding-game"
+    }
+  ]
+}

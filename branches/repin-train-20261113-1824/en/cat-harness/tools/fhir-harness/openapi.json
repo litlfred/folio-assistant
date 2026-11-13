@@ -1,0 +1,3933 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Tools — fhir-harness",
+    "version": "0.1.0",
+    "description": "The call contracts of the harness's Tools, one operation per Tool, generated from the Tool nodes (`schemas/tools/tool.ts`) so standard API tooling can read them. **No HTTP server serves these paths**: each Tool is reached as its `x-invoke` says — a command line, an MCP tool, or an in-process call. Tags are the skills each Tool satisfies."
+  },
+  "servers": [],
+  "tags": [
+    {
+      "name": "compiled-artefact-cache"
+    },
+    {
+      "name": "docs-generation"
+    },
+    {
+      "name": "fhir-questionnaire-wireframe"
+    },
+    {
+      "name": "fhir-validation"
+    },
+    {
+      "name": "ig-ast-delta"
+    },
+    {
+      "name": "ig-binary-artefacts"
+    },
+    {
+      "name": "ig-build-pipeline"
+    },
+    {
+      "name": "ig-publisher-fork"
+    },
+    {
+      "name": "vocabulary-authority"
+    }
+  ],
+  "paths": {
+    "/tools/build-ig-site": {
+      "post": {
+        "operationId": "build-ig-site",
+        "summary": "Stage one IG as its own just-the-docs Jekyll site",
+        "description": "Turn an IG source repository into ONE Jekyll source for just-the-docs, as the IG Publisher builds one IG per site: `input/pagecontent` pages with title, parent and order from `sushi-config.yaml` `pages:`, the files the Publisher's include tags resolve against, images, `_data/fhir.json` from `ig-site-data`, and a `_config.yml`. The pages render unchanged, including their references to the IG's site data. With the IG's menu, the layout is the one every IG site wears: the IG's own top bar, the IG's TOC declared as the folio-assistant navbar's section (added by `rail-standalone-pages`), no sidebar of its own, an edit link per page, and per heading a source-line link and a pre-filled feedback issue.",
+        "tags": [
+          "ig-build-pipeline"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "build-ig-site/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ig-src": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The IG source repository: `sushi-config.yaml` and `input/`."
+                  },
+                  "out": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The Jekyll source directory to write."
+                  },
+                  "baseurl": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Where the built site is served."
+                  },
+                  "plantuml-jar": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Render `input/images-source/*.plantuml` as the Publisher does; without it a visible `not rendered` marker stands in."
+                  },
+                  "dedupe-ids": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The post-build pass, run INSTEAD of staging: over one IG's BUILT pages (`<site>/<instance>`, after the host's Jekyll build), keep the first copy of each anchor the IG's source repeats, where every link already lands, rename the rest, and report each one. A host composing IGs runs it once per line of `stage-ig-sites`' build list (process `ig-docs-site-compose`)."
+                  }
+                },
+                "required": [
+                  "ig-src",
+                  "out"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "pages": {
+                      "$ref": "#/components/schemas/Count",
+                      "description": "Pages staged."
+                    },
+                    "not-rendered": {
+                      "$ref": "#/components/schemas/Count",
+                      "description": "Included files the source does not hold and nothing rendered, each replaced by a VISIBLE marker and listed, never an empty include."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/build-ig-site.jsonld",
+        "x-invoke": {
+          "shell": "bun run fhir-harness/scripts/build-ig-site.ts"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "ig-build-pipeline"
+        ],
+        "x-selection": {
+          "when": "Rendering an IG's own pages through just-the-docs.",
+          "limits": "Fragments only the Publisher's own generation writes (dependency tables, artefact summaries) are not produced here and show as markers. A page `sushi-config.yaml` does not list keeps its file name as title and is reported.",
+          "cost": "Seconds; copies files. Rendering diagrams adds a Java process per diagram."
+        }
+      }
+    },
+    "/tools/check-translation-supplements": {
+      "post": {
+        "operationId": "check-translation-supplements",
+        "summary": "Compile and check an IG's translation CodeSystem supplements",
+        "description": "Compile the IG's CodeSystems with every `input/fsh/translations/<locale>.fsh` CodeSystem supplement in a throw-away FSHOnly SUSHI project, require 0 SUSHI errors, and check that each supplement's base CodeSystem is the IG's own, its codes are a subset of the base's, its language is the file's locale, and every CodeSystem id is unique. SUSHI is the version `ig-toolchain.env` pins, installed from `scripts/sushi/package-lock.json` with install scripts off; the FHIR core package is pinned by sha512; SUSHI runs with no network.",
+        "tags": [
+          "fhir-validation"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "check-translation-supplements/"
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "igRoot": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The IG root; default the working directory. Only paths its `contentTypes.ig.include` declares are read."
+                  },
+                  "json": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Print the result as JSON."
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "verdict": {
+                      "$ref": "#/components/schemas/Text",
+                      "description": "Exit 0 pass or not applicable, 1 findings (each named with its file), 2 could not run. Could-not-run is never a pass."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/check-translation-supplements.jsonld",
+        "x-invoke": {
+          "shell": "bun run fhir-harness/scripts/check-translation-supplements.ts"
+        },
+        "x-install": {
+          "cli": "npm ci --ignore-scripts --no-audit --no-fund --prefix fhir-harness/scripts/sushi"
+        },
+        "x-requires": {
+          "runtime": [
+            "bun",
+            "node",
+            "npm"
+          ],
+          "network": true
+        },
+        "x-satisfies": [
+          "fhir-validation"
+        ],
+        "x-skill-contracts": {
+          "fhir-validation.input": {
+            "$ref": "#/components/schemas/skill.fhir-validation.input"
+          },
+          "fhir-validation.output": {
+            "$ref": "#/components/schemas/skill.fhir-validation.output"
+          }
+        },
+        "x-selection": {
+          "when": "A pull request changes an IG's CodeSystems or its translation supplements, and the IG build is not run on it.",
+          "limits": "Compiles only CodeSystems, Aliases and RuleSets with the supplements: a base CodeSystem written as an Instance, or one from another package, is reported as missing.",
+          "cost": "One SUSHI run of a few seconds; the first run fetches the pinned FHIR core package (megabytes)."
+        }
+      }
+    },
+    "/tools/check-wireframe-questionnaire": {
+      "post": {
+        "operationId": "check-wireframe-questionnaire",
+        "summary": "Check a Questionnaire field for field against the wireframe it was derived from",
+        "description": "Compare the `data-element` fields of a mid-fidelity wireframe (per `data-layout`, in document order) with the answerable items of a BUILT Questionnaire (depth first, named by `definition` or `code`). Reports a field with no item, an item with no field, an item naming no data element, a data element twice in one layout, and the first place the order differs. Fidelity, not design.",
+        "tags": [
+          "fhir-questionnaire-wireframe"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "check-wireframe-questionnaire/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "wireframe": {
+                    "$ref": "#/components/schemas/FilesystemPath",
+                    "description": "The wireframe HTML; fields carry `data-element`, layouts `data-layout`."
+                  },
+                  "questionnaire": {
+                    "$ref": "#/components/schemas/FilesystemPath",
+                    "description": "The built Questionnaire JSON (`fsh-generated/resources/Questionnaire-<id>.json`), never FSH."
+                  }
+                },
+                "required": [
+                  "wireframe",
+                  "questionnaire"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "findings": {
+                      "$ref": "#/components/schemas/Text",
+                      "description": "One line per finding, prefixed with its layout. Exit 0 faithful, 1 a finding, 2 an input could not be read (never a pass)."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/check-wireframe-questionnaire.jsonld",
+        "x-invoke": {
+          "shell": "bun run fhir-harness/scripts/check-wireframe-questionnaire.ts <wireframe> <questionnaire>"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "fhir-questionnaire-wireframe"
+        ],
+        "x-skill-contracts": {
+          "fhir-questionnaire-wireframe.input": {
+            "$ref": "#/components/schemas/skill.fhir-questionnaire-wireframe.input"
+          },
+          "fhir-questionnaire-wireframe.output": {
+            "$ref": "#/components/schemas/skill.fhir-questionnaire-wireframe.output"
+          }
+        },
+        "x-selection": {
+          "when": "A Questionnaire was derived from an L2 wireframe and is reviewed for fidelity; or a suggested edit to either side is checked (`checkSuggestion`, the same judge in the editor-checker shape).",
+          "limits": "Compares ids and order only: it says nothing about labels, answer options, enableWhen or layout quality, which `wireframe-design-review` judges. A wireframe with no `data-element` field is exit 2, not a pass.",
+          "cost": "Milliseconds; reads two files."
+        }
+      }
+    },
+    "/tools/fhir-cache-seed-npm": {
+      "post": {
+        "operationId": "fhir-cache-seed-npm",
+        "summary": "Seed the FHIR package cache from trusted sources (exact versions)",
+        "description": "Fill `~/.fhir/packages` (or `--cache`) for an environment that cannot reach packages.fhir.org, from trust anchors only: npm account `grahamegrieve`, publishers' own published-site repositories (the seeder's list, each fetch verified against the tarball's own package.json), template repos found through FHIR/ig-registry's templates.json read live each run, and a `--mirror`. Exact versions only (a patch wildcard resolves as the Publisher resolves it, recorded); every tarball verified; nothing computed once and kept; provenance recorded; missing versions listed, never substituted.",
+        "tags": [
+          "ig-publisher-fork"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "fhir-cache-seed-npm/"
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "sushi-config": {
+                    "$ref": "#/components/schemas/FilesystemPath",
+                    "description": "Seed what this IG pins: its `dependencies:` and the core package for its `fhirVersion`."
+                  },
+                  "lock": {
+                    "$ref": "#/components/schemas/FilesystemPath",
+                    "description": "An IG's `fhir-packages.lock.json` (`packages`: name, version, `tarball` https URL, `integrity` sha512-/sha256- and/or hex `sha256`). Each package it pins is installed from that URL only, after every pinned hash matches; a mismatch is refused. Its dependencies are not followed: the lock lists them."
+                  },
+                  "cache": {
+                    "$ref": "#/components/schemas/FilesystemPath",
+                    "description": "Default `~/.fhir/packages`, which SUSHI and the IG Publisher read."
+                  },
+                  "dry-run": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Resolve and report; download nothing."
+                  },
+                  "mirror": {
+                    "$ref": "#/components/schemas/FilesystemPath",
+                    "description": "A directory or git repository of `<name>#<version>.tgz` filled by `fhir-package-mirror`."
+                  },
+                  "missing-out": {
+                    "$ref": "#/components/schemas/FilesystemPath",
+                    "description": "Write the missing list, one `name#version` per line: the input `fhir-package-mirror` takes."
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "installed": {
+                      "$ref": "#/components/schemas/Count"
+                    },
+                    "missing": {
+                      "$ref": "#/components/schemas/Count",
+                      "description": "Exit 1 when any is missing. Each is listed with why: not on npm, a different version only, an untrusted maintainer, or not an exact version."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/fhir-cache-seed-npm.jsonld",
+        "x-invoke": {
+          "shell": "bun run fhir-harness/scripts/fhir-cache-seed-npm.ts [--cache <dir>] [--sushi-config <file>] [--mirror <dir|git-url>] [--template-repo <name=owner/repo>] [--site-repo <prefix=owner/repo[@branch]>] [--lock <file>] [--missing-out <file>] [--dry-run] [name#version ...]"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun",
+            "npm",
+            "git"
+          ],
+          "network": true
+        },
+        "x-satisfies": [
+          "ig-publisher-fork"
+        ],
+        "x-selection": {
+          "when": "packages.fhir.org is unreachable and registry.npmjs.org is not.",
+          "limits": "Pinned HL7 versions are often not on npm and need `--mirror`. A template FHIR/ig-registry does not list is named with `--template-repo`. A partly seeded cache does not make a faithful build of an IG whose pins it misses.",
+          "cost": "One download per package; the core packages are tens of megabytes."
+        }
+      }
+    },
+    "/tools/fhir-package-mirror": {
+      "post": {
+        "operationId": "fhir-package-mirror",
+        "summary": "Mirror FHIR packages from packages.fhir.org into a git repository",
+        "description": "On a machine that reaches packages.fhir.org, fetch exactly a missing list (from `fhir-cache-seed-npm --missing-out`), check each tarball names itself exactly, record SHA512SUMS, and commit and push to a git repository that an environment without packages.fhir.org reads with `--mirror`. The person running it is the trust anchor for what it adds.",
+        "tags": [
+          "ig-publisher-fork"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "fhir-package-mirror/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "mirror-repo-dir": {
+                    "$ref": "#/components/schemas/FilesystemPath",
+                    "description": "A git checkout to fill; committed and pushed when it is one."
+                  },
+                  "missing": {
+                    "$ref": "#/components/schemas/FilesystemPath",
+                    "description": "The seeder's `--missing-out` file, so nothing unneeded is mirrored."
+                  }
+                },
+                "required": [
+                  "mirror-repo-dir",
+                  "missing"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "mirrored": {
+                      "$ref": "#/components/schemas/Count",
+                      "description": "Exit non-zero when any could not be fetched or named itself differently."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/fhir-package-mirror.jsonld",
+        "x-invoke": {
+          "shell": "fhir-ig-publisher/ast-export/scripts/mirror-fhir-packages.sh <mirror-repo-dir> <missing.txt | name#version ...>"
+        },
+        "x-install": {
+          "cli": "git clone -b claude/ast-export https://github.com/litlfred/fhir-ig-publisher"
+        },
+        "x-requires": {
+          "runtime": [
+            "bash",
+            "curl",
+            "python3",
+            "git"
+          ],
+          "network": true
+        },
+        "x-satisfies": [
+          "ig-publisher-fork"
+        ],
+        "x-selection": {
+          "when": "The seeder reports missing packages and the environment that needs them cannot reach packages.fhir.org.",
+          "limits": "Run where packages.fhir.org is reachable. It mirrors exact versions only; a wildcard in the list is resolved by the seeder first.",
+          "cost": "One download per package; terminology packages are megabytes each."
+        }
+      }
+    },
+    "/tools/fsh-cone": {
+      "post": {
+        "operationId": "fsh-cone",
+        "summary": "FSH dependency cone",
+        "description": "Compute the dependency cone over an IG's FSH graph, and the blast radius of a set of changed files. It is what lets an incremental IG build rebuild less than everything.",
+        "tags": [
+          "fhir-validation"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "fsh-cone/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "igRoot": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The IG root holding the FSH sources. Absent, the command exits 2 with its usage — could-not-determine, not an empty cone."
+                  },
+                  "csv": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Write the report as CSV to this path instead of printing it."
+                  },
+                  "top": {
+                    "$ref": "#/components/schemas/Count",
+                    "description": "Show only the N largest cones; `0` shows none."
+                  },
+                  "history": {
+                    "$ref": "#/components/schemas/Count",
+                    "description": "Report the blast radius over the last N commits instead of a static cone."
+                  },
+                  "fileUsers": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Also write `fsh-file-users/v1`: for each FSH file, the files that use what it declares. The IG AST's incremental plan reads it (`AstPlanCli -fsh-users`) so a changed RuleSet- or Alias-only file reaches its users rather than forcing a full build."
+                  }
+                },
+                "required": [
+                  "igRoot"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "cone": {
+                      "$ref": "#/components/schemas/Text",
+                      "description": "The cone, or the impact of `--changed`. With `--csv` it goes to that path instead."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/fsh-cone.jsonld",
+        "x-invoke": {
+          "shell": "bun run fhir-harness/scripts/fsh-cone.ts"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "fhir-validation"
+        ],
+        "x-skill-contracts": {
+          "fhir-validation.input": {
+            "$ref": "#/components/schemas/skill.fhir-validation.input"
+          },
+          "fhir-validation.output": {
+            "$ref": "#/components/schemas/skill.fhir-validation.output"
+          }
+        }
+      }
+    },
+    "/tools/ig-artifact-jsonld": {
+      "post": {
+        "operationId": "ig-artifact-jsonld",
+        "summary": "Write one JSON-LD node per IG artefact, and check a built site's nodes",
+        "description": "`write` turns an artefact index into `artifact/<Type>-<id>.jsonld` under a docs root, with no `.json` twin: one `folio-ig-artifact-jsonld/v1` node per artefact, in borrowed vocabularies only (the FHIR RDF class, dcterms, schema.org, PROV), naming the artefact's canonical URL, its representations and, for a compiled copy, what built it. With `--root-resources` (the IG site's default) the first representation is the reduced `<Type>-<id>.json` the site serves at its root (`local`), the second the full copy in the AST cache by raw URL (`mirror`), and each index entry names the root file (`schema:contentUrl`). `check` is the kind's QA: over a BUILT site, every artefact has its node and no node is an orphan, each node is its own file's, no `.json` twin is served beside it, and every local resource it names is on the site. It also writes and checks the index node, `artifact/index.jsonld` (`folio-ig-artifact-index-jsonld/v1`): every artefact once, each entry naming its node. These are the assets the thin pages render.",
+        "tags": [
+          "ig-build-pipeline"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "ig-artifact-jsonld/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "command": {
+                    "$ref": "#/components/schemas/Text",
+                    "description": "`write` or `check`."
+                  },
+                  "index": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The `folio-fhir-artifact-index/v2` to write from, or to check against."
+                  },
+                  "out": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "`write`: the docs root the nodes go under."
+                  },
+                  "dir": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "`check`: the built docs root to check."
+                  },
+                  "base": {
+                    "$ref": "#/components/schemas/Url",
+                    "description": "`write`: the docs root's published URL, for absolute IRIs."
+                  },
+                  "compiled-data": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "`write`: where compiled resource files are served, from the docs root, or the AST cache commit's raw base (then a `mirror`)."
+                  },
+                  "root-resources": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "`write`: the site serves each compiled resource at its root as `<Type>-<id>.json`; each node lists it first."
+                  }
+                },
+                "required": [
+                  "command",
+                  "index"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "nodes": {
+                      "$ref": "#/components/schemas/Count",
+                      "description": "Nodes written, or checked; `check` exits 1 with each finding named."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ig-artifact-jsonld.jsonld",
+        "x-invoke": {
+          "shell": "bun run fhir-harness/scripts/ig-artifact-jsonld.ts"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "ig-build-pipeline"
+        ],
+        "x-selection": {
+          "when": "An IG's pages are thin (the default of `gen-ig-pages`), or a consumer wants the artefacts as linked data.",
+          "limits": "Identity and representations only, never the resource's content: the resource is one of its encodings, fetched by the page. Upstream URLs are not fetched by `check`.",
+          "cost": "Milliseconds per artefact."
+        }
+      }
+    },
+    "/tools/ig-ast-diff": {
+      "post": {
+        "operationId": "ig-ast-diff",
+        "summary": "List and view the delta between two IG ASTs",
+        "description": "Diff two ASTs by resource key: added, removed, changed (with a structural element-level differential) and version-changed resources, plus edges added and removed; optionally fold in the incremental plan, and render just-the-docs pages (an index that lists, a page per resource that shows) every one of which carries the provisional mark. `list <ast>` summarises one AST.",
+        "tags": [
+          "ig-ast-delta"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "ig-ast-diff/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "base": {
+                    "$ref": "#/components/schemas/FilesystemPath"
+                  },
+                  "head": {
+                    "$ref": "#/components/schemas/FilesystemPath"
+                  },
+                  "plan": {
+                    "$ref": "#/components/schemas/FilesystemPath"
+                  },
+                  "site": {
+                    "$ref": "#/components/schemas/FilesystemPath",
+                    "description": "A directory inside the IG's just-the-docs source; pages are wrapped in Liquid raw blocks so FHIR narratives' Liquid is not executed."
+                  }
+                },
+                "required": [
+                  "base",
+                  "head"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "changed": {
+                      "$ref": "#/components/schemas/Count"
+                    },
+                    "pages": {
+                      "$ref": "#/components/schemas/Count",
+                      "description": "Pages written: one index, one per changed or version-changed resource."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ig-ast-diff.jsonld",
+        "x-invoke": {
+          "shell": "bun run fhir-harness/scripts/ig-ast.ts diff <base> <head> [--plan plan.json] [--json delta.json] [--site <dir>]"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "ig-ast-delta"
+        ],
+        "x-selection": {
+          "when": "Reviewing an incremental build, or comparing an incremental AST with a full one.",
+          "limits": "Structural, not FHIR-semantic: a reordered repeating element shows a change at every index. At most 200 differential rows per resource; the rest is counted, never dropped silently.",
+          "cost": "Reads both ASTs once."
+        }
+      }
+    },
+    "/tools/ig-ast-export": {
+      "post": {
+        "operationId": "ig-ast-export",
+        "summary": "Build an IG and write its AST",
+        "description": "Run one ordinary IG Publisher build through `AstPublisher` (a subclass that overrides nothing) and write the AST beside `output/`: one JSON file per resource keyed `canonical|version`, `dependencies.json` (upstream's DependencyAnalyser plus the Library/PlanDefinition/ActivityDefinition/Measure edges it leaves empty), SUSHI's `fsh-index.json`, and a manifest that declares itself a cache and records the inputs it is valid for.",
+        "tags": [
+          "ig-publisher-fork"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "ig-ast-export/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ig": {
+                    "$ref": "#/components/schemas/FilesystemPath",
+                    "description": "The IG root."
+                  },
+                  "ast-out": {
+                    "$ref": "#/components/schemas/FilesystemPath",
+                    "description": "Default `<ig>/output-ast`, OUTSIDE the Publisher's `output/`."
+                  }
+                },
+                "required": [
+                  "ig"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "resources": {
+                      "$ref": "#/components/schemas/Count",
+                      "description": "Resources written, one file each."
+                    },
+                    "edges": {
+                      "$ref": "#/components/schemas/Count",
+                      "description": "Dependency edges, including those whose target is outside the IG (kept, `resolved: null`)."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ig-ast-export.jsonld",
+        "x-invoke": {
+          "shell": "java -cp \"target/classes:$(cat cp.txt)\" org.hl7.fhir.igtools.ast.AstExportCli -ig <ig> [-ast-out <dir>]"
+        },
+        "x-install": {
+          "cli": "git clone -b claude/ast-export https://github.com/litlfred/fhir-ig-publisher && cd fhir-ig-publisher/ast-export && mvn -q package && mvn -q dependency:build-classpath -Dmdep.outputFile=cp.txt"
+        },
+        "x-requires": {
+          "runtime": [
+            "java",
+            "maven",
+            "sushi",
+            "jekyll"
+          ],
+          "network": true
+        },
+        "x-satisfies": [
+          "ig-publisher-fork"
+        ],
+        "x-selection": {
+          "when": "Producing a base AST for incremental work, or measuring what an IG's logic layer depends on.",
+          "limits": "Taken AFTER the build, so resources carry generated narratives. It is a full Publisher run: it needs the package registry and a terminology server, and an environment without them cannot run it.",
+          "cost": "A full IG build: minutes to tens of minutes."
+        }
+      }
+    },
+    "/tools/ig-ast-incremental-build": {
+      "post": {
+        "operationId": "ig-ast-incremental-build",
+        "summary": "Rebuild only the cone of a change and merge it into the AST",
+        "description": "Write the unchanged part of a base AST as a FHIR package into the package cache, build a temporary IG of only the rebuild set with the stock Publisher, merge the result into a mixed-provenance AST (`builtAt` per resource), and repeat while the merged graph's cone reaches resources that were not rebuilt.",
+        "tags": [
+          "ig-publisher-fork"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "ig-ast-incremental-build/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ast": {
+                    "$ref": "#/components/schemas/FilesystemPath"
+                  },
+                  "ig": {
+                    "$ref": "#/components/schemas/FilesystemPath"
+                  },
+                  "out": {
+                    "$ref": "#/components/schemas/FilesystemPath"
+                  },
+                  "cache-folder": {
+                    "$ref": "#/components/schemas/FilesystemPath",
+                    "description": "Keeps the `*.ast-cache` packages out of `~/.fhir/packages`."
+                  },
+                  "fsh-users": {
+                    "$ref": "#/components/schemas/FilesystemPath",
+                    "description": "`fsh-file-users/v1` from `fsh-cone --file-users`, so a changed RuleSet- or Alias-only file reaches its users instead of forcing a full build."
+                  }
+                },
+                "required": [
+                  "ast",
+                  "ig",
+                  "out"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "rounds": {
+                      "$ref": "#/components/schemas/Count",
+                      "description": "Rounds to a fixed point; exit 3 when it does not converge, which means run a full build."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ig-ast-incremental-build.jsonld",
+        "x-invoke": {
+          "shell": "java -cp \"target/classes:$(cat cp.txt)\" org.hl7.fhir.igtools.ast.IncrementalBuildCli -ast <base> -ig <ig> -out <dir> [-cache-folder <dir>] [-fsh-users <json>]"
+        },
+        "x-install": {
+          "cli": "git clone -b claude/ast-export https://github.com/litlfred/fhir-ig-publisher && cd fhir-ig-publisher/ast-export && mvn -q package && mvn -q dependency:build-classpath -Dmdep.outputFile=cp.txt"
+        },
+        "x-requires": {
+          "runtime": [
+            "java",
+            "sushi"
+          ],
+          "network": true
+        },
+        "x-satisfies": [
+          "ig-publisher-fork"
+        ],
+        "x-selection": {
+          "when": "A plan says `incremental`.",
+          "limits": "UNTESTED end to end as of 2026-09-30. The fork README names the risks to check first, beginning with a canonical collision between the cache package and the temporary IG.",
+          "cost": "A Publisher run over the cone, plus loading the cache package."
+        }
+      }
+    },
+    "/tools/ig-ast-jsonld": {
+      "post": {
+        "operationId": "ig-ast-jsonld",
+        "summary": "Export an IG AST as JSON-LD",
+        "description": "Write an AST as linked data against `fhir-harness/schemas/ig-ast.context.jsonld`: each resource a node identified by its canonical URL (`urn:fhir:<Type>/<id>` when it has none) and typed by its FHIR resource type, each dependency edge a link to its target, and the manifest's `authority: cache` and `provisional` list carried on the graph. The AST is validated against the Zod declaration the JSON Schemas are generated from before it is exported.",
+        "tags": [
+          "ig-ast-delta"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "ig-ast-jsonld/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ast": {
+                    "$ref": "#/components/schemas/FilesystemPath"
+                  }
+                },
+                "required": [
+                  "ast"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "jsonld": {
+                      "$ref": "#/components/schemas/FilesystemPath",
+                      "description": "JSON-LD on stdout."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ig-ast-jsonld.jsonld",
+        "x-invoke": {
+          "shell": "bun run fhir-harness/scripts/ig-ast.ts jsonld <ast> > ast.jsonld"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "ig-ast-delta"
+        ],
+        "x-selection": {
+          "when": "Handing an AST to a consumer that reads linked data, or joining it with another graph by canonical URL.",
+          "limits": "Exports the manifest and edges, not each resource's full JSON; a consumer that needs the resource body reads its `file`. Still a cache: the export carries the provisional mark, it does not remove it.",
+          "cost": "Reads the manifest and dependency document once."
+        }
+      }
+    },
+    "/tools/ig-ast-list": {
+      "post": {
+        "operationId": "ig-ast-list",
+        "summary": "Summarise one IG AST",
+        "description": "Counts per resource type, edges in total and resolved inside the IG, edges by origin (upstream's DependencyAnalyser or ast-export's LogicEdges), whether the AST is mixed-provenance and how many resources each revision built, and what the manifest declares provisional.",
+        "tags": [
+          "ig-ast-delta"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "ig-ast-list/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ast": {
+                    "$ref": "#/components/schemas/FilesystemPath"
+                  }
+                },
+                "required": [
+                  "ast"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "resources": {
+                      "$ref": "#/components/schemas/Count"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ig-ast-list.jsonld",
+        "x-invoke": {
+          "shell": "bun run fhir-harness/scripts/ig-ast.ts list <ast>"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "ig-ast-delta"
+        ],
+        "x-selection": {
+          "when": "Before diffing or rendering, to see what an AST holds; after a merge, to see how mixed it is.",
+          "limits": "Counts only; it does not check the AST against the IG's inputs (`ig-ast-validity` does).",
+          "cost": "Reads the manifest and dependency document once."
+        }
+      }
+    },
+    "/tools/ig-ast-measure-real-igs": {
+      "post": {
+        "operationId": "ig-ast-measure-real-igs",
+        "summary": "Measure the AST export on real IGs",
+        "description": "Build the WHO SMART Trust and Immunizations IGs through `ig-ast-export` and print the fork's measurements: counts, whether FSH sources sit where the plan expects, and logic-layer edge coverage per resource type. `--byte-identical` adds a stock build and an `output/` diff.",
+        "tags": [
+          "ig-publisher-fork"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "ig-ast-measure-real-igs/"
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "work-dir": {
+                    "$ref": "#/components/schemas/FilesystemPath"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "logic-covered": {
+                      "$ref": "#/components/schemas/Count",
+                      "description": "Logic resources carrying at least one edge to another logic resource in the IG."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ig-ast-measure-real-igs.jsonld",
+        "x-invoke": {
+          "shell": "fhir-ig-publisher/ast-export/scripts/run-real-igs.sh [work-dir] [--byte-identical]"
+        },
+        "x-install": {
+          "cli": "git clone -b claude/ast-export https://github.com/litlfred/fhir-ig-publisher"
+        },
+        "x-requires": {
+          "runtime": [
+            "java",
+            "maven",
+            "sushi",
+            "jekyll",
+            "python3",
+            "git"
+          ],
+          "network": true
+        },
+        "x-satisfies": [
+          "ig-publisher-fork"
+        ],
+        "x-selection": {
+          "when": "Measuring the AST exporter's coverage, on a machine that reaches the package registry.",
+          "limits": "The two IGs are fixed by repository name; the script knows nothing else about them.",
+          "cost": "Two full IG builds, three with `--byte-identical`."
+        }
+      }
+    },
+    "/tools/ig-ast-pages": {
+      "post": {
+        "operationId": "ig-ast-pages",
+        "summary": "Write the IG AST viewer: a page per instance holding `ig-ast` directories, and a hub",
+        "description": "For every visualiser an instance declares `renderedBy: ig-ast-pages`, write the hub at `<locale>/<harness>/<id>/` and, with `subgraphs: \"instance\"`, one page per instance that declares an `ig-ast` directory, at `…/<instance>/`. Each lists the ASTs the directory holds: the IG's package id, resources in total and by type, dependency edges (resolved inside the IG, by origin, by kind), the rebuild plan when one is recorded, and what stays provisional. A declared directory not on disk — a branch-family member not restored, which is the normal case — is reported UNKNOWN with the family it would be restored from, never as zero ASTs. `ig-ast-list` summarises one AST it is handed; this Tool needs no AST path.",
+        "tags": [
+          "ig-ast-delta"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "ig-ast-pages/"
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "site": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "A site being built: the pages go under it (`visualiser-writers.ts` in cat-harness-tools passes it). Absent, they go under the checkout's site directory."
+                  },
+                  "root": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The checkout whose declarations are read. Default: the checkout holding the working directory."
+                  },
+                  "check": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Write nothing; exit 1 when a page is stale, missing or orphaned."
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "pages": {
+                      "$ref": "#/components/schemas/Count",
+                      "description": "Pages written: the hub and one per instance."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ig-ast-pages.jsonld",
+        "x-invoke": {
+          "shell": "bun run fhir-harness/scripts/gen-ig-ast-pages.ts"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "ig-ast-delta"
+        ],
+        "x-selection": {
+          "when": "Publishing a site that should show which IG ASTs each instance holds.",
+          "limits": "Counts what the cache holds; it does not check an AST against its IG's inputs (`ig-ast-validity` does) or diff two (`ig-ast-diff`).",
+          "cost": "Reads each AST's manifest and dependency document once."
+        }
+      }
+    },
+    "/tools/ig-ast-plan": {
+      "post": {
+        "operationId": "ig-ast-plan",
+        "summary": "Plan an incremental IG build from a delta of changed files",
+        "description": "Map a delta (a commit range, a PR's diff, or the staged index) onto a base AST: which resources to rebuild (the forward cone), which to load from cache, which to remove, or a full build and why. Builds nothing.",
+        "tags": [
+          "ig-publisher-fork",
+          "ig-ast-delta"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "ig-ast-plan/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ast": {
+                    "$ref": "#/components/schemas/FilesystemPath"
+                  },
+                  "ig": {
+                    "$ref": "#/components/schemas/FilesystemPath"
+                  },
+                  "head": {
+                    "$ref": "#/components/schemas/CommitSha",
+                    "description": "Default HEAD; `-staged` diffs the index instead."
+                  },
+                  "fsh-users": {
+                    "$ref": "#/components/schemas/FilesystemPath",
+                    "description": "`fsh-file-users/v1` from `fsh-cone --file-users`: lets a changed RuleSet- or Alias-only file reach its users rather than force a full build."
+                  }
+                },
+                "required": [
+                  "ast",
+                  "ig"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "rebuild": {
+                      "$ref": "#/components/schemas/Count",
+                      "description": "The forward cone. The plan says `full`, with reasons, when a file's effect cannot be determined or the cone exceeds the threshold."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ig-ast-plan.jsonld",
+        "x-invoke": {
+          "shell": "java -cp \"target/classes:$(cat cp.txt)\" org.hl7.fhir.igtools.ast.AstPlanCli -ast <ast> -ig <ig> [-head <rev> | -staged] [-out plan.json] [-fsh-users <json>]"
+        },
+        "x-install": {
+          "cli": "git clone -b claude/ast-export https://github.com/litlfred/fhir-ig-publisher && cd fhir-ig-publisher/ast-export && mvn -q package && mvn -q dependency:build-classpath -Dmdep.outputFile=cp.txt"
+        },
+        "x-requires": {
+          "runtime": [
+            "java",
+            "git"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "ig-publisher-fork",
+          "ig-ast-delta"
+        ],
+        "x-selection": {
+          "when": "Before an incremental build, and to show a reviewer what a change reaches.",
+          "limits": "The cone is computed on the BASE edges, so it is provisional until the rebuild: new edges can extend it. A RuleSet-only FSH file forces a full build unless `-fsh-users` is given.",
+          "cost": "Seconds; reads files and git."
+        }
+      }
+    },
+    "/tools/ig-ast-refresh": {
+      "post": {
+        "operationId": "ig-ast-refresh",
+        "summary": "Refresh an IG's AST cache on a runner",
+        "description": "Dispatch an IG repository's `ig-ast-refresh.yml`, which calls fhir-harness's reusable `.github/workflows/ig-ast-refresh.yml`: mount the layers the IG's index.lock.json pins, restore and judge the cache for `ref`, and when it is not valid (or `force`) run the caller's optional `pre-export` overlay command and build the IG with the pinned Publisher AST exporter (the AST is recorded against the clean commit's inputs, the overlay's changes put back), check the new AST is valid for its commit, and seed `cat/fhir-harness/fhir-ast/<package id>` with `ig-cache seed --push` — only from a commit on the default branch with the tip's inputs. Builds no site, writes no gh-pages, dispatches nothing.",
+        "tags": [
+          "ig-build-pipeline",
+          "compiled-artefact-cache"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "ig-ast-refresh/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "repository": {
+                    "$ref": "#/components/schemas/RepoFullName",
+                    "description": "The IG repository that carries the caller (`owner/repo`)."
+                  },
+                  "ref": {
+                    "$ref": "#/components/schemas/Branch",
+                    "description": "What to build; default `main`. Only a commit on the default branch with the tip's inputs is seeded."
+                  },
+                  "force": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Rebuild even when the cache is valid."
+                  }
+                },
+                "required": [
+                  "repository"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "$ref": "#/components/schemas/Text",
+                      "description": "The run's verdict before (`valid`, `stale`, `cannot-tell`, `missing`) and whether it seeded; the AST as a run artifact when it did not."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ig-ast-refresh.jsonld",
+        "x-invoke": {
+          "shell": "gh workflow run ig-ast-refresh.yml --repo <owner/repo> --ref main -f ref=main [-f force=true]"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "gh"
+          ],
+          "network": true
+        },
+        "x-satisfies": [
+          "ig-build-pipeline",
+          "compiled-artefact-cache"
+        ],
+        "x-selection": {
+          "when": "An IG site publish refused a stale or missing AST, or the IG's source changed on its default branch. Dispatched by a person, or by an agent the owner named for that run — never by an agent on its own.",
+          "limits": "Needs the IG repository to carry the caller and an index.lock.json that mounts fhir-harness. A merge that changes an input during the build leaves the cache unseeded (the run says so). A `pre-export` command is the caller's, in its own workflow file, never a dispatch input; a failing one exports nothing. The no-shrink gate refuses a candidate under 90% of the incumbent.",
+          "cost": "One GitHub runner for the Publisher build: about 25 minutes cold for a ~700-resource IG, less with the restored txcache."
+        }
+      }
+    },
+    "/tools/ig-ast-render": {
+      "post": {
+        "operationId": "ig-ast-render",
+        "summary": "Render a computed IG AST delta as just-the-docs pages",
+        "description": "Write the pages for a delta already computed by `ig-ast-diff --json`: an index that lists, a page per changed resource that shows, every one opening with the provisional mark and with Liquid in values neutralised.",
+        "tags": [
+          "ig-ast-delta"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "ig-ast-render/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "delta": {
+                    "$ref": "#/components/schemas/FilesystemPath",
+                    "description": "`ig-ast-delta/v1`, from `ig-ast-diff --json`."
+                  },
+                  "site": {
+                    "$ref": "#/components/schemas/FilesystemPath"
+                  }
+                },
+                "required": [
+                  "delta",
+                  "site"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "pages": {
+                      "$ref": "#/components/schemas/Count"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ig-ast-render.jsonld",
+        "x-invoke": {
+          "shell": "bun run fhir-harness/scripts/ig-ast.ts render <delta.json> --site <dir>"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "ig-ast-delta"
+        ],
+        "x-selection": {
+          "when": "Re-rendering a stored delta without the two ASTs, e.g. into a staging site.",
+          "limits": "Shows what the delta records; it cannot add a differential the delta did not compute.",
+          "cost": "Milliseconds per page."
+        }
+      }
+    },
+    "/tools/ig-ast-validity": {
+      "post": {
+        "operationId": "ig-ast-validity",
+        "summary": "Is this IG AST still valid for the IG's current inputs?",
+        "description": "Run folio-assistant-core's `compiledValidity` on an AST manifest's `inputs`: recompute the input digest (the same algorithm as the Java writer, pinned by a shared golden vector) and the source revision, and answer valid, stale-inputs (naming which input), or cannot-tell.",
+        "tags": [
+          "ig-ast-delta"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "ig-ast-validity/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ast": {
+                    "$ref": "#/components/schemas/FilesystemPath"
+                  },
+                  "ig": {
+                    "$ref": "#/components/schemas/FilesystemPath"
+                  },
+                  "toolchain": {
+                    "$ref": "#/components/schemas/Text",
+                    "description": "The Publisher that would run now. Without it the toolchain is ASSUMED unchanged, and the result says so."
+                  }
+                },
+                "required": [
+                  "ast",
+                  "ig"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "verdict": {
+                      "$ref": "#/components/schemas/Text",
+                      "description": "Exit 0 valid, 1 stale-inputs, 2 cannot-tell. Cannot-tell is never a pass."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ig-ast-validity.jsonld",
+        "x-invoke": {
+          "shell": "bun run fhir-harness/scripts/ig-ast.ts validity <ast> --ig <root> [--toolchain <s>]"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun",
+            "git"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "ig-ast-delta"
+        ],
+        "x-selection": {
+          "when": "Before trusting, planning against, or rendering from a cached AST.",
+          "limits": "Valid means built from these inputs, not built correctly.",
+          "cost": "Reads `input/` once to hash it."
+        }
+      }
+    },
+    "/tools/ig-binary-audit": {
+      "post": {
+        "operationId": "ig-binary-audit",
+        "summary": "Measure the IG Publisher's binary outputs on a pages branch",
+        "description": "Read a pages branch's git tree and report the Publisher's binary outputs (full-ig.zip, package.tgz and variants, package.db, validator packs, the definitions/examples/expansions zips, spreadsheets) by name: copies, bytes, and how much of it sits in branch previews. Reads the tree, never a checkout, so a multi-gigabyte branch costs a depth-1 fetch.",
+        "tags": [
+          "ig-binary-artefacts"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "ig-binary-audit/"
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "repo": {
+                    "$ref": "#/components/schemas/FilesystemPath",
+                    "description": "A clone that has the pages branch fetched."
+                  },
+                  "ref": {
+                    "$ref": "#/components/schemas/Text",
+                    "description": "Default `origin/gh-pages`."
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "audit": {
+                      "$ref": "#/components/schemas/Text",
+                      "description": "A table, or `ig-binary-audit/v1` JSON with `--json`."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ig-binary-audit.jsonld",
+        "x-invoke": {
+          "shell": "bun run fhir-harness/scripts/ig-binary-audit.ts --repo <checkout> [--ref origin/gh-pages] [--previews branches/] [--json]"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun",
+            "git"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "ig-binary-artefacts"
+        ],
+        "x-selection": {
+          "when": "Before configuring an IG's deploy or release step, when a pages branch nears its size limit, or before linking a download from a page.",
+          "limits": "Counts only the Publisher's own binary names; another large file is in `total` but not itemised. It measures, and deletes nothing.",
+          "cost": "One `git ls-tree` over the branch; seconds for 64,000 files."
+        }
+      }
+    },
+    "/tools/ig-cache": {
+      "post": {
+        "operationId": "ig-cache",
+        "summary": "FHIR AST cache",
+        "description": "Restore, verify, seed and diagnose the prebuilt AST artefacts for an IG. Always try `restore` first: a full AST build via AstExportCli is expensive, a restore is fast. `seed` commits the IG API a layer above generates from the AST (`ig-site:sidecars`, via `ig-api-cache.ts`) as `ig-api/` beside it, and the artefact index built from that tree (`ig-index-cache.ts`) as `fhir-artifact-index/index.json`, so a site reads both by raw URL at the cache commit.",
+        "tags": [
+          "compiled-artefact-cache",
+          "ig-ast-delta"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "ig-cache/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "$ref": "#/components/schemas/IgCacheAction",
+                    "description": "The verb. `doctor` diagnoses a restore that missed."
+                  },
+                  "igRoot": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The IG whose AST is acted on."
+                  },
+                  "package": {
+                    "$ref": "#/components/schemas/PackageName"
+                  },
+                  "remote": {
+                    "$ref": "#/components/schemas/PackageName",
+                    "description": "Git remote to fetch from / push to. Default 'origin'. Use when the IG's origin is upstream and the cache lives on a fork."
+                  }
+                },
+                "required": [
+                  "action"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "$ref": "#/components/schemas/Text",
+                      "description": "A real hit, a miss, or a diagnosis — never a miss that reads as a hit."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ig-cache.jsonld",
+        "x-invoke": {
+          "shell": "fhir-harness/scripts/ig-cache.sh"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bash",
+            "git"
+          ],
+          "network": true
+        },
+        "x-satisfies": [
+          "compiled-artefact-cache",
+          "ig-ast-delta"
+        ]
+      }
+    },
+    "/tools/ig-index-build": {
+      "post": {
+        "operationId": "ig-index-build",
+        "summary": "Build each IG instance's artefact index from the IG's cached AST",
+        "description": "Write each IG instance's `fhir-artifact-index/` at publish, so no IG instance commits one. Indexes each instance that needs this layer and whose `repository` has an AST cache branch; others are skipped and named. Per instance: `index.json` from the AST `ig-cache.sh restore` lays down from the IG repository's cache branch (`authority: \"cache\"`), `menu.json` from the IG's `sushi-config.yaml` at the commit cloned (recording the `source.of` and `source.ref` that `stage-ig-sites` clones from), `releases.json` from the repository's GitHub releases (a failed read writes nothing, never an empty list), `package.tgz` from the AST's resources, and the JSON-LD contexts the IG publishes. The first step of process `ig-docs-site-compose`.",
+        "tags": [
+          "ig-build-pipeline"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "ig-index-build/"
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "root": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The checkout whose IG instances are indexed. Default: the current directory's checkout."
+                  },
+                  "only": {
+                    "$ref": "#/components/schemas/Slug",
+                    "description": "Index one IG instance."
+                  },
+                  "work": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Scratch directory for each IG's clone and restored AST. Default: a fresh temporary directory."
+                  },
+                  "plan": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Write nothing; say which instances would be indexed, and why any is skipped."
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "indexes": {
+                      "$ref": "#/components/schemas/Count",
+                      "description": "IG instances indexed; each skipped instance is named with its reason, never silently absent."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ig-index-build.jsonld",
+        "x-invoke": {
+          "shell": "bun run fhir-harness/scripts/build-ig-indexes.ts"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun",
+            "git"
+          ],
+          "network": true
+        },
+        "x-satisfies": [
+          "ig-build-pipeline"
+        ],
+        "x-selection": {
+          "when": "Building the docs site or a staging preview, before any page step reads an IG instance's artefact index.",
+          "limits": "Needs the IG repository's AST cache branch: an IG with none is skipped, and the index is only as current as that cache (`ig-ast-cache`).",
+          "cost": "A shallow clone and an AST restore per IG, then seconds of indexing."
+        }
+      }
+    },
+    "/tools/ig-page-render-qa": {
+      "post": {
+        "operationId": "ig-page-render-qa",
+        "summary": "Scan every page of a built IG site in a headless browser for markup shown as text",
+        "description": "The checkout script `ig-site:page-render-qa`, the IG site build's last final step: it serves the built site locally, opens the root pages and the artefact pages (not the JSON views, mappings views or redirect stubs) in headless Chromium, waits for each to draw, and lists every text block that shows markdown as text (bold, list markers, links, images, code, headings, tables, HTML tags), code and preformatted text left out. It writes `assets/fhir-qa/page-render.json` and the script the QA report's \"Page scan\" panel draws it with. It reports and never fails the build: without a browser it writes why.",
+        "tags": [
+          "ig-build-pipeline"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "ig-page-render-qa/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "site": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The built site directory."
+                  },
+                  "limit": {
+                    "$ref": "#/components/schemas/Count",
+                    "description": "Scan at most this many pages."
+                  },
+                  "concurrency": {
+                    "$ref": "#/components/schemas/Count",
+                    "description": "Pages open at once; 4 by default."
+                  }
+                },
+                "required": [
+                  "site"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "findings": {
+                      "$ref": "#/components/schemas/Count",
+                      "description": "Text blocks that show markup as text."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ig-page-render-qa.jsonld",
+        "x-invoke": {
+          "shell": "bun run fhir-harness/scripts/ig-page-render-qa.ts"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "ig-build-pipeline"
+        ],
+        "x-selection": {
+          "when": "After an IG site is built, so the QA report shows what its pages show a reader.",
+          "limits": "Needs Playwright and Chromium; without them it records why and scans nothing. Pages that do not finish drawing in 15 s are listed as unfinished.",
+          "cost": "About 20 s for 200 pages."
+        }
+      }
+    },
+    "/tools/ig-pages": {
+      "post": {
+        "operationId": "ig-pages",
+        "summary": "Generate an IG instance's reader-facing pages from its artefact index",
+        "description": "Write `<instance>/docs/` — an index page, one page per artefact, a page per over-large category and per menu group — from `fhir-artifact-index/index.json` (and `menu.json` when ingested), styled by the template chrome an owning instance ingested. For an instance whose docs declare `igSite` it writes no index, menu or category pages — the IG site's own replace them — and only a front-matter `artifacts.md` naming the Tool that drew it. `build-ig-site` renders an IG's narrative pages from source; this Tool writes the artefact pages for every IG instance (`stage-ig-sites` copies them in).",
+        "tags": [
+          "ig-build-pipeline"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "ig-pages/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "instance": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The instance directory: holds `fhir-artifact-index/` and receives `docs/`."
+                  },
+                  "site": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Where an instance declares a visualiser `renderedBy: ig-pages`, the Tool writes that visualiser's route page. With this site directory it writes ONLY those route pages (`<locale>/<harness>/<id>/` and, per instance, `…/<instance>/`) under it: not `docs/`, not the instance. Each opens the IG's artefact index."
+                  },
+                  "label": {
+                    "$ref": "#/components/schemas/Text",
+                    "description": "The IG's display name. The index carries only the package id, which stands in when this is absent."
+                  },
+                  "chrome-owner": {
+                    "$ref": "#/components/schemas/Text",
+                    "description": "The instance whose `chrome.json` styles the pages. Absent, the pages are unstyled and the build says so. The banner's identity is always the index's; a chrome ingested from another IG lends its tokens, never its status."
+                  },
+                  "summary": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Open the index page with the instance's own declaration (`harness_details.html` with `instance=`), making it the instance's landing page."
+                  },
+                  "full-pages": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Default: each artefact page is a thin shell at the same address, with its JSON-LD node, the index node (`artifact/index.jsonld`) and the shared renderer `assets/ig-artifact.js`. With it: full pages, no JSON-LD."
+                  },
+                  "jsonld-base": {
+                    "$ref": "#/components/schemas/Url",
+                    "description": "Thin pages only: the docs root's published URL, so each node's IRIs are absolute. Absent, they are relative to the node's own file."
+                  },
+                  "compiled-data": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Where a compiled index's resource files are served, as a path from the docs root. `.` means each is served once at the docs root as `<Type>-<id>.json`, as the IG site does; a docs root beside the AST passes `../ast-data`."
+                  },
+                  "check": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Write nothing; exit 1 when any page is stale or orphaned."
+                  }
+                },
+                "required": [
+                  "instance"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "pages": {
+                      "$ref": "#/components/schemas/Count",
+                      "description": "Pages written; the menu and chrome are reported as present or COULD NOT DETERMINE, never silently absent."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ig-pages.jsonld",
+        "x-invoke": {
+          "shell": "bun run fhir-harness/scripts/gen-ig-pages.ts"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "ig-build-pipeline"
+        ],
+        "x-selection": {
+          "when": "Building the docs site or a staging preview: an IG instance needs its artefact pages.",
+          "limits": "Narrative pages are not held — the harvest keeps artefacts — so menu entries link upstream. Bodies are still partly HTML inside markdown.",
+          "cost": "Seconds; one file per artefact."
+        }
+      }
+    },
+    "/tools/ig-release": {
+      "post": {
+        "operationId": "ig-release",
+        "summary": "Cut an IG release as a GitHub draft that carries its packages and AST, and report a version left untagged or unreleased",
+        "description": "Gather a release's files from a full Publisher build (package.tgz and its R4/R4B variants, and ast-data.zip, the IG's AST with the Libraries' ELM), say from sushi-config.yaml whether it is a pre-release, and make or refresh the GitHub DRAFT release for the tag with the files uploaded. The owner publishes the draft; a published release is never changed. `check` is the catch-up the AST refresh of the default branch runs (advisory): it reports a current version with no `v<version>` tag, naming the commit that set it for the owner to tag, and a tag with no release, for the owner to run `ig-release.yml` by hand. It never tags and never releases: the tag is the owner's governance step (`ig-release.bpmn`).",
+        "tags": [
+          "ig-binary-artefacts"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "ig-release/"
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "output": {
+                    "$ref": "#/components/schemas/FilesystemPath",
+                    "description": "`assets`: the Publisher's output/ directory."
+                  },
+                  "ast": {
+                    "$ref": "#/components/schemas/FilesystemPath",
+                    "description": "`assets`: the AST directory (its manifest.json)."
+                  },
+                  "tag": {
+                    "$ref": "#/components/schemas/Text",
+                    "description": "`draft`: the git tag the release is for."
+                  },
+                  "ig": {
+                    "$ref": "#/components/schemas/FilesystemPath",
+                    "description": "`kind`, `check`: the IG root (its sushi-config.yaml and git history)."
+                  },
+                  "repo": {
+                    "$ref": "#/components/schemas/Text",
+                    "description": "`draft`, `check`: the repository (`owner/repo`) whose releases are read or written."
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "release": {
+                      "$ref": "#/components/schemas/Text",
+                      "description": "The files with size and SHA-256 (`assets`), `prerelease`/`release` (`kind`), what was done (`draft`), or what the owner should do (`check`)."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ig-release.jsonld",
+        "x-invoke": {
+          "shell": "bun run fhir-harness/scripts/ig-release.ts assets|kind|draft|check …"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun",
+            "zip",
+            "gh"
+          ],
+          "network": true
+        },
+        "x-satisfies": [
+          "ig-binary-artefacts"
+        ],
+        "x-selection": {
+          "when": "When the owner tags an IG version: the IG's `ig-release.yml` caller runs it after a full AST build of the tag. `check` runs in every AST refresh of the default branch.",
+          "limits": "Makes drafts only; publishing is the owner's step on GitHub. Needs a token that may write the repository's releases.",
+          "cost": "One full Publisher build (in the workflow), then a few REST calls and the uploads."
+        }
+      }
+    },
+    "/tools/ig-repo-site": {
+      "post": {
+        "operationId": "ig-repo-site",
+        "summary": "Build an IG repository's own site from its cached AST, with no instance declaration",
+        "description": "The three checkout scripts the platform's site build runs for a repository that holds an IG and only mounts layers (`index.config.json`): `ig-site:ast` restores the AST from the IG's cache branch (`ig-cache.sh restore`) and judges it, refusing a stale, cannot-tell or absent one (a stale one is accepted for a preview by default, refused with `SITE_ACCEPT_STALE_AST=0`, and never accepted for the root); `ig-site:compose` derives the artefact index from the AST (binding any IG API sidecars a layer above left in `$SITE_WORK/ig-api/`), writes the thin artefact pages, stages the IG's `input/` and `sushi-config.yaml` (menu read at build time, palette from the webpage theme of the top layer the repository mounts, edit links from its origin) and composes it at the ROOT of the host site source; `ig-site:publisher-pages` serves each of the AST's resources once, as `<Type>-<id>.json` at the root (no `ast-data/` mirror) — reduced (minified, no narrative, no ELM data, the ELM attachment pointing at the full copy) when the pages read the full resources by raw URL from the AST cache commit, and off with `SITE_ROOT_RESOURCES=0` — the artefact index (or `fhir-artifact-index/index.ref.json`, pointing at the cache's copy) and the sidecars (or none, read from the cache), refuses a page wearing the IG Publisher's chrome, repairs repeated element ids and stamps `folio-build.json`. Never runs the Publisher and never reads its output. Compose lists the pages it puts in the site in `FOLIO_SITE_UPSTREAM_PAGES`, so the site build reports the IG's own dead links rather than refusing the publish over them.",
+        "tags": [
+          "ig-build-pipeline"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "ig-repo-site/"
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ig": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The IG checkout; the current directory by default."
+                  },
+                  "baseurl": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "`compose`: the site's base path; `FOLIO_SITE_BASEURL` from the site build when absent."
+                  },
+                  "plantuml-jar": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "`compose`: render `input/images-source/*.plantuml` as the Publisher does."
+                  },
+                  "work": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The site build's work directory (`SITE_WORK` when absent): where `ast` writes its verdict, a layer above leaves the IG API sidecars, and `compose` the index `publisher-pages` serves."
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "pages": {
+                      "$ref": "#/components/schemas/Count",
+                      "description": "Pages composed, or AST files served."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ig-repo-site.jsonld",
+        "x-invoke": {
+          "shell": "bun run fhir-harness/scripts/ig-repo-site.ts"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun",
+            "git"
+          ],
+          "network": true
+        },
+        "x-satisfies": [
+          "ig-build-pipeline"
+        ],
+        "x-selection": {
+          "when": "Publishing an IG repository's own site, as `stage-local.ts` does for a harnessed IG repository.",
+          "limits": "Needs the IG's AST cache branch (`ig-ast-refresh.yml` writes it) and the network to fetch it; asks the IG's origin for its default branch for edit links (absent, pages carry none). Never runs the Publisher.",
+          "cost": "Seconds to restore and compose; serving the AST is proportional to its size."
+        }
+      }
+    },
+    "/tools/ig-site-data": {
+      "post": {
+        "operationId": "ig-site-data",
+        "summary": "Populate site.data.fhir for a just-the-docs IG render",
+        "description": "Write the IG Publisher's Jekyll variables (`site.data.fhir.ig.*`, `packageId`, `canonical`) for ONE implementation guide, from `sushi-config.yaml` or a published IG's `fhir-artifact-index`, so pages written for the Publisher render on just-the-docs unchanged. fhir-harness declares `site.data` as a pass-through Liquid prefix; this is what Jekyll then reads.",
+        "tags": [
+          "ig-build-pipeline"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "ig-site-data/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ig": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The IG root: holds `sushi-config.yaml`, or `fhir-artifact-index/index.json` for a published IG."
+                  },
+                  "out": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "`<site>/_data/fhir.json` — Jekyll has one `_data/`, so one IG per site, as under the Publisher."
+                  },
+                  "check": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Write nothing; exit 1 when the file is stale."
+                  }
+                },
+                "required": [
+                  "ig",
+                  "out"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "written": {
+                      "$ref": "#/components/schemas/Count",
+                      "description": "Fields written, each from a named source."
+                    },
+                    "undetermined": {
+                      "$ref": "#/components/schemas/Count",
+                      "description": "Fields a Publisher build would have that no source here carries. LISTED, never written as empty strings, because Jekyll prints an empty string and an absent value identically."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ig-site-data.jsonld",
+        "x-invoke": {
+          "shell": "bun run fhir-harness/scripts/ig-site-data.ts"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "ig-build-pipeline"
+        ],
+        "x-selection": {
+          "when": "Rendering an IG's pages through just-the-docs instead of, or beside, the IG Publisher (`ig-publisher-reduction` P0).",
+          "limits": "Only the ImplementationGuide resource's fields plus `packageId` and `canonical`; no fuller Publisher schema is available to copy. A source describing a different package is refused, not merged.",
+          "cost": "Milliseconds; reads two files."
+        }
+      }
+    },
+    "/tools/ingest-ig-menu": {
+      "post": {
+        "operationId": "ingest-ig-menu",
+        "summary": "Ingest an IG's navigation from its sushi-config",
+        "description": "Read `menu:` (and the page tree) out of an IG source repository's `sushi-config.yaml` into `fhir-artifact-index/menu.json`, recording the repository and commit it was read at — the declared source `stage-ig-sites` clones. `--check` re-derives it against a checkout; with no `--source` it reports COULD NOT DETERMINE and exits 2, never 0.",
+        "tags": [
+          "ig-build-pipeline"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "ingest-ig-menu/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "source": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "A checkout of the IG source repository."
+                  },
+                  "out": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The instance's `fhir-artifact-index/` directory."
+                  },
+                  "check": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Write nothing; exit 1 when stale, 2 when it cannot compare."
+                  }
+                },
+                "required": [
+                  "out"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "groups": {
+                      "$ref": "#/components/schemas/Count",
+                      "description": "Menu groups read, each with its items."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ingest-ig-menu.jsonld",
+        "x-invoke": {
+          "shell": "bun run fhir-harness/scripts/ingest-ig-menu.ts"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "ig-build-pipeline"
+        ],
+        "x-selection": {
+          "when": "An IG instance gains, or re-pins, the source repository its site is built from.",
+          "limits": "Reads the config only: a menu item the Publisher generates (a page with no source) is listed, and the site build reports it.",
+          "cost": "Milliseconds."
+        }
+      }
+    },
+    "/tools/ingest-ig-releases": {
+      "post": {
+        "operationId": "ingest-ig-releases",
+        "summary": "Record an IG's GitHub releases as pointers to their binary assets",
+        "description": "Read an IG repository's GitHub releases and write `fhir-artifact-index/releases.json` (`ig-releases/v1`): each asset's name, size, SHA-256 digest and download URL, never its bytes. The IG site's generated `releases` page lists them.",
+        "tags": [
+          "ig-binary-artefacts"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "ingest-ig-releases/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "instance": {
+                    "$ref": "#/components/schemas/FilesystemPath"
+                  },
+                  "repo": {
+                    "$ref": "#/components/schemas/Text",
+                    "description": "`owner/repo`; default the instance menu's recorded IG source, else its declaration's `repository`."
+                  }
+                },
+                "required": [
+                  "instance"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "releases": {
+                      "$ref": "#/components/schemas/FilesystemPath",
+                      "description": "`<instance>/fhir-artifact-index/releases.json`."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ingest-ig-releases.jsonld",
+        "x-invoke": {
+          "shell": "bun run fhir-harness/scripts/ingest-ig-releases.ts --instance <dir> [--repo owner/repo] [--from releases.json]"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": true
+        },
+        "x-satisfies": [
+          "ig-binary-artefacts"
+        ],
+        "x-selection": {
+          "when": "After an IG repository cuts a release, so its pages list the new assets.",
+          "limits": "A record of what GitHub reported on the day it was read; a later release is absent until the next run. Drafts are never recorded.",
+          "cost": "One GitHub API call per 100 releases."
+        }
+      }
+    },
+    "/tools/jsonld-vocabularies": {
+      "post": {
+        "operationId": "jsonld-vocabularies",
+        "summary": "ValueSet expansions → JSON-LD",
+        "description": "JSON-LD vocabularies built from the ValueSet expansions in the IG's AST (`expansions.json`).",
+        "tags": [
+          "ig-build-pipeline"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "jsonld-vocabularies/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ast": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The IG's AST (`output-ast/`, with the build's `expansions.json`)."
+                  }
+                },
+                "required": [
+                  "ast"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "vocabularies": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "`*.jsonld` at the published root."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/jsonld-vocabularies.jsonld",
+        "x-invoke": {
+          "shell": "bun run fhir-harness/scripts/ig-api-gen.ts --ast output-ast --out <sidecars> --site <site>"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "ig-build-pipeline"
+        ],
+        "x-selection": {
+          "when": "The terminology is to be reachable as linked data rather than only as FHIR.",
+          "limits": "Depends on expansion, and so on the terminology server the build was given. An IG built against a dead or restricted `tx` produces fewer vocabularies and fails nothing: the step warns and continues. A thin output is not evidence of a thin ValueSet; check the expansion first.",
+          "cost": "Seconds locally; the expansion it depends on is the expensive part and happens in the Publisher run."
+        }
+      }
+    },
+    "/tools/logical-model-schemas": {
+      "post": {
+        "operationId": "logical-model-schemas",
+        "summary": "Logical models → JSON Schema",
+        "description": "A JSON Schema per logical model, from the logical models in the IG's AST.",
+        "tags": [
+          "ig-build-pipeline"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "logical-model-schemas/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ast": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The IG's AST (`output-ast/`, with the build's `expansions.json`)."
+                  }
+                },
+                "required": [
+                  "ast"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "logicalModelSchemas": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "`schemas/<stem>.schema.json`, one per logical model."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/logical-model-schemas.jsonld",
+        "x-invoke": {
+          "shell": "bun run fhir-harness/scripts/ig-api-gen.ts --ast output-ast --out <sidecars> --site <site>"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "ig-build-pipeline"
+        ],
+        "x-selection": {
+          "when": "An IG is to expose its logical models as an addressable JSON Schema surface.",
+          "limits": "It describes what the AST holds. A model the AST does not hold is not reported as missing.",
+          "cost": "Seconds; reads the AST."
+        }
+      }
+    },
+    "/tools/pin-ig-terminology": {
+      "post": {
+        "operationId": "pin-ig-terminology",
+        "summary": "Snapshot a published IG's terminology at its pinned version",
+        "description": "Read every CodeSystem concept out of a FHIR IG clone checked out at its pinned tag and write a `folio-pinned-terminology/v1` snapshot: the offline, version-fixed answer `check:term-mapping` resolves its `fhir` target against. Which IG, which pin record and which snapshot path are the caller's (`--pin`, `--out`, `--source`); this layer names none.",
+        "tags": [
+          "vocabulary-authority"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "pin-ig-terminology/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "from": {
+                    "$ref": "#/components/schemas/FilesystemPath",
+                    "description": "A clone of the IG checked out at the PINNED tag, passed as `--from`. The script refuses unless that clone's `sushi-config.yaml` version equals the pin's, so a newer clone cannot silently become the snapshot."
+                  }
+                },
+                "required": [
+                  "from"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "snapshot": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "The `--out` path, `folio-pinned-terminology/v1`: the version, the source, and every `system#code` with its display, sorted."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/pin-ig-terminology.jsonld",
+        "x-invoke": {
+          "shell": "bun run fhir-harness/scripts/pin-ig-terminology.ts --from <clone> --pin <pin record> --out <snapshot> --source <repository URL>"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun",
+            "git"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "vocabulary-authority"
+        ],
+        "x-selection": {
+          "when": "The authority a term is checked against must be a fixed artefact a reader can name and re-fetch — a published IG at a version. Also the only option where the vocabulary's host is unreachable.",
+          "limits": "The version comes from the `--pin` record and NEVER from this script, so refreshing means moving the pin first and re-running; re-running against a newer clone is refused rather than silently accepted. It answers only for what the IG publishes at that version — a code added after it, or curated in a collection rather than published, is absent, and `check:term-mapping` reports that as `unmapped` (a checked miss) and not as `undetermined`. Nothing here dereferences a code system IRI.",
+          "cost": "One shallow clone at the tag (~120 KB of FSH at v1.0.0) and a few seconds. The snapshot is committed, so no run at check time."
+        }
+      }
+    },
+    "/tools/sdc-checks": {
+      "post": {
+        "operationId": "sdc-checks",
+        "summary": "Check an IG's built Questionnaires with CSIRO's SDC libraries",
+        "description": "Build-time Structured Data Capture checks, one result per Questionnaire (`sdcChecks[]` of `fhir-questionnaire-wireframe`): `assemble` (`@aehrc/sdc-assemble` 2.0.3: an assemble-root's sub-forms resolve in this IG, and `--out` writes the assembled Questionnaire), `template-extract` (`@aehrc/sdc-template-extract` 1.0.16: extraction from the IG's fixture response yields the expected resources), `populate` (`@aehrc/sdc-populate` 4.7.2: FHIRPath pre-population from a fixture context gives the expected answers) and `behaviour` (`@aehrc/questionnaire-test-toolkit` 0.1.0: the IG's own behavioural test, warn-only). Checks only, no UI.",
+        "tags": [
+          "fhir-questionnaire-wireframe"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "sdc-checks/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ast": {
+                    "$ref": "#/components/schemas/FilesystemPath",
+                    "description": "The IG's FHIR AST (`output-ast/`): its Questionnaires, and the canonicals a sub-form resolves against."
+                  },
+                  "questionnaire": {
+                    "$ref": "#/components/schemas/Text",
+                    "description": "A Questionnaire id to check; default every one in the AST."
+                  },
+                  "fixtures": {
+                    "$ref": "#/components/schemas/FilesystemPath",
+                    "description": "One directory per Questionnaire id: `response.json` + `extract-expected.json`, `populate-context.json` + `populate-expected.json`, `behaviour.test.tsx`."
+                  },
+                  "out": {
+                    "$ref": "#/components/schemas/FilesystemPath",
+                    "description": "Where assembled Questionnaires are written."
+                  }
+                },
+                "required": [
+                  "ast"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "sdcChecks": {
+                      "$ref": "#/components/schemas/Text",
+                      "description": "Per Questionnaire, per check: pass, fail, not-applicable, no-fixture or could-not-determine — the last three never a pass. JSON with `--json`. Exit 1 on an error-severity failure; behavioural tests never fail the run."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/sdc-checks.jsonld",
+        "x-invoke": {
+          "shell": "bun run fhir-harness/scripts/sdc-checks.ts --ast <ast> [--questionnaire <id>] [--fixtures <dir>] [--out <dir>] [--json]"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "fhir-questionnaire-wireframe"
+        ],
+        "x-skill-contracts": {
+          "fhir-questionnaire-wireframe.input": {
+            "$ref": "#/components/schemas/skill.fhir-questionnaire-wireframe.input"
+          },
+          "fhir-questionnaire-wireframe.output": {
+            "$ref": "#/components/schemas/skill.fhir-questionnaire-wireframe.output"
+          }
+        },
+        "x-selection": {
+          "when": "After SUSHI has built the IG's Questionnaires and before they are reviewed as forms; whenever a Questionnaire uses modular sub-forms, template extraction or pre-population.",
+          "limits": "Only as good as the IG's fixtures: with none, extraction and population say `no-fixture` rather than pass. Nothing is fetched from a server: sub-forms resolve in the AST and population queries in the fixture. The behavioural toolkit is early and needs React and Smart Forms peers installed with the IG's tests; without them it is `could-not-determine`, a warning.",
+          "cost": "Seconds per Questionnaire; a behavioural test runs a bun test process."
+        }
+      }
+    },
+    "/tools/stage-ig-sites": {
+      "post": {
+        "operationId": "stage-ig-sites",
+        "summary": "Stage every IG whose instance records its source, one Jekyll site each",
+        "description": "Clone each IG whose instance records a sushi-config source in `fhir-artifact-index/menu.json`, at the recorded commit, and stage it with `build-ig-site` (theme, artefact pages, post-processing fills, edit links to the IG's default branch). Served at `/<instance>/` when its docs declare `igSite` (its artefact pages copied in; a collision is refused), else `/<instance>/ig/`. Prints one `<instance> <jekyll source> <at>` line per IG for the caller's `jekyll build`.",
+        "tags": [
+          "ig-build-pipeline",
+          "docs-generation"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "stage-ig-sites/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "work": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Scratch directory: each IG's clone and its Jekyll source."
+                  },
+                  "baseurl": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The site's base URL; each IG is served under it at `/<instance>/` or `/<instance>/ig/`."
+                  },
+                  "plantuml-jar": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Render `input/images-source/*.plantuml` as the Publisher does."
+                  },
+                  "remote-theme": {
+                    "$ref": "#/components/schemas/Text",
+                    "description": "`owner/repo@ref` for Jekyll's remote-theme plugin, instead of the `just-the-docs` gem."
+                  },
+                  "changed-files": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Build only the IGs a changed file reaches (the staging cone)."
+                  },
+                  "compose-into": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "Move each staged IG into this host Jekyll source at `<instance>/`, so the host's build renders it: in the thin layout with the host's rail linked (the default), or with the host's full chrome (sidebar, search, language selector) under `--full-pages`."
+                  },
+                  "compose-at-root": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "With `--compose-into` and `--only`: the IG IS the site — compose it at the host's ROOT, based at `--baseurl` itself. An IG repository's own site uses this with a `compose-docs --shell` host, so it wears the main site's chrome."
+                  },
+                  "only": {
+                    "$ref": "#/components/schemas/Slug",
+                    "description": "Build one IG instance."
+                  },
+                  "source": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "With `--only`: a local checkout of the IG's source to build from instead of cloning the recorded commit — an IG repository building its own site in CI."
+                  },
+                  "full-pages": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Default: `artifacts.html` and `toc.html` are thin pages over the artefact index node, and composed pages link the host's chrome. With it: full pages; needs `gen-ig-pages --full-pages` too (a mismatch is refused)."
+                  }
+                },
+                "required": [
+                  "work",
+                  "baseurl"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "sites": {
+                      "$ref": "#/components/schemas/Count",
+                      "description": "IGs staged, one stdout line each; an instance with no recorded source is skipped and reported, never silently."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/stage-ig-sites.jsonld",
+        "x-invoke": {
+          "shell": "bun run fhir-harness/scripts/stage-ig-sites.ts"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun",
+            "git"
+          ],
+          "network": true
+        },
+        "x-satisfies": [
+          "ig-build-pipeline",
+          "docs-generation"
+        ],
+        "x-selection": {
+          "when": "Building the docs site or a staging preview: every IG with a recorded source is staged, and with `--compose-into` composed into the host site.",
+          "limits": "Needs network to clone each IG at its pinned commit, and to ask its default branch for edit links (absent, pages carry none and the run says so).",
+          "cost": "Seconds per IG plus the clone; the Jekyll build is the caller's."
+        }
+      }
+    },
+    "/tools/strip-library-binaries": {
+      "post": {
+        "operationId": "strip-library-binaries",
+        "summary": "Strip binary payloads from Library resources",
+        "description": "Remove base64 `content.data` from published `Library` resources, so an IG embedding compiled CQL does not ship the bytes twice.",
+        "tags": [
+          "ig-build-pipeline"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "strip-library-binaries/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "igOutput": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The Publisher's `output/`. It runs AFTER the build — the resources it edits are published ones."
+                  }
+                },
+                "required": [
+                  "igOutput"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "stripped": {
+                      "$ref": "#/components/schemas/Count",
+                      "description": "How many resources were altered. Zero is a determined empty when the output directory was found; a missing output directory is a different state."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/strip-library-binaries.jsonld",
+        "x-invoke": {
+          "shell": "python3 fhir-harness/scripts/library-strip/strip_library_binaries.py <igOutput>"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "python3"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "ig-build-pipeline"
+        ],
+        "x-selection": {
+          "when": "The IG depends on `hl7.fhir.uv.cql` or otherwise embeds compiled artefacts in `Library.content`: a property of the dependency, not of any one IG.",
+          "limits": "It edits PUBLISHED output, so what it removes is gone from the deployed artefact but still present in whatever the Publisher validated. The two are no longer byte-identical, which matters to any fixity check pointed at the deployed copy.",
+          "cost": "Seconds. Deferring it costs the >100MB purge later in the same pipeline, which deletes whole files rather than payloads."
+        }
+      }
+    },
+    "/tools/strip-library-content": {
+      "post": {
+        "operationId": "strip-library-content",
+        "summary": "Replace inline Library content with URL references",
+        "description": "Replace inline CQL/ELM in `Library` resources with a URL reference to the published copy.",
+        "tags": [
+          "ig-build-pipeline"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "strip-library-content/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "igOutput": {
+                    "$ref": "#/components/schemas/RepoPath"
+                  }
+                },
+                "required": [
+                  "igOutput"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "rewritten": {
+                      "$ref": "#/components/schemas/Count"
+                    },
+                    "references": {
+                      "$ref": "#/components/schemas/Url",
+                      "description": "The base the replacement references resolve against. If it is wrong, every rewritten Library points at nothing and the resource still validates."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/strip-library-content.jsonld",
+        "x-invoke": {
+          "shell": "python3 fhir-harness/scripts/library-strip/strip_library_content.py <igOutput>"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "python3"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "ig-build-pipeline"
+        ],
+        "x-selection": {
+          "when": "Same condition as `strip-library-binaries`; upstream runs the two as adjacent steps.",
+          "limits": "A reference is only as good as what serves it. This trades a self-contained resource for a dereferenceable one, which is the right trade for a published IG and the WRONG one for an air-gapped consumer — `network-reach` is a declared topology axis here, and this tool is not safe under `air-gapped` without the referenced copies travelling too.",
+          "cost": "Seconds, and a permanent dependency on the publication base staying served."
+        }
+      }
+    },
+    "/tools/terminology-index": {
+      "post": {
+        "operationId": "terminology-index",
+        "summary": "Write an IG site's static terminology index from the IG's own cache",
+        "description": "Read the IG Publisher's `expansions.json` and `txcache/`, as `ig-cache.sh restore` leaves them, and write `index.json` (gzipped as `index.json.gz` over 1 MB): every code with its system and display, and each value set's codes. The IG site's service worker answers the self-hosted Form Builder's LOINC search from it, and its UCUM search from the vendored full UCUM list, so the site makes no cross-site call. `build-ig-site` runs it for every IG with a Questionnaire.",
+        "tags": [
+          "ig-build-pipeline"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "terminology-index/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "expansions": {
+                    "$ref": "#/components/schemas/FilesystemPath",
+                    "description": "`output-ast/expansions.json`."
+                  },
+                  "txcache": {
+                    "$ref": "#/components/schemas/FilesystemPath",
+                    "description": "`input-cache/txcache/`."
+                  },
+                  "out": {
+                    "$ref": "#/components/schemas/FilesystemPath",
+                    "description": "Where `index.json` (or `index.json.gz`) is written."
+                  }
+                },
+                "required": [
+                  "out"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "index": {
+                      "$ref": "#/components/schemas/FilesystemPath",
+                      "description": "The index file, and a count of codes and value sets on stdout."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/terminology-index.jsonld",
+        "x-invoke": {
+          "shell": "bun run fhir-harness/scripts/terminology-index.ts --expansions <expansions> --txcache <txcache> --out <out>"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "ig-build-pipeline"
+        ],
+        "x-selection": {
+          "when": "Building an IG site whose Questionnaires are edited in the self-hosted Form Builder, or whose form views need `answerValueSet` expanded without a terminology server.",
+          "limits": "Only what the IG's own Publisher run looked up: a LOINC code the IG never used is not in it, and the site says so (\"not in this IG's terminology cache; add it via the FSH source\") rather than asking a server. A cache entry that does not parse is skipped.",
+          "cost": "Reads the cache once; seconds."
+        }
+      }
+    },
+    "/tools/valueset-schemas": {
+      "post": {
+        "operationId": "valueset-schemas",
+        "summary": "ValueSets → JSON Schema",
+        "description": "A JSON Schema per ValueSet, plus the enumeration-response schemas published at the IG root.",
+        "tags": [
+          "ig-build-pipeline"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "valueset-schemas/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ast": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The IG's AST (`output-ast/`, with the build's `expansions.json`)."
+                  }
+                },
+                "required": [
+                  "ast"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "valueSetSchemas": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "One schema per ValueSet, plus the enumeration-response schemas at the IG root."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/valueset-schemas.jsonld",
+        "x-invoke": {
+          "shell": "bun run fhir-harness/scripts/ig-api-gen.ts --ast output-ast --out <sidecars> --site <site>"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "ig-build-pipeline"
+        ],
+        "x-selection": {
+          "when": "An IG is to expose its terminology as JSON Schema.",
+          "limits": "The root `ValueSets.schema.json` it writes is a SCHEMA describing an enumeration response, carrying an `example` that holds the list. It is not an index instance: no FHIR IG publishes an artefact-index instance.",
+          "cost": "Seconds; output size scales with the IG's ValueSets."
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Branch": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._/-]*$",
+        "description": "A git branch name",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Branch"
+      },
+      "CommitSha": {
+        "type": "string",
+        "pattern": "^[0-9a-f]{7,40}$",
+        "description": "A git commit sha, full or abbreviated (7-40 hex digits).",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/CommitSha"
+      },
+      "Count": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 1000000000,
+        "description": "A non-negative count — how many of something, or how many to show. Zero is a real answer.",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count"
+      },
+      "FilesystemPath": {
+        "type": "string",
+        "minLength": 1,
+        "description": "A filesystem path, possibly outside the repository. Not admissible as a command-line argument.",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath"
+      },
+      "Flag": {
+        "type": "boolean",
+        "description": "A boolean switch — projects to a bare flag, with no value word",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+      },
+      "IgCacheAction": {
+        "type": "string",
+        "enum": [
+          "status",
+          "restore",
+          "seed",
+          "contribute",
+          "verify",
+          "list",
+          "doctor"
+        ],
+        "description": "An ig-cache verb: restore AST, seed it, or diagnose.",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/IgCacheAction"
+      },
+      "PackageName": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^[a-z][a-z0-9-]*$",
+        "description": "A skill package, e.g. folio-core",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/PackageName"
+      },
+      "RepoFullName": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$",
+        "description": "A forge repository's full name, owner/name",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoFullName"
+      },
+      "RepoPath": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^[A-Za-z0-9._][A-Za-z0-9._/-]*$",
+        "description": "A path relative to the repository root. No `..` segments.",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+      },
+      "skill.fhir-questionnaire-wireframe.input": {
+        "title": "FHIR Questionnaire Wireframe Input",
+        "description": "Which built Questionnaire to render and review, against which L2 wireframe, and where the drawings and the requests for feedback go.",
+        "type": "object",
+        "required": [
+          "questionnaire"
+        ],
+        "properties": {
+          "questionnaire": {
+            "type": "string",
+            "description": "Repository-relative path of ONE built Questionnaire JSON (`fsh-generated/resources/Questionnaire-<id>.json`), never FSH. Several Questionnaires are several runs, so each carries its own fidelity findings and review."
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "render",
+              "fidelity-check",
+              "wireframe-from-questionnaire"
+            ],
+            "default": "render",
+            "description": "`render`: wireframe and form view for review. `fidelity-check`: only the field-for-field check against `wireframe`. `wireframe-from-questionnaire`: draw an L2 wireframe from a Questionnaire that has none."
+          },
+          "wireframe": {
+            "type": "string",
+            "description": "Repository-relative path of the L2 wireframe HTML the Questionnaire was derived from (the chosen `wireframe-design-review` candidate), when one exists."
+          },
+          "renderer": {
+            "type": "string",
+            "enum": [
+              "lhc-forms"
+            ],
+            "default": "lhc-forms",
+            "description": "The form-view renderer. Only the vendored NLM LHC-Forms (owner, 2026-10-14)."
+          },
+          "assetDir": {
+            "type": "string",
+            "description": "Repository-relative directory for the wireframes, captures and checks."
+          },
+          "suggest": {
+            "type": "boolean",
+            "default": true,
+            "description": "Offer ✍ suggest, in its Questionnaire mode, on the form view."
+          },
+          "issueForm": {
+            "type": "string",
+            "default": "questionnaire-change.yml",
+            "description": "The issue form change requests are opened with."
+          },
+          "channels": {
+            "type": "array",
+            "description": "Where the request for review goes: chosen by judgement, and more than one may be right (staging-review, the deep-link rule, point 5).",
+            "items": {
+              "type": "object",
+              "required": [
+                "kind"
+              ],
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "enum": [
+                    "conversation",
+                    "issue",
+                    "pull-request"
+                  ]
+                },
+                "url": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              }
+            }
+          },
+          "branch": {
+            "type": "string",
+            "description": "The feature branch the renderings are committed on, so feature-staging publishes them."
+          }
+        }
+      },
+      "skill.fhir-questionnaire-wireframe.output": {
+        "title": "FHIR Questionnaire Wireframe Output",
+        "description": "The renderings of one built Questionnaire and their review, in the output shape of cat-harness `wireframe-design-review` (candidates with source HTML, web and mobile screenshots and their staging links; the choice; the changed assets; the staging deep links), plus the renderer that drew the form view, the fidelity findings against the L2 wireframe per layout, and the change requests received.",
+        "type": "object",
+        "required": [
+          "use",
+          "topic",
+          "assetDir",
+          "candidates",
+          "renderer",
+          "changedAssets",
+          "stagingLinks"
+        ],
+        "properties": {
+          "use": {
+            "type": "string",
+            "enum": [
+              "design",
+              "as-is"
+            ]
+          },
+          "topic": {
+            "type": "string"
+          },
+          "assetDir": {
+            "type": "string",
+            "description": "Repository-relative directory holding the wireframes, the form-view captures and their checks."
+          },
+          "intent": {
+            "type": "string",
+            "description": "Repository-relative path of intent.md."
+          },
+          "candidates": {
+            "type": "array",
+            "minItems": 1,
+            "description": "At least two for Design use, exactly one (marked as-is) for as-is use.",
+            "items": {
+              "type": "object",
+              "required": [
+                "id",
+                "source",
+                "screenshots",
+                "outcome"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "Candidate id, shown to reviewers in place of its author."
+                },
+                "title": {
+                  "type": "string"
+                },
+                "source": {
+                  "type": "string",
+                  "description": "Repository-relative path of the candidate's mid-fidelity HTML."
+                },
+                "screenshots": {
+                  "type": "object",
+                  "required": [
+                    "web",
+                    "mobile"
+                  ],
+                  "description": "Written by wireframe-check: one per viewport. A candidate with only one does not enter review.",
+                  "properties": {
+                    "web": {
+                      "type": "string",
+                      "description": "Repository-relative path of the 1280×800 screenshot."
+                    },
+                    "mobile": {
+                      "type": "string",
+                      "description": "Repository-relative path of the 390×844 screenshot."
+                    }
+                  }
+                },
+                "staging": {
+                  "type": "object",
+                  "description": "The candidate and its screenshots on the staging preview, as deep links.",
+                  "properties": {
+                    "source": {
+                      "type": "string",
+                      "format": "uri"
+                    },
+                    "web": {
+                      "type": "string",
+                      "format": "uri"
+                    },
+                    "mobile": {
+                      "type": "string",
+                      "format": "uri"
+                    }
+                  }
+                },
+                "entries": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/skill.fhir-questionnaire-wireframe.output.criterionEntry"
+                  },
+                  "description": "Script and review entries, per criterion. No scores, no averages."
+                },
+                "outcome": {
+                  "type": "string",
+                  "enum": [
+                    "chosen",
+                    "rejected",
+                    "pending",
+                    "as-is"
+                  ]
+                },
+                "reason": {
+                  "type": "string",
+                  "description": "Why it was chosen or why it lost. Rejected candidates stay, each with its reason."
+                }
+              }
+            }
+          },
+          "chosen": {
+            "type": "object",
+            "required": [
+              "candidate",
+              "chosenBy"
+            ],
+            "description": "Design use: the candidate the human reviewer chose. Absent until they choose; an agent never records a choice on a person's behalf.",
+            "properties": {
+              "candidate": {
+                "type": "string",
+                "description": "The chosen candidate's id."
+              },
+              "chosenBy": {
+                "type": "string",
+                "description": "The requester or BA who chose it."
+              },
+              "recordedAt": {
+                "type": "string",
+                "format": "uri",
+                "description": "Where the choice is recorded: the issue or pull request comment, or, when it was made in the conversation, the proposal section that records it."
+              }
+            }
+          },
+          "questionnaire": {
+            "type": "string",
+            "description": "The built Questionnaire JSON rendered, as in the input."
+          },
+          "renderer": {
+            "type": "object",
+            "required": [
+              "name",
+              "version"
+            ],
+            "description": "What drew the form view. The vendored build, never a CDN at runtime (owner, 2026-10-14).",
+            "properties": {
+              "name": {
+                "type": "string",
+                "enum": [
+                  "lhc-forms"
+                ],
+                "description": "NLM LHC-Forms, the owner's choice of 2026-10-14."
+              },
+              "version": {
+                "type": "string",
+                "description": "The vendored LHC-Forms version, e.g. 44.1.0."
+              },
+              "assets": {
+                "type": "string",
+                "description": "Site-relative directory the vendored files are served from."
+              },
+              "licenceNotice": {
+                "type": "string",
+                "description": "Repository-relative path of the NLM licence notice kept with the vendored files."
+              }
+            }
+          },
+          "fidelity": {
+            "type": "array",
+            "description": "check-wireframe-questionnaire's findings, one entry per Questionnaire and wireframe layout. Absent when no L2 wireframe exists; an entry whose status is `could-not-determine` (exit 2) is never a pass.",
+            "items": {
+              "$ref": "#/components/schemas/skill.fhir-questionnaire-wireframe.output.fidelityEntry"
+            }
+          },
+          "sdcChecks": {
+            "type": "array",
+            "description": "The SDC build checks (fhir-harness `sdc-checks`, CSIRO's libraries), one entry per Questionnaire. `not-applicable`, `no-fixture` and `could-not-determine` are never a pass; a behavioural test's failure is a warning.",
+            "items": {
+              "$ref": "#/components/schemas/skill.fhir-questionnaire-wireframe.output.sdcCheckResult"
+            }
+          },
+          "changeRequests": {
+            "type": "array",
+            "description": "Change requests received through ✍ suggest or the questionnaire-change issue form, and where each stands.",
+            "items": {
+              "$ref": "#/components/schemas/skill.fhir-questionnaire-wireframe.output.changeRequest"
+            }
+          },
+          "changedAssets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/skill.fhir-questionnaire-wireframe.output.changedAsset"
+            },
+            "description": "Every file the branch adds, changes or removes — wireframe HTML, form-view pages, screenshots, reviews — in the changed-assets record shape a staging preview's graph carries."
+          },
+          "stagingLinks": {
+            "$ref": "#/components/schemas/skill.fhir-questionnaire-wireframe.output.stagingLinks"
+          }
+        }
+      },
+      "skill.fhir-questionnaire-wireframe.output.changedAsset": {
+        "title": "Changed asset",
+        "description": "One file the branch adds, changes or removes, in the record shape of a staging preview graph's `changedAssets` (cat-harness-tools scripts/kg-changed-assets.ts `ChangedAsset`; glosses in schemas/vocabulary.ts: assetChange, assetKind, beforeVersion, afterVersion, assetSource, renderedPage, renderedPagesUnknown).",
+        "type": "object",
+        "required": [
+          "change"
+        ],
+        "properties": {
+          "change": {
+            "type": "string",
+            "enum": [
+              "added",
+              "changed",
+              "removed"
+            ],
+            "description": "How the asset differs from main."
+          },
+          "kind": {
+            "type": "string",
+            "description": "What the asset is, without namespace: `questionnaire-wireframe`, `questionnaire-rendering`, `questionnaire-screenshot`, or a `wireframe-design-review` kind (`wireframe-candidate`, `wireframe-screenshot`, `wireframe-intent`, `wireframe-review`)."
+          },
+          "title": {
+            "type": "string"
+          },
+          "before": {
+            "type": "string",
+            "format": "uri",
+            "description": "The asset as published on main; absent when it is new on the branch."
+          },
+          "after": {
+            "type": "string",
+            "format": "uri",
+            "description": "The asset as published in the staging preview; absent when the branch removes it."
+          },
+          "source": {
+            "type": "string",
+            "description": "The repository-relative file."
+          },
+          "pages": {
+            "type": "array",
+            "description": "The rendered pages the source maps to, as before/after pairs (StagingPageComparison rows: the item shape of stagingLinks.pages).",
+            "items": {
+              "type": "object",
+              "required": [
+                "title"
+              ],
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "before": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "after": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "summary": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "pagesUnknown": {
+            "type": "string",
+            "description": "Why the pages were not mapped one by one, when they were not; never read as 'renders no page'."
+          }
+        },
+        "$comment": "Mirrors ChangedAsset in cat-harness-tools scripts/kg-changed-assets.ts (PR #203, branch claude/staging-kg-changed-assets)."
+      },
+      "skill.fhir-questionnaire-wireframe.output.changeRequest": {
+        "type": "object",
+        "required": [
+          "issue",
+          "edited",
+          "status"
+        ],
+        "properties": {
+          "issue": {
+            "type": "string",
+            "format": "uri",
+            "description": "The issue the request arrived as."
+          },
+          "via": {
+            "type": "string",
+            "enum": [
+              "suggest",
+              "issue-form"
+            ],
+            "description": "The ✍ suggest editor's Questionnaire mode, or the questionnaire-change issue form filled by hand."
+          },
+          "questionnaire": {
+            "type": "string",
+            "description": "Canonical URL or Questionnaire/<id>."
+          },
+          "edited": {
+            "type": "string",
+            "enum": [
+              "questionnaire",
+              "wireframe"
+            ],
+            "description": "The side the requester changed. It is the source of the change; the other side is brought back in line with it (owner, 2026-10-14)."
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "received",
+              "triaged",
+              "applied",
+              "staged",
+              "declined"
+            ]
+          },
+          "note": {
+            "type": "string",
+            "description": "Why it was declined, or what was applied."
+          }
+        }
+      },
+      "skill.fhir-questionnaire-wireframe.output.criterionEntry": {
+        "type": "object",
+        "required": [
+          "criterion",
+          "status"
+        ],
+        "properties": {
+          "criterion": {
+            "type": "string",
+            "description": "renders, no-overflow, no-placeholder (script entries from wireframe-check); intent-fit, web-usability, mobile-usability, accessibility, alternatives (review entries)."
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "pass",
+              "warn",
+              "fail"
+            ]
+          },
+          "by": {
+            "type": "string",
+            "description": "`script` for a wireframe-check entry; the reviewer otherwise."
+          },
+          "note": {
+            "type": "string",
+            "description": "The reason. Required in substance for every warn and fail."
+          }
+        }
+      },
+      "skill.fhir-questionnaire-wireframe.output.fidelityEntry": {
+        "type": "object",
+        "required": [
+          "questionnaire",
+          "layout",
+          "status",
+          "findings"
+        ],
+        "properties": {
+          "questionnaire": {
+            "type": "string",
+            "description": "Repository-relative path of the built Questionnaire JSON."
+          },
+          "wireframe": {
+            "type": "string",
+            "description": "Repository-relative path of the L2 wireframe HTML it was checked against."
+          },
+          "layout": {
+            "type": "string",
+            "description": "The `data-layout` name, or `(whole document)` when the wireframe has one layout."
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "faithful",
+              "findings",
+              "could-not-determine"
+            ],
+            "description": "Exit 0, 1 and 2 of the checker."
+          },
+          "findings": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The checker's lines for this layout, verbatim."
+          }
+        }
+      },
+      "skill.fhir-questionnaire-wireframe.output.sdcCheckResult": {
+        "type": "object",
+        "required": [
+          "questionnaire",
+          "checks"
+        ],
+        "properties": {
+          "questionnaire": {
+            "type": "string",
+            "description": "The Questionnaire's id."
+          },
+          "checks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "check",
+                "library",
+                "status",
+                "severity",
+                "findings"
+              ],
+              "properties": {
+                "check": {
+                  "type": "string",
+                  "enum": [
+                    "assemble",
+                    "template-extract",
+                    "populate",
+                    "behaviour"
+                  ]
+                },
+                "library": {
+                  "type": "string",
+                  "description": "The npm package and version that ran it."
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "pass",
+                    "fail",
+                    "not-applicable",
+                    "no-fixture",
+                    "could-not-determine"
+                  ]
+                },
+                "severity": {
+                  "type": "string",
+                  "enum": [
+                    "error",
+                    "warning"
+                  ],
+                  "description": "`warning` for the behavioural tests (questionnaire-test-toolkit is early)."
+                },
+                "findings": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "output": {
+                  "type": "string",
+                  "description": "The assembled Questionnaire, when it was written."
+                }
+              }
+            }
+          }
+        }
+      },
+      "skill.fhir-questionnaire-wireframe.output.stagingLinks": {
+        "title": "Staging links",
+        "description": "The staging preview of the work a request for feedback is about: one deep link per changed page (the page and the anchor where the change sits) with the same page on main as `before`. Mirrors StagingComparison in schemas/staging.ts. The rule is skills/sdlc/sdlc-core/staging-review.md §\"The deep-link rule\". Copied inline as `definitions.stagingLinks` into every skill contract that carries it; schemas/staging.test.ts fails when a copy drifts.",
+        "type": "object",
+        "required": [
+          "branch",
+          "slug",
+          "branchUrl",
+          "mainBaseUrl",
+          "stagingBaseUrl",
+          "pages"
+        ],
+        "properties": {
+          "branch": {
+            "type": "string",
+            "description": "Feature branch name."
+          },
+          "slug": {
+            "type": "string",
+            "description": "Branch slug used in the staging URL path."
+          },
+          "branchUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "pr": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "mainBaseUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "stagingBaseUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "pages": {
+            "type": "array",
+            "description": "One entry per changed page, deep-linked; from the change's rendered-impact list, never chosen by judgement.",
+            "items": {
+              "type": "object",
+              "required": [
+                "title"
+              ],
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "before": {
+                  "type": "string",
+                  "format": "uri",
+                  "description": "Same page on main; absent for a new page."
+                },
+                "after": {
+                  "type": "string",
+                  "format": "uri",
+                  "description": "The page on the staging preview, with the anchor where the change sits; absent for a deleted page."
+                },
+                "summary": {
+                  "type": "string",
+                  "description": "What to look at on this page."
+                }
+              }
+            }
+          },
+          "missing": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "What could not be linked, said rather than hidden: no preview yet (and when it will exist), no page list computed, or a changed page the publish ref does not hold."
+          }
+        },
+        "$comment": "Copy of cat-harness schemas/staging-comparison.schema.json; cat-harness schemas/staging.test.ts fails when a copy drifts."
+      },
+      "skill.fhir-validation.input": {
+        "title": "FHIR Validation Input",
+        "description": "Input schema for FHIR validation — runs SUSHI, IG Publisher QA, and conformance checks.",
+        "type": "object",
+        "required": [
+          "igRoot"
+        ],
+        "properties": {
+          "igRoot": {
+            "type": "string",
+            "description": "Path to the IG repository root."
+          },
+          "validationLevel": {
+            "type": "string",
+            "enum": [
+              "sushi-only",
+              "publisher-qa",
+              "full"
+            ],
+            "default": "full",
+            "description": "Level of validation to perform."
+          },
+          "targetProfiles": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Specific CRMI profiles to validate against (Shareable, Publishable, Computable, Executable)."
+          }
+        }
+      },
+      "skill.fhir-validation.output": {
+        "title": "FHIR Validation Output",
+        "description": "Output schema for FHIR validation results.",
+        "type": "object",
+        "required": [
+          "overallStatus"
+        ],
+        "properties": {
+          "overallStatus": {
+            "type": "string",
+            "enum": [
+              "pass",
+              "warnings",
+              "errors"
+            ]
+          },
+          "sushiResult": {
+            "type": "object",
+            "properties": {
+              "status": {
+                "type": "string"
+              },
+              "errors": {
+                "type": "integer"
+              },
+              "warnings": {
+                "type": "integer"
+              }
+            }
+          },
+          "publisherResult": {
+            "type": "object",
+            "properties": {
+              "status": {
+                "type": "string"
+              },
+              "qaHtmlPath": {
+                "type": "string"
+              },
+              "errorCount": {
+                "type": "integer"
+              },
+              "warningCount": {
+                "type": "integer"
+              },
+              "infoCount": {
+                "type": "integer"
+              }
+            }
+          },
+          "conformanceResults": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "resource": {
+                  "type": "string"
+                },
+                "profile": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "conformant",
+                    "non-conformant"
+                  ]
+                },
+                "issues": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "Slug": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^[a-z0-9][a-z0-9-]*$",
+        "description": "A folio slug, e.g. quantum-observable-universe",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug"
+      },
+      "Text": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 400,
+        "description": "A short single-line human string. Not admissible as a command-line argument.",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+      },
+      "Url": {
+        "type": "string",
+        "format": "uri",
+        "description": "An absolute http(s) URL",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Url"
+      }
+    }
+  }
+}

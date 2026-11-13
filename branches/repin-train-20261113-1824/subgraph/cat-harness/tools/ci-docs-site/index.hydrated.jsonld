@@ -1,0 +1,62 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/ci-docs-site/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/ci-docs-site.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Dispatch the index's `docs-site.yml`: security gate, regenerate, compose each layer's site, build, export the graph, verify, restore previews, publish to gh-pages, judge the built site. Started with the standard GitHub CLI; the run is watched with `gh run watch`.",
+      "install": {
+        "cli": "gh"
+      },
+      "invoke": {
+        "shell": "gh workflow run docs-site.yml"
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "flag": "--repo"
+            },
+            "description": "The repository whose workflow is run. Default: the current one.",
+            "name": "repo",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoFullName"
+          },
+          {
+            "arg": {
+              "flag": "--ref"
+            },
+            "description": "The branch to run it on. Default: the default branch.",
+            "name": "ref",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Branch"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "The dispatched run; its outcome is read with `gh run watch` or `gh run view`.",
+            "name": "run",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          }
+        ]
+      },
+      "name": "ci-docs-site",
+      "requirements": {
+        "network": true,
+        "runtime": [
+          "gh"
+        ]
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/render-kg-to-cdn",
+      "title": "Build and publish the platform docs site"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/ci-docs-site",
+  "path": "tools/ci-docs-site/"
+}
