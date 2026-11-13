@@ -1,6 +1,6 @@
 # Harness config panel, and associated harnesses: intent
 
-Wanted: an optional list of **associated** harnessed KGs on any harness inheriting cat-harness (including cat-harness itself), and a config panel or popup in the cat-harness harness visualiser that shows the properties of cat-harness and the other instances, each with the skill that edits it.
+Wanted: an optional list of **associated** harnessed KGs on any harness inheriting cat-harness (including cat-harness itself), and a config panel or popup in the cat-harness harness visualiser that shows the properties of cat-harness and the other layers, each with the skill that edits it.
 
 Not wanted: publishing an associated harness at `/folio-assistant/<name>/`, and any materialized copy.
 

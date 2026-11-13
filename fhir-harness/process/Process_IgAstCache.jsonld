@@ -16,8 +16,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache/node/Start_Publish"
       ],
-      "nodeCount": 10,
-      "flowCount": 10,
+      "nodeCount": 11,
+      "flowCount": 11,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes"
     },
     {
@@ -59,6 +59,14 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache/node/Task_BuildSite",
+      "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache/node/Task_SizeReview",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache#flow/Flow_11",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache",
+      "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache/node/Task_SizeReview",
       "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache/node/End_Published",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes"
     },

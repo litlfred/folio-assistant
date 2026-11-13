@@ -8,17 +8,15 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
       "name": "Branch, gates, PR and review",
       "nodeKind": "activity",
-      "bpmnType": "bpmn:CallActivity",
+      "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/administrator",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/lane/Lane_Administrator",
       "requires": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/skill/prepare-merge",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/continual-progress"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
-      "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview",
       "incoming": [
         "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration#flow/A10"
       ],

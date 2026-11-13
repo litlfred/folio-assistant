@@ -79,6 +79,13 @@
                 "minimum": 0,
                 "maximum": 9007199254740991
               },
+              "except": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
               "package": {
                 "type": "object",
                 "properties": {

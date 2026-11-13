@@ -5,133 +5,133 @@
   {
    "id": "Task_SecurityGate",
    "name": "Run the release security gate",
-   "left": 12.76,
-   "top": 8.52,
+   "left": 20.8,
+   "top": 5.48,
    "box": {
-    "left": 10.5,
-    "top": 35.51,
-    "width": 0.75,
-    "height": 6.82
+    "left": 15.51,
+    "top": 18.49,
+    "width": 1.75,
+    "height": 3.29
    }
   },
   {
    "id": "Task_Regenerate",
    "name": "Regenerate every derived reference from its source",
-   "left": 24.28,
-   "top": 8.52,
+   "left": 42.7,
+   "top": 5.48,
    "box": {
-    "left": 22.02,
-    "top": 35.51,
-    "width": 0.75,
-    "height": 6.82
+    "left": 37.41,
+    "top": 18.49,
+    "width": 1.75,
+    "height": 3.29
    }
   },
   {
    "id": "Call_InstanceSites",
-   "name": "Compose each instance's site [its Tool]",
-   "left": 31.12,
-   "top": 8.52,
+   "name": "Compose each layer's site [its Tool]",
+   "left": 54.38,
+   "top": 5.48,
    "box": {
-    "left": 28.87,
-    "top": 35.51,
-    "width": 0.75,
-    "height": 6.82
+    "left": 49.09,
+    "top": 18.49,
+    "width": 1.75,
+    "height": 3.29
    }
   },
   {
    "id": "Task_Build",
    "name": "Build the Jekyll site and the API reference",
-   "left": 37.97,
-   "top": 8.52,
+   "left": 66.06,
+   "top": 5.48,
    "box": {
-    "left": 35.71,
-    "top": 35.51,
-    "width": 0.75,
-    "height": 6.82
+    "left": 60.77,
+    "top": 18.49,
+    "width": 1.75,
+    "height": 3.29
    }
   },
   {
    "id": "Task_Export",
    "name": "Export the knowledge graph and its schema",
-   "left": 44.82,
-   "top": 8.52,
+   "left": 77.74,
+   "top": 5.48,
    "box": {
-    "left": 42.56,
-    "top": 35.51,
-    "width": 0.75,
-    "height": 6.82
+    "left": 72.45,
+    "top": 18.49,
+    "width": 1.75,
+    "height": 3.29
    }
   },
   {
    "id": "Call_Verify",
    "name": "Verify the export",
-   "left": 51.67,
-   "top": 8.52,
+   "left": 89.42,
+   "top": 5.48,
    "box": {
-    "left": 49.41,
-    "top": 35.51,
-    "width": 0.75,
-    "height": 6.82
+    "left": 84.12,
+    "top": 18.49,
+    "width": 1.75,
+    "height": 3.29
    }
   },
   {
    "id": "Task_Restore",
    "name": "Restore the OPEN PRs' staging previews",
-   "left": 58.51,
-   "top": 8.52,
+   "left": 14.96,
+   "top": 39.04,
    "box": {
-    "left": 56.26,
-    "top": 35.51,
-    "width": 0.75,
-    "height": 6.82
+    "left": 9.67,
+    "top": 52.05,
+    "width": 1.75,
+    "height": 3.29
    }
   },
   {
    "id": "Task_Publish",
    "name": "Push to the CDN (full replace)",
-   "left": 65.36,
-   "top": 8.52,
+   "left": 26.64,
+   "top": 39.04,
    "box": {
-    "left": 63.1,
-    "top": 35.51,
-    "width": 0.75,
-    "height": 6.82
+    "left": 21.35,
+    "top": 52.05,
+    "width": 1.75,
+    "height": 3.29
    }
   },
   {
    "id": "Task_Judge",
    "name": "Judge the built-site checks",
-   "left": 81.54,
-   "top": 8.52,
+   "left": 55.11,
+   "top": 39.04,
    "box": {
-    "left": 79.29,
-    "top": 35.51,
-    "width": 0.75,
-    "height": 6.82
+    "left": 49.82,
+    "top": 52.05,
+    "width": 1.75,
+    "height": 3.29
    }
   },
   {
    "id": "Task_CloseAlert",
    "name": "Close the publication manager's alert, if open",
-   "left": 93.06,
-   "top": 8.52,
+   "left": 76.28,
+   "top": 39.04,
    "box": {
-    "left": 90.8,
-    "top": 35.51,
-    "width": 0.75,
-    "height": 6.82
+    "left": 70.99,
+    "top": 52.05,
+    "width": 1.75,
+    "height": 3.29
    }
   },
   {
    "id": "Call_Alert",
    "name": "Alert the publication manager",
-   "left": 92.9,
-   "top": 64.91,
+   "left": 76.28,
+   "top": 76.03,
    "box": {
-    "left": 89.71,
-    "top": 84.23,
-    "width": 0.75,
-    "height": 6.82
+    "left": 70.99,
+    "top": 89.04,
+    "width": 1.75,
+    "height": 3.29
    }
   }
  ],
@@ -163,10 +163,6 @@
      {
       "name": "compiled-artefact-cache",
       "href": "../../../reference/skill-instructions/compiled-artefact-cache.html"
-     },
-     {
-      "name": "content-publish",
-      "href": "../../../reference/skill-instructions/content-publish.html"
      },
      {
       "name": "content-test",
@@ -258,10 +254,6 @@
       "href": "../../../reference/skill-instructions/compiled-artefact-cache.html"
      },
      {
-      "name": "content-publish",
-      "href": "../../../reference/skill-instructions/content-publish.html"
-     },
-     {
       "name": "content-test",
       "href": "../../../reference/skill-instructions/content-test.html"
      },
@@ -330,7 +322,7 @@
   },
   "Call_InstanceSites": {
    "id": "Call_InstanceSites",
-   "name": "Compose each instance's site [its Tool]",
+   "name": "Compose each layer's site [its Tool]",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/Call_InstanceSites",
    "stepHref": "docs-site-publish.html#step-Call_InstanceSites",
@@ -354,10 +346,6 @@
      {
       "name": "compiled-artefact-cache",
       "href": "../../../reference/skill-instructions/compiled-artefact-cache.html"
-     },
-     {
-      "name": "content-publish",
-      "href": "../../../reference/skill-instructions/content-publish.html"
      },
      {
       "name": "content-test",
@@ -449,10 +437,6 @@
       "href": "../../../reference/skill-instructions/compiled-artefact-cache.html"
      },
      {
-      "name": "content-publish",
-      "href": "../../../reference/skill-instructions/content-publish.html"
-     },
-     {
       "name": "content-test",
       "href": "../../../reference/skill-instructions/content-test.html"
      },
@@ -540,10 +524,6 @@
      {
       "name": "compiled-artefact-cache",
       "href": "../../../reference/skill-instructions/compiled-artefact-cache.html"
-     },
-     {
-      "name": "content-publish",
-      "href": "../../../reference/skill-instructions/content-publish.html"
      },
      {
       "name": "content-test",
@@ -645,10 +625,6 @@
       "href": "../../../reference/skill-instructions/compiled-artefact-cache.html"
      },
      {
-      "name": "content-publish",
-      "href": "../../../reference/skill-instructions/content-publish.html"
-     },
-     {
       "name": "content-test",
       "href": "../../../reference/skill-instructions/content-test.html"
      },
@@ -741,10 +717,6 @@
      {
       "name": "compiled-artefact-cache",
       "href": "../../../reference/skill-instructions/compiled-artefact-cache.html"
-     },
-     {
-      "name": "content-publish",
-      "href": "../../../reference/skill-instructions/content-publish.html"
      },
      {
       "name": "content-test",
@@ -846,10 +818,6 @@
       "href": "../../../reference/skill-instructions/compiled-artefact-cache.html"
      },
      {
-      "name": "content-publish",
-      "href": "../../../reference/skill-instructions/content-publish.html"
-     },
-     {
       "name": "content-test",
       "href": "../../../reference/skill-instructions/content-test.html"
      },
@@ -939,10 +907,6 @@
       "href": "../../../reference/skill-instructions/compiled-artefact-cache.html"
      },
      {
-      "name": "content-publish",
-      "href": "../../../reference/skill-instructions/content-publish.html"
-     },
-     {
       "name": "content-test",
       "href": "../../../reference/skill-instructions/content-test.html"
      },
@@ -1030,10 +994,6 @@
      {
       "name": "compiled-artefact-cache",
       "href": "../../../reference/skill-instructions/compiled-artefact-cache.html"
-     },
-     {
-      "name": "content-publish",
-      "href": "../../../reference/skill-instructions/content-publish.html"
      },
      {
       "name": "content-test",
@@ -1133,10 +1093,6 @@
      {
       "name": "compiled-artefact-cache",
       "href": "../../../reference/skill-instructions/compiled-artefact-cache.html"
-     },
-     {
-      "name": "content-publish",
-      "href": "../../../reference/skill-instructions/content-publish.html"
      },
      {
       "name": "content-test",

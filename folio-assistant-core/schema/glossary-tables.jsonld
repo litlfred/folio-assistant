@@ -1,0 +1,19 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/glossary-tables.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/glossary-tables",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "glossary-tables",
+      "title": "glossary-tables",
+      "summary": "`folio-glossary-tables/v1`: which document blocks show which glossary as a",
+      "module": "schemas/glossary-tables.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-schemas",
+      "jsonSchema": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/zod/glossary-tables/GlossaryTablesSchema.schema.json"
+      ]
+    }
+  ]
+}

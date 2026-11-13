@@ -1688,11 +1688,11 @@
           "heading": false
         },
         {
-          "term": "modelling grit",
+          "term": "social epistemology",
           "heading": false
         },
         {
-          "term": "social epistemology",
+          "term": "modelling grit",
           "heading": false
         }
       ],
@@ -2017,11 +2017,11 @@
           "heading": false
         },
         {
-          "term": "problem",
+          "term": "theoretical",
           "heading": false
         },
         {
-          "term": "theoretical",
+          "term": "problem",
           "heading": false
         }
       ],
@@ -2692,11 +2692,11 @@
           "heading": false
         },
         {
-          "term": "algorithm design",
+          "term": "lower bounds",
           "heading": false
         },
         {
-          "term": "lower bounds",
+          "term": "algorithm design",
           "heading": false
         },
         {
@@ -2767,8 +2767,8 @@
           "heading": false
         },
         {
-          "term": "improving bandits",
-          "heading": false
+          "term": "data-driven",
+          "heading": true
         }
       ],
       "extract": "As before, we have an algorithm playing against an adversary. The role of the adversary is to pick the instance on which the algorithm must perform, and the algorithm’s goal is to solve some optimization problem on that instance. In contrast to the previous chapter, we now will study a situation where the adversary can only define a distribution over instances. Then, a neutral party chooses the specific instance",
@@ -2970,12 +2970,12 @@
       },
       "keywords": [
         {
-          "term": "competitive ratio",
-          "heading": true
-        },
-        {
           "term": "arm satisfies",
           "heading": false
+        },
+        {
+          "term": "competitive ratio",
+          "heading": true
         },
         {
           "term": "arm now",
@@ -3190,8 +3190,8 @@
           "heading": true
         },
         {
-          "term": "hybrid",
-          "heading": true
+          "term": "hybridα",
+          "heading": false
         }
       ],
       "extract": "We now define the hybrid algorithm family. As before, we work in the standard improving-bandits setting with k arms, a known horizon T, and non-decreasing concave reward functions fi. Each algorithm Hybridα,B has two stages. Stage 1 uses a UCB-style envelope: At each step, the algorithm computes a lower bound Li(n) and terminal upper bound Ui(n) on the final reward fi(T) of every arm and pulls the arm with the",
@@ -3435,11 +3435,11 @@
           "heading": false
         },
         {
-          "term": "few years",
+          "term": "social world",
           "heading": false
         },
         {
-          "term": "social world",
+          "term": "few years",
           "heading": false
         },
         {
@@ -3898,11 +3898,11 @@
           "heading": false
         },
         {
-          "term": "communities out",
+          "term": "subsidy",
           "heading": false
         },
         {
-          "term": "subsidy",
+          "term": "communities out",
           "heading": false
         }
       ],
@@ -3953,7 +3953,7 @@
           "heading": false
         },
         {
-          "term": "nudges",
+          "term": "community-wide",
           "heading": false
         }
       ],
@@ -4636,11 +4636,11 @@
           "heading": false
         },
         {
-          "term": "notions",
+          "term": "financial support",
           "heading": false
         },
         {
-          "term": "financial support",
+          "term": "notions",
           "heading": false
         },
         {
@@ -4703,7 +4703,7 @@
           "heading": true
         },
         {
-          "term": "paul",
+          "term": "multi-armed bandits",
           "heading": false
         }
       ],
@@ -4734,6 +4734,10 @@
           "heading": false
         },
         {
+          "term": "multi-armed bandits",
+          "heading": false
+        },
+        {
           "term": "improving multi-armed",
           "heading": false
         },
@@ -4751,10 +4755,6 @@
         },
         {
           "term": "striving",
-          "heading": false
-        },
-        {
-          "term": "option",
           "heading": false
         }
       ],
@@ -5193,7 +5193,7 @@
           "heading": false
         },
         {
-          "term": "correct total",
+          "term": "policy plays",
           "heading": false
         }
       ],
@@ -5510,11 +5510,11 @@
           "heading": false
         },
         {
-          "term": "going",
+          "term": "options",
           "heading": false
         },
         {
-          "term": "options",
+          "term": "going",
           "heading": false
         }
       ],
@@ -5541,11 +5541,11 @@
           "heading": true
         },
         {
-          "term": "plenty",
+          "term": "prospects",
           "heading": false
         },
         {
-          "term": "prospects",
+          "term": "plenty",
           "heading": false
         }
       ],
@@ -5670,11 +5670,11 @@
           "heading": false
         },
         {
-          "term": "university press",
+          "term": "international conference",
           "heading": false
         },
         {
-          "term": "international conference",
+          "term": "university press",
           "heading": false
         },
         {
@@ -5979,11 +5979,11 @@
       },
       "keywords": [
         {
-          "term": "tune hyperparameters",
+          "term": "policy regret",
           "heading": false
         },
         {
-          "term": "policy regret",
+          "term": "tune hyperparameters",
           "heading": false
         },
         {
@@ -6007,8 +6007,8 @@
           "heading": false
         },
         {
-          "term": "paradigm",
-          "heading": false
+          "term": "bound",
+          "heading": true
         }
       ],
       "extract": "√ k) lower bound. A related line of work is that on (deterministic, rested) rising bandits [MTPR22, MMT+24]. This line of work bounds the instance-dependent policy regret on benign instances but otherwise considers similar increasing reward functions. We note that policy regret is a stronger notion of regret than external regret, where an algorithm is compared to the best action on the same set of rewards. In policy",
@@ -6757,8 +6757,8 @@
           "heading": false
         },
         {
-          "term": "behaviors",
-          "heading": false
+          "term": "proof",
+          "heading": true
         }
       ],
       "extract": "Proof. We argue this by applying the proof of Lemma 4.3.3. For a fixed (augmented) in- stance (i.e., fixed instance and fixed random permutation), we are interested in computing the number of different behaviors as we vary B, α . To understand this, let us start by fixing B. Then, by Lemma 4.3.3, we know that there are at most kT possible behaviors as we vary α . Now, for a fixed value of B, for either algorithm,",
@@ -6986,11 +6986,11 @@
           "heading": true
         },
         {
-          "term": "bayes",
+          "term": "conditioned",
           "heading": false
         },
         {
-          "term": "conditioned",
+          "term": "bayes",
           "heading": false
         }
       ],
@@ -7465,8 +7465,8 @@
           "heading": false
         },
         {
-          "term": "boil",
-          "heading": false
+          "term": "proof",
+          "heading": true
         }
       ],
       "extract": "Proof. Recall our previous argument that all deterministic strategies boil down to playing f2 for s steps and then switching to f1. With that in mind, there are two extremes of what could happen to the competitive ratio, one of which decreases with the longer spent on f2, and the other of which increases with time spent on f2 . Thus, we compute them and equalize: competitive ratio if never increase = T −s T (D.1)",
@@ -7645,11 +7645,11 @@
       "heading": false
     },
     {
-      "term": "arm now",
+      "term": "reward ratio",
       "heading": false
     },
     {
-      "term": "reward ratio",
+      "term": "arm now",
       "heading": false
     },
     {
@@ -7677,12 +7677,12 @@
       "heading": true
     },
     {
-      "term": "some arm",
-      "heading": false
-    },
-    {
       "term": "cumulative reward",
       "heading": true
+    },
+    {
+      "term": "some arm",
+      "heading": false
     }
   ],
   "links": {

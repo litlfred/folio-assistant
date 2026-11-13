@@ -22,10 +22,10 @@ root, the files it lists, and the instructions at the predetermined path
 <em>absent</em>. It does not return an empty file or an error that could be taken
 for an unreadable one. <code>bootstrap-kg-navigation</code>'s three answers (absent,
 present, present-but-unreadable) depend on this.</li><li><strong>Serve siblings the same way.</strong> A <code>needs</code> entry is read from a sibling
-checkout, <code>../&#x3C;name>/&#x3C;name>.json</code>, under the same two rules.</li><li><strong>Keep what is written.</strong> Once a new instance's declaration is written and
+checkout, <code>../&#x3C;name>/&#x3C;name>.json</code>, under the same two rules.</li><li><strong>Keep what is written.</strong> Once a new layer's declaration is written and
 committed, later reads return it, and its history shows who wrote it and
 when.</li></ol><h2>Tests</h2><p>Bootstrap runs nothing, so the test named in <code>tested-by:</code> lives with the
 toolset. It checks each numbered line above against a git repository read
-through the git CLI.</p><h2>Not its responsibility</h2><p>Deciding whether a location is an instance, which harness to install, or what
+through the git CLI.</p><h2>Not its responsibility</h2><p>Deciding whether a location is a layer, which harness to install, or what
 a declaration means. Those are judgements made in the Bootstrapping Agent's
 lane, using the files this store serves.</p></body></html>

@@ -7,8 +7,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Ingestion subprocess — extract structure",
-      "summary": "Extract the structure of an uploaded source: its text layer, OCR where it has none, sections, structure and claim candidates.",
-      "description": "Extract the structure of an uploaded source: its text layer, OCR where it has none, sections, structure and claim candidates.",
+      "summary": "Extract the structure of an uploaded source: its text layer, OCR where it has none or where a page's text layer fails the page check, sections, structure and claim candidates.",
+      "description": "Extract the structure of an uploaded source: its text layer, OCR where it has none or where a page's text layer fails the page check, sections, structure and claim candidates. Every step is an arm or rung of `bun run cat ingest` (cat-harness-tools scripts/ingest-document.ts).",
       "enforcement": "advisory",
       "sourcePath": "processes/library/ingest-extract-structure.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant-core/blob/main/processes/library/ingest-extract-structure.bpmn",
@@ -16,8 +16,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure/node/StartEvent_Binary"
       ],
-      "nodeCount": 8,
-      "flowCount": 8,
+      "nodeCount": 9,
+      "flowCount": 9,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes"
     },
     {
@@ -51,6 +51,14 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure/node/Task_ExtractText",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure/node/Task_PageCheck",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure#flow/Flow_e9",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure/node/Task_PageCheck",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure/node/Task_Sections",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes"
     },

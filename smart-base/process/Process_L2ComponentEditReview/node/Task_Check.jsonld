@@ -11,12 +11,12 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_L2ComponentEditReview",
-      "performedBy": "http://smart.who.int/base/role/authoring-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inLane": "http://smart.who.int/base/process/Process_L2ComponentEditReview/lane/Lane_Agent",
       "requires": [
-        "http://smart.who.int/base/skill/content-validate",
-        "http://smart.who.int/base/skill/content-test",
-        "http://smart.who.int/base/skill/artefact-reachability"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-validate",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-test",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/artefact-reachability"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,

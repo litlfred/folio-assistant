@@ -2,7 +2,7 @@
 so that it, not cat-harness, types its block kinds.</p><p>A kind's schema belongs to the layer that declares it, so a composition
 that does not mount that layer has no kinds typed in code and declared by
 no node (which <code>check:kind-validators</code> would fail).</p><h2 id="the-contract" class="tsd-anchor-link">The contract<a href="#the-contract" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>A <code>folio-content-adapter/v1</code> node that says <code>typed: true</code> may name a
-<code>vocabulary</code> module, relative to the instance that declares it. The module
+<code>vocabulary</code> module, relative to the layer that declares it. The module
 exports:</p><ul><li><code>blockSchemas</code> — one Zod object per kind, each with a literal <code>kind</code>. Every
 kind must be declared by a block-kind node of the same adapter.</li><li><code>constraintRules</code> (optional) — <a href="../interfaces/_folio-assistant_schemas_constraints.ConstraintRule.html" class="tsd-kind-interface">ConstraintRule</a>s, run beside
 <code>CONSTRAINT_RULES</code>.</li><li><code>constraintContext</code> (optional) — a <a href="../types/_folio-assistant_schemas_constraints.ConstraintContextContributor.html" class="tsd-kind-type-alias">ConstraintContextContributor</a>:

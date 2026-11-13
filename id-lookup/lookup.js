@@ -11,7 +11,7 @@
  * `large-datasets/` until bean `j7ql`). The plain docs pipeline is
  * "no extensions. no fancy. no js (if possible)", so nothing under
  * `cat-harness/docs/` may load this file. The indexes it reads are hosted by
- * the instance each one is about, e.g. `who-iris/id-lookup/`.
+ * the layer each one is about, e.g. `who-iris/id-lookup/`.
  *
  * `shardFile` and `splitId` must agree with `scripts/lib/id-shards.ts`, which
  * writes the shards. `id-shards.test.ts` compares them over every identifier

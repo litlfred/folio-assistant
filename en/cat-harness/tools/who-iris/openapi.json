@@ -1,0 +1,101 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Tools — who-iris",
+    "version": "0.1.0",
+    "description": "The call contracts of the harness's Tools, one operation per Tool, generated from the Tool nodes (`schemas/tools/tool.ts`) so standard API tooling can read them. **No HTTP server serves these paths**: each Tool is reached as its `x-invoke` says — a command line, an MCP tool, or an in-process call. Tags are the skills each Tool satisfies."
+  },
+  "servers": [],
+  "tags": [
+    {
+      "name": "graph-rendering"
+    }
+  ],
+  "paths": {
+    "/tools/iris-pages": {
+      "post": {
+        "operationId": "iris-pages",
+        "summary": "who-iris catalogue and docs pages",
+        "description": "Render who-iris's docs pages, the catalogue visualiser at its declared route (what the catalogue knows, and what it records that it does not know), the library's withheld list, and the IRIS replica's home page.",
+        "tags": [
+          "graph-rendering"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "iris-pages/"
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "check": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Fail if a page is stale, instead of writing."
+                  },
+                  "site": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "A site being built (the tree `compose-docs --shell` wrote): write only the catalogue page into it, at its route in who-iris's own site, plus a forwarding page at the declared route. A site build passes it (`visualiser-writers.ts`)."
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "pages": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "The replica's home page at `site/index.html` (and its translations), the docs under `docs/`, and the catalogue page under the published site directory."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/who-iris/tools/iris-pages.jsonld",
+        "x-invoke": {
+          "shell": "bun run cat iris:pages"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "graph-rendering"
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Flag": {
+        "type": "boolean",
+        "description": "A boolean switch — projects to a bare flag, with no value word",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+      },
+      "RepoPath": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^[A-Za-z0-9._][A-Za-z0-9._/-]*$",
+        "description": "A path relative to the repository root. No `..` segments.",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+      }
+    }
+  }
+}

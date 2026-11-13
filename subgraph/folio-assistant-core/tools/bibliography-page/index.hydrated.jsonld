@@ -33,6 +33,15 @@
             "name": "site",
             "required": false,
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--scope"
+            },
+            "description": "A scoped site build: the comma-separated instances whose pages this writer writes (the IG and the layer it lands on); every other instance's pages are linked on that layer's own site. Passed by the tools layer's `visualiser-writers.ts` (owner, 2026-11-08, Q-SZ-2 \"B\"). Absent: every instance.",
+            "name": "scope",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/IdList"
           }
         ],
         "outputs": [

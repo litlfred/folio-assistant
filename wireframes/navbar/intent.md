@@ -42,7 +42,7 @@ The declared interaction profile is low-dexterity. That is why the tab bodies ar
 
 - **Reader:** anyone on any docs page, including a low-dexterity or touch reader.
 - **Tasks:**
-  - know which instance they are in
+  - know which layer they are in
   - jump to a harness and to its graphs (library, docs, processes …)
   - reach the harness actions (todos, work items, fsh-guts, launcher, scheme)
   - see the current page's sections

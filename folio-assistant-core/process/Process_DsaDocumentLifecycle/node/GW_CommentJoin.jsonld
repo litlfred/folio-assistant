@@ -10,7 +10,7 @@
       "nodeKind": "exclusive",
       "bpmnType": "bpmn:ExclusiveGateway",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/reviewer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
       "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Reviewer",
       "requires": [],
       "touchesWorkPlan": false,
@@ -22,7 +22,7 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F18"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa"
     }
   ]
 }

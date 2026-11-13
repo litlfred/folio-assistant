@@ -15,8 +15,8 @@
 :root:has(.fa-page-bar) :is(.fa-page-main,.main-content) *{scroll-margin-top:calc(var(--fa-staging-offset,0px) + var(--fa-page-bar-h,0px) + .5rem)}
 body{margin:0}
 body:has(.fa-page-main){background:var(--fa-pl-bg);color:var(--fa-pl-fg);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-/* THE BAR: the whole width beside the rail, outside the content column. Its colours are the page's (`--fa-page-bar-bg`, `--fa-page-bar-fg`). */
-.fa-page-bar{box-sizing:border-box;width:100%;display:flex;flex-wrap:wrap;align-items:center;gap:.25rem 1rem;margin:0;padding:.5rem 1.5rem;background:var(--fa-page-bar-bg,#1c4b7c);color:var(--fa-page-bar-fg,#fff);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:.95rem;z-index:88}
+/* THE BAR: the whole width beside the rail, outside the content column. Its colours are the page's (`--fa-page-bar-bg`, `--fa-page-bar-fg`). Default navy #2d4271, the reference site's header (owner, 2026-11-10); white on it 9.86:1. */
+.fa-page-bar{box-sizing:border-box;width:100%;display:flex;flex-wrap:wrap;align-items:center;gap:.25rem 1rem;margin:0;padding:.5rem 1.5rem;background:var(--fa-page-bar-bg,#2d4271);color:var(--fa-page-bar-fg,#fff);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:.95rem;z-index:88}
 .fa-page-bar a{color:inherit;text-decoration:none}
 /* STICKY on a screen wide enough to spare it: text scrolls under it, and the Folio tab sits on it, so docs-ui's bare strip behind the tab is not drawn. Below 50rem it scrolls away with the page and the strip comes back. */
 @media (min-width:50rem){

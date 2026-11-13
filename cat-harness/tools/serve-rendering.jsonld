@@ -105,6 +105,10 @@
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/maintainedBy",
       "@type": "@id"
     },
+    "jsonSchema": {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/jsonSchema",
+      "@type": "@id"
+    },
     "module": "https://litlfred.github.io/cat-harness/v0/ns/module",
     "holdsGraph": {
       "@id": "http://purl.org/dc/terms/type",
@@ -363,7 +367,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "serve-rendering",
       "title": "Local rendering server",
-      "description": "Serve an instance's renderings over local HTTP with their declared media types. The publication host wherever GitHub Pages is absent, and the only host that can enforce `application/ld+json` at all.",
+      "description": "Serve a layer's renderings over local HTTP with their declared media types. The publication host wherever GitHub Pages is absent, and the only host that can enforce `application/ld+json` at all.",
       "install": {
         "none": true
       },

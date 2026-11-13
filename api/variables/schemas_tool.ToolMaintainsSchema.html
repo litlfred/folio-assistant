@@ -11,7 +11,7 @@ produces <code>&lt;stub&gt;.schema.json</code>, <code>schemas/tools/tool.ts</cod
 <code>tool-types.schema.json</code> — three facts living in one script's local array.
 A reader of the published graph could not get from a schema module to the
 artefact it defines, or back.</p><h2 id="why-is-a-path-and--is-not" class="tsd-anchor-link">Why <code>source</code> is a path and <code>artefact</code> is not<a href="#why-is-a-path-and--is-not" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p><code>source</code> is repo-relative and stable: it names a file in the tree the graph
-describes. <code>artefact</code> is the PUBLISHED path relative to the instance's base,
+describes. <code>artefact</code> is the PUBLISHED path relative to the layer's base,
 because the base differs per deployment — main, a branches/ preview, a local
 checkout — and baking one in would make the node wrong everywhere else.
 <code>renderingPath()</code> in <code>schemas/kg/cat-harness.ts</code> is what joins the two, and is

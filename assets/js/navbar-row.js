@@ -602,8 +602,9 @@
    * The same state as the full switch — `fa-color-scheme` in localStorage
    * and `data-fa-scheme` on `<html>`, the first-paint snippet's two inputs —
    * and the same glyphs, copied from `docs-ui.js` (`BULB_ON`, `BULB_OFF`).
-   * No theme-sheet swap: a lite page's first sheet is never the theme's. When
-   * `docs-ui.js` arrives, its FULL row replaces this one, switch and all. */
+   * Where the theme's sheet IS first (a just-the-docs page wearing the folio
+   * rail), `liteThemeSheet` swaps it too. When `docs-ui.js` mounts its FULL
+   * row, that row replaces this one, switch and all. */
   var BULB_ON =
     '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
     '<path d="M12 2a7 7 0 0 0-4 12.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26A7 7 0 0 0 12 2zm-2 12.1A5 5 0 1 1 14 14.1l-.5.33V16h-3v-1.57l-.5-.33z"/>' +
@@ -633,6 +634,34 @@
     }
   }
 
+  /* THE THEME'S SHEET MUST FOLLOW TOO — owner, 2026-11-08: *"dark mode not
+   * fully wokring"*, then *"it seems ok on reload"*. A just-the-docs page whose
+   * header the full row could not find (the folio rail replaces it) gets THIS
+   * button, and setting `data-fa-scheme` alone repainted only the rail: the
+   * body, tables and code blocks are painted by the theme's FIRST sheet, which
+   * the first-paint snippet swaps on load but nothing swapped on a click. So
+   * swap it here, the same way and with the same guard as `docs-ui.js`
+   * (`themeSheet`, `jtdShows`): only when that sheet is first on the page, and
+   * only when it does not already show the scheme — a swap of a sheet that
+   * already matches is the white flash of 2026-09-24. */
+  function liteThemeSheet(name) {
+    var j = window.jtd;
+    if (!j || typeof j.setTheme !== "function" || typeof j.getTheme !== "function") return;
+    var first = document.querySelector('[rel="stylesheet"]');
+    if (!first || !/just-the-docs-[a-z]+\.css/.test(first.getAttribute("href") || "")) return;
+    var shown = j.getTheme();
+    if (shown === "default") {
+      shown = "dark";
+      try {
+        var n = document.getElementById("fa-site-scheme");
+        if (n && JSON.parse(n.textContent).scheme === "light") shown = "light";
+      } catch (_e) { /* keep the first-paint snippet's default */ }
+    }
+    if (shown !== name) {
+      try { j.setTheme(name); } catch (_e) { /* the attribute still switches the rail */ }
+    }
+  }
+
   function liteSchemeButton() {
     var btn = el("button", { type: "button", class: "fa-nav-icon fa-nav-scheme" });
     function paint(name) {
@@ -648,6 +677,7 @@
     paint(now);
     btn.addEventListener("click", function () {
       var next = liteScheme() === "light" ? "dark" : "light";
+      liteThemeSheet(next);
       document.documentElement.setAttribute("data-fa-scheme", next);
       try { window.localStorage.setItem("fa-color-scheme", next); } catch (_e) { /* private mode */ }
       paint(next);

@@ -105,6 +105,10 @@
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/maintainedBy",
       "@type": "@id"
     },
+    "jsonSchema": {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/jsonSchema",
+      "@type": "@id"
+    },
     "module": "https://litlfred.github.io/cat-harness/v0/ns/module",
     "holdsGraph": {
       "@id": "http://purl.org/dc/terms/type",
@@ -363,7 +367,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "rail-standalone-pages",
       "title": "Give every page Jekyll did not lay out the folio-assistant navbar",
-      "description": "A LAST pass over the finished site: inject the shared navbar (`lib/navbar.ts`, the same component the site sidebar draws) into every page that carries none — standalone viewers, generated instance pages, and each IG site built by `stage-ig-sites`. A page under an `igSite` instance's route is railed as THAT instance's page (its name, mark and graphs); a page may declare its own section (`data-fa-visualiser-nav`) and its label (`fa-visualiser-label`). Mount routes are left to the mount pass, and a page that declines (`folio-navbar: none`) is left bare.",
+      "description": "A LAST pass over the finished site: inject the shared navbar (`lib/navbar.ts`, the same component the site sidebar draws) into every page that carries none — standalone viewers, generated layer pages, and each IG site built by `stage-ig-sites`. A page under an `igSite` layer's route is railed as THAT layer's page (its name, mark and graphs); a page may declare its own section (`data-fa-visualiser-nav`) and its label (`fa-visualiser-label`). Mount routes are left to the mount pass, and a page that declines (`folio-navbar: none`) is left bare.",
       "install": {
         "none": true
       },
@@ -381,7 +385,7 @@
           {
             "name": "built",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug",
-            "description": "The instance whose site this is (`cat-harness`).",
+            "description": "The layer whose site this is (`cat-harness`).",
             "required": true
           },
           {
@@ -396,7 +400,7 @@
           {
             "name": "instance",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug",
-            "description": "With `--foreign-site`: the instance whose own site this is. Its name, mark and graphs head the navbar, and Harnesses lists it (linking to this site's root) and the harnesses it is built on.",
+            "description": "With `--foreign-site`: the layer whose own site this is. Its name, mark and graphs head the navbar, and Harnesses lists it (linking to this site's root) and the harnesses it is built on.",
             "required": false
           }
         ],

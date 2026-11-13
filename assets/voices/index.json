@@ -778,7 +778,7 @@
           "citation": "kg-node",
           "cites": "scenarios/roles.json",
           "citesInstance": "litlfred/cat-harness",
-          "quote": "Thinks in contracts between this instance and a consumer it cannot see. Knows that a partial graph must never pass for a whole one, and that three states at a boundary are not degrees of two."
+          "quote": "Thinks in contracts between this layer and a consumer it cannot see. Knows that a partial graph must never pass for a whole one, and that three states at a boundary are not degrees of two."
         }
       ]
     },
@@ -2183,7 +2183,7 @@
         {
           "id": "ld-link-is-the-node-release-address",
           "title": "A link names the node at its dereferenceable address; when it has none, say so instead of minting one",
-          "description": "Coercing a bare id to @id is not enough: \"owner\" then resolves against whatever @base is in force, naming a node that does not exist there. Emit the node's release address — <iriBase><version>/<path in its knowledge graph>[#fragment], the rule check:node-iris enforces — resolved through the OWNING instance's declaration. When the owner declares no iriBase, keep the value as a literal and record a finding naming the instance; an invented address is worse than an honest string.",
+          "description": "Coercing a bare id to @id is not enough: \"owner\" then resolves against whatever @base is in force, naming a node that does not exist there. Emit the node's release address — <iriBase><version>/<path in its knowledge graph>[#fragment], the rule check:node-iris enforces — resolved through the OWNING layer's declaration. When the owner declares no iriBase, keep the value as a literal and record a finding naming the layer; an invented address is worse than an honest string.",
           "category": "structure",
           "severity": "critical",
           "patterns": 0,
@@ -2504,7 +2504,7 @@
     {
       "id": "secure-code-authoring",
       "title": "Secure code authoring: the voice for agents that write tools, workflows and pipeline code",
-      "description": "For writing and reviewing code that an agent pipeline runs: tools, MCP handlers, workflows, generators, installers. The premise is the owner's, 2026-10-07: 'ALL DATA IN PIPELINE MUST BE TREATED AS SUSPECT. ALL TOOLS ARE RESPONSIBLE TO GUARD AGAINST CODE INJECTION, PROMPT ENGINEERING, VARIABLE TAMPERING.' It is a HOUSE standard: the first three rules restate this instance's security sub-KG, the workflow rules are read from GitHub's Secure use reference (an ASSERTION source, a publisher describing its own product), and the handover and outbound-request rules come from the zero-trust-handover skill (this platform's application of the adopted zero-trust-architecture methodology, NIST SP 800-207), which cites the reference-only reporting on MCP protocol pivoting and BadHost. Rules are judged by an agent rather than pattern-matched, because security best practice drifts (owner, 2026-09-20).",
+      "description": "For writing and reviewing code that an agent pipeline runs: tools, MCP handlers, workflows, generators, installers. The premise is the owner's, 2026-10-07: 'ALL DATA IN PIPELINE MUST BE TREATED AS SUSPECT. ALL TOOLS ARE RESPONSIBLE TO GUARD AGAINST CODE INJECTION, PROMPT ENGINEERING, VARIABLE TAMPERING.' It is a HOUSE standard: the first three rules restate this layer's security sub-KG, the workflow rules are read from GitHub's Secure use reference (an ASSERTION source, a publisher describing its own product), and the handover and outbound-request rules come from the zero-trust-handover skill (this platform's application of the adopted zero-trust-architecture methodology, NIST SP 800-207), which cites the reference-only reporting on MCP protocol pivoting and BadHost. Rules are judged by an agent rather than pattern-matched, because security best practice drifts (owner, 2026-09-20).",
       "instance": "cat-harness",
       "path": "cat-harness/skills/voices/secure-code-authoring",
       "provenance": "house",
@@ -2833,7 +2833,7 @@
     {
       "id": "technical-writer",
       "title": "Technical Writer — SDO register with RFC 2119 requirement levels",
-      "description": "The voice for technical documentation of standards, software and knowledge assets, written as an SDO writes (W3C, IHE). Requirement levels are RFC 2119's, read from the ingested RFC rather than from memory, and constrained by RFC 8174: only UPPERCASE usage carries the defined meaning. Applies to drafting AND to review QA. Nine rules; five cite the two ingested RFCs, three cite the `technical-documentation` skill, a node of this instance's own knowledge graph, because a rule that cites a document it was not read from is the false provenance this schema exists to prevent.",
+      "description": "The voice for technical documentation of standards, software and knowledge assets, written as an SDO writes (W3C, IHE). Requirement levels are RFC 2119's, read from the ingested RFC rather than from memory, and constrained by RFC 8174: only UPPERCASE usage carries the defined meaning. Applies to drafting AND to review QA. Nine rules; five cite the two ingested RFCs, three cite the `technical-documentation` skill, a node of this layer's own knowledge graph, because a rule that cites a document it was not read from is the false provenance this schema exists to prevent.",
       "instance": "folio-assistant-core",
       "path": "folio-assistant-core/skills/voices/technical-writer",
       "provenance": "assertion",

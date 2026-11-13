@@ -197,7 +197,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The document block holding the figure, relative to the instance root."
+          "@value": "The document block holding the figure, relative to the layer root."
         }
       ],
       "dcterms:source": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateConfigFigureSchema.block",
@@ -254,7 +254,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Where `archimate-blocks` writes the view as SVG, relative to the instance root, so the block can show the model's own drawing instead of a picture of it. Absent, the figure is only linked to the view."
+          "@value": "Where `archimate-blocks` writes the view as SVG, relative to the layer root, so the block can show the model's own drawing instead of a picture of it. Absent, the figure is only linked to the view."
         }
       ],
       "dcterms:source": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateConfigFigureSchema.svg",
@@ -292,7 +292,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "One sentence on what this model is and why the instance holds it."
+          "@value": "One sentence on what this model is and why the layer holds it."
         }
       ],
       "dcterms:source": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateConfigModelSchema.description",
@@ -444,7 +444,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The document block holding the table, relative to the instance root."
+          "@value": "The document block holding the table, relative to the layer root."
         }
       ],
       "dcterms:source": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateConfigTableSchema.block",
@@ -3199,7 +3199,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Display name — which instance's work plan this is."
+          "@value": "Display name — which layer's work plan this is."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/sdlc/bean-graph.ts#BeanGraphSchema.name",
@@ -6315,7 +6315,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The graph typologies (directory kinds) whose directories, in OTHER instances, this entry's writers read: the declared READ EDGE that orders them (see \"Writer order\" above). `derive:publish` runs these writers after the writers of every other instance's entry that fills (`directory`) a directory of one of these kinds. Kinds, never instance names: a lower layer reading what the layers above it build cannot name them."
+          "@value": "The graph typologies (directory kinds) whose directories, in OTHER layers, this entry's writers read: the declared READ EDGE that orders them (see \"Writer order\" above). `derive:publish` runs these writers after the writers of every other layer's entry that fills (`directory`) a directory of one of these kinds. Kinds, never layer names: a lower layer reading what the layers above it build cannot name them."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/built-at-publish.ts#BuiltAtPublishSchema.reads",
@@ -6429,7 +6429,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The instance whose workflows and scripts hold it."
+          "@value": "The layer whose workflows and scripts hold it."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/sdlc/cache.ts#CacheSchema.instance",
@@ -6695,7 +6695,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "`github`, `gitlab`, … Defaults to the instance's own forge when absent."
+          "@value": "`github`, `gitlab`, … Defaults to the layer's own forge when absent."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/carried-note.ts#ArtefactRefSchema.provider",
@@ -7246,7 +7246,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The associated harness's instance name, as ITS declaration gives it. Unique within this list."
+          "@value": "The associated harness's layer name, as ITS declaration gives it. Unique within this list."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#AssociatedHarness.name",
@@ -7379,7 +7379,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Non-image artefacts this instance names — `AGENTS.md` first among them."
+          "@value": "Non-image artefacts this layer names — `AGENTS.md` first among them."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#CatHarnessDeclaration.assets",
@@ -7417,7 +7417,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The instance's own avatar (sod4 #4); the table in avatars.ts covers only the instances below the harness."
+          "@value": "The layer's own avatar (sod4 #4); the table in avatars.ts covers only the layers below the harness."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#CatHarnessDeclaration.avatar",
@@ -7436,7 +7436,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Artefacts this instance serves and must never commit, each built at publish by the package scripts it names — {@link BuiltAtPublish}. Owner, 2026-10-14 (\"B1\"): a page computed over the checkout's other instances, or from a branch-kept graph, cannot be current in a commit of this one."
+          "@value": "Artefacts this layer serves and must never commit, each built at publish by the package scripts it names — {@link BuiltAtPublish}. Owner, 2026-10-14 (\"B1\"): a page computed over the checkout's other layers, or from a branch-kept graph, cannot be current in a commit of this one."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#CatHarnessDeclaration.builtAtPublish",
@@ -7455,7 +7455,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Where this instance's artefacts are published — the base every `@id` in the exported graph is minted against."
+          "@value": "Where this layer's artefacts are published — the base every `@id` in the exported graph is minted against."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#CatHarnessDeclaration.canonicalUrl",
@@ -7474,7 +7474,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The content adapters this instance SHIPS, which the harness's composition root discovers rather than names. See {@link ContentAdapterDeclaration}."
+          "@value": "The content adapters this layer SHIPS, which the harness's composition root discovers rather than names. See {@link ContentAdapterDeclaration}."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#CatHarnessDeclaration.contentAdapters",
@@ -7493,7 +7493,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The translation profile of each content type THIS instance owns: which formats it can extract and inject, and which diagrams need re-rendering. Collected by `schemas/library/translation-tools.ts` from every present instance (bean `0r7u`, step 0 part 3), so cat-harness names no content type above it. Module and diagram paths resolve from the declaring instance, then down its `needs` chain."
+          "@value": "The translation profile of each content type THIS layer owns: which formats it can extract and inject, and which diagrams need re-rendering. Collected by `schemas/library/translation-tools.ts` from every present layer (bean `0r7u`, step 0 part 3), so cat-harness names no content type above it. Module and diagram paths resolve from the declaring layer, then down its `needs` chain."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#CatHarnessDeclaration.contentTranslations",
@@ -7512,7 +7512,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Directories this instance scans, before inheritance."
+          "@value": "Directories this layer scans, before inheritance."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#CatHarnessDeclaration.directories",
@@ -7550,7 +7550,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Whether this instance is published on the site. Defaults to enabled; only `false` disables it. Read through `isPublished` (`schemas/kg/url-space.ts`, bean `nbal`)."
+          "@value": "Whether this layer is published on the site. Defaults to enabled; only `false` disables it. Read through `isPublished` (`schemas/kg/url-space.ts`, bean `nbal`)."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#CatHarnessDeclaration.enabled",
@@ -7569,7 +7569,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The opt-in sub-graphs this instance switches on FOR ITSELF, qualified `<instance>.<directory id>` — see the schema field and `schemas/kg/opt-in-subgraphs.ts`. Not inherited by the layers above."
+          "@value": "The opt-in sub-graphs this layer switches on FOR ITSELF, qualified `<instance>.<directory id>` — see the schema field and `schemas/kg/opt-in-subgraphs.ts`. Not inherited by the layers above."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#CatHarnessDeclaration.enableSubgraphs",
@@ -7588,7 +7588,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The CI steps and check scripts of THIS instance that the local gate set deliberately does not run, each with its reason — the rows `cat-harness-tools/scripts/gates.ts` holds as `STEP_EXEMPTIONS` and `SCRIPT_EXEMPTIONS` for the harness's own. Same contract: a reason is required, a step `match` is a substring of the workflow command, a script name is matched exactly. Declared by the owner so the harness need not name a layer above itself (bean `0r7u` step 0)."
+          "@value": "The CI steps and check scripts of THIS layer that the local gate set deliberately does not run, each with its reason — the rows `cat-harness-tools/scripts/gates.ts` holds as `STEP_EXEMPTIONS` and `SCRIPT_EXEMPTIONS` for the harness's own. Same contract: a reason is required, a step `match` is a substring of the workflow command, a script name is matched exactly. Declared by the owner so the harness need not name a layer above itself (bean `0r7u` step 0)."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#CatHarnessDeclaration.gateExemptions",
@@ -7664,7 +7664,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Images this instance names — its marks, in the graph rather than beside it."
+          "@value": "Images this layer names — its marks, in the graph rather than beside it."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#CatHarnessDeclaration.images",
@@ -7683,7 +7683,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The external vocabularies this instance's JSON-LD speaks, prefix → namespace IRI — {@link JsonldPrefixTable}. Owner, 2026-10-14 (bean 63q4): the published context is generated from what documents use, flattened over `needs`, so a vocabulary is declared by the layer that owns it."
+          "@value": "The external vocabularies this layer's JSON-LD speaks, prefix → namespace IRI — {@link JsonldPrefixTable}. Owner, 2026-10-14 (bean 63q4): the published context is generated from what documents use, flattened over `needs`, so a vocabulary is declared by the layer that owns it."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#CatHarnessDeclaration.jsonldPrefixes",
@@ -7721,7 +7721,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The Liquid prefix this instance's VALUES are addressed by in authored text — `{{ <prefix>.<directory-id>.<entry>.<path> }}` — and whether the platform resolves it or passes it through."
+          "@value": "The Liquid prefix this layer's VALUES are addressed by in authored text — `{{ <prefix>.<directory-id>.<entry>.<path> }}` — and whether the platform resolves it or passes it through."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#CatHarnessDeclaration.liquid",
@@ -7740,7 +7740,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Where the instance lives TODAY when that is not the root of {@link repository} — the host repository and the directory within it. Absent means it already lives at the root of its own repository."
+          "@value": "Where the layer lives TODAY when that is not the root of {@link repository} — the host repository and the directory within it. Absent means it already lives at the root of its own repository."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#CatHarnessDeclaration.livesAt",
@@ -7759,7 +7759,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The LSI unit providers this instance SHIPS, which `lsi:near` discovers rather than names. See {@link LsiUnitProviderDeclaration}."
+          "@value": "The LSI unit providers this layer SHIPS, which `lsi:near` discovers rather than names. See {@link LsiUnitProviderDeclaration}."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#CatHarnessDeclaration.lsiUnitProviders",
@@ -7797,7 +7797,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "What a downstream remote-mounts of this instance by default — `schemas/kg/remote-mount.ts`, bean `0mpw`."
+          "@value": "What a downstream remote-mounts of this layer by default — `schemas/kg/remote-mount.ts`, bean `0mpw`."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#CatHarnessDeclaration.mountDefaults",
@@ -7816,7 +7816,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Paths this instance moved and still answers for, during the window of the two-phase move rule (sdlc skill `two-phase-move`). See the schema field."
+          "@value": "Paths this layer moved and still answers for, during the window of the two-phase move rule (sdlc skill `two-phase-move`). See the schema field."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#CatHarnessDeclaration.moves",
@@ -7835,7 +7835,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The instance's name, e.g. `\"agentic-harness\"`."
+          "@value": "The layer's name, e.g. `\"agentic-harness\"`."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#CatHarnessDeclaration.name",
@@ -7854,7 +7854,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Which icons this instance's navbar row shows — see `NavbarIconsSchema`."
+          "@value": "Which icons this layer's navbar row shows — see `NavbarIconsSchema`."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#CatHarnessDeclaration.navbarIcons",
@@ -7873,7 +7873,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The instances this one is BUILT ON — its layer stack, foundation first."
+          "@value": "The layers this one is BUILT ON — its layer stack, foundation first."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#CatHarnessDeclaration.needs",
@@ -7911,7 +7911,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "WHAT KIND of host serves this instance's renderings."
+          "@value": "WHAT KIND of host serves this layer's renderings."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#CatHarnessDeclaration.publication",
@@ -7949,7 +7949,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Harnesses this instance remote-mounts at a pin, transitively — `schemas/kg/remote-mount.ts`, bean `0mpw`."
+          "@value": "Harnesses this layer remote-mounts at a pin, transitively — `schemas/kg/remote-mount.ts`, bean `0mpw`."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#CatHarnessDeclaration.remoteMounts",
@@ -7968,7 +7968,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "What this instance is excused from rendering, and what it carries instead."
+          "@value": "What this layer is excused from rendering, and what it carries instead."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#CatHarnessDeclaration.renderExemption",
@@ -7987,7 +7987,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The repository this instance IS — `owner/name`, its PLANNED home once the pre-split repository is broken apart (owner, 2026-09-30, bean `6rmv`)."
+          "@value": "The repository this layer IS — `owner/name`, its PLANNED home once the pre-split repository is broken apart (owner, 2026-09-30, bean `6rmv`)."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#CatHarnessDeclaration.repository",
@@ -8006,7 +8006,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Instances this one is seeded together with — see `seedsWith` on {@link CatHarnessDeclarationSchema}. Absent is \"seeds alone\"."
+          "@value": "Layers this one is seeded together with — see `seedsWith` on {@link CatHarnessDeclarationSchema}. Absent is \"seeds alone\"."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#CatHarnessDeclaration.seedsWith",
@@ -8063,7 +8063,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Where this whole instance gets its upstream/source material (e.g. an IG source in Git). Bean `bamf`, owner ruling 2026-10-07: declare IG source in instance declaration."
+          "@value": "Where this whole layer gets its upstream/source material (e.g. an IG source in Git). Bean `bamf`, owner ruling 2026-10-07: declare IG source in layer declaration."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#CatHarnessDeclaration.source",
@@ -8139,7 +8139,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "What this instance's own package tasks read and write, keyed by task name — the same {@link ScriptIO}-shaped facts `cat-harness-tools/scripts/task-io.ts` holds for the harness's own tasks: `outputs: []` (measured to write nothing, so it may run in the pool) and `inputs` (what can change the answer, so `regen` may skip it on an unchanged tree; `\"{tracked}\"` is the whole working tree). `because` keeps the measurement that justified it."
+          "@value": "What this layer's own package tasks read and write, keyed by task name — the same {@link ScriptIO}-shaped facts `cat-harness-tools/scripts/task-io.ts` holds for the harness's own tasks: `outputs: []` (measured to write nothing, so it may run in the pool) and `inputs` (what can change the answer, so `regen` may skip it on an unchanged tree; `\"{tracked}\"` is the whole working tree). `because` keeps the measurement that justified it."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#CatHarnessDeclaration.taskIo",
@@ -8386,7 +8386,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Built into the instance's own IG site at `/<instance>/` (bean `mftp`); see `igSite` on the shape below."
+          "@value": "Built into the layer's own IG site at `/<instance>/` (bean `mftp`); see `igSite` on the shape below."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#ContentDirectory.igSite",
@@ -8462,7 +8462,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Where this subgraph gets its content. Absent is `{ kind: \"directory\" }`. Read it through `resolveSubgraphSource` (`schemas/kg/subgraph-source.ts`), which applies the instance config's override by id."
+          "@value": "Where this subgraph gets its content. Absent is `{ kind: \"directory\" }`. Read it through `resolveSubgraphSource` (`schemas/kg/subgraph-source.ts`), which applies the layer config's override by id."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#ContentDirectory.source",
@@ -8633,7 +8633,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "This directory is built INTO the instance's own IG site, which is served at `/<instance>/` — never composed into the main site."
+          "@value": "This directory is built INTO the layer's own IG site, which is served at `/<instance>/` — never composed into the main site."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#ContentDirectoryShape.igSite",
@@ -8652,7 +8652,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "This directory is what answers at the instance's own route, `/<instance>/`."
+          "@value": "This directory is what answers at the layer's own route, `/<instance>/`."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#ContentDirectoryShape.instanceRoot",
@@ -8766,7 +8766,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Where this subgraph gets its CONTENT — the checkout's own directory (the default, so absent means `{ kind: \"directory\" }`) or a declared repository branch, with room for a later kind. The instance config may override it by id. Resolve it with `resolveSubgraphSource`, never by reading this field: the override and #1764's `storage` are folded in there, once. See `schemas/kg/subgraph-source.ts` — bean `l4ay`, owner 2026-10-03."
+          "@value": "Where this subgraph gets its CONTENT — the checkout's own directory (the default, so absent means `{ kind: \"directory\" }`) or a declared repository branch, with room for a later kind. The layer config may override it by id. Resolve it with `resolveSubgraphSource`, never by reading this field: the override and #1764's `storage` are folded in there, once. See `schemas/kg/subgraph-source.ts` — bean `l4ay`, owner 2026-10-03."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#ContentDirectoryShape.source",
@@ -9184,7 +9184,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Stable identifier, unique within an instance. Inheritance overrides match on THIS, never on `path` — see the module note on relocation."
+          "@value": "Stable identifier, unique within a layer. Inheritance overrides match on THIS, never on `path` — see the module note on relocation."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#GraphNodeDirectory.id",
@@ -9222,7 +9222,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Which root `path` is relative to. Absent means this instance's."
+          "@value": "Which root `path` is relative to. Absent means this layer's."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#GraphNodeDirectory.scope",
@@ -9279,7 +9279,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "This entry is an instance SUBGRAPH, not a part of its parent's graph."
+          "@value": "This entry is a layer SUBGRAPH, not a part of its parent's graph."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#GraphNodeDirectoryShape.subgraph",
@@ -9336,7 +9336,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "This instance's directory ids it covers."
+          "@value": "This layer's directory ids it covers."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#HarnessVisualiserSchema.covers",
@@ -9450,7 +9450,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The instance's directory within it, repository-relative, no leading `./`."
+          "@value": "The layer's directory within it, repository-relative, no leading `./`."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#InstanceLocation.path",
@@ -9469,7 +9469,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The repository that holds the instance today, `owner/name`."
+          "@value": "The repository that holds the layer today, `owner/name`."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#InstanceLocation.repository",
@@ -9488,7 +9488,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The substrate's instance name, as its declaration gives it or will."
+          "@value": "The substrate's layer name, as its declaration gives it or will."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#KnownSubstrate.name",
@@ -9545,7 +9545,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Where it stands: proposed (an idea), planned (a staged instance), exists (a repository), published (a release)."
+          "@value": "Where it stands: proposed (an idea), planned (a staged layer), exists (a repository), published (a release)."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#KnownSubstrate.status",
@@ -9621,7 +9621,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The first path segment(s); default the instance's `name`."
+          "@value": "The first path segment(s); default the layer's `name`."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#LiquidPrefix.prefix",
@@ -9697,7 +9697,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Path the directory was (or would be) created at — inside the instance, or at the repository root for a `repository`-scoped entry."
+          "@value": "Path the directory was (or would be) created at — inside the layer, or at the repository root for a `repository`-scoped entry."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#MaterialisedDirectory.absPath",
@@ -9735,7 +9735,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The instance whose declaration contributed the entry — may be a dependency."
+          "@value": "The layer whose declaration contributed the entry — may be a dependency."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#MaterialisedDirectory.declaredBy",
@@ -9792,7 +9792,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Which root `path` was resolved against; absent means the instance's."
+          "@value": "Which root `path` was resolved against; absent means the layer's."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#MaterialisedDirectory.scope",
@@ -9811,7 +9811,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "`<parent id>/<own id>` — unique across the instance, and says who declares it."
+          "@value": "`<parent id>/<own id>` — unique across the layer, and says who declares it."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#NestedDirectory.id",
@@ -9849,7 +9849,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "`true` when the entry declares itself an instance subgraph (bean `cmsl`)."
+          "@value": "`true` when the entry declares itself a layer subgraph (bean `cmsl`)."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#NestedDirectory.subgraph",
@@ -9887,7 +9887,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "WHAT STATE this instance's publication is in. `draft`, always, today."
+          "@value": "WHAT STATE this layer's publication is in. `draft`, always, today."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#Publication.state",
@@ -9925,7 +9925,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Stable identifier, unique within an instance — as on a directory, and for the same reason."
+          "@value": "Stable identifier, unique within a layer — as on a directory, and for the same reason."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#RemoteGraph.id",
@@ -10001,7 +10001,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Where the instance IS reachable, since it renders nothing of its own."
+          "@value": "Where the layer IS reachable, since it renders nothing of its own."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#RenderExemption.reachableAt",
@@ -10039,7 +10039,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Absolute path, resolved against the instance that declared it."
+          "@value": "Absolute path, resolved against the layer that declared it."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#ResolvedDirectory.absPath",
@@ -10058,7 +10058,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Name of the instance whose declaration contributed this entry."
+          "@value": "Name of the layer whose declaration contributed this entry."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#ResolvedDirectory.declaredBy",
@@ -10077,7 +10077,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The instance whose directory this is. A declared subgraph is inherited as one MEMBER per instance in the chain whose same-named directory exists (owner, 2026-09-30, bean `3r47`/`xsqm` follow-up, option A: \"if f-a-core … has a docs/ … and depends on cat-harness where docs/ is declared … the viewer should detect f-a-core/docs\", \"a named (sub-)subgraph of docs\"). The declarer's own member comes first; `member` names each."
+          "@value": "The layer whose directory this is. A declared subgraph is inherited as one MEMBER per layer in the chain whose same-named directory exists (owner, 2026-09-30, bean `3r47`/`xsqm` follow-up, option A: \"if f-a-core … has a docs/ … and depends on cat-harness where docs/ is declared … the viewer should detect f-a-core/docs\", \"a named (sub-)subgraph of docs\"). The declarer's own member comes first; `member` names each."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#ResolvedDirectory.member",
@@ -10115,7 +10115,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "True when this entry is the ROOT instance's — its own declaration, or its own member of an inherited subgraph."
+          "@value": "True when this entry is the ROOT layer's — its own declaration, or its own member of an inherited subgraph."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#ResolvedDirectory.own",
@@ -10210,7 +10210,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The page that renders this subgraph, **relative to the REPOSITORY root** — not to the instance, which is what the sibling `path` on {@link ContentDirectorySchema} is relative to."
+          "@value": "The page that renders this subgraph, **relative to the REPOSITORY root** — not to the layer, which is what the sibling `path` on {@link ContentDirectorySchema} is relative to."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#SubgraphCoverageSchema.visualiser",
@@ -10818,7 +10818,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The tile's theme, by reference (#1168 B8). Absent means the directory's, then the instance's."
+          "@value": "The tile's theme, by reference (#1168 B8). Absent means the directory's, then the layer's."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#VisualisationSchema.theme",
@@ -11065,7 +11065,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Instance directories declared from within, as in `skills.json`."
+          "@value": "Layer directories declared from within, as in `skills.json`."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/concern-groups.ts#ConcernGroupsSchema.directories",
@@ -11103,7 +11103,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Role ids from the instance's KG — see `BlockBase.audience` in `schemas/types.ts`. Declared HERE as well as there because Zod strips what it does not know: a field TypeScript accepts and Zod drops is written by an author, type-checks, and vanishes (bean `zdrf`)."
+          "@value": "Role ids from the layer's KG — see `BlockBase.audience` in `schemas/types.ts`. Declared HERE as well as there because Zod strips what it does not know: a field TypeScript accepts and Zod drops is written by an author, type-checks, and vanishes (bean `zdrf`)."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/constraints.ts#BlockBaseSchema.audience",
@@ -11407,7 +11407,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The vocabulary's name — the same field, and the same value, as a block-kind node's `adapter`. Deliberately NOT `name`: a `<stem>.json` whose `name` equals its stem is an instance DECLARATION to `findDeclarationFile`, so `paper.json` with `name: \"paper\"` made `content-adapters/` an instance and collapsed sci's sibling scope."
+          "@value": "The vocabulary's name — the same field, and the same value, as a block-kind node's `adapter`. Deliberately NOT `name`: a `<stem>.json` whose `name` equals its stem is a layer DECLARATION to `findDeclarationFile`, so `paper.json` with `name: \"paper\"` made `content-adapters/` a layer and collapsed sci's sibling scope."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/content-adapter-node.ts#ContentAdapterNodeSchema.adapter",
@@ -11464,7 +11464,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The vocabulary's own module, `path.ts`, relative to the declaring instance: the code that defines its blocks. For a TYPED vocabulary it exports the kinds' schemas (`blockSchemas`), and may export `constraintRules` and `builders` — the contract and its loader are `vocabulary-modules.ts`. So a layer above cat-harness types its own kinds, and a composition that does not mount it neither discovers nor types them."
+          "@value": "The vocabulary's own module, `path.ts`, relative to the declaring layer: the code that defines its blocks. For a TYPED vocabulary it exports the kinds' schemas (`blockSchemas`), and may export `constraintRules` and `builders` — the contract and its loader are `vocabulary-modules.ts`. So a layer above cat-harness types its own kinds, and a composition that does not mount it neither discovers nor types them."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/content-adapter-node.ts#ContentAdapterNodeSchema.vocabulary",
@@ -11977,7 +11977,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The contributing instance's name, as declared in the dependency entry."
+          "@value": "The contributing layer's name, as declared in the dependency entry."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/content/contributions.ts#FolioContribution.name",
@@ -11996,7 +11996,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The contributing instance's root directory, absolute."
+          "@value": "The contributing layer's root directory, absolute."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/content/contributions.ts#FolioContribution.root",
@@ -13136,7 +13136,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Emitted only when the exporting instance is itself publishable."
+          "@value": "Emitted only when the exporting layer is itself publishable."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/depends-on.ts#DependsOnExport.records",
@@ -13896,7 +13896,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Outbound edges whose direction cannot be decided, because the source instance declares no `needs`. Not clean."
+          "@value": "Outbound edges whose direction cannot be decided, because the source layer declares no `needs`. Not clean."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/detangle-sidecar.ts#DetangleSidecar.undeterminedDirection",
@@ -14910,6 +14910,101 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/device-screen.screenstateschema.blocks",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ScreenStateSchema.blocks"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Blocks that replace the screen's blocks with the same `id`."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/device-screen.ts#ScreenStateSchema.blocks",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/device-screen.screenstateschema.hide",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ScreenStateSchema.hide"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Ids of the screen's blocks this state does not show."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/device-screen.ts#ScreenStateSchema.hide",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/device-screen.screenstateschema.id",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ScreenStateSchema.id"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Its URL value (`?state=tampered`) and what a block's `only` names."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/device-screen.ts#ScreenStateSchema.id",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/device-screen.screenstateschema.label",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ScreenStateSchema.label"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The switch's label (\"Tampered card\")."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/device-screen.ts#ScreenStateSchema.label",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/device-screen.screenstateschema.try",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ScreenStateSchema.try"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What to try in this state."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/device-screen.ts#ScreenStateSchema.try",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/device-screen.statusbadgeblockschema.verdict",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -15021,6 +15116,158 @@
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/discovered-vocabulary.ts#DiscoveredVocabulary.graph",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/document-errata.erratumschema.block",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ErratumSchema.block"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The block that prints it, e.g. `library/<slug>/blocks/prose-sec-003`, when one does."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/content/document-errata.ts#ErratumSchema.block",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/document-errata.erratumschema.evidence",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ErratumSchema.evidence"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What shows it is an error, in a form a person can check: the other page, table or edition that disagrees, quoted or cited."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/content/document-errata.ts#ErratumSchema.evidence",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/document-errata.erratumschema.id",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ErratumSchema.id"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Stable within the entry: `e1`, `e2`, ... Never reused for another erratum."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/content/document-errata.ts#ErratumSchema.id",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/document-errata.erratumschema.narrative",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ErratumSchema.narrative"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The explanation a reader is shown, with its state and author."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/content/document-errata.ts#ErratumSchema.narrative",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/document-errata.erratumschema.page",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ErratumSchema.page"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The physical PDF page (1-based) it is printed on, when known."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/content/document-errata.ts#ErratumSchema.page",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/document-errata.erratumschema.quote",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ErratumSchema.quote"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The words as printed, verbatim, so the place can be found and checked."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/content/document-errata.ts#ErratumSchema.quote",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/document-errata.erratumschema.reading",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ErratumSchema.reading"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The reading the evidence supports, when there is one. Never substituted for `quote`."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/content/document-errata.ts#ErratumSchema.reading",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/document-footnotes.footnotecallschema.context",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FootnoteCallSchema.context"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Up to 60 characters before the mark, so a reader can find it on the page."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/content/document-footnotes.ts#FootnoteCallSchema.context",
       "skos:note": "candidate"
     },
     {
@@ -19786,7 +20033,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The kind's word, as a directory's `graphTypologies` names it. `kind`, NOT `name`: a JSON file whose `name` equals its filename stem is how `findDeclarationFile` recognises an INSTANCE declaration, so a node spelled with `name` made `typologies/` read as a directory of four instances (measured on the first move, 2026-10-04)."
+          "@value": "The kind's word, as a directory's `graphTypologies` names it. `kind`, NOT `name`: a JSON file whose `name` equals its filename stem is how `findDeclarationFile` recognises a LAYER declaration, so a node spelled with `name` made `typologies/` read as a directory of four layers (measured on the first move, 2026-10-04)."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/graph-typology-node.ts#GraphTypologyNodeSchema.kind",
@@ -19812,6 +20059,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/graph-typology-node.graphtypologynodeschema.publishedbybuild",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GraphTypologyNodeSchema.publishedByBuild"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Its directories are source a build Tool publishes at its own route, so the mount pass never copies them."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/kg/graph-typology-node.ts#GraphTypologyNodeSchema.publishedByBuild",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/graph-typology-node.graphtypologynodeschema.rationale",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -19828,6 +20094,25 @@
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/graph-typology-node.ts#GraphTypologyNodeSchema.rationale",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/graph-typology-node.graphtypologynodeschema.serialised",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GraphTypologyNodeSchema.serialised"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Whether a directory of this kind owes json, jsonld and schema.json at its URL (check:subgraph-coverage). Absent: owed unless `holds` is `state`. `false` for kinds whose files are not graph nodes: code, built pages, fixtures. Owner Q-SER-1 C / Q-SER-2 A, 2026-11-12: not all directories need to be harnessed."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/kg/graph-typology-node.ts#GraphTypologyNodeSchema.serialised",
       "skos:note": "candidate"
     },
     {
@@ -20052,7 +20337,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Does a graph of this kind say what the instance **IS**, or where something **GOT TO**?"
+          "@value": "Does a graph of this kind say what the layer **IS**, or where something **GOT TO**?"
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/graph-typology-registry.ts#GraphTypologyDef.holds",
@@ -20090,7 +20375,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Whose namespace the kind is named in, when it is not the harness's: `core` for a kind the content layer above the harness declares as a node in its own `typologies/` graph, named in THAT instance's namespace ({@link graphTypologyIri}, {@link DECLARED_BY}). The harness registers no `core` kind in code since folio-assistant#2598 (owner, 2026-10-16, \"1a\"): the ones it uses itself (`todos`, `library`, `uploads`, `voices`, `folio`, …) are its own. A kind bootstrap defines is bootstrap's whatever this says (`BOOTSTRAP_GRAPH_TYPOLOGIES`). The kind IS its individual, `<ns>graphTypology/<name>` ({@link graphTypologyIri}); there is no class per kind. Owner, 2026-09-30 (bean `3r47`): \"Drop per-kind classes\" — bootstrap names a kind as one `GraphTypology` individual, and the harness now does the same."
+          "@value": "Whose namespace the kind is named in, when it is not the harness's: `core` for a kind the content layer above the harness declares as a node in its own `typologies/` graph, named in THAT layer's namespace ({@link graphTypologyIri}, {@link DECLARED_BY}). The harness registers no `core` kind in code since folio-assistant#2598 (owner, 2026-10-16, \"1a\"): the ones it uses itself (`todos`, `library`, `uploads`, `voices`, `folio`, …) are its own. A kind bootstrap defines is bootstrap's whatever this says (`BOOTSTRAP_GRAPH_TYPOLOGIES`). The kind IS its individual, `<ns>graphTypology/<name>` ({@link graphTypologyIri}); there is no class per kind. Owner, 2026-09-30 (bean `3r47`): \"Drop per-kind classes\" — bootstrap names a kind as one `GraphTypology` individual, and the harness now does the same."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/graph-typology-registry.ts#GraphTypologyDef.layer",
@@ -20109,7 +20394,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Where a NEW instance's own graph of this kind lives, when `folio_init` scaffolds it — `perInstance`'s companion: that field says a dependent HAS its own; this one says where the new one is kept. Bean `hp54`."
+          "@value": "Where a NEW layer's own graph of this kind lives, when `folio_init` scaffolds it — `perInstance`'s companion: that field says a dependent HAS its own; this one says where the new one is kept. Bean `hp54`."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/graph-typology-registry.ts#GraphTypologyDef.newInstanceSource",
@@ -20147,7 +20432,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Does every instance have ITS OWN graph of this kind — so an instance that inherits a directory of this kind gets its own copy created?"
+          "@value": "Does every layer have ITS OWN graph of this kind — so a layer that inherits a directory of this kind gets its own copy created?"
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/graph-typology-registry.ts#GraphTypologyDef.perInstance",
@@ -20170,6 +20455,25 @@
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/graph-typology-registry.ts#GraphTypologyDef.published",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/graph-typology-registry.graphtypologydef.publishedbybuild",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GraphTypologyDef.publishedByBuild"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Is a directory of this kind SOURCE that a build Tool turns into pages at publish, so the directory itself is never copied to the site?"
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/kg/graph-typology-registry.ts#GraphTypologyDef.publishedByBuild",
       "skos:note": "candidate"
     },
     {
@@ -20246,6 +20550,25 @@
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/graph-typology-registry.ts#GraphTypologyDef.schema",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/graph-typology-registry.graphtypologydef.serialised",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GraphTypologyDef.serialised"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Whether a directory of this kind owes json, jsonld and schema.json at its URL (check:subgraph-coverage). Absent: owed unless `holds` is `state`. `false` for kinds whose files are not graph nodes: code, built pages, fixtures. Owner Q-SER-1 C / Q-SER-2 A, 2026-11-12: not all directories need to be harnessed."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/kg/graph-typology-registry.ts#GraphTypologyDef.serialised",
       "skos:note": "candidate"
     },
     {
@@ -21610,7 +21933,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The corpus this indexes, by its instance name."
+          "@value": "The corpus this indexes, by its layer name."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/id-lookup.ts#IdLookupManifestSchema.source",
@@ -21693,14 +22016,14 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/index-config.indexconfigschema.contenttypes",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/index-config.indexconfigobject.contenttypes",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
       },
       "skos:prefLabel": [
         {
-          "@value": "IndexConfigSchema.contentTypes"
+          "@value": "IndexConfigObject.contentTypes"
         }
       ],
       "skos:definition": [
@@ -21708,18 +22031,18 @@
           "@value": "Sections that registered CONTENT TYPES declare about this repository, keyed by the type's id: `\"contentTypes\": { \"dak\": { ... } }`."
         }
       ],
-      "dcterms:source": "cat-harness-tools/schemas/kg/index-config.ts#IndexConfigSchema.contentTypes",
+      "dcterms:source": "cat-harness-tools/schemas/kg/index-config.ts#IndexConfigObject.contentTypes",
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/index-config.indexconfigschema.description",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/index-config.indexconfigobject.description",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
       },
       "skos:prefLabel": [
         {
-          "@value": "IndexConfigSchema.description"
+          "@value": "IndexConfigObject.description"
         }
       ],
       "skos:definition": [
@@ -21727,18 +22050,18 @@
           "@value": "One paragraph under that title, saying what the checkout is for."
         }
       ],
-      "dcterms:source": "cat-harness-tools/schemas/kg/index-config.ts#IndexConfigSchema.description",
+      "dcterms:source": "cat-harness-tools/schemas/kg/index-config.ts#IndexConfigObject.description",
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/index-config.indexconfigschema.enablesubgraphs",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/index-config.indexconfigobject.enablesubgraphs",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
       },
       "skos:prefLabel": [
         {
-          "@value": "IndexConfigSchema.enableSubgraphs"
+          "@value": "IndexConfigObject.enableSubgraphs"
         }
       ],
       "skos:definition": [
@@ -21746,18 +22069,18 @@
           "@value": "The opt-in named sub-graphs switched on for THIS checkout, each `<instance>.<directory id>` (cat-harness#991 step 23.4). An index root declares no instance, so this is where it says what a layer's declaration says in its own `enableSubgraphs` (`schemas/kg/opt-in-subgraphs.ts`). Not inherited by any layer."
         }
       ],
-      "dcterms:source": "cat-harness-tools/schemas/kg/index-config.ts#IndexConfigSchema.enableSubgraphs",
+      "dcterms:source": "cat-harness-tools/schemas/kg/index-config.ts#IndexConfigObject.enableSubgraphs",
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/index-config.indexconfigschema.gateexemptions",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/index-config.indexconfigobject.gateexemptions",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
       },
       "skos:prefLabel": [
         {
-          "@value": "IndexConfigSchema.gateExemptions"
+          "@value": "IndexConfigObject.gateExemptions"
         }
       ],
       "skos:definition": [
@@ -21765,18 +22088,37 @@
           "@value": "The steps of THIS checkout's own workflows that CI runs and the local gate set does not, each with its reason ({@link GateExemptionsSchema}). The index owns `.github/workflows/`, so it declares their exemptions, in the same change as the step — never ahead of it in a layer."
         }
       ],
-      "dcterms:source": "cat-harness-tools/schemas/kg/index-config.ts#IndexConfigSchema.gateExemptions",
+      "dcterms:source": "cat-harness-tools/schemas/kg/index-config.ts#IndexConfigObject.gateExemptions",
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/index-config.indexconfigschema.mountapprovers",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/index-config.indexconfigobject.harnesses",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
       },
       "skos:prefLabel": [
         {
-          "@value": "IndexConfigSchema.mountApprovers"
+          "@value": "IndexConfigObject.harnesses"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Which harnesses are INSTANTIATED here (cat-harness#1138), each an instance of the Harness node kind. Absent is the old form: every layer is read as instantiated, as before. Present, only these are, and the file is written with `layers` rather than `instances`."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/kg/index-config.ts#IndexConfigObject.harnesses",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/index-config.indexconfigobject.mountapprovers",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IndexConfigObject.mountApprovers"
         }
       ],
       "skos:definition": [
@@ -21784,18 +22126,18 @@
           "@value": "Who may consent to a remote mount in this checkout: `consent.by` on an instance's `trust` must be one of them (`schemas/kg/mount-trust.ts`, roast `1ygp` L4.2). The same field an instance declaration carries, here for the checkout whose mounts the index lists and which may declare no instance of its own (folio-assistant#2389). Declaring it in both is an error, never a pick."
         }
       ],
-      "dcterms:source": "cat-harness-tools/schemas/kg/index-config.ts#IndexConfigSchema.mountApprovers",
+      "dcterms:source": "cat-harness-tools/schemas/kg/index-config.ts#IndexConfigObject.mountApprovers",
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/index-config.indexconfigschema.title",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/index-config.indexconfigobject.title",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
       },
       "skos:prefLabel": [
         {
-          "@value": "IndexConfigSchema.title"
+          "@value": "IndexConfigObject.title"
         }
       ],
       "skos:definition": [
@@ -21803,7 +22145,7 @@
           "@value": "What this CHECKOUT is called. The index declares no instance of its own (owner, 2026-10-08), so nothing else names it; `index:render` titles the root `README.md` and `AGENTS.md` with it (owner, 2026-10-09: those two are rendered files). Absent, they are titled generically."
         }
       ],
-      "dcterms:source": "cat-harness-tools/schemas/kg/index-config.ts#IndexConfigSchema.title",
+      "dcterms:source": "cat-harness-tools/schemas/kg/index-config.ts#IndexConfigObject.title",
       "skos:note": "candidate"
     },
     {
@@ -21880,6 +22222,63 @@
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/index-config.ts#IndexSiteSchema.landing",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/index-config.indexsiteschema.publishafter",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IndexSiteSchema.publishAfter"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Workflow files under `.github/workflows/` whose run on the SAME commit the push-to-main publish waits for, before it builds (cat-harness-tools#1879). An IG's site is built from its AST cache, which its `ig-ast-refresh.yml` seeds on the same push. A publish that starts first finds the cache stale and is refused. A workflow that did not run on that commit is not waited for."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/kg/index-config.ts#IndexSiteSchema.publishAfter",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/index-config.indexsiteschema.publisher",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IndexSiteSchema.publisher"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Which site publisher `stage-local.ts` uses for this checkout when no `--publisher` is given: `folio`, or the kind of a publisher a mounted layer declares (`ig`, an IG layer's `site-publisher-ig`). Absent: the declared `site.build` recipe, else the publisher the repository's own workflows call, as before. It exists for a repository that has both, such as a DAK whose instance declares a folio recipe while its site is the IG (smart-trust-demo). Agents had to remember `--publisher ig` for that repository, and the shared `folio-site-publish.yml` that runs on every push to main had no way of knowing it (owner, 2026-11-11: \"i want that it publishes once merge to main, update QA reports etc.\"; cat-harness-tools#1879)."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/kg/index-config.ts#IndexSiteSchema.publisher",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/index-config.indexsiteschema.sharedassets",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IndexSiteSchema.sharedAssets"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Where this site loads the assets every IG site shares, instead of carrying its own copy (owner, 2026-11-09, Q-SZ-7 \"A\"): a site on the same github.io origin that publishes them, such as `https://litlfred.github.io/smart-html-jtd/`. Each shared directory is served at `<sharedAssets>shared/<dir>/<digest>/`, so a site keeps loading the exact bytes it was built with. A build whose copy the host does not serve keeps it local (`scripts/lib/shared-assets.ts`)."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/kg/index-config.ts#IndexSiteSchema.sharedAssets",
       "skos:note": "candidate"
     },
     {
@@ -22047,7 +22446,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Absolute path of the instance root in this checkout or overlay."
+          "@value": "Absolute path of the layer root in this checkout or overlay."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/instance-repositories.ts#InstanceRepository.root",
@@ -22427,7 +22826,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Named profiles, e.g. `low-dexterity`. Free strings on purpose: the vocabulary is open and a closed enum here would reject a profile a downstream instance has a name for and this layer does not."
+          "@value": "Named profiles, e.g. `low-dexterity`. Free strings on purpose: the vocabulary is open and a closed enum here would reject a profile a downstream layer has a name for and this layer does not."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/conduct/interaction.ts#InteractionProfileSchema.profiles",
@@ -22465,7 +22864,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The instance it came from, as a reference — `litlfred/cat-harness`."
+          "@value": "The layer it came from, as a reference — `litlfred/cat-harness`."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/kg-node.ts#AssetSourceSchema.instance",
@@ -22484,7 +22883,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Path within that instance."
+          "@value": "Path within that layer."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/kg-node.ts#AssetSourceSchema.path",
@@ -22636,7 +23035,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Path relative to the root {@link DeclarationScopeSchema | `scope`} names — this instance's by default, the repository's when `scope` says so."
+          "@value": "Path relative to the root {@link DeclarationScopeSchema | `scope`} names — this layer's by default, the repository's when `scope` says so."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/kg-node.ts#KgAssetSchema.src",
@@ -22674,7 +23073,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "What the navbar draws BEHIND this image when it is an avatar: `tone` (the default), the instance's hue square, which a card-art crop covers; or `none`, the image on the rail itself, for a mark that is transparent around its shape (issue #46, gap 5)."
+          "@value": "What the navbar draws BEHIND this image when it is an avatar: `tone` (the default), the layer's hue square, which a card-art crop covers; or `none`, the image on the rail itself, for a mark that is transparent around its shape (issue #46, gap 5)."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/kg-node.ts#KgImage.ground",
@@ -22921,7 +23320,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "WHICH INSTANCE ROOT can answer it — the second axis beside {@link applies}."
+          "@value": "WHICH LAYER ROOT can answer it — the second axis beside {@link applies}."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/sdlc/kg-qa.ts#KgCriterionDefinition.scope",
@@ -23263,7 +23662,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The instance the module belongs to, by its DECLARED NAME, when that is not the instance resolving the reference: `folio-assistant-core:schemas/x.ts#X`."
+          "@value": "The layer the module belongs to, by its DECLARED NAME, when that is not the layer resolving the reference: `folio-assistant-core:schemas/x.ts#X`."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/kind-validator.ts#ValidatorRef.instance",
@@ -23574,6 +23973,63 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/library-keywords.keywordsgraphschema.about",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "KeywordsGraphSchema.about"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The library entry these keywords are about, as the library graph names it."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/library/library-keywords.ts#KeywordsGraphSchema.about",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/library-keywords.keywordvariantschema.method",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "KeywordVariantSchema.method"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The methodology node the variant applies (`lsi`, …)."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/library/library-keywords.ts#KeywordVariantSchema.method",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/library-keywords.keywordvariantschema.space",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "KeywordVariantSchema.space"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`surface`: the weighted term matrix. `latent`: its rank-k reconstruction. `latent-rerank`: latent scores over the words the text uses."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/library/library-keywords.ts#KeywordVariantSchema.space",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/library-keywords.scoredkeywordschema.score",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -23871,7 +24327,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Working directory, relative to the instance root."
+          "@value": "Working directory, relative to the layer root."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/sdlc/log-entry.ts#LogExecutionSchema.cwd",
@@ -25201,7 +25657,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "A standing consent for this instance: see \"Standing consent\" above."
+          "@value": "A standing consent for this layer: see \"Standing consent\" above."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/mount-trust.ts#MountTrustSchema.standing",
@@ -25448,7 +25904,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "In the baseline and unkinded, but OWNED by another instance: a baseline may name only its own."
+          "@value": "In the baseline and unkinded, but OWNED by another layer: a baseline may name only its own."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/node-kind-index.ts#LayerRatchet.foreign",
@@ -25543,7 +25999,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The instance that declares it: the one whose code holds the `nodeKind()`. Absent for a kind reached only as an ANCESTOR (a mixin such as `themed`): no typology names it, so nothing here says where it lives, and guessing from a child would file it under whichever child was read first."
+          "@value": "The layer that declares it: the one whose code holds the `nodeKind()`. Absent for a kind reached only as an ANCESTOR (a mixin such as `themed`): no typology names it, so nothing here says where it lives, and guessing from a child would file it under whichever child was read first."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/node-kind-index.ts#NodeKindEntry.declaredBy",
@@ -25562,7 +26018,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "How its nodes are found when no typology holds them: by a NAME RULE ({@link NAME_RULE_KINDS}). `instance-declaration` is each instance's own `<instance>.json`, which sits at an instance root rather than in a declared directory, so no typology can name it. Absent: found through `holdings`."
+          "@value": "How its nodes are found when no typology holds them: by a NAME RULE ({@link NAME_RULE_KINDS}). `instance-declaration` is each layer's own `<instance>.json`, which sits at a layer root rather than in a declared directory, so no typology can name it. Absent: found through `holdings`."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/node-kind-index.ts#NodeKindEntry.foundBy",
@@ -25790,7 +26246,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The instance that holds it."
+          "@value": "The layer that holds it."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/node-kind-nodes.ts#KindNode.harness",
@@ -25847,7 +26303,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Relative to that instance's root, extension dropped: the node's address."
+          "@value": "Relative to that layer's root, extension dropped: the node's address."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/node-kind-nodes.ts#KindNode.path",
@@ -26170,7 +26626,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "What the rule applies to; absent means the instance's whole graph."
+          "@value": "What the rule applies to; absent means the layer's whole graph."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/content/odrl.ts#OdrlRuleSchema.target",
@@ -26379,7 +26835,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "One sentence on what this API is and why this instance holds it."
+          "@value": "One sentence on what this API is and why this layer holds it."
         }
       ],
       "dcterms:source": "cat-harness-tools/openapi/schemas/openapi.ts#OpenApiConfigDocumentSchema.description",
@@ -26683,7 +27139,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Every directory the instance declares — top level and from within — with its `optIn`."
+          "@value": "Every directory the layer declares — top level and from within — with its `optIn`."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/opt-in-subgraphs.ts#DeclaredOptIns.directories",
@@ -26702,7 +27158,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The instance whose declaration (or declaration file from within) wrote the entry."
+          "@value": "The layer whose declaration (or declaration file from within) wrote the entry."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/opt-in-subgraphs.ts#OptInCarrier.declaredBy",
@@ -26918,6 +27374,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/pdf-structure.pdfdiagnosticsschema.headings_tidied",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PdfDiagnosticsSchema.headings_tidied"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Inferred headings that did not read as headings: a title cut to its last line, rejoined with the lines above it up to its number (`as`), or a body word, a reference's first author or a diagram's labels, dropped. Absent when none was."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/ui/pdf-structure.ts#PdfDiagnosticsSchema.headings_tidied",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/pdf-structure.pdfdiagnosticsschema.latex_overlay",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -26934,6 +27409,25 @@
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/ui/pdf-structure.ts#PdfDiagnosticsSchema.latex_overlay",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/pdf-structure.pdfdiagnosticsschema.outline_rejected",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PdfDiagnosticsSchema.outline_rejected"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The PDF carried an outline and it was not used, with why: its entries are machine bookmark names (`_GoBack`, `_Hlk62546849`, `_TOC_250000`, \"Blank Page\", a merged file's name), or too few of them name a heading the pages print (a Russian edition carrying its English outline). The contents were then inferred, as for a PDF with no outline. Absent when the outline was used or there was none."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/ui/pdf-structure.ts#PdfDiagnosticsSchema.outline_rejected",
       "skos:note": "candidate"
     },
     {
@@ -26956,6 +27450,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/pdf-structure.pdfdiagnosticsschema.oversized_split",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PdfDiagnosticsSchema.oversized_split"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Sections too long to be one block (more than half of a document of 20 pages or more, or over 20,000 words) and how each was cut: at the headings inferred inside it, else where the chapter in its running heads changes, else one section per page. Absent when no section was cut."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/ui/pdf-structure.ts#PdfDiagnosticsSchema.oversized_split",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/pdf-structure.pdfdiagnosticsschema.page_label_conflicts",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -26972,6 +27485,25 @@
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/ui/pdf-structure.ts#PdfDiagnosticsSchema.page_label_conflicts",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/pdf-structure.pdfdiagnosticsschema.pages_read_in_print_order",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PdfDiagnosticsSchema.pages_read_in_print_order"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Pages whose text stream drew the outline's first heading after the page's body, re-read in print order (1-based). Absent when none was."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/ui/pdf-structure.ts#PdfDiagnosticsSchema.pages_read_in_print_order",
       "skos:note": "candidate"
     },
     {
@@ -27165,6 +27697,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/pdf-structure.pdfsourceschema.languages",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PdfSourceSchema.languages"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The document's languages as the ingest was told them (`--lang-hint`, ISO 639-1). A reader asks this, not the entry's slug: 10665/202203 is Russian and its slug has no language suffix, because an item's first edition keeps the bare slug (owner, 2026-11-11, card Q-ODD-1 = A). Absent when the ingest was given none."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/ui/pdf-structure.ts#PdfSourceSchema.languages",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/pdf-structure.pdfsourceschema.math_source",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -27181,6 +27732,25 @@
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/ui/pdf-structure.ts#PdfSourceSchema.math_source",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/pdf-structure.pdfsourceschema.ocr_pages",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PdfSourceSchema.ocr_pages"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Pages whose embedded text layer failed `scripts/_text_quality.py` and were read from the OCR cache instead, each with the reason (owner, 2026-11-11, who-iris card Q-ODD-1 = A: \"force OCR when a page's text layer fails a quality check\"). The rest of the document keeps its embedded text, so `text_source` stays `embedded`. Absent when no page was replaced."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/ui/pdf-structure.ts#PdfSourceSchema.ocr_pages",
       "skos:note": "candidate"
     },
     {
@@ -27507,6 +28077,63 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/portfolio.portfoliolevelschema.id",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PortfolioLevelSchema.id"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`L1`, `L2`, …: short, upper-case first. Unique within the portfolio."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/kg/portfolio.ts#PortfolioLevelSchema.id",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/portfolio.portfoliolevelschema.libraries",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PortfolioLevelSchema.libraries"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Empty is allowed: a level the portfolio names before it has members."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/kg/portfolio.ts#PortfolioLevelSchema.libraries",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/portfolio.portfoliolibraryschema.id",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PortfolioLibrarySchema.id"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Unique within the portfolio."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/kg/portfolio.ts#PortfolioLibrarySchema.id",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/prov-jsonld.owned.file",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -27538,7 +28165,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Path inside the instance, without extension, `/`-separated."
+          "@value": "Path inside the layer, without extension, `/`-separated."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/prov-jsonld.ts#Owned.path",
@@ -27557,7 +28184,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Instance root, absolute."
+          "@value": "Layer root, absolute."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/prov-jsonld.ts#Owned.root",
@@ -27652,7 +28279,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The ODRL policy uid(s) the run was under. Required: a run under no policy cannot be checked. An array when several policies were in force, which is how JSON-LD writes several values of one property: `decide` evaluates every policy an instance holds, so naming only one would misstate what the verdict was computed against."
+          "@value": "The ODRL policy uid(s) the run was under. Required: a run under no policy cannot be checked. An array when several policies were in force, which is how JSON-LD writes several values of one property: `decide` evaluates every policy a layer holds, so naming only one would misstate what the verdict was computed against."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/content/prov.ts#ProvActivityObjectSchema.cat-harness:underPolicy",
@@ -27918,7 +28545,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The subject root relative to the instance root, POSIX, without extension."
+          "@value": "The subject root relative to the layer root, POSIX, without extension."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/sdlc/qa-attestations.ts#AttestationKey.subject",
@@ -27956,7 +28583,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Repo-relative instance root, `.` for the checkout root."
+          "@value": "Repo-relative layer root, `.` for the checkout root."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/sdlc/qa-attestations.ts#KgAttestationTree.instance",
@@ -29552,7 +30179,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The instance the FILE belongs to."
+          "@value": "The layer the FILE belongs to."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/reference-direction.ts#Occurrence.from",
@@ -29590,7 +30217,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The instance whose NAME was found."
+          "@value": "The layer whose NAME was found."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/reference-direction.ts#Occurrence.to",
@@ -29647,7 +30274,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Why this is not a reference to the instance. Required."
+          "@value": "Why this is not a reference to the layer. Required."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/reference-direction.ts#ReferenceExemption.reason",
@@ -29666,7 +30293,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Limit to one target instance; omitted means any."
+          "@value": "Limit to one target layer; omitted means any."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/reference-direction.ts#ReferenceExemption.to",
@@ -29711,6 +30338,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/remote-mount.lockeddirectoryschema.except",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LockedDirectorySchema.except"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A whole-layer mount (`id: \"*\"`) only: the opt-in sub-graphs the downstream has not switched on, relative to the layer root, no trailing slash. Not checked out, not copied, not in the digest (`switchedOffOptInPaths` in scripts/remote-mount.ts)."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/kg/remote-mount.ts#LockedDirectorySchema.except",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/remote-mount.lockeddirectoryschema.package",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -29742,7 +30388,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Relative to the downstream instance's root, no trailing slash."
+          "@value": "Relative to the downstream layer's root, no trailing slash."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/remote-mount.ts#LockedDirectorySchema.path",
@@ -29799,7 +30445,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The instance's DECLARED ASSETS (`assets[].src` — its README and AGENTS.md), each a single file the declaration names and the mount lays down beside the declaration. Bean `hupw`: a mount without them left every declared asset of a mounted instance a dangling reference. Only instance-scoped assets inside the instance are taken; a declared asset the pinned tree lacks makes the instance `missing`."
+          "@value": "The layer's DECLARED ASSETS (`assets[].src` — its README and AGENTS.md), each a single file the declaration names and the mount lays down beside the declaration. Bean `hupw`: a mount without them left every declared asset of a mounted layer a dangling reference. Only instance-scoped assets inside the layer are taken; a declared asset the pinned tree lacks makes the layer `missing`."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/remote-mount.ts#LockedInstanceSchema.assets",
@@ -29818,7 +30464,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Mounted as hydrated metadata (bean `mo75` G2): each directory holds one `index.hydrated.jsonld`, read from the `upstreamPath` directory the instance publishes it in, and the declaration is recorded (it fixed those paths) but NOT laid down — so nothing discovers a code-less instance there."
+          "@value": "Mounted as hydrated metadata (bean `mo75` G2): each directory holds one `index.hydrated.jsonld`, read from the `upstreamPath` directory the layer publishes it in, and the declaration is recorded (it fixed those paths) but NOT laid down — so nothing discovers a code-less layer there."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/remote-mount.ts#LockedInstanceSchema.hydrated",
@@ -29894,7 +30540,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The instance's root in the upstream repository; `\"\"` is that repository's root."
+          "@value": "The layer's root in the upstream repository; `\"\"` is that repository's root."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/remote-mount.ts#LockedInstanceSchema.upstreamRoot",
@@ -29932,7 +30578,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Directory ids, in this instance's own declaration."
+          "@value": "Directory ids, in this layer's own declaration."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/remote-mount.ts#MountDefaultsSchema.directories",
@@ -29951,7 +30597,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Mount the WHOLE instance root — every tracked file at the pin, root files included — instead of its declared directories. For an instance a downstream reads as a checkout rather than as graphs: `bootstrap` (whose `ns.jsonld` and README sit at its root) and `bootstrap-tools` (whose `package.json` and `tsconfig.json` do), the two git submodules a remote mount replaces (bean `nn8e`, #2462). Locked as one directory, id `*`."
+          "@value": "Mount the WHOLE layer root — every tracked file at the pin, root files included — instead of its declared directories. For a layer a downstream reads as a checkout rather than as graphs: `bootstrap` (whose `ns.jsonld` and README sit at its root) and `bootstrap-tools` (whose `package.json` and `tsconfig.json` do), the two git submodules a remote mount replaces (bean `nn8e`, #2462). Locked as one directory, id `*`."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/remote-mount.ts#MountDefaultsSchema.whole",
@@ -29989,7 +30635,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "What the closure reached and did NOT mount, with why — so the check, which reads the lock and never the network, cannot report clean over an instance the mount never laid down. `local` and `skipped` are recorded too: they are answers, and a reader should see them as such."
+          "@value": "What the closure reached and did NOT mount, with why — so the check, which reads the lock and never the network, cannot report clean over a layer the mount never laid down. `local` and `skipped` are recorded too: they are answers, and a reader should see them as such."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/remote-mount.ts#MountLockSchema.unmounted",
@@ -30008,7 +30654,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Mount this instance's directories as their published `index.hydrated.jsonld` only — metadata, no files (bean `mo75` G2). Overrides the mount entry's own `hydrated` either way. `directories` still chooses which subgraphs; `whole` and `hydrated` together are refused at plan time, since one asks for every file and the other for none."
+          "@value": "Mount this layer's directories as their published `index.hydrated.jsonld` only — metadata, no files (bean `mo75` G2). Overrides the mount entry's own `hydrated` either way. `directories` still chooses which subgraphs; `whole` and `hydrated` together are refused at plan time, since one asks for every file and the other for none."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/remote-mount.ts#MountOverrideSchema.hydrated",
@@ -30027,7 +30673,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Tool ids THIS instance declares, each mounted runnable: its definition, its implementation and their import closure, as the declared directories that closure touches (module note, §\"Tools\"). An id the instance does not declare at the pin is refused at plan time, never dropped. Not with `hydrated` (metadata brings no code) or `skip`."
+          "@value": "Tool ids THIS layer declares, each mounted runnable: its definition, its implementation and their import closure, as the declared directories that closure touches (module note, §\"Tools\"). An id the layer does not declare at the pin is refused at plan time, never dropped. Not with `hydrated` (metadata brings no code) or `skip`."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/remote-mount.ts#MountOverrideSchema.tools",
@@ -30046,7 +30692,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Consent for THIS instance at its own pin. Required for an instance reached through a GITLINK: that is another repository at another commit, and the parent mount's consent does not cover it (roast `1ygp` L4.2). Ignored for the declared harness and same-tree instances, which the mount's own `trust` covers."
+          "@value": "Consent for THIS layer at its own pin. Required for a layer reached through a GITLINK: that is another repository at another commit, and the parent mount's consent does not cover it (roast `1ygp` L4.2). Ignored for the declared harness and same-tree layers, which the mount's own `trust` covers."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/remote-mount.ts#MountOverrideSchema.trust",
@@ -30084,7 +30730,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The harness's instance name, as its own declaration states it."
+          "@value": "The harness's layer name, as its own declaration states it."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/remote-mount.ts#RemoteMountSchema.harness",
@@ -30103,7 +30749,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Mount every instance this entry reaches as hydrated metadata ({@link MountOverrideSchema}`.hydrated`), unless its override says `hydrated: false`. Bean `mo75` G2."
+          "@value": "Mount every layer this entry reaches as hydrated metadata ({@link MountOverrideSchema}`.hydrated`), unless its override says `hydrated: false`. Bean `mo75` G2."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/remote-mount.ts#RemoteMountSchema.hydrated",
@@ -30122,7 +30768,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Per-instance overrides across the closure, keyed by instance name."
+          "@value": "Per-instance overrides across the closure, keyed by layer name."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/remote-mount.ts#RemoteMountSchema.overrides",
@@ -30673,7 +31319,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The site the paths are relative to, as a reader finds it (an instance, a URL path)."
+          "@value": "The site the paths are relative to, as a reader finds it (a layer, a URL path)."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/ui/rendered-impact.ts#RenderedImpactSchema.site",
@@ -31281,7 +31927,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Which kinds of actor may take this role on. `external` marks a participant outside the instance's control (a registry, a third-party service)."
+          "@value": "Which kinds of actor may take this role on. `external` marks a participant outside the layer's control (a registry, a third-party service)."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/process/role-graph.ts#RoleDef.actorKinds",
@@ -31585,7 +32231,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The id of a role declared by an instance this one depends on."
+          "@value": "The id of a role declared by a layer this one depends on."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/process/role-graph.ts#RoleExtension.role",
@@ -31604,7 +32250,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Skills the role gains in this instance's checkout."
+          "@value": "Skills the role gains in this layer's checkout."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/process/role-graph.ts#RoleExtension.skills",
@@ -31642,7 +32288,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Roles of a LOWER instance this graph adds skills to, BY ID (placement PR0b, bean `ejye`). See {@link RoleExtension}."
+          "@value": "Roles of a LOWER layer this graph adds skills to, BY ID (placement PR0b, bean `ejye`). See {@link RoleExtension}."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/process/role-graph.ts#RoleGraph.extensions",
@@ -32105,44 +32751,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/run-context.runcontextschema.profile",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "RunContextSchema.profile"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "The tool profile selected. Absent: the run selected none, and `releases[]` lists what it resolved anyway."
-        }
-      ],
-      "dcterms:source": "cat-harness-tools/schemas/sdlc/run-context.ts#RunContextSchema.profile",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/run-context.runcontextschema.prov",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "RunContextSchema.prov"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "The PROV activity that records this context as `prov:used`. Absent until the run records one (step 3)."
-        }
-      ],
-      "dcterms:source": "cat-harness-tools/schemas/sdlc/run-context.ts#RunContextSchema.prov",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/run-context.runinvokerschema.id",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -32212,7 +32820,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The instance's declared name."
+          "@value": "The layer's declared name."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/process/scenario-overlay.ts#ScenarioLayer.instance",
@@ -33093,6 +33701,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/site-indexes.librarydocumentviewschema.images",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LibraryDocumentViewSchema.images"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The entry's KEPT figures (role `figure`, a WebP on disk), each with every language's description. Absent when it keeps none."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/ui/site-indexes.ts#LibraryDocumentViewSchema.images",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/site-indexes.librarydocumentviewschema.links",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -33150,6 +33777,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/site-indexes.librarydocumentviewschema.tables",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LibraryDocumentViewSchema.tables"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The entry's transcribed tables (`tabular.csvw.json`), cells inline. Absent when it has none."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/ui/site-indexes.ts#LibraryDocumentViewSchema.tables",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/site-indexes.librarydocumentviewschema.variant",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -33166,6 +33812,25 @@
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/ui/site-indexes.ts#LibraryDocumentViewSchema.variant",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/site-indexes.libraryindexentryschema.catalogue",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LibraryIndexEntrySchema.catalogue"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The catalogue record behind this entry (`library-graph.ts` `catalogueInfo` / `referencedCatalogueEntries`, #1752 / #1765)."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/ui/site-indexes.ts#LibraryIndexEntrySchema.catalogue",
       "skos:note": "candidate"
     },
     {
@@ -33226,22 +33891,22 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/site-indexes.libraryindexentryschema.view",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/site-indexes.libraryindexentryschema.upstream",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
       },
       "skos:prefLabel": [
         {
-          "@value": "LibraryIndexEntrySchema.view"
+          "@value": "LibraryIndexEntrySchema.upstream"
         }
       ],
       "skos:definition": [
         {
-          "@value": "The page that RENDERS this entry, site-root path with a leading `/` and no base (the avatar's convention): another instance's declared root for a referenced entry it renders, else the entry's own library page. GENERATED by `gen-library-viz`, never stored in the asset (#1881)."
+          "@value": "Original file URLs upstream for an entry catalogued by reference (#1765)."
         }
       ],
-      "dcterms:source": "cat-harness-tools/schemas/ui/site-indexes.ts#LibraryIndexEntrySchema.view",
+      "dcterms:source": "cat-harness-tools/schemas/ui/site-indexes.ts#LibraryIndexEntrySchema.upstream",
       "skos:note": "candidate"
     },
     {
@@ -33428,7 +34093,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Every OTHER instance's declared `translation-sources` directory, each measured on its own (issue #2228). Optional: an index written before the field existed is still a valid index."
+          "@value": "Every OTHER layer's declared `translation-sources` directory, each measured on its own (issue #2228). Optional: an index written before the field existed is still a valid index."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/ui/site-indexes.ts#TranslationStatusSchema.instances",
@@ -33637,7 +34302,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Marks the entry as a subgraph of the INSTANCE rather than a part of the skills graph. Replaced `dependents` on 2026-09-30 (option A), when inheritance became automatic and the per-entry field was retired."
+          "@value": "Marks the entry as a subgraph of the LAYER rather than a part of the skills graph. Replaced `dependents` on 2026-09-30 (option A), when inheritance became automatic and the per-entry field was retired."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/skill-topics.ts#SkillsDirectoryEntrySchema.subgraph",
@@ -33675,7 +34340,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "One node, two lists: the instance directories declared from within."
+          "@value": "One node, two lists: the layer directories declared from within."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/skill-topics.ts#SkillTopicsSchema.directories",
@@ -34720,7 +35385,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The declaring instance's `alsoWritten`, for `bodyFrom: \"summary\"`."
+          "@value": "The declaring layer's `alsoWritten`, for `bodyFrom: \"summary\"`."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/content/sticky-contribution.ts#DeclaredContribution.alsoWritten",
@@ -34739,7 +35404,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The declaring instance's `name`."
+          "@value": "The declaring layer's `name`."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/content/sticky-contribution.ts#DeclaredContribution.declaredBy",
@@ -34758,7 +35423,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The declaration this contribution came from, RELATIVE TO THE REPOSITORY — `cat-harness/cat-harness.json`, `bootstrap/bootstrap.json`: each instance's own `<instance>/<instance>.json`."
+          "@value": "The declaration this contribution came from, RELATIVE TO THE REPOSITORY — `cat-harness/cat-harness.json`, `bootstrap/bootstrap.json`: each layer's own `<instance>/<instance>.json`."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/content/sticky-contribution.ts#DeclaredContribution.declaredIn",
@@ -34777,7 +35442,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The declaring instance's `description`, for `bodyFrom: \"description\"`."
+          "@value": "The declaring layer's `description`, for `bodyFrom: \"description\"`."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/content/sticky-contribution.ts#DeclaredContribution.description",
@@ -34796,7 +35461,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The declaring instance's root path on disk, when known."
+          "@value": "The declaring layer's root path on disk, when known."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/content/sticky-contribution.ts#DeclaredContribution.instanceRoot",
@@ -34815,7 +35480,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The declaring instance's `summary`, for `bodyFrom: \"summary\"`."
+          "@value": "The declaring layer's `summary`, for `bodyFrom: \"summary\"`."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/content/sticky-contribution.ts#DeclaredContribution.summary",
@@ -34948,7 +35613,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Read the body from the declaring instance instead. See {@link STICKY_BODY_SOURCES}."
+          "@value": "Read the body from the declaring layer instead. See {@link STICKY_BODY_SOURCES}."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/content/sticky-contribution.ts#StickyContributionSchema.bodyFrom",
@@ -35271,7 +35936,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "What the files were built in — they are computed over a checkout's instances, so the checkout is provenance."
+          "@value": "What the files were built in — they are computed over a checkout's layers, so the checkout is provenance."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/subgraph-manifest.ts#SubgraphIndexManifestSchema.builtIn",
@@ -35290,7 +35955,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The instance's declared `docs` directory, no trailing slash."
+          "@value": "The layer's declared `docs` directory, no trailing slash."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/subgraph-manifest.ts#SubgraphIndexManifestSchema.docs",
@@ -35461,7 +36126,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The upstream instance's name — the `<HARNESS>` segment of the subgraph IRI."
+          "@value": "The upstream layer's name — the `<HARNESS>` segment of the subgraph IRI."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/subgraph-source.ts#HydratedSourceSchema.harness",
@@ -35480,7 +36145,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The subgraph's path in that instance, e.g. `tools` or `skills/sdlc`; never the root."
+          "@value": "The subgraph's path in that layer, e.g. `tools` or `skills/sdlc`; never the root."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/subgraph-source.ts#HydratedSourceSchema.subgraph",
@@ -35943,63 +36608,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/tabular-csvw.tabularcsvwschema.narrative",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "TabularCsvwSchema.narrative"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "What the data is about, under bean `ju0u`'s state machine, the same record v1 carries. Required on the same terms as `source`."
-        }
-      ],
-      "dcterms:source": "cat-harness-tools/schemas/library/tabular-csvw.ts#TabularCsvwSchema.narrative",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/tabular-csvw.tabularcsvwschema.source",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "TabularCsvwSchema.source"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "The technical-metadata block every ingest sidecar carries (`file`, `sha256`, `mimetype_sniffed`, ...), the same record `folio-tabular-records/v1` holds as `source` — bean `urat`. It is how `check-l1-complete` (`sourceBlockOf`) and `check-library-qa` learn what the entry was made from. Required (urat step 5): no committed record predates it, and an extractor's output, which has none, is {@link TabularCsvwTablesSchema}. Not a CSVW key: {@link toCsvw} never emits it."
-        }
-      ],
-      "dcterms:source": "cat-harness-tools/schemas/library/tabular-csvw.ts#TabularCsvwSchema.source",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/tabular-csvw.tabularcsvwschema.tables",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "TabularCsvwSchema.tables"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "One per sheet. A CSV has exactly one; a workbook is a `csvw:TableGroup`."
-        }
-      ],
-      "dcterms:source": "cat-harness-tools/schemas/library/tabular-csvw.ts#TabularCsvwSchema.tables",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/tabular-records.tabularrecordsschema.at-context",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -36316,7 +36924,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The schemes or collections consulted. **May be empty**, and an empty list is a determined finding — this instance declares nothing to check against for that target — rather than a missing field."
+          "@value": "The schemes or collections consulted. **May be empty**, and an empty list is a determined finding — this layer declares nothing to check against for that target — rather than a missing field."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/content/term-mapping.ts#MappingScopeSchema.consulted",
@@ -36373,7 +36981,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The instance that owns the scheme. A scheme id such as `kg-tools` is shared by every instance's extraction, so a scheme is keyed by (instance, scheme): bean `q3n9`, owner ruling A, 2026-10-24. The instance is derived from the scheme's source, never from where its glossary file sits, so a file that moves keeps its key."
+          "@value": "The layer that owns the scheme. A scheme id such as `kg-tools` is shared by every layer's extraction, so a scheme is keyed by (instance, scheme): bean `q3n9`, owner ruling A, 2026-10-24. The layer is derived from the scheme's source, never from where its glossary file sits, so a file that moves keeps its key."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/content/term-mapping.ts#TermMappingSchema.instance",
@@ -37988,7 +38596,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The layouts the instance does not supply for this theme's role."
+          "@value": "The layouts the layer does not supply for this theme's role."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/ui/theme.ts#ResolvedBackdrop.missing",
@@ -38045,7 +38653,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The declared image `role` this theme's art comes from — `landing` for the three `landing-*` entries an instance declares."
+          "@value": "The declared image `role` this theme's art comes from — `landing` for the three `landing-*` entries a layer declares."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/ui/theme.ts#ThemeBackdropSchema.imageRole",
@@ -38216,7 +38824,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The owning instance, as `owner/repo` (bean `6rmv`). Absent means the citing instance's own."
+          "@value": "The owning layer, as `owner/repo` (bean `6rmv`). Absent means the citing layer's own."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/ui/theme.ts#ThemeRefSchema.instance",
@@ -39451,7 +40059,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "A function in **this instance's own code**."
+          "@value": "A function in **this layer's own code**."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/tools/tool.ts#ToolInvokeSchema.inProcess",
@@ -39508,7 +40116,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Published path relative to the instance's base, e.g. `tool.schema.json`. No leading slash: it is joined by `renderingPath`, which owns the layout."
+          "@value": "Published path relative to the layer's base, e.g. `tool.schema.json`. No leading slash: it is joined by `renderingPath`, which owns the layout."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/tools/tool.ts#ToolMaintainsSchema.artefact",
@@ -39527,7 +40135,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "What the artefact IS, for a consumer deciding whether it can read it. Open string: an instance may maintain kinds this vocabulary has not met."
+          "@value": "What the artefact IS, for a consumer deciding whether it can read it. Open string: a layer may maintain kinds this vocabulary has not met."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/tools/tool.ts#ToolMaintainsSchema.format",
@@ -40363,7 +40971,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Who this block is written FOR — Role ids from the instance's KG (`scenarios/roles.json`, {@link RoleGraph})."
+          "@value": "Who this block is written FOR — Role ids from the layer's KG (`scenarios/roles.json`, {@link RoleGraph})."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/types.ts#BlockBase.audience",
@@ -43289,7 +43897,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "A square picture of the person, a path from the instance root; the initials are the fallback."
+          "@value": "A square picture of the person, a path from the layer root; the initials are the fallback."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/process/user-scenario.ts#JourneyPersonaSchema.avatar",
@@ -43441,7 +44049,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The BPMN file, relative to the instance root."
+          "@value": "The BPMN file, relative to the layer root."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/process/user-scenario.ts#RealisedBySchema.process",
@@ -44942,7 +45550,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The instance that DERIVED this voice, by declared name."
+          "@value": "The layer that DERIVED this voice, by declared name."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/content/voice-skill.ts#VoiceSkillSchema.owner",
@@ -45303,7 +45911,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Rule ids that cite a node of this instance's own graph."
+          "@value": "Rule ids that cite a node of this layer's own graph."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/content/voices.ts#VoiceProvenanceFlag.ruleIds",
@@ -45322,7 +45930,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The instance holding it, as `owner/repo` (bean `6rmv`). Absent means this one."
+          "@value": "The layer holding it, as `owner/repo` (bean `6rmv`). Absent means this one."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/content/voices.ts#VoiceRefSchema.instance",
@@ -45379,7 +45987,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The instance holding the corpus, as its planned `owner/repo` (bean `6rmv`; it was the declared name until then), when it is not this one. Absent means this instance, so every existing citation keeps its meaning unchanged."
+          "@value": "The layer holding the corpus, as its planned `owner/repo` (bean `6rmv`; it was the declared name until then), when it is not this one. Absent means this layer, so every existing citation keeps its meaning unchanged."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/content/voices.ts#VoiceRuleSourceSchema.instance",
@@ -45763,6 +46371,63 @@
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/conduct/waiver.ts#WaiverNodeSchema.scope",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/web-app.webappbuildschema.installer",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WebAppBuildSchema.installer"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Which installer reads the lockfile: `npm ci` or `bun install --frozen-lockfile`."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/ui/web-app.ts#WebAppBuildSchema.installer",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/web-app.webappbuildschema.outdir",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WebAppBuildSchema.outDir"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Where the build writes, relative to the app's directory."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/ui/web-app.ts#WebAppBuildSchema.outDir",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/web-app.webappbuildschema.script",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WebAppBuildSchema.script"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The `package.json` script that builds it."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/ui/web-app.ts#WebAppBuildSchema.script",
       "skos:note": "candidate"
     },
     {
@@ -46203,6 +46868,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.tablerowschema.group",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TableRowSchema.group"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A heading the row is listed under, when a table groups its rows (\"Governance\")."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#TableRowSchema.group",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.tablerowschema.question",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -46238,6 +46922,272 @@
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#TableRowSchema.what",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.workshoplabschema.creditlabel",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WorkshopLabSchema.creditLabel"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The credit link's words (\"DPI-H Lab\"); `name` when absent."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#WorkshopLabSchema.creditLabel",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.workshoplabschema.scale",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WorkshopLabSchema.scale"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The scale `rate` tables are rated on (Done / In progress / Not yet), its first option \"nothing missing\"."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#WorkshopLabSchema.scale",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.workshoplabschema.usecases",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WorkshopLabSchema.useCases"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The use cases a table may tick; `journey` ones come ticked, as the journeys teach them."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#WorkshopLabSchema.useCases",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.workshoplabschema.usecasetext",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WorkshopLabSchema.useCaseText"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The table's use-case statement as the journeys fill it in; each taught journey's line is added under it. Editable."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#WorkshopLabSchema.useCaseText",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.workshoplabstepschema.discuss",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WorkshopLabStepSchema.discuss"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The DISCUSS prompt read to the table."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#WorkshopLabStepSchema.discuss",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.workshoplabstepschema.holders",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WorkshopLabStepSchema.holders"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Tables whose rows each get \"who holds it today\" (decision rights, legal bases)."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#WorkshopLabStepSchema.holders",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.workshoplabstepschema.label",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WorkshopLabStepSchema.label"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "On the step's tab (\"Who decides\")."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#WorkshopLabStepSchema.label",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.workshoplabstepschema.minutes",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WorkshopLabStepSchema.minutes"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The timer's length; no timer when absent."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#WorkshopLabStepSchema.minutes",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.workshoplabstepschema.note",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WorkshopLabStepSchema.note"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A caution under the step (\"Don't enter personal health information.\")."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#WorkshopLabStepSchema.note",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.workshoplabstepschema.pick",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WorkshopLabStepSchema.pick"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Tables whose rows the table ticks (the patterns it would start with, the cost drivers that dominate)."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#WorkshopLabStepSchema.pick",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.workshoplabstepschema.rate",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WorkshopLabStepSchema.rate"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Tables whose rows the table rates on `lab.scale` (a readiness check)."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#WorkshopLabStepSchema.rate",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.workshoplabstepschema.resources",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WorkshopLabStepSchema.resources"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Resources (`resources[].id`) linked from the step."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#WorkshopLabStepSchema.resources",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.workshoplabstepschema.title",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WorkshopLabStepSchema.title"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The step's question (\"Who is part of the working team?\")."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#WorkshopLabStepSchema.title",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.workshoplabstepschema.usecases",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WorkshopLabStepSchema.useCases"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The use-case cards (`lab.useCases`), any number ticked, and the table's own statement under them."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#WorkshopLabStepSchema.useCases",
       "skos:note": "candidate"
     },
     {
@@ -46355,6 +47305,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.workshoppresentationschema.architecture",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WorkshopPresentationSchema.architecture"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "How it works opens with the architecture panel (JV-13): the countries side by side, one row per layer of a reference architecture, each box a system part, all read from the ArchiMate model `model` of the layer's `cat-archimate.config.json`. Element refs are the model's ids. `root` is the grouping whose child groupings are the rows; each of `countries` a grouping that aggregates a country's systems; `shared` the grouping drawn as the foundation band under both. A part's row and box label come from the reference block its country's instance specializes; its moments from the steps realised by the BPMN of the processes its system serves."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#WorkshopPresentationSchema.architecture",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.workshoppresentationschema.badge",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -46431,6 +47400,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.workshoppresentationschema.cover",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WorkshopPresentationSchema.cover"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The table sheets' cover (JV-14), printed before Sheet 1: the blanks a table fills in (`fields`; absent: Country, Delegation, Table, Facilitator), the workshop's `promise`, and the `table` whose rows are the ways to start (VaxLink: the substitution patterns)."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#WorkshopPresentationSchema.cover",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.workshoppresentationschema.devicedemo",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -46443,7 +47431,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The instance's own device demo: an app that shows each moment's screen. The viewer does not draw the screens; its Device Demo view frames the app's own page for each (`href` + `#/demo/<id>` unless `route` says otherwise) and links each screen and the steps it shows both ways. `href` is a URL, or a path from the site's root (`vaxlink/`)."
+          "@value": "The layer's own device demo: an app that shows each moment's screen. The viewer does not draw the screens; its Device Demo view frames the app's own page for each (`href` + `#/demo/<id>` unless `route` says otherwise) and links each screen and the steps it shows both ways. `href` is a URL, or a path from the site's root (`vaxlink/`)."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#WorkshopPresentationSchema.deviceDemo",
@@ -46466,6 +47454,25 @@
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#WorkshopPresentationSchema.ig",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.workshoppresentationschema.inspector",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WorkshopPresentationSchema.inspector"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The payload drawer's bar in the workshop's words (VaxLink: \"FHIR R4 & WHO GDHCN payload inspector\", the trust list's key \"DEV Key: 916ffa… (XXR)\", \"Click to inspect raw FHIR / CBOR payload\"). Absent: \"FHIR payload inspector\", no key, a plain hint."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#WorkshopPresentationSchema.inspector",
       "skos:note": "candidate"
     },
     {
@@ -46697,6 +47704,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.workshoppresentationschema.tagrows",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WorkshopPresentationSchema.tagRows"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "How a walkthrough step's policy card groups the rows of the tables it tags, in this order: each row a label, an optional glyph and the tables it gathers (VaxLink: \"Forces\" = decision rights + legal basis, \"Cost driver\", \"If it is missing\" = substitution patterns). Absent: one row per table, titled by the table."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#WorkshopPresentationSchema.tagRows",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.workshoppresentationschema.views",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -46709,7 +47735,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The ArchiMate views How it works shows first (the systems, the journeys as use cases), before the views each taught journey names: a model id of the instance's `cat-archimate.config.json` and a view id in it."
+          "@value": "The ArchiMate views How it works shows first (the systems, the journeys as use cases), before the views each taught journey names: a model id of the layer's `cat-archimate.config.json` and a view id in it."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#WorkshopPresentationSchema.views",
@@ -46918,7 +47944,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The scenario id (`user-scenario`), looked up in this instance first."
+          "@value": "The scenario id (`user-scenario`), looked up in this layer first."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#WorkshopStepSchema.scenario",

@@ -31,6 +31,16 @@
     root.style.setProperty("--fa-page-bar-h", stuck ? Math.ceil(b.getBoundingClientRect().height) + "px" : "0px");
   }
 
+  // A jump this script makes is instant. The theme sets
+  // `scroll-behavior: smooth` on <html>, and a smooth jump on a page still
+  // drawing animates toward a spot that keeps moving: on a long document it
+  // stopped thousands of pixels short, then jumped again (dth-hrh, 2026-10-31).
+  function instantly(f) {
+    var s = root.style, was = s.scrollBehavior;
+    s.scrollBehavior = "auto";
+    try { f(); } finally { s.scrollBehavior = was; }
+  }
+
   // Stop helping the moment the reader scrolls on their own.
   var reader = false;
   function readerMoved() { reader = true; }
@@ -48,7 +58,7 @@
       var t = document.getElementById(id);
       if (!t) return;
       mo.disconnect();
-      if (!reader) t.scrollIntoView();
+      if (!reader) instantly(function () { t.scrollIntoView(); });
     });
     mo.observe(document.body, { childList: true, subtree: true });
     window.setTimeout(function () { mo.disconnect(); }, 15000);
@@ -73,7 +83,7 @@
     var tries = 0;
     (function step() {
       if (reader || Math.abs((window.scrollY || 0) - y) <= 2) return;
-      if (root.scrollHeight - window.innerHeight >= y) { window.scrollTo(0, y); return; }
+      if (root.scrollHeight - window.innerHeight >= y) { instantly(function () { window.scrollTo(0, y); }); return; }
       if (++tries < 50) window.setTimeout(step, 100);
     })();
   }
@@ -85,7 +95,7 @@
     if (!h || h.length < 2 || reader) return;
     var t;
     try { t = document.getElementById(decodeURIComponent(h.slice(1))); } catch (_e) { return; }
-    if (t) t.scrollIntoView();
+    if (t) instantly(function () { t.scrollIntoView(); });
   }
 
   var bleedQueued = false;

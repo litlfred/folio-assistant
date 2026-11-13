@@ -105,6 +105,10 @@
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/maintainedBy",
       "@type": "@id"
     },
+    "jsonSchema": {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/jsonSchema",
+      "@type": "@id"
+    },
     "module": "https://litlfred.github.io/cat-harness/v0/ns/module",
     "holdsGraph": {
       "@id": "http://purl.org/dc/terms/type",
@@ -386,7 +390,7 @@
           {
             "name": "page",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
-            "description": "`docs/reference/upload-step/index.md`, under the instance's declared site directory. Never hand-edited."
+            "description": "`docs/reference/upload-step/index.md`, under the layer's declared site directory. Never hand-edited."
           }
         ]
       },

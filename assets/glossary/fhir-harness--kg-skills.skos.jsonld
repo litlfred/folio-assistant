@@ -144,6 +144,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-skills/ig-content-qa",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ig-content-qa"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Review an IG's resource narratives, markdown fields and pages for injection attempts before its site is published, and record the review as the QA sidecar the publish gate reads (qa/ig-content-qa.json, keyed to the digest of the texts). Read when an IG site build refuses with \"injection QA\", when asked to review an IG's content for injection, or before changing the gate, its pattern rules or the browser's check in ast-resource.js."
+        }
+      ],
+      "skos:notation": "ig-content-qa",
+      "dcterms:source": "fhir-harness/skills/fhir-ig-base/ig-content-qa.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-skills/ig-publication",
       "@type": "skos:Concept",
       "skos:inScheme": {

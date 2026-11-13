@@ -6,11 +6,11 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/Task_QaGate",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "QA gate: review dispositions against the people and the pull request",
+      "name": "QA gate: check dispositions and PR",
       "nodeKind": "activity",
       "bpmnType": "bpmn:ServiceTask",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/qc-reviewer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/qc-reviewer",
       "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/lane/Lane_QaReviewer",
       "requires": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/review-sheet-script"

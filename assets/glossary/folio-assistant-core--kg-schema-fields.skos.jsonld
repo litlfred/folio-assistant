@@ -1318,7 +1318,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The DECLARED NAME of the instance holding the library; absent means this instance."
+          "@value": "The DECLARED NAME of the layer holding the library; absent means this layer."
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/extracted-statement.ts#StatementSourceSchema.instance",
@@ -2021,7 +2021,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The DECLARED NAME of the instance holding the corpus — not a path."
+          "@value": "The DECLARED NAME of the layer holding the corpus — not a path."
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/library-ref.ts#LibraryRef.instance",
@@ -2249,7 +2249,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Where the bytes landed, instance-relative. Present iff `materialized`."
+          "@value": "Where the bytes landed, layer-relative. Present iff `materialized`."
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/materialization.ts#MaterializationSchema.localPath",
@@ -2671,6 +2671,44 @@
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#ReviewerSchema.name",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields/public-comment.reviewlogcolumnschema.role",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ReviewLogColumnSchema.role"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Absent when the header carries no role colour."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#ReviewLogColumnSchema.role",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields/public-comment.reviewlogtabschema.headerrow",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ReviewLogTabSchema.headerRow"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "1-based row of the column headers (a tab may open with an instructions row)."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/public-comment.ts#ReviewLogTabSchema.headerRow",
       "skos:note": "candidate"
     },
     {

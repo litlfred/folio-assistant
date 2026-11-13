@@ -19,6 +19,14 @@
             "side"
           ]
         },
+        "only": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9-]*$"
+          }
+        },
         "buttons": {
           "minItems": 1,
           "type": "array",
@@ -68,6 +76,9 @@
                   "tent",
                   "bus",
                   "plane",
+                  "scale",
+                  "coins",
+                  "shuffle",
                   "syringe",
                   "pill",
                   "pill-off",

@@ -105,6 +105,10 @@
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/maintainedBy",
       "@type": "@id"
     },
+    "jsonSchema": {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/jsonSchema",
+      "@type": "@id"
+    },
     "module": "https://litlfred.github.io/cat-harness/v0/ns/module",
     "holdsGraph": {
       "@id": "http://purl.org/dc/terms/type",
@@ -363,7 +367,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "merge-overlap",
       "title": "Merge overlap (conflict prediction)",
-      "description": "For the open PRs (via `gh`, or a list of branches), report which pairs would conflict: pairwise overlap on AUTHORED paths, with generated paths excluded using the merge-conflict-patterns declaration; which PRs touch a shared declaration (an instance's `<instance>.json`, `roles.json`, `package.json`, `bun.lock`, schemas, BPMN/DMN); and which touch the harness layer's directory or its tools layer's. A PR that could not be measured makes no pair independent. JSON (`merge-overlap/v1`), the conflict-prediction input for composing trains.",
+      "description": "For the open PRs (via `gh`, or a list of branches), report which pairs would conflict: pairwise overlap on AUTHORED paths, with generated paths excluded using the merge-conflict-patterns declaration; which PRs touch a shared declaration (a layer's `<instance>.json`, `roles.json`, `package.json`, `bun.lock`, schemas, BPMN/DMN); and which touch the harness layer's directory or its tools layer's. A PR that could not be measured makes no pair independent. JSON (`merge-overlap/v1`), the conflict-prediction input for composing trains.",
       "install": {
         "none": true
       },

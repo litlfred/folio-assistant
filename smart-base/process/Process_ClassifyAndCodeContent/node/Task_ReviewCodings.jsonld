@@ -11,14 +11,14 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:UserTask",
       "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
-      "performedBy": "http://smart.who.int/base/role/terminologist",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/terminologist",
       "inLane": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_Terminologist",
       "requires": [
         "http://smart.who.int/base/skill/classify-and-code-content",
-        "http://smart.who.int/base/skill/ontologist",
-        "http://smart.who.int/base/skill/glossary-terms",
-        "http://smart.who.int/base/skill/terminology-management",
-        "http://smart.who.int/base/skill/content-review"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/ontologist",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/glossary-terms",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/terminology-management",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-review"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,

@@ -7,8 +7,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Ingestion subprocess — derive content from the assets",
-      "summary": "Derive content from an ingested source's assets: the archive, technical metadata, images, audio, tabular data and provenance.",
-      "description": "Derive content from an ingested source's assets: the archive, technical metadata, images, audio, tabular data and provenance.",
+      "summary": "Derive content from an ingested source's assets: the archive, technical metadata, figures and tables, images, audio, tabular data, footnotes and provenance.",
+      "description": "Derive content from an ingested source's assets: the archive, technical metadata, figures and tables, images, audio, tabular data, footnotes and provenance. Every step is an arm of `bun run cat ingest` (cat-harness-tools scripts/ingest-document.ts), so a re-ingest re-derives all of them; none is a step somebody runs by hand afterwards.",
       "enforcement": "advisory",
       "sourcePath": "processes/library/ingest-derive-content.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant-core/blob/main/processes/library/ingest-derive-content.bpmn",
@@ -16,8 +16,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/node/StartEvent_Assets"
       ],
-      "nodeCount": 10,
-      "flowCount": 13,
+      "nodeCount": 12,
+      "flowCount": 16,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes"
     },
     {
@@ -49,6 +49,14 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/node/Gateway_Fan",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/node/Task_FiguresTables",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent#flow/Flow_d15",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/node/Task_FiguresTables",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/node/Task_Image",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes"
     },
@@ -114,6 +122,22 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/node/Gateway_Join",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/node/Task_Provenance",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent#flow/Flow_d14",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/node/Gateway_Fan",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/node/Task_Footnotes",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent#flow/Flow_d16",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/node/Task_Footnotes",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/node/Gateway_Join",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes"
     },
     {

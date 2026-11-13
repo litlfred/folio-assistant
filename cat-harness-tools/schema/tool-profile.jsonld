@@ -1,0 +1,19 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/tool-profile.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/tool-profile",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "tool-profile",
+      "title": "tool-profile",
+      "summary": "Tool profiles — a named set of tool releases a run selects as one.",
+      "module": "schemas/tools/tool-profile.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-schemas",
+      "jsonSchema": [
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-profile/ToolProfileSchema.schema.json"
+      ]
+    }
+  ]
+}

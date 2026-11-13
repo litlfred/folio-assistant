@@ -270,17 +270,12 @@
   "Call_NarrativeCodeReview": {
    "id": "Call_NarrativeCodeReview",
    "name": "Prose and the code it describes",
-   "type": "bpmn:CallActivity",
+   "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Review/node/Call_NarrativeCodeReview",
    "stepHref": "review-task.html#step-Call_NarrativeCodeReview",
    "lane": "Reviewer / SME",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Review/lane/Lane_Reviewer",
    "skills": [],
-   "calls": {
-    "name": "Prose and the code it describes",
-    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NarrativeCodeReview",
-    "diagram": "narrative-code-review.html"
-   },
    "role": {
     "name": "reviewer",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
@@ -413,16 +408,6 @@
      {
       "name": "bpmn-authoring",
       "href": "../../../reference/skill-instructions/bpmn-authoring.html",
-      "via": "author"
-     },
-     {
-      "name": "content-author",
-      "href": "../../../reference/skill-instructions/content-author.html",
-      "via": "author"
-     },
-     {
-      "name": "content-plan",
-      "href": "../../../reference/skill-instructions/content-plan.html",
       "via": "author"
      },
      {

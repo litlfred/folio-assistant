@@ -19,7 +19,7 @@ On the index (`<route>/`):
 
 On each reference's own page (`<route>/<sub-graph>/<key>/`; for a library item, its asset page): every bibliographic field, every place the work can be read (its URL, DOI, arXiv page, repository and pinned copy, DSpace handles), where it sits in the KG, and its export. An entry with no title shows its citation as the source printed it.
 
-On each sub-graph's page (`<route>/<sub-graph>/`): the directory, its instance and kind, a link back to all references, the same four exports over that directory alone, and the filter and list.
+On each sub-graph's page (`<route>/<sub-graph>/`): the directory, its layer and kind, a link back to all references, the same four exports over that directory alone, and the filter and list.
 
 ## Observed
 

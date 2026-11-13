@@ -139,7 +139,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardOpenClose/lane/Lane_Reader",
       "@type": "cat-harness:Lane",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/user",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
       "name": "Reader",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardOpenClose"
@@ -147,7 +147,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardOpenClose/lane/Lane_Renderer",
       "@type": "cat-harness:Lane",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/board-renderer",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/board-renderer",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
       "name": "Board renderer",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardOpenClose"
@@ -163,9 +163,9 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardOpenClose#flow/F_Closed",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardOpenClose",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/board-renderer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/board-renderer",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/board-windows",
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/board-windows",
       "touchesWorkPlan": false
     },
     {
@@ -179,9 +179,9 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardOpenClose#flow/F_Back",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardOpenClose",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/board-renderer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/board-renderer",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/board-windows",
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/board-windows",
       "touchesWorkPlan": false
     },
     {
@@ -195,9 +195,9 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardOpenClose#flow/F_Opened",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardOpenClose",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/board-renderer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/board-renderer",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/board-windows",
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/board-windows",
       "touchesWorkPlan": false
     },
     {
@@ -214,9 +214,9 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardOpenClose#flow/F_Raised",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardOpenClose",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/board-renderer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/board-renderer",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/board-windows",
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/board-windows",
       "touchesWorkPlan": false
     },
     {
@@ -233,9 +233,9 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardOpenClose#flow/F_2",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardOpenClose",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/board-renderer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/board-renderer",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/board-windows",
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/board-windows",
       "touchesWorkPlan": false
     },
     {
@@ -249,9 +249,9 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardOpenClose#flow/F_Zoom1",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardOpenClose",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/board-renderer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/board-renderer",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/board-windows",
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/board-windows",
       "touchesWorkPlan": false
     },
     {
@@ -265,9 +265,9 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardOpenClose#flow/F_Zoom2",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardOpenClose",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/board-renderer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/board-renderer",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/board-windows",
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/board-windows",
       "touchesWorkPlan": false
     },
     {
@@ -283,7 +283,7 @@
       "name": "The reader leaves the board",
       "nodeKind": "end",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardOpenClose",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/user",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -304,7 +304,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardOpenClose#flow/F_Leave"
       ],
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardOpenClose",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/user",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -322,7 +322,7 @@
       "nodeKind": "exclusive",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardOpenClose#flow/Flow_GW_Act_Join",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardOpenClose",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/user",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -336,7 +336,7 @@
       "nodeKind": "start",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardOpenClose#flow/F_1",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardOpenClose",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/user",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -408,7 +408,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardPlaceNote/lane/Lane_Author",
       "@type": "cat-harness:Lane",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/author",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
       "name": "Author",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardPlaceNote"
@@ -416,7 +416,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardPlaceNote/lane/Lane_Layer",
       "@type": "cat-harness:Lane",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/corpus",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/corpus",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
       "name": "Layout layer",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardPlaceNote"
@@ -432,9 +432,9 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardPlaceNote#flow/F_Created",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardPlaceNote",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/author",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/board-diagram-interchange",
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/board-diagram-interchange",
       "touchesWorkPlan": false
     },
     {
@@ -451,9 +451,9 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardPlaceNote#flow/F_2",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardPlaceNote",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/corpus",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/corpus",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/board-diagram-interchange",
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/board-diagram-interchange",
       "touchesWorkPlan": false
     },
     {
@@ -467,9 +467,9 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardPlaceNote#flow/F_3",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardPlaceNote",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/corpus",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/corpus",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/board-diagram-interchange",
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/board-diagram-interchange",
       "touchesWorkPlan": false
     },
     {
@@ -482,7 +482,7 @@
       "name": "The board shows it there",
       "nodeKind": "end",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardPlaceNote",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/corpus",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/corpus",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -500,7 +500,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardPlaceNote#flow/F_Existing"
       ],
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardPlaceNote",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/author",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -514,7 +514,7 @@
       "nodeKind": "start",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardPlaceNote#flow/F_1",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardPlaceNote",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/author",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -602,7 +602,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardRelocate/lane/Lane_Reader",
       "@type": "cat-harness:Lane",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/user",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
       "name": "Reader",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardRelocate"
@@ -610,7 +610,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardRelocate/lane/Lane_Renderer",
       "@type": "cat-harness:Lane",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/board-renderer",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/board-renderer",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
       "name": "Board renderer",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardRelocate"
@@ -626,9 +626,9 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardRelocate#flow/F_2",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardRelocate",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/board-renderer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/board-renderer",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/deletion-requires-confirmation",
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/deletion-requires-confirmation",
       "touchesWorkPlan": false
     },
     {
@@ -642,9 +642,9 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardRelocate#flow/F_Cancelled",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardRelocate",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/board-renderer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/board-renderer",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/board-windows",
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/board-windows",
       "touchesWorkPlan": false
     },
     {
@@ -658,9 +658,9 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardRelocate#flow/F_3",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardRelocate",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/board-renderer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/board-renderer",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/board-diagram-interchange",
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/board-diagram-interchange",
       "touchesWorkPlan": false
     },
     {
@@ -674,9 +674,9 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardRelocate#flow/F_5",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardRelocate",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/board-renderer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/board-renderer",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/deletion-requires-confirmation",
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/deletion-requires-confirmation",
       "touchesWorkPlan": false
     },
     {
@@ -690,9 +690,9 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardRelocate#flow/F_4",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardRelocate",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/board-renderer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/board-renderer",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/board-diagram-interchange",
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/board-diagram-interchange",
       "touchesWorkPlan": false
     },
     {
@@ -705,7 +705,7 @@
       "name": "The content lives in the trashcan",
       "nodeKind": "end",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardRelocate",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/board-renderer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/board-renderer",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -719,7 +719,7 @@
       "name": "Nothing moved",
       "nodeKind": "end",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardRelocate",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/user",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -737,7 +737,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardRelocate#flow/F_No"
       ],
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardRelocate",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/user",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -751,7 +751,7 @@
       "nodeKind": "start",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardRelocate#flow/F_1",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardRelocate",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/user",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
       "relaxable": true,
       "touchesWorkPlan": false
     }

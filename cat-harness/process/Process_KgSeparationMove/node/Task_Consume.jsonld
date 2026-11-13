@@ -8,7 +8,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
       "name": "Parent consumes, additively",
       "nodeKind": "activity",
-      "bpmnType": "bpmn:CallActivity",
+      "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparationMove",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/platform-authoring-agent",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparationMove/lane/Lane_Platform",
@@ -17,7 +17,6 @@
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
-      "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamAdoption",
       "incoming": [
         "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparationMove#flow/F15"
       ],

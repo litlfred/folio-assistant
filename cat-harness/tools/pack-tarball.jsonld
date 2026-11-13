@@ -105,6 +105,10 @@
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/maintainedBy",
       "@type": "@id"
     },
+    "jsonSchema": {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/jsonSchema",
+      "@type": "@id"
+    },
     "module": "https://litlfred.github.io/cat-harness/v0/ns/module",
     "holdsGraph": {
       "@id": "http://purl.org/dc/terms/type",
@@ -362,8 +366,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/pack-tarball.jsonld",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "pack-tarball",
-      "title": "Package instance into an npm tarball and record binary release",
-      "description": "Build an npm tarball (.tgz) of an instance using `bun pm pack`, compute its size and SHA-256 digest, and record it as a `folio-binary-release/v1` state node.",
+      "title": "Package layer into an npm tarball and record binary release",
+      "description": "Build an npm tarball (.tgz) of a layer using `bun pm pack`, compute its size and SHA-256 digest, and record it as a `folio-binary-release/v1` state node.",
       "install": {
         "none": true
       },
@@ -375,7 +379,7 @@
           {
             "name": "root",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
-            "description": "Instance root containing package.json (default: cwd).",
+            "description": "Layer root containing package.json (default: cwd).",
             "required": false,
             "arg": {
               "flag": "--root"
@@ -447,7 +451,6 @@
         "network": false
       },
       "satisfies": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/skill/package-release",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/npm-kg-distribution"
       ]
     }

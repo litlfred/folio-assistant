@@ -451,7 +451,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ig-artifact-jsonld.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "`write` turns an artefact index into `artifact/<Type>-<id>.jsonld` (and a `.json` twin) under a docs root: one `folio-ig-artifact-jsonld/v1` node per artefact, in borrowed vocabularies only (the FHIR RDF class, dcterms, schema.org, PROV), naming the artefact's canonical URL, its representations and, for a compiled copy, what built it. `check` is the kind's QA: over a BUILT site, every artefact has its node and no node is an orphan, each node is its own file's, its twin matches, and every local resource it names is on the site. It also writes and checks the index node, `artifact/index.jsonld` (`folio-ig-artifact-index-jsonld/v1`): every artefact once, each entry naming its node. These are the assets the thin pages render.",
+          "description": "`write` turns an artefact index into `artifact/<Type>-<id>.jsonld` under a docs root, with no `.json` twin: one `folio-ig-artifact-jsonld/v1` node per artefact, in borrowed vocabularies only (the FHIR RDF class, dcterms, schema.org, PROV), naming the artefact's canonical URL, its representations and, for a compiled copy, what built it. With `--root-resources` (the IG site's default) the first representation is the reduced `<Type>-<id>.json` the site serves at its root (`local`), the second the full copy in the AST cache by raw URL (`mirror`), and each index entry names the root file (`schema:contentUrl`). `check` is the kind's QA: over a BUILT site, every artefact has its node and no node is an orphan, each node is its own file's, no `.json` twin is served beside it, and every local resource it names is on the site. It also writes and checks the index node, `artifact/index.jsonld` (`folio-ig-artifact-index-jsonld/v1`): every artefact once, each entry naming its node. These are the assets the thin pages render.",
           "install": {
             "none": true
           },
@@ -491,10 +491,16 @@
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Url"
               },
               {
-                "description": "`write`: where compiled resource files are served, from the docs root.",
+                "description": "`write`: where compiled resource files are served, from the docs root, or the AST cache commit's raw base (then a `mirror`).",
                 "name": "compiled-data",
                 "required": false,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "description": "`write`: the site serves each compiled resource at its root as `<Type>-<id>.json`; each node lists it first.",
+                "name": "root-resources",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
               }
             ],
             "outputs": [
@@ -1236,7 +1242,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ig-cache.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Restore, verify, seed and diagnose the prebuilt AST artefacts for an IG. Always try `restore` first: a full AST build via AstExportCli is expensive, a restore is fast.",
+          "description": "Restore, verify, seed and diagnose the prebuilt AST artefacts for an IG. Always try `restore` first: a full AST build via AstExportCli is expensive, a restore is fast. `seed` commits the IG API a layer above generates from the AST (`ig-site:sidecars`, via `ig-api-cache.ts`) as `ig-api/` beside it, and the artefact index built from that tree (`ig-index-cache.ts`) as `fhir-artifact-index/index.json`, so a site reads both by raw URL at the cache commit.",
           "install": {
             "none": true
           },
@@ -1381,6 +1387,72 @@
       "path": "tools/ig-index-build/"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/tools/ig-page-render-qa/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ig-page-render-qa.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "The checkout script `ig-site:page-render-qa`, the IG site build's last final step: it serves the built site locally, opens the root pages and the artefact pages (not the JSON views, mappings views or redirect stubs) in headless Chromium, waits for each to draw, and lists every text block that shows markdown as text (bold, list markers, links, images, code, headings, tables, HTML tags), code and preformatted text left out. It writes `assets/fhir-qa/page-render.json` and the script the QA report's \"Page scan\" panel draws it with. It reports and never fails the build: without a browser it writes why.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run fhir-harness/scripts/ig-page-render-qa.ts"
+          },
+          "io": {
+            "inputs": [
+              {
+                "description": "The built site directory.",
+                "name": "site",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--limit"
+                },
+                "description": "Scan at most this many pages.",
+                "name": "limit",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count"
+              },
+              {
+                "arg": {
+                  "flag": "--concurrency"
+                },
+                "description": "Pages open at once; 4 by default.",
+                "name": "concurrency",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "Text blocks that show markup as text.",
+                "name": "findings",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count"
+              }
+            ]
+          },
+          "name": "ig-page-render-qa",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "bun"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-build-pipeline",
+          "title": "Scan every page of a built IG site in a headless browser for markup shown as text"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/ig-page-render-qa",
+      "path": "tools/ig-page-render-qa/"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/tools/ig-pages/",
       "@type": "bootstrap:Subgraph",
       "hasMember": [
@@ -1445,7 +1517,7 @@
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Url"
               },
               {
-                "description": "Where a compiled index's resource files are served, as a path from the docs root. In an IG site the docs root IS the site root, so it is `ast-data`, not `../ast-data`.",
+                "description": "Where a compiled index's resource files are served, as a path from the docs root. `.` means each is served once at the docs root as `<Type>-<id>.json`, as the IG site does; a docs root beside the AST passes `../ast-data`.",
                 "name": "compiled-data",
                 "required": false,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
@@ -1483,13 +1555,87 @@
       "path": "tools/ig-pages/"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/tools/ig-release/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ig-release.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Gather a release's files from a full Publisher build (package.tgz and its R4/R4B variants, and ast-data.zip, the IG's AST with the Libraries' ELM), say from sushi-config.yaml whether it is a pre-release, and make or refresh the GitHub DRAFT release for the tag with the files uploaded. The owner publishes the draft; a published release is never changed. `check` is the catch-up the AST refresh of the default branch runs (advisory): it reports a current version with no `v<version>` tag, naming the commit that set it for the owner to tag, and a tag with no release, for the owner to run `ig-release.yml` by hand. It never tags and never releases: the tag is the owner's governance step (`ig-release.bpmn`).",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run fhir-harness/scripts/ig-release.ts assets|kind|draft|check …"
+          },
+          "io": {
+            "inputs": [
+              {
+                "description": "`assets`: the Publisher's output/ directory.",
+                "name": "output",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath"
+              },
+              {
+                "description": "`assets`: the AST directory (its manifest.json).",
+                "name": "ast",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath"
+              },
+              {
+                "description": "`draft`: the git tag the release is for.",
+                "name": "tag",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+              },
+              {
+                "description": "`kind`, `check`: the IG root (its sushi-config.yaml and git history).",
+                "name": "ig",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath"
+              },
+              {
+                "description": "`draft`, `check`: the repository (`owner/repo`) whose releases are read or written.",
+                "name": "repo",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "The files with size and SHA-256 (`assets`), `prerelease`/`release` (`kind`), what was done (`draft`), or what the owner should do (`check`).",
+                "name": "release",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+              }
+            ]
+          },
+          "name": "ig-release",
+          "requirements": {
+            "network": true,
+            "runtime": [
+              "bun",
+              "zip",
+              "gh"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-binary-artefacts",
+          "title": "Cut an IG release as a GitHub draft that carries its packages and AST, and report a version left untagged or unreleased"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/ig-release",
+      "path": "tools/ig-release/"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/tools/ig-repo-site/",
       "@type": "bootstrap:Subgraph",
       "hasMember": [
         {
           "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ig-repo-site.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "The three checkout scripts the platform's site build runs for a repository that holds an IG and only mounts layers (`index.config.json`): `ig-site:ast` restores the AST from the IG's cache branch (`ig-cache.sh restore`) and judges it, refusing a stale, cannot-tell or absent one (a stale one is accepted for a preview by default, refused with `SITE_ACCEPT_STALE_AST=0`, and never accepted for the root); `ig-site:compose` derives the artefact index from the AST (binding any IG API sidecars a layer above left in `$SITE_WORK/ig-api/`), writes the thin artefact pages, stages the IG's `input/` and `sushi-config.yaml` (menu read at build time, palette from the webpage theme of the top layer the repository mounts, edit links from its origin) and composes it at the ROOT of the host site source; `ig-site:publisher-pages` serves the AST's resources (`ast-data/` and `<Type>-<id>.json`), the artefact index and the sidecars, refuses a page wearing the IG Publisher's chrome, repairs repeated element ids and stamps `folio-build.json`. Never runs the Publisher and never reads its output. Compose lists the pages it puts in the site in `FOLIO_SITE_UPSTREAM_PAGES`, so the site build reports the IG's own dead links rather than refusing the publish over them.",
+          "description": "The three checkout scripts the platform's site build runs for a repository that holds an IG and only mounts layers (`index.config.json`): `ig-site:ast` restores the AST from the IG's cache branch (`ig-cache.sh restore`) and judges it, refusing a stale, cannot-tell or absent one (a stale one is accepted for a preview by default, refused with `SITE_ACCEPT_STALE_AST=0`, and never accepted for the root); `ig-site:compose` derives the artefact index from the AST (binding any IG API sidecars a layer above left in `$SITE_WORK/ig-api/`), writes the thin artefact pages, stages the IG's `input/` and `sushi-config.yaml` (menu read at build time, palette from the webpage theme of the top layer the repository mounts, edit links from its origin) and composes it at the ROOT of the host site source; `ig-site:publisher-pages` serves each of the AST's resources once, as `<Type>-<id>.json` at the root (no `ast-data/` mirror) — reduced (minified, no narrative, no ELM data, the ELM attachment pointing at the full copy) when the pages read the full resources by raw URL from the AST cache commit, and off with `SITE_ROOT_RESOURCES=0` — the artefact index (or `fhir-artifact-index/index.ref.json`, pointing at the cache's copy) and the sidecars (or none, read from the cache), refuses a page wearing the IG Publisher's chrome, repairs repeated element ids and stamps `folio-build.json`. Never runs the Publisher and never reads its output. Compose lists the pages it puts in the site in `FOLIO_SITE_UPSTREAM_PAGES`, so the site build reports the IG's own dead links rather than refusing the publish over them.",
           "install": {
             "none": true
           },

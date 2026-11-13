@@ -105,6 +105,10 @@
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/maintainedBy",
       "@type": "@id"
     },
+    "jsonSchema": {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/jsonSchema",
+      "@type": "@id"
+    },
     "module": "https://litlfred.github.io/cat-harness/v0/ns/module",
     "holdsGraph": {
       "@id": "http://purl.org/dc/terms/type",
@@ -362,8 +366,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/lsi-viewer.jsonld",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "lsi-viewer",
-      "title": "Latent semantic index viewer",
-      "description": "Render every committed LSI index — dimensions as two poles, narrow-dimension and near-duplicate findings — and which declared prose graphs still need one.",
+      "title": "Indexing evidence viewer",
+      "description": "Render the Indexing evidence page: for each indexing method, the held papers it rests on and the skills, Tools and processes that apply it, and the indexing skills with no evidence yet; and its Keywords page (`keywords/`), the derived keywords graph as an A–Z index with the six extraction variants side by side and their agreement with headings, author keywords and the glossaries. Index health is the `lsi-indexes` check of `bun run cat health`.",
       "install": {
         "none": true
       },

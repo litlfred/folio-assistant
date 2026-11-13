@@ -1,0 +1,4938 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "arxiv-2404.04834v4",
+  "instance": "cat-harness",
+  "about": "library/arxiv-2404.04834v4",
+  "corpus": {
+    "library": "cat-harness/library/corpus",
+    "sections": 2232,
+    "terms": 15352
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "lma agents",
+        "score": 30.8162,
+        "evidence": []
+      },
+      {
+        "term": "lma systems",
+        "score": 29.55,
+        "evidence": []
+      },
+      {
+        "term": "lma roles",
+        "score": 25.4695,
+        "evidence": []
+      },
+      {
+        "term": "software systems",
+        "score": 23.3749,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "engineering agents",
+        "score": 23.1697,
+        "evidence": []
+      },
+      {
+        "term": "llm-based agents",
+        "score": 23.0854,
+        "evidence": []
+      },
+      {
+        "term": "current lma",
+        "score": 22.0756,
+        "evidence": []
+      },
+      {
+        "term": "lma framework",
+        "score": 22.0371,
+        "evidence": []
+      },
+      {
+        "term": "software development",
+        "score": 20.6879,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "trustworthy lma",
+        "score": 20.0756,
+        "evidence": []
+      },
+      {
+        "term": "multi-agent systems",
+        "score": 19.7998,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "lma applications",
+        "score": 19.7295,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "lma agents",
+        "score": 955.3527,
+        "evidence": []
+      },
+      {
+        "term": "arxiv preprint",
+        "score": 858.8474,
+        "evidence": []
+      },
+      {
+        "term": "lma systems",
+        "score": 768.0551,
+        "evidence": []
+      },
+      {
+        "term": "engineering agents",
+        "score": 729.1134,
+        "evidence": []
+      },
+      {
+        "term": "llm-based agents",
+        "score": 722.4309,
+        "evidence": []
+      },
+      {
+        "term": "lma roles",
+        "score": 661.9434,
+        "evidence": []
+      },
+      {
+        "term": "software systems",
+        "score": 647.293,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "specialized agents",
+        "score": 577.0275,
+        "evidence": []
+      },
+      {
+        "term": "software development",
+        "score": 566.4777,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "autonomous agents",
+        "score": 564.3986,
+        "evidence": []
+      },
+      {
+        "term": "lma framework",
+        "score": 557.5136,
+        "evidence": []
+      },
+      {
+        "term": "current lma",
+        "score": 555.4165,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "lma agents",
+        "score": 23.1369,
+        "evidence": []
+      },
+      {
+        "term": "llm-based agents",
+        "score": 20.8388,
+        "evidence": []
+      },
+      {
+        "term": "engineering agents",
+        "score": 20.3922,
+        "evidence": []
+      },
+      {
+        "term": "lma systems",
+        "score": 20.1497,
+        "evidence": []
+      },
+      {
+        "term": "lma roles",
+        "score": 18.7,
+        "evidence": []
+      },
+      {
+        "term": "software systems",
+        "score": 18.3095,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "llm-based multi-agent",
+        "score": 17.4332,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "specialized agents",
+        "score": 16.8989,
+        "evidence": []
+      },
+      {
+        "term": "collaborative agents",
+        "score": 16.5048,
+        "evidence": []
+      },
+      {
+        "term": "software requirements",
+        "score": 16.0453,
+        "evidence": []
+      },
+      {
+        "term": "software process",
+        "score": 15.9487,
+        "evidence": []
+      },
+      {
+        "term": "software development",
+        "score": 15.9384,
+        "evidence": [
+          "heading"
+        ]
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "lma agents",
+        "score": 893.7327,
+        "evidence": []
+      },
+      {
+        "term": "arxiv preprint",
+        "score": 868.9316,
+        "evidence": []
+      },
+      {
+        "term": "llm-based agents",
+        "score": 745.1283,
+        "evidence": []
+      },
+      {
+        "term": "engineering agents",
+        "score": 732.2536,
+        "evidence": []
+      },
+      {
+        "term": "lma systems",
+        "score": 639.8743,
+        "evidence": []
+      },
+      {
+        "term": "collaborative agents",
+        "score": 602.5854,
+        "evidence": []
+      },
+      {
+        "term": "specialized agents",
+        "score": 594.4543,
+        "evidence": []
+      },
+      {
+        "term": "lma roles",
+        "score": 581.8507,
+        "evidence": []
+      },
+      {
+        "term": "agents capabilities",
+        "score": 573.7865,
+        "evidence": []
+      },
+      {
+        "term": "autonomous agents",
+        "score": 573.0704,
+        "evidence": []
+      },
+      {
+        "term": "software systems",
+        "score": 566.5349,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "llm agents",
+        "score": 548.24,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "lma agents",
+        "score": 23.1369,
+        "evidence": []
+      },
+      {
+        "term": "llm-based agents",
+        "score": 20.8388,
+        "evidence": []
+      },
+      {
+        "term": "engineering agents",
+        "score": 20.3922,
+        "evidence": []
+      },
+      {
+        "term": "lma systems",
+        "score": 20.1497,
+        "evidence": []
+      },
+      {
+        "term": "lma roles",
+        "score": 18.7,
+        "evidence": []
+      },
+      {
+        "term": "software systems",
+        "score": 18.3095,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "llm-based multi-agent",
+        "score": 17.4332,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "specialized agents",
+        "score": 16.8989,
+        "evidence": []
+      },
+      {
+        "term": "collaborative agents",
+        "score": 16.5048,
+        "evidence": []
+      },
+      {
+        "term": "software requirements",
+        "score": 16.0453,
+        "evidence": []
+      },
+      {
+        "term": "software process",
+        "score": 15.9487,
+        "evidence": []
+      },
+      {
+        "term": "software development",
+        "score": 15.9384,
+        "evidence": [
+          "heading"
+        ]
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "snake game",
+        "score": 1326.4996,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "tetris game",
+        "score": 1070.0537,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "generated snake",
+        "score": 1021.417,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "game-over",
+        "score": 985.1841,
+        "evidence": []
+      },
+      {
+        "term": "game-over state",
+        "score": 985.1841,
+        "evidence": []
+      },
+      {
+        "term": "in-game",
+        "score": 942.0847,
+        "evidence": []
+      },
+      {
+        "term": "playable",
+        "score": 942.0847,
+        "evidence": []
+      },
+      {
+        "term": "chatdev",
+        "score": 712.579,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "collisions",
+        "score": 637.9768,
+        "evidence": []
+      },
+      {
+        "term": "screen shots",
+        "score": 477.4258,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "spawn",
+        "score": 474.3885,
+        "evidence": []
+      },
+      {
+        "term": "unsuccessful",
+        "score": 419.482,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-1-introduction": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "singapore management",
+          "score": 2.5001,
+          "evidence": []
+        },
+        {
+          "term": "christoph treude",
+          "score": 1.4831,
+          "evidence": []
+        },
+        {
+          "term": "management university",
+          "score": 1.3035,
+          "evidence": []
+        },
+        {
+          "term": "autonomous agents",
+          "score": 1.164,
+          "evidence": []
+        },
+        {
+          "term": "fee",
+          "score": 0.9999,
+          "evidence": []
+        },
+        {
+          "term": "copies",
+          "score": 0.9759,
+          "evidence": []
+        },
+        {
+          "term": "edu",
+          "score": 0.9264,
+          "evidence": []
+        },
+        {
+          "term": "junda",
+          "score": 0.7952,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "singapore management",
+          "score": 63.7821,
+          "evidence": []
+        },
+        {
+          "term": "christoph treude",
+          "score": 20.1579,
+          "evidence": []
+        },
+        {
+          "term": "management university",
+          "score": 19.2577,
+          "evidence": []
+        },
+        {
+          "term": "copies",
+          "score": 15.9383,
+          "evidence": []
+        },
+        {
+          "term": "edu",
+          "score": 15.0078,
+          "evidence": []
+        },
+        {
+          "term": "autonomous agents",
+          "score": 14.3783,
+          "evidence": []
+        },
+        {
+          "term": "fee",
+          "score": 14.035,
+          "evidence": []
+        },
+        {
+          "term": "junda",
+          "score": 10.4515,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "autonomous agents",
+          "score": 0.2011,
+          "evidence": []
+        },
+        {
+          "term": "management university",
+          "score": 0.1568,
+          "evidence": []
+        },
+        {
+          "term": "systems",
+          "score": 0.1522,
+          "evidence": []
+        },
+        {
+          "term": "christoph treude",
+          "score": 0.1455,
+          "evidence": []
+        },
+        {
+          "term": "engineering",
+          "score": 0.1382,
+          "evidence": []
+        },
+        {
+          "term": "lma",
+          "score": 0.1279,
+          "evidence": []
+        },
+        {
+          "term": "tasks",
+          "score": 0.1214,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.1183,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "autonomous agents",
+          "score": 4.0722,
+          "evidence": []
+        },
+        {
+          "term": "arxiv",
+          "score": 2.6905,
+          "evidence": []
+        },
+        {
+          "term": "lma",
+          "score": 2.2656,
+          "evidence": []
+        },
+        {
+          "term": "systems",
+          "score": 2.1684,
+          "evidence": []
+        },
+        {
+          "term": "work",
+          "score": 2.0992,
+          "evidence": []
+        },
+        {
+          "term": "license",
+          "score": 1.9948,
+          "evidence": []
+        },
+        {
+          "term": "management university",
+          "score": 1.9684,
+          "evidence": []
+        },
+        {
+          "term": "swot",
+          "score": 1.9278,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "autonomous agents",
+          "score": 0.2011,
+          "evidence": []
+        },
+        {
+          "term": "management university",
+          "score": 0.1568,
+          "evidence": []
+        },
+        {
+          "term": "christoph treude",
+          "score": 0.1455,
+          "evidence": []
+        },
+        {
+          "term": "singapore management",
+          "score": 0.1316,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.1183,
+          "evidence": []
+        },
+        {
+          "term": "acm",
+          "score": 0.1138,
+          "evidence": []
+        },
+        {
+          "term": "david",
+          "score": 0.1016,
+          "evidence": []
+        },
+        {
+          "term": "work",
+          "score": 0.0949,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "neville",
+          "score": 164.3436,
+          "evidence": []
+        },
+        {
+          "term": "tobias",
+          "score": 95.2567,
+          "evidence": []
+        },
+        {
+          "term": "shanghai",
+          "score": 95.2013,
+          "evidence": []
+        },
+        {
+          "term": "huawei",
+          "score": 76.8757,
+          "evidence": []
+        },
+        {
+          "term": "schnabel",
+          "score": 67.8797,
+          "evidence": []
+        },
+        {
+          "term": "berkeley",
+          "score": 67.4945,
+          "evidence": []
+        },
+        {
+          "term": "jiao",
+          "score": 63.8416,
+          "evidence": []
+        },
+        {
+          "term": "qianxiang",
+          "score": 62.7066,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-001-21-autonomous-agent": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "lma systems",
+          "score": 2.8039,
+          "evidence": []
+        },
+        {
+          "term": "software systems",
+          "score": 1.8838,
+          "evidence": []
+        },
+        {
+          "term": "software engineering",
+          "score": 1.8276,
+          "evidence": []
+        },
+        {
+          "term": "llm-based agents",
+          "score": 1.6854,
+          "evidence": []
+        },
+        {
+          "term": "software development",
+          "score": 1.6639,
+          "evidence": []
+        },
+        {
+          "term": "systems ensure",
+          "score": 1.374,
+          "evidence": []
+        },
+        {
+          "term": "quality assurance",
+          "score": 1.1558,
+          "evidence": []
+        },
+        {
+          "term": "autonomous",
+          "score": 0.9124,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "lma systems",
+          "score": 95.9654,
+          "evidence": []
+        },
+        {
+          "term": "software systems",
+          "score": 55.8346,
+          "evidence": []
+        },
+        {
+          "term": "software engineering",
+          "score": 43.1864,
+          "evidence": []
+        },
+        {
+          "term": "software development",
+          "score": 38.93,
+          "evidence": []
+        },
+        {
+          "term": "systems ensure",
+          "score": 36.4983,
+          "evidence": []
+        },
+        {
+          "term": "llm-based agents",
+          "score": 31.4397,
+          "evidence": []
+        },
+        {
+          "term": "collaborative",
+          "score": 16.3989,
+          "evidence": []
+        },
+        {
+          "term": "quality assurance",
+          "score": 14.9887,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "lma systems",
+          "score": 1.2906,
+          "evidence": []
+        },
+        {
+          "term": "llm-based agents",
+          "score": 1.2839,
+          "evidence": []
+        },
+        {
+          "term": "software systems",
+          "score": 1.1578,
+          "evidence": []
+        },
+        {
+          "term": "software engineering",
+          "score": 1.1439,
+          "evidence": []
+        },
+        {
+          "term": "software development",
+          "score": 1.0283,
+          "evidence": []
+        },
+        {
+          "term": "systems ensure",
+          "score": 0.6848,
+          "evidence": []
+        },
+        {
+          "term": "multi-agent",
+          "score": 0.5106,
+          "evidence": []
+        },
+        {
+          "term": "roles",
+          "score": 0.4867,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "lma systems",
+          "score": 48.4252,
+          "evidence": []
+        },
+        {
+          "term": "llm-based agents",
+          "score": 41.0812,
+          "evidence": []
+        },
+        {
+          "term": "software systems",
+          "score": 32.4177,
+          "evidence": []
+        },
+        {
+          "term": "software development",
+          "score": 25.2959,
+          "evidence": []
+        },
+        {
+          "term": "software engineering",
+          "score": 23.8235,
+          "evidence": []
+        },
+        {
+          "term": "systems ensure",
+          "score": 20.1424,
+          "evidence": []
+        },
+        {
+          "term": "project",
+          "score": 12.1247,
+          "evidence": []
+        },
+        {
+          "term": "roles",
+          "score": 11.167,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "lma systems",
+          "score": 1.2906,
+          "evidence": []
+        },
+        {
+          "term": "llm-based agents",
+          "score": 1.2839,
+          "evidence": []
+        },
+        {
+          "term": "software systems",
+          "score": 1.1578,
+          "evidence": []
+        },
+        {
+          "term": "software engineering",
+          "score": 1.1439,
+          "evidence": []
+        },
+        {
+          "term": "software development",
+          "score": 1.0283,
+          "evidence": []
+        },
+        {
+          "term": "systems ensure",
+          "score": 0.6848,
+          "evidence": []
+        },
+        {
+          "term": "roles",
+          "score": 0.4867,
+          "evidence": []
+        },
+        {
+          "term": "quality assurance",
+          "score": 0.4651,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "h1n",
+          "score": 39.3192,
+          "evidence": []
+        },
+        {
+          "term": "preparedness",
+          "score": 32.8498,
+          "evidence": []
+        },
+        {
+          "term": "phii",
+          "score": 24.8171,
+          "evidence": []
+        },
+        {
+          "term": "snake",
+          "score": 22.3827,
+          "evidence": []
+        },
+        {
+          "term": "game-over",
+          "score": 21.3949,
+          "evidence": []
+        },
+        {
+          "term": "in-game",
+          "score": 20.9211,
+          "evidence": []
+        },
+        {
+          "term": "playable",
+          "score": 20.9211,
+          "evidence": []
+        },
+        {
+          "term": "tetris",
+          "score": 19.5833,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-003-3-literature-review": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "lma systems",
+          "score": 1.6951,
+          "evidence": []
+        },
+        {
+          "term": "software engineering",
+          "score": 1.1591,
+          "evidence": []
+        },
+        {
+          "term": "paving",
+          "score": 0.6308,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "lma systems",
+          "score": 28.848,
+          "evidence": []
+        },
+        {
+          "term": "software engineering",
+          "score": 15.9334,
+          "evidence": []
+        },
+        {
+          "term": "paving",
+          "score": 7.0175,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "lma systems",
+          "score": 0.2838,
+          "evidence": []
+        },
+        {
+          "term": "software engineering",
+          "score": 0.2752,
+          "evidence": []
+        },
+        {
+          "term": "review",
+          "score": 0.1633,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "lma systems",
+          "score": 10.2391,
+          "evidence": []
+        },
+        {
+          "term": "software engineering",
+          "score": 5.067,
+          "evidence": []
+        },
+        {
+          "term": "agents",
+          "score": 5.0571,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "lma systems",
+          "score": 0.2838,
+          "evidence": []
+        },
+        {
+          "term": "software engineering",
+          "score": 0.2752,
+          "evidence": []
+        },
+        {
+          "term": "review",
+          "score": 0.1633,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "h1n",
+          "score": 44.672,
+          "evidence": []
+        },
+        {
+          "term": "preparedness",
+          "score": 37.205,
+          "evidence": []
+        },
+        {
+          "term": "phii",
+          "score": 27.6449,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-004-2-preliminary": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "autonomous agent",
+          "score": 1.0766,
+          "evidence": []
+        },
+        {
+          "term": "manages",
+          "score": 0.7406,
+          "evidence": []
+        },
+        {
+          "term": "ences",
+          "score": 0.6308,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "autonomous agent",
+          "score": 13.3208,
+          "evidence": []
+        },
+        {
+          "term": "manages",
+          "score": 10.2914,
+          "evidence": []
+        },
+        {
+          "term": "goals",
+          "score": 8.1461,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "agents",
+          "score": 0.1162,
+          "evidence": []
+        },
+        {
+          "term": "autonomous agent",
+          "score": 0.1145,
+          "evidence": []
+        },
+        {
+          "term": "prov",
+          "score": 0.0802,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "agents",
+          "score": 2.1274,
+          "evidence": []
+        },
+        {
+          "term": "lma",
+          "score": 1.4037,
+          "evidence": []
+        },
+        {
+          "term": "autonomous agent",
+          "score": 1.2817,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "autonomous agent",
+          "score": 0.1271,
+          "evidence": []
+        },
+        {
+          "term": "entity",
+          "score": 0.0479,
+          "evidence": []
+        },
+        {
+          "term": "external",
+          "score": 0.0438,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "appli",
+          "score": 16.3907,
+          "evidence": []
+        },
+        {
+          "term": "ences",
+          "score": 15.7623,
+          "evidence": []
+        },
+        {
+          "term": "h1n",
+          "score": 14.5454,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-005-22-llm-based-autonomous-agent": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "llm-based agent",
+          "score": 4.4539,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "llm-based multi-agent",
+          "score": 2.4003,
+          "evidence": []
+        },
+        {
+          "term": "orchestration platform",
+          "score": 2.3654,
+          "evidence": []
+        },
+        {
+          "term": "decentralized execution",
+          "score": 1.9057,
+          "evidence": []
+        },
+        {
+          "term": "lma systems",
+          "score": 1.8615,
+          "evidence": []
+        },
+        {
+          "term": "agents communicate",
+          "score": 1.7757,
+          "evidence": []
+        },
+        {
+          "term": "among agents",
+          "score": 1.7623,
+          "evidence": []
+        },
+        {
+          "term": "software engineering",
+          "score": 1.7205,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "llm-based agent",
+          "score": 128.2401,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "llm-based multi-agent",
+          "score": 57.6111,
+          "evidence": []
+        },
+        {
+          "term": "among agents",
+          "score": 51.1489,
+          "evidence": []
+        },
+        {
+          "term": "orchestration platform",
+          "score": 48.9326,
+          "evidence": []
+        },
+        {
+          "term": "agents communicate",
+          "score": 48.417,
+          "evidence": []
+        },
+        {
+          "term": "multi-agent systems",
+          "score": 38.1387,
+          "evidence": []
+        },
+        {
+          "term": "software engineering",
+          "score": 36.3946,
+          "evidence": []
+        },
+        {
+          "term": "lma systems",
+          "score": 35.4762,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "llm-based agent",
+          "score": 2.6708,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lma systems",
+          "score": 1.4552,
+          "evidence": []
+        },
+        {
+          "term": "software engineering",
+          "score": 1.2728,
+          "evidence": []
+        },
+        {
+          "term": "among agents",
+          "score": 1.149,
+          "evidence": []
+        },
+        {
+          "term": "multi-agent systems",
+          "score": 1.1351,
+          "evidence": []
+        },
+        {
+          "term": "software development",
+          "score": 1.0262,
+          "evidence": []
+        },
+        {
+          "term": "agents communicate",
+          "score": 0.9334,
+          "evidence": []
+        },
+        {
+          "term": "literature review",
+          "score": 0.839,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "llm-based agent",
+          "score": 64.1196,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "among agents",
+          "score": 34.4751,
+          "evidence": []
+        },
+        {
+          "term": "lma systems",
+          "score": 33.3945,
+          "evidence": []
+        },
+        {
+          "term": "agents communicate",
+          "score": 32.2273,
+          "evidence": []
+        },
+        {
+          "term": "llm-based multi-agent",
+          "score": 25.3915,
+          "evidence": []
+        },
+        {
+          "term": "software engineering",
+          "score": 24.1951,
+          "evidence": []
+        },
+        {
+          "term": "software development",
+          "score": 20.1404,
+          "evidence": []
+        },
+        {
+          "term": "roles",
+          "score": 14.5599,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "llm-based agent",
+          "score": 2.6708,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lma systems",
+          "score": 1.4552,
+          "evidence": []
+        },
+        {
+          "term": "software engineering",
+          "score": 1.2728,
+          "evidence": []
+        },
+        {
+          "term": "among agents",
+          "score": 1.149,
+          "evidence": []
+        },
+        {
+          "term": "multi-agent systems",
+          "score": 1.1351,
+          "evidence": []
+        },
+        {
+          "term": "agents communicate",
+          "score": 1.0346,
+          "evidence": []
+        },
+        {
+          "term": "software development",
+          "score": 1.0262,
+          "evidence": []
+        },
+        {
+          "term": "literature review",
+          "score": 0.839,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "positiveinteger",
+          "score": 15.1589,
+          "evidence": []
+        },
+        {
+          "term": "beginintegerrange",
+          "score": 12.6487,
+          "evidence": []
+        },
+        {
+          "term": "endintegerrange",
+          "score": 12.3996,
+          "evidence": []
+        },
+        {
+          "term": "h1n",
+          "score": 12.3809,
+          "evidence": []
+        },
+        {
+          "term": "autonomous",
+          "score": 11.7938,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "preparedness",
+          "score": 10.5871,
+          "evidence": []
+        },
+        {
+          "term": "spectrum-based",
+          "score": 10.3888,
+          "evidence": []
+        },
+        {
+          "term": "appli",
+          "score": 9.6353,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-007-32-code-generation": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "code generation",
+          "score": 4.0336,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "exclusion criterion",
+          "score": 2.8398,
+          "evidence": []
+        },
+        {
+          "term": "lma systems",
+          "score": 2.2989,
+          "evidence": []
+        },
+        {
+          "term": "exclusion criteria",
+          "score": 2.2948,
+          "evidence": []
+        },
+        {
+          "term": "lma framework",
+          "score": 2.2772,
+          "evidence": []
+        },
+        {
+          "term": "code teacher",
+          "score": 2.1531,
+          "evidence": []
+        },
+        {
+          "term": "code learner",
+          "score": 2.0939,
+          "evidence": []
+        },
+        {
+          "term": "papers identified",
+          "score": 2.074,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "code generation",
+          "score": 116.1236,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "exclusion criterion",
+          "score": 69.463,
+          "evidence": []
+        },
+        {
+          "term": "lma systems",
+          "score": 58.2798,
+          "evidence": []
+        },
+        {
+          "term": "lma framework",
+          "score": 57.9272,
+          "evidence": []
+        },
+        {
+          "term": "papers identified",
+          "score": 55.7438,
+          "evidence": []
+        },
+        {
+          "term": "relevant papers",
+          "score": 55.5104,
+          "evidence": []
+        },
+        {
+          "term": "code teacher",
+          "score": 55.3211,
+          "evidence": []
+        },
+        {
+          "term": "code learner",
+          "score": 54.2995,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "code generation",
+          "score": 4.0432,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "llm-based agents",
+          "score": 2.3356,
+          "evidence": []
+        },
+        {
+          "term": "lma systems",
+          "score": 2.3274,
+          "evidence": []
+        },
+        {
+          "term": "lma framework",
+          "score": 2.0095,
+          "evidence": []
+        },
+        {
+          "term": "code learner",
+          "score": 1.9235,
+          "evidence": []
+        },
+        {
+          "term": "code teacher",
+          "score": 1.8763,
+          "evidence": []
+        },
+        {
+          "term": "software engineering",
+          "score": 1.8507,
+          "evidence": []
+        },
+        {
+          "term": "initial code",
+          "score": 1.8065,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "code generation",
+          "score": 71.4878,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "llm-based agents",
+          "score": 50.6401,
+          "evidence": []
+        },
+        {
+          "term": "lma systems",
+          "score": 46.2875,
+          "evidence": []
+        },
+        {
+          "term": "lma framework",
+          "score": 35.3015,
+          "evidence": []
+        },
+        {
+          "term": "code learner",
+          "score": 30.9257,
+          "evidence": []
+        },
+        {
+          "term": "code teacher",
+          "score": 30.9257,
+          "evidence": []
+        },
+        {
+          "term": "initial code",
+          "score": 30.9257,
+          "evidence": []
+        },
+        {
+          "term": "software engineering",
+          "score": 29.866,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "code generation",
+          "score": 4.0432,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "llm-based agents",
+          "score": 2.3356,
+          "evidence": []
+        },
+        {
+          "term": "lma systems",
+          "score": 2.3274,
+          "evidence": []
+        },
+        {
+          "term": "lma framework",
+          "score": 2.0095,
+          "evidence": []
+        },
+        {
+          "term": "code learner",
+          "score": 1.9235,
+          "evidence": []
+        },
+        {
+          "term": "code teacher",
+          "score": 1.8763,
+          "evidence": []
+        },
+        {
+          "term": "software engineering",
+          "score": 1.8507,
+          "evidence": []
+        },
+        {
+          "term": "initial code",
+          "score": 1.8065,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "h1n",
+          "score": 20.0145,
+          "evidence": []
+        },
+        {
+          "term": "preparedness",
+          "score": 16.9609,
+          "evidence": []
+        },
+        {
+          "term": "snake",
+          "score": 16.8786,
+          "evidence": []
+        },
+        {
+          "term": "game-over",
+          "score": 15.9618,
+          "evidence": []
+        },
+        {
+          "term": "in-game",
+          "score": 15.6378,
+          "evidence": []
+        },
+        {
+          "term": "playable",
+          "score": 15.6378,
+          "evidence": []
+        },
+        {
+          "term": "cooperates",
+          "score": 15.4207,
+          "evidence": []
+        },
+        {
+          "term": "tetris",
+          "score": 14.8889,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-008-33-software-quality-assurance": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "bug detection",
+          "score": 1.9467,
+          "evidence": []
+        },
+        {
+          "term": "fault localization",
+          "score": 1.6993,
+          "evidence": []
+        },
+        {
+          "term": "vulnerability detection",
+          "score": 1.6299,
+          "evidence": []
+        },
+        {
+          "term": "llm-based agents",
+          "score": 1.5227,
+          "evidence": []
+        },
+        {
+          "term": "false positives",
+          "score": 1.5079,
+          "evidence": []
+        },
+        {
+          "term": "lma systems",
+          "score": 1.4601,
+          "evidence": []
+        },
+        {
+          "term": "code analysis",
+          "score": 1.3611,
+          "evidence": []
+        },
+        {
+          "term": "testing",
+          "score": 1.0833,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "bug detection",
+          "score": 37.6032,
+          "evidence": []
+        },
+        {
+          "term": "vulnerability detection",
+          "score": 30.0051,
+          "evidence": []
+        },
+        {
+          "term": "fault localization",
+          "score": 27.0355,
+          "evidence": []
+        },
+        {
+          "term": "testing",
+          "score": 25.7971,
+          "evidence": []
+        },
+        {
+          "term": "llm-based agents",
+          "score": 24.0171,
+          "evidence": []
+        },
+        {
+          "term": "code analysis",
+          "score": 22.6953,
+          "evidence": []
+        },
+        {
+          "term": "lma systems",
+          "score": 21.636,
+          "evidence": []
+        },
+        {
+          "term": "false positives",
+          "score": 20.7966,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "llm-based agents",
+          "score": 0.7961,
+          "evidence": []
+        },
+        {
+          "term": "software",
+          "score": 0.7933,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "code analysis",
+          "score": 0.6779,
+          "evidence": []
+        },
+        {
+          "term": "lma systems",
+          "score": 0.6331,
+          "evidence": []
+        },
+        {
+          "term": "quality",
+          "score": 0.3776,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vulnerability detection",
+          "score": 0.3533,
+          "evidence": []
+        },
+        {
+          "term": "fault localization",
+          "score": 0.3482,
+          "evidence": []
+        },
+        {
+          "term": "multi-agent",
+          "score": 0.3214,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "llm-based agents",
+          "score": 18.0863,
+          "evidence": []
+        },
+        {
+          "term": "code analysis",
+          "score": 12.6302,
+          "evidence": []
+        },
+        {
+          "term": "lma systems",
+          "score": 12.2768,
+          "evidence": []
+        },
+        {
+          "term": "software",
+          "score": 11.9202,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "fault localization",
+          "score": 5.9029,
+          "evidence": []
+        },
+        {
+          "term": "roles",
+          "score": 5.2673,
+          "evidence": []
+        },
+        {
+          "term": "multi-agent",
+          "score": 4.7076,
+          "evidence": []
+        },
+        {
+          "term": "review",
+          "score": 4.3542,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "llm-based agents",
+          "score": 0.7961,
+          "evidence": []
+        },
+        {
+          "term": "software",
+          "score": 0.7933,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "code analysis",
+          "score": 0.6779,
+          "evidence": []
+        },
+        {
+          "term": "lma systems",
+          "score": 0.6331,
+          "evidence": []
+        },
+        {
+          "term": "quality",
+          "score": 0.3776,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vulnerability detection",
+          "score": 0.3533,
+          "evidence": []
+        },
+        {
+          "term": "fault localization",
+          "score": 0.3482,
+          "evidence": []
+        },
+        {
+          "term": "bug detection",
+          "score": 0.3205,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "fault localization",
+          "score": 24.8475,
+          "evidence": []
+        },
+        {
+          "term": "cooperates",
+          "score": 21.0414,
+          "evidence": []
+        },
+        {
+          "term": "spectrum-based",
+          "score": 20.8506,
+          "evidence": []
+        },
+        {
+          "term": "mutation-based",
+          "score": 20.1984,
+          "evidence": []
+        },
+        {
+          "term": "cto",
+          "score": 18.8901,
+          "evidence": []
+        },
+        {
+          "term": "cpo",
+          "score": 18.4682,
+          "evidence": []
+        },
+        {
+          "term": "coder",
+          "score": 17.6957,
+          "evidence": []
+        },
+        {
+          "term": "ceo",
+          "score": 17.5166,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-009-34-software-maintenance": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "maintenance",
+          "score": 2.3216,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "code review",
+          "score": 1.8992,
+          "evidence": []
+        },
+        {
+          "term": "fault localization",
+          "score": 1.7363,
+          "evidence": []
+        },
+        {
+          "term": "specialized agents",
+          "score": 1.6721,
+          "evidence": []
+        },
+        {
+          "term": "code changes",
+          "score": 1.5306,
+          "evidence": []
+        },
+        {
+          "term": "monte carlo",
+          "score": 1.404,
+          "evidence": []
+        },
+        {
+          "term": "software",
+          "score": 1.3343,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "carlo tree",
+          "score": 1.2866,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "maintenance",
+          "score": 48.2028,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "code review",
+          "score": 47.6165,
+          "evidence": []
+        },
+        {
+          "term": "code changes",
+          "score": 35.0493,
+          "evidence": []
+        },
+        {
+          "term": "specialized agents",
+          "score": 33.7244,
+          "evidence": []
+        },
+        {
+          "term": "fault localization",
+          "score": 26.9555,
+          "evidence": []
+        },
+        {
+          "term": "debugging",
+          "score": 24.3872,
+          "evidence": []
+        },
+        {
+          "term": "software",
+          "score": 22.6392,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "monte carlo",
+          "score": 19.0704,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "code review",
+          "score": 1.224,
+          "evidence": []
+        },
+        {
+          "term": "software",
+          "score": 1.1023,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "specialized agents",
+          "score": 0.9117,
+          "evidence": []
+        },
+        {
+          "term": "code changes",
+          "score": 0.9066,
+          "evidence": []
+        },
+        {
+          "term": "multi-agent systems",
+          "score": 0.8563,
+          "evidence": []
+        },
+        {
+          "term": "fault localization",
+          "score": 0.7351,
+          "evidence": []
+        },
+        {
+          "term": "lma",
+          "score": 0.4529,
+          "evidence": []
+        },
+        {
+          "term": "maintenance",
+          "score": 0.4172,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "code review",
+          "score": 28.5363,
+          "evidence": []
+        },
+        {
+          "term": "code changes",
+          "score": 20.7477,
+          "evidence": []
+        },
+        {
+          "term": "specialized agents",
+          "score": 17.9913,
+          "evidence": []
+        },
+        {
+          "term": "software",
+          "score": 17.877,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "multi-agent systems",
+          "score": 11.7556,
+          "evidence": []
+        },
+        {
+          "term": "fault localization",
+          "score": 10.7504,
+          "evidence": []
+        },
+        {
+          "term": "lma",
+          "score": 8.7745,
+          "evidence": []
+        },
+        {
+          "term": "codeagent",
+          "score": 6.7379,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "code review",
+          "score": 1.224,
+          "evidence": []
+        },
+        {
+          "term": "software",
+          "score": 1.1023,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "specialized agents",
+          "score": 0.9117,
+          "evidence": []
+        },
+        {
+          "term": "code changes",
+          "score": 0.9066,
+          "evidence": []
+        },
+        {
+          "term": "multi-agent systems",
+          "score": 0.8563,
+          "evidence": []
+        },
+        {
+          "term": "fault localization",
+          "score": 0.7351,
+          "evidence": []
+        },
+        {
+          "term": "maintenance",
+          "score": 0.4172,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "process",
+          "score": 0.3989,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "fault localization",
+          "score": 40.0533,
+          "evidence": []
+        },
+        {
+          "term": "spectrum-based",
+          "score": 31.5694,
+          "evidence": []
+        },
+        {
+          "term": "mutation-based",
+          "score": 30.2663,
+          "evidence": []
+        },
+        {
+          "term": "multi-hop",
+          "score": 25.9439,
+          "evidence": []
+        },
+        {
+          "term": "cooperates",
+          "score": 25.6109,
+          "evidence": []
+        },
+        {
+          "term": "h1n",
+          "score": 25.3615,
+          "evidence": []
+        },
+        {
+          "term": "codeactagent",
+          "score": 25.2887,
+          "evidence": []
+        },
+        {
+          "term": "buggy",
+          "score": 25.123,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-010-35-end-to-end-software-development": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "software development",
+          "score": 4.8051,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "end-to-end software",
+          "score": 4.3494,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "development process",
+          "score": 2.2474,
+          "evidence": []
+        },
+        {
+          "term": "dynamic process",
+          "score": 1.8166,
+          "evidence": []
+        },
+        {
+          "term": "development practices",
+          "score": 1.8129,
+          "evidence": []
+        },
+        {
+          "term": "process models",
+          "score": 1.5579,
+          "evidence": []
+        },
+        {
+          "term": "agent roles",
+          "score": 1.4737,
+          "evidence": []
+        },
+        {
+          "term": "project requirements",
+          "score": 1.4698,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "software development",
+          "score": 206.2167,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "end-to-end software",
+          "score": 137.3317,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "development process",
+          "score": 77.2257,
+          "evidence": []
+        },
+        {
+          "term": "development practices",
+          "score": 62.6488,
+          "evidence": []
+        },
+        {
+          "term": "dynamic process",
+          "score": 38.5939,
+          "evidence": []
+        },
+        {
+          "term": "process models",
+          "score": 33.3468,
+          "evidence": []
+        },
+        {
+          "term": "project requirements",
+          "score": 31.0729,
+          "evidence": []
+        },
+        {
+          "term": "agile",
+          "score": 23.6756,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "software development",
+          "score": 1.9911,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "end-to-end software",
+          "score": 1.4461,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "software process",
+          "score": 1.2546,
+          "evidence": []
+        },
+        {
+          "term": "agent roles",
+          "score": 0.8854,
+          "evidence": []
+        },
+        {
+          "term": "dynamic process",
+          "score": 0.8551,
+          "evidence": []
+        },
+        {
+          "term": "process models",
+          "score": 0.8433,
+          "evidence": []
+        },
+        {
+          "term": "project requirements",
+          "score": 0.7028,
+          "evidence": []
+        },
+        {
+          "term": "lma",
+          "score": 0.6356,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "software development",
+          "score": 50.9668,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "end-to-end software",
+          "score": 33.2105,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "software process",
+          "score": 30.3686,
+          "evidence": []
+        },
+        {
+          "term": "lma",
+          "score": 19.6825,
+          "evidence": []
+        },
+        {
+          "term": "agents",
+          "score": 18.6308,
+          "evidence": []
+        },
+        {
+          "term": "dynamic process",
+          "score": 17.4525,
+          "evidence": []
+        },
+        {
+          "term": "process models",
+          "score": 17.1993,
+          "evidence": []
+        },
+        {
+          "term": "project requirements",
+          "score": 14.6169,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "software development",
+          "score": 1.9911,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "end-to-end software",
+          "score": 1.4461,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "software process",
+          "score": 1.2546,
+          "evidence": []
+        },
+        {
+          "term": "agent roles",
+          "score": 0.8854,
+          "evidence": []
+        },
+        {
+          "term": "dynamic process",
+          "score": 0.8551,
+          "evidence": []
+        },
+        {
+          "term": "process models",
+          "score": 0.8433,
+          "evidence": []
+        },
+        {
+          "term": "project requirements",
+          "score": 0.7028,
+          "evidence": []
+        },
+        {
+          "term": "lma",
+          "score": 0.6356,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "h1n",
+          "score": 32.4039,
+          "evidence": []
+        },
+        {
+          "term": "preparedness",
+          "score": 27.3235,
+          "evidence": []
+        },
+        {
+          "term": "snake",
+          "score": 22.7424,
+          "evidence": []
+        },
+        {
+          "term": "game-over",
+          "score": 21.6435,
+          "evidence": []
+        },
+        {
+          "term": "in-game",
+          "score": 21.0304,
+          "evidence": []
+        },
+        {
+          "term": "playable",
+          "score": 21.0304,
+          "evidence": []
+        },
+        {
+          "term": "phii",
+          "score": 20.6903,
+          "evidence": []
+        },
+        {
+          "term": "tetris",
+          "score": 19.172,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-011-4-case-study": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "chatdev",
+          "score": 1.3793,
+          "evidence": []
+        },
+        {
+          "term": "turbo",
+          "score": 0.8147,
+          "evidence": []
+        },
+        {
+          "term": "lma",
+          "score": 0.7682,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "chatdev",
+          "score": 28.8237,
+          "evidence": []
+        },
+        {
+          "term": "turbo",
+          "score": 11.0269,
+          "evidence": []
+        },
+        {
+          "term": "lma",
+          "score": 10.0052,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "lma",
+          "score": 0.1414,
+          "evidence": []
+        },
+        {
+          "term": "agents",
+          "score": 0.1267,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 0.1244,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "lma",
+          "score": 4.0277,
+          "evidence": []
+        },
+        {
+          "term": "agents",
+          "score": 3.2982,
+          "evidence": []
+        },
+        {
+          "term": "systems",
+          "score": 2.1068,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "lma",
+          "score": 0.1414,
+          "evidence": []
+        },
+        {
+          "term": "agents",
+          "score": 0.1267,
+          "evidence": []
+        },
+        {
+          "term": "software",
+          "score": 0.1152,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "snake",
+          "score": 218.072,
+          "evidence": []
+        },
+        {
+          "term": "game-over",
+          "score": 210.287,
+          "evidence": []
+        },
+        {
+          "term": "in-game",
+          "score": 199.7795,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-012-41-snake-game": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "snake game",
+          "score": 6.9692,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "chatdev",
+          "score": 1.2389,
+          "evidence": []
+        },
+        {
+          "term": "game-over",
+          "score": 1.0079,
+          "evidence": []
+        },
+        {
+          "term": "screen",
+          "score": 0.8033,
+          "evidence": []
+        },
+        {
+          "term": "food",
+          "score": 0.7062,
+          "evidence": []
+        },
+        {
+          "term": "displayed",
+          "score": 0.6937,
+          "evidence": []
+        },
+        {
+          "term": "generated",
+          "score": 0.5967,
+          "evidence": []
+        },
+        {
+          "term": "prompt",
+          "score": 0.587,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "snake game",
+          "score": 194.8714,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "chatdev",
+          "score": 23.059,
+          "evidence": []
+        },
+        {
+          "term": "game-over",
+          "score": 14.035,
+          "evidence": []
+        },
+        {
+          "term": "screen",
+          "score": 10.4515,
+          "evidence": []
+        },
+        {
+          "term": "food",
+          "score": 9.7549,
+          "evidence": []
+        },
+        {
+          "term": "displayed",
+          "score": 9.4298,
+          "evidence": []
+        },
+        {
+          "term": "prompt",
+          "score": 9.323,
+          "evidence": []
+        },
+        {
+          "term": "generated",
+          "score": 9.0305,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "lma",
+          "score": 0.1718,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 0.1303,
+          "evidence": []
+        },
+        {
+          "term": "software",
+          "score": 0.1278,
+          "evidence": []
+        },
+        {
+          "term": "agents",
+          "score": 0.1178,
+          "evidence": []
+        },
+        {
+          "term": "requirements",
+          "score": 0.1178,
+          "evidence": []
+        },
+        {
+          "term": "game",
+          "score": 0.1125,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "snake game",
+          "score": 0.1125,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "llm-based",
+          "score": 0.1111,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "lma",
+          "score": 3.2062,
+          "evidence": []
+        },
+        {
+          "term": "agents",
+          "score": 2.6809,
+          "evidence": []
+        },
+        {
+          "term": "prompt",
+          "score": 2.2823,
+          "evidence": []
+        },
+        {
+          "term": "game",
+          "score": 2.1652,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "snake game",
+          "score": 2.1652,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "systems",
+          "score": 1.9923,
+          "evidence": []
+        },
+        {
+          "term": "injection",
+          "score": 1.716,
+          "evidence": []
+        },
+        {
+          "term": "wireframes",
+          "score": 1.6575,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "snake game",
+          "score": 0.1525,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "user",
+          "score": 0.0898,
+          "evidence": []
+        },
+        {
+          "term": "prompt",
+          "score": 0.0858,
+          "evidence": []
+        },
+        {
+          "term": "generated",
+          "score": 0.0762,
+          "evidence": []
+        },
+        {
+          "term": "state",
+          "score": 0.0608,
+          "evidence": []
+        },
+        {
+          "term": "chatdev",
+          "score": 0.0575,
+          "evidence": []
+        },
+        {
+          "term": "generate",
+          "score": 0.0521,
+          "evidence": []
+        },
+        {
+          "term": "instructions",
+          "score": 0.0513,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "snake game",
+          "score": 786.6207,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "game-over",
+          "score": 291.8013,
+          "evidence": []
+        },
+        {
+          "term": "in-game",
+          "score": 275.8362,
+          "evidence": []
+        },
+        {
+          "term": "playable",
+          "score": 275.8362,
+          "evidence": []
+        },
+        {
+          "term": "tetris",
+          "score": 205.0596,
+          "evidence": []
+        },
+        {
+          "term": "collisions",
+          "score": 186.9223,
+          "evidence": []
+        },
+        {
+          "term": "chatdev",
+          "score": 184.8652,
+          "evidence": []
+        },
+        {
+          "term": "shots",
+          "score": 147.4386,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-013-42-tetris-game": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "tetris game",
+          "score": 7.0771,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "snake game",
+          "score": 2.6393,
+          "evidence": []
+        },
+        {
+          "term": "game still",
+          "score": 2.056,
+          "evidence": []
+        },
+        {
+          "term": "tenth attempt",
+          "score": 1.8063,
+          "evidence": []
+        },
+        {
+          "term": "lma systems",
+          "score": 1.4601,
+          "evidence": []
+        },
+        {
+          "term": "chatdev",
+          "score": 1.3793,
+          "evidence": []
+        },
+        {
+          "term": "current lma",
+          "score": 1.3778,
+          "evidence": []
+        },
+        {
+          "term": "completed rows",
+          "score": 1.3722,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "tetris game",
+          "score": 210.5647,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "snake game",
+          "score": 72.2221,
+          "evidence": []
+        },
+        {
+          "term": "game still",
+          "score": 64.3716,
+          "evidence": []
+        },
+        {
+          "term": "tenth attempt",
+          "score": 29.2124,
+          "evidence": []
+        },
+        {
+          "term": "chatdev",
+          "score": 28.8237,
+          "evidence": []
+        },
+        {
+          "term": "lma systems",
+          "score": 21.636,
+          "evidence": []
+        },
+        {
+          "term": "completed rows",
+          "score": 20.3382,
+          "evidence": []
+        },
+        {
+          "term": "current lma",
+          "score": 20.2051,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "lma systems",
+          "score": 0.5016,
+          "evidence": []
+        },
+        {
+          "term": "current lma",
+          "score": 0.4232,
+          "evidence": []
+        },
+        {
+          "term": "tetris game",
+          "score": 0.3675,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "complex tasks",
+          "score": 0.2725,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 0.2228,
+          "evidence": []
+        },
+        {
+          "term": "software",
+          "score": 0.2145,
+          "evidence": []
+        },
+        {
+          "term": "agents",
+          "score": 0.213,
+          "evidence": []
+        },
+        {
+          "term": "game still",
+          "score": 0.1939,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "lma systems",
+          "score": 15.1268,
+          "evidence": []
+        },
+        {
+          "term": "current lma",
+          "score": 11.9907,
+          "evidence": []
+        },
+        {
+          "term": "agents",
+          "score": 7.0535,
+          "evidence": []
+        },
+        {
+          "term": "tetris game",
+          "score": 5.7978,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "project",
+          "score": 4.3617,
+          "evidence": []
+        },
+        {
+          "term": "complex tasks",
+          "score": 3.4474,
+          "evidence": []
+        },
+        {
+          "term": "development",
+          "score": 3.3695,
+          "evidence": []
+        },
+        {
+          "term": "software",
+          "score": 3.3271,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "lma systems",
+          "score": 0.5016,
+          "evidence": []
+        },
+        {
+          "term": "current lma",
+          "score": 0.4232,
+          "evidence": []
+        },
+        {
+          "term": "tetris game",
+          "score": 0.3675,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "complex tasks",
+          "score": 0.2725,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 0.2228,
+          "evidence": []
+        },
+        {
+          "term": "game still",
+          "score": 0.1939,
+          "evidence": []
+        },
+        {
+          "term": "requirements",
+          "score": 0.1793,
+          "evidence": []
+        },
+        {
+          "term": "development",
+          "score": 0.1787,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "tetris game",
+          "score": 435.4761,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "snake game",
+          "score": 280.9169,
+          "evidence": []
+        },
+        {
+          "term": "game-over",
+          "score": 207.2558,
+          "evidence": []
+        },
+        {
+          "term": "in-game",
+          "score": 196.9132,
+          "evidence": []
+        },
+        {
+          "term": "playable",
+          "score": 196.9132,
+          "evidence": []
+        },
+        {
+          "term": "collisions",
+          "score": 133.5204,
+          "evidence": []
+        },
+        {
+          "term": "chatdev",
+          "score": 133.4411,
+          "evidence": []
+        },
+        {
+          "term": "shots",
+          "score": 104.9836,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-014-5-research-agenda": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "research",
+          "score": 1.2044,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lma systems",
+          "score": 1.1571,
+          "evidence": []
+        },
+        {
+          "term": "research questions",
+          "score": 1.129,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "research",
+          "score": 20.7413,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "research questions",
+          "score": 17.1305,
+          "evidence": []
+        },
+        {
+          "term": "lma systems",
+          "score": 14.424,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "lma systems",
+          "score": 0.1938,
+          "evidence": []
+        },
+        {
+          "term": "software",
+          "score": 0.1013,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.0963,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "lma systems",
+          "score": 6.1323,
+          "evidence": []
+        },
+        {
+          "term": "agents",
+          "score": 2.8719,
+          "evidence": []
+        },
+        {
+          "term": "software",
+          "score": 1.7458,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "lma systems",
+          "score": 0.1938,
+          "evidence": []
+        },
+        {
+          "term": "software",
+          "score": 0.1013,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.0963,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "h1n",
+          "score": 51.774,
+          "evidence": []
+        },
+        {
+          "term": "preparedness",
+          "score": 43.1103,
+          "evidence": []
+        },
+        {
+          "term": "phii",
+          "score": 31.5519,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-015-51-phase-1-enhancing-individual-agent-capabiliti": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "llm-based agents",
+          "score": 3.3378,
+          "evidence": []
+        },
+        {
+          "term": "lma roles",
+          "score": 3.2955,
+          "evidence": []
+        },
+        {
+          "term": "engineering roles",
+          "score": 3.0872,
+          "evidence": []
+        },
+        {
+          "term": "llm-based multi-agent",
+          "score": 2.8698,
+          "evidence": []
+        },
+        {
+          "term": "key roles",
+          "score": 2.7381,
+          "evidence": []
+        },
+        {
+          "term": "role-playing abilities",
+          "score": 2.5074,
+          "evidence": []
+        },
+        {
+          "term": "role-playing capabilities",
+          "score": 2.4177,
+          "evidence": []
+        },
+        {
+          "term": "specialized skills",
+          "score": 2.3117,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "llm-based agents",
+          "score": 186.1219,
+          "evidence": []
+        },
+        {
+          "term": "engineering roles",
+          "score": 131.6809,
+          "evidence": []
+        },
+        {
+          "term": "lma roles",
+          "score": 128.1772,
+          "evidence": []
+        },
+        {
+          "term": "key roles",
+          "score": 118.157,
+          "evidence": []
+        },
+        {
+          "term": "agents capabilities",
+          "score": 116.206,
+          "evidence": []
+        },
+        {
+          "term": "llm-based multi-agent",
+          "score": 115.9444,
+          "evidence": []
+        },
+        {
+          "term": "specialized skills",
+          "score": 69.4156,
+          "evidence": []
+        },
+        {
+          "term": "software engineering",
+          "score": 65.2142,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "lma roles",
+          "score": 3.4792,
+          "evidence": []
+        },
+        {
+          "term": "llm-based agents",
+          "score": 3.3883,
+          "evidence": []
+        },
+        {
+          "term": "lma systems",
+          "score": 3.0312,
+          "evidence": []
+        },
+        {
+          "term": "engineering roles",
+          "score": 3.0125,
+          "evidence": []
+        },
+        {
+          "term": "llm-based multi-agent",
+          "score": 2.902,
+          "evidence": []
+        },
+        {
+          "term": "agents capabilities",
+          "score": 2.6338,
+          "evidence": []
+        },
+        {
+          "term": "software engineering",
+          "score": 2.5066,
+          "evidence": []
+        },
+        {
+          "term": "key roles",
+          "score": 2.42,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "llm-based agents",
+          "score": 168.9013,
+          "evidence": []
+        },
+        {
+          "term": "lma roles",
+          "score": 118.377,
+          "evidence": []
+        },
+        {
+          "term": "engineering roles",
+          "score": 113.2855,
+          "evidence": []
+        },
+        {
+          "term": "agents capabilities",
+          "score": 112.5523,
+          "evidence": []
+        },
+        {
+          "term": "llm-based multi-agent",
+          "score": 106.5283,
+          "evidence": []
+        },
+        {
+          "term": "key roles",
+          "score": 95.6138,
+          "evidence": []
+        },
+        {
+          "term": "lma systems",
+          "score": 71.9052,
+          "evidence": []
+        },
+        {
+          "term": "software engineering",
+          "score": 69.9641,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "lma roles",
+          "score": 3.4792,
+          "evidence": []
+        },
+        {
+          "term": "llm-based agents",
+          "score": 3.3883,
+          "evidence": []
+        },
+        {
+          "term": "lma systems",
+          "score": 3.0312,
+          "evidence": []
+        },
+        {
+          "term": "engineering roles",
+          "score": 3.0125,
+          "evidence": []
+        },
+        {
+          "term": "llm-based multi-agent",
+          "score": 2.902,
+          "evidence": []
+        },
+        {
+          "term": "agents capabilities",
+          "score": 2.6338,
+          "evidence": []
+        },
+        {
+          "term": "software engineering",
+          "score": 2.5066,
+          "evidence": []
+        },
+        {
+          "term": "key roles",
+          "score": 2.42,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "h1n",
+          "score": 27.1605,
+          "evidence": []
+        },
+        {
+          "term": "preparedness",
+          "score": 22.7365,
+          "evidence": []
+        },
+        {
+          "term": "phii",
+          "score": 17.1018,
+          "evidence": []
+        },
+        {
+          "term": "lma roles",
+          "score": 14.9108,
+          "evidence": []
+        },
+        {
+          "term": "refining role-playing",
+          "score": 13.858,
+          "evidence": []
+        },
+        {
+          "term": "ˆmu",
+          "score": 13.2064,
+          "evidence": []
+        },
+        {
+          "term": "role-playing abilities",
+          "score": 13.197,
+          "evidence": []
+        },
+        {
+          "term": "ˆml",
+          "score": 13.0561,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-016-52-phase-two-optimizing-agent-synergy": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "lma agents",
+          "score": 3.9717,
+          "evidence": []
+        },
+        {
+          "term": "lma systems",
+          "score": 3.6051,
+          "evidence": []
+        },
+        {
+          "term": "existing lma",
+          "score": 2.9885,
+          "evidence": []
+        },
+        {
+          "term": "llm-based agents",
+          "score": 2.7988,
+          "evidence": []
+        },
+        {
+          "term": "project evolves",
+          "score": 2.6842,
+          "evidence": []
+        },
+        {
+          "term": "software projects",
+          "score": 2.5468,
+          "evidence": []
+        },
+        {
+          "term": "project management",
+          "score": 2.333,
+          "evidence": []
+        },
+        {
+          "term": "project manager",
+          "score": 2.2627,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "lma agents",
+          "score": 273.7345,
+          "evidence": []
+        },
+        {
+          "term": "lma systems",
+          "score": 213.5667,
+          "evidence": []
+        },
+        {
+          "term": "existing lma",
+          "score": 157.5541,
+          "evidence": []
+        },
+        {
+          "term": "llm-based agents",
+          "score": 155.8331,
+          "evidence": []
+        },
+        {
+          "term": "individual agents",
+          "score": 137.3544,
+          "evidence": []
+        },
+        {
+          "term": "agents increases",
+          "score": 136.2967,
+          "evidence": []
+        },
+        {
+          "term": "project data",
+          "score": 96.1952,
+          "evidence": []
+        },
+        {
+          "term": "project evolves",
+          "score": 90.5824,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "lma agents",
+          "score": 4.3044,
+          "evidence": []
+        },
+        {
+          "term": "lma systems",
+          "score": 4.1123,
+          "evidence": []
+        },
+        {
+          "term": "existing lma",
+          "score": 3.2902,
+          "evidence": []
+        },
+        {
+          "term": "llm-based agents",
+          "score": 2.9517,
+          "evidence": []
+        },
+        {
+          "term": "software projects",
+          "score": 2.7812,
+          "evidence": []
+        },
+        {
+          "term": "software development",
+          "score": 2.6157,
+          "evidence": []
+        },
+        {
+          "term": "multi-agent systems",
+          "score": 2.5723,
+          "evidence": []
+        },
+        {
+          "term": "project evolves",
+          "score": 2.5347,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "lma agents",
+          "score": 273.0012,
+          "evidence": []
+        },
+        {
+          "term": "lma systems",
+          "score": 221.07,
+          "evidence": []
+        },
+        {
+          "term": "llm-based agents",
+          "score": 160.5528,
+          "evidence": []
+        },
+        {
+          "term": "existing lma",
+          "score": 158.6057,
+          "evidence": []
+        },
+        {
+          "term": "individual agents",
+          "score": 134.6765,
+          "evidence": []
+        },
+        {
+          "term": "agents increases",
+          "score": 126.0083,
+          "evidence": []
+        },
+        {
+          "term": "multi-agent systems",
+          "score": 94.9188,
+          "evidence": []
+        },
+        {
+          "term": "software development",
+          "score": 92.2885,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "lma agents",
+          "score": 4.3044,
+          "evidence": []
+        },
+        {
+          "term": "lma systems",
+          "score": 4.1123,
+          "evidence": []
+        },
+        {
+          "term": "existing lma",
+          "score": 3.2902,
+          "evidence": []
+        },
+        {
+          "term": "llm-based agents",
+          "score": 2.9517,
+          "evidence": []
+        },
+        {
+          "term": "software projects",
+          "score": 2.7812,
+          "evidence": []
+        },
+        {
+          "term": "software development",
+          "score": 2.6157,
+          "evidence": []
+        },
+        {
+          "term": "multi-agent systems",
+          "score": 2.5723,
+          "evidence": []
+        },
+        {
+          "term": "project evolves",
+          "score": 2.5347,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "h1n",
+          "score": 28.1982,
+          "evidence": []
+        },
+        {
+          "term": "preparedness",
+          "score": 23.6898,
+          "evidence": []
+        },
+        {
+          "term": "snake",
+          "score": 18.4072,
+          "evidence": []
+        },
+        {
+          "term": "phii",
+          "score": 17.8292,
+          "evidence": []
+        },
+        {
+          "term": "game-over",
+          "score": 17.6178,
+          "evidence": []
+        },
+        {
+          "term": "in-game",
+          "score": 17.1023,
+          "evidence": []
+        },
+        {
+          "term": "playable",
+          "score": 17.1023,
+          "evidence": []
+        },
+        {
+          "term": "tetris",
+          "score": 15.4669,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-018-61-a-comparison-with-the-mixture-of-experts-para": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "experts",
+          "score": 2.4655,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lma systems",
+          "score": 2.0495,
+          "evidence": []
+        },
+        {
+          "term": "gating mechanism",
+          "score": 1.6832,
+          "evidence": []
+        },
+        {
+          "term": "paradigm",
+          "score": 1.2745,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mixture",
+          "score": 0.9913,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "specialized",
+          "score": 0.5927,
+          "evidence": []
+        },
+        {
+          "term": "feedback",
+          "score": 0.5574,
+          "evidence": []
+        },
+        {
+          "term": "training",
+          "score": 0.5513,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "experts",
+          "score": 65.1691,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lma systems",
+          "score": 43.272,
+          "evidence": []
+        },
+        {
+          "term": "gating mechanism",
+          "score": 27.3561,
+          "evidence": []
+        },
+        {
+          "term": "paradigm",
+          "score": 17.6593,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mixture",
+          "score": 11.0269,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "training",
+          "score": 8.5994,
+          "evidence": []
+        },
+        {
+          "term": "specialized",
+          "score": 7.6377,
+          "evidence": []
+        },
+        {
+          "term": "feedback",
+          "score": 7.4807,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "lma systems",
+          "score": 0.4492,
+          "evidence": []
+        },
+        {
+          "term": "agents",
+          "score": 0.2749,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 0.2285,
+          "evidence": []
+        },
+        {
+          "term": "experts",
+          "score": 0.1977,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "multi-agent",
+          "score": 0.1945,
+          "evidence": []
+        },
+        {
+          "term": "software",
+          "score": 0.1916,
+          "evidence": []
+        },
+        {
+          "term": "llm-based",
+          "score": 0.1726,
+          "evidence": []
+        },
+        {
+          "term": "roles",
+          "score": 0.1638,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "lma systems",
+          "score": 17.0703,
+          "evidence": []
+        },
+        {
+          "term": "agents",
+          "score": 9.5797,
+          "evidence": []
+        },
+        {
+          "term": "project",
+          "score": 4.247,
+          "evidence": []
+        },
+        {
+          "term": "tasks",
+          "score": 3.7791,
+          "evidence": []
+        },
+        {
+          "term": "software",
+          "score": 3.574,
+          "evidence": []
+        },
+        {
+          "term": "llm-based",
+          "score": 3.5184,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 3.5095,
+          "evidence": []
+        },
+        {
+          "term": "roles",
+          "score": 3.4322,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "lma systems",
+          "score": 0.4492,
+          "evidence": []
+        },
+        {
+          "term": "agents",
+          "score": 0.2749,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 0.2285,
+          "evidence": []
+        },
+        {
+          "term": "experts",
+          "score": 0.1977,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "llms",
+          "score": 0.1571,
+          "evidence": []
+        },
+        {
+          "term": "specialized",
+          "score": 0.1332,
+          "evidence": []
+        },
+        {
+          "term": "human",
+          "score": 0.1091,
+          "evidence": []
+        },
+        {
+          "term": "feedback",
+          "score": 0.1089,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "h1n",
+          "score": 43.8689,
+          "evidence": []
+        },
+        {
+          "term": "preparedness",
+          "score": 36.3029,
+          "evidence": []
+        },
+        {
+          "term": "phii",
+          "score": 26.3575,
+          "evidence": []
+        },
+        {
+          "term": "kilowatthour",
+          "score": 24.1329,
+          "evidence": []
+        },
+        {
+          "term": "kilowatt-hour",
+          "score": 22.2919,
+          "evidence": []
+        },
+        {
+          "term": "energyconsumptiondescription",
+          "score": 20.899,
+          "evidence": []
+        },
+        {
+          "term": "energyquantity",
+          "score": 19.054,
+          "evidence": []
+        },
+        {
+          "term": "energyunit",
+          "score": 19.054,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-019-62-threat-to-validity": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "validity",
+          "score": 0.8412,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "threat",
+          "score": 0.7752,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "search",
+          "score": 0.6419,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "search",
+          "score": 9.5342,
+          "evidence": []
+        },
+        {
+          "term": "validity",
+          "score": 9.2392,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "studies",
+          "score": 8.8712,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "lma",
+          "score": 0.1447,
+          "evidence": []
+        },
+        {
+          "term": "software",
+          "score": 0.1247,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 0.1181,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "agents",
+          "score": 2.1269,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 2.0764,
+          "evidence": []
+        },
+        {
+          "term": "llm-based",
+          "score": 1.563,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "software",
+          "score": 0.1247,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 0.1181,
+          "evidence": []
+        },
+        {
+          "term": "llm-based",
+          "score": 0.1175,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "ˆmu",
+          "score": 36.1683,
+          "evidence": []
+        },
+        {
+          "term": "ˆml",
+          "score": 35.6872,
+          "evidence": []
+        },
+        {
+          "term": "positiveinteger",
+          "score": 19.5278,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-020-7-conclusion-and-future-work": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "lma systems",
+          "score": 2.2252,
+          "evidence": []
+        },
+        {
+          "term": "software engineering",
+          "score": 1.4709,
+          "evidence": []
+        },
+        {
+          "term": "software development",
+          "score": 1.2961,
+          "evidence": []
+        },
+        {
+          "term": "llm-based agents",
+          "score": 1.2828,
+          "evidence": []
+        },
+        {
+          "term": "research questions",
+          "score": 1.0455,
+          "evidence": []
+        },
+        {
+          "term": "future",
+          "score": 0.8271,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "synergy",
+          "score": 0.81,
+          "evidence": []
+        },
+        {
+          "term": "exploring",
+          "score": 0.6243,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "lma systems",
+          "score": 53.2772,
+          "evidence": []
+        },
+        {
+          "term": "software engineering",
+          "score": 25.7724,
+          "evidence": []
+        },
+        {
+          "term": "software development",
+          "score": 21.9996,
+          "evidence": []
+        },
+        {
+          "term": "llm-based agents",
+          "score": 17.6609,
+          "evidence": []
+        },
+        {
+          "term": "research questions",
+          "score": 14.5378,
+          "evidence": []
+        },
+        {
+          "term": "synergy",
+          "score": 11.2624,
+          "evidence": []
+        },
+        {
+          "term": "future",
+          "score": 11.1336,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "exploring",
+          "score": 8.5533,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "lma systems",
+          "score": 0.7982,
+          "evidence": []
+        },
+        {
+          "term": "software engineering",
+          "score": 0.7057,
+          "evidence": []
+        },
+        {
+          "term": "llm-based agents",
+          "score": 0.6855,
+          "evidence": []
+        },
+        {
+          "term": "software development",
+          "score": 0.6113,
+          "evidence": []
+        },
+        {
+          "term": "roles",
+          "score": 0.3003,
+          "evidence": []
+        },
+        {
+          "term": "work",
+          "score": 0.2577,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "multi-agent",
+          "score": 0.2367,
+          "evidence": []
+        },
+        {
+          "term": "review",
+          "score": 0.2339,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "lma systems",
+          "score": 26.8276,
+          "evidence": []
+        },
+        {
+          "term": "llm-based agents",
+          "score": 22.2612,
+          "evidence": []
+        },
+        {
+          "term": "software development",
+          "score": 13.6236,
+          "evidence": []
+        },
+        {
+          "term": "software engineering",
+          "score": 13.1461,
+          "evidence": []
+        },
+        {
+          "term": "project",
+          "score": 6.661,
+          "evidence": []
+        },
+        {
+          "term": "roles",
+          "score": 6.3905,
+          "evidence": []
+        },
+        {
+          "term": "tasks",
+          "score": 5.3985,
+          "evidence": []
+        },
+        {
+          "term": "requirements",
+          "score": 4.1985,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "lma systems",
+          "score": 0.7982,
+          "evidence": []
+        },
+        {
+          "term": "software engineering",
+          "score": 0.7057,
+          "evidence": []
+        },
+        {
+          "term": "llm-based agents",
+          "score": 0.6855,
+          "evidence": []
+        },
+        {
+          "term": "software development",
+          "score": 0.6113,
+          "evidence": []
+        },
+        {
+          "term": "work",
+          "score": 0.2577,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "review",
+          "score": 0.2339,
+          "evidence": []
+        },
+        {
+          "term": "future",
+          "score": 0.2113,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "research questions",
+          "score": 0.2107,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "h1n",
+          "score": 44.0555,
+          "evidence": []
+        },
+        {
+          "term": "preparedness",
+          "score": 36.7105,
+          "evidence": []
+        },
+        {
+          "term": "phii",
+          "score": 27.244,
+          "evidence": []
+        },
+        {
+          "term": "snake",
+          "score": 21.3214,
+          "evidence": []
+        },
+        {
+          "term": "game-over",
+          "score": 20.4272,
+          "evidence": []
+        },
+        {
+          "term": "in-game",
+          "score": 19.9545,
+          "evidence": []
+        },
+        {
+          "term": "playable",
+          "score": 19.9545,
+          "evidence": []
+        },
+        {
+          "term": "crdm",
+          "score": 18.7003,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-021-references": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "arxiv preprint",
+          "score": 5.6164,
+          "evidence": []
+        },
+        {
+          "term": "yang liu",
+          "score": 4.2516,
+          "evidence": []
+        },
+        {
+          "term": "lingming zhang",
+          "score": 4.0177,
+          "evidence": []
+        },
+        {
+          "term": "zhiyuan liu",
+          "score": 3.9315,
+          "evidence": []
+        },
+        {
+          "term": "wei liu",
+          "score": 3.9017,
+          "evidence": []
+        },
+        {
+          "term": "cheng yang",
+          "score": 3.8207,
+          "evidence": []
+        },
+        {
+          "term": "yifei wang",
+          "score": 3.8084,
+          "evidence": []
+        },
+        {
+          "term": "dong chen",
+          "score": 3.7429,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "arxiv preprint",
+          "score": 855.5911,
+          "evidence": []
+        },
+        {
+          "term": "yang liu",
+          "score": 288.8551,
+          "evidence": []
+        },
+        {
+          "term": "zihao wang",
+          "score": 245.5362,
+          "evidence": []
+        },
+        {
+          "term": "yifei wang",
+          "score": 244.9441,
+          "evidence": []
+        },
+        {
+          "term": "shuo wang",
+          "score": 239.5484,
+          "evidence": []
+        },
+        {
+          "term": "wei liu",
+          "score": 239.4569,
+          "evidence": []
+        },
+        {
+          "term": "lingming zhang",
+          "score": 237.067,
+          "evidence": []
+        },
+        {
+          "term": "chi wang",
+          "score": 232.6407,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "arxiv preprint",
+          "score": 5.6349,
+          "evidence": []
+        },
+        {
+          "term": "yang liu",
+          "score": 4.2872,
+          "evidence": []
+        },
+        {
+          "term": "lingming zhang",
+          "score": 4.0169,
+          "evidence": []
+        },
+        {
+          "term": "zhiyuan liu",
+          "score": 3.9612,
+          "evidence": []
+        },
+        {
+          "term": "wei liu",
+          "score": 3.9446,
+          "evidence": []
+        },
+        {
+          "term": "yifei wang",
+          "score": 3.8673,
+          "evidence": []
+        },
+        {
+          "term": "cheng yang",
+          "score": 3.8029,
+          "evidence": []
+        },
+        {
+          "term": "zihao wang",
+          "score": 3.7668,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "arxiv preprint",
+          "score": 860.0576,
+          "evidence": []
+        },
+        {
+          "term": "yang liu",
+          "score": 286.5913,
+          "evidence": []
+        },
+        {
+          "term": "zihao wang",
+          "score": 245.8657,
+          "evidence": []
+        },
+        {
+          "term": "yifei wang",
+          "score": 245.2166,
+          "evidence": []
+        },
+        {
+          "term": "shuo wang",
+          "score": 240.6252,
+          "evidence": []
+        },
+        {
+          "term": "wei liu",
+          "score": 236.688,
+          "evidence": []
+        },
+        {
+          "term": "chi wang",
+          "score": 234.0345,
+          "evidence": []
+        },
+        {
+          "term": "lingming zhang",
+          "score": 233.8754,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "arxiv preprint",
+          "score": 5.6349,
+          "evidence": []
+        },
+        {
+          "term": "yang liu",
+          "score": 4.2872,
+          "evidence": []
+        },
+        {
+          "term": "lingming zhang",
+          "score": 4.0169,
+          "evidence": []
+        },
+        {
+          "term": "zhiyuan liu",
+          "score": 3.9612,
+          "evidence": []
+        },
+        {
+          "term": "wei liu",
+          "score": 3.9446,
+          "evidence": []
+        },
+        {
+          "term": "yifei wang",
+          "score": 3.8673,
+          "evidence": []
+        },
+        {
+          "term": "cheng yang",
+          "score": 3.8029,
+          "evidence": []
+        },
+        {
+          "term": "zihao wang",
+          "score": 3.7668,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "abhik roychoudhury",
+          "score": 74.4217,
+          "evidence": []
+        },
+        {
+          "term": "daoguang zan",
+          "score": 68.4077,
+          "evidence": []
+        },
+        {
+          "term": "yufan dang",
+          "score": 67.2762,
+          "evidence": []
+        },
+        {
+          "term": "ratnadira widyasari",
+          "score": 67.234,
+          "evidence": []
+        },
+        {
+          "term": "shin yoo",
+          "score": 66.1837,
+          "evidence": []
+        },
+        {
+          "term": "haifeng ruan",
+          "score": 64.4097,
+          "evidence": []
+        },
+        {
+          "term": "yuheng cheng",
+          "score": 57.1049,
+          "evidence": []
+        },
+        {
+          "term": "shuo",
+          "score": 40.9315,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "singapore management",
+          "score": 2.2082,
+          "evidence": []
+        },
+        {
+          "term": "lma systems",
+          "score": 1.9417,
+          "evidence": []
+        },
+        {
+          "term": "software engineering",
+          "score": 1.7952,
+          "evidence": []
+        },
+        {
+          "term": "autonomous agents",
+          "score": 1.6156,
+          "evidence": []
+        },
+        {
+          "term": "multi-agent systems",
+          "score": 1.5702,
+          "evidence": []
+        },
+        {
+          "term": "llm-based multi-agent",
+          "score": 1.5182,
+          "evidence": []
+        },
+        {
+          "term": "christoph treude",
+          "score": 1.4831,
+          "evidence": []
+        },
+        {
+          "term": "software development",
+          "score": 1.4644,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "singapore management",
+          "score": 45.4785,
+          "evidence": []
+        },
+        {
+          "term": "software engineering",
+          "score": 40.9224,
+          "evidence": []
+        },
+        {
+          "term": "lma systems",
+          "score": 38.2694,
+          "evidence": []
+        },
+        {
+          "term": "software development",
+          "score": 31.0553,
+          "evidence": []
+        },
+        {
+          "term": "multi-agent systems",
+          "score": 28.3717,
+          "evidence": []
+        },
+        {
+          "term": "autonomous agents",
+          "score": 26.2823,
+          "evidence": []
+        },
+        {
+          "term": "llm-based multi-agent",
+          "score": 22.8793,
+          "evidence": []
+        },
+        {
+          "term": "christoph treude",
+          "score": 20.1579,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "lma systems",
+          "score": 0.8358,
+          "evidence": []
+        },
+        {
+          "term": "software engineering",
+          "score": 0.769,
+          "evidence": []
+        },
+        {
+          "term": "multi-agent systems",
+          "score": 0.679,
+          "evidence": []
+        },
+        {
+          "term": "llm-based multi-agent",
+          "score": 0.6551,
+          "evidence": []
+        },
+        {
+          "term": "software development",
+          "score": 0.6195,
+          "evidence": []
+        },
+        {
+          "term": "autonomous agents",
+          "score": 0.5155,
+          "evidence": []
+        },
+        {
+          "term": "road ahead",
+          "score": 0.3768,
+          "evidence": []
+        },
+        {
+          "term": "literature review",
+          "score": 0.3723,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "lma systems",
+          "score": 22.4242,
+          "evidence": []
+        },
+        {
+          "term": "software engineering",
+          "score": 16.4298,
+          "evidence": []
+        },
+        {
+          "term": "autonomous agents",
+          "score": 15.8959,
+          "evidence": []
+        },
+        {
+          "term": "software development",
+          "score": 14.9307,
+          "evidence": []
+        },
+        {
+          "term": "multi-agent systems",
+          "score": 13.2246,
+          "evidence": []
+        },
+        {
+          "term": "llm-based multi-agent",
+          "score": 11.6059,
+          "evidence": []
+        },
+        {
+          "term": "roles",
+          "score": 6.4439,
+          "evidence": []
+        },
+        {
+          "term": "project",
+          "score": 4.8247,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "lma systems",
+          "score": 0.8358,
+          "evidence": []
+        },
+        {
+          "term": "software engineering",
+          "score": 0.769,
+          "evidence": []
+        },
+        {
+          "term": "multi-agent systems",
+          "score": 0.679,
+          "evidence": []
+        },
+        {
+          "term": "llm-based multi-agent",
+          "score": 0.6551,
+          "evidence": []
+        },
+        {
+          "term": "software development",
+          "score": 0.6195,
+          "evidence": []
+        },
+        {
+          "term": "autonomous agents",
+          "score": 0.5155,
+          "evidence": []
+        },
+        {
+          "term": "road ahead",
+          "score": 0.3768,
+          "evidence": []
+        },
+        {
+          "term": "literature review",
+          "score": 0.3723,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "h1n",
+          "score": 42.6465,
+          "evidence": []
+        },
+        {
+          "term": "preparedness",
+          "score": 35.5759,
+          "evidence": []
+        },
+        {
+          "term": "snake",
+          "score": 29.9329,
+          "evidence": []
+        },
+        {
+          "term": "game-over",
+          "score": 28.7158,
+          "evidence": []
+        },
+        {
+          "term": "in-game",
+          "score": 27.8691,
+          "evidence": []
+        },
+        {
+          "term": "playable",
+          "score": 27.8691,
+          "evidence": []
+        },
+        {
+          "term": "phii",
+          "score": 27.2237,
+          "evidence": []
+        },
+        {
+          "term": "tetris",
+          "score": 25.0155,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

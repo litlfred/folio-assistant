@@ -26,7 +26,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Runs the site route's steps via `stage-local.ts` → `build-instance-site.ts`: `ig-site:sidecars` (IG API sidecars, if the landing layer has the step), `ig-site:compose` (artefact index and thin pages from the AST, the IG composed at the root), `ig-site:openapi` (if the IG holds OpenAPI pages), `ig-site:publisher-pages` (the AST's resources as `ast-data/`, the build stamp), and last `ig-site:bar` (the IG's slim bar on pages written after `publisher-pages`). Published at the root from the default branch, as a preview otherwise."
+          "@value": "Runs the site route's steps via `stage-local.ts` → `build-instance-site.ts`: `ig-site:sidecars` (IG API sidecars, if the landing layer has the step), `ig-site:compose` (artefact index and thin pages from the AST, the IG composed at the root), `ig-site:openapi` (if the IG holds OpenAPI pages), `ig-site:publisher-pages` (the AST's resources as `<Type>-<id>.json` at the root, the build stamp), and last `ig-site:bar` (the IG's slim bar on pages written after `publisher-pages`). Published at the root from the default branch, as a preview otherwise. When the restore recorded the cache commit, the site reads the AST from that commit by raw URL rather than copying it: the artefact pages draw each full resource there, the IG API sidecars are read from its `ig-api/` (fhir-harness#344), and the artefact index from its `fhir-artifact-index/index.json`, which the site points at with `fhir-artifact-index/index.ref.json` instead of serving (#358). The root `<Type>-<id>.json` copies are then reduced (minified, no narrative, no ELM data; #359), and the JSON-LD graph (`artifact/*.jsonld`) names each root file first and the cache copy as its mirror. The full resources are the cache commit's and the release's `package.tgz`."
         }
       ],
       "skos:notation": "Task_BuildSite",
@@ -106,11 +106,31 @@
       ],
       "skos:definition": [
         {
-          "@value": "`ig-cache.sh seed --ig-root . --push`: one commit holding the AST, the Publisher's expansions and `txcache/`, its subject recording the package, counts, Publisher version and source commit. Refused when the candidate is under 90% of the incumbent's resources or edges (the no-shrink gate)."
+          "@value": "`ig-cache.sh seed --ig-root . --push`: one commit holding the AST, the Publisher's expansions and `txcache/`, the IG API generated over that AST (`ig-api/`, `ig-api-cache.ts`) and the artefact index built from that tree (`fhir-artifact-index/index.json`, `ig-index-cache.ts`), which the site reads by raw URL; its subject recording the package, counts, Publisher version and source commit. Refused when the candidate is under 90% of the incumbent's resources or edges (the no-shrink gate)."
         }
       ],
       "skos:notation": "Task_Seed",
       "dcterms:source": "fhir-harness/processes/content/ig-ast-cache.bpmn#Task_Seed",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-bpmn-activities/process_igastcache.task_sizereview",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Review the site's size"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Read the size report the build printed before its push, and fix what it shows, or raise a decision card with the owner when no known fix applies (skill `ig-publication` §\"Size review\"). The report is cat-harness-tools `site-size.ts` (`bun run cat site:size`), written as `site-size.json` beside the build, never into the site. It gives the total against the published `gh-pages` root, the top directories, the size by extension, the biggest files, byte-identical duplicates, source maps, the directories named after another layer of `index.lock.json`, and the directories the shared-assets host could serve. Growth over the budget (10% or 10 MB) is a warning. The review is advisory and never refuses a publish."
+        }
+      ],
+      "skos:notation": "Task_SizeReview",
+      "dcterms:source": "fhir-harness/processes/content/ig-ast-cache.bpmn#Task_SizeReview",
       "skos:note": "candidate"
     },
     {
@@ -366,7 +386,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Deploy the site built from main or a release. Deploying is release-management, after a human authorised the release — an agent never records that authorisation. Report the published URL only once it answers: a returned deploy is not a serving site."
+          "@value": "Deploy the site built from main or a release. Deploying is release-management, after a human authorised the release — an agent never records that authorisation. A release's files are not deployed to the site: a `v*` tag makes a GitHub draft release carrying them (`ig-release.yml`; skill `ig-binary-artefacts` §\"Releasing\"), which the owner publishes. Report the published URL only once it answers: a returned deploy is not a serving site."
         }
       ],
       "skos:notation": "Task_Deploy",
@@ -654,6 +674,106 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-bpmn-activities/process_igrelease.task_check",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Check the current version's tag and release"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`bun run fhir-harness/scripts/ig-release.ts check --ig . --repo <owner/repo>` (Tool `ig-release`). Prints one notice per finding: `version X is untagged: the owner tags commit <sha> with vX`, or `tag vX has no release: run \"IG release (draft)\" (ig-release.yml) by hand with tag vX`, or that a draft waits for the owner. Exits 0 always; never tags and never releases."
+        }
+      ],
+      "skos:notation": "Task_Check",
+      "dcterms:source": "fhir-harness/processes/content/ig-release.bpmn#Task_Check",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-bpmn-activities/process_igrelease.task_publish",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Publish the draft release"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The owner reads the draft's files and publishes it on GitHub: `Task_AuthorizeRelease` of `draft-to-publication.bpmn`. Until then only the repository's writers see it and `releases.json` leaves it out."
+        }
+      ],
+      "skos:notation": "Task_Publish",
+      "dcterms:source": "fhir-harness/processes/content/ig-release.bpmn#Task_Publish",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-bpmn-activities/process_igrelease.task_releasebuild",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Build the tag in full and make the draft release"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`ig-release.yml` (Tool `ig-release`): `ig-ast-refresh.yml` with `force` and `release` (never incremental), then `ig-release.ts assets` gathers `package.tgz` (and `package.r4.tgz`, `package.r4b.tgz`), `ast-data.zip` (the AST, Libraries with their ELM) and `SHA256SUMS`, and `ig-release.ts draft` makes or refreshes the GitHub draft for the tag. A tag with a published release is refused."
+        }
+      ],
+      "skos:notation": "Task_ReleaseBuild",
+      "dcterms:source": "fhir-harness/processes/content/ig-release.bpmn#Task_ReleaseBuild",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-bpmn-activities/process_igrelease.task_runrelease",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Run IG release (draft) by hand for the tag"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Actions → \"IG release (draft)\" → Run workflow, input `tag` = `v<version>`. For a tag pushed before the IG carried the caller, or whose run failed."
+        }
+      ],
+      "skos:notation": "Task_RunRelease",
+      "dcterms:source": "fhir-harness/processes/content/ig-release.bpmn#Task_RunRelease",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-bpmn-activities/process_igrelease.task_tag",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Tag the IG's current version"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The owner tags the commit that set the version with `v<version>` (for example `v0.2.0`) and pushes the tag. A `releaseLabel` of `ci-build`, `ballot` or `draft`, or a version with a suffix, makes it a pre-release (`ig-release.ts kind`). `ig-release.ts check` names the commit: the newest one whose diff of `sushi-config.yaml` sets that version, else HEAD."
+        }
+      ],
+      "skos:notation": "Task_Tag",
+      "dcterms:source": "fhir-harness/processes/content/ig-release.bpmn#Task_Tag",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-bpmn-activities/process_l3fhir.call_publishstatements",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -726,7 +846,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Release authorisation and review follow draft-to-publication.bpmn."
+          "@value": "Release authorisation and review follow draft-to-publication.bpmn. The site is published from the AST on the IG's cache branch (ig-ast-cache.bpmn). A release is started by the owner pushing a `v*` tag of the current version (`ig-release.bpmn`, which also holds the catch-up when a version was not tagged): the IG's `ig-release.yml` runs a full AST build, then `ig-release.ts` makes a GitHub DRAFT release carrying `package.tgz` (and its R4/R4B variants), `ast-data.zip` and `SHA256SUMS`; the owner publishing that draft is Task_AuthorizeRelease (skill `ig-binary-artefacts` §\"Releasing\"). The site serves each resource as a reduced `<Type>-<id>.json` at its root; the full copies are the release's and the AST cache's."
         }
       ],
       "skos:notation": "Task_PublishIg",

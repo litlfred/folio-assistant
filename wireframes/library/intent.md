@@ -9,7 +9,7 @@
 
 All five are written by `cat-harness/scripts/gen-library-viz.ts`: "a zero-dependency viewer under `<site>/<graph>/` that fetches the projection relative to its own location" (`cat-harness/docs/assets/library/index.json`). The drawing uses the IRIS replica. The others differ only in their counts: agent-skills has 4 entries, cat-harness 4, folio-assistant 0 entries with 20 of 31 uploads uningested, and the science layer 1.
 
-**Who it is for:** a librarian or maintainer of an instance's L1 corpus (the ingested documents). They need a sortable listing with metadata, and a desktop view.
+**Who it is for:** a librarian or maintainer of a layer's L1 corpus (the ingested documents). They need a sortable listing with metadata, and a desktop view.
 
 **What they need to do** (from the generator):
 - in the **Listing**, sort by any column and see every metadatum, to answer "which is the biggest", "which has no OCR" and "which came from which upload"
@@ -21,7 +21,7 @@ All five are written by `cat-harness/scripts/gen-library-viz.ts`: "a zero-depend
 - see how much of the summary drain is left: a badge counts the prose blocks not yet summarised and the agent drafts awaiting a person, and an opened entry states its own count. The count is advisory, never styled as an error.
 - "Pull out to folio" an entry. The page is otherwise read-only.
 
-**What it must show:** a heading and a summary line (instance · entries · words · sections), badges (uningested uploads, json files scanned for references, prose blocks not yet summarised), the toolbar, the listing (13 columns: slug with the entry's cover and the pull-out control, title, instance, rung, sections, blocks, images, OCR, pages, words, size, referenced by, source), the "Uploads — the queue feeding this" table, and, once an entry is opened, its blocks with the extract and the agent summary side by side (stacked at 390 px).
+**What it must show:** a heading and a summary line (layer · entries · words · sections), badges (uningested uploads, json files scanned for references, prose blocks not yet summarised), the toolbar, the listing (13 columns: slug with the entry's cover and the pull-out control, title, layer, rung, sections, blocks, images, OCR, pages, words, size, referenced by, source), the "Uploads — the queue feeding this" table, and, once an entry is opened, its blocks with the extract and the agent summary side by side (stacked at 390 px).
 
 ## Observed on main (re-checked against main 0bcf94bd)
 

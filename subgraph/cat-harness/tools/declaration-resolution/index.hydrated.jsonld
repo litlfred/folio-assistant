@@ -7,7 +7,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/declaration-resolution.jsonld",
       "@type": "cat-harness:Tool",
-      "description": "Read every instance declaration in the checkout and resolve what it names: `directories` (and those declared from within) through `check:declared-dirs`, `assets` through `check:declared-assets`, `visualisers[].renderedBy` through `check:visualiser-routes`, `needs` through the instance-graph resolver, and `visualisers[].coversKinds` against the graph typologies registered IN THIS CHECKOUT — its own and those a mounted layer contributes, read from the checkout under inspection rather than from where the harness module sits. A declaration that does not parse is a finding. One verdict per instance and field, naming the gate that decided it. Exit 0 every reference resolves, 1 one does not, 2 could not determine; a certain finding is reported before anything undetermined.",
+      "description": "Read every layer declaration in the checkout and resolve what it names: `directories` (and those declared from within) through `check:declared-dirs`, `assets` through `check:declared-assets`, `visualisers[].renderedBy` through `check:visualiser-routes`, `needs` through the instance-graph resolver, and `visualisers[].coversKinds` against the graph typologies registered IN THIS CHECKOUT — its own and those a mounted layer contributes, read from the checkout under inspection rather than from where the harness module sits. A declaration that does not parse is a finding. One verdict per layer and field, naming the gate that decided it. Exit 0 every reference resolves, 1 one does not, 2 could not determine; a certain finding is reported before anything undetermined.",
       "install": {
         "none": true
       },
@@ -37,7 +37,7 @@
         ],
         "outputs": [
           {
-            "description": "Unresolved references per instance and field, and what could not be determined; entries examined per field.",
+            "description": "Unresolved references per layer and field, and what could not be determined; entries examined per field.",
             "name": "findings",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count"
           }

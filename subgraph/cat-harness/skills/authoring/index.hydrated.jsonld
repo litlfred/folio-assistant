@@ -12,28 +12,18 @@
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/package/authoring-core",
           "@type": "cat-harness:SkillPackage",
           "declaresSkill": [
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/block-density",
             "https://litlfred.github.io/folio-assistant/cat-harness/skill/canonical-watcher",
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/chapter-complexity-review",
             "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-graph",
             "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-profiles",
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/devils-advocate-watcher",
             "https://litlfred.github.io/folio-assistant/cat-harness/skill/editor",
             "https://litlfred.github.io/folio-assistant/cat-harness/skill/evidence-review",
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/exposition-swarm-drain",
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/integration-audit",
             "https://litlfred.github.io/folio-assistant/cat-harness/skill/md-authoring",
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/one-voice-audit",
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/one-voice-integration-watcher",
             "https://litlfred.github.io/folio-assistant/cat-harness/skill/one-voice-style-guide",
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/production-vs-exploratory-discipline",
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/readability-editing",
             "https://litlfred.github.io/folio-assistant/cat-harness/skill/review-heatmap",
             "https://litlfred.github.io/folio-assistant/cat-harness/skill/scientific-accuracy",
             "https://litlfred.github.io/folio-assistant/cat-harness/skill/technical-documentation",
             "https://litlfred.github.io/folio-assistant/cat-harness/skill/todo-review",
             "https://litlfred.github.io/folio-assistant/cat-harness/skill/uses-editorial-review",
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/voice-authoring-guidance",
             "https://litlfred.github.io/folio-assistant/cat-harness/skill/voice-editorial-review",
             "https://litlfred.github.io/folio-assistant/cat-harness/skill/voice-overlay-review"
           ],
@@ -43,25 +33,6 @@
           "name": "authoring-core",
           "path": "skills/authoring/authoring-core",
           "version": "0.1.0"
-        },
-        {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/block-density",
-          "@type": "bootstrap:Skill",
-          "ambiguous": false,
-          "description": "Audits individual content blocks for single-topic coherence, length, and embedded tables.  Blocks that cover multiple topics or exceed ~2/3 of a page should be split; large tables (>5 rows) must be their own `table` block.  Child blocks from a split may belong in different chapters than the parent.",
-          "hasIOContract": false,
-          "hasInstructions": true,
-          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/authoring-core",
-          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
-          "instructionLines": 122,
-          "instructionsPath": "skills/authoring/authoring-core/block-density.md",
-          "name": "block-density",
-          "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/0a619b9e05b93afd12859c9f20cd122c7db7d9e183123b16d9133355d6f4f1cf",
-            "bytes": 4918,
-            "sha256": "0a619b9e05b93afd12859c9f20cd122c7db7d9e183123b16d9133355d6f4f1cf"
-          },
-          "title": "Block Density — Topic Coherence and Table Extraction Skill"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/canonical-watcher",
@@ -81,25 +52,6 @@
             "sha256": "2bcfe7928b6099f041ef665d0d2b88d05aaf3ecd83ab970d60b365b208b875fa"
           },
           "title": "/canonical-watcher"
-        },
-        {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/chapter-complexity-review",
-          "@type": "bootstrap:Skill",
-          "ambiguous": false,
-          "description": "Analyse a chapter's internal dependency graph to find backward edges (blocks that reference something defined later), compute graph energy, and suggest section/block reorderings that minimise complexity. Uses Graphviz for visualisation and brute-force permutation search for optimal section ordering.",
-          "hasIOContract": false,
-          "hasInstructions": true,
-          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/authoring-core",
-          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
-          "instructionLines": 223,
-          "instructionsPath": "skills/authoring/authoring-core/chapter-complexity-review.md",
-          "name": "chapter-complexity-review",
-          "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b5105511736e72a35cbe31f5bc5a53d827e6dd20a4bf6fb5636b2d439d9fa9ee",
-            "bytes": 8781,
-            "sha256": "b5105511736e72a35cbe31f5bc5a53d827e6dd20a4bf6fb5636b2d439d9fa9ee"
-          },
-          "title": "Chapter Complexity Review"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-graph",
@@ -133,30 +85,11 @@
           "instructionsPath": "skills/authoring/authoring-core/content-profiles.md",
           "name": "content-profiles",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ff3756cd4e27048f305e289949b565ef7c1b9fd32fa846d9413fb8a3aeae75d4",
-            "bytes": 4864,
-            "sha256": "ff3756cd4e27048f305e289949b565ef7c1b9fd32fa846d9413fb8a3aeae75d4"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5a3ca9cd4939dd6e90e58c459a9e870b411194fa5c333e2d9837bd14a20b7771",
+            "bytes": 4848,
+            "sha256": "5a3ca9cd4939dd6e90e58c459a9e870b411194fa5c333e2d9837bd14a20b7771"
           },
           "title": "Content types — `document` is the base, a paper extends it"
-        },
-        {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/devils-advocate-watcher",
-          "@type": "bootstrap:Skill",
-          "ambiguous": false,
-          "description": "Logical devil's-advocate integration watcher — for every content block (.ts/.md) and formal sibling, constructs the strongest adversarial case that it is WRONG: the objection a hostile-but- competent referee would raise (false claim, vacuity, circularity, overclaim, hidden degree-of-freedom, logical non-sequitur, formal↔narrative divergence, citation misuse, definitional ambiguity, empirical fragility, domain implausibility, irreproducible compute). Fans out multiple adversarial-lens agents per block, then an adjudicator scores whether each objection survives rebuttal. Persists per-block <block>.qa.json entries under the `da-*` criteria family (reviewer.kind = \"agent\"). Operationalizes the standing Critical-distance red-team license (AGENTS.md). Inherits all shared mechanics (Monitor, subscriptions, queue, ledger, idle sweep, author-ask, watch-prepared-PRs, witness-drift recovery, billing-quick-fail flake) from `integration-watcher`.",
-          "hasIOContract": false,
-          "hasInstructions": true,
-          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/authoring-core",
-          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
-          "instructionLines": 468,
-          "instructionsPath": "skills/authoring/authoring-core/devils-advocate-watcher.md",
-          "name": "devils-advocate-watcher",
-          "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c837f62d91129dc1010d943d10a5e52823a32078611495b5aff1602a89f573c3",
-            "bytes": 28121,
-            "sha256": "c837f62d91129dc1010d943d10a5e52823a32078611495b5aff1602a89f573c3"
-          },
-          "title": "/devils-advocate-watcher"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/editor",
@@ -189,49 +122,11 @@
           "instructionsPath": "skills/authoring/authoring-core/evidence-review.md",
           "name": "evidence-review",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/6a50cb0b47c12bd8deabc04940525cf9528754b35bdd24dcc6f6ae40d80b7685",
-            "bytes": 5089,
-            "sha256": "6a50cb0b47c12bd8deabc04940525cf9528754b35bdd24dcc6f6ae40d80b7685"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/10dd4496f5a461b773b28bc09b19923ae6351acdd7d9fe1d10ffe6c0dc63d2bd",
+            "bytes": 4938,
+            "sha256": "10dd4496f5a461b773b28bc09b19923ae6351acdd7d9fe1d10ffe6c0dc63d2bd"
           },
           "title": "Evidence review — the same rule, a second instance"
-        },
-        {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/exposition-swarm-drain",
-          "@type": "bootstrap:Skill",
-          "ambiguous": false,
-          "description": "Drain the paper's narrative blocks through an exposition-quality swarm: a small fleet of grouped-batch agents each audit their batch against the Milnor exposition gate (expo-milnor-clarity, H1–H8) plus the deterministic narrative defect checks (proof-sketch-vs-kind, proof-no-lean-mention-in-prose, proof-cross-block-duplication), then RESOLVE the flagged blocks with conservative, math-preserving edits. Each swarm agent owns its own branch (commits, pushes, opens a PR); the foreground session runs auto prepare-merge on each swarm branch and repeats batch-by-batch until the paper is completely drained. Sister to `/integration-backlog` (that drains watcher findings; this drains exposition quality).",
-          "hasIOContract": false,
-          "hasInstructions": true,
-          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/authoring-core",
-          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
-          "instructionLines": 215,
-          "instructionsPath": "skills/authoring/authoring-core/exposition-swarm-drain.md",
-          "name": "exposition-swarm-drain",
-          "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ed524ff2ff1b77820fd196a0ef849bd77306b9eca4774cb13b47ece344628f53",
-            "bytes": 10737,
-            "sha256": "ed524ff2ff1b77820fd196a0ef849bd77306b9eca4774cb13b47ece344628f53"
-          },
-          "title": "/exposition-swarm-drain — Milnor-exposition audit→resolve drain"
-        },
-        {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/integration-audit",
-          "@type": "bootstrap:Skill",
-          "ambiguous": false,
-          "description": "Sidecar-invalidation utility for the integration-watcher pipeline. Adds mechanical QA fields (script-reviewer entries) to per-block `.qa.json` sidecars and marks the existing entries stale so the next `qa-sweep` re-evaluates them. Use when a checker bug is fixed in a QA checker module (downstream \"fresh\" entries are now incorrect) or when a registry update adds a criterion the block hasn't been audited under.",
-          "hasIOContract": false,
-          "hasInstructions": true,
-          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/authoring-core",
-          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
-          "instructionLines": 149,
-          "instructionsPath": "skills/authoring/authoring-core/integration-audit.md",
-          "name": "integration-audit",
-          "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7b7b2c635600863f93b0c7f1a54f9181eb2d0d2a1ade7a67b861e114f93d33f3",
-            "bytes": 6402,
-            "sha256": "7b7b2c635600863f93b0c7f1a54f9181eb2d0d2a1ade7a67b861e114f93d33f3"
-          },
-          "title": "/integration-audit — invalidate + re-audit the sidecar pipeline"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/md-authoring",
@@ -252,43 +147,6 @@
           "title": "Markdown Authoring Conventions"
         },
         {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/one-voice-audit",
-          "@type": "bootstrap:Skill",
-          "ambiguous": false,
-          "hasIOContract": false,
-          "hasInstructions": true,
-          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/authoring-core",
-          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
-          "instructionLines": 311,
-          "instructionsPath": "skills/authoring/authoring-core/one-voice-audit.md",
-          "name": "one-voice-audit",
-          "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9a9801d852a8c4047b2f4eb7f5dd8c3637e06df608b2eaae6ed7b66e547518f8",
-            "bytes": 16792,
-            "sha256": "9a9801d852a8c4047b2f4eb7f5dd8c3637e06df608b2eaae6ed7b66e547518f8"
-          },
-          "title": "One-Voice Audit"
-        },
-        {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/one-voice-integration-watcher",
-          "@type": "bootstrap:Skill",
-          "ambiguous": false,
-          "description": "One-voice integration watcher — watches origin/main + open active PRs + newly-opened PRs for content-block changes (`.md`, `.ts`, proof files), runs the per-block QA suite covering scholarly voice, AI-slop detection, section/chapter fit, canonical-vs-deprecated notation usage, and domain-boundary placement. Persists every finding to a sibling `<block>.qa.json` audit report (multi-reviewer, per-field SHA staleness). The watcher NEVER stops — when no events arrive it falls back to idle-sweep of the staleness backlog, rebuilding the audit knowledge base that feeds future content reviews. Inherits shared mechanics (Monitor, subscriptions, queue, ledger, idle sweep, author-ask, watch-prepared-PRs, witness-drift recovery, billing-quick-fail flake, sibling-PR comment protocol) from `integration-watcher`.",
-          "hasIOContract": false,
-          "hasInstructions": true,
-          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/authoring-core",
-          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
-          "instructionLines": 284,
-          "instructionsPath": "skills/authoring/authoring-core/one-voice-integration-watcher.md",
-          "name": "one-voice-integration-watcher",
-          "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/84cac9ba74ad99c35164964498b7438fdc857c442bec9faf00777a74fa6da3a6",
-            "bytes": 16006,
-            "sha256": "84cac9ba74ad99c35164964498b7438fdc857c442bec9faf00777a74fa6da3a6"
-          },
-          "title": "/one-voice-integration-watcher"
-        },
-        {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/one-voice-style-guide",
           "@type": "bootstrap:Skill",
           "ambiguous": false,
@@ -301,48 +159,11 @@
           "instructionsPath": "skills/authoring/authoring-core/one-voice-style-guide.md",
           "name": "one-voice-style-guide",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b01017bdac19c061cdaf50c64bdcd87fa05f8aa0b52773361d0a57e419f16b18",
-            "bytes": 8472,
-            "sha256": "b01017bdac19c061cdaf50c64bdcd87fa05f8aa0b52773361d0a57e419f16b18"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a1fd854bc3d97da82be5cec8572c9aadd96276a1fca593501e0270193c570f43",
+            "bytes": 8483,
+            "sha256": "a1fd854bc3d97da82be5cec8572c9aadd96276a1fca593501e0270193c570f43"
           },
           "title": "One-Voice Style Guide — Author Voice Profile"
-        },
-        {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/production-vs-exploratory-discipline",
-          "@type": "bootstrap:Skill",
-          "ambiguous": false,
-          "description": "Distinguish PRODUCTION (derived-only, no fits) from EXPLORATORY (empirical-fit probes OK as shape-hints) from NUMEROLOGY (post-hoc fits to known constants). The bright-line guide for which output goes where, the derivation-menu check, and the escalation path for off-menu coefficients, so empirical fits are not promoted into production scripts, \"closed\" status, dashboards or named constants.",
-          "hasIOContract": false,
-          "hasInstructions": true,
-          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/authoring-core",
-          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
-          "instructionLines": 262,
-          "instructionsPath": "skills/authoring/authoring-core/production-vs-exploratory-discipline.md",
-          "name": "production-vs-exploratory-discipline",
-          "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d7bfc01f0a075d30ffe2d52c3ec8d31a2c44a42ede14b06284f6f19497f2bcc5",
-            "bytes": 12147,
-            "sha256": "d7bfc01f0a075d30ffe2d52c3ec8d31a2c44a42ede14b06284f6f19497f2bcc5"
-          },
-          "title": "Production vs exploratory vs numerology — the bright-line guide"
-        },
-        {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/readability-editing",
-          "@type": "bootstrap:Skill",
-          "ambiguous": false,
-          "hasIOContract": false,
-          "hasInstructions": true,
-          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/authoring-core",
-          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
-          "instructionLines": 118,
-          "instructionsPath": "skills/authoring/authoring-core/readability-editing.md",
-          "name": "readability-editing",
-          "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c026d14730141e0420d9ec885d085929c960aa7cc8c55de680e3bf1e998257c2",
-            "bytes": 4959,
-            "sha256": "c026d14730141e0420d9ec885d085929c960aa7cc8c55de680e3bf1e998257c2"
-          },
-          "title": "Readability Editing Skill"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/review-heatmap",
@@ -357,9 +178,9 @@
           "instructionsPath": "skills/authoring/authoring-core/review-heatmap.md",
           "name": "review-heatmap",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c46684d9d9c4a65e37b7ae4e010a5b8b479fcb1760d97521864f1a377b13bd69",
-            "bytes": 6494,
-            "sha256": "c46684d9d9c4a65e37b7ae4e010a5b8b479fcb1760d97521864f1a377b13bd69"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/179b47b854b0db6b5a0bbc406297d380610d52dc4c94dbb047cfbadda1a601d7",
+            "bytes": 6491,
+            "sha256": "179b47b854b0db6b5a0bbc406297d380610d52dc4c94dbb047cfbadda1a601d7"
           },
           "title": "Review heat map — where to look first"
         },
@@ -439,25 +260,6 @@
           "title": "`uses[]` Editorial Review"
         },
         {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/voice-authoring-guidance",
-          "@type": "bootstrap:Skill",
-          "ambiguous": false,
-          "description": "Load the active voices' rules BEFORE writing, so a block is drafted in the register it will be reviewed against. The authoring half of the voice overlay; `voice-overlay-review` is the half that runs after.",
-          "hasIOContract": false,
-          "hasInstructions": true,
-          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/authoring-core",
-          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
-          "instructionLines": 76,
-          "instructionsPath": "skills/authoring/authoring-core/voice-authoring-guidance.md",
-          "name": "voice-authoring-guidance",
-          "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e34f03d70bc8030315d93813c617c01b08f0a7dd8819414b62eb1ed761606cfa",
-            "bytes": 3135,
-            "sha256": "e34f03d70bc8030315d93813c617c01b08f0a7dd8819414b62eb1ed761606cfa"
-          },
-          "title": "Voice authoring guidance"
-        },
-        {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/voice-editorial-review",
           "@type": "bootstrap:Skill",
           "ambiguous": false,
@@ -489,9 +291,9 @@
           "instructionsPath": "skills/authoring/authoring-core/voice-overlay-review.md",
           "name": "voice-overlay-review",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2abdf9817ae09eeadad68f5c2d5d6e95f7b7751de79236c9eae9cfd20c0f775d",
-            "bytes": 3499,
-            "sha256": "2abdf9817ae09eeadad68f5c2d5d6e95f7b7751de79236c9eae9cfd20c0f775d"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7bdad8d0ed5d2c3c712653be822d65d775550dd76bc6245eca61300f556875c4",
+            "bytes": 3496,
+            "sha256": "7bdad8d0ed5d2c3c712653be822d65d775550dd76bc6245eca61300f556875c4"
           },
           "title": "Voice overlay review"
         }
@@ -510,17 +312,14 @@
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/package/content-lifecycle",
           "@type": "cat-harness:SkillPackage",
           "declaresSkill": [
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-author",
             "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-feedback",
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-plan",
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-publish",
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-retire",
             "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-review",
             "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-test",
             "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-validate",
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/evidence-appraisal"
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/evidence-appraisal",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/feedback-deep-links"
           ],
-          "description": "General content development lifecycle skills: plan, author, validate, review, test, publish, feedback, retire",
+          "description": "General content lifecycle methods the harness's own processes call: validate, review, test and feedback. Planning, authoring, publication and retirement are operational and belong to the content layer above (content split step 1).",
           "hasManifest": true,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
           "name": "content-lifecycle",
@@ -531,26 +330,6 @@
             "https://litlfred.github.io/folio-assistant/cat-harness/capability/node-runtime"
           ],
           "version": "0.1.0"
-        },
-        {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-author",
-          "@type": "bootstrap:Skill",
-          "ambiguous": false,
-          "hasIOContract": true,
-          "hasInstructions": true,
-          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/content-lifecycle",
-          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
-          "inputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/content-author/input.schema.json",
-          "instructionLines": 48,
-          "instructionsPath": "skills/authoring/content-lifecycle/content-author.md",
-          "name": "content-author",
-          "outputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/content-author/output.schema.json",
-          "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/db87d9aad42ad0af7af56bf70c9bea824cb34be1f33ce3300063859b1e79ff46",
-            "bytes": 1709,
-            "sha256": "db87d9aad42ad0af7af56bf70c9bea824cb34be1f33ce3300063859b1e79ff46"
-          },
-          "title": "Content Authoring"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-feedback",
@@ -566,69 +345,11 @@
           "name": "content-feedback",
           "outputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/content-feedback/output.schema.json",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/070eb59846e3f80842bee0db4f3d69c0b21ba421ed499ecf7825a3beb972870d",
-            "bytes": 1548,
-            "sha256": "070eb59846e3f80842bee0db4f3d69c0b21ba421ed499ecf7825a3beb972870d"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/76dd538a15cba2be2b0b572c7b67df568fbe28cabc22d8f995f8a819aada7fea",
+            "bytes": 1504,
+            "sha256": "76dd538a15cba2be2b0b572c7b67df568fbe28cabc22d8f995f8a819aada7fea"
           },
           "title": "Content Feedback Collection"
-        },
-        {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-plan",
-          "@type": "bootstrap:Skill",
-          "ambiguous": false,
-          "hasIOContract": true,
-          "hasInstructions": true,
-          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/content-lifecycle",
-          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
-          "inputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/content-plan/input.schema.json",
-          "instructionLines": 34,
-          "instructionsPath": "skills/authoring/content-lifecycle/content-plan.md",
-          "name": "content-plan",
-          "outputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/content-plan/output.schema.json",
-          "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1f4d7044eb58e715c4f81db0eb202a178f70630056527cb8dd2ea372aec00c1e",
-            "bytes": 819,
-            "sha256": "1f4d7044eb58e715c4f81db0eb202a178f70630056527cb8dd2ea372aec00c1e"
-          },
-          "title": "Content Planning"
-        },
-        {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-publish",
-          "@type": "bootstrap:Skill",
-          "ambiguous": false,
-          "hasIOContract": true,
-          "hasInstructions": true,
-          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/content-lifecycle",
-          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
-          "inputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/content-publish/input.schema.json",
-          "instructionLines": 38,
-          "instructionsPath": "skills/authoring/content-lifecycle/content-publish.md",
-          "name": "content-publish",
-          "outputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/content-publish/output.schema.json",
-          "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1a3bf809e12a50888dcc0a962f1c2803a5a917d1e795ec976af290a3500f0534",
-            "bytes": 1246,
-            "sha256": "1a3bf809e12a50888dcc0a962f1c2803a5a917d1e795ec976af290a3500f0534"
-          },
-          "title": "Content Publication"
-        },
-        {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-retire",
-          "@type": "bootstrap:Skill",
-          "ambiguous": false,
-          "hasIOContract": false,
-          "hasInstructions": true,
-          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/content-lifecycle",
-          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
-          "instructionLines": 28,
-          "instructionsPath": "skills/authoring/content-lifecycle/content-retire.md",
-          "name": "content-retire",
-          "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/0461e4044e3d917944a15d9b3f1f565fb0c5ae8e6a41a2bd1f939435f8165609",
-            "bytes": 649,
-            "sha256": "0461e4044e3d917944a15d9b3f1f565fb0c5ae8e6a41a2bd1f939435f8165609"
-          },
-          "title": "Content Retirement"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-review",
@@ -644,9 +365,9 @@
           "name": "content-review",
           "outputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/content-review/output.schema.json",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3cd9e969de33521ca235d629384b78dae3d608824ee122505d6bc6b89e90aa16",
-            "bytes": 2318,
-            "sha256": "3cd9e969de33521ca235d629384b78dae3d608824ee122505d6bc6b89e90aa16"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ba1cf17f26aeca738333b1ae5a4dd5764588fa240c50eaad77cd76c76614224d",
+            "bytes": 2270,
+            "sha256": "ba1cf17f26aeca738333b1ae5a4dd5764588fa240c50eaad77cd76c76614224d"
           },
           "title": "Content Review"
         },
@@ -664,9 +385,9 @@
           "name": "content-test",
           "outputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/content-test/output.schema.json",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8391564957019519e77192d0536173061a814bb0577dce928a030b11b6815d46",
-            "bytes": 3717,
-            "sha256": "8391564957019519e77192d0536173061a814bb0577dce928a030b11b6815d46"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c643c78de13679b7187c9fe0cc38f989510e7ec0f8b5326491b5acc89b534bb7",
+            "bytes": 3690,
+            "sha256": "c643c78de13679b7187c9fe0cc38f989510e7ec0f8b5326491b5acc89b534bb7"
           },
           "title": "Content Testing"
         },
@@ -702,11 +423,30 @@
           "instructionsPath": "skills/authoring/content-lifecycle/evidence-appraisal.md",
           "name": "evidence-appraisal",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3b7b37b3df86e9ff90acf2ceda6c3a77a6d49ad4933269796a41f0acd0a1eeda",
-            "bytes": 3664,
-            "sha256": "3b7b37b3df86e9ff90acf2ceda6c3a77a6d49ad4933269796a41f0acd0a1eeda"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e137085e8d376a74ce357aa5ac14db7185c7fe9a6e16715ec75bbc6666178fbc",
+            "bytes": 3616,
+            "sha256": "e137085e8d376a74ce357aa5ac14db7185c7fe9a6e16715ec75bbc6666178fbc"
           },
           "title": "Evidence Appraisal"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/feedback-deep-links",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "The deep-link rule for every request for feedback, review, sign-off or acceptance on something rendered: carry the staging preview, one deep link per changed page with the same page on main, pages taken from the change rather than chosen, the third state said rather than hidden, and the request placed where the person will look.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/content-lifecycle",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+          "instructionLines": 56,
+          "instructionsPath": "skills/authoring/content-lifecycle/feedback-deep-links.md",
+          "name": "feedback-deep-links",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/767ad16637eadddc331c0aa799104bf2b21bf200fa8986f110e5db1702a9822a",
+            "bytes": 3423,
+            "sha256": "767ad16637eadddc331c0aa799104bf2b21bf200fa8986f110e5db1702a9822a"
+          },
+          "title": "The deep-link rule — every request for feedback"
         }
       ],
       "holdsGraph": [

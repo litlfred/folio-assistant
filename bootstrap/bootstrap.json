@@ -87,8 +87,8 @@
   "title": "Bootstrap",
   "description": "The graph an agent reads before it knows what this repository is.",
   "versionInfo": "0.1.1",
-  "generatedAtTime": "2026-11-08T14:52:02.084Z",
-  "wasDerivedFrom": "git:975bbe594a8246f34e8f7b01b01cdb11bee51ce1",
+  "generatedAtTime": "2026-11-13T08:49:10.459Z",
+  "wasDerivedFrom": "git:c51f9c4aaed9dc175be37d618a3c48c3027881b4",
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap/asset/agent-instructions",
@@ -175,8 +175,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap/process/Process_CompleteInitialization",
       "@type": "bootstrap:Process",
       "label": "Complete initialization",
-      "summary": "A SUB-PROCESS of initialize-harness, called after a harness is installed and also when the location turns out to be an instance of the chosen harness already.",
-      "description": "A SUB-PROCESS of initialize-harness, called after a harness is installed and also when the location turns out to be an instance of the chosen harness already. It is how an agent — the one that installed the harness, or one dispatched for exactly this with nothing but this diagram and the declaration — makes sure EVERY initialization step is done.\n\nTHE STEPS ARE NOT LISTED HERE. They are named by the declarations: the instance's `<name>.json` and every declaration it `needs`, read from the sibling checkouts. A declared directory is a step (it exists); a declared asset is a step (the file is there); a dependency's `<name>/docs/bootstrap/initialization.md` is a step (it was followed); the root README and the sections it opts into are steps; the `repository` a declaration names makes the site steps — a Pages workflow, a `gh-pages` branch, Pages switched on, the address answering. A harness above bootstrap names more in the same way — a work-plan store it declares as a directory is a directory step — and bootstrap does not need to know which. The skill `initialization-steps` has the table.\n\nIDEMPOTENT BY CONSTRUCTION. Every step is CHECKED before anything is done, and a done step is left alone, so running this twice changes nothing the second time. Nothing is replaced: a step that would overwrite what somebody wrote is a step for a person, not for the agent.\n\nFOUR STATES, NOT TWO. done; not done; could not determine — the check could not run (no forge CLI, no network), which is NEVER reported as done; and stated — the declarations name it but nothing can observe it (reading and following instructions), exactly as a stated precondition is never reported as satisfied.\n\nTHE PRIMARY STEP IS DRAWN, not left in the list: A_CheckDocuments, the harness's JSON Schemas and JSON-LD at the IRIs they name, checked first after the declarations are read. Everything after it — directories, README, the site — is either how those documents are reached or how a person reads about them.\n\nWHERE TOOLS ARE AVAILABLE, a toolset may perform the same checks (`initialization-steps`); otherwise the agent reads files. The diagram is the same either way.\n\nNO work-plan element on any activity, and isExecutable is false, for the reasons initialize-harness gives.",
+      "summary": "A SUB-PROCESS of initialize-harness, called after a harness is installed and also when the location turns out to be a layer instantiating the chosen harness already.",
+      "description": "A SUB-PROCESS of initialize-harness, called after a harness is installed and also when the location turns out to be a layer instantiating the chosen harness already. It is how an agent — the one that installed the harness, or one dispatched for exactly this with nothing but this diagram and the declaration — makes sure EVERY initialization step is done.\n\nTHE STEPS ARE NOT LISTED HERE. They are named by the declarations: the layer's `<name>.json` and every declaration it `needs`, read from the sibling checkouts. A declared directory is a step (it exists); a declared asset is a step (the file is there); a dependency's `<name>/docs/bootstrap/initialization.md` is a step (it was followed); the root README and the sections it opts into are steps; the `repository` a declaration names makes the site steps — a Pages workflow, a `gh-pages` branch, Pages switched on, the address answering. A harness above bootstrap names more in the same way — a work-plan store it declares as a directory is a directory step — and bootstrap does not need to know which. The skill `initialization-steps` has the table.\n\nIDEMPOTENT BY CONSTRUCTION. Every step is CHECKED before anything is done, and a done step is left alone, so running this twice changes nothing the second time. Nothing is replaced: a step that would overwrite what somebody wrote is a step for a person, not for the agent.\n\nFOUR STATES, NOT TWO. done; not done; could not determine — the check could not run (no forge CLI, no network), which is NEVER reported as done; and stated — the declarations name it but nothing can observe it (reading and following instructions), exactly as a stated precondition is never reported as satisfied.\n\nTHE PRIMARY STEP IS DRAWN, not left in the list: A_CheckDocuments, the harness's JSON Schemas and JSON-LD at the IRIs they name, checked first after the declarations are read. Everything after it — directories, README, the site — is either how those documents are reached or how a person reads about them.\n\nWHERE TOOLS ARE AVAILABLE, a toolset may perform the same checks (`initialization-steps`); otherwise the agent reads files. The diagram is the same either way.\n\nNO work-plan element on any activity, and isExecutable is false, for the reasons initialize-harness gives.",
       "requires": [
         "https://litlfred.github.io/folio-assistant/bootstrap/process/Process_HumanAgentDiscussion",
         "https://litlfred.github.io/folio-assistant/bootstrap/process/Process_LogMessage"
@@ -1274,7 +1274,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap/process/Process_LogMessage/node/GW_Complete",
       "@type": "bootstrap:ProcessNode",
-      "label": "All five present?",
+      "label": "Required fields: all five present?",
       "type": "bpmn:exclusiveGateway",
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/process/Process_LogMessage"
     },
@@ -1339,7 +1339,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap/role/knowledge-graph-data-store",
       "@type": "bootstrap:Role",
       "label": "Knowledge Graph Data Store",
-      "description": "A git repository, reached either through the git CLI or through a forge's API. It is where a declaration and its graph are READ from and where a new instance's declaration is WRITTEN to. It holds and serves, and takes no part in deciding what should happen. Its skill is its contract, `knowledge-graph-data-store`: what it must serve and keep, which a test can check.",
+      "description": "A git repository, reached either through the git CLI or through a forge's API. It is where a declaration and its graph are READ from and where a new layer's declaration is WRITTEN to. It holds and serves, and takes no part in deciding what should happen. Its skill is its contract, `knowledge-graph-data-store`: what it must serve and keep, which a test can check.",
       "source": "scenarios/roles.json",
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/directory/scenarios"
     },
@@ -1424,7 +1424,7 @@
       "@type": "bootstrap:Skill",
       "label": "initialization-steps",
       "title": "Every initialization step, as the declarations name them",
-      "description": "Walk every initialization step the declarations name (the instance's own and each one it needs), check each before doing anything, do what can be done, ask for what only a person can do, and report every step as done, not done, could not determine, or stated.",
+      "description": "Walk every initialization step the declarations name (the layer's own and each one it needs), check each before doing anything, do what can be done, ask for what only a person can do, and report every step as done, not done, could not determine, or stated.",
       "source": "skills/initialization-steps.md",
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/directory/skills"
     },
@@ -1433,7 +1433,7 @@
       "@type": "bootstrap:Skill",
       "label": "knowledge-graph-data-store",
       "title": "The Knowledge Graph Data Store's contract",
-      "description": "The contract a Knowledge Graph Data Store keeps: serve a declaration, its graph and its instructions exactly as committed, say plainly when a file is absent, and keep a new instance's declaration once it is written. A mechanical Actor plays this Role; this is what it must do, and what it can be tested against.",
+      "description": "The contract a Knowledge Graph Data Store keeps: serve a declaration, its graph and its instructions exactly as committed, say plainly when a file is absent, and keep a new layer's declaration once it is written. A mechanical Actor plays this Role; this is what it must do, and what it can be tested against.",
       "source": "skills/knowledge-graph-data-store.md",
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/directory/skills"
     },
@@ -1468,8 +1468,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap/skill/publish-site",
       "@type": "bootstrap:Skill",
       "label": "publish-site",
-      "title": "The site: an instance rendered for publication, and its address answering",
-      "description": "Give an instance a site: its Knowledge Graph rendered for publication at its site address, and the address answering. Four checks — a workflow publishes it, the gh-pages branch exists, Pages serves that branch, the address answers. How the rendering is staged and pushed is the toolset's own process, not this skill's.",
+      "title": "The site: a layer rendered for publication, and its address answering",
+      "description": "Give a layer a site: its Knowledge Graph rendered for publication at its site address, and the address answering. Four checks — a workflow publishes it, the gh-pages branch exists, Pages serves that branch, the address answers. How the rendering is staged and pushed is the toolset's own process, not this skill's.",
       "source": "skills/publish-site.md",
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/directory/skills"
     },

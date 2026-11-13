@@ -8,16 +8,13 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
       "name": "Land the feature's PRs",
       "nodeKind": "activity",
-      "bpmnType": "bpmn:CallActivity",
+      "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Close",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Close/lane/Lane_Agent",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/skill/merge-to-main"
-      ],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
-      "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain",
       "incoming": [
         "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Close#flow/SF_Close_Proceed"
       ],

@@ -105,6 +105,10 @@
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/maintainedBy",
       "@type": "@id"
     },
+    "jsonSchema": {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/jsonSchema",
+      "@type": "@id"
+    },
     "module": "https://litlfred.github.io/cat-harness/v0/ns/module",
     "holdsGraph": {
       "@id": "http://purl.org/dc/terms/type",
@@ -362,8 +366,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/archimate-check.jsonld",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "archimate-check",
-      "title": "Check an instance's ArchiMate models against its config",
-      "description": "The ArchiMate gate (graph typology `archimate`): every model an instance's `cat-archimate.config.json` names is held, parses (Archi's native XML or its zipped archive), and resolves — every box in every view draws an element the model holds, every relationship's ends are in the model — and no `.archimate` file is held that the config does not name.",
+      "title": "Check a layer's ArchiMate models against its config",
+      "description": "The ArchiMate gate (graph typology `archimate`): every model a layer's `cat-archimate.config.json` names is held, parses (Archi's native XML or its zipped archive), and resolves — every box in every view draws an element the model holds, every relationship's ends are in the model — and no `.archimate` file is held that the config does not name.",
       "install": {
         "none": true
       },
@@ -375,7 +379,7 @@
           {
             "name": "instance",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
-            "description": "The instance root whose `archimate` directory is checked.",
+            "description": "The layer root whose `archimate` directory is checked.",
             "required": true,
             "arg": {
               "flag": "--instance"

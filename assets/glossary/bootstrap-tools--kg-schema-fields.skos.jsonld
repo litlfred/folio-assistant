@@ -843,7 +843,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The repository's or harness's name at the two top levels; the instance-relative path below them."
+          "@value": "The repository's or harness's name at the two top levels; the layer-relative path below them."
         }
       ],
       "dcterms:source": "bootstrap-tools/schemas/subgraph-export.ts#SubgraphNodeBase.name",
@@ -862,7 +862,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Instance-relative, ending in `/`; `./` at the two top levels."
+          "@value": "Layer-relative, ending in `/`; `./` at the two top levels."
         }
       ],
       "dcterms:source": "bootstrap-tools/schemas/subgraph-export.ts#SubgraphNodeBase.path",

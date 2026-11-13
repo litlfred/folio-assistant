@@ -11,11 +11,11 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "http://smart.who.int/base/process/Process_L2ComponentEditReview",
-      "performedBy": "http://smart.who.int/base/role/reviewer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
       "inLane": "http://smart.who.int/base/process/Process_L2ComponentEditReview/lane/Lane_Reviewer",
       "requires": [
-        "http://smart.who.int/base/skill/content-review",
-        "http://smart.who.int/base/skill/visual-diff",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-review",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/visual-diff",
         "http://smart.who.int/base/skill/l2-component-edit-review"
       ],
       "touchesWorkPlan": false,

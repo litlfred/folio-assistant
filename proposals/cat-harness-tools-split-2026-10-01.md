@@ -49,7 +49,7 @@ Total tracked: **8,327** files (`git ls-files cat-harness | wc -l`).
 
 | class | files | goes to |
 |---|---|---|
-| KG | 6,391 | `litlfred/cat-harness` (about 560 of these are outputs about higher instances. See §1.4 and D3) |
+| KG | 6,391 | `litlfred/cat-harness` (about 560 of these are outputs about higher layers. See §1.4 and D3) |
 | CODE | 1,336 | `litlfred/cat-harness-tools` |
 | MIXED: Zod schemas (`schemas/**/*.ts`, 140 sources and 65 tests) | 205 | tools, following the bootstrap precedent. See §1.2 and D1 |
 | MIXED: content-object block manifests (`content/docs/**/*.ts` 189, `translations/**/*.ts` 7) | 196 | stay in content **as data**. See D2 |
@@ -101,13 +101,13 @@ Total tracked: **8,327** files (`git ls-files cat-harness | wc -l`).
 | root `package.json` `main`, `exports`, `files` | `main` and all `exports` point at `cat-harness/src/…`. `files` lists `cat-harness/src/` and `cat-harness/ui/` | same |
 | `.github/workflows/*` mentions of `cat-harness/` | **209 mentions in 13 of 33 workflows**. 136 are code paths. The largest are `feature-staging` 75, `docs-site` 47, `jsonld-gen-check` 33, `code-quality-gates` 17 and `folio-staging` 14 | `grep -o` |
 | workflows already checking out submodules | 31 files contain `submodules: true`. No `actions/checkout` step lacks a `submodules` key | `grep` |
-| `tsconfig.json` `include` | 9 `cat-harness/**` globs, plus `tools/**` and higher-instance globs | parsed |
+| `tsconfig.json` `include` | 9 `cat-harness/**` globs, plus `tools/**` and higher-layer globs | parsed |
 | `bunfig.toml` | `preload = ["./cat-harness/schemas/test-preload.ts"]` | read |
 | `.mcp.json` | 3 servers: `cat-harness/src/index.ts`, `scripts/sage-mcp.sh`, `scripts/google-drive-mcp.sh` | read |
 | `.claude/settings.json` hooks | 3 (`session-start-coord-sweep.sh`, `ask-well.sh`, `decisions-named-not-asked.ts`), plus 46 `.claude/**` files naming a code path | `git grep` |
 | `playwright.config.ts` | imports `./cat-harness/scripts/playwright-chromium`, with `testDir: ./cat-harness/test` | read |
-| higher instances that **import** cat-harness code (scripts, src, content/pipeline, test) | core 17 files · sci 6 · who-iris 1 · fhir-harness 1 · large-datasets 1 | `classify.py` |
-| higher instances that **import** cat-harness Zod | core 27 · sci 6 · who-iris 5 · smart-trust 3 · fhir-harness 2 · smart-base 1 · root `tools/index.ts` 1 · fsh-guts 1 | `classify.py` |
+| higher layers that **import** cat-harness code (scripts, src, content/pipeline, test) | core 17 files · sci 6 · who-iris 1 · fhir-harness 1 · large-datasets 1 | `classify.py` |
+| higher layers that **import** cat-harness Zod | core 27 · sci 6 · who-iris 5 · smart-trust 3 · fhir-harness 2 · smart-base 1 · root `tools/index.ts` 1 · fsh-guts 1 | `classify.py` |
 | non-import mentions of cat-harness code paths outside `cat-harness/` (excluding `beans/` and `fsh-guts/`) | 2,223 mentions. `beans/` (232 files) is history and is **not rewritten** | `git grep -c` |
 | `upstream-pins.json` | 2 notes naming `content/pipeline/qa-utils.ts` and `script-sidecars` | read |
 
@@ -134,9 +134,9 @@ fails CI without any edit to the checker. Plant one and watch it go red first
 | skill `.ts` → Zod/code | 9 | 3 | **blocker**. Fixed by the §1.3 rule |
 | Zod → CODE | 30 | 17 | all `*.test.ts`, and all of it moves to tools. No source schema imports a script |
 | CODE and Zod → `bootstrap-tools` | 32 | 29 | allowed: tools need bootstrap-tools |
-| `cat-harness` → any higher instance (static import) | **0** | 0 | `git grep` for `from '../…/(folio-assistant-core|…)/'` finds nothing |
-| higher instances → cat-harness CODE | 73 | 27 | becomes higher → **cat-harness-tools**. Conflicts with Q1 as worded. See D1 |
-| higher instances → cat-harness Zod | 77 | 46 | the same. See D1 |
+| `cat-harness` → any higher layer (static import) | **0** | 0 | `git grep` for `from '../…/(folio-assistant-core|…)/'` finds nothing |
+| higher layers → cat-harness CODE | 73 | 27 | becomes higher → **cat-harness-tools**. Conflicts with Q1 as worded. See D1 |
+| higher layers → cat-harness Zod | 77 | 46 | the same. See D1 |
 | unresolved specifiers inside CODE (variable paths, `${platformDir}`, the `init-folio` templates) | 50 | 18 | reviewed by hand in stage 1a. `builtin-adapters.ts`, `route-groups.ts` and `qa-checker-discovery.ts` load modules by path |
 
 **Non-import references from content into code** (`textrefs.py`, over KG text only):
@@ -158,18 +158,18 @@ repositories is a URL to the declared repository").
 
 Relative markdown links in authored KG `.md` files (`links.py`) that point into
 code: 23. Links that leave `cat-harness/`: 38 (`AGENTS.md` 7, `README.md` 4,
-other instances 26, `package.json` 1).
+other layers 26, `package.json` 1).
 
 ### Blockers
 
 1. **`schemas/graph-typology-registry.ts` names 7 distinct validators in higher
-   instances, at 8 sites.**
+   layers, at 8 sites.**
    - `folio-assistant-core:schemas/{extraction,dublin-core×2,catalogue×2,fhir-artifact-index,review-verdict}.ts`
    - `large-datasets:schemas/source-descriptor.ts`
 
    Once the registry is in tools, these are tools reaching up a layer.
 
-   Fix: the owning instance registers the kind on load. This is the `q2wn`
+   Fix: the owning layer registers the kind on load. This is the `q2wn`
    pattern that core's `folio` and `glossary` kinds already use (`import
    "./folio-graph-typology.js"` in `cat-harness.ts`). It lands in stage 1b.
    - `catalogue`, `extraction`, `fhir-artifact-index` and `review-verdict` move to core.
@@ -181,7 +181,7 @@ other instances 26, `package.json` 1).
    test (it guards an `fsh-guts` file, which belongs to the checkout), or skip
    it when the file is absent and report "could not determine". It lands in
    stage 1d.
-3. **About 204 code files compute "this instance's root" as `import.meta.dir/..`.**
+3. **About 204 code files compute "this layer's root" as `import.meta.dir/..`.**
    - 135 top-level files go up one level, which means the harness root.
    - 105 `scripts/*.ts` files go up two levels, which means the repo root.
    - Of the `scripts/tests` files, 3 go up one level, 68 go up two and 57 go up three.
@@ -221,7 +221,7 @@ other instances 26, `package.json` 1).
    - The generators `gen-schema-docs`, `gen-skill-docs`, `gen-docs-pages`, `compose-docs`, `mount-instance-docs`, `kg-export`, `harness-schema-export`, `kg-viewer` and `glossary-export` are code and move.
    - The content they read and write (`cat-harness/docs/**`) stays.
    - `docs-site.yml` keeps building from the checkout, with both submodules present. See D5.
-9. **Higher instances import 73 code statements and 77 Zod statements** from what becomes `cat-harness-tools`. This needs a ruling: see D1.
+9. **Higher layers import 73 code statements and 77 Zod statements** from what becomes `cat-harness-tools`. This needs a ruling: see D1.
 
    Two of them sit outside the document adapter, which Q1 already splits:
    - core `scripts/sample-import-run.ts` drives `src/tools/workflow.ts`. Blocker 2 in w2gr, still open.
@@ -238,7 +238,7 @@ other instances 26, `package.json` 1).
 
 | claimed | verified | measured |
 |---|---|---|
-| `graph-typology-registry.ts` names 7 validators in higher instances | **yes** | 7 distinct `module#Export`, 8 sites (lines 870, 1348, 1352, 1451–1453, 1492, 1763). Core 6 sites, large-datasets 1. Plus 1 `bootstrap-tools:` site, which is allowed |
+| `graph-typology-registry.ts` names 7 validators in higher layers | **yes** | 7 distinct `module#Export`, 8 sites (lines 870, 1348, 1352, 1451–1453, 1492, 1763). Core 6 sites, large-datasets 1. Plus 1 `bootstrap-tools:` site, which is allowed |
 | `remote-packages-honest-docs.test.ts` reads `fsh-guts/` | **yes** | line 48, `readFileSync(join(ROOT, "../fsh-guts/scripts/generate-docs.ts"))` |
 | root `package.json` scripts → `cat-harness/scripts` | **yes** | 307 scripts name `cat-harness/scripts/`. 338 name any `cat-harness/` code path. The total is 378 scripts |
 | workflows → `cat-harness/` | **yes** | 209 mentions in 13 files (136 code paths) |
@@ -259,7 +259,7 @@ unless the table says otherwise.
 
 - **Claim:** claim `w2gr`. Record the owner's D1–D6 answers in it.
 - **Wait for PR0 and PR1:** wait for #1704 (PR0a) and PR1 to merge. Re-run `classify.py`: ABOVE must be 0, and `cat-harness.json` must hold no `scope: repository` entries.
-- **Watch the boundary gates fail:** `check:import-direction` (cat-harness → planted cat-harness-tools file) and `check:tools-closure`, generalised to take an instance name. Watch each one go red on a planted violation.
+- **Watch the boundary gates fail:** `check:import-direction` (cat-harness → planted cat-harness-tools file) and `check:tools-closure`, generalised to take a layer name. Watch each one go red on a planted violation.
 - **Record the baseline:** the `bun test` pass count, the `mcp:capture` tool list, the outputs of every generator's `--check`, and the `knownSkills` set.
 - **Gates:** none change.
 - **Falsifier:** a planted violation that stays green. If one does, stop and fix the gate first.
@@ -295,7 +295,7 @@ unless the table says otherwise.
 - **New:** a generator (an extension of `harness-schema-export`) writes one JSON Schema per declared node kind into `cat-harness/schemas/`, with `$id` under `iriBase`. `check:node-iris`-style gate: each `$id` is its file's path.
 - **Edits:**
   - The 621 intra-tools importers need no change, because the relative paths are preserved.
-  - The 46 higher-instance Zod importers repoint (D1).
+  - The 46 higher-layer Zod importers repoint (D1).
   - Blocker 1: core and large-datasets register their own 6 kinds on load. The registry no longer names them.
   - `cat-harness.json` drops `bootstrap-tools` from `needs`.
 - **Gates:** `check:kind-validators`, `kg:schema:check`, `check:layout-norms`, `code-lists:check`, `docs:harness:check` (generated reference), `bun test`.
@@ -319,7 +319,7 @@ unless the table says otherwise.
 
 ### Stage 1d: content is self-contained
 
-- **Hosted outputs about higher instances (≈560 files):** handle per D3. The main ones are `uml/overview/<instance>` 188, `docs/uml/overview` 94, `docs/assets/img/uml/*` ≈211, and `docs/cat-harness/{catalogue,library,voices}/<instance>` 27.
+- **Hosted outputs about higher layers (≈560 files):** handle per D3. The main ones are `uml/overview/<instance>` 188, `docs/uml/overview` 94, `docs/assets/img/uml/*` ≈211, and `docs/cat-harness/{catalogue,library,voices}/<instance>` 27.
 - **Authored prose:** rewrite the authored code-path mentions (§2: skills 438, processes 11, scenarios 9, docs ≈250) and the 23 code links and 38 outbound links to repository-qualified references or URLs. Regenerate the generated ones.
 - **Blocker 2:** the `fsh-guts` test.
 - **Gates:** `readme:audit`, `check:stale-paths`, `kg:audit:check`, `uml:overview:check`, `docs:harness:check`.
@@ -330,13 +330,13 @@ unless the table says otherwise.
 
 - **New:** `cat-harness-tools/scripts/rehearse-standalone.ts`, a copy of `bootstrap-tools/scripts/rehearse-standalone.ts`. It copies only the tracked files of `cat-harness/`, `cat-harness-tools/`, `bootstrap/` and `bootstrap-tools/` into an empty temporary directory. Each copy gets `git init` and `git add`, and `node_modules` is linked in.
 - **What the rehearsal runs:**
-  - closure, and `check:import-direction` scoped to the two instances
+  - closure, and `check:import-direction` scoped to the two layers
   - every generator's `--check`, `kg:audit:check`, `skill:register:check`, `harness-schema-export --check`, `kg-export --out /dev/null`
   - `tsc`, `bun test .`
 - **CI step:** `check:cat-harness-standalone`.
 - **Expected failures, fixed in place:**
-  - tools that walk the checkout for higher instances (`instanceRootsIn`, the checkout aggregate from PR0a) must handle "none found" as an empty overlay
-  - tests whose fixtures live in higher instances (placement §5: 11 test fixtures and 18 code/docs files name moved diagrams)
+  - tools that walk the checkout for higher layers (`instanceRootsIn`, the checkout aggregate from PR0a) must handle "none found" as an empty overlay
+  - tests whose fixtures live in higher layers (placement §5: 11 test fixtures and 18 code/docs files name moved diagrams)
 - **Falsifiers:**
   - An empty tree exits non-zero.
   - A planted read of `../folio-assistant-core/x` is red.
@@ -365,7 +365,7 @@ whose message names the folio-assistant source SHA.
   - `bun install --frozen-lockfile`
   - `tsc`, `bun test`, closure, the rehearsal and every `:check` script in `cat-harness-tools/package.json`
   - a link audit: 0 broken links, and 0 leaving the repository except declared URLs
-  - a names-outside audit: every remaining mention of folio-assistant or a higher instance is intentional
+  - a names-outside audit: every remaining mention of folio-assistant or a higher layer is intentional
   - licence files present
 - **Output:** `QA-cat-harness.md` and `QA-cat-harness-tools.md`, in the format of `QA-bootstrap{,-tools}.md`.
 - **Fixes:** fixes made during QA are committed to the new repositories, not back into the staged copies.
@@ -386,7 +386,7 @@ whose message names the folio-assistant source SHA.
 
 ## 5. Open decisions for the owner
 
-### D1. May the higher instances' **code** import `cat-harness-tools`?
+### D1. May the higher layers' **code** import `cat-harness-tools`?
 
 **Context.**
 - Under this split every line of code leaves `cat-harness`, including the Zod schemas, `src/workflow/*` and `content/pipeline/*`.
@@ -396,11 +396,11 @@ whose message names the folio-assistant source SHA.
 
 **Options:**
 1. **(Rec.) Code may, content may not, and never the server.**
-   - Higher instances' **code** needs `cat-harness-tools`, but only its `schemas/`, `content/pipeline/` and `src/workflow/` subpaths. A subpath closure gate forbids `src/{index,server,routes,tools}`, which keeps Q1's intent: the document adapter's server half still moves.
-   - Higher instances' content stays code-free when each of them is split in turn.
+   - Higher layers' **code** needs `cat-harness-tools`, but only its `schemas/`, `content/pipeline/` and `src/workflow/` subpaths. A subpath closure gate forbids `src/{index,server,routes,tools}`, which keeps Q1's intent: the document adapter's server half still moves.
+   - Higher layers' content stays code-free when each of them is split in turn.
    - This mirrors bootstrap exactly.
 2. **Keep a library layer in cat-harness.** `schemas/*.ts`, `src/workflow/` and the pipeline helpers stay in cat-harness. That leaves ≈450 `.ts` files in the content repository, which contradicts FR-7 and "exactly as bootstrap".
-3. **Split every higher instance into X and X-tools now,** so only `-tools` repositories import `cat-harness-tools`. This is correct long-term but multiplies the work by about 5. It is out of scope here.
+3. **Split every higher layer into X and X-tools now,** so only `-tools` repositories import `cat-harness-tools`. This is correct long-term but multiplies the work by about 5. It is out of scope here.
 
 **Default:** option 1. Stage 1a proceeds on that basis. If you choose otherwise before stage 1b, only 1b's repointing changes.
 
@@ -420,18 +420,18 @@ FR-7 says content holds no code. A builder shim (`content/schema/builders.ts` re
 
 **Default:** option 1.
 
-### D3. Outputs about **higher** instances that cat-harness hosts today (≈560 files)
+### D3. Outputs about **higher** layers that cat-harness hosts today (≈560 files)
 
 **Context.**
 - These are UML overviews of core, who-iris, smart-base and others (`uml/overview/<instance>` 188, `docs/uml/overview` 94, `docs/assets/img/uml` ≈211) and `docs/cat-harness/{catalogue,library,voices}/<instance>` (27).
 - Hosted outputs about **bootstrap** (109 files, including `test/results/bootstrap{,-tools}`) follow the skill's rule: the harness hosts output about its content.
-- The higher instances are not cat-harness's content. A standalone cat-harness repository would describe instances that depend on it, which is an upward reference.
+- The higher layers are not cat-harness's content. A standalone cat-harness repository would describe layers that depend on it, which is an upward reference.
 - PR0a already moves the checkout-wide directories to `folio-assistant.json`.
 
 **Options:**
 1. **(Rec.) Move them to the checkout root** (folio-assistant's `docs/` overlay and a root `uml/`), declared by `folio-assistant.json`. The tools still generate them, running from the checkout.
-2. **Each instance hosts its own,** under `<instance>/uml/` and `<instance>/docs/`. That is clean per instance, but it scatters 10 generator targets.
-3. **Keep them in cat-harness as hosted outputs.** That is the cheapest option, but the standalone repository then names about 15 instances above it.
+2. **Each layer hosts its own,** under `<instance>/uml/` and `<instance>/docs/`. That is clean per layer, but it scatters 10 generator targets.
+3. **Keep them in cat-harness as hosted outputs.** That is the cheapest option, but the standalone repository then names about 15 layers above it.
 
 **Default:** option 1.
 
@@ -446,7 +446,7 @@ FR-7 says content holds no code. A builder shim (`content/schema/builders.ts` re
 1. **(Rec.) Split after PR0 and PR1, before PR2.**
    - PR7 and PR8 are re-targeted to `cat-harness-tools/scripts/tests/<group>/` and `cat-harness-tools/schemas/`.
    - PR2–PR6 and PR9 are unaffected.
-   - Every later placement PR then runs against the two-instance layout it is aiming for.
+   - Every later placement PR then runs against the two-layer layout it is aiming for.
 2. **Finish PR0–PR9 first, then split.** This gives the fewest rebases but delays the split by the whole placement programme.
 3. **Interleave:** run stage 1a now and 1b–1d after PR8. This gives the most churn on `schemas/`.
 
@@ -488,7 +488,7 @@ FR-7 says content holds no code. A builder shim (`content/schema/builders.ts` re
 |---|---|---|---|
 | 0 | 0 | a few (planted-failure tests) | 0 |
 | 1a | ≈1,340 | 1,000–1,500 (codemod) | declaration, `package.json`, `roots.ts` |
-| 1b | 205 | ≈60, plus higher-instance repoints (46 files) | generator, ≈60 JSON Schemas |
+| 1b | 205 | ≈60, plus higher-layer repoints (46 files) | generator, ≈60 JSON Schemas |
 | 1c | ≈300 converted | ≈10 readers | `check:content-code-free` |
 | 1d | ≈560 (D3) | ≈700 authored mentions, plus regenerated output | 0 |
 | 2 | 0 | as found | rehearsal script |
@@ -498,8 +498,8 @@ FR-7 says content holds no code. A builder shim (`content/schema/builders.ts` re
 
 ## Owner rulings, 2026-10-01
 
-- **D1:** "shouldn't we move cat-harness code to cat-harness-tools? … f-a-core (in general dependent harnesses) can reference and use cat-harness or other harness/tools in its dependency chain." → ALL cat-harness code moves to cat-harness-tools (widens w2gr). A dependent instance's code may import anything in its dependency chain, cat-harness-tools included; the import-direction gate only forbids upward edges.
+- **D1:** "shouldn't we move cat-harness code to cat-harness-tools? … f-a-core (in general dependent harnesses) can reference and use cat-harness or other harness/tools in its dependency chain." → ALL cat-harness code moves to cat-harness-tools (widens w2gr). A dependent layer's code may import anything in its dependency chain, cat-harness-tools included; the import-direction gate only forbids upward edges.
 - **D2:** Option 1 — convert `.ts` content (manifests, tool defs, skill defs) to JSON; generated `.jsonld` byte-identical; gate fails on code in content.
-- **D3:** Option 2 — each instance hosts the generated outputs about itself.
+- **D3:** Option 2 — each layer hosts the generated outputs about itself.
 - **D4:** Option 3 — interleave split stages with placement PRs.
 - D5, D6: defaults (site built from folio-assistant at the current URL; fsh-guts manifest naming the source commit, no tarball).

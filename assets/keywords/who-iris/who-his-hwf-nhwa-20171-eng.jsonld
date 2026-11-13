@@ -1,0 +1,2186 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "who-his-hwf-nhwa-20171-eng",
+  "instance": "who-iris",
+  "about": "library/who-his-hwf-nhwa-20171-eng",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7908,
+    "terms": 73102
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "health workforce",
+        "score": 9.4552,
+        "evidence": []
+      },
+      {
+        "term": "workforce policies",
+        "score": 7.0201,
+        "evidence": []
+      },
+      {
+        "term": "workforce accounts",
+        "score": 6.2484,
+        "evidence": []
+      },
+      {
+        "term": "health labour",
+        "score": 6.2179,
+        "evidence": []
+      },
+      {
+        "term": "workforce stock",
+        "score": 6.0003,
+        "evidence": []
+      },
+      {
+        "term": "health employment",
+        "score": 5.7826,
+        "evidence": []
+      },
+      {
+        "term": "health workers",
+        "score": 5.6426,
+        "evidence": []
+      },
+      {
+        "term": "nhwa handbook",
+        "score": 5.6035,
+        "evidence": []
+      },
+      {
+        "term": "national health",
+        "score": 5.3106,
+        "evidence": []
+      },
+      {
+        "term": "quality health",
+        "score": 5.2942,
+        "evidence": []
+      },
+      {
+        "term": "current health",
+        "score": 5.1816,
+        "evidence": []
+      },
+      {
+        "term": "density health",
+        "score": 5.1192,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "health workforce",
+        "score": 136.3388,
+        "evidence": []
+      },
+      {
+        "term": "workforce policies",
+        "score": 105.1534,
+        "evidence": []
+      },
+      {
+        "term": "workforce accounts",
+        "score": 90.5945,
+        "evidence": []
+      },
+      {
+        "term": "health labour",
+        "score": 89.2866,
+        "evidence": []
+      },
+      {
+        "term": "workforce stock",
+        "score": 87.1245,
+        "evidence": []
+      },
+      {
+        "term": "nhwa handbook",
+        "score": 82.9889,
+        "evidence": []
+      },
+      {
+        "term": "health workers",
+        "score": 79.342,
+        "evidence": []
+      },
+      {
+        "term": "health employment",
+        "score": 78.4822,
+        "evidence": []
+      },
+      {
+        "term": "density health",
+        "score": 76.9651,
+        "evidence": []
+      },
+      {
+        "term": "current health",
+        "score": 74.2619,
+        "evidence": []
+      },
+      {
+        "term": "quality health",
+        "score": 70.3055,
+        "evidence": []
+      },
+      {
+        "term": "national health",
+        "score": 69.4329,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "health workforce",
+        "score": 4.7049,
+        "evidence": []
+      },
+      {
+        "term": "workforce accounts",
+        "score": 3.6701,
+        "evidence": []
+      },
+      {
+        "term": "national health",
+        "score": 3.6143,
+        "evidence": []
+      },
+      {
+        "term": "health workers",
+        "score": 3.4916,
+        "evidence": []
+      },
+      {
+        "term": "health labour",
+        "score": 3.2776,
+        "evidence": []
+      },
+      {
+        "term": "workforce policies",
+        "score": 3.1981,
+        "evidence": []
+      },
+      {
+        "term": "workforce stock",
+        "score": 3.1749,
+        "evidence": []
+      },
+      {
+        "term": "health care",
+        "score": 2.8825,
+        "evidence": []
+      },
+      {
+        "term": "active health",
+        "score": 2.8607,
+        "evidence": []
+      },
+      {
+        "term": "density health",
+        "score": 2.8575,
+        "evidence": []
+      },
+      {
+        "term": "health services",
+        "score": 2.7676,
+        "evidence": []
+      },
+      {
+        "term": "health employment",
+        "score": 2.732,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "health workforce",
+        "score": 95.4666,
+        "evidence": []
+      },
+      {
+        "term": "health workers",
+        "score": 69.4322,
+        "evidence": []
+      },
+      {
+        "term": "national health",
+        "score": 62.8175,
+        "evidence": []
+      },
+      {
+        "term": "health labour",
+        "score": 61.9496,
+        "evidence": []
+      },
+      {
+        "term": "workforce accounts",
+        "score": 59.4773,
+        "evidence": []
+      },
+      {
+        "term": "active health",
+        "score": 58.2068,
+        "evidence": []
+      },
+      {
+        "term": "health care",
+        "score": 57.994,
+        "evidence": []
+      },
+      {
+        "term": "health services",
+        "score": 56.049,
+        "evidence": []
+      },
+      {
+        "term": "workforce policies",
+        "score": 55.4797,
+        "evidence": []
+      },
+      {
+        "term": "health employment",
+        "score": 55.4485,
+        "evidence": []
+      },
+      {
+        "term": "density health",
+        "score": 54.9611,
+        "evidence": []
+      },
+      {
+        "term": "workforce stock",
+        "score": 54.6976,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "health workforce",
+        "score": 4.7049,
+        "evidence": []
+      },
+      {
+        "term": "workforce accounts",
+        "score": 3.6701,
+        "evidence": []
+      },
+      {
+        "term": "national health",
+        "score": 3.6143,
+        "evidence": []
+      },
+      {
+        "term": "health workers",
+        "score": 3.4916,
+        "evidence": []
+      },
+      {
+        "term": "health labour",
+        "score": 3.2776,
+        "evidence": []
+      },
+      {
+        "term": "workforce policies",
+        "score": 3.1981,
+        "evidence": []
+      },
+      {
+        "term": "workforce stock",
+        "score": 3.1749,
+        "evidence": []
+      },
+      {
+        "term": "health care",
+        "score": 2.8825,
+        "evidence": []
+      },
+      {
+        "term": "active health",
+        "score": 2.8607,
+        "evidence": []
+      },
+      {
+        "term": "density health",
+        "score": 2.8575,
+        "evidence": []
+      },
+      {
+        "term": "health services",
+        "score": 2.7676,
+        "evidence": []
+      },
+      {
+        "term": "health employment",
+        "score": 2.732,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "重点人群",
+        "score": 733.1321,
+        "evidence": []
+      },
+      {
+        "term": "相一致",
+        "score": 605.5966,
+        "evidence": []
+      },
+      {
+        "term": "这一点很重要",
+        "score": 561.6967,
+        "evidence": []
+      },
+      {
+        "term": "并提供一",
+        "score": 467.9516,
+        "evidence": []
+      },
+      {
+        "term": "要在活动挂图上做好记录",
+        "score": 467.6233,
+        "evidence": []
+      },
+      {
+        "term": "问题的讨论结束",
+        "score": 467.6233,
+        "evidence": []
+      },
+      {
+        "term": "咨询小组将由18名成员组成",
+        "score": 441.1452,
+        "evidence": []
+      },
+      {
+        "term": "汇集在流感领域中国际公认的决策者",
+        "score": 441.1452,
+        "evidence": []
+      },
+      {
+        "term": "的情况",
+        "score": 428.2155,
+        "evidence": []
+      },
+      {
+        "term": "dedougou",
+        "score": 413.719,
+        "evidence": []
+      },
+      {
+        "term": "dori",
+        "score": 413.719,
+        "evidence": []
+      },
+      {
+        "term": "gaoua",
+        "score": 413.719,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "page-002": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "health workforce",
+          "score": 1.0424,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 0.7563,
+          "evidence": []
+        },
+        {
+          "term": "hrh",
+          "score": 0.639,
+          "evidence": []
+        },
+        {
+          "term": "uhc",
+          "score": 0.5828,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "health workforce",
+          "score": 19.1171,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 13.1415,
+          "evidence": []
+        },
+        {
+          "term": "hrh",
+          "score": 9.8304,
+          "evidence": []
+        },
+        {
+          "term": "uhc",
+          "score": 9.1872,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health workforce",
+          "score": 0.441,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.1807,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 0.1473,
+          "evidence": []
+        },
+        {
+          "term": "indicators",
+          "score": 0.1283,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health workforce",
+          "score": 9.1013,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 3.3062,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 3.03,
+          "evidence": []
+        },
+        {
+          "term": "training",
+          "score": 2.4235,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health workforce",
+          "score": 0.441,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.1807,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 0.1473,
+          "evidence": []
+        },
+        {
+          "term": "indicators",
+          "score": 0.1283,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 59.0697,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 52.9518,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 50.5827,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 42.3414,
+          "evidence": []
+        }
+      ]
+    },
+    "page-003": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "health workforce",
+          "score": 0.9702,
+          "evidence": []
+        },
+        {
+          "term": "hwf",
+          "score": 0.6446,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 0.5993,
+          "evidence": []
+        },
+        {
+          "term": "cross-country",
+          "score": 0.5861,
+          "evidence": []
+        },
+        {
+          "term": "uhc",
+          "score": 0.5828,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "health workforce",
+          "score": 16.1649,
+          "evidence": []
+        },
+        {
+          "term": "inform",
+          "score": 12.0277,
+          "evidence": []
+        },
+        {
+          "term": "hwf",
+          "score": 9.4259,
+          "evidence": []
+        },
+        {
+          "term": "uhc",
+          "score": 9.1872,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 8.761,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health workforce",
+          "score": 0.494,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 0.1798,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.1752,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.1714,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 0.1525,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health workforce",
+          "score": 9.9235,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 3.8284,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 2.9492,
+          "evidence": []
+        },
+        {
+          "term": "training",
+          "score": 2.7288,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 2.4765,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health workforce",
+          "score": 0.494,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 0.1798,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.1752,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.1714,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 0.1525,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 52.0934,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 49.7619,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 47.7187,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 36.7109,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 36.7109,
+          "evidence": []
+        }
+      ]
+    },
+    "page-004": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "nhwa",
+          "score": 0.5993,
+          "evidence": []
+        },
+        {
+          "term": "island",
+          "score": 0.499,
+          "evidence": []
+        },
+        {
+          "term": "sdg",
+          "score": 0.4118,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "nhwa",
+          "score": 8.761,
+          "evidence": []
+        },
+        {
+          "term": "island",
+          "score": 6.0853,
+          "evidence": []
+        },
+        {
+          "term": "mandate",
+          "score": 5.169,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "workforce",
+          "score": 0.1297,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.1107,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 0.0881,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health",
+          "score": 2.2814,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 2.1226,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 1.6657,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "workforce",
+          "score": 0.1297,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.1107,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 0.0881,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "这一点很重要",
+          "score": 34.9482,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 33.5752,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 30.0535,
+          "evidence": []
+        }
+      ]
+    },
+    "page-005": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "gshrh",
+          "score": 0.871,
+          "evidence": []
+        },
+        {
+          "term": "resolution",
+          "score": 0.5703,
+          "evidence": []
+        },
+        {
+          "term": "wha",
+          "score": 0.5394,
+          "evidence": []
+        },
+        {
+          "term": "urges",
+          "score": 0.5205,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "gshrh",
+          "score": 16.5297,
+          "evidence": []
+        },
+        {
+          "term": "resolution",
+          "score": 8.9295,
+          "evidence": []
+        },
+        {
+          "term": "wha",
+          "score": 8.1706,
+          "evidence": []
+        },
+        {
+          "term": "sixty-ninth",
+          "score": 6.673,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health",
+          "score": 0.1951,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 0.1795,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.1253,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 0.1219,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health",
+          "score": 3.9473,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 2.6301,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 1.8555,
+          "evidence": []
+        },
+        {
+          "term": "digital",
+          "score": 1.5409,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health",
+          "score": 0.1951,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 0.1795,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.1253,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.1126,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "还包括区域经济一体化组织",
+          "score": 96.1525,
+          "evidence": []
+        },
+        {
+          "term": "适用时",
+          "score": 96.1525,
+          "evidence": []
+        },
+        {
+          "term": "文件a",
+          "score": 72.8349,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 66.1737,
+          "evidence": []
+        }
+      ]
+    },
+    "page-006": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "productivity",
+          "score": 0.7636,
+          "evidence": []
+        },
+        {
+          "term": "current health",
+          "score": 0.7549,
+          "evidence": []
+        },
+        {
+          "term": "health workforce",
+          "score": 0.6926,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "current health",
+          "score": 12.6891,
+          "evidence": []
+        },
+        {
+          "term": "deployment",
+          "score": 12.3708,
+          "evidence": []
+        },
+        {
+          "term": "productivity",
+          "score": 11.5952,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health workforce",
+          "score": 0.3098,
+          "evidence": []
+        },
+        {
+          "term": "current health",
+          "score": 0.16,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 0.0994,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health workforce",
+          "score": 5.7738,
+          "evidence": []
+        },
+        {
+          "term": "current health",
+          "score": 2.7928,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 2.4339,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health workforce",
+          "score": 0.3098,
+          "evidence": []
+        },
+        {
+          "term": "current health",
+          "score": 0.16,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 0.0994,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 43.7379,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 43.4717,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 40.1736,
+          "evidence": []
+        }
+      ]
+    },
+    "page-007": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "increasing productivity",
+          "score": 1.2023,
+          "evidence": []
+        },
+        {
+          "term": "effective retention",
+          "score": 1.104,
+          "evidence": []
+        },
+        {
+          "term": "retention policies",
+          "score": 1.0466,
+          "evidence": []
+        },
+        {
+          "term": "performance through",
+          "score": 0.9086,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "effective retention",
+          "score": 19.7805,
+          "evidence": []
+        },
+        {
+          "term": "increasing productivity",
+          "score": 18.5768,
+          "evidence": []
+        },
+        {
+          "term": "performance through",
+          "score": 17.9819,
+          "evidence": []
+        },
+        {
+          "term": "retention policies",
+          "score": 17.7137,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health workers",
+          "score": 0.2253,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 0.126,
+          "evidence": []
+        },
+        {
+          "term": "training",
+          "score": 0.0767,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 0.0751,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health workers",
+          "score": 4.0879,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 1.7637,
+          "evidence": []
+        },
+        {
+          "term": "region",
+          "score": 1.3579,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 1.3347,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health workers",
+          "score": 0.2253,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 0.126,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.0677,
+          "evidence": []
+        },
+        {
+          "term": "through effective",
+          "score": 0.0652,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 39.95,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 31.1461,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 30.216,
+          "evidence": []
+        },
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 30.0624,
+          "evidence": []
+        }
+      ]
+    },
+    "page-008": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "labour market",
+          "score": 1.2797,
+          "evidence": []
+        },
+        {
+          "term": "market analysis",
+          "score": 0.9425,
+          "evidence": []
+        },
+        {
+          "term": "interplay",
+          "score": 0.6083,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "labour market",
+          "score": 22.6057,
+          "evidence": []
+        },
+        {
+          "term": "market analysis",
+          "score": 15.9882,
+          "evidence": []
+        },
+        {
+          "term": "interplay",
+          "score": 7.877,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "workforce",
+          "score": 0.1394,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.1109,
+          "evidence": []
+        },
+        {
+          "term": "labour market",
+          "score": 0.1105,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "workforce",
+          "score": 2.2918,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 1.9458,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 1.8376,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "workforce",
+          "score": 0.1394,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.1109,
+          "evidence": []
+        },
+        {
+          "term": "labour market",
+          "score": 0.1105,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 50.5892,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 46.9778,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 43.2716,
+          "evidence": []
+        }
+      ]
+    },
+    "page-009": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "labour market",
+          "score": 1.1457,
+          "evidence": []
+        },
+        {
+          "term": "health workers",
+          "score": 0.9848,
+          "evidence": []
+        },
+        {
+          "term": "unemployed",
+          "score": 0.8696,
+          "evidence": []
+        },
+        {
+          "term": "care sector",
+          "score": 0.861,
+          "evidence": []
+        },
+        {
+          "term": "migration",
+          "score": 0.6338,
+          "evidence": []
+        },
+        {
+          "term": "policies",
+          "score": 0.5699,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "health workers",
+          "score": 19.5396,
+          "evidence": []
+        },
+        {
+          "term": "labour market",
+          "score": 18.699,
+          "evidence": []
+        },
+        {
+          "term": "care sector",
+          "score": 14.7461,
+          "evidence": []
+        },
+        {
+          "term": "unemployed",
+          "score": 14.0594,
+          "evidence": []
+        },
+        {
+          "term": "policies",
+          "score": 11.3086,
+          "evidence": []
+        },
+        {
+          "term": "migration",
+          "score": 9.9366,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health workers",
+          "score": 0.392,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 0.342,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 0.245,
+          "evidence": []
+        },
+        {
+          "term": "labour market",
+          "score": 0.2047,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 0.2012,
+          "evidence": []
+        },
+        {
+          "term": "care sector",
+          "score": 0.1827,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health workers",
+          "score": 10.2965,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 9.0586,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 5.596,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 4.8476,
+          "evidence": []
+        },
+        {
+          "term": "training",
+          "score": 3.5505,
+          "evidence": []
+        },
+        {
+          "term": "care sector",
+          "score": 2.8362,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health workers",
+          "score": 0.392,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 0.342,
+          "evidence": []
+        },
+        {
+          "term": "labour market",
+          "score": 0.2047,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 0.2012,
+          "evidence": []
+        },
+        {
+          "term": "care sector",
+          "score": 0.1827,
+          "evidence": []
+        },
+        {
+          "term": "policies",
+          "score": 0.0816,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 58.1458,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 54.208,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 52.5641,
+          "evidence": []
+        },
+        {
+          "term": "咨询小组将由18名成员组成",
+          "score": 40.7787,
+          "evidence": []
+        },
+        {
+          "term": "汇集在流感领域中国际公认的决策者",
+          "score": 40.7787,
+          "evidence": []
+        },
+        {
+          "term": "dedougou",
+          "score": 40.4085,
+          "evidence": []
+        }
+      ]
+    },
+    "page-010": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "nhwa",
+          "score": 0.878,
+          "evidence": []
+        },
+        {
+          "term": "deans",
+          "score": 0.5903,
+          "evidence": []
+        },
+        {
+          "term": "experts",
+          "score": 0.5539,
+          "evidence": []
+        },
+        {
+          "term": "instructors",
+          "score": 0.5429,
+          "evidence": []
+        },
+        {
+          "term": "indicators",
+          "score": 0.5179,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "nhwa",
+          "score": 17.522,
+          "evidence": []
+        },
+        {
+          "term": "experts",
+          "score": 10.044,
+          "evidence": []
+        },
+        {
+          "term": "indicators",
+          "score": 7.9324,
+          "evidence": []
+        },
+        {
+          "term": "deans",
+          "score": 7.5893,
+          "evidence": []
+        },
+        {
+          "term": "instructors",
+          "score": 7.0297,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "workforce",
+          "score": 0.1561,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.1559,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.145,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 0.1321,
+          "evidence": []
+        },
+        {
+          "term": "indicators",
+          "score": 0.1286,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "data",
+          "score": 2.7948,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 2.4783,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 1.8868,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 1.6484,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 1.5901,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health",
+          "score": 0.1559,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.145,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 0.1321,
+          "evidence": []
+        },
+        {
+          "term": "indicators",
+          "score": 0.1286,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.1195,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "潜在的利益冲突",
+          "score": 32.8566,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 31.9424,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 31.6118,
+          "evidence": []
+        },
+        {
+          "term": "如个人",
+          "score": 30.4371,
+          "evidence": []
+        },
+        {
+          "term": "dedougou",
+          "score": 27.9578,
+          "evidence": []
+        }
+      ]
+    },
+    "page-011": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "declared",
+          "score": 0.4877,
+          "evidence": []
+        },
+        {
+          "term": "numeric",
+          "score": 0.4778,
+          "evidence": []
+        },
+        {
+          "term": "indicators",
+          "score": 0.4104,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "numeric",
+          "score": 6.0853,
+          "evidence": []
+        },
+        {
+          "term": "declared",
+          "score": 5.3121,
+          "evidence": []
+        },
+        {
+          "term": "indicators",
+          "score": 5.2883,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "workforce",
+          "score": 0.1075,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.0985,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.0839,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "workforce",
+          "score": 1.3887,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 1.1749,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 1.0902,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "workforce",
+          "score": 0.1075,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.0985,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 0.0699,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "潜在的利益冲突",
+          "score": 40.6065,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 38.933,
+          "evidence": []
+        },
+        {
+          "term": "如个人",
+          "score": 38.6506,
+          "evidence": []
+        }
+      ]
+    },
+    "page-012": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "module",
+          "score": 1.0838,
+          "evidence": []
+        },
+        {
+          "term": "health workforce",
+          "score": 0.9988,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 0.6576,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "module",
+          "score": 35.551,
+          "evidence": []
+        },
+        {
+          "term": "health workforce",
+          "score": 17.0361,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 11.7606,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health workforce",
+          "score": 0.4814,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 0.1909,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 0.142,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health workforce",
+          "score": 12.458,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 5.7165,
+          "evidence": []
+        },
+        {
+          "term": "training",
+          "score": 3.7506,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health workforce",
+          "score": 0.4814,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 0.1909,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 0.142,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "相一致",
+          "score": 59.0026,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 50.9278,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 43.0822,
+          "evidence": []
+        }
+      ]
+    },
+    "page-013": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "worker density",
+          "score": 1.7853,
+          "evidence": []
+        },
+        {
+          "term": "worker distribution",
+          "score": 1.5135,
+          "evidence": []
+        },
+        {
+          "term": "density health",
+          "score": 1.4341,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "worker density",
+          "score": 35.2811,
+          "evidence": []
+        },
+        {
+          "term": "worker distribution",
+          "score": 32.9874,
+          "evidence": []
+        },
+        {
+          "term": "density health",
+          "score": 29.0475,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health workers",
+          "score": 0.3147,
+          "evidence": []
+        },
+        {
+          "term": "density health",
+          "score": 0.2377,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 0.2182,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health workers",
+          "score": 8.2276,
+          "evidence": []
+        },
+        {
+          "term": "density health",
+          "score": 6.549,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 4.4985,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health workers",
+          "score": 0.3147,
+          "evidence": []
+        },
+        {
+          "term": "density health",
+          "score": 0.2377,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 0.2182,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "并提供一",
+          "score": 56.1146,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 52.848,
+          "evidence": []
+        },
+        {
+          "term": "dedougou",
+          "score": 41.2008,
+          "evidence": []
+        }
+      ]
+    },
+    "page-014": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hrhstatistics",
+          "score": 0.5903,
+          "evidence": []
+        },
+        {
+          "term": "jan",
+          "score": 0.571,
+          "evidence": []
+        },
+        {
+          "term": "maputo",
+          "score": 0.5582,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "workforce",
+          "score": 8.8565,
+          "evidence": []
+        },
+        {
+          "term": "hrhstatistics",
+          "score": 7.5893,
+          "evidence": []
+        },
+        {
+          "term": "maputo",
+          "score": 7.1839,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "workforce",
+          "score": 0.1361,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.136,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.0852,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health",
+          "score": 3.0367,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 2.6568,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 2.0852,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "workforce",
+          "score": 0.1361,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.136,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.0852,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 84.5405,
+          "evidence": []
+        },
+        {
+          "term": "如果不是对所有数据进行审查",
+          "score": 38.8421,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 34.8869,
+          "evidence": []
+        }
+      ]
+    },
+    "page-016": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hwf",
+          "score": 0.4067,
+          "evidence": []
+        },
+        {
+          "term": "hrh",
+          "score": 0.4032,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 0.3781,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hrh",
+          "score": 4.9152,
+          "evidence": []
+        },
+        {
+          "term": "hwf",
+          "score": 4.713,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 4.3805,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "world",
+          "score": 0.1267,
+          "evidence": []
+        },
+        {
+          "term": "organization",
+          "score": 0.1148,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.1128,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "world",
+          "score": 1.9948,
+          "evidence": []
+        },
+        {
+          "term": "organization",
+          "score": 1.8076,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 1.7089,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "world",
+          "score": 0.1267,
+          "evidence": []
+        },
+        {
+          "term": "organization",
+          "score": 0.1148,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.1128,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 297.4615,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 126.5122,
+          "evidence": []
+        },
+        {
+          "term": "监督机制",
+          "score": 62.613,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

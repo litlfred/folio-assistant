@@ -105,6 +105,10 @@
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/maintainedBy",
       "@type": "@id"
     },
+    "jsonSchema": {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/jsonSchema",
+      "@type": "@id"
+    },
     "module": "https://litlfred.github.io/cat-harness/v0/ns/module",
     "holdsGraph": {
       "@id": "http://purl.org/dc/terms/type",
@@ -363,10 +367,10 @@
     "registry",
     "packages"
   ],
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/975bbe594a8246f34e8f7b01b01cdb11bee51ce1",
-  "sourceCommitSha": "975bbe594a8246f34e8f7b01b01cdb11bee51ce1",
-  "sourceTree": "8515b2cf3a678ffab43a222a3d099887cf9c3c1a",
-  "sourceCommitAt": "2026-11-08T14:29:02+01:00",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c51f9c4aaed9dc175be37d618a3c48c3027881b4",
+  "sourceCommitSha": "c51f9c4aaed9dc175be37d618a3c48c3027881b4",
+  "sourceTree": "41d9dd0b016cc2c8f14ac0a1e8ecff7110234a11",
+  "sourceCommitAt": "2026-11-13T08:55:02+01:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -378,7 +382,8 @@
     "GraphTypology": 5,
     "Role": 2,
     "Subgraph": 5,
-    "Asset": 2
+    "Asset": 2,
+    "Schema": 6
   },
   "@graph": [
     {
@@ -816,14 +821,16 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/GraphTypology",
       "name": "processes",
       "renderable": false,
-      "summary": "A Subgraph of Processes: BPMN diagrams that coordinate Tasks, and the decision tables their gateways compute from."
+      "summary": "A Subgraph of Processes: BPMN diagrams that coordinate Tasks, and the decision tables their gateways compute from.",
+      "validatorNotApplicable": "its nodes are `.bpmn` and `.dmn` — XML, counted 2026-09-24 as 77 and 9. A Zod schema parses JSON, so one here would be a category error; `check:workflows`, `xml-comment-check` and `check-process-documentation` grade them instead."
     },
     {
       "@id": "https://litlfred.github.io/bootstrap/v0/ns/graphTypology/scenarios",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/GraphTypology",
       "name": "scenarios",
       "renderable": false,
-      "summary": "A Subgraph of Roles: the responsibilities an Actor takes on, and who takes them on."
+      "summary": "A Subgraph of Roles: the responsibilities an Actor takes on, and who takes them on.",
+      "validatorRef": "schemas/process/role-graph.ts#RoleGraphSchema"
     },
     {
       "@id": "https://litlfred.github.io/bootstrap/v0/ns/graphTypology/schemas",
@@ -837,7 +844,8 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/GraphTypology",
       "name": "code",
       "renderable": false,
-      "summary": "Source code -- the modules, scripts and entry points an instance holds. Declared so that code is scannable at all: an undeclared file is one no checker has a reason to look at. Being declared here says nothing about whether a Tool node claims it, which is a separate question and a separate axis."
+      "summary": "Source code -- the modules, scripts and entry points an instance holds. Declared so that code is scannable at all: an undeclared file is one no checker has a reason to look at. Being declared here says nothing about whether a Tool node claims it, which is a separate question and a separate axis.",
+      "validatorNotApplicable": "its nodes are TypeScript — 1793 files, counted 2026-09-24. `tsc` is the validator for code, and `check:partition` plus `check-code-accounting` grade the graph over it."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/role/site-publisher",
@@ -977,6 +985,100 @@
       "assetRole": "instance-readme",
       "title": "bootstrap-tools",
       "description": "What the toolset holds, why it is outside bootstrap, and how to run it."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/discussion",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "discussion",
+      "title": "discussion",
+      "summary": "The two documents the `discussion` process carries, as Zod.",
+      "module": "schemas/discussion.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/bootstrap-tools/directory/bootstrap-tools-schemas",
+      "jsonSchema": [
+        "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/zod/discussion/DiscussionInputSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/zod/discussion/DiscussionOutputObjectSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/zod/discussion/DiscussionOutputSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/zod/discussion/ExchangeEntrySchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/zod/discussion/ParticipantSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/zod/discussion/RepositoryRefSchema.schema.json"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/graph",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "graph",
+      "title": "graph",
+      "summary": "bootstrap's own terms, and the shape of the file that declares a Knowledge",
+      "module": "schemas/graph.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/bootstrap-tools/directory/bootstrap-tools-schemas",
+      "jsonSchema": [
+        "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/zod/graph/AssetSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/zod/graph/DependencySchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/zod/graph/GraphTypologySchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/zod/graph/KnowledgeGraphDeclarationSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/zod/graph/SubgraphSchema.schema.json"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/model-registry",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "model-registry",
+      "title": "model-registry",
+      "summary": "Which languages a MODEL is good at, and whether anybody checked.",
+      "module": "schemas/model-registry.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/bootstrap-tools/directory/bootstrap-tools-schemas",
+      "jsonSchema": [
+        "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/zod/model-registry/ModelEntrySchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/zod/model-registry/ModelIdSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/zod/model-registry/ModelRegistrySchema.schema.json"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/release-iri",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "release-iri",
+      "title": "release-iri",
+      "summary": "A layer's release addresses: where its identifiers live for the major",
+      "module": "schemas/release-iri.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/bootstrap-tools/directory/bootstrap-tools-schemas"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/requirement-set",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "requirement-set",
+      "title": "requirement-set",
+      "summary": "A REQUIREMENT SET — the requirements document: a set of requirement",
+      "module": "schemas/requirement-set.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/bootstrap-tools/directory/bootstrap-tools-schemas",
+      "jsonSchema": [
+        "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/zod/requirement-set/MemberDecisionSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/zod/requirement-set/RequirementSetIdSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/zod/requirement-set/RequirementSetMemberSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/zod/requirement-set/RequirementSetSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/zod/requirement-set/RequirementSetStageSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/zod/requirement-set/SignOffOutcomeSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/zod/requirement-set/SignOffSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/zod/requirement-set/SignerKindSchema.schema.json"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/requirement",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "requirement",
+      "title": "requirement",
+      "summary": "A REQUIREMENT — what a harness, or something built with one, must do, said so it",
+      "module": "schemas/requirement.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/bootstrap-tools/directory/bootstrap-tools-schemas",
+      "jsonSchema": [
+        "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/zod/requirement/RequirementLevelSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/zod/requirement/RequirementRefSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/zod/requirement/RequirementSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/zod/requirement/RequirementStatementSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/zod/requirement/RequirementStatusSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/zod/requirement/StatementKindSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/zod/requirement/SuccessCriterionSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/zod/requirement/VerificationMethodSchema.schema.json"
+      ]
     }
   ]
 }

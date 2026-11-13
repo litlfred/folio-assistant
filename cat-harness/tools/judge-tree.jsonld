@@ -105,6 +105,10 @@
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/maintainedBy",
       "@type": "@id"
     },
+    "jsonSchema": {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/jsonSchema",
+      "@type": "@id"
+    },
     "module": "https://litlfred.github.io/cat-harness/v0/ns/module",
     "holdsGraph": {
       "@id": "http://purl.org/dc/terms/type",
@@ -375,7 +379,7 @@
           {
             "name": "lock",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
-            "description": "The index.lock.json whose fixity digests name every instance but the caller.",
+            "description": "The index.lock.json whose fixity digests name every layer but the caller.",
             "required": true,
             "arg": {
               "flag": "--lock"
@@ -384,7 +388,7 @@
           {
             "name": "caller",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoFullName",
-            "description": "The caller as owner/name (or its lock instance): the entry replaced by its PR tree. Every runner must name it the same way.",
+            "description": "The caller as owner/name (or its lock layer): the entry replaced by its PR tree. Every runner must name it the same way.",
             "required": true,
             "arg": {
               "flag": "--caller"
@@ -420,7 +424,7 @@
           {
             "name": "instance",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/InstanceId",
-            "description": "The own instance(s) run-gates.py judges; repeatable.",
+            "description": "The own layer(s) run-gates.py judges; repeatable.",
             "required": false,
             "arg": {
               "flag": "--instance"

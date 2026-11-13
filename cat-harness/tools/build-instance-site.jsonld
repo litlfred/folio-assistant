@@ -105,6 +105,10 @@
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/maintainedBy",
       "@type": "@id"
     },
+    "jsonSchema": {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/jsonSchema",
+      "@type": "@id"
+    },
     "module": "https://litlfred.github.io/cat-harness/v0/ns/module",
     "holdsGraph": {
       "@id": "http://purl.org/dc/terms/type",
@@ -362,8 +366,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/build-instance-site.jsonld",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "build-instance-site",
-      "title": "Build, check and (on request) publish an instance's own site, or a branches/<branch> preview",
-      "description": "From a checkout whose layers arrive by remote mount: mount the pinned closure, install, run the instance's own gates (`--pre`), compose the harness chrome for THIS instance, run its source steps, build with Jekyll at the base path read from the git remote (`/<repo>`, or `/<repo>/branches/<branch>` for a preview), run the post-build steps (mount-instance-docs, pdf-viewer, set-html-lang, publish-id-lookup, rail-standalone-pages), and check that every relative or base-rooted link in every page resolves to a file under the site, reading each page with an HTML parser. Any failing step stops the run; a link that does not resolve means nothing is published. It never decides to publish: only `--publish` does, and then a root publish keeps `branches/` and `_render-log/` on the branch, and a preview replaces only its own `branches/<branch>/`.",
+      "title": "Build, check and (on request) publish a layer's own site, or a branches/<branch> preview",
+      "description": "From a checkout whose layers arrive by remote mount: mount the pinned closure, install, run the layer's own gates (`--pre`), compose the harness chrome for THIS layer, run its source steps, build with Jekyll at the base path read from the git remote (`/<repo>`, or `/<repo>/branches/<branch>` for a preview), run the post-build steps (mount-instance-docs, pdf-viewer, set-html-lang, publish-id-lookup, rail-standalone-pages), and check that every relative or base-rooted link in every page resolves to a file under the site, reading each page with an HTML parser. Any failing step stops the run; a link that does not resolve means nothing is published. It never decides to publish: only `--publish` does, and then a root publish keeps `branches/` and `_render-log/` on the branch, and a preview replaces only its own `branches/<branch>/`.",
       "install": {
         "none": true
       },
@@ -375,7 +379,7 @@
           {
             "name": "root",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
-            "description": "The instance checkout (holds `index.config.json`). Default: the working directory.",
+            "description": "The layer checkout (holds `index.config.json`). Default: the working directory.",
             "required": false,
             "arg": {
               "flag": "--root"
@@ -384,7 +388,7 @@
           {
             "name": "instance",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug",
-            "description": "The declared instance name; must match the checkout's declaration.",
+            "description": "The declared layer name; must match the checkout's declaration.",
             "required": true,
             "arg": {
               "flag": "--instance"
@@ -402,7 +406,7 @@
           {
             "name": "pre",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ScriptName",
-            "description": "A package script to run in the checkout first, as `bun run <name>` (repeatable): the instance's own gates. Any non-zero exit stops the build.",
+            "description": "A package script to run in the checkout first, as `bun run <name>` (repeatable): the layer's own gates. Any non-zero exit stops the build.",
             "required": false,
             "arg": {
               "flag": "--pre"
@@ -485,7 +489,6 @@
         "network": true
       },
       "satisfies": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/skill/deployment-awareness",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/remote-mount"
       ]
     }

@@ -1,6 +1,8 @@
-// The OpenAPI pages' one loader, published once at `assets/openapi.js` and
-// loaded by every page `gen-openapi-pages.ts` writes (bean `s4ta`). The page
-// holds identity and a pointer; this fetches the SERVED OpenAPI document and
+// The OpenAPI renderer, published once at `assets/openapi.js` and loaded by
+// every page `gen-openapi-pages.ts` writes (bean `s4ta`), after the generic
+// renderer (`assets/kg-render.js`, issue #1830). The page DECLARES its node
+// in RDFa — a `schema:WebAPI` or a `hydra:Operation` — and this registers for
+// those two classes. It fetches the SERVED OpenAPI document (`data-kg-openapi`) and
 // draws the operation Swagger-style — method and path, parameters, request
 // body, responses, and their schemas with `$ref`s resolved — or, on a
 // document's page, the list of its operations (`visualizer-loading`).
@@ -8,18 +10,11 @@
 // No dependencies, and no `innerHTML` of anything read from the document:
 // every string it shows is set as text, because the document is upstream's.
 (function () {
-  // PRINT AND PDF: count in and out; the last loader to finish marks
-  // <html data-kg-loaded>, on success or failure (`visualizer-loading`).
-  var kg = (window.__kgLoads = window.__kgLoads || {
-    pending: 0,
-    done: function () {
-      if (--this.pending === 0) document.documentElement.setAttribute("data-kg-loaded", "");
-    },
-  });
-  var cfgEl = document.getElementById("openapi-page");
-  var host = document.querySelector(".oa-body");
-  if (!cfgEl || !host) return;
-  var cfg = JSON.parse(cfgEl.textContent);
+  var WEB_API = "https://schema.org/WebAPI";
+  var OPERATION = "http://www.w3.org/ns/hydra/core#Operation";
+  // What the page drawing now is — set by `render`, one node per page. PRINT
+  // AND PDF: the generic renderer counts this page's load in and out.
+  var cfg, host;
 
   function el(tag, attrs, kids) {
     var e = document.createElement(tag);
@@ -195,7 +190,7 @@
       out.push(el("ul", { class: "oa-ops" }, groups[g].map(function (o) {
         var m = o["hydra:method"].toLowerCase();
         return el("li", {}, [
-          el("a", { href: "./" + o["schema:identifier"] + "/" }, [
+          el("a", { href: "./operation/" + encodeURIComponent(o["schema:identifier"]) + "/" }, [
             el("span", { class: "oa-m oa-m-" + m }, [o["hydra:method"]]), " ",
             el("code", {}, [o["schema:urlTemplate"]]),
           ]),
@@ -210,18 +205,31 @@
     return out;
   }
 
-  kg.pending++;
-  var want = cfg.kind === "document" ? [getJson(cfg.openapi), getJson(cfg.node)] : [getJson(cfg.openapi)];
-  Promise.all(want)
-    .then(function (r) {
-      var parts = cfg.kind === "document" ? drawDocument(r[0], r[1]) : drawOperation(r[0]);
-      host.textContent = "";
-      parts.forEach(function (p) { host.appendChild(p); });
-    })
-    .catch(function (e) {
-      fail(cfg.openapi, e);
-    })
-    .finally(function () {
-      kg.done();
-    });
+  function render(c) {
+    var body = c.element.querySelector(".oa-body");
+    if (!body) return;
+    host = body;
+    var a = function (k) { return c.element.getAttribute("data-kg-" + k); };
+    cfg = {
+      kind: c.types.some(function (t) { return t === WEB_API; }) ? "document" : "operation",
+      node: c.alternates["application/ld+json"],
+      openapi: a("openapi"),
+      method: a("method"),
+      path: a("path"),
+    };
+    var want = cfg.kind === "document" ? [getJson(cfg.openapi), getJson(cfg.node)] : [getJson(cfg.openapi)];
+    return Promise.all(want)
+      .then(function (r) {
+        var parts = cfg.kind === "document" ? drawDocument(r[0], r[1]) : drawOperation(r[0]);
+        host.textContent = "";
+        parts.forEach(function (p) { host.appendChild(p); });
+      })
+      .catch(function (e) {
+        fail(cfg.openapi, e);
+      });
+  }
+
+  var q = (window.kgRenderers = window.kgRenderers || []);
+  q.push({ match: WEB_API, render: render });
+  q.push({ match: OPERATION, render: render });
 })();

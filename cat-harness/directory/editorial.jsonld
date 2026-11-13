@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/cat-harness/directory/editorial.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/directory/editorial",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "editorial",
+      "path": "editorial/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/cat-harness"
+      ],
+      "description": "The editorial sub-graph — a NAMED SUB-GRAPH of the harness, OPT-IN like `sdlc`: off in every layer unless that layer lists `cat-harness.editorial` in its own `enableSubgraphs` (owner, 2026-11-10, card Q-SG-1 C, wave 2). It holds the `editorial-audits` skill package: the one-voice, devil's-advocate and integration watchers, voice reviews, readability, block density, chapter complexity, the exposition swarm drain and the production-vs-exploratory discipline. The editor, content graph, content profiles, Markdown authoring and the review skills that always-on skills cite stay in `authoring-core`. Declared FROM WITHIN in `editorial/graph.json`.",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/editorial"
+    }
+  ]
+}

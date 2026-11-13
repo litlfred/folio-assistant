@@ -1,0 +1,3510 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-266967",
+  "instance": "who-iris",
+  "about": "library/10665-266967",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7908,
+    "terms": 73102
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "duck-embryo vaccine",
+        "score": 27.4689,
+        "evidence": []
+      },
+      {
+        "term": "flury vaccine",
+        "score": 24.6166,
+        "evidence": []
+      },
+      {
+        "term": "phenolized vaccine",
+        "score": 21.2713,
+        "evidence": []
+      },
+      {
+        "term": "flury hep",
+        "score": 20.2931,
+        "evidence": []
+      },
+      {
+        "term": "pooled vaccine",
+        "score": 19.728,
+        "evidence": []
+      },
+      {
+        "term": "vaccine alone",
+        "score": 19.1235,
+        "evidence": []
+      },
+      {
+        "term": "vaccine potency",
+        "score": 18.9341,
+        "evidence": []
+      },
+      {
+        "term": "serum pic",
+        "score": 18.1202,
+        "evidence": []
+      },
+      {
+        "term": "vaccine failed",
+        "score": 16.2033,
+        "evidence": []
+      },
+      {
+        "term": "duck-embryo vac",
+        "score": 16.1834,
+        "evidence": []
+      },
+      {
+        "term": "antirabies serum",
+        "score": 16.0501,
+        "evidence": []
+      },
+      {
+        "term": "vaccine gave",
+        "score": 15.839,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "duck-embryo vaccine",
+        "score": 826.7145,
+        "evidence": []
+      },
+      {
+        "term": "flury vaccine",
+        "score": 677.4278,
+        "evidence": []
+      },
+      {
+        "term": "phenolized vaccine",
+        "score": 596.3302,
+        "evidence": []
+      },
+      {
+        "term": "vaccine alone",
+        "score": 584.0477,
+        "evidence": []
+      },
+      {
+        "term": "pooled vaccine",
+        "score": 582.7813,
+        "evidence": []
+      },
+      {
+        "term": "vaccine potency",
+        "score": 568.3517,
+        "evidence": []
+      },
+      {
+        "term": "vaccine gave",
+        "score": 512.0938,
+        "evidence": []
+      },
+      {
+        "term": "vaccine failed",
+        "score": 508.2437,
+        "evidence": []
+      },
+      {
+        "term": "reference vaccine",
+        "score": 488.4831,
+        "evidence": []
+      },
+      {
+        "term": "serum alone",
+        "score": 455.2192,
+        "evidence": []
+      },
+      {
+        "term": "serum pic",
+        "score": 450.8297,
+        "evidence": []
+      },
+      {
+        "term": "antirabies serum",
+        "score": 413.6826,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "reference vaccine",
+        "score": 5.6135,
+        "evidence": []
+      },
+      {
+        "term": "pooled vaccine",
+        "score": 5.4021,
+        "evidence": []
+      },
+      {
+        "term": "vaccine alone",
+        "score": 5.3246,
+        "evidence": []
+      },
+      {
+        "term": "duck-embryo vaccine",
+        "score": 5.0323,
+        "evidence": []
+      },
+      {
+        "term": "flury vaccine",
+        "score": 4.6124,
+        "evidence": []
+      },
+      {
+        "term": "phenolized vaccine",
+        "score": 4.6124,
+        "evidence": []
+      },
+      {
+        "term": "vaccine failed",
+        "score": 4.6124,
+        "evidence": []
+      },
+      {
+        "term": "vaccine gave",
+        "score": 4.6124,
+        "evidence": []
+      },
+      {
+        "term": "vaccine potency",
+        "score": 4.6124,
+        "evidence": []
+      },
+      {
+        "term": "doses against",
+        "score": 3.4056,
+        "evidence": []
+      },
+      {
+        "term": "different vaccines",
+        "score": 3.3856,
+        "evidence": []
+      },
+      {
+        "term": "rabies vaccination",
+        "score": 2.9961,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "reference vaccine",
+        "score": 149.9326,
+        "evidence": []
+      },
+      {
+        "term": "pooled vaccine",
+        "score": 147.5714,
+        "evidence": []
+      },
+      {
+        "term": "duck-embryo vaccine",
+        "score": 139.0882,
+        "evidence": []
+      },
+      {
+        "term": "flury vaccine",
+        "score": 139.0882,
+        "evidence": []
+      },
+      {
+        "term": "phenolized vaccine",
+        "score": 139.0882,
+        "evidence": []
+      },
+      {
+        "term": "vaccine alone",
+        "score": 139.0882,
+        "evidence": []
+      },
+      {
+        "term": "vaccine failed",
+        "score": 139.0882,
+        "evidence": []
+      },
+      {
+        "term": "vaccine gave",
+        "score": 139.0882,
+        "evidence": []
+      },
+      {
+        "term": "vaccine potency",
+        "score": 139.0882,
+        "evidence": []
+      },
+      {
+        "term": "mumps",
+        "score": 97.8116,
+        "evidence": []
+      },
+      {
+        "term": "rabies vaccination",
+        "score": 89.3856,
+        "evidence": []
+      },
+      {
+        "term": "immunization",
+        "score": 83.2281,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "reference vaccine",
+        "score": 5.6135,
+        "evidence": []
+      },
+      {
+        "term": "pooled vaccine",
+        "score": 5.4021,
+        "evidence": []
+      },
+      {
+        "term": "vaccine alone",
+        "score": 5.3246,
+        "evidence": []
+      },
+      {
+        "term": "duck-embryo vaccine",
+        "score": 5.0323,
+        "evidence": []
+      },
+      {
+        "term": "vaccine potency",
+        "score": 4.9485,
+        "evidence": []
+      },
+      {
+        "term": "flury vaccine",
+        "score": 4.8967,
+        "evidence": []
+      },
+      {
+        "term": "phenolized vaccine",
+        "score": 4.8233,
+        "evidence": []
+      },
+      {
+        "term": "vaccine gave",
+        "score": 4.7379,
+        "evidence": []
+      },
+      {
+        "term": "vaccine failed",
+        "score": 4.7358,
+        "evidence": []
+      },
+      {
+        "term": "doses against",
+        "score": 3.4056,
+        "evidence": []
+      },
+      {
+        "term": "different vaccines",
+        "score": 3.3856,
+        "evidence": []
+      },
+      {
+        "term": "rabies vaccination",
+        "score": 3.223,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "感染者",
+        "score": 2801.194,
+        "evidence": []
+      },
+      {
+        "term": "这两种hpv",
+        "score": 1766.3476,
+        "evidence": []
+      },
+      {
+        "term": "平等主义",
+        "score": 1721.7012,
+        "evidence": []
+      },
+      {
+        "term": "的原则",
+        "score": 1525.8626,
+        "evidence": []
+      },
+      {
+        "term": "这种差异",
+        "score": 1408.8599,
+        "evidence": []
+      },
+      {
+        "term": "反过来",
+        "score": 1372.5272,
+        "evidence": []
+      },
+      {
+        "term": "原则或价值观",
+        "score": 1343.4846,
+        "evidence": []
+      },
+      {
+        "term": "如果没有",
+        "score": 1291.7293,
+        "evidence": []
+      },
+      {
+        "term": "研究人员相信",
+        "score": 1287.6159,
+        "evidence": []
+      },
+      {
+        "term": "感染和宫颈癌",
+        "score": 1259.4454,
+        "evidence": []
+      },
+      {
+        "term": "协议的主题事项",
+        "score": 1234.0574,
+        "evidence": []
+      },
+      {
+        "term": "协议缔约方",
+        "score": 1234.0574,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-001-by": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "flury vaccine",
+          "score": 1.6215,
+          "evidence": []
+        },
+        {
+          "term": "ruegsegger",
+          "score": 0.9714,
+          "evidence": []
+        },
+        {
+          "term": "tierkel",
+          "score": 0.9423,
+          "evidence": []
+        },
+        {
+          "term": "schnurrenberger",
+          "score": 0.9369,
+          "evidence": []
+        },
+        {
+          "term": "guinea-pigs",
+          "score": 0.853,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "flury vaccine",
+          "score": 28.443,
+          "evidence": []
+        },
+        {
+          "term": "ruegsegger",
+          "score": 15.754,
+          "evidence": []
+        },
+        {
+          "term": "schnurrenberger",
+          "score": 15.1787,
+          "evidence": []
+        },
+        {
+          "term": "tierkel",
+          "score": 15.1787,
+          "evidence": []
+        },
+        {
+          "term": "guinea-pigs",
+          "score": 13.7924,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "flury vaccine",
+          "score": 0.2177,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.1287,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.1149,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 0.1082,
+          "evidence": []
+        },
+        {
+          "term": "studies",
+          "score": 0.0839,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "flury vaccine",
+          "score": 4.3861,
+          "evidence": []
+        },
+        {
+          "term": "mumps",
+          "score": 3.0856,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 2.6448,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 2.5691,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 1.9304,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "flury vaccine",
+          "score": 0.2316,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 0.1082,
+          "evidence": []
+        },
+        {
+          "term": "studies",
+          "score": 0.0839,
+          "evidence": []
+        },
+        {
+          "term": "study",
+          "score": 0.0567,
+          "evidence": []
+        },
+        {
+          "term": "parallel",
+          "score": 0.0554,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "感染者",
+          "score": 259.4037,
+          "evidence": []
+        },
+        {
+          "term": "这两种hpv",
+          "score": 162.5672,
+          "evidence": []
+        },
+        {
+          "term": "平等主义",
+          "score": 144.6927,
+          "evidence": []
+        },
+        {
+          "term": "的原则",
+          "score": 127.8998,
+          "evidence": []
+        },
+        {
+          "term": "这种差异",
+          "score": 120.0047,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-002-employed": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "antirabies serum",
+          "score": 2.7082,
+          "evidence": []
+        },
+        {
+          "term": "serum pic",
+          "score": 2.2067,
+          "evidence": []
+        },
+        {
+          "term": "duck-embryo vaccine",
+          "score": 2.1794,
+          "evidence": []
+        },
+        {
+          "term": "flury vaccine",
+          "score": 1.9365,
+          "evidence": []
+        },
+        {
+          "term": "vaccine potency",
+          "score": 1.8984,
+          "evidence": []
+        },
+        {
+          "term": "sterile distilled",
+          "score": 1.7506,
+          "evidence": []
+        },
+        {
+          "term": "distilled water",
+          "score": 1.6107,
+          "evidence": []
+        },
+        {
+          "term": "hep flury",
+          "score": 1.5723,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "antirabies serum",
+          "score": 75.783,
+          "evidence": []
+        },
+        {
+          "term": "serum pic",
+          "score": 60.1106,
+          "evidence": []
+        },
+        {
+          "term": "duck-embryo vaccine",
+          "score": 53.4876,
+          "evidence": []
+        },
+        {
+          "term": "flury vaccine",
+          "score": 46.9968,
+          "evidence": []
+        },
+        {
+          "term": "vaccine potency",
+          "score": 46.3002,
+          "evidence": []
+        },
+        {
+          "term": "rabies",
+          "score": 33.892,
+          "evidence": []
+        },
+        {
+          "term": "unpublished working",
+          "score": 27.8032,
+          "evidence": []
+        },
+        {
+          "term": "sterile distilled",
+          "score": 27.6483,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "duck-embryo vaccine",
+          "score": 0.5664,
+          "evidence": []
+        },
+        {
+          "term": "flury vaccine",
+          "score": 0.5218,
+          "evidence": []
+        },
+        {
+          "term": "vaccine potency",
+          "score": 0.5218,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.3637,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.301,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 0.279,
+          "evidence": []
+        },
+        {
+          "term": "street virus",
+          "score": 0.1852,
+          "evidence": []
+        },
+        {
+          "term": "mumps",
+          "score": 0.1752,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "duck-embryo vaccine",
+          "score": 12.3134,
+          "evidence": []
+        },
+        {
+          "term": "flury vaccine",
+          "score": 12.3134,
+          "evidence": []
+        },
+        {
+          "term": "vaccine potency",
+          "score": 12.3134,
+          "evidence": []
+        },
+        {
+          "term": "mumps",
+          "score": 8.0293,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 7.9455,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 7.6589,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 5.5986,
+          "evidence": []
+        },
+        {
+          "term": "catch-up",
+          "score": 4.9535,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "duck-embryo vaccine",
+          "score": 0.5664,
+          "evidence": []
+        },
+        {
+          "term": "vaccine potency",
+          "score": 0.5561,
+          "evidence": []
+        },
+        {
+          "term": "flury vaccine",
+          "score": 0.5519,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 0.279,
+          "evidence": []
+        },
+        {
+          "term": "street virus",
+          "score": 0.1978,
+          "evidence": []
+        },
+        {
+          "term": "strain",
+          "score": 0.1111,
+          "evidence": []
+        },
+        {
+          "term": "serum pic",
+          "score": 0.0946,
+          "evidence": []
+        },
+        {
+          "term": "potency tests",
+          "score": 0.0929,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "感染者",
+          "score": 193.6391,
+          "evidence": []
+        },
+        {
+          "term": "这两种hpv",
+          "score": 120.7847,
+          "evidence": []
+        },
+        {
+          "term": "平等主义",
+          "score": 116.7258,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 106.1892,
+          "evidence": []
+        },
+        {
+          "term": "反过来",
+          "score": 101.9272,
+          "evidence": []
+        },
+        {
+          "term": "的原则",
+          "score": 94.9779,
+          "evidence": []
+        },
+        {
+          "term": "研究人员相信",
+          "score": 91.021,
+          "evidence": []
+        },
+        {
+          "term": "这种差异",
+          "score": 89.811,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-003-and": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "duck-embryo vaccine",
+          "score": 1.9615,
+          "evidence": []
+        },
+        {
+          "term": "phenolized vaccine",
+          "score": 1.9602,
+          "evidence": []
+        },
+        {
+          "term": "flury vaccine",
+          "score": 1.9365,
+          "evidence": []
+        },
+        {
+          "term": "hep flury",
+          "score": 1.5723,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "phenolized vaccine",
+          "score": 47.3615,
+          "evidence": []
+        },
+        {
+          "term": "duck-embryo vaccine",
+          "score": 46.9968,
+          "evidence": []
+        },
+        {
+          "term": "flury vaccine",
+          "score": 46.9968,
+          "evidence": []
+        },
+        {
+          "term": "hep flury",
+          "score": 24.9412,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "duck-embryo vaccine",
+          "score": 0.2184,
+          "evidence": []
+        },
+        {
+          "term": "flury vaccine",
+          "score": 0.2025,
+          "evidence": []
+        },
+        {
+          "term": "phenolized vaccine",
+          "score": 0.2025,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.1289,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "duck-embryo vaccine",
+          "score": 7.7242,
+          "evidence": []
+        },
+        {
+          "term": "flury vaccine",
+          "score": 7.472,
+          "evidence": []
+        },
+        {
+          "term": "phenolized vaccine",
+          "score": 7.472,
+          "evidence": []
+        },
+        {
+          "term": "mumps",
+          "score": 6.4083,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "duck-embryo vaccine",
+          "score": 0.2184,
+          "evidence": []
+        },
+        {
+          "term": "flury vaccine",
+          "score": 0.2131,
+          "evidence": []
+        },
+        {
+          "term": "phenolized vaccine",
+          "score": 0.2105,
+          "evidence": []
+        },
+        {
+          "term": "recommended",
+          "score": 0.0348,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "感染者",
+          "score": 215.0364,
+          "evidence": []
+        },
+        {
+          "term": "平等主义",
+          "score": 138.2151,
+          "evidence": []
+        },
+        {
+          "term": "这两种hpv",
+          "score": 133.7023,
+          "evidence": []
+        },
+        {
+          "term": "反过来",
+          "score": 123.6755,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-004-method": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "serum pic",
+          "score": 2.382,
+          "evidence": []
+        },
+        {
+          "term": "duck-embryo vaccine",
+          "score": 2.3089,
+          "evidence": []
+        },
+        {
+          "term": "flury vaccine",
+          "score": 2.1083,
+          "evidence": []
+        },
+        {
+          "term": "hep flury",
+          "score": 1.984,
+          "evidence": []
+        },
+        {
+          "term": "administering doses",
+          "score": 1.5362,
+          "evidence": []
+        },
+        {
+          "term": "post-infection treatment",
+          "score": 1.2471,
+          "evidence": []
+        },
+        {
+          "term": "guinea-pigs",
+          "score": 1.0763,
+          "evidence": []
+        },
+        {
+          "term": "phenolized",
+          "score": 1.0485,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "serum pic",
+          "score": 78.6379,
+          "evidence": []
+        },
+        {
+          "term": "duck-embryo vaccine",
+          "score": 56.886,
+          "evidence": []
+        },
+        {
+          "term": "flury vaccine",
+          "score": 50.3952,
+          "evidence": []
+        },
+        {
+          "term": "hep flury",
+          "score": 37.4119,
+          "evidence": []
+        },
+        {
+          "term": "administering doses",
+          "score": 28.6667,
+          "evidence": []
+        },
+        {
+          "term": "challenge",
+          "score": 23.5932,
+          "evidence": []
+        },
+        {
+          "term": "units",
+          "score": 22.5969,
+          "evidence": []
+        },
+        {
+          "term": "guinea-pigs",
+          "score": 20.6886,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "duck-embryo vaccine",
+          "score": 0.3986,
+          "evidence": []
+        },
+        {
+          "term": "flury vaccine",
+          "score": 0.364,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.2138,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.1883,
+          "evidence": []
+        },
+        {
+          "term": "administering doses",
+          "score": 0.188,
+          "evidence": []
+        },
+        {
+          "term": "virus",
+          "score": 0.1366,
+          "evidence": []
+        },
+        {
+          "term": "mumps",
+          "score": 0.1253,
+          "evidence": []
+        },
+        {
+          "term": "months",
+          "score": 0.1117,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "duck-embryo vaccine",
+          "score": 9.7979,
+          "evidence": []
+        },
+        {
+          "term": "flury vaccine",
+          "score": 9.7979,
+          "evidence": []
+        },
+        {
+          "term": "mumps",
+          "score": 6.509,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 6.1603,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 5.9436,
+          "evidence": []
+        },
+        {
+          "term": "administering doses",
+          "score": 4.5221,
+          "evidence": []
+        },
+        {
+          "term": "catch-up",
+          "score": 3.8796,
+          "evidence": []
+        },
+        {
+          "term": "piri",
+          "score": 3.1403,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "duck-embryo vaccine",
+          "score": 0.3986,
+          "evidence": []
+        },
+        {
+          "term": "flury vaccine",
+          "score": 0.3872,
+          "evidence": []
+        },
+        {
+          "term": "administering doses",
+          "score": 0.2116,
+          "evidence": []
+        },
+        {
+          "term": "test",
+          "score": 0.1109,
+          "evidence": []
+        },
+        {
+          "term": "infection",
+          "score": 0.1071,
+          "evidence": []
+        },
+        {
+          "term": "number",
+          "score": 0.0932,
+          "evidence": []
+        },
+        {
+          "term": "method",
+          "score": 0.0809,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "period",
+          "score": 0.0803,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "感染者",
+          "score": 158.9214,
+          "evidence": []
+        },
+        {
+          "term": "这两种hpv",
+          "score": 99.9926,
+          "evidence": []
+        },
+        {
+          "term": "平等主义",
+          "score": 86.6928,
+          "evidence": []
+        },
+        {
+          "term": "反过来",
+          "score": 85.4022,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 84.9493,
+          "evidence": []
+        },
+        {
+          "term": "尤其在发展中国家",
+          "score": 76.9991,
+          "evidence": []
+        },
+        {
+          "term": "研究人员相信",
+          "score": 74.7824,
+          "evidence": []
+        },
+        {
+          "term": "的原则",
+          "score": 71.9333,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-t-p-subrahmanyan": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "duck-embryo vaccine",
+          "score": 2.5067,
+          "evidence": []
+        },
+        {
+          "term": "serum pic",
+          "score": 2.376,
+          "evidence": []
+        },
+        {
+          "term": "phenolized vaccine",
+          "score": 2.336,
+          "evidence": []
+        },
+        {
+          "term": "flury vaccine",
+          "score": 2.3062,
+          "evidence": []
+        },
+        {
+          "term": "hep flury",
+          "score": 1.984,
+          "evidence": []
+        },
+        {
+          "term": "vaccine failed",
+          "score": 1.9575,
+          "evidence": []
+        },
+        {
+          "term": "pooled vaccine",
+          "score": 1.8609,
+          "evidence": []
+        },
+        {
+          "term": "different doses",
+          "score": 1.4132,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "duck-embryo vaccine",
+          "score": 75.4398,
+          "evidence": []
+        },
+        {
+          "term": "phenolized vaccine",
+          "score": 69.4961,
+          "evidence": []
+        },
+        {
+          "term": "flury vaccine",
+          "score": 68.9491,
+          "evidence": []
+        },
+        {
+          "term": "serum pic",
+          "score": 62.375,
+          "evidence": []
+        },
+        {
+          "term": "vaccine failed",
+          "score": 60.153,
+          "evidence": []
+        },
+        {
+          "term": "pooled vaccine",
+          "score": 59.4675,
+          "evidence": []
+        },
+        {
+          "term": "hep flury",
+          "score": 37.4119,
+          "evidence": []
+        },
+        {
+          "term": "different doses",
+          "score": 33.5802,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pooled vaccine",
+          "score": 0.4519,
+          "evidence": []
+        },
+        {
+          "term": "duck-embryo vaccine",
+          "score": 0.405,
+          "evidence": []
+        },
+        {
+          "term": "flury vaccine",
+          "score": 0.3704,
+          "evidence": []
+        },
+        {
+          "term": "phenolized vaccine",
+          "score": 0.3704,
+          "evidence": []
+        },
+        {
+          "term": "vaccine failed",
+          "score": 0.3704,
+          "evidence": []
+        },
+        {
+          "term": "different doses",
+          "score": 0.2525,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.2498,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.2227,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "pooled vaccine",
+          "score": 14.9642,
+          "evidence": []
+        },
+        {
+          "term": "duck-embryo vaccine",
+          "score": 14.4596,
+          "evidence": []
+        },
+        {
+          "term": "flury vaccine",
+          "score": 13.898,
+          "evidence": []
+        },
+        {
+          "term": "phenolized vaccine",
+          "score": 13.898,
+          "evidence": []
+        },
+        {
+          "term": "vaccine failed",
+          "score": 13.898,
+          "evidence": []
+        },
+        {
+          "term": "mumps",
+          "score": 9.0657,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 9.0145,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 8.7693,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pooled vaccine",
+          "score": 0.4519,
+          "evidence": []
+        },
+        {
+          "term": "duck-embryo vaccine",
+          "score": 0.405,
+          "evidence": []
+        },
+        {
+          "term": "flury vaccine",
+          "score": 0.3936,
+          "evidence": []
+        },
+        {
+          "term": "phenolized vaccine",
+          "score": 0.3879,
+          "evidence": []
+        },
+        {
+          "term": "vaccine failed",
+          "score": 0.3807,
+          "evidence": []
+        },
+        {
+          "term": "different doses",
+          "score": 0.2525,
+          "evidence": []
+        },
+        {
+          "term": "administered",
+          "score": 0.0925,
+          "evidence": []
+        },
+        {
+          "term": "alone",
+          "score": 0.0761,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "感染者",
+          "score": 159.7253,
+          "evidence": []
+        },
+        {
+          "term": "这两种hpv",
+          "score": 98.6592,
+          "evidence": []
+        },
+        {
+          "term": "研究人员相信",
+          "score": 84.735,
+          "evidence": []
+        },
+        {
+          "term": "他们的",
+          "score": 71.8776,
+          "evidence": []
+        },
+        {
+          "term": "议程项目",
+          "score": 67.963,
+          "evidence": []
+        },
+        {
+          "term": "平等主义",
+          "score": 67.1157,
+          "evidence": []
+        },
+        {
+          "term": "反过来",
+          "score": 66.2085,
+          "evidence": []
+        },
+        {
+          "term": "尤其在发展中国家",
+          "score": 64.8118,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-007-two": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "serum pic",
+          "score": 2.5242,
+          "evidence": []
+        },
+        {
+          "term": "against challenge",
+          "score": 1.6313,
+          "evidence": []
+        },
+        {
+          "term": "afforded significant",
+          "score": 1.4077,
+          "evidence": []
+        },
+        {
+          "term": "significant protection",
+          "score": 1.1899,
+          "evidence": []
+        },
+        {
+          "term": "hour",
+          "score": 0.9586,
+          "evidence": []
+        },
+        {
+          "term": "units",
+          "score": 0.8647,
+          "evidence": []
+        },
+        {
+          "term": "embryo",
+          "score": 0.8202,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "serum pic",
+          "score": 76.2705,
+          "evidence": []
+        },
+        {
+          "term": "against challenge",
+          "score": 51.3795,
+          "evidence": []
+        },
+        {
+          "term": "afforded significant",
+          "score": 23.2945,
+          "evidence": []
+        },
+        {
+          "term": "units",
+          "score": 22.5969,
+          "evidence": []
+        },
+        {
+          "term": "significant protection",
+          "score": 22.1114,
+          "evidence": []
+        },
+        {
+          "term": "hour",
+          "score": 20.9518,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 15.4615,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "vaccine",
+          "score": 0.3125,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.1975,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.1753,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 0.1709,
+          "evidence": []
+        },
+        {
+          "term": "mumps",
+          "score": 0.1153,
+          "evidence": []
+        },
+        {
+          "term": "virus",
+          "score": 0.1023,
+          "evidence": []
+        },
+        {
+          "term": "vaccinated",
+          "score": 0.0918,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "vaccine",
+          "score": 6.2166,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 4.0066,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 3.8773,
+          "evidence": []
+        },
+        {
+          "term": "mumps",
+          "score": 3.6895,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 3.0928,
+          "evidence": []
+        },
+        {
+          "term": "catch-up",
+          "score": 2.5483,
+          "evidence": []
+        },
+        {
+          "term": "piri",
+          "score": 2.0393,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "vaccine",
+          "score": 0.3125,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 0.1709,
+          "evidence": []
+        },
+        {
+          "term": "against challenge",
+          "score": 0.086,
+          "evidence": []
+        },
+        {
+          "term": "days",
+          "score": 0.0632,
+          "evidence": []
+        },
+        {
+          "term": "serum pic",
+          "score": 0.0619,
+          "evidence": []
+        },
+        {
+          "term": "pooled",
+          "score": 0.0612,
+          "evidence": []
+        },
+        {
+          "term": "alone",
+          "score": 0.0555,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "感染者",
+          "score": 167.0953,
+          "evidence": []
+        },
+        {
+          "term": "这两种hpv",
+          "score": 103.272,
+          "evidence": []
+        },
+        {
+          "term": "平等主义",
+          "score": 87.4268,
+          "evidence": []
+        },
+        {
+          "term": "反过来",
+          "score": 86.1249,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 82.3628,
+          "evidence": []
+        },
+        {
+          "term": "研究人员相信",
+          "score": 81.9991,
+          "evidence": []
+        },
+        {
+          "term": "尤其在发展中国家",
+          "score": 77.0635,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-008-an": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "serum pic",
+          "score": 1.9514,
+          "evidence": []
+        },
+        {
+          "term": "pooled vaccine",
+          "score": 1.1858,
+          "evidence": []
+        },
+        {
+          "term": "units",
+          "score": 0.616,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "serum pic",
+          "score": 41.5833,
+          "evidence": []
+        },
+        {
+          "term": "pooled vaccine",
+          "score": 19.0296,
+          "evidence": []
+        },
+        {
+          "term": "units",
+          "score": 11.2984,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pooled vaccine",
+          "score": 0.1906,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.1071,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.086,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "pooled vaccine",
+          "score": 3.6231,
+          "evidence": []
+        },
+        {
+          "term": "mumps",
+          "score": 2.3272,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 2.0307,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pooled vaccine",
+          "score": 0.1906,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 0.0824,
+          "evidence": []
+        },
+        {
+          "term": "infection",
+          "score": 0.0528,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "感染者",
+          "score": 161.7947,
+          "evidence": []
+        },
+        {
+          "term": "这两种hpv",
+          "score": 100.3678,
+          "evidence": []
+        },
+        {
+          "term": "平等主义",
+          "score": 79.78,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-009-although": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "duck-embryo vaccine",
+          "score": 1.9951,
+          "evidence": []
+        },
+        {
+          "term": "serum pic",
+          "score": 1.8643,
+          "evidence": []
+        },
+        {
+          "term": "pooled vaccine",
+          "score": 1.6107,
+          "evidence": []
+        },
+        {
+          "term": "experiment",
+          "score": 0.6966,
+          "evidence": []
+        },
+        {
+          "term": "units",
+          "score": 0.616,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "duck-embryo vaccine",
+          "score": 41.1183,
+          "evidence": []
+        },
+        {
+          "term": "serum pic",
+          "score": 36.9515,
+          "evidence": []
+        },
+        {
+          "term": "pooled vaccine",
+          "score": 34.9669,
+          "evidence": []
+        },
+        {
+          "term": "units",
+          "score": 11.2984,
+          "evidence": []
+        },
+        {
+          "term": "experiment",
+          "score": 10.9582,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pooled vaccine",
+          "score": 0.3145,
+          "evidence": []
+        },
+        {
+          "term": "duck-embryo vaccine",
+          "score": 0.281,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.162,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.1378,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 0.1297,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "pooled vaccine",
+          "score": 6.7228,
+          "evidence": []
+        },
+        {
+          "term": "duck-embryo vaccine",
+          "score": 6.123,
+          "evidence": []
+        },
+        {
+          "term": "mumps",
+          "score": 4.2045,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 3.7722,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 3.6536,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pooled vaccine",
+          "score": 0.3145,
+          "evidence": []
+        },
+        {
+          "term": "duck-embryo vaccine",
+          "score": 0.281,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 0.1297,
+          "evidence": []
+        },
+        {
+          "term": "infection",
+          "score": 0.0662,
+          "evidence": []
+        },
+        {
+          "term": "alone",
+          "score": 0.0489,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "感染者",
+          "score": 156.4355,
+          "evidence": []
+        },
+        {
+          "term": "这两种hpv",
+          "score": 96.3097,
+          "evidence": []
+        },
+        {
+          "term": "研究人员相信",
+          "score": 92.0292,
+          "evidence": []
+        },
+        {
+          "term": "议程项目",
+          "score": 74.9595,
+          "evidence": []
+        },
+        {
+          "term": "在研究开始后",
+          "score": 73.7559,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-010-the-ed50": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "duck-embryo vaccine",
+          "score": 2.4791,
+          "evidence": []
+        },
+        {
+          "term": "reference vaccine",
+          "score": 1.7936,
+          "evidence": []
+        },
+        {
+          "term": "phenolized vaccines",
+          "score": 1.4949,
+          "evidence": []
+        },
+        {
+          "term": "pooled phenolized",
+          "score": 1.4043,
+          "evidence": []
+        },
+        {
+          "term": "former reference",
+          "score": 1.2906,
+          "evidence": []
+        },
+        {
+          "term": "rabbits",
+          "score": 1.2808,
+          "evidence": []
+        },
+        {
+          "term": "antigenic value",
+          "score": 1.1709,
+          "evidence": []
+        },
+        {
+          "term": "guinea-pigs",
+          "score": 1.0763,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "duck-embryo vaccine",
+          "score": 72.3475,
+          "evidence": []
+        },
+        {
+          "term": "reference vaccine",
+          "score": 56.1988,
+          "evidence": []
+        },
+        {
+          "term": "rabbits",
+          "score": 24.8474,
+          "evidence": []
+        },
+        {
+          "term": "former reference",
+          "score": 24.2644,
+          "evidence": []
+        },
+        {
+          "term": "phenolized vaccines",
+          "score": 23.6728,
+          "evidence": []
+        },
+        {
+          "term": "pooled phenolized",
+          "score": 23.3366,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 21.7711,
+          "evidence": []
+        },
+        {
+          "term": "guinea-pigs",
+          "score": 20.6886,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "reference vaccine",
+          "score": 0.4797,
+          "evidence": []
+        },
+        {
+          "term": "duck-embryo vaccine",
+          "score": 0.413,
+          "evidence": []
+        },
+        {
+          "term": "phenolized vaccines",
+          "score": 0.2486,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.2357,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.2008,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 0.1902,
+          "evidence": []
+        },
+        {
+          "term": "mumps",
+          "score": 0.1285,
+          "evidence": []
+        },
+        {
+          "term": "influenza",
+          "score": 0.1255,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "reference vaccine",
+          "score": 14.0537,
+          "evidence": []
+        },
+        {
+          "term": "duck-embryo vaccine",
+          "score": 12.7898,
+          "evidence": []
+        },
+        {
+          "term": "mumps",
+          "score": 9.4175,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 7.8355,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 7.7788,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 5.4427,
+          "evidence": []
+        },
+        {
+          "term": "catch-up",
+          "score": 5.1141,
+          "evidence": []
+        },
+        {
+          "term": "phenolized vaccines",
+          "score": 4.4758,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "reference vaccine",
+          "score": 0.4797,
+          "evidence": []
+        },
+        {
+          "term": "duck-embryo vaccine",
+          "score": 0.413,
+          "evidence": []
+        },
+        {
+          "term": "phenolized vaccines",
+          "score": 0.2655,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 0.1902,
+          "evidence": []
+        },
+        {
+          "term": "former reference",
+          "score": 0.1122,
+          "evidence": []
+        },
+        {
+          "term": "pooled phenolized",
+          "score": 0.0789,
+          "evidence": []
+        },
+        {
+          "term": "antigenic value",
+          "score": 0.0658,
+          "evidence": []
+        },
+        {
+          "term": "received",
+          "score": 0.0615,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "感染者",
+          "score": 139.9721,
+          "evidence": []
+        },
+        {
+          "term": "这两种hpv",
+          "score": 86.2541,
+          "evidence": []
+        },
+        {
+          "term": "平等主义",
+          "score": 78.7671,
+          "evidence": []
+        },
+        {
+          "term": "反过来",
+          "score": 75.8429,
+          "evidence": []
+        },
+        {
+          "term": "研究人员相信",
+          "score": 72.5769,
+          "evidence": []
+        },
+        {
+          "term": "的原则",
+          "score": 72.3571,
+          "evidence": []
+        },
+        {
+          "term": "尤其在发展中国家",
+          "score": 71.0747,
+          "evidence": []
+        },
+        {
+          "term": "议程项目",
+          "score": 69.1314,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-012-and": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "duck-embryo vaccine",
+          "score": 3.4058,
+          "evidence": []
+        },
+        {
+          "term": "phenolized vaccine",
+          "score": 2.5113,
+          "evidence": []
+        },
+        {
+          "term": "pooled vaccine",
+          "score": 2.1285,
+          "evidence": []
+        },
+        {
+          "term": "seven days",
+          "score": 1.6244,
+          "evidence": []
+        },
+        {
+          "term": "hep flury",
+          "score": 1.5723,
+          "evidence": []
+        },
+        {
+          "term": "experi ment",
+          "score": 1.517,
+          "evidence": []
+        },
+        {
+          "term": "street virus",
+          "score": 1.5007,
+          "evidence": []
+        },
+        {
+          "term": "rabbits",
+          "score": 1.487,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "duck-embryo vaccine",
+          "score": 152.1041,
+          "evidence": []
+        },
+        {
+          "term": "phenolized vaccine",
+          "score": 94.2345,
+          "evidence": []
+        },
+        {
+          "term": "pooled vaccine",
+          "score": 87.5361,
+          "evidence": []
+        },
+        {
+          "term": "seven days",
+          "score": 39.117,
+          "evidence": []
+        },
+        {
+          "term": "rabbits",
+          "score": 33.1299,
+          "evidence": []
+        },
+        {
+          "term": "challenge",
+          "score": 27.5254,
+          "evidence": []
+        },
+        {
+          "term": "experi ment",
+          "score": 26.5829,
+          "evidence": []
+        },
+        {
+          "term": "dosage",
+          "score": 25.9572,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pooled vaccine",
+          "score": 0.7454,
+          "evidence": []
+        },
+        {
+          "term": "duck-embryo vaccine",
+          "score": 0.6488,
+          "evidence": []
+        },
+        {
+          "term": "phenolized vaccine",
+          "score": 0.6488,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.399,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 0.3666,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.3469,
+          "evidence": []
+        },
+        {
+          "term": "street virus",
+          "score": 0.2261,
+          "evidence": []
+        },
+        {
+          "term": "seven days",
+          "score": 0.2153,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "pooled vaccine",
+          "score": 25.0395,
+          "evidence": []
+        },
+        {
+          "term": "duck-embryo vaccine",
+          "score": 23.6374,
+          "evidence": []
+        },
+        {
+          "term": "phenolized vaccine",
+          "score": 23.6374,
+          "evidence": []
+        },
+        {
+          "term": "mumps",
+          "score": 15.2927,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 14.9246,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 14.2784,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 10.6879,
+          "evidence": []
+        },
+        {
+          "term": "catch-up",
+          "score": 9.1328,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pooled vaccine",
+          "score": 0.7454,
+          "evidence": []
+        },
+        {
+          "term": "duck-embryo vaccine",
+          "score": 0.7098,
+          "evidence": []
+        },
+        {
+          "term": "phenolized vaccine",
+          "score": 0.6797,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 0.3666,
+          "evidence": []
+        },
+        {
+          "term": "street virus",
+          "score": 0.235,
+          "evidence": []
+        },
+        {
+          "term": "seven days",
+          "score": 0.2153,
+          "evidence": []
+        },
+        {
+          "term": "infection",
+          "score": 0.1896,
+          "evidence": []
+        },
+        {
+          "term": "number",
+          "score": 0.1713,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "感染者",
+          "score": 125.442,
+          "evidence": []
+        },
+        {
+          "term": "这两种hpv",
+          "score": 77.7125,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 66.8019,
+          "evidence": []
+        },
+        {
+          "term": "平等主义",
+          "score": 63.9846,
+          "evidence": []
+        },
+        {
+          "term": "研究人员相信",
+          "score": 59.8467,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 57.6895,
+          "evidence": []
+        },
+        {
+          "term": "的原则",
+          "score": 56.3736,
+          "evidence": []
+        },
+        {
+          "term": "反过来",
+          "score": 56.2278,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-013-minimum": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "duck-embryo vaccine",
+          "score": 3.0558,
+          "evidence": []
+        },
+        {
+          "term": "flury vaccine",
+          "score": 2.6632,
+          "evidence": []
+        },
+        {
+          "term": "vaccine gave",
+          "score": 2.4253,
+          "evidence": []
+        },
+        {
+          "term": "hep flury",
+          "score": 2.3034,
+          "evidence": []
+        },
+        {
+          "term": "pooled vaccine",
+          "score": 2.2855,
+          "evidence": []
+        },
+        {
+          "term": "post-infection treatment",
+          "score": 2.1526,
+          "evidence": []
+        },
+        {
+          "term": "nervous tissue",
+          "score": 1.4733,
+          "evidence": []
+        },
+        {
+          "term": "protection experiments",
+          "score": 1.2379,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "duck-embryo vaccine",
+          "score": 122.7428,
+          "evidence": []
+        },
+        {
+          "term": "flury vaccine",
+          "score": 103.2706,
+          "evidence": []
+        },
+        {
+          "term": "vaccine gave",
+          "score": 97.8096,
+          "evidence": []
+        },
+        {
+          "term": "pooled vaccine",
+          "score": 97.2888,
+          "evidence": []
+        },
+        {
+          "term": "post-infection treatment",
+          "score": 51.1711,
+          "evidence": []
+        },
+        {
+          "term": "hep flury",
+          "score": 49.8825,
+          "evidence": []
+        },
+        {
+          "term": "nervous tissue",
+          "score": 25.4906,
+          "evidence": []
+        },
+        {
+          "term": "potency",
+          "score": 24.5697,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pooled vaccine",
+          "score": 0.5672,
+          "evidence": []
+        },
+        {
+          "term": "duck-embryo vaccine",
+          "score": 0.4995,
+          "evidence": []
+        },
+        {
+          "term": "flury vaccine",
+          "score": 0.4553,
+          "evidence": []
+        },
+        {
+          "term": "vaccine gave",
+          "score": 0.4553,
+          "evidence": []
+        },
+        {
+          "term": "different doses",
+          "score": 0.2742,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.2658,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.2274,
+          "evidence": []
+        },
+        {
+          "term": "studies",
+          "score": 0.1765,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "pooled vaccine",
+          "score": 21.0715,
+          "evidence": []
+        },
+        {
+          "term": "duck-embryo vaccine",
+          "score": 19.6076,
+          "evidence": []
+        },
+        {
+          "term": "flury vaccine",
+          "score": 19.6076,
+          "evidence": []
+        },
+        {
+          "term": "vaccine gave",
+          "score": 19.6076,
+          "evidence": []
+        },
+        {
+          "term": "mumps",
+          "score": 15.6706,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 11.323,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 10.9384,
+          "evidence": []
+        },
+        {
+          "term": "different doses",
+          "score": 8.3566,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pooled vaccine",
+          "score": 0.5672,
+          "evidence": []
+        },
+        {
+          "term": "duck-embryo vaccine",
+          "score": 0.4995,
+          "evidence": []
+        },
+        {
+          "term": "flury vaccine",
+          "score": 0.4848,
+          "evidence": []
+        },
+        {
+          "term": "vaccine gave",
+          "score": 0.4667,
+          "evidence": []
+        },
+        {
+          "term": "different doses",
+          "score": 0.2742,
+          "evidence": []
+        },
+        {
+          "term": "recommended",
+          "score": 0.0975,
+          "evidence": []
+        },
+        {
+          "term": "alone",
+          "score": 0.0944,
+          "evidence": []
+        },
+        {
+          "term": "reported",
+          "score": 0.0899,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "感染者",
+          "score": 141.7999,
+          "evidence": []
+        },
+        {
+          "term": "这两种hpv",
+          "score": 88.1651,
+          "evidence": []
+        },
+        {
+          "term": "平等主义",
+          "score": 74.252,
+          "evidence": []
+        },
+        {
+          "term": "反过来",
+          "score": 70.7354,
+          "evidence": []
+        },
+        {
+          "term": "研究人员相信",
+          "score": 70.3121,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 68.8694,
+          "evidence": []
+        },
+        {
+          "term": "尤其在发展中国家",
+          "score": 65.2771,
+          "evidence": []
+        },
+        {
+          "term": "议程项目",
+          "score": 62.5913,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-017-ri-sumt": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "vaccin flury",
+          "score": 2.6042,
+          "evidence": []
+        },
+        {
+          "term": "vaccin prepare",
+          "score": 2.4309,
+          "evidence": []
+        },
+        {
+          "term": "flury hep",
+          "score": 2.3034,
+          "evidence": []
+        },
+        {
+          "term": "inferieur celui",
+          "score": 1.8819,
+          "evidence": []
+        },
+        {
+          "term": "prepare sur",
+          "score": 1.7497,
+          "evidence": []
+        },
+        {
+          "term": "melange",
+          "score": 1.4381,
+          "evidence": []
+        },
+        {
+          "term": "rage",
+          "score": 1.2642,
+          "evidence": []
+        },
+        {
+          "term": "administres",
+          "score": 1.0207,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "vaccin prepare",
+          "score": 90.2178,
+          "evidence": []
+        },
+        {
+          "term": "vaccin flury",
+          "score": 89.1909,
+          "evidence": []
+        },
+        {
+          "term": "flury hep",
+          "score": 49.8825,
+          "evidence": []
+        },
+        {
+          "term": "prepare sur",
+          "score": 43.592,
+          "evidence": []
+        },
+        {
+          "term": "inferieur celui",
+          "score": 33.2883,
+          "evidence": []
+        },
+        {
+          "term": "melange",
+          "score": 31.5081,
+          "evidence": []
+        },
+        {
+          "term": "rage",
+          "score": 23.6311,
+          "evidence": []
+        },
+        {
+          "term": "administres",
+          "score": 16.565,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "vaccin prepare",
+          "score": 0.3763,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.3552,
+          "evidence": []
+        },
+        {
+          "term": "une dose",
+          "score": 0.3429,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.3404,
+          "evidence": []
+        },
+        {
+          "term": "vaccin flury",
+          "score": 0.3194,
+          "evidence": []
+        },
+        {
+          "term": "prepare sur",
+          "score": 0.2709,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.2485,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 0.2318,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "vaccin prepare",
+          "score": 18.2778,
+          "evidence": []
+        },
+        {
+          "term": "vaccin flury",
+          "score": 17.1368,
+          "evidence": []
+        },
+        {
+          "term": "une dose",
+          "score": 11.9612,
+          "evidence": []
+        },
+        {
+          "term": "est",
+          "score": 9.4541,
+          "evidence": []
+        },
+        {
+          "term": "apres",
+          "score": 8.7439,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 7.508,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 7.5018,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 6.9004,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "vaccin prepare",
+          "score": 0.3763,
+          "evidence": []
+        },
+        {
+          "term": "une dose",
+          "score": 0.3429,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.3404,
+          "evidence": []
+        },
+        {
+          "term": "vaccin flury",
+          "score": 0.3259,
+          "evidence": []
+        },
+        {
+          "term": "prepare sur",
+          "score": 0.2709,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.2485,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.216,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.2008,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "要在活动挂图上做好记录",
+          "score": 162.2123,
+          "evidence": []
+        },
+        {
+          "term": "问题的讨论结束",
+          "score": 162.2123,
+          "evidence": []
+        },
+        {
+          "term": "由于这个理由",
+          "score": 158.3028,
+          "evidence": []
+        },
+        {
+          "term": "世界医学协会",
+          "score": 148.6981,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 134.838,
+          "evidence": []
+        },
+        {
+          "term": "岁的儿童",
+          "score": 134.3732,
+          "evidence": []
+        },
+        {
+          "term": "法律上",
+          "score": 133.2496,
+          "evidence": []
+        },
+        {
+          "term": "在该案例中可以做些什么来防止或减轻潜在的发表偏倚",
+          "score": 132.3093,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-018-references": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "wld hlth",
+          "score": 3.4704,
+          "evidence": []
+        },
+        {
+          "term": "hlth org",
+          "score": 2.7604,
+          "evidence": []
+        },
+        {
+          "term": "culbertson",
+          "score": 1.8268,
+          "evidence": []
+        },
+        {
+          "term": "indiana med",
+          "score": 1.7216,
+          "evidence": []
+        },
+        {
+          "term": "powell",
+          "score": 1.5687,
+          "evidence": []
+        },
+        {
+          "term": "ass",
+          "score": 1.5197,
+          "evidence": []
+        },
+        {
+          "term": "publ",
+          "score": 1.3952,
+          "evidence": []
+        },
+        {
+          "term": "peck",
+          "score": 1.2132,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "wld hlth",
+          "score": 99.8121,
+          "evidence": []
+        },
+        {
+          "term": "hlth org",
+          "score": 82.8181,
+          "evidence": []
+        },
+        {
+          "term": "culbertson",
+          "score": 53.1254,
+          "evidence": []
+        },
+        {
+          "term": "powell",
+          "score": 41.3771,
+          "evidence": []
+        },
+        {
+          "term": "publ",
+          "score": 33.892,
+          "evidence": []
+        },
+        {
+          "term": "indiana med",
+          "score": 33.2811,
+          "evidence": []
+        },
+        {
+          "term": "ass",
+          "score": 33.1299,
+          "evidence": []
+        },
+        {
+          "term": "peck",
+          "score": 22.768,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "geneva",
+          "score": 0.1498,
+          "evidence": []
+        },
+        {
+          "term": "accessed",
+          "score": 0.1476,
+          "evidence": []
+        },
+        {
+          "term": "world",
+          "score": 0.1385,
+          "evidence": []
+        },
+        {
+          "term": "organization",
+          "score": 0.1299,
+          "evidence": []
+        },
+        {
+          "term": "indiana med",
+          "score": 0.1197,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 0.1145,
+          "evidence": []
+        },
+        {
+          "term": "int",
+          "score": 0.1038,
+          "evidence": []
+        },
+        {
+          "term": "dis",
+          "score": 0.1025,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "geneva",
+          "score": 2.2537,
+          "evidence": []
+        },
+        {
+          "term": "doi",
+          "score": 2.0666,
+          "evidence": []
+        },
+        {
+          "term": "world",
+          "score": 1.9472,
+          "evidence": []
+        },
+        {
+          "term": "organization",
+          "score": 1.837,
+          "evidence": []
+        },
+        {
+          "term": "accessed",
+          "score": 1.7946,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 1.7702,
+          "evidence": []
+        },
+        {
+          "term": "tuberculosis",
+          "score": 1.6741,
+          "evidence": []
+        },
+        {
+          "term": "dis",
+          "score": 1.5685,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "indiana med",
+          "score": 0.1197,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.0783,
+          "evidence": []
+        },
+        {
+          "term": "hlth org",
+          "score": 0.0712,
+          "evidence": []
+        },
+        {
+          "term": "references",
+          "score": 0.0604,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "bull",
+          "score": 0.0434,
+          "evidence": []
+        },
+        {
+          "term": "rep",
+          "score": 0.0353,
+          "evidence": []
+        },
+        {
+          "term": "series",
+          "score": 0.033,
+          "evidence": []
+        },
+        {
+          "term": "anderson",
+          "score": 0.0141,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "感染者",
+          "score": 601.9652,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 564.1026,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 446.8477,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 433.8907,
+          "evidence": []
+        },
+        {
+          "term": "的原则",
+          "score": 418.25,
+          "evidence": []
+        },
+        {
+          "term": "平等主义",
+          "score": 411.4507,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 395.2039,
+          "evidence": []
+        },
+        {
+          "term": "这两种hpv",
+          "score": 388.147,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "duck-embryo vaccine",
+          "score": 3.3265,
+          "evidence": []
+        },
+        {
+          "term": "powell culbertson",
+          "score": 2.9826,
+          "evidence": []
+        },
+        {
+          "term": "flury vaccine",
+          "score": 2.7001,
+          "evidence": []
+        },
+        {
+          "term": "rabies infection",
+          "score": 2.6038,
+          "evidence": []
+        },
+        {
+          "term": "hep flury",
+          "score": 2.4374,
+          "evidence": []
+        },
+        {
+          "term": "duck embryo",
+          "score": 2.2745,
+          "evidence": []
+        },
+        {
+          "term": "pooled vaccine",
+          "score": 2.0493,
+          "evidence": []
+        },
+        {
+          "term": "antirabies serum",
+          "score": 1.9362,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "duck-embryo vaccine",
+          "score": 139.7348,
+          "evidence": []
+        },
+        {
+          "term": "rabies infection",
+          "score": 94.8531,
+          "evidence": []
+        },
+        {
+          "term": "flury vaccine",
+          "score": 94.2998,
+          "evidence": []
+        },
+        {
+          "term": "pooled vaccine",
+          "score": 75.1669,
+          "evidence": []
+        },
+        {
+          "term": "powell culbertson",
+          "score": 71.7345,
+          "evidence": []
+        },
+        {
+          "term": "hep flury",
+          "score": 56.3732,
+          "evidence": []
+        },
+        {
+          "term": "peck",
+          "score": 45.536,
+          "evidence": []
+        },
+        {
+          "term": "duck embryo",
+          "score": 43.1032,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pooled vaccine",
+          "score": 0.6533,
+          "evidence": []
+        },
+        {
+          "term": "duck-embryo vaccine",
+          "score": 0.6099,
+          "evidence": []
+        },
+        {
+          "term": "flury vaccine",
+          "score": 0.561,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.3604,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.2828,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 0.2344,
+          "evidence": []
+        },
+        {
+          "term": "virus",
+          "score": 0.2246,
+          "evidence": []
+        },
+        {
+          "term": "mumps",
+          "score": 0.2046,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "pooled vaccine",
+          "score": 18.4565,
+          "evidence": []
+        },
+        {
+          "term": "duck-embryo vaccine",
+          "score": 17.3837,
+          "evidence": []
+        },
+        {
+          "term": "flury vaccine",
+          "score": 17.3837,
+          "evidence": []
+        },
+        {
+          "term": "mumps",
+          "score": 13.9835,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 10.7262,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 9.6446,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 6.3646,
+          "evidence": []
+        },
+        {
+          "term": "catch-up",
+          "score": 5.9911,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pooled vaccine",
+          "score": 0.6533,
+          "evidence": []
+        },
+        {
+          "term": "duck-embryo vaccine",
+          "score": 0.6099,
+          "evidence": []
+        },
+        {
+          "term": "flury vaccine",
+          "score": 0.5938,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.3604,
+          "evidence": []
+        },
+        {
+          "term": "virus",
+          "score": 0.2246,
+          "evidence": []
+        },
+        {
+          "term": "rabies infection",
+          "score": 0.2004,
+          "evidence": []
+        },
+        {
+          "term": "studies",
+          "score": 0.1381,
+          "evidence": []
+        },
+        {
+          "term": "potency tests",
+          "score": 0.1132,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "感染者",
+          "score": 335.0223,
+          "evidence": []
+        },
+        {
+          "term": "这两种hpv",
+          "score": 212.0759,
+          "evidence": []
+        },
+        {
+          "term": "平等主义",
+          "score": 197.9572,
+          "evidence": []
+        },
+        {
+          "term": "的原则",
+          "score": 178.5894,
+          "evidence": []
+        },
+        {
+          "term": "这种差异",
+          "score": 165.7867,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 164.845,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 164.2313,
+          "evidence": []
+        },
+        {
+          "term": "原则或价值观",
+          "score": 156.1999,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

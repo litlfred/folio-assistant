@@ -1,0 +1,76 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/tools/ig-release/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ig-release.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Gather a release's files from a full Publisher build (package.tgz and its R4/R4B variants, and ast-data.zip, the IG's AST with the Libraries' ELM), say from sushi-config.yaml whether it is a pre-release, and make or refresh the GitHub DRAFT release for the tag with the files uploaded. The owner publishes the draft; a published release is never changed. `check` is the catch-up the AST refresh of the default branch runs (advisory): it reports a current version with no `v<version>` tag, naming the commit that set it for the owner to tag, and a tag with no release, for the owner to run `ig-release.yml` by hand. It never tags and never releases: the tag is the owner's governance step (`ig-release.bpmn`).",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run fhir-harness/scripts/ig-release.ts assets|kind|draft|check …"
+      },
+      "io": {
+        "inputs": [
+          {
+            "description": "`assets`: the Publisher's output/ directory.",
+            "name": "output",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath"
+          },
+          {
+            "description": "`assets`: the AST directory (its manifest.json).",
+            "name": "ast",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath"
+          },
+          {
+            "description": "`draft`: the git tag the release is for.",
+            "name": "tag",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          },
+          {
+            "description": "`kind`, `check`: the IG root (its sushi-config.yaml and git history).",
+            "name": "ig",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath"
+          },
+          {
+            "description": "`draft`, `check`: the repository (`owner/repo`) whose releases are read or written.",
+            "name": "repo",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "The files with size and SHA-256 (`assets`), `prerelease`/`release` (`kind`), what was done (`draft`), or what the owner should do (`check`).",
+            "name": "release",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          }
+        ]
+      },
+      "name": "ig-release",
+      "requirements": {
+        "network": true,
+        "runtime": [
+          "bun",
+          "zip",
+          "gh"
+        ]
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-binary-artefacts",
+      "title": "Cut an IG release as a GitHub draft that carries its packages and AST, and report a version left untagged or unreleased"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/ig-release",
+  "path": "tools/ig-release/"
+}

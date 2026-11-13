@@ -8,14 +8,13 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
       "name": "Prose and the code it describes",
       "nodeKind": "activity",
-      "bpmnType": "bpmn:CallActivity",
+      "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Review",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Review/lane/Lane_Reviewer",
       "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
-      "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NarrativeCodeReview",
       "incoming": [
         "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Review#flow/F_R10"
       ],

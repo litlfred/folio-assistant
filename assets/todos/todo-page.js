@@ -1,18 +1,22 @@
 /*
-  One todo's page — issue #1908. Generated pages at <site>/todos/<id>/ carry a
-  config block (`fa-todo-page-config`) naming the todo; this script loads the
-  todo's published JSON-LD and draws it. Nothing about the todo is written into
-  the page itself: the JSON-LD is the one copy (scripts/todo-page.ts).
+  One todo's page — issue #1908. A page at <site>/todo/<id>/ DECLARES its
+  todo (cat-harness-tools#1830): RDFa resource/typeof (ical:Vtodo) on
+  #fa-todo-page, a JSON-LD stub beside it, the todo's JSON-LD as the head's
+  rel="alternate", and what else it needs as data-kg-* on the same element.
+  The generic renderer (assets/kg-render.js) hands that element here. A page
+  written before that, at <site>/todos/<id>/, carries a config block
+  (`fa-todo-page-config`) instead, and is still drawn from it until the site
+  is regenerated. This script loads the todo's published JSON-LD and draws
+  it. Nothing about the todo is written into the page itself: the JSON-LD is
+  the one copy (cat-harness-tools scripts/todo-page.ts).
 
   Every value reaches the DOM through textContent, and every href through
   safeHref, because a todo's text is authored and its links come from data.
 */
 (function () {
   "use strict";
-  var cfgEl = document.getElementById("fa-todo-page-config");
-  if (!cfgEl) return;
+  var VTODO = "http://www.w3.org/2002/12/cal/ical#Vtodo";
   var cfg;
-  try { cfg = JSON.parse(cfgEl.textContent || "{}"); } catch (_e) { return; }
 
   function $(id) { return document.getElementById(id); }
   function el(tag, text, cls) {
@@ -21,11 +25,13 @@
     if (cls) n.className = cls;
     return n;
   }
+  // An href is resolved against the page and kept only if it is http(s):
+  // the URL's own parse decides the scheme, so no "javascript:" survives.
   function safeHref(h) {
     if (typeof h !== "string" || h === "") return null;
-    var m = /^([a-z][a-z0-9+.-]*):/i.exec(h);
-    if (m && !/^https?$/i.test(m[1])) return null;
-    return h;
+    var u;
+    try { u = new URL(h, document.baseURI); } catch (_e) { return null; }
+    return u.protocol === "http:" || u.protocol === "https:" ? u.href : null;
   }
   function link(text, href) {
     var safe = safeHref(href);
@@ -110,14 +116,38 @@
     }).catch(function () { /* the todo itself is drawn; siblings are an extra */ });
   }
 
-  fetch(cfg.jsonld).then(function (r) {
-    if (!r.ok) throw new Error(r.status + " " + r.statusText);
-    return r.json();
-  }).then(function (todo) {
-    draw(todo);
-    siblings(todo);
-  }).catch(function (e) {
-    // "Could not load" is not "nothing to show", and the page says which.
-    $("fa-todo-status").textContent = "Could not load this todo from " + cfg.jsonld + ": " + e.message;
+  function load() {
+    return fetch(cfg.jsonld).then(function (r) {
+      if (!r.ok) throw new Error(r.status + " " + r.statusText);
+      return r.json();
+    }).then(function (todo) {
+      draw(todo);
+      siblings(todo);
+    }).catch(function (e) {
+      // "Could not load" is not "nothing to show", and the page says which.
+      $("fa-todo-status").textContent = "Could not load this todo from " + cfg.jsonld + ": " + e.message;
+    });
+  }
+
+  // A page from before the declaration: its config block names the todo.
+  var cfgEl = document.getElementById("fa-todo-page-config");
+  if (cfgEl) {
+    try { cfg = JSON.parse(cfgEl.textContent || "{}"); } catch (_e) { return; }
+    load();
+    return;
+  }
+  // A page that declares its todo: drawn when the generic renderer hands it over.
+  (window.kgRenderers = window.kgRenderers || []).push({
+    match: VTODO,
+    render: function (c) {
+      var a = function (k) { return c.element.getAttribute("data-kg-" + k); };
+      cfg = {
+        jsonld: c.alternates["application/ld+json"] || c.iri + ".jsonld",
+        graph: a("graph"),
+        pages: a("pages") || "../",
+        targetHref: a("target-href"),
+      };
+      return load();
+    },
   });
 })();

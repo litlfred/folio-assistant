@@ -19,6 +19,14 @@
             "side"
           ]
         },
+        "only": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9-]*$"
+          }
+        },
         "app": {
           "type": "string",
           "minLength": 1
@@ -56,6 +64,9 @@
             "tent",
             "bus",
             "plane",
+            "scale",
+            "coins",
+            "shuffle",
             "syringe",
             "pill",
             "pill-off",
@@ -138,6 +149,9 @@
                 "tent",
                 "bus",
                 "plane",
+                "scale",
+                "coins",
+                "shuffle",
                 "syringe",
                 "pill",
                 "pill-off",
@@ -224,6 +238,9 @@
                   "tent",
                   "bus",
                   "plane",
+                  "scale",
+                  "coins",
+                  "shuffle",
                   "syringe",
                   "pill",
                   "pill-off",

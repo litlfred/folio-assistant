@@ -7,7 +7,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/harness-state.jsonld",
       "@type": "cat-harness:Tool",
-      "description": "For every harness in the checkout, run bootstrap's setup check without performing anything or touching the network, and write one `folio-harness-state/v1` file: each step in its state, the first step not done (its position) with what to do next, and health badges that are the harness's own (setup steps; the instance's committed health report, unknown without one). A recommendation is said, never acted on.",
+      "description": "For every harness in the checkout, run bootstrap's setup check without performing anything or touching the network, and write one `folio-harness-state/v1` file: each step in its state, the first step not done (its position) with what to do next, and health badges that are the harness's own (setup steps; the layer's committed health report, unknown without one). A recommendation is said, never acted on.",
       "install": {
         "none": true
       },

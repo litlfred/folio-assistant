@@ -3,7 +3,7 @@ name: knowledge-graph-data-store
 description: >
   The contract a Knowledge Graph Data Store keeps: serve a declaration, its
   graph and its instructions exactly as committed, say plainly when a file is
-  absent, and keep a new instance's declaration once it is written. A
+  absent, and keep a new layer's declaration once it is written. A
   mechanical Actor plays this Role; this is what it must do, and what it can be
   tested against.
 tested-by:
@@ -34,7 +34,7 @@ this skill is the other side of those reads.
    present, present-but-unreadable) depend on this.
 3. **Serve siblings the same way.** A `needs` entry is read from a sibling
    checkout, `../<name>/<name>.json`, under the same two rules.
-4. **Keep what is written.** Once a new instance's declaration is written and
+4. **Keep what is written.** Once a new layer's declaration is written and
    committed, later reads return it, and its history shows who wrote it and
    when.
 
@@ -46,6 +46,6 @@ through the git CLI.
 
 ## Not its responsibility
 
-Deciding whether a location is an instance, which harness to install, or what
+Deciding whether a location is a layer, which harness to install, or what
 a declaration means. Those are judgements made in the Bootstrapping Agent's
 lane, using the files this store serves.

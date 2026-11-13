@@ -105,6 +105,10 @@
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/maintainedBy",
       "@type": "@id"
     },
+    "jsonSchema": {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/jsonSchema",
+      "@type": "@id"
+    },
     "module": "https://litlfred.github.io/cat-harness/v0/ns/module",
     "holdsGraph": {
       "@id": "http://purl.org/dc/terms/type",
@@ -363,7 +367,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "openapi-ingest-source",
       "title": "OpenAPI ingest from source",
-      "description": "Ingest the OpenAPI documents an instance's `cat-openapi.config.json` lists under `documents` from a local checkout of their repository, read AT a branch, tag or commit (`git show`), verbatim, with a provenance recording the resolved commit and the document's sha256. `--check` verifies the committed copies offline.",
+      "description": "Ingest the OpenAPI documents a layer's `cat-openapi.config.json` lists under `documents` from a local checkout of their repository, read AT a branch, tag or commit (`git show`), verbatim, with a provenance recording the resolved commit and the document's sha256. `--check` verifies the committed copies offline.",
       "install": {
         "none": true
       },
@@ -375,7 +379,7 @@
           {
             "name": "instance",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
-            "description": "The instance root holding `cat-openapi.config.json` and the declared `openapi` directory.",
+            "description": "The layer root holding `cat-openapi.config.json` and the declared `openapi` directory.",
             "required": true,
             "arg": {
               "flag": "--instance"

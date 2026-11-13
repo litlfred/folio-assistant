@@ -105,6 +105,10 @@
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/maintainedBy",
       "@type": "@id"
     },
+    "jsonSchema": {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/jsonSchema",
+      "@type": "@id"
+    },
     "module": "https://litlfred.github.io/cat-harness/v0/ns/module",
     "holdsGraph": {
       "@id": "http://purl.org/dc/terms/type",
@@ -388,6 +392,15 @@
             "required": false,
             "arg": {
               "flag": "--site"
+            }
+          },
+          {
+            "name": "scope",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/IdList",
+            "description": "A scoped site build: the comma-separated instances whose pages this writer writes (the IG and the layer it lands on); every other instance's pages are linked on that layer's own site. Passed by the tools layer's `visualiser-writers.ts` (owner, 2026-11-08, Q-SZ-2 \"B\"). Absent: every instance.",
+            "required": false,
+            "arg": {
+              "flag": "--scope"
             }
           }
         ],

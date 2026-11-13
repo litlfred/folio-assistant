@@ -11,12 +11,12 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
-      "performedBy": "http://smart.who.int/base/role/authoring-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inLane": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_Agent",
       "requires": [
         "http://smart.who.int/base/skill/classify-and-code-content",
         "http://smart.who.int/base/skill/recommendation-scenarios",
-        "http://smart.who.int/base/skill/glossary-terms"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/glossary-terms"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,

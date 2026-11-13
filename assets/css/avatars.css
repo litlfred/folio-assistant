@@ -164,6 +164,13 @@
   mask-image: var(--fa-avatar-glyph);
 }
 
+.fa-avatar[data-fa-kind="web-app"] {
+  /* a window of its own with a play mark: an app that draws its own frame and runs when opened */
+  --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 5h18v14H3zM3 9h18M10 12v5l4.5-2.5z' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  -webkit-mask-image: var(--fa-avatar-glyph);
+  mask-image: var(--fa-avatar-glyph);
+}
+
 .fa-avatar[data-fa-kind="merge-queue"] {
   /* three queued items converging into one line — a queue feeding a train */
   --fa-avatar-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 7h5M5 12h5M5 17h5M10 7q4 0 4 5M10 17q4 0 4-5M10 12h9' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
@@ -821,6 +828,7 @@
   .fa-avatar[data-fa-kind="workflow-state"] { background-color: hsl(188 46% 34%); }
   .fa-avatar[data-fa-kind="basic-cdn-site"] { background-color: hsl(196 46% 34%); }
   .fa-avatar[data-fa-kind="cdn-site"] { background-color: hsl(184 46% 34%); }
+  .fa-avatar[data-fa-kind="web-app"] { background-color: hsl(262 46% 34%); }
   .fa-avatar[data-fa-kind="merge-queue"] { background-color: hsl(205 46% 34%); }
   .fa-avatar[data-fa-kind="bean-notes"] { background-color: hsl(40 46% 34%); }
   .fa-avatar[data-fa-kind="notes"] { background-color: hsl(95 46% 34%); }
@@ -934,6 +942,7 @@
     .fa-avatar[data-fa-kind="workflow-state"] { background-color: hsl(188 46% 34%); }
     .fa-avatar[data-fa-kind="basic-cdn-site"] { background-color: hsl(196 46% 34%); }
     .fa-avatar[data-fa-kind="cdn-site"] { background-color: hsl(184 46% 34%); }
+    .fa-avatar[data-fa-kind="web-app"] { background-color: hsl(262 46% 34%); }
     .fa-avatar[data-fa-kind="merge-queue"] { background-color: hsl(205 46% 34%); }
     .fa-avatar[data-fa-kind="bean-notes"] { background-color: hsl(40 46% 34%); }
     .fa-avatar[data-fa-kind="notes"] { background-color: hsl(95 46% 34%); }
@@ -1048,6 +1057,7 @@
   .fa-avatar[data-fa-kind="workflow-state"] { background-color: hsl(188 42% 72%); }
   .fa-avatar[data-fa-kind="basic-cdn-site"] { background-color: hsl(196 42% 72%); }
   .fa-avatar[data-fa-kind="cdn-site"] { background-color: hsl(184 42% 72%); }
+  .fa-avatar[data-fa-kind="web-app"] { background-color: hsl(262 42% 72%); }
   .fa-avatar[data-fa-kind="merge-queue"] { background-color: hsl(205 42% 72%); }
   .fa-avatar[data-fa-kind="bean-notes"] { background-color: hsl(40 42% 72%); }
   .fa-avatar[data-fa-kind="notes"] { background-color: hsl(95 42% 72%); }
@@ -1161,6 +1171,7 @@
     .fa-avatar[data-fa-kind="workflow-state"] { background-color: hsl(188 42% 72%); }
     .fa-avatar[data-fa-kind="basic-cdn-site"] { background-color: hsl(196 42% 72%); }
     .fa-avatar[data-fa-kind="cdn-site"] { background-color: hsl(184 42% 72%); }
+    .fa-avatar[data-fa-kind="web-app"] { background-color: hsl(262 42% 72%); }
     .fa-avatar[data-fa-kind="merge-queue"] { background-color: hsl(205 42% 72%); }
     .fa-avatar[data-fa-kind="bean-notes"] { background-color: hsl(40 42% 72%); }
     .fa-avatar[data-fa-kind="notes"] { background-color: hsl(95 42% 72%); }
@@ -1277,6 +1288,7 @@
   .fa-avatar[data-fa-kind="workflow-state"][data-fa-trash="true"] { background-color: hsl(188 16% 52%); }
   .fa-avatar[data-fa-kind="basic-cdn-site"][data-fa-trash="true"] { background-color: hsl(196 16% 52%); }
   .fa-avatar[data-fa-kind="cdn-site"][data-fa-trash="true"] { background-color: hsl(184 16% 52%); }
+  .fa-avatar[data-fa-kind="web-app"][data-fa-trash="true"] { background-color: hsl(262 16% 52%); }
   .fa-avatar[data-fa-kind="merge-queue"][data-fa-trash="true"] { background-color: hsl(205 16% 52%); }
   .fa-avatar[data-fa-kind="bean-notes"][data-fa-trash="true"] { background-color: hsl(40 16% 52%); }
   .fa-avatar[data-fa-kind="notes"][data-fa-trash="true"] { background-color: hsl(95 16% 52%); }
@@ -1389,6 +1401,7 @@
     .fa-avatar[data-fa-kind="workflow-state"][data-fa-trash="true"] { background-color: hsl(188 16% 52%); }
     .fa-avatar[data-fa-kind="basic-cdn-site"][data-fa-trash="true"] { background-color: hsl(196 16% 52%); }
     .fa-avatar[data-fa-kind="cdn-site"][data-fa-trash="true"] { background-color: hsl(184 16% 52%); }
+    .fa-avatar[data-fa-kind="web-app"][data-fa-trash="true"] { background-color: hsl(262 16% 52%); }
     .fa-avatar[data-fa-kind="merge-queue"][data-fa-trash="true"] { background-color: hsl(205 16% 52%); }
     .fa-avatar[data-fa-kind="bean-notes"][data-fa-trash="true"] { background-color: hsl(40 16% 52%); }
     .fa-avatar[data-fa-kind="notes"][data-fa-trash="true"] { background-color: hsl(95 16% 52%); }
@@ -1501,6 +1514,7 @@
   .fa-avatar[data-fa-kind="workflow-state"][data-fa-trash="true"] { background-color: hsl(188 14% 56%); }
   .fa-avatar[data-fa-kind="basic-cdn-site"][data-fa-trash="true"] { background-color: hsl(196 14% 56%); }
   .fa-avatar[data-fa-kind="cdn-site"][data-fa-trash="true"] { background-color: hsl(184 14% 56%); }
+  .fa-avatar[data-fa-kind="web-app"][data-fa-trash="true"] { background-color: hsl(262 14% 56%); }
   .fa-avatar[data-fa-kind="merge-queue"][data-fa-trash="true"] { background-color: hsl(205 14% 56%); }
   .fa-avatar[data-fa-kind="bean-notes"][data-fa-trash="true"] { background-color: hsl(40 14% 56%); }
   .fa-avatar[data-fa-kind="notes"][data-fa-trash="true"] { background-color: hsl(95 14% 56%); }
@@ -1613,6 +1627,7 @@
     .fa-avatar[data-fa-kind="workflow-state"][data-fa-trash="true"] { background-color: hsl(188 14% 56%); }
     .fa-avatar[data-fa-kind="basic-cdn-site"][data-fa-trash="true"] { background-color: hsl(196 14% 56%); }
     .fa-avatar[data-fa-kind="cdn-site"][data-fa-trash="true"] { background-color: hsl(184 14% 56%); }
+    .fa-avatar[data-fa-kind="web-app"][data-fa-trash="true"] { background-color: hsl(262 14% 56%); }
     .fa-avatar[data-fa-kind="merge-queue"][data-fa-trash="true"] { background-color: hsl(205 14% 56%); }
     .fa-avatar[data-fa-kind="bean-notes"][data-fa-trash="true"] { background-color: hsl(40 14% 56%); }
     .fa-avatar[data-fa-kind="notes"][data-fa-trash="true"] { background-color: hsl(95 14% 56%); }

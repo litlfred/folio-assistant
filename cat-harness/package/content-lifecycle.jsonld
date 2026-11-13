@@ -8,19 +8,16 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/SkillPackage",
       "name": "content-lifecycle",
       "version": "0.1.0",
-      "description": "General content development lifecycle skills: plan, author, validate, review, test, publish, feedback, retire",
+      "description": "General content lifecycle methods the harness's own processes call: validate, review, test and feedback. Planning, authoring, publication and retirement are operational and belong to the content layer above (content split step 1).",
       "path": "skills/authoring/content-lifecycle",
       "hasManifest": true,
       "declaresSkill": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-author",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-feedback",
-        "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-plan",
-        "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-publish",
-        "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-retire",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-review",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-test",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-validate",
-        "https://litlfred.github.io/folio-assistant/cat-harness/skill/evidence-appraisal"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/evidence-appraisal",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/feedback-deep-links"
       ],
       "providesCapability": [
         "https://litlfred.github.io/folio-assistant/cat-harness/capability/git-push",

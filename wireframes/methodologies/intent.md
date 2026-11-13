@@ -15,15 +15,15 @@ The page's own description: *"The methodologies this repository has adopted — 
 - **Reader:** an agent or person choosing a method for a task (a decision, a responsibility matrix, a UI review), and a reviewer checking a methodology's evidence base.
 - **Tasks:**
   - pick the methodology whose `applies-when` matches the situation
-  - see which instance declares it (`cat-harness`, the DAK layer, `smart-kg`)
+  - see which layer declares it (`cat-harness`, the DAK layer, `smart-kg`)
   - see where it came from, and whether the source is held here, only cited, or cited and dangling
   - open the ingested source
 
 ## What it must show (read off the generator)
 
 - the framing: a methodology is someone else's named external work; one without an origin is a house process
-- four stat boxes: adopted methodologies, with the source held here, cited not ingested, instances declaring the graph
-- "Choosing one": one row per node — title (link to its section) and name, `applies-when` cut to 150 characters, an evidence badge (source held / cited, not ingested / citation does not resolve), and the declaring instance
+- four stat boxes: adopted methodologies, with the source held here, cited not ingested, layers declaring the graph
+- "Choosing one": one row per node — title (link to its section) and name, `applies-when` cut to 150 characters, an evidence badge (source held / cited, not ingested / citation does not resolve), and the declaring layer
 - "Where each one came from": the three states explained, then per node the full applies-when, the origin, and its ingested sources or "No ingested source"
 - "Files in the graph that are not methodology nodes", reported either way
 
@@ -36,7 +36,7 @@ Regions in reading order, web (≥ 800 px, drawn at 1280):
 2. **"▾ Folio" glass handle**, fixed top centre.
 3. **Main header** with the theme's search field.
 4. **Page title "Methodologies"**, then two framing paragraphs.
-5. **Four stat boxes:** **10** adopted methodologies · **4** with the source held here · **6** cited, not ingested · **3** instance(s) declaring the graph.
+5. **Four stat boxes:** **10** adopted methodologies · **4** with the source held here · **6** cited, not ingested · **3** layer(s) declaring the graph.
 6. **"Choosing one":** a paragraph, then a 4-column, 10-row table, alphabetical: DIIG (the DAK layer, cited), DMN (cited), GRADE (`smart-kg`, cited), Hybrid LLM/deterministic (held), Kepner-Tregoe (cited), MADR (cited), RACI (held), RASCI (cited), SWOT (held), WireGen (held). Every `applies when` cell ends in "…".
 7. **"Where each one came from":** the three-state paragraph, then ten `h3` sections, each: name — declared by — badge; **Applies when.** (full); **Origin.** (full); then **Ingested sources:** as a list of `library/…` slugs, or **No ingested source.** with a pointer to `literature-search`.
 8. **"Files in the graph that are not methodology nodes":** "None — every `.md` in the declared directories carries `$schema: folio-methodology/v1`."

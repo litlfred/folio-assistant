@@ -87,6 +87,36 @@
                 "sha256"
               ],
               "additionalProperties": false
+            },
+            "ocr_pages": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "page": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 9007199254740991
+                  },
+                  "reason": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "page",
+                  "reason"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "languages": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[a-z]{2,3}(-[A-Za-z0-9]{1,8})*$"
+              }
             }
           },
           "required": [
@@ -665,6 +695,110 @@
             "outline_reordered": {
               "type": "boolean",
               "const": true
+            },
+            "outline_rejected": {
+              "type": "string",
+              "minLength": 1
+            },
+            "oversized_split": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "page_start": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 9007199254740991
+                  },
+                  "page_end": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 9007199254740991
+                  },
+                  "words": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "by": {
+                    "type": "string",
+                    "enum": [
+                      "headings",
+                      "running heads",
+                      "pages"
+                    ]
+                  },
+                  "into": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 9007199254740991
+                  }
+                },
+                "required": [
+                  "title",
+                  "page_start",
+                  "page_end",
+                  "words",
+                  "by",
+                  "into"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "headings_tidied": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "page": {
+                    "anyOf": [
+                      {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 9007199254740991
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "action": {
+                    "type": "string",
+                    "enum": [
+                      "rejoined",
+                      "dropped"
+                    ]
+                  },
+                  "as": {
+                    "type": "string"
+                  },
+                  "why": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "title",
+                  "page",
+                  "action",
+                  "why"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "pages_read_in_print_order": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 9007199254740991
+              }
             }
           },
           "required": [

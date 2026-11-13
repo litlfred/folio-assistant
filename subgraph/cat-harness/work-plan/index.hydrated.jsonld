@@ -71,9 +71,9 @@
               "instructionsPath": "work-plan/skills/work-plan/bean-coordination.md",
               "name": "bean-coordination",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9572e570035fc303fc45fe819bfbb65eade49595a935dabf46a337629edc6117",
-                "bytes": 36767,
-                "sha256": "9572e570035fc303fc45fe819bfbb65eade49595a935dabf46a337629edc6117"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8087264930ada99562b6f5ba381a08d0b1c671e0f1e618e1f62cc3543b6f0555",
+                "bytes": 36535,
+                "sha256": "8087264930ada99562b6f5ba381a08d0b1c671e0f1e618e1f62cc3543b6f0555"
               },
               "title": "Bean Coordination"
             },
@@ -92,9 +92,9 @@
               "name": "bean-drain",
               "outputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/bean-drain/output.schema.json",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/11f554f02f023326d35b72265f642a3d11ff5d2e3a105a88b9444d8e2a87ecaf",
-                "bytes": 10373,
-                "sha256": "11f554f02f023326d35b72265f642a3d11ff5d2e3a105a88b9444d8e2a87ecaf"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/181ec506f337755f8939691184d93be364532f8668fb391a0dd6db26c992ceb0",
+                "bytes": 10177,
+                "sha256": "181ec506f337755f8939691184d93be364532f8668fb391a0dd6db26c992ceb0"
               },
               "title": "Bean drain"
             },
@@ -130,9 +130,9 @@
               "instructionsPath": "work-plan/skills/work-plan/todo-manager.md",
               "name": "todo-manager",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e9d8edd3ea4ea065f9dad2b04b659f56a427e201c16e5c97b8ec19dfce0f2f53",
-                "bytes": 37962,
-                "sha256": "e9d8edd3ea4ea065f9dad2b04b659f56a427e201c16e5c97b8ec19dfce0f2f53"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f00faa6229dad0d3383fc7a39df46f5a9eb6c48c4aca842c4110a2bede318d73",
+                "bytes": 37679,
+                "sha256": "f00faa6229dad0d3383fc7a39df46f5a9eb6c48c4aca842c4110a2bede318d73"
               },
               "title": "Session Task Manager (`beans`)"
             },
@@ -149,9 +149,9 @@
               "instructionsPath": "work-plan/skills/work-plan/work-plan-restructure.md",
               "name": "work-plan-restructure",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3895cae257df2b2668fe9bd11d4ab9fc48689a6023be88ed67c56c66681258b9",
-                "bytes": 8775,
-                "sha256": "3895cae257df2b2668fe9bd11d4ab9fc48689a6023be88ed67c56c66681258b9"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8aaa19f029ae3bd444eb256d89bea048163bd4200594764634e8bd62ceaae7ee",
+                "bytes": 8688,
+                "sha256": "8aaa19f029ae3bd444eb256d89bea048163bd4200594764634e8bd62ceaae7ee"
               },
               "title": "Restructuring a work plan — a reviewed plan, not a bulk edit"
             },
@@ -668,6 +668,167 @@
           "path": "work-plan/tools/drain-queue/"
         },
         {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/work-plan/tools/open-work-lookup/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/open-work-lookup.jsonld",
+              "@type": "cat-harness:Tool",
+              "description": "Answer whether a path, a path prefix or a bean id appears on a repository's default branch or on the head of any of its open pull requests, and where: the PR number, head branch, first commit author and creation time. A path or prefix matches files at the default branch and files each open PR changes; a bean id matches PR titles, bodies and head branch names. Repositories or PRs that could not be read are listed, so an empty answer is never mistaken for absence.",
+              "install": {
+                "none": true
+              },
+              "invoke": {
+                "inProcess": {
+                  "module": "scripts/open-work-lookup.ts"
+                },
+                "shell": "bun run cat lookup:open-work"
+              },
+              "io": {
+                "inputs": [
+                  {
+                    "arg": {
+                      "flag": "--path"
+                    },
+                    "description": "An exact repository path.",
+                    "name": "path",
+                    "required": false,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+                  },
+                  {
+                    "arg": {
+                      "flag": "--prefix"
+                    },
+                    "description": "A directory or file-name prefix; every path under or starting with it matches.",
+                    "name": "prefix",
+                    "required": false,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+                  },
+                  {
+                    "arg": {
+                      "flag": "--bean"
+                    },
+                    "description": "A bean id, full or short.",
+                    "name": "bean",
+                    "required": false,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/BeanId"
+                  },
+                  {
+                    "arg": {
+                      "flag": "--repo"
+                    },
+                    "description": "Repositories to search. Repeat. Defaults to the current checkout's origin.",
+                    "name": "repo",
+                    "repeated": true,
+                    "required": false,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoFullName"
+                  },
+                  {
+                    "arg": {
+                      "flag": "--json"
+                    },
+                    "description": "Emit `definitions.lookup` as JSON.",
+                    "name": "json",
+                    "required": false,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+                  }
+                ],
+                "outputs": [
+                  {
+                    "description": "One line per hit: repository, default branch or PR number, head, author, when, and what matched. Then what could not be read. Exactly one of path, prefix or bean must be given. With --json, `definitions.lookup` of schemas/skills/bean-drain/output.schema.json.",
+                    "name": "lookup",
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+                  },
+                  {
+                    "description": "With --json, the hits as one `OpenWorkLookup` record, with what could not be read. Programs read this; people read `lookup`.",
+                    "name": "result",
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/OpenWorkLookup"
+                  }
+                ]
+              },
+              "name": "open-work-lookup",
+              "requirements": {
+                "network": true,
+                "runtime": [
+                  "bun"
+                ]
+              },
+              "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/bean-coordination",
+              "title": "Does a path or bean exist on main or any open PR"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/tools"
+          ],
+          "name": "work-plan/tools/open-work-lookup",
+          "path": "work-plan/tools/open-work-lookup/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/work-plan/tools/sibling-sessions/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/sibling-sessions.jsonld",
+              "@type": "cat-harness:Tool",
+              "description": "List the Claude Code sessions that have committed to this repository in a time window, from the `Claude-Session:` trailer on commits across ALL branches — with each one's commit count, first and last commit, latest subject, and the branches containing its tip. The session API cannot see a sibling session, so the trailer is the only durable session identity here and a session's state is INFERRED from its branch; whether a session is still running is not knowable from a checkout and is deliberately not reported.",
+              "install": {
+                "none": true
+              },
+              "invoke": {
+                "inProcess": {
+                  "module": "scripts/sibling-sessions.ts"
+                },
+                "shell": "bun run cat sessions"
+              },
+              "io": {
+                "inputs": [
+                  {
+                    "arg": {
+                      "flag": "--since"
+                    },
+                    "description": "The window: `4h`, `2d`, `1w`, or an ISO date. Defaults to one day.",
+                    "name": "since",
+                    "required": false,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/TimeWindow"
+                  },
+                  {
+                    "arg": {
+                      "flag": "--json"
+                    },
+                    "description": "Emit the sweep as JSON rather than the report.",
+                    "name": "json",
+                    "required": false,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+                  }
+                ],
+                "outputs": [
+                  {
+                    "description": "One entry per session, most recently active first, plus the number of commits examined and how many carried no trailer. A window with NO commits exits non-zero rather than reporting 'no siblings' — a sweep over nothing has not found anything.",
+                    "name": "report",
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+                  },
+                  {
+                    "description": "With --json, the sweep as one `SessionSweep` record: the sessions, the commits examined and how many carried no trailer. Programs read this; people read `report`.",
+                    "name": "result",
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/SessionSweep"
+                  }
+                ]
+              },
+              "name": "sibling-sessions",
+              "requirements": {
+                "network": false
+              },
+              "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/bean-coordination",
+              "title": "Sibling sessions in a window"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/tools"
+          ],
+          "name": "work-plan/tools/sibling-sessions",
+          "path": "work-plan/tools/sibling-sessions/"
+        },
+        {
           "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/work-plan/tools/work-plan-prime/",
           "@type": "bootstrap:Subgraph",
           "hasMember": [
@@ -723,7 +884,7 @@
             {
               "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/workflow-complete.jsonld",
               "@type": "cat-harness:Tool",
-              "description": "Record an enabled step as done — or supply the facts a decision gateway is computed from — and advance the instance. Refuses a step that is not enabled.",
+              "description": "Record an enabled step as done — or supply the facts a decision gateway is computed from — and advance the layer. Refuses a step that is not enabled.",
               "install": {
                 "none": true
               },
@@ -784,7 +945,7 @@
                     "arg": {
                       "stdin": true
                     },
-                    "description": "Appended to the instance's bean.",
+                    "description": "Appended to the layer's bean.",
                     "name": "note",
                     "required": false,
                     "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
@@ -799,7 +960,7 @@
                 ],
                 "outputs": [
                   {
-                    "description": "The instance's new position, and what is enabled next.",
+                    "description": "The layer's new position, and what is enabled next.",
                     "name": "position",
                     "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
                   }
@@ -901,7 +1062,7 @@
             {
               "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/workflow-list.jsonld",
               "@type": "cat-harness:Tool",
-              "description": "The BPMN processes this instance defines, and the instances currently open against them.",
+              "description": "The BPMN processes this layer defines, and the layers currently open against them.",
               "install": {
                 "none": true
               },
@@ -917,7 +1078,7 @@
                 "inputs": [],
                 "outputs": [
                   {
-                    "description": "Each process, its policy, and its open instances.",
+                    "description": "Each process, its policy, and its open layers.",
                     "name": "processes",
                     "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
                   }
@@ -944,7 +1105,7 @@
             {
               "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/workflow-next.jsonld",
               "@type": "cat-harness:Tool",
-              "description": "The activities an instance may work right now, each with the lane that owns it and the skill that implements it.",
+              "description": "The activities a layer may work right now, each with the lane that owns it and the skill that implements it.",
               "install": {
                 "none": true
               },
@@ -996,7 +1157,7 @@
             {
               "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/workflow-start.jsonld",
               "@type": "cat-harness:Tool",
-              "description": "Open an instance of a process for a subject. Idempotent: an existing instance for the same subject is returned rather than duplicated.",
+              "description": "Open an instance of a process for a subject. Idempotent: an existing layer for the same subject is returned rather than duplicated.",
               "install": {
                 "none": true
               },
@@ -1019,7 +1180,7 @@
                     "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ProcessId"
                   },
                   {
-                    "description": "What the instance is about — a block label, a release, a bean.",
+                    "description": "What the layer is about — a block label, a release, a bean.",
                     "name": "subject",
                     "required": true,
                     "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
@@ -1028,7 +1189,7 @@
                     "arg": {
                       "flag": "--bean"
                     },
-                    "description": "The work-plan item this instance carries out.",
+                    "description": "The work-plan item this layer carries out.",
                     "name": "bean",
                     "required": false,
                     "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/BeanId"
@@ -1037,7 +1198,7 @@
                     "arg": {
                       "flag": "--plan"
                     },
-                    "description": "The work plan this instance is part of: an epic or milestone whose `process:` tag names this process. Not every process needs one.",
+                    "description": "The work plan this layer is part of: an epic or milestone whose `process:` tag names this process. Not every process needs one.",
                     "name": "plan",
                     "required": false,
                     "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/BeanId"
@@ -1045,7 +1206,7 @@
                 ],
                 "outputs": [
                   {
-                    "description": "The instance opened or found.",
+                    "description": "The layer opened or found.",
                     "name": "instance",
                     "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/InstanceId"
                   }

@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/dsa/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa",
+      "@type": "bootstrap:Subgraph",
+      "name": "dsa"
+    }
+  ],
+  "hasSubgraph": [
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/dsa/processes/",
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/dsa/skills/"
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/cat-harness"
+  ],
+  "name": "dsa",
+  "path": "dsa/"
+}

@@ -10,8 +10,8 @@
       "summary": "Extract, partition, package, and distribute knowledge graph datasets as W3C RDF 1.1 N-Quads with pre-compiled named SPARQL queries.",
       "description": "Extract, partition, package, and distribute knowledge graph datasets as W3C RDF 1.1 N-Quads with pre-compiled named SPARQL queries. Governed by skills `nquads-distribution` and `named-query-execution`, grounded in `schemas/kg/nquads-distribution.ts`.\n\nCRITICAL INVARIANTS:\n1. 2-TIER SUBGRAPH ARCHITECTURE: A lightweight Spine backbone partition is loaded on startup, while bulky subgraphs (communities, workflow domains) are lazily fetched on demand.\n2. UPSTREAM SKOLEMIZATION: Zero blank nodes across all partitions. Every node must carry a deterministic minted IRI.\n3. PARTITION BUDGET CEILING: Partitions must strictly stay under 5 MB gzipped / 50k quads to protect browser heap and memory allocations.\n4. GRAPH AVAILABILITY GUARD: Queries declare requiredSubgraphs; execution fails fast with MissingPartitionError rather than silently returning partial query results.\n5. NO COMMITTED BINARY PAYLOADS: `.nq.gz` distribution payloads are gitignored, generated on demand or in CI, and served to Pages via 'served: true'.",
       "enforcement": "strict",
-      "sourcePath": "processes/kg/nquads-distribution.bpmn",
-      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/kg/nquads-distribution.bpmn",
+      "sourcePath": "kg-ops/processes/nquads-distribution.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/kg-ops/processes/nquads-distribution.bpmn",
       "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/nquads-distribution.svg",
       "startNode": [
         "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/Start_Dataset"
@@ -22,7 +22,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-dd-1.0"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution#flow/Flow_1",
@@ -30,7 +30,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/Start_Dataset",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/A_ExtractSkolemize",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution#flow/Flow_2",
@@ -38,7 +38,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/A_ExtractSkolemize",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/A_PartitionQuads",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution#flow/Flow_3",
@@ -46,7 +46,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/A_PartitionQuads",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/GW_PartitionBudget",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution#flow/Flow_BudgetPass",
@@ -55,7 +55,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/GW_PartitionBudget",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/A_DeclareManifest",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution#flow/Flow_BudgetFail",
@@ -64,7 +64,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/GW_PartitionBudget",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/A_ReportBudgetExcess",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution#flow/Flow_StopBudget",
@@ -72,7 +72,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/A_ReportBudgetExcess",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/End_BudgetStopped",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution#flow/Flow_4",
@@ -80,7 +80,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/A_DeclareManifest",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/A_VerifyQueries",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution#flow/Flow_5",
@@ -88,7 +88,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/A_VerifyQueries",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/A_GateCheck",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution#flow/Flow_6",
@@ -96,7 +96,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/A_GateCheck",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/GW_CiGreen",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution#flow/Flow_CiPass",
@@ -105,7 +105,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/GW_CiGreen",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/A_DeployPages",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution#flow/Flow_CiFail",
@@ -114,7 +114,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/GW_CiGreen",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/End_CiFailed",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution#flow/Flow_7",
@@ -122,7 +122,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/A_DeployPages",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/End_Distributed",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops"
     }
   ]
 }

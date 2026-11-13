@@ -168,8 +168,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/node/CallActivity_CodeChangeReview",
       "@type": "bootstrap:ProcessNode",
-      "bpmnType": "bpmn:CallActivity",
-      "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview",
+      "bpmnType": "bpmn:Task",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/lane/Lane_Administrator",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration#flow/A10",
@@ -179,10 +178,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/administrator",
       "relaxable": true,
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/skill/prepare-merge",
-        "https://litlfred.github.io/folio-assistant/cat-harness/skill/continual-progress"
-      ],
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/continual-progress",
       "touchesWorkPlan": false
     },
     {
@@ -370,6 +366,199 @@
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/role-model",
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication",
+      "@type": "bootstrap:Process",
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-dd-1.0"
+      ],
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/adjudication.svg",
+      "description": "A criterion's reviewer entries disagree and no mechanism can settle them: this is the judgement that does, and the record it must leave.\n\nYou are in this process when a sidecar holds two entries for ONE criterion that do not agree — a script failing what a reviewer passed, an agent and a person reading the same block differently. That is the entry condition and it is computable, which is why the first gateway leaves rather than guessing: one reviewer and no checker is a review, one checker and no reviewer is a gate, and neither is adjudicable. Nobody enters this process by declaring that they have entered it.\n\nThree things the diagram holds that prose kept losing. The adjudicator is DISPATCHED rather than briefed — given the findings and the checker's output and, deliberately, never the artefact, because an adjudicator shown the artefact can talk itself into any reading of the finding and that failure raises no error. The adjudication LEADS the criterion and the checker's entry is KEPT beneath it, because a disagreement between a checker and a reviewer is information and a sidecar showing only the winner has lost it. And the dispensation is scoped to the version it was granted against by its `field_hash`, so it lapses when the source moves and never becomes precedent.\n\nThis process ENDS at the judgement. What the answer means, and what is done about it, belongs to whoever asked — `criterion-adjudication.bpmn` is the QA-criterion specialisation, where the finding stands, the criterion is scoped, or a dispensation is granted with its reason. Until 2026-09-23 those three lived here and every caller ran them: six diagrams called this process and only two asked a question they answer. Bean `bvuk`.\n\nWhat stays shared is what must not vary: the entry condition nobody may declare their way past, the untainted dispatch, and the restriction to a person or an agent. What a legitimate outcome IS does vary, and it now varies where it is asked.",
+      "enforcement": "advisory",
+      "flowCount": 6,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "name": "Adjudication",
+      "nodeCount": 7,
+      "sourcePath": "processes/process/adjudication.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/process/adjudication.bpmn",
+      "startNode": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication/node/Start_Disagreement",
+      "summary": "A criterion's reviewer entries disagree and no mechanism can settle them: this is the judgement that does, and the record it must leave."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication#flow/F_1",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication/node/Start_Disagreement",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication/node/A_StateFinding"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication#flow/F_2",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication/node/A_StateFinding",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication/node/GW_Adjudicable"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication#flow/F_3",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication/node/A_Dispatch",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication/node/A_Adjudicate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication#flow/F_4",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication/node/A_Adjudicate",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication/node/End_Adjudicated"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication#flow/F_Adjudicable",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication/node/GW_Adjudicable",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "name": "both sides present",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication/node/A_Dispatch"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication#flow/F_NotAdjudicable",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication/node/GW_Adjudicable",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "name": "only one side",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication/node/End_NotAdjudicable"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication/lane/Lane_Adjudicator",
+      "@type": "cat-harness:Lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/adjudicator",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "name": "Adjudicator",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication/lane/Lane_FeedbackProvider",
+      "@type": "cat-harness:Lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/feedback-provider",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "name": "Feedback provider",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication/node/A_Adjudicate",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication/lane/Lane_Adjudicator",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication#flow/F_3",
+      "name": "Adjudicate the disagreement",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication#flow/F_4",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/adjudicator",
+      "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/adjudication",
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication/node/A_Dispatch",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication/lane/Lane_Adjudicator",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication#flow/F_Adjudicable",
+      "name": "Dispatch with adjudicator_sees — never the artefact",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication#flow/F_3",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/adjudicator",
+      "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/untainted-verification",
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication/node/A_StateFinding",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication/lane/Lane_FeedbackProvider",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication#flow/F_1",
+      "name": "State the finding and what it read",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication#flow/F_2",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/feedback-provider",
+      "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-feedback",
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication/node/End_Adjudicated",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:EndEvent",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication/lane/Lane_Adjudicator",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication#flow/F_4",
+      "name": "Adjudicated, with the reason recorded",
+      "nodeKind": "end",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/adjudicator",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication/node/End_NotAdjudicable",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:EndEvent",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication/lane/Lane_Adjudicator",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication#flow/F_NotAdjudicable",
+      "name": "Not adjudicable — it is a review, a gate, or a bug report",
+      "nodeKind": "end",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/adjudicator",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication/node/GW_Adjudicable",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication/lane/Lane_Adjudicator",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication#flow/F_2",
+      "name": "Are both sides present?",
+      "nodeKind": "exclusive",
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication#flow/F_Adjudicable",
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication#flow/F_NotAdjudicable"
+      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/adjudicator",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication/node/Start_Disagreement",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:StartEvent",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication/lane/Lane_FeedbackProvider",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "name": "Entries for one criterion disagree",
+      "nodeKind": "start",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication#flow/F_1",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/feedback-provider",
+      "relaxable": true,
       "touchesWorkPlan": false
     },
     {
@@ -1083,8 +1272,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Close/node/Call_MergeToMain",
       "@type": "bootstrap:ProcessNode",
-      "bpmnType": "bpmn:CallActivity",
-      "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain",
+      "bpmnType": "bpmn:Task",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Close/lane/Lane_Agent",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
       "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Close#flow/SF_Close_Proceed",
@@ -1094,7 +1282,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Close",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/merge-to-main",
       "touchesWorkPlan": false
     },
     {
@@ -1642,7 +1829,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Deliver",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/prepare-merge",
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/continual-progress",
       "touchesWorkPlan": false
     },
     {
@@ -1658,10 +1845,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Deliver",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "relaxable": true,
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/skill/delivery-summary",
-        "https://litlfred.github.io/folio-assistant/cat-harness/skill/staging-review"
-      ],
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/staging-review",
       "touchesWorkPlan": false
     },
     {
@@ -2703,10 +2887,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Signoff",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "relaxable": true,
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/skill/crdm-requirements-workflow",
-        "https://litlfred.github.io/folio-assistant/cat-harness/skill/coordinate"
-      ],
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/crdm-requirements-workflow",
       "touchesWorkPlan": false
     },
     {
@@ -2722,7 +2903,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Signoff",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/todo-manager",
       "touchesWorkPlan": false
     },
     {
@@ -2889,6 +3069,216 @@
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Signoff#flow/SF_Process_CRDM_Signoff_1",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Signoff",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication",
+      "@type": "bootstrap:Process",
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-dd-1.0"
+      ],
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/criterion-adjudication.svg",
+      "description": "Two reviewer entries for ONE QA criterion disagree: ask the adjudication, then do the one of three things that a criterion disagreement admits.\n\nYou are in this process when the disagreement is about a criterion — a script failing what a reviewer passed, an agent and a person reading the same block differently. If what disagrees is not a criterion, this is the wrong process and `adjudication.bpmn` is the one to call directly, with your own outcomes.\n\nThe three outcomes are legitimate in the same way, and it is not which one is chosen: the finding stands, the criterion does not apply here and should be scoped, or it applies and this is a stated exception. All three converge on A_RecordEntry, because what makes an outcome sound is that its reason was recorded.\n\nADVISORY at the process level, for the reason the adjudication itself is: a judgement cannot be gated, since the whole reason it was entered is that the mechanism ran out of facts. What is NOT relaxable is A_RecordEntry. A judgement nobody wrote down is indistinguishable from a checker that was never run, so the judgement is free and the record is not.",
+      "enforcement": "advisory",
+      "flowCount": 8,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "name": "Criterion adjudication",
+      "nodeCount": 7,
+      "sourcePath": "processes/process/criterion-adjudication.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/process/criterion-adjudication.bpmn",
+      "startNode": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication/node/Start_CriterionDisagreement",
+      "summary": "Two reviewer entries for ONE QA criterion disagree: ask the adjudication, then do the one of three things that a criterion disagreement admits."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication#flow/F_C1",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication/node/Start_CriterionDisagreement",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication/node/Call_Adjudicate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication#flow/F_C2",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication/node/Call_Adjudicate",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication/node/GW_Outcome"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication#flow/F_C5",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication/node/A_ScopeCriterion",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication/node/A_RecordEntry"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication#flow/F_C6",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication/node/A_Dispensation",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication/node/A_RecordEntry"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication#flow/F_C7",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication/node/A_RecordEntry",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication/node/End_Settled"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication#flow/F_Exception",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication/node/GW_Outcome",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "name": "it applies; this is an exception",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication/node/A_Dispensation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication#flow/F_Scope",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication/node/GW_Outcome",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "name": "the criterion does not apply here",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication/node/A_ScopeCriterion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication#flow/F_Stands",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication/node/GW_Outcome",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "name": "the finding stands",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication/node/A_RecordEntry"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication/lane/Lane_CriterionAdjudicator",
+      "@type": "cat-harness:Lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/adjudicator",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "name": "Adjudicator",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication/node/A_Dispensation",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication/lane/Lane_CriterionAdjudicator",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication#flow/F_Exception",
+      "name": "Grant a dispensation, with its reason",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication#flow/F_C6",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/adjudicator",
+      "relaxable": false,
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/adjudication",
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication/node/A_RecordEntry",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication/lane/Lane_CriterionAdjudicator",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication#flow/F_Stands",
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication#flow/F_C5",
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication#flow/F_C6"
+      ],
+      "name": "Write the entry that LEADS — keeping the checker's beneath it",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication#flow/F_C7",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/adjudicator",
+      "relaxable": false,
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/adjudication",
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication/node/A_ScopeCriterion",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication/lane/Lane_CriterionAdjudicator",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication#flow/F_Scope",
+      "name": "Scope the criterion so it stops applying here",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication#flow/F_C5",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/adjudicator",
+      "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/adjudication",
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication/node/Call_Adjudicate",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:CallActivity",
+      "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication/lane/Lane_CriterionAdjudicator",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication#flow/F_C1",
+      "name": "Adjudicate the criterion disagreement",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication#flow/F_C2",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/adjudicator",
+      "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/adjudication",
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication/node/End_Settled",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:EndEvent",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication/lane/Lane_CriterionAdjudicator",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication#flow/F_C7",
+      "name": "Settled, with the reason on the record",
+      "nodeKind": "end",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/adjudicator",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication/node/GW_Outcome",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication/lane/Lane_CriterionAdjudicator",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication#flow/F_C2",
+      "name": "Which of the three?",
+      "nodeKind": "exclusive",
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication#flow/F_Stands",
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication#flow/F_Scope",
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication#flow/F_Exception"
+      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/adjudicator",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication/node/Start_CriterionDisagreement",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:StartEvent",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication/lane/Lane_CriterionAdjudicator",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "name": "Entries for one criterion disagree",
+      "nodeKind": "start",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication#flow/F_C1",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/adjudicator",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -3275,6 +3665,428 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/sibling-session",
       "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis",
+      "@type": "bootstrap:Process",
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-dd-1.0"
+      ],
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/options-analysis.svg",
+      "description": "A decision reached by a NAMED methodology, with its rejected options recorded. Called as a subprocess, never run on its own.\n\nWHEN IT APPLIES: the trigger is `opening-brief`'s — IRREVERSIBILITY AND SURPRISE, not size. A reversible choice needs no subprocess; an irreversible one cannot skip it. A subprocess fired on every decision becomes ceremony, and ceremony is how a gate stops being read.\n\nWHY IT IS ONE SUBPROCESS AND NOT A BRANCH PER METHODOLOGY: the methodologies are parallel tracks selected by context, and the selection is a judgement made inside A_Select rather than a gateway. A gateway per methodology would assert the choice is computable from data, which is the claim `dmn` says to make only when the criteria recur.\n\nWHAT IT DOES NOT DO: it does not decide. It produces the options, their trade-offs and a recommendation; the decision and its authorisation belong to whoever owns the calling step.",
+      "enforcement": "strict",
+      "flowCount": 8,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "name": "Options analysis",
+      "nodeCount": 9,
+      "sourcePath": "processes/process/options-analysis.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/process/options-analysis.bpmn",
+      "startNode": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis/node/Start_Process_OptionsAnalysis",
+      "summary": "A decision reached by a NAMED methodology, with its rejected options recorded."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis#flow/SF_Process_OptionsAnalysis_1",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis/node/Start_Process_OptionsAnalysis",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis/node/A_Frame"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis#flow/SF_Process_OptionsAnalysis_2",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis/node/A_Frame",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis/node/GW_Trigger"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis#flow/SF_Process_OptionsAnalysis_2b",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis/node/GW_Trigger",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis/node/A_Select"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis#flow/SF_Process_OptionsAnalysis_2c",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis/node/GW_Trigger",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis/node/End_TriggerNotMet"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis#flow/SF_Process_OptionsAnalysis_3",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis/node/A_Select",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis/node/A_CheckEvidence"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis#flow/SF_Process_OptionsAnalysis_3b",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis/node/A_CheckEvidence",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis/node/A_Apply"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis#flow/SF_Process_OptionsAnalysis_4",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis/node/A_Apply",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis/node/A_Record"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis#flow/SF_Process_OptionsAnalysis_5",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis/node/A_Record",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis/node/End_Process_OptionsAnalysis"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis/lane/Lane_BusinessAnalyst",
+      "@type": "cat-harness:Lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "name": "Business analyst",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis/node/A_Apply",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis/lane/Lane_BusinessAnalyst",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis#flow/SF_Process_OptionsAnalysis_3b",
+      "name": "Apply it, and state each option's trade-offs",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis#flow/SF_Process_OptionsAnalysis_4",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
+      "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/methodology-adoption",
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis/node/A_CheckEvidence",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis/lane/Lane_BusinessAnalyst",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis#flow/SF_Process_OptionsAnalysis_3",
+      "name": "Check the selected methodology's evidence base",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis#flow/SF_Process_OptionsAnalysis_3b",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
+      "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/literature-search",
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis/node/A_Frame",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis/lane/Lane_BusinessAnalyst",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis#flow/SF_Process_OptionsAnalysis_1",
+      "name": "Frame the decision and check the trigger",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis#flow/SF_Process_OptionsAnalysis_2",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
+      "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/opening-brief",
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis/node/A_Record",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis/lane/Lane_BusinessAnalyst",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis#flow/SF_Process_OptionsAnalysis_4",
+      "name": "Record the chosen option AND the rejected ones",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis#flow/SF_Process_OptionsAnalysis_5",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
+      "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/decision-audit",
+      "touchesWorkPlan": true,
+      "workPlanOp": "note"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis/node/A_Select",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis/lane/Lane_BusinessAnalyst",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis#flow/SF_Process_OptionsAnalysis_2b",
+      "name": "Select the methodology by context",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis#flow/SF_Process_OptionsAnalysis_3",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
+      "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/methodology-adoption",
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis/node/End_Process_OptionsAnalysis",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:EndEvent",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis/lane/Lane_BusinessAnalyst",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis#flow/SF_Process_OptionsAnalysis_5",
+      "name": "Options and recommendation recorded",
+      "nodeKind": "end",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis/node/End_TriggerNotMet",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:EndEvent",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis/lane/Lane_BusinessAnalyst",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis#flow/SF_Process_OptionsAnalysis_2c",
+      "name": "Trigger not met — the caller decides without an analysis",
+      "nodeKind": "end",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis/node/GW_Trigger",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis/lane/Lane_BusinessAnalyst",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis#flow/SF_Process_OptionsAnalysis_2",
+      "name": "Irreversible or surprising?",
+      "nodeKind": "exclusive",
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis#flow/SF_Process_OptionsAnalysis_2b",
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis#flow/SF_Process_OptionsAnalysis_2c"
+      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis/node/Start_Process_OptionsAnalysis",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:StartEvent",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis/lane/Lane_BusinessAnalyst",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "name": "A decision is in play",
+      "nodeKind": "start",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis#flow/SF_Process_OptionsAnalysis_1",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork",
+      "@type": "bootstrap:Process",
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-dd-1.0"
+      ],
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/related-work.svg",
+      "description": "Before new work takes shape, find the work it touches. When a requirement is initiated or updated through a human-agent chat (CRDM), or a method is adopted from a source, search the beans and the repository's issues and open PRs for relevance. Categorize and summarize every hit, then ask the user whether and how to coordinate. Judgement decides the categories and the recommendation; the user decides the coordination. Owner, 2026-09-23 (issue #1023): 'existing beans need to be searched for relevance and categorized (and summarized), same for issues (e.g. github). ask user if they want to coordinate. judgement is used to determine how'. Operating skill: related-work-coordination.",
+      "enforcement": "strict",
+      "flowCount": 6,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "name": "Related work: find, sort, summarize, ask to coordinate",
+      "nodeCount": 7,
+      "sourcePath": "processes/process/related-work.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/process/related-work.bpmn",
+      "startNode": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork/node/Start_RW",
+      "summary": "Before new work takes shape, find the work it touches."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork#flow/SF_Process_RelatedWork_1",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork/node/Start_RW",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork/node/A_SearchBeans"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork#flow/SF_Process_RelatedWork_2",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork/node/A_SearchBeans",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork/node/A_SearchIssues"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork#flow/SF_Process_RelatedWork_3",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork/node/A_SearchIssues",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork/node/A_Categorize"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork#flow/SF_Process_RelatedWork_4",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork/node/A_Categorize",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork/node/U_Coordinate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork#flow/SF_Process_RelatedWork_5",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork/node/U_Coordinate",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork/node/A_Record"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork#flow/SF_Process_RelatedWork_6",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork/node/A_Record",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork/node/End_RW"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork/lane/Lane_Agent",
+      "@type": "cat-harness:Lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "name": "Agent",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork/lane/Lane_User",
+      "@type": "cat-harness:Lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "name": "User",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork/node/A_Categorize",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork/lane/Lane_Agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork#flow/SF_Process_RelatedWork_3",
+      "name": "Categorize and summarize",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork#flow/SF_Process_RelatedWork_4",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork/node/A_Record",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork/lane/Lane_Agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork#flow/SF_Process_RelatedWork_5",
+      "name": "Record and act on the answer",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork#flow/SF_Process_RelatedWork_6",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork/node/A_SearchBeans",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork/lane/Lane_Agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork#flow/SF_Process_RelatedWork_1",
+      "name": "Search beans for relevance",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork#flow/SF_Process_RelatedWork_2",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork/node/A_SearchIssues",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork/lane/Lane_Agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork#flow/SF_Process_RelatedWork_2",
+      "name": "Search issues and open PRs",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork#flow/SF_Process_RelatedWork_3",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork/node/End_RW",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:EndEvent",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork/lane/Lane_Agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork#flow/SF_Process_RelatedWork_6",
+      "name": "Related work known and decided",
+      "nodeKind": "end",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork/node/Start_RW",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:StartEvent",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork/lane/Lane_Agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "name": "Work started or changed in chat",
+      "nodeKind": "start",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork#flow/SF_Process_RelatedWork_1",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork/node/U_Coordinate",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:CallActivity",
+      "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_AskThePerson",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork/lane/Lane_User",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork#flow/SF_Process_RelatedWork_4",
+      "name": "Coordinate? How?",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork#flow/SF_Process_RelatedWork_5",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
+      "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/interaction-modality",
       "touchesWorkPlan": false
     },
     {

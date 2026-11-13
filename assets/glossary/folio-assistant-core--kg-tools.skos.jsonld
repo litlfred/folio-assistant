@@ -74,6 +74,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-tools/c-value-terms",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Rank candidate glossary terms in prose by C-value"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The scoring step of the `automatic-term-extraction` method: count the word n-grams of one or more Markdown or text files (not across punctuation, front matter or code), and rank them by C-value as Frantzi & Ananiadou 1996 define it, so nested multi-word terms are not swamped by the longer phrases that contain them. Tested against the paper's own worked example (Table 2). Every row is a candidate; it writes nothing and promotes nothing."
+        }
+      ],
+      "skos:notation": "c-value-terms",
+      "dcterms:source": "folio-assistant-core/tools/c-value-terms/c-value-terms.ts#c-value-terms",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-tools/catalogue-from-references",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -394,6 +414,46 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-tools/mesh-authority",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Validate draft MeSH headings against NLM's authority"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Stage three of `skill-pipeline-subject-indexing` for MeSH: look up every candidate heading of a draft (a preferred heading, an entry term, or a descriptor id, with an optional qualifier) in NLM's MeSH authority at id.nlm.nih.gov, current year. Each candidate comes back `resolved` (in the preferred form), `qualifier-not-allowed` (descriptor kept, qualifier dropped), `ambiguous` (options listed for a person) or `not-found` (dropped). It never adds a heading the draft did not propose and never emits one the authority lacks."
+        }
+      ],
+      "skos:notation": "mesh-authority",
+      "dcterms:source": "folio-assistant-core/tools/mesh-authority/mesh-authority.ts#mesh-authority",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-tools/public-comment-changesets",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Public-comment change-sets"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Bring a public review's change-sets back in line with GitHub: open the primary issue of each change-set somebody has engaged with, link the other issues that discuss it, and re-render each issue's change-set section from its `changesets/CS-*.json` record. The nightly half of what the folio's public-comment workflow does on each issue event (`github`); `check` validates the records without writing."
+        }
+      ],
+      "skos:notation": "public-comment-changesets",
+      "dcterms:source": "folio-assistant-core/tools/public-comment-changesets/public-comment-changesets.ts#public-comment-changesets",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-tools/publish-extracted-statements",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -411,6 +471,26 @@
       ],
       "skos:notation": "publish-extracted-statements",
       "dcterms:source": "folio-assistant-core/tools/publish-extracted-statements/publish-extracted-statements.ts#publish-extracted-statements",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-tools/references-extract",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Reference lists to reference nodes"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Split each library entry's reference lists (a References, Bibliography or Further reading section or heading, in the six UN languages and Portuguese) into folio-reference/v1 nodes in the instance's declared `references` directory, one per cited work, keyed `<doc-id>.<section>.<n>`: provenance extracted, derivedFrom the section file, printed the entry verbatim, and only the fields read without guessing (URL, DOI, ISBN, year, access date). The bibliography page lists them as the document's own bibliography. `--check` writes nothing and fails when a node is stale."
+        }
+      ],
+      "skos:notation": "references-extract",
+      "dcterms:source": "folio-assistant-core/tools/references-extract/references-extract.ts#references-extract",
       "skos:note": "candidate"
     },
     {

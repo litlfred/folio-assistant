@@ -665,7 +665,7 @@
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Gateway_Accurate",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph",
-      "name": "Needs correction",
+      "name": "Needs\ncorrection",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_ReturnForCorrection"
     },
@@ -1902,7 +1902,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/w3c-xsd11-structures"
       ],
       "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/multi-locale-translation.svg",
-      "description": "Translate one or more instances into several locales at once, as a team: one source-language lead, one translator per locale, an untainted round trip, and the owner's merge window. The result is unofficial, on main, and kept current by a watcher.\n\nYou are in this process when more than one locale is being produced from the same source at the same time. `translation-workflow` is the machine half for one catalogue and `human-translation-workflow` is the path to an official, signed-off translation; this process is the team around them. It extracts ONCE: every locale starts from the same templates, merged to main in one source PR before any locale begins, and no translator re-extracts. Each locale then lands as its own PR to main, never into the source branch, and a source PR's branch receives nothing after it merges.\n\nTwo things are never done in a translation: fixing the source (a source-text error is reported as one issue to the lead), and editing a FHIR resource inline (terms go into one CodeSystem supplement per locale). Officiality is not decided here: every catalogue is written unofficial, and a person makes it official through human-translation-workflow.",
+      "description": "Translate one or more layers into several locales at once, as a team: one source-language lead, one translator per locale, an untainted round trip, and the owner's merge window. The result is unofficial, on main, and kept current by a watcher.\n\nYou are in this process when more than one locale is being produced from the same source at the same time. `translation-workflow` is the machine half for one catalogue and `human-translation-workflow` is the path to an official, signed-off translation; this process is the team around them. It extracts ONCE: every locale starts from the same templates, merged to main in one source PR before any locale begins, and no translator re-extracts. Each locale then lands as its own PR to main, never into the source branch, and a source PR's branch receives nothing after it merges.\n\nTwo things are never done in a translation: fixing the source (a source-text error is reported as one issue to the lead), and editing a FHIR resource inline (terms go into one CodeSystem supplement per locale). Officiality is not decided here: every catalogue is written unofficial, and a person makes it official through human-translation-workflow.",
       "enforcement": "advisory",
       "flowCount": 20,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph",
@@ -1911,7 +1911,7 @@
       "sourcePath": "library/processes/multi-locale-translation.bpmn",
       "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/library/processes/multi-locale-translation.bpmn",
       "startNode": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/node/Start_ML",
-      "summary": "Translate one or more instances into several locales at once, as a team: one source-language lead, one translator per locale, an untainted round trip, and the owner's merge window."
+      "summary": "Translate one or more layers into several locales at once, as a team: one source-language lead, one translator per locale, an untainted round trip, and the owner's merge window."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_1",
@@ -3756,7 +3756,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg#flow/Flow_14",
         "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg#flow/Flow_16"
       ],
-      "name": "Choose subgraphs, the asset policy, harnesses",
+      "name": "Choose subgraphs, assets, harnesses",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg#flow/Flow_15",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg",
@@ -4426,7 +4426,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/w3c-xsd11-structures"
       ],
       "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/translation-refresh.svg",
-      "description": "Keep every locale current after the source moves: detect, refresh the templates, merge them into each locale, translate only what is new or fuzzy, check it, and land one PR per instance on main.\n\nYou are in this process when the watcher scheduled by `multi-locale-translation` wakes, or when a template check has failed. It is the loop that process ends with. A fresh session can run it cold: the skill `translation-refresh` gives each step as a command, and each instance's own AGENTS.md names what is particular to it. One run walks every instance in turn, and each instance with something to refresh gets its own PR.\n\nA refresh never re-translates a finished string. Obsolete strings are kept as `#~` entries, new ones arrive empty, and only new and fuzzy strings are translated, with the terms the term base already fixes. The round trip runs on the changed strings only.",
+      "description": "Keep every locale current after the source moves: detect, refresh the templates, merge them into each locale, translate only what is new or fuzzy, check it, and land one PR per layer on main.\n\nYou are in this process when the watcher scheduled by `multi-locale-translation` wakes, or when a template check has failed. It is the loop that process ends with. A fresh session can run it cold: the skill `translation-refresh` gives each step as a command, and each layer's own AGENTS.md names what is particular to it. One run walks every layer in turn, and each layer with something to refresh gets its own PR.\n\nA refresh never re-translates a finished string. Obsolete strings are kept as `#~` entries, new ones arrive empty, and only new and fuzzy strings are translated, with the terms the term base already fixes. The round trip runs on the changed strings only.",
       "enforcement": "advisory",
       "flowCount": 17,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph",
@@ -4435,7 +4435,7 @@
       "sourcePath": "library/processes/translation-refresh.bpmn",
       "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/library/processes/translation-refresh.bpmn",
       "startNode": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRefresh/node/Start_TR",
-      "summary": "Keep every locale current after the source moves: detect, refresh the templates, merge them into each locale, translate only what is new or fuzzy, check it, and land one PR per instance on main."
+      "summary": "Keep every locale current after the source moves: detect, refresh the templates, merge them into each locale, translate only what is new or fuzzy, check it, and land one PR per layer on main."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_1",

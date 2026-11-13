@@ -17,21 +17,21 @@ On the index (`glossary/`):
 - the authored terms, with a filter box and live count, and an A–Z letter bar;
 - per term: the label, the code (`notation`) when the label and source do not already say it, a status badge when not `authored`, the definition, the scheme, the term IRI for an authored term, the source as a link to the asset, and the external matches as links;
 - a Sources list: each scheme with its SKOS JSON-LD link, the swimlane ledgers (linked, never copied), and the external schemes referenced through `remoteGraphs`;
-- a table of the extracted schemes, instance by asset type, each column heading linked to that type's page and each count linked to its SKOS;
+- a table of the extracted schemes, layer by asset type, each column heading linked to that type's page and each count linked to its SKOS;
 - schema.org `DefinedTermSet` JSON-LD for search engines, carrying the authored terms only.
 
 On each asset type's page (`glossary/<type>/`):
 - a link back to the index, and a sentence on what the terms are read from;
-- which instances contribute, each with its count and SKOS link;
+- which layers contribute, each with its count and SKOS link;
 - the page's size and its budget;
 - the filter box with a live count, the A–Z bar, and every term with the "candidate, extracted" badge.
 
 Every term is on exactly one page: authored on the index, extracted on its type's.
 
-Authored terms are minted by the instance that owns their source, in its own
+Authored terms are minted by the layer that owns their source, in its own
 namespace (cat-harness's platform terms in cat-harness's `platform` scheme;
 core's in `glossary`), so the index lists each authored scheme with its owning
-instance. The swimlane index is linked as a source, not rendered a second time.
+layer. The swimlane index is linked as a source, not rendered a second time.
 An extracted term's IRI is left to its scheme's SKOS rather than printed on
 every row. A type page over its budget is split by the first letter of the
 label, on fixed ranges. `glossary.test.ts` pins that every term appears once

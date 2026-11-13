@@ -105,6 +105,10 @@
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/maintainedBy",
       "@type": "@id"
     },
+    "jsonSchema": {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/jsonSchema",
+      "@type": "@id"
+    },
     "module": "https://litlfred.github.io/cat-harness/v0/ns/module",
     "holdsGraph": {
       "@id": "http://purl.org/dc/terms/type",
@@ -363,7 +367,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "openapi-pages",
       "title": "OpenAPI viewer",
-      "description": "Render every OpenAPI document an instance's `openapi` graph holds at the visualiser's route: a hub, a page per instance listing its documents, and a page per document and per operation, drawn from the document copied beside them.",
+      "description": "Render every OpenAPI document a layer's `openapi` graph holds at the visualiser's route: a hub, a page per layer listing its documents, and a page per document and per operation, drawn from the document copied beside them.",
       "install": {
         "none": true
       },

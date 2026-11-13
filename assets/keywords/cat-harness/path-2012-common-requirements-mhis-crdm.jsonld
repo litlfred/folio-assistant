@@ -1,0 +1,3212 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "path-2012-common-requirements-mhis-crdm",
+  "instance": "cat-harness",
+  "about": "library/path-2012-common-requirements-mhis-crdm",
+  "corpus": {
+    "library": "cat-harness/library/corpus",
+    "sections": 2232,
+    "terms": 15352
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "maternal health",
+        "score": 19.359,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "health care",
+        "score": 17.1725,
+        "evidence": []
+      },
+      {
+        "term": "community health",
+        "score": 14.1009,
+        "evidence": []
+      },
+      {
+        "term": "health system",
+        "score": 13.8368,
+        "evidence": []
+      },
+      {
+        "term": "health center",
+        "score": 13.6917,
+        "evidence": []
+      },
+      {
+        "term": "health service",
+        "score": 13.6817,
+        "evidence": []
+      },
+      {
+        "term": "health information",
+        "score": 13.5165,
+        "evidence": []
+      },
+      {
+        "term": "health worker",
+        "score": 13.2717,
+        "evidence": []
+      },
+      {
+        "term": "support maternal",
+        "score": 12.4633,
+        "evidence": []
+      },
+      {
+        "term": "child health",
+        "score": 12.1179,
+        "evidence": []
+      },
+      {
+        "term": "appropriate health",
+        "score": 12.1053,
+        "evidence": []
+      },
+      {
+        "term": "delivery process",
+        "score": 11.8449,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "hcw chw",
+        "score": 773.6405,
+        "evidence": []
+      },
+      {
+        "term": "physician support",
+        "score": 524.3164,
+        "evidence": []
+      },
+      {
+        "term": "patient record",
+        "score": 491.8166,
+        "evidence": []
+      },
+      {
+        "term": "patient visit",
+        "score": 488.9261,
+        "evidence": []
+      },
+      {
+        "term": "screening chw",
+        "score": 462.2311,
+        "evidence": []
+      },
+      {
+        "term": "chw print",
+        "score": 458.0722,
+        "evidence": []
+      },
+      {
+        "term": "patient information",
+        "score": 451.7685,
+        "evidence": []
+      },
+      {
+        "term": "chw indicate",
+        "score": 449.6063,
+        "evidence": []
+      },
+      {
+        "term": "health care",
+        "score": 440.267,
+        "evidence": []
+      },
+      {
+        "term": "pregnant woman",
+        "score": 439.2576,
+        "evidence": []
+      },
+      {
+        "term": "enter patient",
+        "score": 433.0352,
+        "evidence": []
+      },
+      {
+        "term": "physician allow",
+        "score": 429.5913,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "hcw chw",
+        "score": 11.171,
+        "evidence": []
+      },
+      {
+        "term": "patient visit",
+        "score": 8.8716,
+        "evidence": []
+      },
+      {
+        "term": "registration clerk",
+        "score": 8.4686,
+        "evidence": []
+      },
+      {
+        "term": "health care",
+        "score": 8.202,
+        "evidence": []
+      },
+      {
+        "term": "community health",
+        "score": 8.0986,
+        "evidence": []
+      },
+      {
+        "term": "patient record",
+        "score": 8.0671,
+        "evidence": []
+      },
+      {
+        "term": "process community",
+        "score": 7.9879,
+        "evidence": []
+      },
+      {
+        "term": "physician support",
+        "score": 7.9388,
+        "evidence": []
+      },
+      {
+        "term": "process routine",
+        "score": 7.9374,
+        "evidence": []
+      },
+      {
+        "term": "birth attendant",
+        "score": 7.8898,
+        "evidence": []
+      },
+      {
+        "term": "enter patient",
+        "score": 7.8572,
+        "evidence": []
+      },
+      {
+        "term": "skilled birth",
+        "score": 7.705,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "hcw chw",
+        "score": 813.579,
+        "evidence": []
+      },
+      {
+        "term": "physician support",
+        "score": 570.8759,
+        "evidence": []
+      },
+      {
+        "term": "patient visit",
+        "score": 472.8748,
+        "evidence": []
+      },
+      {
+        "term": "physician allow",
+        "score": 470.9008,
+        "evidence": []
+      },
+      {
+        "term": "chw print",
+        "score": 466.5772,
+        "evidence": []
+      },
+      {
+        "term": "chw indicate",
+        "score": 457.8615,
+        "evidence": []
+      },
+      {
+        "term": "screening chw",
+        "score": 457.3632,
+        "evidence": []
+      },
+      {
+        "term": "patient record",
+        "score": 448.1475,
+        "evidence": []
+      },
+      {
+        "term": "patient information",
+        "score": 428.5766,
+        "evidence": []
+      },
+      {
+        "term": "registration clerk",
+        "score": 414.1769,
+        "evidence": []
+      },
+      {
+        "term": "enter patient",
+        "score": 407.6446,
+        "evidence": []
+      },
+      {
+        "term": "physician link",
+        "score": 396.5791,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "hcw chw",
+        "score": 11.171,
+        "evidence": []
+      },
+      {
+        "term": "patient visit",
+        "score": 8.8716,
+        "evidence": []
+      },
+      {
+        "term": "registration clerk",
+        "score": 8.4686,
+        "evidence": []
+      },
+      {
+        "term": "health care",
+        "score": 8.202,
+        "evidence": []
+      },
+      {
+        "term": "community health",
+        "score": 8.0986,
+        "evidence": []
+      },
+      {
+        "term": "patient record",
+        "score": 8.0671,
+        "evidence": []
+      },
+      {
+        "term": "process community",
+        "score": 7.9879,
+        "evidence": []
+      },
+      {
+        "term": "physician support",
+        "score": 7.9388,
+        "evidence": []
+      },
+      {
+        "term": "process routine",
+        "score": 7.9374,
+        "evidence": []
+      },
+      {
+        "term": "birth attendant",
+        "score": 7.8898,
+        "evidence": []
+      },
+      {
+        "term": "enter patient",
+        "score": 7.8572,
+        "evidence": []
+      },
+      {
+        "term": "skilled birth",
+        "score": 7.705,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "h1n",
+        "score": 1633.9135,
+        "evidence": []
+      },
+      {
+        "term": "preparedness",
+        "score": 1340.0589,
+        "evidence": []
+      },
+      {
+        "term": "woman suspects",
+        "score": 1263.4111,
+        "evidence": []
+      },
+      {
+        "term": "pregnant woman",
+        "score": 1166.7469,
+        "evidence": []
+      },
+      {
+        "term": "birth attendant",
+        "score": 1156.8083,
+        "evidence": []
+      },
+      {
+        "term": "hcw chw",
+        "score": 1101.7319,
+        "evidence": []
+      },
+      {
+        "term": "pregnant women",
+        "score": 1064.2125,
+        "evidence": []
+      },
+      {
+        "term": "skilled birth",
+        "score": 1059.5777,
+        "evidence": []
+      },
+      {
+        "term": "suspects she",
+        "score": 1032.2687,
+        "evidence": []
+      },
+      {
+        "term": "anc visit",
+        "score": 1006.5425,
+        "evidence": []
+      },
+      {
+        "term": "routine antenatal",
+        "score": 985.466,
+        "evidence": []
+      },
+      {
+        "term": "antenatal care",
+        "score": 962.4754,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-preface": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "maternal health",
+          "score": 2.4107,
+          "evidence": []
+        },
+        {
+          "term": "health information",
+          "score": 1.5638,
+          "evidence": []
+        },
+        {
+          "term": "technical agencies",
+          "score": 1.3126,
+          "evidence": []
+        },
+        {
+          "term": "software developers",
+          "score": 1.298,
+          "evidence": []
+        },
+        {
+          "term": "donors",
+          "score": 1.0079,
+          "evidence": []
+        },
+        {
+          "term": "information systems",
+          "score": 0.9307,
+          "evidence": []
+        },
+        {
+          "term": "professionals",
+          "score": 0.9167,
+          "evidence": []
+        },
+        {
+          "term": "requirements",
+          "score": 0.7486,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "maternal health",
+          "score": 55.5619,
+          "evidence": []
+        },
+        {
+          "term": "health information",
+          "score": 35.8939,
+          "evidence": []
+        },
+        {
+          "term": "software developers",
+          "score": 20.2207,
+          "evidence": []
+        },
+        {
+          "term": "technical agencies",
+          "score": 19.099,
+          "evidence": []
+        },
+        {
+          "term": "information system",
+          "score": 15.1185,
+          "evidence": []
+        },
+        {
+          "term": "donors",
+          "score": 14.035,
+          "evidence": []
+        },
+        {
+          "term": "requirements",
+          "score": 13.8451,
+          "evidence": []
+        },
+        {
+          "term": "professionals",
+          "score": 12.6487,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health information",
+          "score": 0.3571,
+          "evidence": []
+        },
+        {
+          "term": "maternal health",
+          "score": 0.2673,
+          "evidence": []
+        },
+        {
+          "term": "information systems",
+          "score": 0.265,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 0.2367,
+          "evidence": []
+        },
+        {
+          "term": "software developers",
+          "score": 0.2331,
+          "evidence": []
+        },
+        {
+          "term": "requirements",
+          "score": 0.149,
+          "evidence": []
+        },
+        {
+          "term": "review",
+          "score": 0.1183,
+          "evidence": []
+        },
+        {
+          "term": "work",
+          "score": 0.1155,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health information",
+          "score": 10.4067,
+          "evidence": []
+        },
+        {
+          "term": "maternal health",
+          "score": 9.0742,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 3.817,
+          "evidence": []
+        },
+        {
+          "term": "information systems",
+          "score": 3.5841,
+          "evidence": []
+        },
+        {
+          "term": "classification",
+          "score": 3.3933,
+          "evidence": []
+        },
+        {
+          "term": "software developers",
+          "score": 3.1323,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 3.0184,
+          "evidence": []
+        },
+        {
+          "term": "woman",
+          "score": 2.5002,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health information",
+          "score": 0.3571,
+          "evidence": []
+        },
+        {
+          "term": "maternal health",
+          "score": 0.2673,
+          "evidence": []
+        },
+        {
+          "term": "information systems",
+          "score": 0.265,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 0.2367,
+          "evidence": []
+        },
+        {
+          "term": "software developers",
+          "score": 0.2331,
+          "evidence": []
+        },
+        {
+          "term": "requirements",
+          "score": 0.149,
+          "evidence": []
+        },
+        {
+          "term": "technical agencies",
+          "score": 0.0964,
+          "evidence": []
+        },
+        {
+          "term": "document",
+          "score": 0.0877,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "h1n",
+          "score": 132.0861,
+          "evidence": []
+        },
+        {
+          "term": "preparedness",
+          "score": 108.3375,
+          "evidence": []
+        },
+        {
+          "term": "phii",
+          "score": 73.796,
+          "evidence": []
+        },
+        {
+          "term": "mdg",
+          "score": 52.9698,
+          "evidence": []
+        },
+        {
+          "term": "millennium",
+          "score": 52.9698,
+          "evidence": []
+        },
+        {
+          "term": "crdm",
+          "score": 52.2395,
+          "evidence": []
+        },
+        {
+          "term": "ict",
+          "score": 51.4485,
+          "evidence": []
+        },
+        {
+          "term": "maternal health",
+          "score": 49.3966,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-001-table-of-contents": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "contents",
+          "score": 0.6843,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "preface",
+          "score": 0.6308,
+          "evidence": []
+        },
+        {
+          "term": "requirements",
+          "score": 0.5792,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "requirements",
+          "score": 8.307,
+          "evidence": []
+        },
+        {
+          "term": "contents",
+          "score": 7.4433,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "preface",
+          "score": 7.0175,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "process",
+          "score": 0.1733,
+          "evidence": []
+        },
+        {
+          "term": "business",
+          "score": 0.1152,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.0706,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "process",
+          "score": 3.436,
+          "evidence": []
+        },
+        {
+          "term": "business",
+          "score": 1.5631,
+          "evidence": []
+        },
+        {
+          "term": "comprehension",
+          "score": 1.176,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "process",
+          "score": 0.1733,
+          "evidence": []
+        },
+        {
+          "term": "business",
+          "score": 0.1152,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.0706,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "h1n",
+          "score": 210.8933,
+          "evidence": []
+        },
+        {
+          "term": "preparedness",
+          "score": 172.4724,
+          "evidence": []
+        },
+        {
+          "term": "phii",
+          "score": 114.9385,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-004-technical-contributors": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "child health",
+          "score": 2.0447,
+          "evidence": []
+        },
+        {
+          "term": "health integrated",
+          "score": 1.8426,
+          "evidence": []
+        },
+        {
+          "term": "integrated program",
+          "score": 1.7104,
+          "evidence": []
+        },
+        {
+          "term": "gates foundation",
+          "score": 1.5289,
+          "evidence": []
+        },
+        {
+          "term": "maternal",
+          "score": 1.2868,
+          "evidence": []
+        },
+        {
+          "term": "path",
+          "score": 0.9952,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "child health",
+          "score": 38.6132,
+          "evidence": []
+        },
+        {
+          "term": "health integrated",
+          "score": 36.0693,
+          "evidence": []
+        },
+        {
+          "term": "integrated program",
+          "score": 31.6986,
+          "evidence": []
+        },
+        {
+          "term": "maternal",
+          "score": 26.5638,
+          "evidence": []
+        },
+        {
+          "term": "path",
+          "score": 24.3358,
+          "evidence": []
+        },
+        {
+          "term": "gates foundation",
+          "score": 22.7351,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "child health",
+          "score": 0.1794,
+          "evidence": []
+        },
+        {
+          "term": "health integrated",
+          "score": 0.1598,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 0.095,
+          "evidence": []
+        },
+        {
+          "term": "community",
+          "score": 0.0649,
+          "evidence": []
+        },
+        {
+          "term": "guidance",
+          "score": 0.064,
+          "evidence": []
+        },
+        {
+          "term": "patient",
+          "score": 0.0612,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "child health",
+          "score": 5.9864,
+          "evidence": []
+        },
+        {
+          "term": "health integrated",
+          "score": 5.9864,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 2.7379,
+          "evidence": []
+        },
+        {
+          "term": "classification",
+          "score": 2.2634,
+          "evidence": []
+        },
+        {
+          "term": "woman",
+          "score": 1.5753,
+          "evidence": []
+        },
+        {
+          "term": "disease",
+          "score": 1.4885,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "child health",
+          "score": 0.1794,
+          "evidence": []
+        },
+        {
+          "term": "health integrated",
+          "score": 0.1709,
+          "evidence": []
+        },
+        {
+          "term": "gates foundation",
+          "score": 0.047,
+          "evidence": []
+        },
+        {
+          "term": "technical",
+          "score": 0.0452,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "bill",
+          "score": 0.0359,
+          "evidence": []
+        },
+        {
+          "term": "maternal",
+          "score": 0.0293,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "h1n",
+          "score": 205.5198,
+          "evidence": []
+        },
+        {
+          "term": "preparedness",
+          "score": 168.2059,
+          "evidence": []
+        },
+        {
+          "term": "kirsten",
+          "score": 136.5968,
+          "evidence": []
+        },
+        {
+          "term": "phii",
+          "score": 113.3315,
+          "evidence": []
+        },
+        {
+          "term": "mdg",
+          "score": 108.0193,
+          "evidence": []
+        },
+        {
+          "term": "millennium",
+          "score": 108.0193,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-005-abbreviations": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "birth attendant",
+          "score": 2.0854,
+          "evidence": []
+        },
+        {
+          "term": "health care",
+          "score": 1.8136,
+          "evidence": []
+        },
+        {
+          "term": "worker",
+          "score": 0.8647,
+          "evidence": []
+        },
+        {
+          "term": "hcw",
+          "score": 0.6842,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "health care",
+          "score": 29.7079,
+          "evidence": []
+        },
+        {
+          "term": "birth attendant",
+          "score": 27.2591,
+          "evidence": []
+        },
+        {
+          "term": "worker",
+          "score": 11.8378,
+          "evidence": []
+        },
+        {
+          "term": "hcw",
+          "score": 7.0175,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health care",
+          "score": 0.3935,
+          "evidence": []
+        },
+        {
+          "term": "birth attendant",
+          "score": 0.3566,
+          "evidence": []
+        },
+        {
+          "term": "chw",
+          "score": 0.269,
+          "evidence": []
+        },
+        {
+          "term": "woman",
+          "score": 0.2502,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health care",
+          "score": 7.0555,
+          "evidence": []
+        },
+        {
+          "term": "chw",
+          "score": 5.8759,
+          "evidence": []
+        },
+        {
+          "term": "hcw",
+          "score": 4.884,
+          "evidence": []
+        },
+        {
+          "term": "physician",
+          "score": 4.8738,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health care",
+          "score": 0.3935,
+          "evidence": []
+        },
+        {
+          "term": "birth attendant",
+          "score": 0.3566,
+          "evidence": []
+        },
+        {
+          "term": "chw",
+          "score": 0.269,
+          "evidence": []
+        },
+        {
+          "term": "hcw",
+          "score": 0.2338,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "birth attendant",
+          "score": 308.9477,
+          "evidence": []
+        },
+        {
+          "term": "h1n",
+          "score": 246.5402,
+          "evidence": []
+        },
+        {
+          "term": "menstrual",
+          "score": 215.3504,
+          "evidence": []
+        },
+        {
+          "term": "sba",
+          "score": 215.3504,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-background": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "maternal health",
+          "score": 2.3017,
+          "evidence": []
+        },
+        {
+          "term": "improve maternal",
+          "score": 1.787,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 1.4614,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 1.3034,
+          "evidence": []
+        },
+        {
+          "term": "ict",
+          "score": 1.0079,
+          "evidence": []
+        },
+        {
+          "term": "sustainable",
+          "score": 0.8075,
+          "evidence": []
+        },
+        {
+          "term": "solutions",
+          "score": 0.684,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "maternal health",
+          "score": 49.1179,
+          "evidence": []
+        },
+        {
+          "term": "improve maternal",
+          "score": 34.3962,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 29.6284,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 28.6298,
+          "evidence": []
+        },
+        {
+          "term": "ict",
+          "score": 14.035,
+          "evidence": []
+        },
+        {
+          "term": "sustainable",
+          "score": 11.2624,
+          "evidence": []
+        },
+        {
+          "term": "solutions",
+          "score": 10.7993,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health services",
+          "score": 0.2729,
+          "evidence": []
+        },
+        {
+          "term": "maternal health",
+          "score": 0.2546,
+          "evidence": []
+        },
+        {
+          "term": "information system",
+          "score": 0.1391,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 0.1243,
+          "evidence": []
+        },
+        {
+          "term": "improve maternal",
+          "score": 0.086,
+          "evidence": []
+        },
+        {
+          "term": "work",
+          "score": 0.0851,
+          "evidence": []
+        },
+        {
+          "term": "free",
+          "score": 0.0841,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health services",
+          "score": 7.9237,
+          "evidence": []
+        },
+        {
+          "term": "maternal health",
+          "score": 7.9193,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 3.4867,
+          "evidence": []
+        },
+        {
+          "term": "classification",
+          "score": 3.0052,
+          "evidence": []
+        },
+        {
+          "term": "woman",
+          "score": 1.8858,
+          "evidence": []
+        },
+        {
+          "term": "tasks",
+          "score": 1.8333,
+          "evidence": []
+        },
+        {
+          "term": "disease",
+          "score": 1.7821,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health services",
+          "score": 0.2729,
+          "evidence": []
+        },
+        {
+          "term": "maternal health",
+          "score": 0.2546,
+          "evidence": []
+        },
+        {
+          "term": "information system",
+          "score": 0.1391,
+          "evidence": []
+        },
+        {
+          "term": "improve maternal",
+          "score": 0.086,
+          "evidence": []
+        },
+        {
+          "term": "developing",
+          "score": 0.0645,
+          "evidence": []
+        },
+        {
+          "term": "interventions",
+          "score": 0.0634,
+          "evidence": []
+        },
+        {
+          "term": "solutions",
+          "score": 0.0419,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "h1n",
+          "score": 189.5516,
+          "evidence": []
+        },
+        {
+          "term": "preparedness",
+          "score": 155.5152,
+          "evidence": []
+        },
+        {
+          "term": "mdg",
+          "score": 110.2017,
+          "evidence": []
+        },
+        {
+          "term": "millennium",
+          "score": 110.2017,
+          "evidence": []
+        },
+        {
+          "term": "ict",
+          "score": 108.3785,
+          "evidence": []
+        },
+        {
+          "term": "phii",
+          "score": 106.4959,
+          "evidence": []
+        },
+        {
+          "term": "maternal health",
+          "score": 93.112,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-007-collaborative-requirements-development-methodolo": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "methodology",
+          "score": 1.7058,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "clinical domains",
+          "score": 1.2971,
+          "evidence": []
+        },
+        {
+          "term": "requirements",
+          "score": 0.918,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "collaborative",
+          "score": 0.7836,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "methodology",
+          "score": 31.4117,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "clinical domains",
+          "score": 18.9011,
+          "evidence": []
+        },
+        {
+          "term": "requirements",
+          "score": 11.076,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "crdm",
+          "score": 10.4515,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "requirements",
+          "score": 0.1691,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health",
+          "score": 0.1497,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 0.1387,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 0.1067,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "chain",
+          "score": 3.503,
+          "evidence": []
+        },
+        {
+          "term": "licensed",
+          "score": 3.3823,
+          "evidence": []
+        },
+        {
+          "term": "alfred",
+          "score": 2.7658,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 2.6339,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "requirements",
+          "score": 0.1691,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health",
+          "score": 0.1497,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 0.1387,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 0.1067,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "h1n",
+          "score": 210.5221,
+          "evidence": []
+        },
+        {
+          "term": "preparedness",
+          "score": 171.941,
+          "evidence": []
+        },
+        {
+          "term": "phii",
+          "score": 114.6872,
+          "evidence": []
+        },
+        {
+          "term": "crdm",
+          "score": 79.0578,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-008-application-of-the-process-to-clinical-work": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "process",
+          "score": 1.8927,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "business process",
+          "score": 1.8908,
+          "evidence": []
+        },
+        {
+          "term": "clinicians",
+          "score": 1.8424,
+          "evidence": []
+        },
+        {
+          "term": "clinical",
+          "score": 1.5775,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "process flows",
+          "score": 1.5672,
+          "evidence": []
+        },
+        {
+          "term": "process map",
+          "score": 1.4615,
+          "evidence": []
+        },
+        {
+          "term": "process mapping",
+          "score": 1.4591,
+          "evidence": []
+        },
+        {
+          "term": "participants",
+          "score": 1.0989,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "clinicians",
+          "score": 42.105,
+          "evidence": []
+        },
+        {
+          "term": "business process",
+          "score": 40.9441,
+          "evidence": []
+        },
+        {
+          "term": "process flows",
+          "score": 28.3645,
+          "evidence": []
+        },
+        {
+          "term": "process mapping",
+          "score": 26.7766,
+          "evidence": []
+        },
+        {
+          "term": "process map",
+          "score": 25.9385,
+          "evidence": []
+        },
+        {
+          "term": "clinical",
+          "score": 24.2826,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "participants",
+          "score": 20.2355,
+          "evidence": []
+        },
+        {
+          "term": "requirements",
+          "score": 13.8451,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "process",
+          "score": 0.8859,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "business process",
+          "score": 0.6826,
+          "evidence": []
+        },
+        {
+          "term": "process map",
+          "score": 0.5174,
+          "evidence": []
+        },
+        {
+          "term": "process flows",
+          "score": 0.443,
+          "evidence": []
+        },
+        {
+          "term": "process mapping",
+          "score": 0.443,
+          "evidence": []
+        },
+        {
+          "term": "work",
+          "score": 0.2731,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "model",
+          "score": 0.1766,
+          "evidence": []
+        },
+        {
+          "term": "visualisation",
+          "score": 0.1617,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "process",
+          "score": 23.5548,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "business process",
+          "score": 16.9458,
+          "evidence": []
+        },
+        {
+          "term": "process map",
+          "score": 12.9343,
+          "evidence": []
+        },
+        {
+          "term": "process flows",
+          "score": 11.7774,
+          "evidence": []
+        },
+        {
+          "term": "process mapping",
+          "score": 11.7774,
+          "evidence": []
+        },
+        {
+          "term": "comprehension",
+          "score": 4.276,
+          "evidence": []
+        },
+        {
+          "term": "model",
+          "score": 4.061,
+          "evidence": []
+        },
+        {
+          "term": "work",
+          "score": 3.4876,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "process",
+          "score": 0.8859,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "business process",
+          "score": 0.6826,
+          "evidence": []
+        },
+        {
+          "term": "process map",
+          "score": 0.5174,
+          "evidence": []
+        },
+        {
+          "term": "process mapping",
+          "score": 0.4821,
+          "evidence": []
+        },
+        {
+          "term": "process flows",
+          "score": 0.4767,
+          "evidence": []
+        },
+        {
+          "term": "work",
+          "score": 0.2731,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "participants",
+          "score": 0.1236,
+          "evidence": []
+        },
+        {
+          "term": "explanation",
+          "score": 0.1221,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "h1n",
+          "score": 63.3787,
+          "evidence": []
+        },
+        {
+          "term": "preparedness",
+          "score": 52.2156,
+          "evidence": []
+        },
+        {
+          "term": "phii",
+          "score": 34.6619,
+          "evidence": []
+        },
+        {
+          "term": "crdm",
+          "score": 26.3789,
+          "evidence": []
+        },
+        {
+          "term": "watch",
+          "score": 20.8151,
+          "evidence": []
+        },
+        {
+          "term": "walks",
+          "score": 15.2932,
+          "evidence": []
+        },
+        {
+          "term": "informatics",
+          "score": 15.2749,
+          "evidence": []
+        },
+        {
+          "term": "mdg",
+          "score": 14.8352,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-009-outputs-of-the-crdm-process": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "maternal health",
+          "score": 1.9414,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 1.3489,
+          "evidence": []
+        },
+        {
+          "term": "ten priority",
+          "score": 1.2882,
+          "evidence": []
+        },
+        {
+          "term": "priority processes",
+          "score": 1.1101,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "maternal health",
+          "score": 34.1391,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 22.0015,
+          "evidence": []
+        },
+        {
+          "term": "ten priority",
+          "score": 16.7303,
+          "evidence": []
+        },
+        {
+          "term": "priority processes",
+          "score": 13.9925,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "process",
+          "score": 0.3288,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health services",
+          "score": 0.1864,
+          "evidence": []
+        },
+        {
+          "term": "maternal health",
+          "score": 0.1793,
+          "evidence": []
+        },
+        {
+          "term": "process framework",
+          "score": 0.1644,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "process",
+          "score": 4.9675,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "maternal health",
+          "score": 4.2299,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 4.2193,
+          "evidence": []
+        },
+        {
+          "term": "process framework",
+          "score": 2.4838,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "process",
+          "score": 0.3288,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health services",
+          "score": 0.1864,
+          "evidence": []
+        },
+        {
+          "term": "process framework",
+          "score": 0.1815,
+          "evidence": []
+        },
+        {
+          "term": "maternal health",
+          "score": 0.1793,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "h1n",
+          "score": 143.4512,
+          "evidence": []
+        },
+        {
+          "term": "preparedness",
+          "score": 117.7126,
+          "evidence": []
+        },
+        {
+          "term": "crdm",
+          "score": 117.6413,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "phii",
+          "score": 80.0092,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-010-user-and-systems-requirements-supporting-materna": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "user requirements",
+          "score": 3.5489,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "business processes",
+          "score": 3.4826,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "functional requirements",
+          "score": 2.1394,
+          "evidence": []
+        },
+        {
+          "term": "associated requirements",
+          "score": 1.7649,
+          "evidence": []
+        },
+        {
+          "term": "system requirements",
+          "score": 1.67,
+          "evidence": []
+        },
+        {
+          "term": "business process",
+          "score": 1.6332,
+          "evidence": []
+        },
+        {
+          "term": "ten business",
+          "score": 1.6319,
+          "evidence": []
+        },
+        {
+          "term": "activities",
+          "score": 1.0089,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "user requirements",
+          "score": 107.7683,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "business processes",
+          "score": 77.7625,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "functional requirements",
+          "score": 61.1675,
+          "evidence": []
+        },
+        {
+          "term": "associated requirements",
+          "score": 52.4985,
+          "evidence": []
+        },
+        {
+          "term": "system requirements",
+          "score": 51.4024,
+          "evidence": []
+        },
+        {
+          "term": "ten business",
+          "score": 32.6957,
+          "evidence": []
+        },
+        {
+          "term": "business process",
+          "score": 31.9835,
+          "evidence": []
+        },
+        {
+          "term": "activities",
+          "score": 19.6323,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "business processes",
+          "score": 0.6856,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "business process",
+          "score": 0.5792,
+          "evidence": []
+        },
+        {
+          "term": "user requirements",
+          "score": 0.5365,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health",
+          "score": 0.2917,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "system requirements",
+          "score": 0.2684,
+          "evidence": []
+        },
+        {
+          "term": "ten business",
+          "score": 0.2555,
+          "evidence": []
+        },
+        {
+          "term": "functional requirements",
+          "score": 0.2187,
+          "evidence": []
+        },
+        {
+          "term": "general system",
+          "score": 0.1622,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "business processes",
+          "score": 12.0945,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "business process",
+          "score": 11.8415,
+          "evidence": []
+        },
+        {
+          "term": "user requirements",
+          "score": 6.7485,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "systems",
+          "score": 6.6838,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ten business",
+          "score": 4.8979,
+          "evidence": []
+        },
+        {
+          "term": "lma",
+          "score": 3.1618,
+          "evidence": []
+        },
+        {
+          "term": "management",
+          "score": 2.8215,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 2.7941,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "business processes",
+          "score": 0.6856,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "business process",
+          "score": 0.5792,
+          "evidence": []
+        },
+        {
+          "term": "user requirements",
+          "score": 0.5365,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health",
+          "score": 0.2917,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "system requirements",
+          "score": 0.2684,
+          "evidence": []
+        },
+        {
+          "term": "ten business",
+          "score": 0.2555,
+          "evidence": []
+        },
+        {
+          "term": "functional requirements",
+          "score": 0.2187,
+          "evidence": []
+        },
+        {
+          "term": "associated requirements",
+          "score": 0.1721,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "h1n",
+          "score": 76.6397,
+          "evidence": []
+        },
+        {
+          "term": "preparedness",
+          "score": 63.0205,
+          "evidence": []
+        },
+        {
+          "term": "phii",
+          "score": 42.704,
+          "evidence": []
+        },
+        {
+          "term": "crdm",
+          "score": 31.4327,
+          "evidence": []
+        },
+        {
+          "term": "maternal",
+          "score": 27.4792,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "watch",
+          "score": 25.0995,
+          "evidence": []
+        },
+        {
+          "term": "mdg",
+          "score": 21.5534,
+          "evidence": []
+        },
+        {
+          "term": "millennium",
+          "score": 21.5534,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-011-lessons-learned": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "manual process",
+          "score": 1.6874,
+          "evidence": []
+        },
+        {
+          "term": "care",
+          "score": 1.0903,
+          "evidence": []
+        },
+        {
+          "term": "pregnant",
+          "score": 0.9632,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.9505,
+          "evidence": []
+        },
+        {
+          "term": "routine",
+          "score": 0.9444,
+          "evidence": []
+        },
+        {
+          "term": "solutions",
+          "score": 0.7941,
+          "evidence": []
+        },
+        {
+          "term": "learned",
+          "score": 0.7903,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "validate",
+          "score": 0.6803,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "manual process",
+          "score": 36.3391,
+          "evidence": []
+        },
+        {
+          "term": "care",
+          "score": 18.1304,
+          "evidence": []
+        },
+        {
+          "term": "solutions",
+          "score": 14.3991,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 13.2241,
+          "evidence": []
+        },
+        {
+          "term": "pregnant",
+          "score": 13.2241,
+          "evidence": []
+        },
+        {
+          "term": "work",
+          "score": 11.6728,
+          "evidence": []
+        },
+        {
+          "term": "routine",
+          "score": 11.5295,
+          "evidence": []
+        },
+        {
+          "term": "requirements",
+          "score": 11.076,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "manual process",
+          "score": 0.5684,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.3033,
+          "evidence": []
+        },
+        {
+          "term": "business",
+          "score": 0.2635,
+          "evidence": []
+        },
+        {
+          "term": "work",
+          "score": 0.2042,
+          "evidence": []
+        },
+        {
+          "term": "chw",
+          "score": 0.1929,
+          "evidence": []
+        },
+        {
+          "term": "woman",
+          "score": 0.1901,
+          "evidence": []
+        },
+        {
+          "term": "support",
+          "score": 0.1791,
+          "evidence": []
+        },
+        {
+          "term": "visualisation",
+          "score": 0.1699,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "manual process",
+          "score": 14.625,
+          "evidence": []
+        },
+        {
+          "term": "comprehension",
+          "score": 6.0662,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 4.9493,
+          "evidence": []
+        },
+        {
+          "term": "model",
+          "score": 3.8188,
+          "evidence": []
+        },
+        {
+          "term": "modeling",
+          "score": 3.8055,
+          "evidence": []
+        },
+        {
+          "term": "quality",
+          "score": 3.6656,
+          "evidence": []
+        },
+        {
+          "term": "chw",
+          "score": 3.6019,
+          "evidence": []
+        },
+        {
+          "term": "woman",
+          "score": 3.5481,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "manual process",
+          "score": 0.5684,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.3033,
+          "evidence": []
+        },
+        {
+          "term": "work",
+          "score": 0.2042,
+          "evidence": []
+        },
+        {
+          "term": "requirements",
+          "score": 0.1609,
+          "evidence": []
+        },
+        {
+          "term": "tools",
+          "score": 0.154,
+          "evidence": []
+        },
+        {
+          "term": "care",
+          "score": 0.1529,
+          "evidence": []
+        },
+        {
+          "term": "users",
+          "score": 0.1383,
+          "evidence": []
+        },
+        {
+          "term": "participants",
+          "score": 0.1369,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "h1n",
+          "score": 50.2279,
+          "evidence": []
+        },
+        {
+          "term": "preparedness",
+          "score": 41.5252,
+          "evidence": []
+        },
+        {
+          "term": "menstrual",
+          "score": 30.8886,
+          "evidence": []
+        },
+        {
+          "term": "sba",
+          "score": 30.8886,
+          "evidence": []
+        },
+        {
+          "term": "suspects",
+          "score": 29.0899,
+          "evidence": []
+        },
+        {
+          "term": "clinic",
+          "score": 29.0899,
+          "evidence": []
+        },
+        {
+          "term": "phii",
+          "score": 28.3962,
+          "evidence": []
+        },
+        {
+          "term": "mdg",
+          "score": 28.0323,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-012-conclusions": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "health services",
+          "score": 1.0996,
+          "evidence": []
+        },
+        {
+          "term": "current methodology",
+          "score": 0.9906,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 0.8207,
+          "evidence": []
+        },
+        {
+          "term": "care",
+          "score": 0.7442,
+          "evidence": []
+        },
+        {
+          "term": "opportunity",
+          "score": 0.7085,
+          "evidence": []
+        },
+        {
+          "term": "solutions",
+          "score": 0.684,
+          "evidence": []
+        },
+        {
+          "term": "stakeholders",
+          "score": 0.6753,
+          "evidence": []
+        },
+        {
+          "term": "clinical",
+          "score": 0.6251,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "health services",
+          "score": 15.5575,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 13.9554,
+          "evidence": []
+        },
+        {
+          "term": "current methodology",
+          "score": 13.0503,
+          "evidence": []
+        },
+        {
+          "term": "solutions",
+          "score": 10.7993,
+          "evidence": []
+        },
+        {
+          "term": "opportunity",
+          "score": 9.7549,
+          "evidence": []
+        },
+        {
+          "term": "stakeholders",
+          "score": 9.3323,
+          "evidence": []
+        },
+        {
+          "term": "effective",
+          "score": 9.2278,
+          "evidence": []
+        },
+        {
+          "term": "care",
+          "score": 9.0652,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "process",
+          "score": 0.318,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 0.236,
+          "evidence": []
+        },
+        {
+          "term": "business",
+          "score": 0.1781,
+          "evidence": []
+        },
+        {
+          "term": "work",
+          "score": 0.1389,
+          "evidence": []
+        },
+        {
+          "term": "time",
+          "score": 0.1216,
+          "evidence": []
+        },
+        {
+          "term": "requirements",
+          "score": 0.1195,
+          "evidence": []
+        },
+        {
+          "term": "processes",
+          "score": 0.1179,
+          "evidence": []
+        },
+        {
+          "term": "review",
+          "score": 0.1098,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "process",
+          "score": 6.9652,
+          "evidence": []
+        },
+        {
+          "term": "comprehension",
+          "score": 2.8296,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 2.675,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 2.675,
+          "evidence": []
+        },
+        {
+          "term": "models",
+          "score": 2.1838,
+          "evidence": []
+        },
+        {
+          "term": "lma",
+          "score": 2.1128,
+          "evidence": []
+        },
+        {
+          "term": "business",
+          "score": 1.9706,
+          "evidence": []
+        },
+        {
+          "term": "systems",
+          "score": 1.9085,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "process",
+          "score": 0.318,
+          "evidence": []
+        },
+        {
+          "term": "health services",
+          "score": 0.236,
+          "evidence": []
+        },
+        {
+          "term": "work",
+          "score": 0.1389,
+          "evidence": []
+        },
+        {
+          "term": "development",
+          "score": 0.1064,
+          "evidence": []
+        },
+        {
+          "term": "tools",
+          "score": 0.1026,
+          "evidence": []
+        },
+        {
+          "term": "system",
+          "score": 0.0922,
+          "evidence": []
+        },
+        {
+          "term": "language",
+          "score": 0.0919,
+          "evidence": []
+        },
+        {
+          "term": "opportunities",
+          "score": 0.0905,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "h1n",
+          "score": 74.4701,
+          "evidence": []
+        },
+        {
+          "term": "preparedness",
+          "score": 61.2647,
+          "evidence": []
+        },
+        {
+          "term": "phii",
+          "score": 41.6098,
+          "evidence": []
+        },
+        {
+          "term": "crdm",
+          "score": 30.1966,
+          "evidence": []
+        },
+        {
+          "term": "mdg",
+          "score": 25.3881,
+          "evidence": []
+        },
+        {
+          "term": "millennium",
+          "score": 25.3881,
+          "evidence": []
+        },
+        {
+          "term": "watch",
+          "score": 24.7125,
+          "evidence": []
+        },
+        {
+          "term": "ict",
+          "score": 23.7801,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-013-appendix-1-business-process-flows": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "pregnant woman",
+          "score": 4.3985,
+          "evidence": []
+        },
+        {
+          "term": "woman suspects",
+          "score": 3.9776,
+          "evidence": []
+        },
+        {
+          "term": "woman agrees",
+          "score": 3.5688,
+          "evidence": []
+        },
+        {
+          "term": "patient record",
+          "score": 3.5266,
+          "evidence": []
+        },
+        {
+          "term": "woman goes",
+          "score": 3.3615,
+          "evidence": []
+        },
+        {
+          "term": "health center",
+          "score": 3.2791,
+          "evidence": []
+        },
+        {
+          "term": "enter patient",
+          "score": 3.2414,
+          "evidence": []
+        },
+        {
+          "term": "suspects she",
+          "score": 2.8544,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "pregnant woman",
+          "score": 159.8351,
+          "evidence": []
+        },
+        {
+          "term": "woman suspects",
+          "score": 141.2153,
+          "evidence": []
+        },
+        {
+          "term": "woman agrees",
+          "score": 132.3653,
+          "evidence": []
+        },
+        {
+          "term": "health center",
+          "score": 129.7568,
+          "evidence": []
+        },
+        {
+          "term": "woman goes",
+          "score": 129.4951,
+          "evidence": []
+        },
+        {
+          "term": "patient record",
+          "score": 127.5928,
+          "evidence": []
+        },
+        {
+          "term": "enter patient",
+          "score": 102.4341,
+          "evidence": []
+        },
+        {
+          "term": "health worker",
+          "score": 101.004,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "patient record",
+          "score": 1.4502,
+          "evidence": []
+        },
+        {
+          "term": "enter patient",
+          "score": 1.4036,
+          "evidence": []
+        },
+        {
+          "term": "community health",
+          "score": 1.3423,
+          "evidence": []
+        },
+        {
+          "term": "pregnant woman",
+          "score": 1.3057,
+          "evidence": []
+        },
+        {
+          "term": "health center",
+          "score": 1.2799,
+          "evidence": []
+        },
+        {
+          "term": "woman agrees",
+          "score": 1.2053,
+          "evidence": []
+        },
+        {
+          "term": "woman suspects",
+          "score": 1.1839,
+          "evidence": []
+        },
+        {
+          "term": "woman goes",
+          "score": 1.1585,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "patient record",
+          "score": 62.5719,
+          "evidence": []
+        },
+        {
+          "term": "community health",
+          "score": 59.5037,
+          "evidence": []
+        },
+        {
+          "term": "health center",
+          "score": 57.4947,
+          "evidence": []
+        },
+        {
+          "term": "enter patient",
+          "score": 54.1846,
+          "evidence": []
+        },
+        {
+          "term": "health information",
+          "score": 53.501,
+          "evidence": []
+        },
+        {
+          "term": "pregnant woman",
+          "score": 53.0556,
+          "evidence": []
+        },
+        {
+          "term": "health system",
+          "score": 52.2438,
+          "evidence": []
+        },
+        {
+          "term": "woman suspects",
+          "score": 49.1598,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "patient record",
+          "score": 1.4502,
+          "evidence": []
+        },
+        {
+          "term": "enter patient",
+          "score": 1.4036,
+          "evidence": []
+        },
+        {
+          "term": "community health",
+          "score": 1.3423,
+          "evidence": []
+        },
+        {
+          "term": "pregnant woman",
+          "score": 1.3057,
+          "evidence": []
+        },
+        {
+          "term": "health center",
+          "score": 1.2799,
+          "evidence": []
+        },
+        {
+          "term": "woman agrees",
+          "score": 1.2053,
+          "evidence": []
+        },
+        {
+          "term": "woman suspects",
+          "score": 1.1839,
+          "evidence": []
+        },
+        {
+          "term": "woman goes",
+          "score": 1.1585,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "woman suspects",
+          "score": 360.2289,
+          "evidence": []
+        },
+        {
+          "term": "pregnant woman",
+          "score": 327.2173,
+          "evidence": []
+        },
+        {
+          "term": "suspects she",
+          "score": 294.4307,
+          "evidence": []
+        },
+        {
+          "term": "woman agrees",
+          "score": 254.9044,
+          "evidence": []
+        },
+        {
+          "term": "clinic",
+          "score": 196.664,
+          "evidence": []
+        },
+        {
+          "term": "woman goes",
+          "score": 195.017,
+          "evidence": []
+        },
+        {
+          "term": "clinician",
+          "score": 180.0822,
+          "evidence": []
+        },
+        {
+          "term": "enter encounter",
+          "score": 178.8607,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-014-appendix-2-requirements": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hcw chw",
+          "score": 7.6484,
+          "evidence": []
+        },
+        {
+          "term": "registration clerk",
+          "score": 5.7892,
+          "evidence": []
+        },
+        {
+          "term": "skilled birth",
+          "score": 5.5814,
+          "evidence": []
+        },
+        {
+          "term": "physician support",
+          "score": 5.5109,
+          "evidence": []
+        },
+        {
+          "term": "physician allow",
+          "score": 5.3032,
+          "evidence": []
+        },
+        {
+          "term": "visit registration",
+          "score": 5.1759,
+          "evidence": []
+        },
+        {
+          "term": "routine facility",
+          "score": 5.1126,
+          "evidence": []
+        },
+        {
+          "term": "chw print",
+          "score": 5.0666,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hcw chw",
+          "score": 707.1146,
+          "evidence": []
+        },
+        {
+          "term": "physician support",
+          "score": 505.3315,
+          "evidence": []
+        },
+        {
+          "term": "physician allow",
+          "score": 417.9974,
+          "evidence": []
+        },
+        {
+          "term": "chw print",
+          "score": 398.5638,
+          "evidence": []
+        },
+        {
+          "term": "chw indicate",
+          "score": 390.0979,
+          "evidence": []
+        },
+        {
+          "term": "screening chw",
+          "score": 386.4985,
+          "evidence": []
+        },
+        {
+          "term": "registration clerk",
+          "score": 360.5574,
+          "evidence": []
+        },
+        {
+          "term": "physician link",
+          "score": 352.9274,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hcw chw",
+          "score": 7.6273,
+          "evidence": []
+        },
+        {
+          "term": "registration clerk",
+          "score": 5.7757,
+          "evidence": []
+        },
+        {
+          "term": "skilled birth",
+          "score": 5.2892,
+          "evidence": []
+        },
+        {
+          "term": "patient record",
+          "score": 5.2316,
+          "evidence": []
+        },
+        {
+          "term": "visit registration",
+          "score": 5.2272,
+          "evidence": []
+        },
+        {
+          "term": "physician support",
+          "score": 5.2109,
+          "evidence": []
+        },
+        {
+          "term": "chw print",
+          "score": 5.2096,
+          "evidence": []
+        },
+        {
+          "term": "enter patient",
+          "score": 5.1873,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hcw chw",
+          "score": 703.0016,
+          "evidence": []
+        },
+        {
+          "term": "physician support",
+          "score": 499.5967,
+          "evidence": []
+        },
+        {
+          "term": "physician allow",
+          "score": 412.8192,
+          "evidence": []
+        },
+        {
+          "term": "chw print",
+          "score": 398.5798,
+          "evidence": []
+        },
+        {
+          "term": "chw indicate",
+          "score": 390.1507,
+          "evidence": []
+        },
+        {
+          "term": "screening chw",
+          "score": 387.7896,
+          "evidence": []
+        },
+        {
+          "term": "patient record",
+          "score": 360.7032,
+          "evidence": []
+        },
+        {
+          "term": "registration clerk",
+          "score": 357.8368,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hcw chw",
+          "score": 7.6273,
+          "evidence": []
+        },
+        {
+          "term": "registration clerk",
+          "score": 5.7757,
+          "evidence": []
+        },
+        {
+          "term": "skilled birth",
+          "score": 5.2892,
+          "evidence": []
+        },
+        {
+          "term": "patient record",
+          "score": 5.2316,
+          "evidence": []
+        },
+        {
+          "term": "visit registration",
+          "score": 5.2272,
+          "evidence": []
+        },
+        {
+          "term": "physician support",
+          "score": 5.2109,
+          "evidence": []
+        },
+        {
+          "term": "chw print",
+          "score": 5.2096,
+          "evidence": []
+        },
+        {
+          "term": "enter patient",
+          "score": 5.1873,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "hcw chw",
+          "score": 233.3283,
+          "evidence": []
+        },
+        {
+          "term": "skilled birth",
+          "score": 212.5402,
+          "evidence": []
+        },
+        {
+          "term": "anc visit",
+          "score": 208.2252,
+          "evidence": []
+        },
+        {
+          "term": "clerk queue",
+          "score": 191.1181,
+          "evidence": []
+        },
+        {
+          "term": "woman agrees",
+          "score": 185.2555,
+          "evidence": []
+        },
+        {
+          "term": "woman arrives",
+          "score": 177.4039,
+          "evidence": []
+        },
+        {
+          "term": "antenatal care",
+          "score": 177.2564,
+          "evidence": []
+        },
+        {
+          "term": "registration clerk",
+          "score": 176.5753,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

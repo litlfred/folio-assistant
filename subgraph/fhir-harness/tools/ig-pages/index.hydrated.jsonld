@@ -65,7 +65,7 @@
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Url"
           },
           {
-            "description": "Where a compiled index's resource files are served, as a path from the docs root. In an IG site the docs root IS the site root, so it is `ast-data`, not `../ast-data`.",
+            "description": "Where a compiled index's resource files are served, as a path from the docs root. `.` means each is served once at the docs root as `<Type>-<id>.json`, as the IG site does; a docs root beside the AST passes `../ast-data`.",
             "name": "compiled-data",
             "required": false,
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"

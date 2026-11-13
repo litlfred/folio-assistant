@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/harness-state.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/harness-state",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "harness-state",
+      "title": "harness-state",
+      "summary": "One harness's state as `harness:state` publishes it (`folio-harness-state/v1`).",
+      "module": "schemas/sdlc/harness-state.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-schemas",
+      "jsonSchema": [
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/harness-state/HarnessBadgeSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/harness-state/HarnessStateIndexSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/harness-state/HarnessStateSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/harness-state/HarnessStatesSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/harness-state/HarnessStepSchema.schema.json"
+      ]
+    }
+  ]
+}

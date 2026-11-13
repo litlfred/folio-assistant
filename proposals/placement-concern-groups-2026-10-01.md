@@ -2,7 +2,7 @@
 
 **Status:** proposal for review. It follows the owner's process ruling: *"review, resolve issues, then staged PRs"*. §4 lists the issues that still need a ruling, and every staged PR in §2 waits on that ruling.
 
-**Checkout measured:** `/home/user/wt/bt/folio-assistant` at `3d5a11111af`, on branch `next/inherit`, 3 commits ahead of `origin/main`. This checkout includes work item `1g4s` (option A: an inherited subgraph gains the same-named directory of each instance as a member). It also includes #1702 (`rqao`), which split the skill definitions by theme. The earlier `placement-review.md` was measured at `8ad74abcd12`. Where the two disagree, this document uses the newer checkout.
+**Checkout measured:** `/home/user/wt/bt/folio-assistant` at `3d5a11111af`, on branch `next/inherit`, 3 commits ahead of `origin/main`. This checkout includes work item `1g4s` (option A: an inherited subgraph gains the same-named directory of each layer as a member). It also includes #1702 (`rqao`), which split the skill definitions by theme. The earlier `placement-review.md` was measured at `8ad74abcd12`. Where the two disagree, this document uses the newer checkout.
 
 **Method:** every count comes from `git ls-files` or from a script in `scratchpad/prop/`:
 
@@ -13,9 +13,9 @@
 | `refzones.py` | – | reference sites per path, split into zones: history, generated, sidecar, authored, code |
 | `tests.py`, `schemas.py` | – | first-pass grouping of test and schema files by filename. These counts are **heuristic**: expect about ±15 % per group |
 
-**Layer abbreviations:** harness = `cat-harness`, core = `folio-assistant-core`, sci = `folio-assistant-sci`. The other instances keep their names.
+**Layer abbreviations:** harness = `cat-harness`, core = `folio-assistant-core`, sci = `folio-assistant-sci`. The other layers keep their names.
 
-**Stack, from each instance's `needs`:**
+**Stack, from each layer's `needs`:**
 - `cat-harness` → `bootstrap`
 - core → cat-harness
 - sci, fhir-harness and large-datasets each → core
@@ -52,7 +52,7 @@ One new finding came out of the re-check. The harness's own basic metadata step,
 - **Concern** is the sub-subgraph: one of the eight groups the owner ruled in `9umr`.
 - **Layer** is the instance.
 
-A path carries both, for example `folio-assistant-sci/skills/content/folio-paper-adapter/`. The group ids are **shared**: every instance and every subgraph typology uses the same eight. Under `1g4s` option A, the harness declares each group once, and each higher instance's same-named directory (for example `folio-assistant-core/skills/library/`) is a **named member** of it. Higher instances therefore add no groups of their own. Their content-type work (paper, WHO SMART, FHIR IG, document) goes in as *packages* under `content/`, and their detailed methodologies go in as packages under the harness group they refine (`library/`, `ui/`, `conduct/`).
+A path carries both, for example `folio-assistant-sci/skills/content/folio-paper-adapter/`. The group ids are **shared**: every layer and every subgraph typology uses the same eight. Under `1g4s` option A, the harness declares each group once, and each higher layer's same-named directory (for example `folio-assistant-core/skills/library/`) is a **named member** of it. Higher layers therefore add no groups of their own. Their content-type work (paper, WHO SMART, FHIR IG, document) goes in as *packages* under `content/`, and their detailed methodologies go in as packages under the harness group they refine (`library/`, `ui/`, `conduct/`).
 
 **Where the vocabulary lives (settled by the corpus, not asked):** one code list, `cat-harness/code-lists/concern-group`, holding the eight codes, each with a title and a definition. Each kind's declaration file names its members by that code. `skills/skills.json` topics already carry a title and description. Restating those in four more declaration files would break *"one fact, one place"* (AGENTS.md, work items section).
 
@@ -65,7 +65,7 @@ Definitions:
 - **`tools`**: how a capability becomes a Tool node and an MCP service, and how that service is deployed and authenticated.
 - **`kg`**: how the graph is declared, placed, read, restructured, exported and audited, including skill registration and placement.
 - **`library`**: how a source is acquired, uploaded, described by metadata in the KG, and held in `library/`. The harness holds the **basic** flow; core holds the detailed methods (§3).
-- **`content`**: how content is authored, reviewed, validated and published, independent of content type (lifecycle, voice review, technical writing). Higher instances put their content-type packages here.
+- **`content`**: how content is authored, reviewed, validated and published, independent of content type (lifecycle, voice review, technical writing). Higher layers put their content-type packages here.
 - **`ui`**: how the corpus is rendered, published and presented: the docs site, viewers, boards and themes.
 - **`conduct`**: how an agent behaves: interaction, confirmation, memory, reporting, swarms and security.
 
@@ -119,9 +119,9 @@ Harness methodologies and `library/` sources per group:
 
 **Methodologies are not split** (13 files). The owner's split list (*schemas, skills, uml, processes, library, tests*) does not name them. The table records each methodology's group so that its cited `library/` sources can follow (§4 issue 3). Each of the 16 sources is cited by one group only (`git grep` over `methodologies/` and `skills/`).
 
-The members each higher instance adds, as members of the harness groups:
+The members each higher layer adds, as members of the harness groups:
 
-| instance | skills | processes |
+| layer | skills | processes |
 |---|---|---|
 | core | `content/`: `folio-document-adapter` (4), `folio-editorial` (14), `one-voice` (3), `content-lifecycle-ext` (2); `library/`: `cataloguing` (8+1d), `ingestion` (2 + new `l1-document-ingestion`); `ui/boards` (2); `conduct/onboarding` (2) | `content/` (6 + 4 DMN), `library/` (4 plus the new `l1-document-ingestion`, beside the existing `deep-document-research`), `ui/` (3 boards), `conduct/` (getting-started + 2 DMN) |
 | sci | `content/`: `folio-paper-adapter` (46+4d), `authoring-math` (3), `paper-editorial` (6), and the 3 `claude-scientific-skills` packages | `content/` (2 + `lean-build-gate.dmn`) |
@@ -129,7 +129,7 @@ The members each higher instance adds, as members of the harness groups:
 | fhir-harness | `content/fhir-ig-authoring` (4) | `content/` (`l3-fhir-pipeline`, `ig-incremental-build`) |
 | large-datasets | `sample-import` joins the existing flat package | – |
 
-The existing directories in higher instances stay as they are: sci's `skills/lean/`, `skills/data/` and `skills/voices/`, and smart-base's `methodologies/processes/`. They are declared by their owner (`cmsl` round 4). Re-homing them is not part of this proposal.
+The existing directories in higher layers stay as they are: sci's `skills/lean/`, `skills/data/` and `skills/voices/`, and smart-base's `methodologies/processes/`. They are declared by their owner (`cmsl` round 4). Re-homing them is not part of this proposal.
 
 ### 1.3 Primary homes for items that fit two groups
 
@@ -159,7 +159,7 @@ That changes three things in the suggested order:
 - Skill ids and paths follow location, so every rewrite is a codemod over `git grep` hits.
 - Generated trees are regenerated, never hand-edited: `cat-harness/docs/reference/**`, `uml/`, translation POT/PO files, `glossary/generated/**`.
 - `beans/**` is history and is **not rewritten**. The work item store has 112 files naming `skills/folio-core/` alone.
-- **kg-qa sidecars.** A moved subject strands its sidecar as SUBJECT GONE, and deleting one needs owner approval (`9umr`, `deletion-requires-confirmation`). Instead, each PR **relocates** the sidecar using `lps0`'s identity-checked relocation (`scripts/tests/sidecar-relocation.test.ts`). That relocation is currently exercised within one instance only. A cross-instance move is PR0's falsifier.
+- **kg-qa sidecars.** A moved subject strands its sidecar as SUBJECT GONE, and deleting one needs owner approval (`9umr`, `deletion-requires-confirmation`). Instead, each PR **relocates** the sidecar using `lps0`'s identity-checked relocation (`scripts/tests/sidecar-relocation.test.ts`). That relocation is currently exercised within one layer only. A cross-layer move is PR0's falsifier.
 - **Gates that break on every move:**
   - `skill:register:check`, `skills:docs:check`, `docs:harness:check`
   - `kg:audit:check`, `kg:audit:all:check`, `check:orphan-verdicts`
@@ -171,14 +171,14 @@ That changes three things in the suggested order:
 
 | part | what | files | references to update | gates most likely to break |
 |---|---|---|---|---|
-| 0a | **The checkout aggregates** (`cmsl` option A, step 3, owner round 3). `folio-assistant.json` `needs` every staged instance. Corpus-wide tools resolve over the root overlay. The 19 upward `scope: repository` mirrors are removed from `cat-harness.json`. The 7 root-level entries (`fsh-guts`, `beans`, `todos`, `memory`, `interaction`, `issue-marks`, `root-docs`) move to `folio-assistant.json`. A check refuses any new mirror. | `folio-assistant.json`, `cat-harness/cat-harness.json`, the new helper (`checkoutDirectoriesForGraph`), and the ~25 call sites the `cmsl` proposal names | `INSTANCE_ROOT = cat-harness` in the corpus-wide scripts (for example `check-workflow-refs.ts`); `kgDirectories` / `workflowDirs` consumers | `check:declared-dirs`, `check:harness-dirs`, `harness:dirs:check`, `check:instance-graph`, `check:subgraph-coverage`, `check:declaration-claims`, `kg:audit:*`; the tests `resolution-across-needs`, `own-kg-roots`, `harness-config` |
-| 0b | **Overlay by id** for `scenarios/roles.json` and `scenarios/actors/*.json`. A higher instance's entry with an existing harness id *extends* it: it adds `skills` to a role, or `roles` to an actor. It overrides nothing else. This is the same id-matching rule as directory overrides and `inherits`. It does **not** restore `roles:` in skill front matter (work items `tuvg` and `v625`). | `schemas/role-graph.ts` (`readRoleGraph`, `readActors`); `kg-audit.ts` already walks per-dependency role graphs (line 2539) | `raci-chart.ts`, `stakeholder-map.ts`, `kg-export.ts`, `check-fallback-roles.ts` | `check:raci`, `check:actor-reach`, `check:fallback-roles`, `check:lane-documentation`, `kg:audit:check` |
+| 0a | **The checkout aggregates** (`cmsl` option A, step 3, owner round 3). `folio-assistant.json` `needs` every staged layer. Corpus-wide tools resolve over the root overlay. The 19 upward `scope: repository` mirrors are removed from `cat-harness.json`. The 7 root-level entries (`fsh-guts`, `beans`, `todos`, `memory`, `interaction`, `issue-marks`, `root-docs`) move to `folio-assistant.json`. A check refuses any new mirror. | `folio-assistant.json`, `cat-harness/cat-harness.json`, the new helper (`checkoutDirectoriesForGraph`), and the ~25 call sites the `cmsl` proposal names | `INSTANCE_ROOT = cat-harness` in the corpus-wide scripts (for example `check-workflow-refs.ts`); `kgDirectories` / `workflowDirs` consumers | `check:declared-dirs`, `check:harness-dirs`, `harness:dirs:check`, `check:instance-graph`, `check:subgraph-coverage`, `check:declaration-claims`, `kg:audit:*`; the tests `resolution-across-needs`, `own-kg-roots`, `harness-config` |
+| 0b | **Overlay by id** for `scenarios/roles.json` and `scenarios/actors/*.json`. A higher layer's entry with an existing harness id *extends* it: it adds `skills` to a role, or `roles` to an actor. It overrides nothing else. This is the same id-matching rule as directory overrides and `inherits`. It does **not** restore `roles:` in skill front matter (work items `tuvg` and `v625`). | `schemas/role-graph.ts` (`readRoleGraph`, `readActors`); `kg-audit.ts` already walks per-dependency role graphs (line 2539) | `raci-chart.ts`, `stakeholder-map.ts`, `kg-export.ts`, `check-fallback-roles.ts` | `check:raci`, `check:actor-reach`, `check:fallback-roles`, `check:lane-documentation`, `kg:audit:check` |
 | 0c | **Sub-subgraph declarations for the other kinds.** `declarationFile` for `processes` (`processes.json`), `schemas` (`schemas.json`), `library` (`library.json`), and for the test directories. The `concern-group` code list. Member resolution at the nested level, so that core's `skills/library/` is a member of the harness's `library` sub-subgraph. The `sdlc`, `tools` and `content` topics are declared in the PR that first fills them ("declare only what exists"). | `schemas/graph-typology-registry.ts`, `schemas/cat-harness.ts` (`resolveDirectories`), `scripts/skill-topics.ts`, `code-lists/concern-group` | – | `check:layout-norms` (it rejects a nested declared directory unless the kind declares it from within), `check:subgraphs`, `code-lists:check`, `uml:overview:check` |
 
 **Falsifiers:**
 1. From the checkout root, these must be **identical** before and after PR0, because nothing moved: the `knownSkills` set, the `workflowFiles` set, each role's resolved skills, and the `kg-export` node count.
-2. From `cat-harness` resolved alone, nothing in a higher instance may be visible. The `cmsl` falsifier is that a split checkout sees less.
-3. A sidecar relocated across instances keeps its verdict. If it cannot, PR1 needs the owner's approval for the orphaned sidecars before it can land.
+2. From `cat-harness` resolved alone, nothing in a higher layer may be visible. The `cmsl` falsifier is that a split checkout sees less.
+3. A sidecar relocated across layers keeps its verdict. If it cannot, PR1 needs the owner's approval for the orphaned sidecars before it can land.
 
 ### PR1: content-type skill packages move up
 
@@ -354,7 +354,7 @@ With the recommended option A:
 **Falsifiers:**
 1. `methodology-from-source.bpmn`'s `calledElement="Process_Ingestion"` still resolves to the **harness** file.
 2. `bun run cat ingest uploads/<fixture>.pdf --dry-run` picks the same rung before and after.
-3. `residual.py` reports 0 edges from `document-ingestion` to a higher instance.
+3. `residual.py` reports 0 edges from `document-ingestion` to a higher layer.
 
 ### PR7: tests split along the same groups (§4 issue 5)
 
@@ -527,7 +527,7 @@ Five issues are open. The corpus settles everything else, and §0 records those 
 Harness code imports them: `builders` from 162 files, `block-kinds` from 13, `lean-packages` from 11. Moving a schema without its importers creates cat-harness→higher imports, which `kg:detangle:direction` (p11x) rejects.
 
 *Options:*
-- **A (Rec.)** Regroup them in place now, under `schemas/content/` and `schemas/ui/`. Record their target instance in `partition/instance-rules.ts`, and move them with their importers in the code partition (#223, yj6r).
+- **A (Rec.)** Regroup them in place now, under `schemas/content/` and `schemas/ui/`. Record their target layer in `partition/instance-rules.ts`, and move them with their importers in the code partition (#223, yj6r).
 - **B** Move them now together with their importing code. This turns a KG restructuring into the code split.
 - **C** Move them now and shim the imports. The direction gate fails.
 
@@ -558,7 +558,7 @@ Harness code imports them: `builders` from 162 files, `block-kinds` from 13, `le
 | BPMN lanes bound to a moving role | 0 | – | – | 0 |
 | skill-to-skill links from staying harness skills | 20 | the higher skill links down; the harness mentions it by name only or drops the link | same PR as each target | 0 |
 | harness text naming higher files by path (the review's 18) | 18 | 11 go with moved files; `library-ingestion`, `document-ingestion.bpmn:86` rewritten (PR6); `docs-auto`/`incremental-render` (the who-iris example), `instance-publication` (`ig-publisher-reduction`) and `skill-voice-review` (agent-skills voices) generalised; `technical-documentation` link dropped (§0) | PR1–6 | 0 |
-| `cat-harness.json` `scope: repository` entries into higher instances | 19 (+7 at the root) | the checkout aggregates | PR0a | 0 |
+| `cat-harness.json` `scope: repository` entries into higher layers | 19 (+7 at the root) | the checkout aggregates | PR0a | 0 |
 | **Not yet at zero: out of scope for this programme** | | | | |
 | code imports cat-harness → core schemas (yj6r) | 15 | PR5 removes the materialization and extraction ones (3). The other 12 (external-schema 3, dublin-core 2, fhir-artifact-index 2, glossary 2, library-ref 1, changeset 1, glossary-page 1) stay with yj6r / #223 | PR5, then yj6r | 12 |
 | harness tests and code that name moved diagrams by path (11 test fixtures, 18 code/docs-folio files) | 29 files | resolve by process id through the checkout overlay. Tests are exempt by partition rule, but fixtures should be local before the repository cut | PR3 (ids); #223 | 0 path refs; fixtures flagged |

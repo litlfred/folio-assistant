@@ -7,7 +7,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/cat-harness-schema.jsonld",
       "@type": "cat-harness:Tool",
-      "description": "The zod definition of `<name>.json` — what an instance may declare about itself — and the published JSON Schema generated from it.",
+      "description": "The zod definition of `<name>.json` — what a layer may declare about itself — and the published JSON Schema generated from it.",
       "install": {
         "none": true
       },
@@ -38,7 +38,7 @@
       "maintainsFrom": "schemas/kg/cat-harness.ts",
       "name": "cat-harness-schema",
       "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/kg-export",
-      "title": "Instance declaration schema"
+      "title": "Layer declaration schema"
     }
   ],
   "holdsGraph": [

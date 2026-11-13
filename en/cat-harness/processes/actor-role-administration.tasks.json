@@ -5,73 +5,73 @@
   {
    "id": "Task_AddActor",
    "name": "Add an actor, and declare its kind",
-   "left": 37.18,
-   "top": 6.1,
+   "left": 42.48,
+   "top": 6.41,
    "box": {
-    "left": 30.61,
-    "top": 13.94,
-    "width": 1.54,
-    "height": 4.18
+    "left": 37.03,
+    "top": 18.59,
+    "width": 1.8,
+    "height": 3.08
    }
   },
   {
    "id": "Task_AssignRoles",
    "name": "Open or close a role to an actor",
-   "left": 37.18,
-   "top": 20.82,
+   "left": 42.48,
+   "top": 24.36,
    "box": {
-    "left": 30.61,
-    "top": 30.57,
-    "width": 1.54,
-    "height": 4.18
+    "left": 37.03,
+    "top": 36.54,
+    "width": 1.8,
+    "height": 3.08
    }
   },
   {
    "id": "Task_GrantOrRevoke",
    "name": "Grant or revoke a permission",
-   "left": 37.18,
-   "top": 37.46,
+   "left": 42.48,
+   "top": 42.31,
    "box": {
-    "left": 30.61,
-    "top": 45.3,
-    "width": 1.54,
-    "height": 4.18
+    "left": 37.03,
+    "top": 54.49,
+    "width": 1.8,
+    "height": 3.08
    }
   },
   {
    "id": "Task_RetireActor",
    "name": "Retire an actor — never delete one",
-   "left": 37.18,
-   "top": 53.14,
+   "left": 42.48,
+   "top": 60.26,
    "box": {
-    "left": 30.61,
-    "top": 60.98,
-    "width": 1.54,
-    "height": 4.18
+    "left": 37.03,
+    "top": 72.44,
+    "width": 1.8,
+    "height": 3.08
    }
   },
   {
    "id": "CallActivity_CodeChangeReview",
    "name": "Branch, gates, PR and review",
-   "left": 58.01,
-   "top": 24.91,
+   "left": 68.05,
+   "top": 32.69,
    "box": {
-    "left": 53.37,
-    "top": 41.46,
-    "width": 1.54,
-    "height": 4.18
+    "left": 62.59,
+    "top": 44.87,
+    "width": 1.8,
+    "height": 3.08
    }
   },
   {
    "id": "Task_RunKgAudit",
    "name": "Audit the graph",
-   "left": 58.01,
-   "top": 76.13,
+   "left": 68.05,
+   "top": 82.05,
    "box": {
-    "left": 53.37,
-    "top": 92.68,
-    "width": 1.54,
-    "height": 4.18
+    "left": 62.59,
+    "top": 94.23,
+    "width": 1.8,
+    "height": 3.08
    }
   }
  ],
@@ -316,26 +316,17 @@
   "CallActivity_CodeChangeReview": {
    "id": "CallActivity_CodeChangeReview",
    "name": "Branch, gates, PR and review",
-   "type": "bpmn:CallActivity",
+   "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/node/CallActivity_CodeChangeReview",
    "stepHref": "actor-role-administration.html#step-CallActivity_CodeChangeReview",
    "lane": "Administrator",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/lane/Lane_Administrator",
    "skills": [
     {
-     "name": "prepare-merge",
-     "href": "../../../reference/skill-instructions/prepare-merge.html"
-    },
-    {
      "name": "continual-progress",
      "href": "../../../reference/skill-instructions/continual-progress.html"
     }
    ],
-   "calls": {
-    "name": "Code change and review",
-    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview",
-    "diagram": "code-change-review.html"
-   },
    "role": {
     "name": "administrator",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/administrator",
@@ -406,10 +397,6 @@
      {
       "name": "compiled-artefact-cache",
       "href": "../../../reference/skill-instructions/compiled-artefact-cache.html"
-     },
-     {
-      "name": "content-publish",
-      "href": "../../../reference/skill-instructions/content-publish.html"
      },
      {
       "name": "content-test",

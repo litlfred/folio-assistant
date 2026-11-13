@@ -7,7 +7,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/openapi-ingest-source.jsonld",
       "@type": "cat-harness:Tool",
-      "description": "Ingest the OpenAPI documents an instance's `cat-openapi.config.json` lists under `documents` from a local checkout of their repository, read AT a branch, tag or commit (`git show`), verbatim, with a provenance recording the resolved commit and the document's sha256. `--check` verifies the committed copies offline.",
+      "description": "Ingest the OpenAPI documents a layer's `cat-openapi.config.json` lists under `documents` from a local checkout of their repository, read AT a branch, tag or commit (`git show`), verbatim, with a provenance recording the resolved commit and the document's sha256. `--check` verifies the committed copies offline.",
       "install": {
         "none": true
       },
@@ -20,7 +20,7 @@
             "arg": {
               "flag": "--instance"
             },
-            "description": "The instance root holding `cat-openapi.config.json` and the declared `openapi` directory.",
+            "description": "The layer root holding `cat-openapi.config.json` and the declared `openapi` directory.",
             "name": "instance",
             "required": true,
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"

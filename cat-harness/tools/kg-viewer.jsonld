@@ -105,6 +105,10 @@
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/maintainedBy",
       "@type": "@id"
     },
+    "jsonSchema": {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/jsonSchema",
+      "@type": "@id"
+    },
     "module": "https://litlfred.github.io/cat-harness/v0/ns/module",
     "holdsGraph": {
       "@id": "http://purl.org/dc/terms/type",
@@ -363,7 +367,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "kg-viewer",
       "title": "Knowledge graph viewer",
-      "description": "Render the instance's published knowledge graph as one page: facets by kind and sub-graph, search, a node's properties, its edges and back-links, and the graph's own gaps — reading the JSON-LD document at the site root rather than carrying a copy.",
+      "description": "Render the layer's published knowledge graph as one page: facets by kind and sub-graph, search, a node's properties, its edges and back-links, and the graph's own gaps — reading the JSON-LD document at the site root rather than carrying a copy.",
       "install": {
         "none": true
       },

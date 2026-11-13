@@ -258,6 +258,23 @@
       ],
       "description": "An ig-cache verb: restore AST, seed it, or diagnose."
     },
+    "ChangeSetAction": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "string",
+      "enum": [
+        "seed",
+        "propose",
+        "add",
+        "list",
+        "body",
+        "adopt",
+        "check",
+        "reconcile",
+        "github",
+        "install"
+      ],
+      "description": "A change-set verb: check or reconcile the records, or handle one GitHub issue event."
+    },
     "NamespaceLayer": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
       "type": "string",

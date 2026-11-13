@@ -10,11 +10,11 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewStage",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/build-pipeline",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewStage/lane/Lane_Pipeline",
       "requires": [
-        "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/feature-staging",
-        "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/rendered-impact"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/feature-staging",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/rendered-impact"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,

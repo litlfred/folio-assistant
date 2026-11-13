@@ -105,6 +105,10 @@
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/maintainedBy",
       "@type": "@id"
     },
+    "jsonSchema": {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/jsonSchema",
+      "@type": "@id"
+    },
     "module": "https://litlfred.github.io/cat-harness/v0/ns/module",
     "holdsGraph": {
       "@id": "http://purl.org/dc/terms/type",
@@ -363,7 +367,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "mount-from-lock",
       "title": "Replay a committed mount lock with nothing but Node",
-      "description": "Lay down every remote mount `index.lock.json` records — each instance fetched at the lock's full SHA (sparse, blob-filtered), each directory verified against its `treeDigest`, a mismatch undone and reported — importing only `node:*`, so it runs on a fresh clone before any layer is present. It never decides what to mount: `remote-mount` writes the lock (and checks trust); this only replays it. Refuses to write over a path with tracked files or bytes that no longer hash to the lock. Exit 0 mounted/current, 1 missing, 2 could-not-determine.",
+      "description": "Lay down every remote mount `index.lock.json` records — each layer fetched at the lock's full SHA (sparse, blob-filtered), each directory verified against its `treeDigest`, a mismatch undone and reported — importing only `node:*`, so it runs on a fresh clone before any layer is present. It never decides what to mount: `remote-mount` writes the lock (and checks trust); this only replays it. Refuses to write over a path with tracked files or bytes that no longer hash to the lock. Exit 0 mounted/current, 1 missing, 2 could-not-determine.",
       "install": {
         "none": true
       },
@@ -375,7 +379,7 @@
           {
             "name": "root",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
-            "description": "The instance root whose lock is replayed. Default: the working directory.",
+            "description": "The layer root whose lock is replayed. Default: the working directory.",
             "required": false,
             "arg": {
               "flag": "--root"
@@ -395,7 +399,7 @@
           {
             "name": "outcomes",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count",
-            "description": "Per instance: mounted, current, missing or could-not-determine."
+            "description": "Per layer: mounted, current, missing or could-not-determine."
           }
         ]
       },

@@ -105,6 +105,10 @@
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/maintainedBy",
       "@type": "@id"
     },
+    "jsonSchema": {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/jsonSchema",
+      "@type": "@id"
+    },
     "module": "https://litlfred.github.io/cat-harness/v0/ns/module",
     "holdsGraph": {
       "@id": "http://purl.org/dc/terms/type",
@@ -390,7 +394,7 @@
           {
             "name": "instance",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug",
-            "description": "Instance declaring the graph, e.g. `cat-harness`.",
+            "description": "Layer declaring the graph, e.g. `cat-harness`.",
             "required": false,
             "arg": {
               "flag": "--instance"
@@ -399,7 +403,7 @@
           {
             "name": "graph",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug",
-            "description": "Graph id within the instance, e.g. `library`.",
+            "description": "Graph id within the layer, e.g. `library`.",
             "required": false,
             "arg": {
               "flag": "--graph"

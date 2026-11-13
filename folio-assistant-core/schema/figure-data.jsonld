@@ -1,0 +1,21 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/figure-data.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/figure-data",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "figure-data",
+      "title": "figure-data",
+      "summary": "The shapes of figure data held on a library entry's `figure-data/`: a",
+      "module": "schemas/figure-data.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-schemas",
+      "jsonSchema": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/zod/figure-data/DiigPhasesAdaptationSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/zod/figure-data/DiigPhasesFigureSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/zod/figure-data/SmartGuidelinesApproachFigureSchema.schema.json"
+      ]
+    }
+  ]
+}

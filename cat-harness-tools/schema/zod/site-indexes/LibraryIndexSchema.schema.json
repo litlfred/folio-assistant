@@ -151,7 +151,7 @@
               },
               "view": {
                 "type": "string",
-                "pattern": "^\\/[a-z0-9][a-z0-9._/-]*\\/$"
+                "pattern": "^\\/[A-Za-z0-9][A-Za-z0-9._/-]*\\/$"
               },
               "viewable": {
                 "type": "string",
@@ -289,6 +289,49 @@
                   }
                 },
                 "additionalProperties": false
+              },
+              "catalogue": {
+                "type": "object",
+                "properties": {
+                  "record": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "handle": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "xml": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "node": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "additionalProperties": false
+              },
+              "upstream": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "label": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "href": {
+                      "type": "string",
+                      "format": "uri"
+                    }
+                  },
+                  "required": [
+                    "label",
+                    "href"
+                  ],
+                  "additionalProperties": false
+                }
               },
               "avatar": {
                 "type": "object",

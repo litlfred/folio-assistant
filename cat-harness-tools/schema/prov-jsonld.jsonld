@@ -1,0 +1,16 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/prov-jsonld.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/prov-jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "prov-jsonld",
+      "title": "prov-jsonld",
+      "summary": "PROV activities as PROV-JSONLD — links, not strings.",
+      "module": "schemas/kg/prov-jsonld.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-schemas"
+    }
+  ]
+}

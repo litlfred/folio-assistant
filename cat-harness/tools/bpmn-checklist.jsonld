@@ -105,6 +105,10 @@
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/maintainedBy",
       "@type": "@id"
     },
+    "jsonSchema": {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/jsonSchema",
+      "@type": "@id"
+    },
     "module": "https://litlfred.github.io/cat-harness/v0/ns/module",
     "holdsGraph": {
       "@id": "http://purl.org/dc/terms/type",
@@ -375,7 +379,7 @@
           {
             "name": "out",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
-            "description": "Write every `<stem>.checklist.md` into this one directory instead. Default: each beside its diagram, in the instance that owns it; the harness site's `assets/workflows/checklists` holds those of the instances below the harness.",
+            "description": "Write every `<stem>.checklist.md` into this one directory instead. Default: each beside its diagram, in the layer that owns it; the harness site's `assets/workflows/checklists` holds those of the layers below the harness.",
             "required": false,
             "arg": {
               "flag": "--out"
@@ -395,7 +399,7 @@
           {
             "name": "checklists",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
-            "description": "One committed `<stem>.checklist.md` per diagram in every instance, beside its `.bpmn`."
+            "description": "One committed `<stem>.checklist.md` per diagram in every layer, beside its `.bpmn`."
           }
         ]
       },

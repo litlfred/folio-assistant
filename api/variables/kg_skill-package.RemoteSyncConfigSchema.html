@@ -4,7 +4,7 @@
 appeared only as a value in <a href="kg_skill-package.RemoteSyncStrategySchema.html" class="tsd-kind-variable">RemoteSyncStrategySchema</a>, and both
 wrappers pinned <code>ref: &quot;main&quot;</code> with <code>autoUpdate: true</code>. The owner chose to
 implement it, <strong>committed, pinned and read-only</strong>:</p><ul><li>the sync copies each declared skill at the wrapper's <code>ref</code> into its own
-package under the instance's skills directory, with a sha256 fixity record
+package under the layer's skills directory, with a sha256 fixity record
 per file, so <code>check:materialized-fixity</code> fails an edit in place;</li><li>a wrapper that declares <code>sync</code> must pin a full commit SHA and may not
 <code>autoUpdate</code> — a skill body is a prompt an agent follows, so an unpinned
 one is an unreviewed prompt. <a href="kg_skill-package.RemotePackageRefSchema.html" class="tsd-kind-variable">RemotePackageRefSchema</a> refuses both;</li><li><code>bun run cat check:remote-skills</code> fails, offline, when a declared skill is

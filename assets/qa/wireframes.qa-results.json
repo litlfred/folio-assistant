@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness-tools/scripts/check-wireframes.ts",
-    "script_hash": "eef4b12b8517"
+    "script_hash": "f9081d242e39"
   },
   "subject": {
     "kind": "corpus",
@@ -11,8 +11,12 @@
   "families": {
     "covered": {
       "summary": "A declared visualiser with a wireframe whose checks pass at both viewports.",
-      "count": 49,
+      "count": 50,
       "entries": [
+        {
+          "ref": "cat-harness/apps",
+          "wireframe": "apps"
+        },
         {
           "ref": "cat-harness/attestations",
           "wireframe": "state-dashboard"
@@ -44,10 +48,6 @@
         {
           "ref": "cat-harness/document-kinds",
           "wireframe": "document-kinds"
-        },
-        {
-          "ref": "cat-harness/editor-checkers",
-          "wireframe": "state-registry"
         },
         {
           "ref": "cat-harness/external-schemas",
@@ -198,6 +198,10 @@
           "wireframe": "folio-assistant-core/glossary-page"
         },
         {
+          "ref": "folio-assistant-sci/editor-checkers",
+          "wireframe": "folio-assistant-sci/editor-checkers"
+        },
+        {
           "ref": "smart-base/artifact-index",
           "wireframe": "smart-base/fhir-artifact-index"
         },
@@ -237,5 +241,5 @@
       "entries": []
     }
   },
-  "total": 49
+  "total": 50
 }

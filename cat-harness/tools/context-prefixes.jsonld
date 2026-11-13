@@ -105,6 +105,10 @@
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/maintainedBy",
       "@type": "@id"
     },
+    "jsonSchema": {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/jsonSchema",
+      "@type": "@id"
+    },
     "module": "https://litlfred.github.io/cat-harness/v0/ns/module",
     "holdsGraph": {
       "@id": "http://purl.org/dc/terms/type",
@@ -363,7 +367,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "context-prefixes",
       "title": "JSON-LD content-key check",
-      "description": "Check every committed JSON-LD document that names the content context, or an instance's own generated context: every plain key is a declared term (never descending into an `@json` value), and no file path sits under an `@id`-coerced term. An empty corpus is a finding, never a clean run. Prefixes are checked by `jsonld:contexts --check`.",
+      "description": "Check every committed JSON-LD document that names the content context, or a layer's own generated context: every plain key is a declared term (never descending into an `@json` value), and no file path sits under an `@id`-coerced term. An empty corpus is a finding, never a clean run. Prefixes are checked by `jsonld:contexts --check`.",
       "install": {
         "none": true
       },

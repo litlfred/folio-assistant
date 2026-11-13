@@ -29,11 +29,11 @@ All four target repositories are **empty**: `git ls-remote` returns no refs, 202
 
 | check | result |
 |---|---|
-| `check:import-direction` | **0** wrong-direction imports in every instance. 76 `import(expr)` calls in 40 files cannot be determined |
+| `check:import-direction` | **0** wrong-direction imports in every layer. 76 `import(expr)` calls in 40 files cannot be determined |
 | `check:partition` | 1,259 modules, 0 unassigned, 0 wrong-direction edges in cat-harness code |
 | `check:tools-closure` | bootstrap-tools imports only itself and its declared packages |
 | cat-harness-tools imports | all stay within {bootstrap-tools, cat-harness, cat-harness-tools}; `needs` matches |
-| `check:reference-direction:strict` | **4,552** wrong-direction *mentions* (prose, names, paths) in 524 files; 162 files name several instances above them; 8 stale PENDING entries |
+| `check:reference-direction:strict` | **4,552** wrong-direction *mentions* (prose, names, paths) in 524 files; 162 files name several layers above them; 8 stale PENDING entries |
 
 Imports are clean. Upward **paths and mentions** are not. A mention that is a
 link or a path breaks when the layer stands alone.

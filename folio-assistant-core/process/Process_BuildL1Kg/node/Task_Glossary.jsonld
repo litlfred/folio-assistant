@@ -6,11 +6,11 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg/node/Task_Glossary",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "Read glossary and abbreviations into candidate terms",
+      "name": "Read glossary into candidate terms",
       "nodeKind": "activity",
       "bpmnType": "bpmn:ServiceTask",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg/lane/Lane_0",
       "requires": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/glossary-terms"

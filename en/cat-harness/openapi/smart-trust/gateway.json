@@ -4,7 +4,7 @@
     "hydra": "http://www.w3.org/ns/hydra/core#",
     "dcterms": "http://purl.org/dc/terms/"
   },
-  "@id": "https://litlfred.github.io/folio-assistant/smart-trust/openapi/gateway.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/smart-trust/openapi/gateway",
   "@type": "schema:WebAPI",
   "schema:identifier": "gateway",
   "schema:name": "Trust Network Gateway API",
@@ -15,7 +15,7 @@
   "schema:contentUrl": "https://litlfred.github.io/folio-assistant/smart-trust/openapi/gateway.openapi.json",
   "hydra:supportedOperation": [
     {
-      "@id": "https://litlfred.github.io/folio-assistant/smart-trust/openapi/gateway/postTrustedCertificate.jsonld",
+      "@id": "https://litlfred.github.io/folio-assistant/smart-trust/openapi/gateway/operation/postTrustedCertificate",
       "@type": "hydra:Operation",
       "schema:identifier": "postTrustedCertificate",
       "hydra:method": "POST",
@@ -23,7 +23,7 @@
       "hydra:title": "Uploads Trusted Certificate"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/smart-trust/openapi/gateway/deleteVerificationInformation.jsonld",
+      "@id": "https://litlfred.github.io/folio-assistant/smart-trust/openapi/gateway/operation/deleteVerificationInformation",
       "@type": "hydra:Operation",
       "schema:identifier": "deleteVerificationInformation",
       "hydra:method": "DELETE",
@@ -31,7 +31,7 @@
       "hydra:title": "Deletes Signer Certificate of a trusted Issuer"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/smart-trust/openapi/gateway/deleteVerificationInformationAlias.jsonld",
+      "@id": "https://litlfred.github.io/folio-assistant/smart-trust/openapi/gateway/operation/deleteVerificationInformationAlias",
       "@type": "hydra:Operation",
       "schema:identifier": "deleteVerificationInformationAlias",
       "hydra:method": "POST",
@@ -39,7 +39,7 @@
       "hydra:title": "Deletes Signer Certificate of a trusted Issuer"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/smart-trust/openapi/gateway/uploadTrustedReference.jsonld",
+      "@id": "https://litlfred.github.io/folio-assistant/smart-trust/openapi/gateway/operation/uploadTrustedReference",
       "@type": "hydra:Operation",
       "schema:identifier": "uploadTrustedReference",
       "hydra:method": "POST",
@@ -47,7 +47,7 @@
       "hydra:title": "Upload a new trusted reference"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/smart-trust/openapi/gateway/deleteTrustedReference.jsonld",
+      "@id": "https://litlfred.github.io/folio-assistant/smart-trust/openapi/gateway/operation/deleteTrustedReference",
       "@type": "hydra:Operation",
       "schema:identifier": "deleteTrustedReference",
       "hydra:method": "DELETE",
@@ -55,7 +55,7 @@
       "hydra:title": "Delete a Trusted Reference"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/smart-trust/openapi/gateway/postVerificationInformation.jsonld",
+      "@id": "https://litlfred.github.io/folio-assistant/smart-trust/openapi/gateway/operation/postVerificationInformation",
       "@type": "hydra:Operation",
       "schema:identifier": "postVerificationInformation",
       "hydra:method": "POST",
@@ -63,7 +63,7 @@
       "hydra:title": "Uploads Signer Certificate of a trusted Issuer"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/smart-trust/openapi/gateway/deleteVerificationInformation_1.jsonld",
+      "@id": "https://litlfred.github.io/folio-assistant/smart-trust/openapi/gateway/operation/deleteVerificationInformation_1",
       "@type": "hydra:Operation",
       "schema:identifier": "deleteVerificationInformation_1",
       "hydra:method": "DELETE",
@@ -71,7 +71,7 @@
       "hydra:title": "Deletes Signer Certificate of a trusted Issuer"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/smart-trust/openapi/gateway/deleteVerificationInformationAlias_1.jsonld",
+      "@id": "https://litlfred.github.io/folio-assistant/smart-trust/openapi/gateway/operation/deleteVerificationInformationAlias_1",
       "@type": "hydra:Operation",
       "schema:identifier": "deleteVerificationInformationAlias_1",
       "hydra:method": "POST",
@@ -79,7 +79,7 @@
       "hydra:title": "Deletes Signer Certificate of a trusted Issuer"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/smart-trust/openapi/gateway/uploadValidationRule.jsonld",
+      "@id": "https://litlfred.github.io/folio-assistant/smart-trust/openapi/gateway/operation/uploadValidationRule",
       "@type": "hydra:Operation",
       "schema:identifier": "uploadValidationRule",
       "hydra:method": "POST",
@@ -87,7 +87,7 @@
       "hydra:title": "Create a new versions of a rule with id"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/smart-trust/openapi/gateway/deleteValidationRules.jsonld",
+      "@id": "https://litlfred.github.io/folio-assistant/smart-trust/openapi/gateway/operation/deleteValidationRules",
       "@type": "hydra:Operation",
       "schema:identifier": "deleteValidationRules",
       "hydra:method": "DELETE",
@@ -95,7 +95,7 @@
       "hydra:title": "Delete all versions of a rule with id"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/smart-trust/openapi/gateway/deleteValidationRulesAliasEndpoint.jsonld",
+      "@id": "https://litlfred.github.io/folio-assistant/smart-trust/openapi/gateway/operation/deleteValidationRulesAliasEndpoint",
       "@type": "hydra:Operation",
       "schema:identifier": "deleteValidationRulesAliasEndpoint",
       "hydra:method": "POST",
@@ -103,7 +103,7 @@
       "hydra:title": "Delete all versions of a rule with id (Alias Endpoint for DELETE)"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/smart-trust/openapi/gateway/getValuesetIds.jsonld",
+      "@id": "https://litlfred.github.io/folio-assistant/smart-trust/openapi/gateway/operation/getValuesetIds",
       "@type": "hydra:Operation",
       "schema:identifier": "getValuesetIds",
       "hydra:method": "GET",
@@ -111,7 +111,7 @@
       "hydra:title": "Gets a list of available valuesets."
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/smart-trust/openapi/gateway/getValueset.jsonld",
+      "@id": "https://litlfred.github.io/folio-assistant/smart-trust/openapi/gateway/operation/getValueset",
       "@type": "hydra:Operation",
       "schema:identifier": "getValueset",
       "hydra:method": "GET",
@@ -119,7 +119,7 @@
       "hydra:title": "Requests a specific valueset by its id."
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/smart-trust/openapi/gateway/downloadTrustList.jsonld",
+      "@id": "https://litlfred.github.io/folio-assistant/smart-trust/openapi/gateway/operation/downloadTrustList",
       "@type": "hydra:Operation",
       "schema:identifier": "downloadTrustList",
       "hydra:method": "GET",
@@ -127,7 +127,7 @@
       "hydra:title": "Returns the list of trusted certificates of domain DCC."
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/smart-trust/openapi/gateway/downloadTrustListFilteredByType.jsonld",
+      "@id": "https://litlfred.github.io/folio-assistant/smart-trust/openapi/gateway/operation/downloadTrustListFilteredByType",
       "@type": "hydra:Operation",
       "schema:identifier": "downloadTrustListFilteredByType",
       "hydra:method": "GET",
@@ -135,7 +135,7 @@
       "hydra:title": "Returns a filtered list of trusted certificates of domain DCC."
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/smart-trust/openapi/gateway/downloadTrustListFilteredByCountryAndType.jsonld",
+      "@id": "https://litlfred.github.io/folio-assistant/smart-trust/openapi/gateway/operation/downloadTrustListFilteredByCountryAndType",
       "@type": "hydra:Operation",
       "schema:identifier": "downloadTrustListFilteredByCountryAndType",
       "hydra:method": "GET",
@@ -143,7 +143,7 @@
       "hydra:title": "Returns a filtered list of trusted certificates of domain DCC."
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/smart-trust/openapi/gateway/getTrustedReferencesTrustList.jsonld",
+      "@id": "https://litlfred.github.io/folio-assistant/smart-trust/openapi/gateway/operation/getTrustedReferencesTrustList",
       "@type": "hydra:Operation",
       "schema:identifier": "getTrustedReferencesTrustList",
       "hydra:method": "GET",
@@ -151,7 +151,7 @@
       "hydra:title": "Returns the list of trusted issuers filtered by criterias."
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/smart-trust/openapi/gateway/getTrustedIssuersByCountry.jsonld",
+      "@id": "https://litlfred.github.io/folio-assistant/smart-trust/openapi/gateway/operation/getTrustedIssuersByCountry",
       "@type": "hydra:Operation",
       "schema:identifier": "getTrustedIssuersByCountry",
       "hydra:method": "GET",
@@ -159,7 +159,7 @@
       "hydra:title": "Returns the list of trusted issuers filtered by criterias."
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/smart-trust/openapi/gateway/downloadTrustListCertificate.jsonld",
+      "@id": "https://litlfred.github.io/folio-assistant/smart-trust/openapi/gateway/operation/downloadTrustListCertificate",
       "@type": "hydra:Operation",
       "schema:identifier": "downloadTrustListCertificate",
       "hydra:method": "GET",
@@ -167,7 +167,7 @@
       "hydra:title": "Returns a filtered list of trusted certificates. The provided search criteria are additive. It is possible to provide more than one value for each criteria. (Except for withFederation)"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/smart-trust/openapi/gateway/getTrustedReference.jsonld",
+      "@id": "https://litlfred.github.io/folio-assistant/smart-trust/openapi/gateway/operation/getTrustedReference",
       "@type": "hydra:Operation",
       "schema:identifier": "getTrustedReference",
       "hydra:method": "GET",
@@ -175,7 +175,7 @@
       "hydra:title": "Get a single trusted references"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/smart-trust/openapi/gateway/downloadValidationRules.jsonld",
+      "@id": "https://litlfred.github.io/folio-assistant/smart-trust/openapi/gateway/operation/downloadValidationRules",
       "@type": "hydra:Operation",
       "schema:identifier": "downloadValidationRules",
       "hydra:method": "GET",
@@ -183,7 +183,7 @@
       "hydra:title": "Download all rules of country."
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/smart-trust/openapi/gateway/downloadCountryList.jsonld",
+      "@id": "https://litlfred.github.io/folio-assistant/smart-trust/openapi/gateway/operation/downloadCountryList",
       "@type": "hydra:Operation",
       "schema:identifier": "downloadCountryList",
       "hydra:method": "GET",

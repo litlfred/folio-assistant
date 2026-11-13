@@ -2,7 +2,7 @@
 cached at the commit the subscription pins. See
 <code>docs/proposals/kg-subscriptions.md</code>.</p></div><div class="tsd-comment tsd-typography"><div class="tsd-tag-graphNode"><h4 class="tsd-anchor-link" id="graph-node">Graph Node<a href="#graph-node" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>schema</p><h2 id="a-wrapper-not-a-copy-of" class="tsd-anchor-link">A wrapper, not a copy of <code>&lt;name&gt;.json</code><a href="#a-wrapper-not-a-copy-of" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>A bare copy would carry a <code>name</code> equal to its file stem — the rule that
 marks a directory's declaration (<code>declarationFileIn</code>, <code>findDeclarationFile</code>)
-— so every scanner would see a second instance nobody installed. So the
+— so every scanner would see a second layer nobody installed. So the
 snapshot declares what it is (<code>$schema</code>), and the upstream bytes sit in
 <code>raw</code>, untouched, where no scanner reads them as a declaration.</p><h2 id="and-a-digest-not-a-parsed-object" class="tsd-anchor-link"><code>raw</code> and a digest, not a parsed object<a href="#and-a-digest-not-a-parsed-object" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The digest is over <code>raw</code> exactly as fetched, so a re-fetch can check the
 pin byte for byte (the <code>sync-remote-skills</code> rule). <code>summary</code> is what a

@@ -9,6 +9,24 @@
     }
   ],
   "$defs": {
+    "skills/content-author/input": {
+      "$ref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/content-author/input.schema.json"
+    },
+    "skills/content-author/output": {
+      "$ref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/content-author/output.schema.json"
+    },
+    "skills/content-plan/input": {
+      "$ref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/content-plan/input.schema.json"
+    },
+    "skills/content-plan/output": {
+      "$ref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/content-plan/output.schema.json"
+    },
+    "skills/content-publish/input": {
+      "$ref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/content-publish/input.schema.json"
+    },
+    "skills/content-publish/output": {
+      "$ref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/content-publish/output.schema.json"
+    },
     "skills/document-authoring/input": {
       "$ref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/document-authoring/input.schema.json"
     },
@@ -233,6 +251,15 @@
     },
     "zod/public-comment/RecommendationSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/zod/public-comment/RecommendationSchema.schema.json"
+    },
+    "zod/public-comment/ReviewLogColumnSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/zod/public-comment/ReviewLogColumnSchema.schema.json"
+    },
+    "zod/public-comment/ReviewLogSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/zod/public-comment/ReviewLogSchema.schema.json"
+    },
+    "zod/public-comment/ReviewLogTabSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/zod/public-comment/ReviewLogTabSchema.schema.json"
     },
     "zod/public-comment/ReviewerSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/zod/public-comment/ReviewerSchema.schema.json"

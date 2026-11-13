@@ -2,7 +2,7 @@
 vocabulary — the first test preload, ahead of <code>test-preload.ts</code>.</p></div><div class="tsd-comment tsd-typography"><div class="tsd-tag-graphNode"><h4 class="tsd-anchor-link" id="graph-node">Graph Node<a href="#graph-node" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>none — a test preload; it sets one environment variable and defines no schema</p><h2 id="why" class="tsd-anchor-link">Why<a href="#why" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>cat-harness's code types the paper vocabulary, whose nodes live with their
 owners — document kinds in the content core, math kinds and the <code>paper</code>
 adapter in the science layer. Standing alone, as
-<code>check:cat-harness-standalone</code> runs it, none of them is there.</p><p>So: when no instance in this checkout declares a <code>block-kinds</code> graph,
+<code>check:cat-harness-standalone</code> runs it, none of them is there.</p><p>So: when no layer in this checkout declares a <code>block-kinds</code> graph,
 <code>FOLIO_FIXTURE_CHECKOUT</code> names <code>test/fixtures/standalone-checkout/</code>, which
 <code>declared-nodes.ts</code> then scans beside the real checkout. In the monorepo it
 is never set, so no test there can pass on the fixture instead of the real

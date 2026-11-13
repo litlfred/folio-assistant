@@ -61,11 +61,85 @@
               "instructionsPath": "skills/content/content-lifecycle-ext/block-change-summary.md",
               "name": "block-change-summary",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b53113c9f8f966d29ac042075778acce3d29b185772b6f455097ef47dbc32c15",
-                "bytes": 4583,
-                "sha256": "b53113c9f8f966d29ac042075778acce3d29b185772b6f455097ef47dbc32c15"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/37dfa18a8d48eec08c09c312a35585fb492b2de34362d34a689752ead75e1634",
+                "bytes": 4334,
+                "sha256": "37dfa18a8d48eec08c09c312a35585fb492b2de34362d34a689752ead75e1634"
               },
               "title": "Block Change Summary"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-author",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "hasIOContract": true,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+              "inputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/content-author/input.schema.json",
+              "instructionLines": 48,
+              "instructionsPath": "skills/content/content-lifecycle-ext/content-author.md",
+              "name": "content-author",
+              "outputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/content-author/output.schema.json",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/db87d9aad42ad0af7af56bf70c9bea824cb34be1f33ce3300063859b1e79ff46",
+                "bytes": 1709,
+                "sha256": "db87d9aad42ad0af7af56bf70c9bea824cb34be1f33ce3300063859b1e79ff46"
+              },
+              "title": "Content Authoring"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-plan",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "hasIOContract": true,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+              "inputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/content-plan/input.schema.json",
+              "instructionLines": 34,
+              "instructionsPath": "skills/content/content-lifecycle-ext/content-plan.md",
+              "name": "content-plan",
+              "outputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/content-plan/output.schema.json",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1f4d7044eb58e715c4f81db0eb202a178f70630056527cb8dd2ea372aec00c1e",
+                "bytes": 819,
+                "sha256": "1f4d7044eb58e715c4f81db0eb202a178f70630056527cb8dd2ea372aec00c1e"
+              },
+              "title": "Content Planning"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-publish",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "hasIOContract": true,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+              "inputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/content-publish/input.schema.json",
+              "instructionLines": 38,
+              "instructionsPath": "skills/content/content-lifecycle-ext/content-publish.md",
+              "name": "content-publish",
+              "outputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/content-publish/output.schema.json",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/91a25beeacaba1a9ea03668a537338317b586d57417d2f8201d3c61c93f6b053",
+                "bytes": 1271,
+                "sha256": "91a25beeacaba1a9ea03668a537338317b586d57417d2f8201d3c61c93f6b053"
+              },
+              "title": "Content Publication"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-retire",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+              "instructionLines": 28,
+              "instructionsPath": "skills/content/content-lifecycle-ext/content-retire.md",
+              "name": "content-retire",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/0461e4044e3d917944a15d9b3f1f565fb0c5ae8e6a41a2bd1f939435f8165609",
+                "bytes": 649,
+                "sha256": "0461e4044e3d917944a15d9b3f1f565fb0c5ae8e6a41a2bd1f939435f8165609"
+              },
+              "title": "Content Retirement"
             },
             {
               "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/corpus-commit-contract",
@@ -84,6 +158,24 @@
                 "sha256": "1a95381c1cc8a4d5647f367fddcf54345385781776410c6fc26a3b1ad24c4cd0"
               },
               "title": "Corpus — committing an accepted edit"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/diff",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "Show per-block content changes with viewer links, changelog, and undo impact analysis",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+              "instructionLines": 164,
+              "instructionsPath": "skills/content/content-lifecycle-ext/diff.md",
+              "name": "diff",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9941234f1c135b245ea7ce2849f0ff88c19caaa068076c5e5d2da4a24ed897fa",
+                "bytes": 6363,
+                "sha256": "9941234f1c135b245ea7ce2849f0ff88c19caaa068076c5e5d2da4a24ed897fa"
+              },
+              "title": "Diff — Content Block Change Report"
             },
             {
               "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/quality-control",
@@ -116,9 +208,9 @@
               "instructionsPath": "skills/content/content-lifecycle-ext/registry-authority-contract.md",
               "name": "registry-authority-contract",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9161dbc4edd0a265ac9ff65be21abc7678b77ac719bf0b0ed793d43d4c36f392",
-                "bytes": 2570,
-                "sha256": "9161dbc4edd0a265ac9ff65be21abc7678b77ac719bf0b0ed793d43d4c36f392"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/98ac49b67b73f4e780715695859b35f4c8d98992e5e6f4b044f742fcca9a7a6d",
+                "bytes": 2561,
+                "sha256": "98ac49b67b73f4e780715695859b35f4c8d98992e5e6f4b044f742fcca9a7a6d"
               },
               "title": "External registry — confirming a source's authority"
             },
@@ -134,9 +226,9 @@
               "instructionsPath": "skills/content/content-lifecycle-ext/review-comments.md",
               "name": "review-comments",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e890b92c058200b58763528f196b6b5682f855e88ca57ad7dbcbe11fcbc57809",
-                "bytes": 19100,
-                "sha256": "e890b92c058200b58763528f196b6b5682f855e88ca57ad7dbcbe11fcbc57809"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2f03149ee410f5b2f4edf345e920dc0654033f6056c95de7d522a320e93449dc",
+                "bytes": 19060,
+                "sha256": "2f03149ee410f5b2f4edf345e920dc0654033f6056c95de7d522a320e93449dc"
               },
               "title": "Review comments — from a PR comment to a structured todo"
             }
@@ -182,9 +274,9 @@
               "name": "document-authoring",
               "outputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/document-authoring/output.schema.json",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/00bb67f4794a64e04b39718ce80549cabc597b08076126d6725825cd12c0284e",
-                "bytes": 4092,
-                "sha256": "00bb67f4794a64e04b39718ce80549cabc597b08076126d6725825cd12c0284e"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ced14aa5e7176dc6e91d013bcc480224e59364e7dd7f2ed20e3d741dbca4edd5",
+                "bytes": 4089,
+                "sha256": "ced14aa5e7176dc6e91d013bcc480224e59364e7dd7f2ed20e3d741dbca4edd5"
               },
               "title": "document-authoring"
             },
@@ -227,118 +319,10 @@
               "title": "document-structure"
             },
             {
-              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/dsa-catalogue-status",
-              "@type": "bootstrap:Skill",
-              "ambiguous": false,
-              "description": "Set the life-cycle status (`adms:status`, W3C DCAT 3 §6.4.30) on a Data Sharing Agreement's DCAT 3 catalogue record when the agreement is amended, renewed, terminated, or expires, while keeping all published versions readable at their immutable URLs (DSA building block B3, process step P14.5 `Task_SetStatus`).",
-              "hasIOContract": false,
-              "hasInstructions": true,
-              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
-              "instructionLines": 54,
-              "instructionsPath": "skills/content/folio-document-adapter/dsa-catalogue-status.md",
-              "name": "dsa-catalogue-status",
-              "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4f955a1a8d665d24b11c6b22ae667f50998d5122150197c825695537cd18d29f",
-                "bytes": 2304,
-                "sha256": "4f955a1a8d665d24b11c6b22ae667f50998d5122150197c825695537cd18d29f"
-              },
-              "title": "`dsa-catalogue-status` — Set the catalogue status when an agreement changes or ends (P14.5)"
-            },
-            {
-              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/dsa-checksum",
-              "@type": "bootstrap:Skill",
-              "ambiguous": false,
-              "description": "Compute and record the SHA-256 cryptographic digest of a signed Data Sharing Agreement's legal text as a W3C DCAT 3 `spdx:checksum` (`spdx:Checksum` with `spdx:checksumAlgorithm_sha256` and 64-character lowercase hex `spdx:checksumValue`), verified by `check:dsa-hash` (DSA building block B3, process steps P2.2 `Task_Hash` and P2.2a `Task_HashSummary`).",
-              "hasIOContract": false,
-              "hasInstructions": true,
-              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
-              "instructionLines": 79,
-              "instructionsPath": "skills/content/folio-document-adapter/dsa-checksum.md",
-              "name": "dsa-checksum",
-              "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/58ca1b36107da3eb1803c6a3815326ea61fec0226392ad95a50303dc81bc2417",
-                "bytes": 3401,
-                "sha256": "58ca1b36107da3eb1803c6a3815326ea61fec0226392ad95a50303dc81bc2417"
-              },
-              "title": "`dsa-checksum` — Compute and record the SHA-256 of the legal text (P2.2)"
-            },
-            {
-              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/dsa-dcat-record",
-              "@type": "bootstrap:Skill",
-              "ambiguous": false,
-              "description": "Write the W3C DCAT 3 `dcat:Resource` and `dcat:Distribution` catalogue record for a Data Sharing Agreement (`dcat:downloadURL`, `spdx:checksum`, `odrl:hasPolicy`) and link versions with `dcat:version` and `dcat:previousVersion` (DSA building block B3, process step P2.4–5 `Task_Catalogue`).",
-              "hasIOContract": false,
-              "hasInstructions": true,
-              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
-              "instructionLines": 65,
-              "instructionsPath": "skills/content/folio-document-adapter/dsa-dcat-record.md",
-              "name": "dsa-dcat-record",
-              "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/971cd1aa035e602191c6a3ddc0ca781232be3e603cb2282d0493b3ba31c4631e",
-                "bytes": 3371,
-                "sha256": "971cd1aa035e602191c6a3ddc0ca781232be3e603cb2282d0493b3ba31c4631e"
-              },
-              "title": "`dsa-dcat-record` — Write the DCAT 3 record and link versions (P2.4–5)"
-            },
-            {
-              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/dsa-odrl-source",
-              "@type": "bootstrap:Skill",
-              "ambiguous": false,
-              "description": "Bind a computable Data Sharing Agreement's W3C ODRL 2.2 `Agreement` to its signed legal text distribution using DCMI Metadata Terms `dcterms:source`, naming the exact `dcat:Distribution` whose `spdx:checksum` is checked (DSA building block B3, process step P2.3 `Task_OdrlCitesText`).",
-              "hasIOContract": false,
-              "hasInstructions": true,
-              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
-              "instructionLines": 91,
-              "instructionsPath": "skills/content/folio-document-adapter/dsa-odrl-source.md",
-              "name": "dsa-odrl-source",
-              "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/363163331d0bc044825eba6ab8f0e72286f34d899239dda7c46254342b573f3d",
-                "bytes": 3386,
-                "sha256": "363163331d0bc044825eba6ab8f0e72286f34d899239dda7c46254342b573f3d"
-              },
-              "title": "`dsa-odrl-source` — Make the ODRL Agreement cite the legal text distribution (P2.3)"
-            },
-            {
-              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/folio-board-diagram-interchange",
-              "@type": "bootstrap:Skill",
-              "ambiguous": false,
-              "description": "The content-folio half of the harness's board-diagram-interchange skill: binds processes/ui/board-place-note.bpmn and board-relocate.bpmn, folio board filters over pages and block kinds, and note-to-board arrow direction.",
-              "hasIOContract": false,
-              "hasInstructions": true,
-              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
-              "instructionLines": 35,
-              "instructionsPath": "skills/content/folio-document-adapter/folio-board-diagram-interchange.md",
-              "name": "folio-board-diagram-interchange",
-              "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1aa61c6fabc7edc78c204f52c2fe9c6925a63a4a6c289e5d8d38de14ecd0027f",
-                "bytes": 1531,
-                "sha256": "1aa61c6fabc7edc78c204f52c2fe9c6925a63a4a6c289e5d8d38de14ecd0027f"
-              },
-              "title": "Folio board diagram interchange"
-            },
-            {
-              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/folio-board-windows",
-              "@type": "bootstrap:Skill",
-              "ambiguous": false,
-              "description": "The content-folio half of the harness's board-windows skill: binds processes/ui/board-open-close.bpmn, folio-glass pinning (todo/<id> and landing/<slot>), and content-type card chrome ([x], [linksrc], [edit]).",
-              "hasIOContract": false,
-              "hasInstructions": true,
-              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
-              "instructionLines": 40,
-              "instructionsPath": "skills/content/folio-document-adapter/folio-board-windows.md",
-              "name": "folio-board-windows",
-              "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7ac650c64210109b3cb8e0a13dcb412402d4aa50557831ad2d26dc5998701b9d",
-                "bytes": 1775,
-                "sha256": "7ac650c64210109b3cb8e0a13dcb412402d4aa50557831ad2d26dc5998701b9d"
-              },
-              "title": "Folio board windows and glass pinning"
-            },
-            {
               "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/folio-content-lifecycle",
               "@type": "bootstrap:Skill",
               "ambiguous": false,
-              "description": "The content-folio half of the harness's content-lifecycle skills (content-author, content-feedback, content-plan, content-publish, content-review, content-test, content-validate, evidence-appraisal): binds core lifecycle diagrams, quality-control and review-comments gates, and empirical vs. formal evidence rules.",
+              "description": "The content-folio half of the content-lifecycle skills (the harness's content-feedback, content-review, content-test, content-validate and evidence-appraisal; this layer's content-plan, content-author, content-publish and content-retire): binds core lifecycle diagrams, quality-control and review-comments gates, and empirical vs. formal evidence rules.",
               "hasIOContract": false,
               "hasInstructions": true,
               "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
@@ -346,9 +330,9 @@
               "instructionsPath": "skills/content/folio-document-adapter/folio-content-lifecycle.md",
               "name": "folio-content-lifecycle",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b9eab5129173ff5227942a673ec45efb4a9302696b987a2d7d473b0d64a11876",
-                "bytes": 3477,
-                "sha256": "b9eab5129173ff5227942a673ec45efb4a9302696b987a2d7d473b0d64a11876"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3fc73b7b4d1be81446bad64d7790f7e5cd3899ad2427a3f87aca3cb09a32be89",
+                "bytes": 3407,
+                "sha256": "3fc73b7b4d1be81446bad64d7790f7e5cd3899ad2427a3f87aca3cb09a32be89"
               },
               "title": "Folio content lifecycle and evidence appraisal"
             },
@@ -400,9 +384,9 @@
               "instructionsPath": "skills/content/folio-document-adapter/folio-getting-started.md",
               "name": "folio-getting-started",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b305702980c1ead47221fe245c85d105a52f0305c6441b6561634d48121b00ff",
-                "bytes": 3000,
-                "sha256": "b305702980c1ead47221fe245c85d105a52f0305c6441b6561634d48121b00ff"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/6421c3fed033bc8d6545210f51e5ab8ff2b4e5e1af85149dc61bd31071925881",
+                "bytes": 2989,
+                "sha256": "6421c3fed033bc8d6545210f51e5ab8ff2b4e5e1af85149dc61bd31071925881"
               },
               "title": "Folio getting started — content-type triage and routing"
             },
@@ -451,14 +435,14 @@
               "hasInstructions": true,
               "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
               "inputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/public-comment/input.schema.json",
-              "instructionLines": 593,
+              "instructionLines": 605,
               "instructionsPath": "skills/content/folio-document-adapter/public-comment.md",
               "name": "public-comment",
               "outputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/public-comment/output.schema.json",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d6f74ab0a2b9ca1c195a26b3e941ef8b32a56de142d57219239c28c876ccc5fd",
-                "bytes": 38819,
-                "sha256": "d6f74ab0a2b9ca1c195a26b3e941ef8b32a56de142d57219239c28c876ccc5fd"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/34bab80be5ea4c0e1900452e70011e8146bb0d06fbf46c8d410ecbd468849463",
+                "bytes": 39423,
+                "sha256": "34bab80be5ea4c0e1900452e70011e8146bb0d06fbf46c8d410ecbd468849463"
               },
               "title": "public-comment"
             },
@@ -524,13 +508,13 @@
               "hasIOContract": false,
               "hasInstructions": true,
               "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
-              "instructionLines": 1270,
+              "instructionLines": 1334,
               "instructionsPath": "skills/content/folio-document-adapter/review-sheet-script.md",
               "name": "review-sheet-script",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/6fa62c6f84265811abfef4ce7a93958fbafc88351d95acede62a6db0dedc0d62",
-                "bytes": 80185,
-                "sha256": "6fa62c6f84265811abfef4ce7a93958fbafc88351d95acede62a6db0dedc0d62"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/791e116673e259d9480721240fc970e6c3ea6e7d34bd9e79da83f29bde168684",
+                "bytes": 84896,
+                "sha256": "791e116673e259d9480721240fc970e6c3ea6e7d34bd9e79da83f29bde168684"
               },
               "title": "The review sheet's Apps Script"
             }
@@ -557,9 +541,9 @@
               "instructionsPath": "skills/content/requirements-planning/plan-request-gate.md",
               "name": "plan-request-gate",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/61e07425a59e48d22bee243055be76ae7e6ed452d58408e0247457aa7dab0cf1",
-                "bytes": 6861,
-                "sha256": "61e07425a59e48d22bee243055be76ae7e6ed452d58408e0247457aa7dab0cf1"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/aab7cbac8fd7fb6b21b72a946d5ea6402fa3e1167e9dc23f2a1ea5ba0d4029cc",
+                "bytes": 6441,
+                "sha256": "aab7cbac8fd7fb6b21b72a946d5ea6402fa3e1167e9dc23f2a1ea5ba0d4029cc"
               },
               "title": "A plan request stops at a signed-off plan"
             },
@@ -575,9 +559,9 @@
               "instructionsPath": "skills/content/requirements-planning/requirement-definition.md",
               "name": "requirement-definition",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9d2f8b4ae05f9e04df1d6135b3002959a15965d728955fe5d8859b9faf99955e",
-                "bytes": 6339,
-                "sha256": "9d2f8b4ae05f9e04df1d6135b3002959a15965d728955fe5d8859b9faf99955e"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4eae26f3fc967f56551724588dad1721861d4f748766f55279e4a7b29fddba93",
+                "bytes": 6181,
+                "sha256": "4eae26f3fc967f56551724588dad1721861d4f748766f55279e4a7b29fddba93"
               },
               "title": "One definition of a requirement"
             }
@@ -607,7 +591,7 @@
               "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/dublin-core-renderings",
               "@type": "bootstrap:Skill",
               "ambiguous": false,
-              "description": "Render a catalogue's Dublin Core records in the two standard forms an outside reader can use: Dublin Core XML, which a harvester reads, and JSON-LD bound to DCMI Metadata Terms. Each rendering is published beside the item's page. Covers which records get one, which XML form is used and why, how every field maps from the record's own data (never composed), what cannot be expressed and how that is reported, and the gate. Read this before changing the mapping, adding a catalogue instance, or linking a rendering from a page.",
+              "description": "Render a catalogue's Dublin Core records in the two standard forms an outside reader can use: Dublin Core XML, which a harvester reads, and JSON-LD bound to DCMI Metadata Terms. Each rendering is published beside the item's page. Covers which records get one, which XML form is used and why, how every field maps from the record's own data (never composed), what cannot be expressed and how that is reported, and the gate. Read this before changing the mapping, adding a catalogue layer, or linking a rendering from a page.",
               "hasIOContract": false,
               "hasInstructions": true,
               "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
@@ -615,29 +599,11 @@
               "instructionsPath": "skills/library/catalogue/dublin-core-renderings.md",
               "name": "dublin-core-renderings",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/63d09afef48541c1ce2d0cecfa1d936bef83e97681bc489feb684f33d923d3b1",
-                "bytes": 6987,
-                "sha256": "63d09afef48541c1ce2d0cecfa1d936bef83e97681bc489feb684f33d923d3b1"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8a552cd44c7c9e17e096c0a1158cdcf82f7a7d0b440229b160723b72a56353af",
+                "bytes": 6992,
+                "sha256": "8a552cd44c7c9e17e096c0a1158cdcf82f7a7d0b440229b160723b72a56353af"
               },
               "title": "Dublin Core renderings"
-            },
-            {
-              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/oxigraph-catalogue-search",
-              "@type": "bootstrap:Skill",
-              "ambiguous": false,
-              "description": "How to compile, partition, distribute via CDN, and query digital library catalogue and Qualified Dublin Core metadata using Oxigraph in-memory WebAssembly on the static edge. Establishes the 2-tier on-demand loading hierarchy, upstream skolemization for zero blank nodes, append-only streaming partition writes, and SPARQL 1.1 cross-graph query recipes.",
-              "hasIOContract": false,
-              "hasInstructions": true,
-              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
-              "instructionLines": 216,
-              "instructionsPath": "skills/library/catalogue/oxigraph-catalogue-search.md",
-              "name": "oxigraph-catalogue-search",
-              "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/0517da62963a0801ccb2d0a068c189a462ce57bf2b356d4870fbfb012d439155",
-                "bytes": 8666,
-                "sha256": "0517da62963a0801ccb2d0a068c189a462ce57bf2b356d4870fbfb012d439155"
-              },
-              "title": "Oxigraph Multi-Graph Static Search & Catalog Discovery"
             }
           ],
           "holdsGraph": [
@@ -680,9 +646,9 @@
               "instructionsPath": "skills/library/cataloguing/archiving-web-pages.md",
               "name": "archiving-web-pages",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/64f81bbd805018a2f3b3adec3303dcc14a39f1b758055bb26af2d2666f104604",
-                "bytes": 3287,
-                "sha256": "64f81bbd805018a2f3b3adec3303dcc14a39f1b758055bb26af2d2666f104604"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/44170f801044b16476b2b2ef8aebdee13d977e99f839137b10d4574624f93d1d",
+                "bytes": 3283,
+                "sha256": "44170f801044b16476b2b2ef8aebdee13d977e99f839137b10d4574624f93d1d"
               },
               "title": "Archiving a web page"
             },
@@ -703,24 +669,6 @@
                 "sha256": "d66b435ba4679b81ad5d283ad1cbe8f7d79412477aade2e329dd9d290680009c"
               },
               "title": "bib-human-review"
-            },
-            {
-              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/bib-photo-ingestion-watcher",
-              "@type": "bootstrap:Skill",
-              "ambiguous": false,
-              "description": "Integration-watcher for bib physical-review issues. When a page photo is uploaded to a `bib-physical-review` issue (or an in-repo source passage is agent-identified), OCR/read it, formalise the cited result (if the project has a formal-proof pipeline), confirm the project's usage matches the source, run machine + agent bib validation, then set the reference status to `validated` and refresh references.review.json. Use when processing a bib-physical-review issue that has an attached photo, or when ingesting an uploaded paper.",
-              "hasIOContract": false,
-              "hasInstructions": true,
-              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
-              "instructionLines": 53,
-              "instructionsPath": "skills/library/cataloguing/bib-photo-ingestion-watcher.md",
-              "name": "bib-photo-ingestion-watcher",
-              "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/129b2b280aebb60a869e8e421ff1a94aaa86c2df56de60fe5d81607ec8b4e0a6",
-                "bytes": 2669,
-                "sha256": "129b2b280aebb60a869e8e421ff1a94aaa86c2df56de60fe5d81607ec8b4e0a6"
-              },
-              "title": "bib-photo-ingestion-watcher"
             },
             {
               "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/bib-qa",
@@ -752,9 +700,9 @@
               "instructionsPath": "skills/library/cataloguing/filing-dublin-core.md",
               "name": "filing-dublin-core",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1f4f78f480c0447b8cf96377b1b64cede3370ae655792ff18dd7ccc30ddb9371",
-                "bytes": 4749,
-                "sha256": "1f4f78f480c0447b8cf96377b1b64cede3370ae655792ff18dd7ccc30ddb9371"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a2f12d0f5bfd5df22b5929a3d750f84e4c1c989dd90ed3a7b8247d5bc587034d",
+                "bytes": 4745,
+                "sha256": "a2f12d0f5bfd5df22b5929a3d750f84e4c1c989dd90ed3a7b8247d5bc587034d"
               },
               "title": "Filing a source: what Dublin Core carries, and what it does not"
             },
@@ -765,13 +713,13 @@
               "hasIOContract": false,
               "hasInstructions": true,
               "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
-              "instructionLines": 140,
+              "instructionLines": 120,
               "instructionsPath": "skills/library/cataloguing/glossary-build.md",
               "name": "glossary-build",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c967ffcec9a742018baee534aac76a725cadef3dc4d22aa5f8828512c23692ac",
-                "bytes": 6515,
-                "sha256": "c967ffcec9a742018baee534aac76a725cadef3dc4d22aa5f8828512c23692ac"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/432889cc295b98630bab982fc628b6d4b80d98354746a5457d1f7a392ea7e0d7",
+                "bytes": 5954,
+                "sha256": "432889cc295b98630bab982fc628b6d4b80d98354746a5457d1f7a392ea7e0d7"
               },
               "title": "Glossary Build Skill"
             },
@@ -779,19 +727,37 @@
               "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/glossary-terms",
               "@type": "bootstrap:Skill",
               "ambiguous": false,
-              "description": "Add terms to an instance's glossary: local SKOS terms (folio-glossary/v1) with a definition, a code and links to external SKOS concepts, and references to whole external schemes. Rendered on the glossary/ page; gated by check:glossary. Authored terms go to gettext (.pot) for translation; a paper's glossary is one more scheme.",
+              "description": "Add terms to a layer's glossary: local SKOS terms (folio-glossary/v1) with a definition, a code and links to external SKOS concepts, and references to whole external schemes. Rendered on the glossary/ page; gated by check:glossary. Authored terms go to gettext (.pot) for translation; a paper's glossary is one more scheme.",
               "hasIOContract": false,
               "hasInstructions": true,
               "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
-              "instructionLines": 474,
+              "instructionLines": 476,
               "instructionsPath": "skills/library/cataloguing/glossary-terms.md",
               "name": "glossary-terms",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f96f595a61c2ee0c163a743b97ae8c4548dbacce9cf8abb1876823b4e650b926",
-                "bytes": 24525,
-                "sha256": "f96f595a61c2ee0c163a743b97ae8c4548dbacce9cf8abb1876823b4e650b926"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b4ec501d30a1ae6b369e8463ce363cb04ec8d208f634e5d6faec7930bb44cc47",
+                "bytes": 24486,
+                "sha256": "b4ec501d30a1ae6b369e8463ce363cb04ec8d208f634e5d6faec7930bb44cc47"
               },
               "title": "Glossary terms"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/mesh-subject-indexing",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "Assign Medical Subject Headings (MeSH) to a work as a DRAFT for a person to review, in the four stages of skill-pipeline-subject-indexing: over-generate concepts, filter them by NLM's own rules, validate every heading against NLM's MeSH authority with Tool `mesh-authority`, and write the reviewed list. Never emits a heading the authority does not hold.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+              "instructionLines": 111,
+              "instructionsPath": "skills/library/cataloguing/mesh-subject-indexing.md",
+              "name": "mesh-subject-indexing",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c7e874554ad2c022f01d38e16404b66134f77d45f8a0f4f1e649ca266f243422",
+                "bytes": 5206,
+                "sha256": "c7e874554ad2c022f01d38e16404b66134f77d45f8a0f4f1e649ca266f243422"
+              },
+              "title": "MeSH subject indexing"
             },
             {
               "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/ontologist",
@@ -801,13 +767,13 @@
               "hasIOContract": false,
               "hasInstructions": true,
               "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
-              "instructionLines": 224,
+              "instructionLines": 226,
               "instructionsPath": "skills/library/cataloguing/ontologist.md",
               "name": "ontologist",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8ce357c858410816f2d4272f4673cc29d1fffeedd8bea5efc9c8a0d639e2dd59",
-                "bytes": 9274,
-                "sha256": "8ce357c858410816f2d4272f4673cc29d1fffeedd8bea5efc9c8a0d639e2dd59"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/91637dec1200bcc266493872a478f689f136a0cca4c3553a340840ba62bbd337",
+                "bytes": 9322,
+                "sha256": "91637dec1200bcc266493872a478f689f136a0cca4c3553a340840ba62bbd337"
               },
               "title": "Semantic Ontologist (Ambiguity Detection & Glossary)"
             }
@@ -834,24 +800,6 @@
           "@type": "bootstrap:Subgraph",
           "hasMember": [
             {
-              "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/audio-transcription",
-              "@type": "bootstrap:Skill",
-              "ambiguous": false,
-              "description": "Turn recorded speech (a meeting recording, a video with audio, an interview) into a transcript the library can cite, and choose WHICH open-source recogniser to run for the job: whisper.cpp by default, faster-whisper, WhisperX with pyannote, Vosk, NVIDIA Parakeet/Canary, or Distil-Whisper. Covers audio extraction, why two exports of one recogniser are one opinion, how to compare transcripts (WER, CER, DER), translation, and what blocks a run. Use when an upload contains audio or video, when someone asks which transcription tool to use, or before declaring a new transcription Tool.",
-              "hasIOContract": false,
-              "hasInstructions": true,
-              "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
-              "instructionLines": 145,
-              "instructionsPath": "skills/library/ingestion/audio-transcription.md",
-              "name": "audio-transcription",
-              "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/cafc699e08d4b54a1e81cb78cbb4983f9c8b3a0bd56602fbbd127877c5d7ff1e",
-                "bytes": 8211,
-                "sha256": "cafc699e08d4b54a1e81cb78cbb4983f9c8b3a0bd56602fbbd127877c5d7ff1e"
-              },
-              "title": "Audio transcription: which recogniser, when, and how to check it"
-            },
-            {
               "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
               "@type": "bootstrap:Skill",
               "ambiguous": false,
@@ -859,13 +807,13 @@
               "hasIOContract": false,
               "hasInstructions": true,
               "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
-              "instructionLines": 482,
+              "instructionLines": 534,
               "instructionsPath": "skills/library/ingestion/document-intake.md",
               "name": "document-intake",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8234c454d829e58fe1e9d2b02807e9bc898d08bc49248529094766fc391eaa99",
-                "bytes": 22721,
-                "sha256": "8234c454d829e58fe1e9d2b02807e9bc898d08bc49248529094766fc391eaa99"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/894467f6fe25f8baf017289dbb5f1518165cb508ed9c757555749c99ba910ad8",
+                "bytes": 25657,
+                "sha256": "894467f6fe25f8baf017289dbb5f1518165cb508ed9c757555749c99ba910ad8"
               },
               "title": "Document Intake"
             },
@@ -873,17 +821,17 @@
               "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/figure-rebuild",
               "@type": "bootstrap:Skill",
               "ambiguous": false,
-              "description": "Turn a source publication's figures into computable diagrams when a folio is built from its L1 entry. Every declared figure gets a block, and each one is rebuilt in the form its type calls for: an ArchiMate view, BPMN, DMN, a FHIR logical model, or an SVG generated from data, always from one schema-backed source. The PDF crop stays beside the rebuild as the cited source. The figure-coverage check counts what is missing and what is still only a picture.",
+              "description": "Turn a figure into a computable diagram: every figure of a source publication when a folio is built from its L1 entry, and any hand-drawn figure in a folio, an IG or a demonstrator that is redrawn from a source. Every declared figure gets a block, and each one is rebuilt in the form its type calls for: an ArchiMate view, BPMN, DMN, a FHIR logical model, or an SVG generated from data, always from one schema-backed source. The PDF crop stays beside the rebuild as the cited source, and the rebuild keeps the original's layout. The figure-coverage check counts what is missing and what is still only a picture.",
               "hasIOContract": false,
               "hasInstructions": true,
               "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
-              "instructionLines": 263,
+              "instructionLines": 339,
               "instructionsPath": "skills/library/ingestion/figure-rebuild.md",
               "name": "figure-rebuild",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/57003f31b8a0cb9917fb06cc1110fcf9197dee37bbb06a653e4483e15a29acc1",
-                "bytes": 15142,
-                "sha256": "57003f31b8a0cb9917fb06cc1110fcf9197dee37bbb06a653e4483e15a29acc1"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/85ed62899c9017b42c53f741eb119db9e6eac2a855752192490e851e27b5a9e7",
+                "bytes": 19830,
+                "sha256": "85ed62899c9017b42c53f741eb119db9e6eac2a855752192490e851e27b5a9e7"
               },
               "title": "Figure rebuild: a figure is data, not a picture"
             },
@@ -913,13 +861,13 @@
               "hasIOContract": false,
               "hasInstructions": true,
               "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
-              "instructionLines": 869,
+              "instructionLines": 1137,
               "instructionsPath": "skills/library/ingestion/l1-document-ingestion.md",
               "name": "l1-document-ingestion",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/835c1c36e42791d8599efed1a4d3788cd85a053401e6c45e4550b8b4f040b0e9",
-                "bytes": 48571,
-                "sha256": "835c1c36e42791d8599efed1a4d3788cd85a053401e6c45e4550b8b4f040b0e9"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/62c9bb34346636f09d22494e22720cb6a5d8bd400ea80c926e95167093e820ca",
+                "bytes": 63788,
+                "sha256": "62c9bb34346636f09d22494e22720cb6a5d8bd400ea80c926e95167093e820ca"
               },
               "title": "L1 document ingestion"
             },
@@ -935,9 +883,9 @@
               "instructionsPath": "skills/library/ingestion/publish-extracted-statements.md",
               "name": "publish-extracted-statements",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/dc67e5e171df2bd0c60f2594d34be76e0f743ea86b5e84f47708ee75d9c0ef5a",
-                "bytes": 6819,
-                "sha256": "dc67e5e171df2bd0c60f2594d34be76e0f743ea86b5e84f47708ee75d9c0ef5a"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fb4988690cc1284ef4bbf9d799ccd410dcfc8b547dcbd22a40b3af864b2eb1f0",
+                "bytes": 6813,
+                "sha256": "fb4988690cc1284ef4bbf9d799ccd410dcfc8b547dcbd22a40b3af864b2eb1f0"
               },
               "title": "Publish extracted statements with source links"
             },
@@ -989,9 +937,9 @@
           "instructionsPath": "skills/review/review.md",
           "name": "review",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ab8c9d75c3370187eff7ad07dac7221d2964822e460f1306ddf1a3a6b873e170",
-            "bytes": 3135,
-            "sha256": "ab8c9d75c3370187eff7ad07dac7221d2964822e460f1306ddf1a3a6b873e170"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e8e5fcc32db9c6aec4e74bca7d30bc23ff573b7a331611191c74404448724054",
+            "bytes": 2968,
+            "sha256": "e8e5fcc32db9c6aec4e74bca7d30bc23ff573b7a331611191c74404448724054"
           },
           "title": "Review: a pointer to the review skills"
         }

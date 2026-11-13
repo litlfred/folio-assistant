@@ -22,7 +22,7 @@ at that <code>@id</code>. For bootstrap that is the vocabulary (<code>ns.jsonld<
 at <code>&#x3C;iriBase>v&#x3C;major>/processes/ns/</code>, the namespace every diagram binds);</li><li>the graph export, built when the site is published, at the address its own
 <code>@id</code> names (<a href="bootstrap-graph-publication.html"><code>bootstrap-graph-publication</code></a>).</li></ul><p>Each document carries its <code>@context</code> inline, so publishing the document
 publishes its context. A harness whose documents name an external context
-publishes that context the same way, at its own IRI.</p><p><strong>No <code>iriBase</code>, no addresses.</strong> An instance that declares none has nothing
+publishes that context the same way, at its own IRI.</p><p><strong>No <code>iriBase</code>, no addresses.</strong> A layer that declares none has nothing
 here to publish, and says so rather than reporting a pass over nothing.</p><h2>Where each goes</h2><p>At the path its IRI names, with <code>iriBase</code> removed. An address ending in <code>/</code>
 (<code>…/v0/ns/</code>) gets the document as <code>index.jsonld</code> there, with an <code>index.json</code>
 copy beside it. A <code>.jsonld</code> gets a <code>.json</code> copy with the same bytes beside it,

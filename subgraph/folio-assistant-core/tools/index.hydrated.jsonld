@@ -161,6 +161,15 @@
                 "name": "site",
                 "required": false,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--scope"
+                },
+                "description": "A scoped site build: the comma-separated instances whose pages this writer writes (the IG and the layer it lands on); every other instance's pages are linked on that layer's own site. Passed by the tools layer's `visualiser-writers.ts` (owner, 2026-11-08, Q-SZ-2 \"B\"). Absent: every instance.",
+                "name": "scope",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/IdList"
               }
             ],
             "outputs": [
@@ -274,6 +283,105 @@
       ],
       "name": "tools/block-actions",
       "path": "tools/block-actions/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/c-value-terms/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/c-value-terms.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "The scoring step of the `automatic-term-extraction` method: count the word n-grams of one or more Markdown or text files (not across punctuation, front matter or code), and rank them by C-value as Frantzi & Ananiadou 1996 define it, so nested multi-word terms are not swamped by the longer phrases that contain them. Tested against the paper's own worked example (Table 2). Every row is a candidate; it writes nothing and promotes nothing.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run folio-assistant-core/scripts/c-value.ts"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "positional": 0
+                },
+                "description": "One or more Markdown or text files whose prose is read.",
+                "name": "files",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--max-length"
+                },
+                "description": "Longest n-gram, in words; 1 or more. Default 5.",
+                "name": "maxLength",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count"
+              },
+              {
+                "arg": {
+                  "flag": "--min-freq"
+                },
+                "description": "Fewest occurrences an n-gram needs to be scored. Default 3, the paper's cut-off; 1 or more.",
+                "name": "minFreq",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count"
+              },
+              {
+                "arg": {
+                  "flag": "--top"
+                },
+                "description": "How many candidates to print; 1 or more. Default 50.",
+                "name": "top",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count"
+              },
+              {
+                "arg": {
+                  "flag": "--edge-stopwords"
+                },
+                "description": "Drop n-grams that begin or end with a common English function word. Off by default, because the 1996 method has no such filter.",
+                "name": "edgeStopwords",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              },
+              {
+                "arg": {
+                  "flag": "--json"
+                },
+                "description": "Print the candidates as JSON, each with its frequency, nesting counts and C-value.",
+                "name": "json",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "A ranked table, or JSON with `status: candidate`, of n-grams with a C-value above 0.",
+                "name": "candidates",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+              }
+            ]
+          },
+          "name": "c-value-terms",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "bun"
+            ]
+          },
+          "satisfies": [
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/glossary-terms",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/ontologist"
+          ],
+          "title": "Rank candidate glossary terms in prose by C-value"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/c-value-terms",
+      "path": "tools/c-value-terms/"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/catalogue-from-references/",
@@ -853,7 +961,7 @@
             ]
           },
           "satisfies": [
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/diff",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/diff",
             "https://litlfred.github.io/folio-assistant/cat-harness/skill/staging-review"
           ],
           "title": "Folio ChangeSet"
@@ -1425,6 +1533,15 @@
                 "name": "site",
                 "required": false,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--scope"
+                },
+                "description": "A scoped site build: the comma-separated instances whose pages this writer writes (the IG and the layer it lands on); every other instance's pages are linked on that layer's own site. Passed by the tools layer's `visualiser-writers.ts` (owner, 2026-11-08, Q-SZ-2 \"B\"). Absent: every instance.",
+                "name": "scope",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/IdList"
               }
             ],
             "outputs": [
@@ -1591,6 +1708,127 @@
       "path": "tools/l1-coverage/"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/mesh-authority/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/mesh-authority.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Stage three of `skill-pipeline-subject-indexing` for MeSH: look up every candidate heading of a draft (a preferred heading, an entry term, or a descriptor id, with an optional qualifier) in NLM's MeSH authority at id.nlm.nih.gov, current year. Each candidate comes back `resolved` (in the preferred form), `qualifier-not-allowed` (descriptor kept, qualifier dropped), `ambiguous` (options listed for a person) or `not-found` (dropped). It never adds a heading the draft did not propose and never emits one the authority lacks.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run folio-assistant-core/scripts/mesh-authority.ts validate"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "positional": 0
+                },
+                "description": "A JSON file: `{ \"candidates\": [{ \"label\"?, \"descriptor\"?, \"qualifier\"?, \"why\"? }] }`, in the order stage two ranked them.",
+                "name": "draft",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--json"
+                },
+                "description": "Print the full report as JSON instead of the review table.",
+                "name": "json",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "A review table with one row per candidate, or with `--json` the report: `results` per candidate and `validated`, the headings a reviewer sees.",
+                "name": "report",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+              }
+            ]
+          },
+          "name": "mesh-authority",
+          "requirements": {
+            "network": true,
+            "runtime": [
+              "bun"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/mesh-subject-indexing",
+          "title": "Validate draft MeSH headings against NLM's authority"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/mesh-authority",
+      "path": "tools/mesh-authority/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/public-comment-changesets/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/public-comment-changesets.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Bring a public review's change-sets back in line with GitHub: open the primary issue of each change-set somebody has engaged with, link the other issues that discuss it, and re-render each issue's change-set section from its `changesets/CS-*.json` record. The nightly half of what the folio's public-comment workflow does on each issue event (`github`); `check` validates the records without writing.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run folio-assistant-core/scripts/public-comment-changesets.ts"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "positional": 0
+                },
+                "description": "The command: `reconcile` (the nightly run), `check` (validate the records, write nothing) or `github` (one issue event, as the workflow does).",
+                "name": "operation",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ChangeSetAction"
+              },
+              {
+                "arg": {
+                  "flag": "--store"
+                },
+                "description": "The record's directory in the repository. Default `review/public-comment`.",
+                "name": "store",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "The updated `changesets/CS-*.json` records under the store; the issues are updated on GitHub.",
+                "name": "changesets",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "public-comment-changesets",
+          "requirements": {
+            "network": true,
+            "runtime": [
+              "bun",
+              "gh"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/public-comment",
+          "title": "Public-comment change-sets"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/public-comment-changesets",
+      "path": "tools/public-comment-changesets/"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/publish-extracted-statements/",
       "@type": "bootstrap:Subgraph",
       "hasMember": [
@@ -1658,6 +1896,75 @@
       ],
       "name": "tools/publish-extracted-statements",
       "path": "tools/publish-extracted-statements/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/references-extract/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/references-extract.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Split each library entry's reference lists (a References, Bibliography or Further reading section or heading, in the six UN languages and Portuguese) into folio-reference/v1 nodes in the instance's declared `references` directory, one per cited work, keyed `<doc-id>.<section>.<n>`: provenance extracted, derivedFrom the section file, printed the entry verbatim, and only the fields read without guessing (URL, DOI, ISBN, year, access date). The bibliography page lists them as the document's own bibliography. `--check` writes nothing and fails when a node is stale.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run cat references:extract"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "flag": "--instance"
+                },
+                "description": "The instance root whose library sections are read and whose references directory is written.",
+                "name": "instance",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--entry"
+                },
+                "description": "One library entry's slug, to extract only its lists.",
+                "name": "entry",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--check"
+                },
+                "description": "Fail if a node is stale, instead of writing.",
+                "name": "check",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "The extracted reference nodes: `<references dir>/<doc-id>.<section>.<n>.json`.",
+                "name": "references",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "references-extract",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "bun"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/l1-document-ingestion",
+          "title": "Reference lists to reference nodes"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/references-extract",
+      "path": "tools/references-extract/"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/references-render/",

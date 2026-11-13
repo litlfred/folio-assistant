@@ -16,8 +16,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg/node/StartEvent_Derived2"
       ],
-      "nodeCount": 8,
-      "flowCount": 7,
+      "nodeCount": 9,
+      "flowCount": 8,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes"
     },
     {
@@ -65,6 +65,14 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg/node/Task_Glossary",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg/node/Task_References",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg#flow/Flow_k5c",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg/node/Task_References",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg/node/Task_Link",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes"
     },

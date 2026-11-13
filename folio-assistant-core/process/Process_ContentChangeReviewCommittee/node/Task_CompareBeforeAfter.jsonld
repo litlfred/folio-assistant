@@ -10,12 +10,12 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewCommittee",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/reviewer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
       "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewCommittee/lane/Lane_Reviewer",
       "requires": [
-        "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/staging-review",
-        "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/visual-diff",
-        "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/rendered-impact"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/staging-review",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/visual-diff",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/rendered-impact"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,

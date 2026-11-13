@@ -270,6 +270,30 @@
 
   /* ── Language switcher ────────────────────────────────────────────────── */
 
+  /* The bar picker's name, in the page's language (owner, 2026-11-10: the
+     reference site reads "Select language" beside a translate glyph). One
+     entry per UN language; any other locale falls back to English. */
+  var SELECT_LANGUAGE = {
+    "ar": "\u0627\u062E\u062A\u0631 \u0627\u0644\u0644\u063A\u0629",
+    "zh": "\u9009\u62E9\u8BED\u8A00",
+    "en": "Select language",
+    "fr": "Choisir la langue",
+    "ru": "\u0412\u044B\u0431\u0440\u0430\u0442\u044C \u044F\u0437\u044B\u043A",
+    "es": "Seleccionar idioma"
+  };
+
+  // A translate glyph (a CJK character beside a Latin A), the reference
+  // site's language mark. Material Icons "translate", Apache-2.0.
+  var TRANSLATE_GLYPH =
+    '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+    '<path fill="currentColor" d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/>' +
+    "</svg>";
+
+  var CHEVRON_GLYPH =
+    '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+    '<path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>' +
+    "</svg>";
+
   // Globe glyph for the toggle button
   var GLOBE_GLYPH =
     '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
@@ -482,6 +506,8 @@
       // this one kept the literals, because the gate never opened this view.
       var tab = el(isAvailable ? "a" : "span", {
         href: isAvailable ? safeHref(localePath(basePath, loc)) : undefined,
+        // Says "unavailable" to a screen reader too, not only by its strike-through (Q-TRP-2).
+        "aria-disabled": isAvailable ? undefined : "true",
         "data-locale": loc,
         title: isAvailable
           ? LOCALE_NAMES[loc] + (isRemembered ? " \u2014 your saved language" : "")
@@ -561,11 +587,28 @@
       "aria-label": "Language: " + (LOCALE_NAMES[currentLang] || currentLang.toUpperCase()),
       title: "Available translations for this page",
     });
-    toggle.appendChild(el("span", { class: "fa-page-lang-globe", "aria-hidden": "true" }, "\uD83C\uDF10"));
-    toggle.appendChild(el("span", { class: "fa-page-lang-current" }, currentLang.toUpperCase()));
-    toggle.appendChild(el("span", { class: "fa-page-lang-caret", "aria-hidden": "true" }, "\u25BE"));
+    /* IN A PAGE'S OWN BAR, THE REFERENCE SITE'S CONTROL -- owner,
+     * 2026-11-10: "have styling match who.int especially for language and
+     * search parts". The bar's picker is a translate glyph, the words
+     * "Select language" in the page's language, and a chevron; it opens a
+     * dropdown of the languages, each named in its own language. The band's
+     * globe-and-tabs picker, on a page with no bar, is unchanged. */
+    if (slot) {
+      var labelLang = SELECT_LANGUAGE[currentLang] ? currentLang : "en";
+      var icon = el("span", { class: "fa-page-lang-glyph", "aria-hidden": "true" });
+      icon.innerHTML = TRANSLATE_GLYPH;
+      toggle.appendChild(icon);
+      toggle.appendChild(el("span", { class: "fa-page-lang-label", lang: labelLang }, SELECT_LANGUAGE[labelLang]));
+      var chevron = el("span", { class: "fa-page-lang-chevron", "aria-hidden": "true" });
+      chevron.innerHTML = CHEVRON_GLYPH;
+      toggle.appendChild(chevron);
+    } else {
+      toggle.appendChild(el("span", { class: "fa-page-lang-globe", "aria-hidden": "true" }, "\uD83C\uDF10"));
+      toggle.appendChild(el("span", { class: "fa-page-lang-current" }, currentLang.toUpperCase()));
+      toggle.appendChild(el("span", { class: "fa-page-lang-caret", "aria-hidden": "true" }, "\u25BE"));
+    }
     container.appendChild(toggle);
-    var list = el("span", { class: "fa-page-lang-list", id: listId });
+    var list = el(slot ? "ul" : "span", { class: "fa-page-lang-list", id: listId });
 
     function paintLangOpen(open) {
       container.setAttribute("data-open", open ? "true" : "false");
@@ -597,13 +640,20 @@
 
       var tab = el(isAvailable ? "a" : "span", {
         href: isAvailable ? safeHref(localePath(basePath, loc)) : undefined,
+        // Says "unavailable" to a screen reader too, not only by its strike-through (Q-TRP-2).
+        "aria-disabled": isAvailable ? undefined : "true",
         title: isAvailable
           ? LOCALE_NAMES[loc] + (isRemembered ? " \u2014 your saved language" : "")
           : LOCALE_NAMES[loc] + " \u2014 not yet translated",
         class: "fa-page-lang-tab" +
                (isCurrent ? " is-current" : isAvailable ? "" : " is-unavailable") +
-               (isRemembered ? " is-remembered" : "")
-      }, loc.toUpperCase());
+               (isRemembered ? " is-remembered" : ""),
+        // In the bar each language is named in its own language, so it is
+        // marked with it: a screen reader then says "中文" in Chinese.
+        lang: slot ? loc : undefined,
+        hreflang: slot && isAvailable ? loc : undefined,
+        "aria-current": slot && isCurrent ? "page" : undefined
+      }, slot ? (LOCALE_NAMES[loc] || loc.toUpperCase()) : loc.toUpperCase());
 
       // Hover is a CSS `:hover` rule now. It was a pair of listeners writing
       // `style.background`, which is an inline colour literal with extra steps
@@ -614,7 +664,13 @@
           link.addEventListener("click", function () { setGlobalLocale(locale); });
         })(loc, tab);
       }
-      list.appendChild(tab);
+      if (slot) {
+        var item = el("li");
+        item.appendChild(tab);
+        list.appendChild(item);
+      } else {
+        list.appendChild(tab);
+      }
     }
     container.appendChild(list);
 
@@ -632,6 +688,10 @@
     if (slot) {
       container.setAttribute("data-fa-slotted", "");
       slot.appendChild(container);
+      // A dropdown hangs over the page, so a press anywhere else closes it.
+      document.addEventListener("click", function (e) {
+        if (container.getAttribute("data-open") === "true" && !container.contains(e.target)) paintLangOpen(false);
+      });
     } else {
       glassBandSlot("start").appendChild(container);
     }
@@ -10716,6 +10776,22 @@
   // are drawn at 80% of the body text size, a little quieter than the prose.
   var FIGURE_TEXT_RATIO = 0.8;
 
+  function isBpmnSvg(scope) {
+    var svg = scope.querySelector("svg");
+    return !!(svg && svg.querySelector("[data-element-id]"));
+  }
+
+  // A plain figure that turns out to be a BPMN drawing is text-fitted. Also
+  // called when the inlined <svg> lands in a figure mounted while it was
+  // still an <object> (the Mermaid observer can mount mid-inlining).
+  function fitBpmn(scope) {
+    if (!isBpmnSvg(scope)) return false;
+    fitTextToBody(scope);
+    if (!scope.classList.contains("fa-textfit")) return false;
+    scope.classList.remove("fa-plain");
+    return true;
+  }
+
   function fitTextToBody(scope) {
     var svg = scope.querySelector("svg");
     var width = intrinsicWidth(scope);
@@ -10736,6 +10812,14 @@
     // drawn at, so a 555px PlantUML diagram arrived at more than twice its
     // size, text and all. The stylesheet reads this as `min(100%, natural)`;
     // with no natural size known it falls back to the column, as before.
+    // EVERY BPMN drawing is text-fitted, not only one in a `.bpmn-figure`
+    // (owner, 2026-11-12: "bpmn font size is 80% of main narrative size ...
+    // applies all bpmn"). An IG page embeds its BPMN as a bare
+    // `<object data="x.svg">`, which arrives here as a plain figure and was
+    // stretched to the column, so its labels came out anywhere from 66% to
+    // 95% of the body text. bpmn-js output is recognised by its
+    // `data-element-id` shapes, an attribute `scopeSvg` leaves alone.
+    if (isPlain && fitBpmn(scope)) isPlain = false;
     if (isPlain) {
       var art0 = scope.querySelector("svg, img, object");
       var natural = intrinsicWidth(scope) ||
@@ -11357,7 +11441,10 @@
             if (checked === undefined) a.removeAttribute("href");
             else a.setAttribute("href", new URL(checked, fileUrl).href);
           });
-          img.parentNode.replaceChild(scopeSvg(document.importNode(svg, true)), img);
+          var host = img.parentNode;
+          host.replaceChild(scopeSvg(document.importNode(svg, true)), img);
+          var mounted = host.closest && host.closest(".fa-figure-scope.fa-plain");
+          if (mounted) fitBpmn(mounted);
         })
         .catch(function (e) {
           console.warn("docs-ui: could not inline " + src + " (" + e.message + "); it stays a static image, so its links will not work.");
@@ -13468,6 +13555,72 @@
     };
   }
 
+  /**
+   * THE BAR'S SEARCH IS A MAGNIFIER -- owner, 2026-11-10: "have styling
+   * match who.int especially for language and search parts". On the
+   * reference site the header shows a large magnifier, and the field opens
+   * only when it is pressed. So a search box that sits in a page's own top
+   * bar (`.fa-page-bar`: an IG's `.ig-search`, the site bar's theme
+   * `.search`) is wrapped with a magnifier button that opens it as a panel
+   * under the bar and closes it again (`l4zi`: the inverse is the same
+   * control in the same place).
+   *
+   * MOVED, NEVER REBUILT, NEVER DETACHED: the box keeps its input, its
+   * results and every handler bound to them, and stays in the document, so
+   * a script that looks its input up by id still finds it. Closed is
+   * `data-open="false"` on the wrapper and `display: none` in docs-ui.css.
+   *
+   * Idempotent: a box already wrapped is left alone.
+   */
+  function mountBarSearch() {
+    var boxes = document.querySelectorAll(".fa-page-bar .ig-search, .fa-page-bar .search");
+    Array.prototype.forEach.call(boxes, function (box, i) {
+      if (box.parentNode && box.parentNode.classList && box.parentNode.classList.contains("fa-bar-search")) return;
+      var input = box.querySelector("input");
+      if (!input) return;
+      if (!box.id) box.id = "fa-bar-search-box" + (i ? "-" + i : "");
+      var wrap = el("span", { class: "fa-bar-search", "data-open": "false" });
+      var toggle = chromeText(el("button", {
+        type: "button",
+        class: "fa-bar-search-toggle",
+        "aria-label": "Search",
+        "aria-expanded": "false",
+        "aria-controls": box.id,
+        title: "Search this site"
+      }));
+      toggle.innerHTML = BAR_SEARCH_GLYPH;
+      box.parentNode.insertBefore(wrap, box);
+      wrap.appendChild(toggle);
+      wrap.appendChild(box);
+
+      function paint(open, refocus) {
+        wrap.setAttribute("data-open", open ? "true" : "false");
+        toggle.setAttribute("aria-expanded", open ? "true" : "false");
+        if (open) input.focus();
+        else if (refocus) toggle.focus();
+      }
+      toggle.addEventListener("click", function () {
+        paint(wrap.getAttribute("data-open") !== "true", false);
+      });
+      wrap.addEventListener("keydown", function (e) {
+        if (e.key !== "Escape" || wrap.getAttribute("data-open") !== "true") return;
+        e.preventDefault();
+        e.stopPropagation();
+        paint(false, true);
+      });
+      document.addEventListener("click", function (e) {
+        if (wrap.getAttribute("data-open") === "true" && !wrap.contains(e.target)) paint(false, false);
+      });
+    });
+  }
+
+  // The bar's magnifier: bolder than the band's, as the reference site's is.
+  var BAR_SEARCH_GLYPH =
+    '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+    '<circle cx="10" cy="10" r="6.5" fill="none" stroke="currentColor" stroke-width="3"/>' +
+    '<path d="M15 15l5.5 5.5" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"/>' +
+    "</svg>";
+
   function init() {
     // RTL detection — Arabic pages get dir="rtl" on <html> which
     // triggers the CSS rules in docs-ui.css for smooth sidebar slide.
@@ -13523,6 +13676,8 @@
     mountLibraryPullouts();
     mountBlockPins();
     mountTodoStickies();
+    // Before the picker: the magnifier comes first in the bar, then language.
+    mountBarSearch();
     mountPageLanguageBar();
     mountTableFilters();
     // Figures are mounted only after the inlining settles, so the scan sees the

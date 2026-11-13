@@ -4,6 +4,14 @@
 .lib-page #document .seg button[aria-selected="true"] { font-weight: 600; }
 .lib-page #document .docbody { padding: 0 16px 8px; }
 .lib-page #document .dockw { padding: 4px 16px; }
+/* Kept figures and transcribed tables (who-iris#224). */
+.lib-page #document .doc-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; margin: .5rem 0 1rem; }
+.lib-page #document .doc-figure { margin: 0; border: 1px solid var(--border, #8884); border-radius: 6px; padding: 6px; background: var(--card, transparent); }
+.lib-page #document .doc-figure img { display: block; width: 100%; height: auto; max-height: 320px; object-fit: contain; background: #fff; border-radius: 4px; }
+.lib-page #document .doc-figure figcaption { font-size: .85em; margin-top: 6px; }
+.lib-page #document .doc-table { margin: .4rem 0; }
+.lib-page #document .doc-table-scroll { overflow-x: auto; max-width: 100%; }
+.lib-page #document .doc-table table { font-size: .85em; }
 .lib-page #document p.kw, .lib-page #document .dockw p.kw { display: inline; margin: 0; }
 .lib-page #document .docsec p.kw { display: block; margin: 2px 0 6px; }
 .lib-page #document p.kw .pill { margin: 0 2px 2px 0; }
@@ -84,6 +92,17 @@ html[data-fa-scheme="light"] .lib-page {
 .lib-page .lib-view .pdf-viewer { margin:.6rem 0 0 !important; }
 .lib-page .lib-view img { display:block; max-width:100%; height:auto; border:1px solid var(--line); border-radius:6px; }
 .lib-page .lib-view-absent p { margin:0; }
+.lib-page .lib-record { padding:6px 0; border-bottom:1px solid var(--line); }
+.lib-page .lib-record p { margin:0; }
+.lib-page .lib-summary { padding:6px 0 10px; border-bottom:1px solid var(--line); }
+.lib-page .lib-summary h2 { margin:.4rem 0; }
+.lib-page .lib-summary p { margin:.3rem 0; max-width:60rem; }
+.lib-page .lib-versions { padding:6px 0; border-bottom:1px solid var(--line); }
+.lib-page .lib-versions p { margin:0; }
+.lib-page .lib-lang-toggle { margin:.5rem 0 0; }
+.lib-page .lib-lang-toggle a.seg-link { display:inline-block; min-height:24px; line-height:24px; padding:2px 10px; border:1px solid var(--line); text-decoration:none; }
+.lib-page details.lib-all { padding:10px 0; border-top:1px solid var(--line); }
+.lib-page details.lib-all > summary { cursor:pointer; font-size:1rem; min-height:24px; }
 .lib-page .toolbar { padding:10px 0; display:flex; flex-wrap:wrap; gap:8px; align-items:center; border-bottom:1px solid var(--line); }
 .lib-page input, .lib-page select, .lib-page button { font:inherit; color:var(--fg); background:var(--box);
   border:1px solid var(--line); border-radius:6px; padding:6px 9px; }

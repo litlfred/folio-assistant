@@ -2,11 +2,11 @@
 
 ## Covers
 
-The `themes` kind viewer that this harness declares (`visualisers` id `themes`, Tool `theme-viewer`). It covers the platform's own themes and every `themes` directory that an instance in the checkout declares. The tools layer's `render-theme-sheet.ts --viz` (script `theme:viz`) draws it, and writes one page at `<locale>/cat-harness/themes/`. The route key is the one `index.json` records for this wireframe.
+The `themes` kind viewer that this harness declares (`visualisers` id `themes`, Tool `theme-viewer`). It covers the platform's own themes and every `themes` directory that a layer in the checkout declares. The tools layer's `render-theme-sheet.ts --viz` (script `theme:viz`) draws it, and writes one page at `<locale>/cat-harness/themes/`. The route key is the one `index.json` records for this wireframe.
 
 ### How this was drawn
 
-Drawn from the page that `theme:viz` writes in a checkout of the index, with the pull request that adds the viewer overlaid. That run reported 18 themes: 14 from the platform, and 4 declared by 2 instances. The instances are drawn as `<instance-a>` and `<instance-b>`, so this layer names no layer above it. The theme rows are abridged to one row of each shape: a theme with no backdrop, and a theme with art in three layouts.
+Drawn from the page that `theme:viz` writes in a checkout of the index, with the pull request that adds the viewer overlaid. That run reported 18 themes: 14 from the platform, and 4 declared by 2 layers. The layers are drawn as `<instance-a>` and `<instance-b>`, so this layer names no layer above it. The theme rows are abridged to one row of each shape: a theme with no backdrop, and a theme with art in three layouts.
 
 ## Who it is for, and what they need to do
 
@@ -18,9 +18,9 @@ Drawn from the page that `theme:viz` writes in a checkout of the index, with the
 
 ## What it must show
 
-1. The total count of themes, split between the platform and the declaring instances.
-2. One section for the platform, and one per declaring instance.
-3. Per theme: its title, id and kind, its description, which instance wears it, the four palette swatches with their hex values, the contrast verdict (or "no backdrop"), and a sample sticky.
+1. The total count of themes, split between the platform and the declaring layers.
+2. One section for the platform, and one per declaring layer.
+3. Per theme: its title, id and kind, its description, which layer wears it, the four palette swatches with their hex values, the contrast verdict (or "no backdrop"), and a sample sticky.
 4. Per layout with art (laptop, mobile, card): the art at its pixel size, with the `textRegion` and `avatarRegion` boxes drawn over it, and the avatar clip at 46 px.
 5. A key that says which colour is which region.
 

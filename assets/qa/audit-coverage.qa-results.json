@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness-tools/scripts/audit-coverage.ts",
-    "script_hash": "714d44513ab7"
+    "script_hash": "dfa83f0da295"
   },
   "subject": {
     "kind": "audit-coverage",
@@ -10,8 +10,8 @@
   },
   "families": {
     "coverage-measured": {
-      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 97 of 97 declared kind(s), 280 gate(s), 108 criteria.",
-      "count": 97,
+      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 98 of 98 declared kind(s), 281 gate(s), 108 criteria.",
+      "count": 98,
       "entries": [
         {
           "kind": "archimate",
@@ -236,7 +236,9 @@
           "criteria": [],
           "subjectKinds": [],
           "gates": [
-            "bun run cat check:xml-comments"
+            "bun run cat check:xml-comments",
+            "bun run cat processes:viz:check",
+            "bun run cat render:bpmn:check"
           ],
           "typed": false,
           "adversarial": "never",
@@ -265,13 +267,22 @@
             "bootstrap-tools/schemas",
             "cat-harness-tools/schemas",
             "cat-harness/archimate",
+            "cat-harness/editorial",
             "cat-harness/folio-render",
+            "cat-harness/integrations",
+            "cat-harness/kg-ops",
             "cat-harness/library",
             "cat-harness/openapi",
+            "cat-harness/platform-ui",
+            "cat-harness/research",
             "cat-harness/schemas",
             "cat-harness/sdlc",
             "cat-harness/work-plan",
             "fhir-harness/schemas",
+            "folio-assistant-core/board",
+            "folio-assistant-core/dsa",
+            "folio-assistant-core/library",
+            "folio-assistant-core/library-extras",
             "folio-assistant-core/schemas",
             "folio-assistant-sci/schemas",
             "smart-base/schemas"
@@ -337,6 +348,7 @@
             "bun run cat check:landing-instance",
             "bun run cat check:layout-norms:check",
             "bun run cat check:mount-collisions",
+            "bun run cat check:optin-links",
             "bun run cat check:package-exports",
             "bun run cat check:publishable",
             "bun run cat check:published-instance-exports",
@@ -566,7 +578,8 @@
             "cat-harness/docs/concepts",
             "cat-harness/docs/guides",
             "cat-harness/docs/process",
-            "cat-harness/docs/start"
+            "cat-harness/docs/start",
+            "cat-harness/docs/wireframes"
           ],
           "criteria": [],
           "subjectKinds": [],
@@ -966,7 +979,7 @@
           "directories": [
             "cat-harness/library/corpus",
             "fhir-harness/library",
-            "folio-assistant-core/library",
+            "folio-assistant-core/library/corpus",
             "folio-assistant-sci/library",
             "smart-base/library",
             "smart-immunizations/library",
@@ -1051,6 +1064,7 @@
           "state": "covered",
           "directories": [
             "cat-harness/methodologies",
+            "cat-harness/research/methodologies",
             "folio-assistant-core/methodologies",
             "folio-assistant-sci/methodologies",
             "smart-base/methodologies"
@@ -1149,10 +1163,12 @@
           "directories": [
             "bootstrap-tools/processes",
             "bootstrap/processes",
+            "cat-harness/kg-ops/processes",
             "cat-harness/library/processes",
             "cat-harness/processes",
             "cat-harness/sdlc/processes",
             "fhir-harness/processes",
+            "folio-assistant-core/dsa/processes",
             "folio-assistant-core/processes",
             "folio-assistant-sci/processes",
             "smart-base/methodologies/processes",
@@ -1224,6 +1240,7 @@
             "bun run cat check:stale-field-advice",
             "bun run cat check:workflow-coverage",
             "bun run cat check:workflow-refs",
+            "bun run cat check:workflow-tools",
             "bun run cat check:xml-comments",
             "bun run cat kg:audit:all:check",
             "bun run cat kg:audit:check",
@@ -1331,7 +1348,8 @@
           "kind": "references",
           "state": "covered",
           "directories": [
-            "folio-assistant-sci/extracted-references"
+            "folio-assistant-sci/extracted-references",
+            "who-iris/references"
           ],
           "criteria": [],
           "subjectKinds": [],
@@ -1486,11 +1504,17 @@
             "bootstrap-tools/skills",
             "bootstrap/skills",
             "cat-harness-tools/skills",
+            "cat-harness/editorial/skills",
+            "cat-harness/kg-ops/skills",
             "cat-harness/library/skills",
+            "cat-harness/platform-ui/skills",
             "cat-harness/sdlc/skills",
             "cat-harness/skills",
             "cat-harness/work-plan/skills",
             "fhir-harness/skills",
+            "folio-assistant-core/board/skills",
+            "folio-assistant-core/dsa/skills",
+            "folio-assistant-core/library-extras/skills",
             "folio-assistant-core/skills",
             "folio-assistant-sci/skills",
             "folio-assistant-sci/skills/data",
@@ -1771,6 +1795,10 @@
           "state": "covered",
           "directories": [
             "cat-harness-tools/tools",
+            "cat-harness/integrations/tools",
+            "cat-harness/kg-ops/tools",
+            "cat-harness/platform-ui/tools",
+            "cat-harness/sdlc/tools",
             "cat-harness/tools",
             "cat-harness/work-plan/tools",
             "fhir-harness/tools",
@@ -1794,6 +1822,7 @@
           ],
           "gates": [
             "bun run cat check:tools",
+            "bun run cat check:workflow-tools",
             "bun run cat kg:audit:all:check",
             "bun run cat kg:audit:check",
             "bun run cat kg:export:check",
@@ -2016,6 +2045,19 @@
           "hasFiles": true
         },
         {
+          "kind": "web-app",
+          "state": "unknown",
+          "directories": [
+            "smart-trust/onboarding-game"
+          ],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [],
+          "typed": true,
+          "adversarial": "never",
+          "hasFiles": false
+        },
+        {
           "kind": "workflow-state",
           "state": "covered",
           "directories": [
@@ -2187,15 +2229,22 @@
       "entries": []
     },
     "kinds-unaudited": {
-      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 280 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
+      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 281 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
       "count": 0,
       "entries": []
     },
     "kinds-unknown": {
       "summary": "A declared directory of this kind is not in the checkout and declares no `storage`, and nothing else of the kind was counted — the census was not taken (bean `0dav`, readers-audit C8). Never `empty`: that would print an absent answer as a determined zero. Not gated: proposal §2.3.",
-      "count": 0,
-      "entries": []
+      "count": 1,
+      "entries": [
+        {
+          "kind": "web-app",
+          "directories": [
+            "smart-trust/onboarding-game"
+          ]
+        }
+      ]
     }
   },
-  "total": 120
+  "total": 122
 }

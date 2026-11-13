@@ -128,6 +128,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields/fhir-artifact-index.fhirartifactindexschema.sidecarbase",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FhirArtifactIndexSchema.sidecarBase"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Where the bound sidecars' bytes are read from when the site does not hold them: an absolute base, the IG API in the AST cache commit (`https://raw.githubusercontent.com/<owner>/<repo>/<sha>/ig-api/sidecars`; owner, 2026-11-10, card \"A\"). A sidecar is then fetched at `<sidecarBase>/<file>` (`ig-api-hub.ts` `sidecarHref`), and its `localPath` stays the path it would be held at. Absent, each is served at its `localPath`."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema.sidecarBase",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields/fhir-artifact-index.fhirartifactindexschema.sidecarsunbound",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -710,10 +729,29 @@
       ],
       "skos:definition": [
         {
-          "@value": "`local`: a copy this site serves; `upstream`: the file where the IG publishes it."
+          "@value": "`local`: a copy this site serves (the reduced `<Type>-<id>.json` at the site root, listed first); `mirror`: the full copy in the IG's AST cache, by raw URL pinned to the cache commit; `upstream`: the file where the IG publishes it."
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-artifact-jsonld.ts#IgArtifactEncodingSchema.dcterms:source",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields/ig-artifact-jsonld.igartifactindexentryschema.schema-contenturl",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IgArtifactIndexEntrySchema.schema:contentUrl"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The resource this site serves at its root, `<Type>-<id>.json` (the node's first `local` encoding), so a harvester finds every file from this one list."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/ig-artifact-jsonld.ts#IgArtifactIndexEntrySchema.schema:contentUrl",
       "skos:note": "candidate"
     },
     {
@@ -1230,6 +1268,44 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields/ig-content-type.igsection.trustedscripts",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IgSection.trustedScripts"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Same-site scripts the IG's own pages load, as each page's script `src` writes them (owner, 2026-11-12, cards Q-TRP-3 and Q-RAIL-2). The injection gate (`scripts/ig-content-qa.ts`) accepts, on a page and only there, a script element whose `src` is on this list and that has no body; every other script, and any script in a resource's narrative or markdown, is still refused. Absent means none."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/ig-content-type.ts#IgSection.trustedScripts",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields/ig-content-type.igsection.trustedsvgs",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IgSection.trustedSvgs"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Same-site SVG drawings the IG's own pages embed with `<object>`, as each element's `data` writes them, so the drawing's links work (owner, 2026-11-12: the onboarding diagrams' drill-down). The injection gate accepts, on a page and only there, an `<object>` opening tag whose `data` is on this list, whose `type` (if any) is `image/svg+xml`, and whose other attributes are presentational (`style`, `width`, `height`, `class`, `id`, `title`, `role`, `aria-*`). The element's body is still scanned. Absent means none."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/ig-content-type.ts#IgSection.trustedSvgs",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields/ig-identity.igidentityschema.id",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1531,6 +1607,25 @@
         }
       ],
       "dcterms:source": "fhir-harness/schemas/ig-metadata-index.ts#IgMetadataSourceSchema.runUrl",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields/ig-releases.igreleaseschema.ast",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IgReleaseSchema.ast"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The IG AST cache commit compiled from this release's tag, where one was seeded (fhir-harness#329): a page reads the release's resources by raw URL at it. Absent for a release cut before the cache kept its commits (#326); its AST is in its `ast-data.zip`."
+        }
+      ],
+      "dcterms:source": "fhir-harness/schemas/ig-releases.ts#IgReleaseSchema.ast",
       "skos:note": "candidate"
     },
     {

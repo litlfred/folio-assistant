@@ -105,6 +105,10 @@
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/maintainedBy",
       "@type": "@id"
     },
+    "jsonSchema": {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/jsonSchema",
+      "@type": "@id"
+    },
     "module": "https://litlfred.github.io/cat-harness/v0/ns/module",
     "holdsGraph": {
       "@id": "http://purl.org/dc/terms/type",
@@ -363,7 +367,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "workflow-list",
       "title": "List processes",
-      "description": "The BPMN processes this instance defines, and the instances currently open against them.",
+      "description": "The BPMN processes this layer defines, and the layers currently open against them.",
       "install": {
         "none": true
       },
@@ -381,7 +385,7 @@
           {
             "name": "processes",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown",
-            "description": "Each process, its policy, and its open instances."
+            "description": "Each process, its policy, and its open layers."
           }
         ]
       },

@@ -2,7 +2,7 @@
 owns it — no central registry; a <code>typologies/</code> graph of one node per kind,
 the way <code>tools/</code> holds Tool definitions as nodes.</p><p>A harness declares a directory of graph typology <code>typologies</code>; each <code>*.json</code> in it is
 one <a href="../variables/cat-harness_schemas_graph-typology-node.GraphTypologyNodeSchema.html" class="tsd-kind-variable">GraphTypologyNodeSchema</a>. The registry a reader sees is the base
-layer's own kinds plus every declared node across the instances, loaded
+layer's own kinds plus every declared node across the layers, loaded
 lazily by <code>graph-typology-registry.ts</code> on first use, and a name declared by two
 files is refused, naming both.</p><p>The fields are <code>GraphTypologyDef</code>'s, one for one, plus <code>kind</code> (the file says what
 it declares) and <code>avatar</code> (so the kind's mark travels with the kind). A

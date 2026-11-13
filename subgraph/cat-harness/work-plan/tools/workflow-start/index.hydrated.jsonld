@@ -7,7 +7,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/workflow-start.jsonld",
       "@type": "cat-harness:Tool",
-      "description": "Open an instance of a process for a subject. Idempotent: an existing instance for the same subject is returned rather than duplicated.",
+      "description": "Open an instance of a process for a subject. Idempotent: an existing layer for the same subject is returned rather than duplicated.",
       "install": {
         "none": true
       },
@@ -30,7 +30,7 @@
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ProcessId"
           },
           {
-            "description": "What the instance is about — a block label, a release, a bean.",
+            "description": "What the layer is about — a block label, a release, a bean.",
             "name": "subject",
             "required": true,
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
@@ -39,7 +39,7 @@
             "arg": {
               "flag": "--bean"
             },
-            "description": "The work-plan item this instance carries out.",
+            "description": "The work-plan item this layer carries out.",
             "name": "bean",
             "required": false,
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/BeanId"
@@ -48,7 +48,7 @@
             "arg": {
               "flag": "--plan"
             },
-            "description": "The work plan this instance is part of: an epic or milestone whose `process:` tag names this process. Not every process needs one.",
+            "description": "The work plan this layer is part of: an epic or milestone whose `process:` tag names this process. Not every process needs one.",
             "name": "plan",
             "required": false,
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/BeanId"
@@ -56,7 +56,7 @@
         ],
         "outputs": [
           {
-            "description": "The instance opened or found.",
+            "description": "The layer opened or found.",
             "name": "instance",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/InstanceId"
           }

@@ -2,7 +2,7 @@
 
 **Status:** read-only audit for the separation arc (epic work item `folio-assistant-7x5n`, issue [#1770](https://github.com/litlfred/folio-assistant/issues/1770), story S4 `rfuq`). **Nothing was moved.** *Amended 2026-10-30 (work item `saqd`):* eight rows that the heuristic sent to sci or core are reclassified as `CODE` rows that stay in cat-harness-tools: `gen-content-graph-uml.ts`, `content-graph-analysis.py`, `artefact-verification.json`, `content-graph.ts`, `markdown-ast.ts`, `profile-check.ts`, `qa-criteria-registry.ts` and `schemas/translation.ts`. Each `signal` gives the measurement; the counts below include the change. The plan it serves is `cat-harness/docs/proposals/separation-arc-2026-10-01.md` (on branch `claude/blissful-ride-c2f26u`). Every row is in [`placement-audit-2026-10-01.json`](placement-audit-2026-10-01.json): `{kind, id, path, instance, concern, verdict, target, signal, evidence, pr}`.
 
-**Measured at:** `origin/main` `cdb0a018c4a`, with the `bootstrap` (`f70a56c`) and `bootstrap-tools` (`920c772`) submodules initialised. **2266 items** across 20 kinds in 14 instance directories (`smart-l1`, `smart-dak`, `smart-ig` and `smart-immunizations` hold none of these kinds yet: only a declaration and QA results).
+**Measured at:** `origin/main` `cdb0a018c4a`, with the `bootstrap` (`f70a56c`) and `bootstrap-tools` (`920c772`) submodules initialised. **2266 items** across 20 kinds in 14 layer directories (`smart-l1`, `smart-dak`, `smart-ig` and `smart-immunizations` hold none of these kinds yet: only a declaration and QA results).
 
 ## Summary
 
@@ -32,13 +32,13 @@
 | code-group | 9 | 31 | 1 | 197 |  | 5 | 243 |
 | **all** | **945** | **292** | **89** | **798** | **127** | **15** | **2266** |
 
-`CODE` means "executable in cat-harness → cat-harness-tools" (D1). `TO-JSON` means "placed right, but the `.ts` node becomes data" (D2). Neither changes the instance that owns the *knowledge*. A `SPLIT` either divides an item or keeps it and inverts its upward references; its `signal` says which.
+`CODE` means "executable in cat-harness → cat-harness-tools" (D1). `TO-JSON` means "placed right, but the `.ts` node becomes data" (D2). Neither changes the layer that owns the *knowledge*. A `SPLIT` either divides an item or keeps it and inverts its upward references; its `signal` says which.
 
-### Per instance
+### Per layer
 
-"Move out" counts this instance's MOVE, SPLIT, CODE and AMBIGUOUS rows. "Move in" counts rows elsewhere whose primary target is this instance (a SPLIT counts toward its named higher instance).
+"Move out" counts this layer's MOVE, SPLIT, CODE and AMBIGUOUS rows. "Move in" counts rows elsewhere whose primary target is this layer (a SPLIT counts toward its named higher layer).
 
-| instance | items | OK | TO-JSON (in place) | move out | move in |
+| layer | items | OK | TO-JSON (in place) | move out | move in |
 |---|---:|---:|---:|---:|---:|
 | agent-skills | 21 | 0 | 0 | 21 | 0 |
 | bootstrap | 20 | 20 | 0 | 0 | 0 |
@@ -91,9 +91,9 @@ One Python script (≈900 lines, kept out of the tree because it is not small; t
    - **process** / **decision**: each `.bpmn` / `.dmn`. **role**: each entry of every `scenarios/roles.json`; **role-extension**: each `extensions[]` overlay entry (PR0b). **story**: each `stories.json` entry. **actor**, **capability**: each JSON file.
    - **methodology**, **code-list**, **policy**, **template**: each file. **schema**: each file under `<instance>/schemas/`. **library-entry**: each `<instance>/library/<slug>/`. **source-descriptor**: each `large-datasets/sources/*.json`.
    - **script-group**: each child of `scripts/` (a subdirectory is one row; a flat script is one row). **code-group**: the same for `src/`, `adapters/`, `content/pipeline/`, `deploy/`, `ui/`, `viewer/`, `types/` and `test/` (results excluded).
-2. **Layers** (target, after the 2026-10-01 rulings): `bootstrap → bootstrap-tools → cat-harness → cat-harness-tools → folio-assistant-core → {folio-assistant-sci, fhir-harness, who-iris} → smart-base → {smart-l1, smart-dak, smart-ig} → {smart-trust, smart-immunizations}`. `large-datasets` and `agent-skills` are treated as cat-harness (subgraph ruling); `who-style-guide` as who-iris (#1735). The checkout root may reference everything. An edge is **upward** when its target instance is outside the source's transitive `needs`. A KG item citing its own code half (cat-harness → cat-harness-tools) is a prose citation, not an upward edge (split plan §2).
+2. **Layers** (target, after the 2026-10-01 rulings): `bootstrap → bootstrap-tools → cat-harness → cat-harness-tools → folio-assistant-core → {folio-assistant-sci, fhir-harness, who-iris} → smart-base → {smart-l1, smart-dak, smart-ig} → {smart-trust, smart-immunizations}`. `large-datasets` and `agent-skills` are treated as cat-harness (subgraph ruling); `who-style-guide` as who-iris (#1735). The checkout root may reference everything. An edge is **upward** when its target layer is outside the source's transitive `needs`. A KG item citing its own code half (cat-harness → cat-harness-tools) is a prose citation, not an upward edge (split plan §2).
 3. **Signals per item**
-   - *references*: instance-prefixed paths in the text (`lit:`), relative markdown links (`link:`) and relative imports (`imp:`) resolved against `git ls-files`, plus structured id references resolved to their owning instance — skill ids in text and front matter, BPMN `skill ref` / `role ref` / `calledElement` / `decisionRef`, role `skills`, actor `roles` / `capabilities`, story `role`, tool `satisfies`. **For code only `imp:` counts**: a path literal in a corpus-wide checker is resolved through the checkout overlay (PR0a), not a placement signal, and is recorded in `evidence`.
+   - *references*: instance-prefixed paths in the text (`lit:`), relative markdown links (`link:`) and relative imports (`imp:`) resolved against `git ls-files`, plus structured id references resolved to their owning layer — skill ids in text and front matter, BPMN `skill ref` / `role ref` / `calledElement` / `decisionRef`, role `skills`, actor `roles` / `capabilities`, story `role`, tool `satisfies`. **For code only `imp:` counts**: a path literal in a corpus-wide checker is resolved through the checkout overlay (PR0a), not a placement signal, and is recorded in `evidence`.
    - *vocabulary*: counts of FHIR/IG/FSH, WHO/SMART/DAK, Lean/LaTeX/theorem/proof, IRIS/DSpace, folio/document and harness terms (the word "folio" is not counted when it is the repository name `folio-assistant`). A domain wins only at ≥ 6 hits, ≥ 4 per 1000 words, twice the runner-up and ≥ 0.6× the harness terms; for code it needs ≥ 12 hits and 1.5× the harness terms.
    - *users*: KG items that name the id — skills, processes, scenarios, methodologies, tool definitions. Registries (`package-manifest.json`, `skills.json`), docs pages, tests and code are not users. For library entries every authored file counts.
 4. **Verdict rule**, in order: instance-level rulings → code (D1, imports, then vocabulary gated by importers) → upward references (MOVE when the item also carries the target's vocabulary; AMBIGUOUS when ≥ 3 same-layer items use it; otherwise SPLIT = keep and invert) → vocabulary above the layer (MOVE, or SPLIT when lower users exist) → sole higher user carrying that domain (rule 3) → OK. Then the **standing rulings** of `placement-concern-groups-2026-10-01.md` override the heuristic for the items they name (PR2 regroup, PR3 processes, PR4 roles/actors/capabilities, PR6 cataloguing, ruling 4B schemas), and the `signal` records what the heuristic said when it disagreed.
@@ -104,16 +104,16 @@ One Python script (≈900 lines, kept out of the tree because it is not small; t
 ## Findings that are not one row
 
 1. **`cat-harness-tools/cat-harness-tools.json` still declares `needs: ["folio-assistant-core"]`**, which the "tools below core" ruling reverses. Its `needs` should become `["cat-harness", "bootstrap-tools"]`, and `folio-assistant-core.json` should add `cat-harness-tools`. With that, the C1 cycle in the seed-readiness section of the arc plan is gone: the 88 core → cat-harness-code references become core → cat-harness-tools, which points down. Measured here: of the 27 tracked `cat-harness-tools/` files, **0** import core, so nothing in it has to move up today.
-2. **The `content` concern lives in a directory called `authoring/`** (`cat-harness/skills/authoring/{authoring-core,content-lifecycle}`), while the code list `cat-harness/code-lists/concern-group.json` names it `content`. Every higher instance already uses `skills/content/`. Targets in this audit use `content` for higher instances and keep `authoring/` inside cat-harness until that is ruled (owner question 6).
+2. **The `content` concern lives in a directory called `authoring/`** (`cat-harness/skills/authoring/{authoring-core,content-lifecycle}`), while the code list `cat-harness/code-lists/concern-group.json` names it `content`. Every higher layer already uses `skills/content/`. Targets in this audit use `content` for higher layers and keep `authoring/` inside cat-harness until that is ruled (owner question 6).
 3. **`tools` has no directory yet.** The MCP ruling puts the generic MCP skills in `cat-harness/skills/tools/mcp/` and the general tool skills in `cat-harness/skills/tools/`; the folio-specific MCP surfaces go to `folio-assistant-core/skills/tools/mcp/` and `folio-assistant-core/tools/`. The five `folio-core` skills measure as generic (0–10 folio terms vs 14–138 harness terms) and stay in cat-harness.
-4. **Corpus-wide checkers name higher instances by literal path.** 90 code rows carry such literals (recorded in `evidence`, not counted as placement). They are the R6 class of the arc plan and are fixed by resolving through the checkout overlay (PR0a), not by moving the checker.
-5. **The checkout root's `.claude/commands/` hold sci-specific entry points** (`lean-*`, `latex-build-cache`, `proof-integration-watcher`, …). They are OK where they are, because the root may reference every instance, but each follows its skill when the root stops aggregating (S8).
+4. **Corpus-wide checkers name higher layers by literal path.** 90 code rows carry such literals (recorded in `evidence`, not counted as placement). They are the R6 class of the arc plan and are fixed by resolving through the checkout overlay (PR0a), not by moving the checker.
+5. **The checkout root's `.claude/commands/` hold sci-specific entry points** (`lean-*`, `latex-build-cache`, `proof-integration-watcher`, …). They are OK where they are, because the root may reference every layer, but each follows its skill when the root stops aggregating (S8).
 
 ## Where this disagrees with the earlier proposals (with evidence)
 
 | proposal said | this audit says | evidence |
 |---|---|---|
-| PR2: `sample-import` → `large-datasets/skills/` | **stays in cat-harness** | owner ruling 2026-10-01: large-datasets is a cat-harness subgraph, so the move is now inside one instance |
+| PR2: `sample-import` → `large-datasets/skills/` | **stays in cat-harness** | owner ruling 2026-10-01: large-datasets is a cat-harness subgraph, so the move is now inside one layer |
 | PR5: materialization state vocabulary and `extraction.ts` / `extract-assets.ts` move down **into cat-harness**; `sample-import-run.ts` → large-datasets | they move down **into cat-harness-tools** (`schemas/library/`, `scripts/`), and so does `sample-import-run.ts` | D1 + "tools below core": they are Zod and code, and large-datasets is now a cat-harness subgraph. The heuristic alone found them OK in core (none imports upward), so these rows carry the ruling, not a measurement |
 | split plan blocker 1: `graph-typology-registry.ts` validators in core must be registered on load because tools must not reach up | unchanged, and now **mandatory** rather than tidy | with tools below core, a tools → core reference is a cycle, not a style issue |
 | arc C1: core → tools while tools → core is a cycle needing a ruling | **resolved** | owner ruling "tools below core" (relayed 2026-10-01); see finding 1 |
@@ -158,14 +158,14 @@ Each question gives the context, the options, and a recommendation, so it can be
 **Q5. Form of the large-datasets and agent-skills subgraphs**
 
 - *Context:* The ruling makes both cat-harness subgraphs. This audit targets them **dissolved into concern groups** (`cat-harness/skills/library/large-datasets/…`, `cat-harness/library/<group>/<slug>`), which matches PR8 ruling 3A. The alternative keeps them as nested directories (`cat-harness/large-datasets/`, `cat-harness/agent-skills/`).
-- *Options:* (a) dissolve into the eight groups (as targeted here); (b) nested directory per former instance, declared as one subgraph each; (c) dissolve agent-skills (it is only library + voices) but nest large-datasets (it has code, processes and sources).
+- *Options:* (a) dissolve into the eight groups (as targeted here); (b) nested directory per former layer, declared as one subgraph each; (c) dissolve agent-skills (it is only library + voices) but nest large-datasets (it has code, processes and sources).
 - *Recommendation:* **(a)**: "one fact, one place", and the group ids already exist.
 
 **Q6. `skills/authoring/` vs the `content` concern code**
 
 - *Context:* See finding 2: one concern, two names.
 - *Options:* (a) rename `cat-harness/skills/authoring/` → `skills/content/` in PR2 `pzwb`; (b) rename the code to `authoring` everywhere; (c) leave both.
-- *Recommendation:* **(a)**: higher instances already use `skills/content/`.
+- *Recommendation:* **(a)**: higher layers already use `skills/content/`.
 
 **Q7. Core's `schemas/{catalogue,dublin-core,fhir-artifact-index}.ts`**
 
@@ -175,7 +175,7 @@ Each question gives the context, the options, and a recommendation, so it can be
 
 ## Per-kind tables
 
-MOVE, SPLIT and AMBIGUOUS rows are listed in full. OK, CODE and TO-JSON rows are collapsed to a count per instance and concern; the JSON has every row.
+MOVE, SPLIT and AMBIGUOUS rows are listed in full. OK, CODE and TO-JSON rows are collapsed to a count per layer and concern; the JSON has every row.
 
 ### skill (480)
 
@@ -303,7 +303,7 @@ MOVE, SPLIT and AMBIGUOUS rows are listed in full. OK, CODE and TO-JSON rows are
 
 <details markdown="1"><summary>collapsed: OK 335, CODE 3, TO-JSON 23</summary>
 
-| instance | concern | OK | CODE | TO-JSON |
+| layer | concern | OK | CODE | TO-JSON |
 |---|---|---:|---:|---:|
 | bootstrap | content | 3 |  |  |
 | bootstrap | kg | 4 |  |  |
@@ -347,7 +347,7 @@ MOVE, SPLIT and AMBIGUOUS rows are listed in full. OK, CODE and TO-JSON rows are
 
 <details markdown="1"><summary>collapsed: OK 41</summary>
 
-| instance | concern | OK | CODE | TO-JSON |
+| layer | concern | OK | CODE | TO-JSON |
 |---|---|---:|---:|---:|
 | folio-assistant-core | content | 37 |  |  |
 | folio-assistant-sci | content | 2 |  |  |
@@ -359,7 +359,7 @@ MOVE, SPLIT and AMBIGUOUS rows are listed in full. OK, CODE and TO-JSON rows are
 
 <details markdown="1"><summary>collapsed: OK 44</summary>
 
-| instance | concern | OK | CODE | TO-JSON |
+| layer | concern | OK | CODE | TO-JSON |
 |---|---|---:|---:|---:|
 | root | conduct | 4 |  |  |
 | root | content | 21 |  |  |
@@ -375,32 +375,32 @@ MOVE, SPLIT and AMBIGUOUS rows are listed in full. OK, CODE and TO-JSON rows are
 |---|---|---|---|---|---|
 | MOVE | `cat-harness/tools/index.ts` | `folio-assistant-core/tools/folio-block-qa-summary.json` | content | refined MCP ruling 2026-10-01: folio-specific tool surface → folio-assistant-core (core tools/mcp subgraph for folio surfaces); also D2 JSON — subject is folio content (vocabulary) | unplanned (tool placement; S5 70lx carries implementations) |
 | MOVE | `cat-harness/tools/index.ts` | `folio-assistant-core/tools/folio-block-screenshots.json` | sdlc | refined MCP ruling 2026-10-01: folio-specific tool surface → folio-assistant-core (core tools/mcp subgraph for folio surfaces); also D2 JSON | unplanned (tool placement; S5 70lx carries implementations) |
-| MOVE | `cat-harness/tools/index.ts` | `folio-assistant-sci/tools/latex-preflight.json` | content | rule 1/3: satisfies skills owned by folio-assistant-sci; also D2 (definition becomes JSON); implementation → that instance's code | unplanned (tool placement; S5 70lx carries implementations) |
-| MOVE | `cat-harness/tools/index.ts` | `folio-assistant-sci/tools/latex-overfull.json` | content | rule 1/3: satisfies skills owned by folio-assistant-sci; also D2 (definition becomes JSON); implementation → that instance's code | unplanned (tool placement; S5 70lx carries implementations) |
-| MOVE | `cat-harness/tools/index.ts` | `folio-assistant-sci/tools/tex-snippet-validate.json` | content | rule 1/3: satisfies skills owned by folio-assistant-sci; also D2 (definition becomes JSON); implementation → that instance's code | unplanned (tool placement; S5 70lx carries implementations) |
-| MOVE | `cat-harness/tools/index.ts` | `folio-assistant-sci/tools/tex-source-audit.json` | content | rule 1/3: satisfies skills owned by folio-assistant-sci; also D2 (definition becomes JSON); implementation → that instance's code | unplanned (tool placement; S5 70lx carries implementations) |
-| MOVE | `cat-harness/tools/index.ts` | `folio-assistant-sci/tools/headless-render-qc.json` | sdlc | rule 2: tool subject is sci; also D2 (definition becomes JSON); implementation → that instance's code | unplanned (tool placement; S5 70lx carries implementations) |
-| MOVE | `cat-harness/tools/index.ts` | `folio-assistant-sci/tools/lean-build.json` | content | rule 1/3: satisfies skills owned by folio-assistant-sci; also D2 (definition becomes JSON); implementation → that instance's code | unplanned (tool placement; S5 70lx carries implementations) |
-| MOVE | `cat-harness/tools/index.ts` | `folio-assistant-sci/tools/lean-cache.json` | content | rule 1/3: satisfies skills owned by folio-assistant-sci; also D2 (definition becomes JSON); implementation → that instance's code | unplanned (tool placement; S5 70lx carries implementations) |
-| MOVE | `cat-harness/tools/index.ts` | `folio-assistant-sci/tools/lean-toolchain-setup.json` | content | rule 1/3: satisfies skills owned by folio-assistant-sci; also D2 (definition becomes JSON); implementation → that instance's code | unplanned (tool placement; S5 70lx carries implementations) |
-| MOVE | `cat-harness/tools/index.ts` | `folio-assistant-sci/tools/lean-coverage.json` | content | rule 1/3: satisfies skills owned by folio-assistant-sci; also D2 (definition becomes JSON); implementation → that instance's code | unplanned (tool placement; S5 70lx carries implementations) |
-| MOVE | `cat-harness/tools/index.ts` | `folio-assistant-sci/tools/lean-audit.json` | content | rule 1/3: satisfies skills owned by folio-assistant-sci; also D2 (definition becomes JSON); implementation → that instance's code | unplanned (tool placement; S5 70lx carries implementations) |
-| MOVE | `cat-harness/tools/index.ts` | `folio-assistant-sci/tools/content-manifest-validate.json` | content | rule 1/3: satisfies skills owned by folio-assistant-sci; also D2 (definition becomes JSON); implementation → that instance's code | unplanned (tool placement; S5 70lx carries implementations) |
-| MOVE | `cat-harness/tools/index.ts` | `folio-assistant-sci/tools/paper-latex-build.json` | content | rule 1/3: satisfies skills owned by folio-assistant-sci; also D2 (definition becomes JSON); implementation → that instance's code | unplanned (tool placement; S5 70lx carries implementations) |
-| MOVE | `cat-harness/tools/index.ts` | `folio-assistant-sci/tools/proof-dependency-graph.json` | ui | rule 1/3: satisfies skills owned by folio-assistant-sci; also D2 (definition becomes JSON); implementation → that instance's code | unplanned (tool placement; S5 70lx carries implementations) |
-| MOVE | `cat-harness/tools/index.ts` | `folio-assistant-sci/tools/proof-objects-extract.json` | content | rule 1/3: satisfies skills owned by folio-assistant-sci; also D2 (definition becomes JSON); implementation → that instance's code | unplanned (tool placement; S5 70lx carries implementations) |
-| MOVE | `cat-harness/tools/index.ts` | `folio-assistant-sci/tools/proof-status-update.json` | content | rule 1/3: satisfies skills owned by folio-assistant-sci; also D2 (definition becomes JSON); implementation → that instance's code | unplanned (tool placement; S5 70lx carries implementations) |
-| MOVE | `cat-harness/tools/index.ts` | `folio-assistant-core/tools/glossary-build.json` | library | rule 1/3: satisfies skills owned by folio-assistant-core; also D2 (definition becomes JSON); implementation → that instance's code | unplanned (tool placement; S5 70lx carries implementations) |
-| MOVE | `cat-harness/tools/index.ts` | `fhir-harness/tools/fsh-cone.json` | content | rule 1/3: satisfies skills owned by fhir-harness; also D2 (definition becomes JSON); implementation → that instance's code | unplanned (tool placement; S5 70lx carries implementations) |
-| MOVE | `cat-harness/tools/mcp.ts` | `folio-assistant-sci/tools/check-dependencies.json` | content | rule 1/3: satisfies skills owned by folio-assistant-sci; also D2 (definition becomes JSON); implementation → that instance's code | unplanned (tool placement; S5 70lx carries implementations) |
-| MOVE | `cat-harness/tools/mcp.ts` | `folio-assistant-sci/tools/paper-preferences.json` | content | rule 1/3: satisfies skills owned by folio-assistant-sci; also D2 (definition becomes JSON); implementation → that instance's code | unplanned (tool placement; S5 70lx carries implementations) |
-| MOVE | `cat-harness/tools/mcp.ts` | `folio-assistant-sci/tools/paper-preview.json` | content | rule 1/3: satisfies skills owned by folio-assistant-sci; also D2 (definition becomes JSON); implementation → that instance's code | unplanned (tool placement; S5 70lx carries implementations) |
+| MOVE | `cat-harness/tools/index.ts` | `folio-assistant-sci/tools/latex-preflight.json` | content | rule 1/3: satisfies skills owned by folio-assistant-sci; also D2 (definition becomes JSON); implementation → that layer's code | unplanned (tool placement; S5 70lx carries implementations) |
+| MOVE | `cat-harness/tools/index.ts` | `folio-assistant-sci/tools/latex-overfull.json` | content | rule 1/3: satisfies skills owned by folio-assistant-sci; also D2 (definition becomes JSON); implementation → that layer's code | unplanned (tool placement; S5 70lx carries implementations) |
+| MOVE | `cat-harness/tools/index.ts` | `folio-assistant-sci/tools/tex-snippet-validate.json` | content | rule 1/3: satisfies skills owned by folio-assistant-sci; also D2 (definition becomes JSON); implementation → that layer's code | unplanned (tool placement; S5 70lx carries implementations) |
+| MOVE | `cat-harness/tools/index.ts` | `folio-assistant-sci/tools/tex-source-audit.json` | content | rule 1/3: satisfies skills owned by folio-assistant-sci; also D2 (definition becomes JSON); implementation → that layer's code | unplanned (tool placement; S5 70lx carries implementations) |
+| MOVE | `cat-harness/tools/index.ts` | `folio-assistant-sci/tools/headless-render-qc.json` | sdlc | rule 2: tool subject is sci; also D2 (definition becomes JSON); implementation → that layer's code | unplanned (tool placement; S5 70lx carries implementations) |
+| MOVE | `cat-harness/tools/index.ts` | `folio-assistant-sci/tools/lean-build.json` | content | rule 1/3: satisfies skills owned by folio-assistant-sci; also D2 (definition becomes JSON); implementation → that layer's code | unplanned (tool placement; S5 70lx carries implementations) |
+| MOVE | `cat-harness/tools/index.ts` | `folio-assistant-sci/tools/lean-cache.json` | content | rule 1/3: satisfies skills owned by folio-assistant-sci; also D2 (definition becomes JSON); implementation → that layer's code | unplanned (tool placement; S5 70lx carries implementations) |
+| MOVE | `cat-harness/tools/index.ts` | `folio-assistant-sci/tools/lean-toolchain-setup.json` | content | rule 1/3: satisfies skills owned by folio-assistant-sci; also D2 (definition becomes JSON); implementation → that layer's code | unplanned (tool placement; S5 70lx carries implementations) |
+| MOVE | `cat-harness/tools/index.ts` | `folio-assistant-sci/tools/lean-coverage.json` | content | rule 1/3: satisfies skills owned by folio-assistant-sci; also D2 (definition becomes JSON); implementation → that layer's code | unplanned (tool placement; S5 70lx carries implementations) |
+| MOVE | `cat-harness/tools/index.ts` | `folio-assistant-sci/tools/lean-audit.json` | content | rule 1/3: satisfies skills owned by folio-assistant-sci; also D2 (definition becomes JSON); implementation → that layer's code | unplanned (tool placement; S5 70lx carries implementations) |
+| MOVE | `cat-harness/tools/index.ts` | `folio-assistant-sci/tools/content-manifest-validate.json` | content | rule 1/3: satisfies skills owned by folio-assistant-sci; also D2 (definition becomes JSON); implementation → that layer's code | unplanned (tool placement; S5 70lx carries implementations) |
+| MOVE | `cat-harness/tools/index.ts` | `folio-assistant-sci/tools/paper-latex-build.json` | content | rule 1/3: satisfies skills owned by folio-assistant-sci; also D2 (definition becomes JSON); implementation → that layer's code | unplanned (tool placement; S5 70lx carries implementations) |
+| MOVE | `cat-harness/tools/index.ts` | `folio-assistant-sci/tools/proof-dependency-graph.json` | ui | rule 1/3: satisfies skills owned by folio-assistant-sci; also D2 (definition becomes JSON); implementation → that layer's code | unplanned (tool placement; S5 70lx carries implementations) |
+| MOVE | `cat-harness/tools/index.ts` | `folio-assistant-sci/tools/proof-objects-extract.json` | content | rule 1/3: satisfies skills owned by folio-assistant-sci; also D2 (definition becomes JSON); implementation → that layer's code | unplanned (tool placement; S5 70lx carries implementations) |
+| MOVE | `cat-harness/tools/index.ts` | `folio-assistant-sci/tools/proof-status-update.json` | content | rule 1/3: satisfies skills owned by folio-assistant-sci; also D2 (definition becomes JSON); implementation → that layer's code | unplanned (tool placement; S5 70lx carries implementations) |
+| MOVE | `cat-harness/tools/index.ts` | `folio-assistant-core/tools/glossary-build.json` | library | rule 1/3: satisfies skills owned by folio-assistant-core; also D2 (definition becomes JSON); implementation → that layer's code | unplanned (tool placement; S5 70lx carries implementations) |
+| MOVE | `cat-harness/tools/index.ts` | `fhir-harness/tools/fsh-cone.json` | content | rule 1/3: satisfies skills owned by fhir-harness; also D2 (definition becomes JSON); implementation → that layer's code | unplanned (tool placement; S5 70lx carries implementations) |
+| MOVE | `cat-harness/tools/mcp.ts` | `folio-assistant-sci/tools/check-dependencies.json` | content | rule 1/3: satisfies skills owned by folio-assistant-sci; also D2 (definition becomes JSON); implementation → that layer's code | unplanned (tool placement; S5 70lx carries implementations) |
+| MOVE | `cat-harness/tools/mcp.ts` | `folio-assistant-sci/tools/paper-preferences.json` | content | rule 1/3: satisfies skills owned by folio-assistant-sci; also D2 (definition becomes JSON); implementation → that layer's code | unplanned (tool placement; S5 70lx carries implementations) |
+| MOVE | `cat-harness/tools/mcp.ts` | `folio-assistant-sci/tools/paper-preview.json` | content | rule 1/3: satisfies skills owned by folio-assistant-sci; also D2 (definition becomes JSON); implementation → that layer's code | unplanned (tool placement; S5 70lx carries implementations) |
 | MOVE | `smart-base/tools/index.ts` | `fhir-harness/tools/valueset-schemas.json` | content | rule 2: generic FHIR vocabulary, no WHO/SMART/DAK terms | unplanned (tool placement; S5 70lx carries implementations) |
 | SPLIT | `cat-harness/tools/mcp.ts` | `cat-harness/tools/instance-init.json (generic instance init) + folio-assistant-core/tools/folio-init.json (content-adapter scaffold; core tools/mcp subgraph)` | conduct | refined MCP ruling 2026-10-01 + mer2 ("split the operation"): generic init stays, folio scaffold half is core-specific | mer2 (S6) + 70lx |
 
 <details markdown="1"><summary>collapsed: TO-JSON 104</summary>
 
-| instance | concern | OK | CODE | TO-JSON |
+| layer | concern | OK | CODE | TO-JSON |
 |---|---|---:|---:|---:|
 | cat-harness | content |  |  | 5 |
 | cat-harness | kg |  |  | 19 |
@@ -420,7 +420,7 @@ MOVE, SPLIT and AMBIGUOUS rows are listed in full. OK, CODE and TO-JSON rows are
 
 <details markdown="1"><summary>collapsed: OK 1, CODE 1</summary>
 
-| instance | concern | OK | CODE | TO-JSON |
+| layer | concern | OK | CODE | TO-JSON |
 |---|---|---:|---:|---:|
 | cat-harness | tools |  | 1 |  |
 | root | tools | 1 |  |  |
@@ -463,7 +463,7 @@ MOVE, SPLIT and AMBIGUOUS rows are listed in full. OK, CODE and TO-JSON rows are
 
 <details markdown="1"><summary>collapsed: OK 49</summary>
 
-| instance | concern | OK | CODE | TO-JSON |
+| layer | concern | OK | CODE | TO-JSON |
 |---|---|---:|---:|---:|
 | bootstrap | content | 2 |  |  |
 | bootstrap | kg | 1 |  |  |
@@ -491,7 +491,7 @@ MOVE, SPLIT and AMBIGUOUS rows are listed in full. OK, CODE and TO-JSON rows are
 
 <details markdown="1"><summary>collapsed: OK 4</summary>
 
-| instance | concern | OK | CODE | TO-JSON |
+| layer | concern | OK | CODE | TO-JSON |
 |---|---|---:|---:|---:|
 | cat-harness | content | 1 |  |  |
 | cat-harness | sdlc | 3 |  |  |
@@ -521,7 +521,7 @@ MOVE, SPLIT and AMBIGUOUS rows are listed in full. OK, CODE and TO-JSON rows are
 
 <details markdown="1"><summary>collapsed: OK 36</summary>
 
-| instance | concern | OK | CODE | TO-JSON |
+| layer | concern | OK | CODE | TO-JSON |
 |---|---|---:|---:|---:|
 | bootstrap | content | 2 |  |  |
 | bootstrap | kg | 2 |  |  |
@@ -539,7 +539,7 @@ MOVE, SPLIT and AMBIGUOUS rows are listed in full. OK, CODE and TO-JSON rows are
 
 <details markdown="1"><summary>collapsed: OK 25</summary>
 
-| instance | concern | OK | CODE | TO-JSON |
+| layer | concern | OK | CODE | TO-JSON |
 |---|---|---:|---:|---:|
 | fhir-harness | content | 5 |  |  |
 | folio-assistant-core | content | 3 |  |  |
@@ -590,7 +590,7 @@ MOVE, SPLIT and AMBIGUOUS rows are listed in full. OK, CODE and TO-JSON rows are
 
 <details markdown="1"><summary>collapsed: OK 80</summary>
 
-| instance | concern | OK | CODE | TO-JSON |
+| layer | concern | OK | CODE | TO-JSON |
 |---|---|---:|---:|---:|
 | cat-harness | content | 39 |  |  |
 | cat-harness | library | 14 |  |  |
@@ -615,7 +615,7 @@ MOVE, SPLIT and AMBIGUOUS rows are listed in full. OK, CODE and TO-JSON rows are
 
 <details markdown="1"><summary>collapsed: OK 27</summary>
 
-| instance | concern | OK | CODE | TO-JSON |
+| layer | concern | OK | CODE | TO-JSON |
 |---|---|---:|---:|---:|
 | cat-harness | content | 14 |  |  |
 | cat-harness | library | 2 |  |  |
@@ -643,7 +643,7 @@ MOVE, SPLIT and AMBIGUOUS rows are listed in full. OK, CODE and TO-JSON rows are
 
 <details markdown="1"><summary>collapsed: OK 17</summary>
 
-| instance | concern | OK | CODE | TO-JSON |
+| layer | concern | OK | CODE | TO-JSON |
 |---|---|---:|---:|---:|
 | cat-harness | tools | 17 |  |  |
 
@@ -653,7 +653,7 @@ MOVE, SPLIT and AMBIGUOUS rows are listed in full. OK, CODE and TO-JSON rows are
 
 <details markdown="1"><summary>collapsed: OK 21</summary>
 
-| instance | concern | OK | CODE | TO-JSON |
+| layer | concern | OK | CODE | TO-JSON |
 |---|---|---:|---:|---:|
 | cat-harness | content | 2 |  |  |
 | cat-harness | kg | 2 |  |  |
@@ -681,7 +681,7 @@ MOVE, SPLIT and AMBIGUOUS rows are listed in full. OK, CODE and TO-JSON rows are
 
 <details markdown="1"><summary>collapsed: OK 6</summary>
 
-| instance | concern | OK | CODE | TO-JSON |
+| layer | concern | OK | CODE | TO-JSON |
 |---|---|---:|---:|---:|
 | cat-harness | kg | 1 |  |  |
 | cat-harness | sdlc | 5 |  |  |
@@ -711,7 +711,7 @@ MOVE, SPLIT and AMBIGUOUS rows are listed in full. OK, CODE and TO-JSON rows are
 
 <details markdown="1"><summary>collapsed: OK 3, CODE 1</summary>
 
-| instance | concern | OK | CODE | TO-JSON |
+| layer | concern | OK | CODE | TO-JSON |
 |---|---|---:|---:|---:|
 | bootstrap-tools | process | 1 |  |  |
 | bootstrap-tools | ui | 2 |  |  |
@@ -759,7 +759,7 @@ MOVE, SPLIT and AMBIGUOUS rows are listed in full. OK, CODE and TO-JSON rows are
 
 <details markdown="1"><summary>collapsed: OK 87, CODE 187</summary>
 
-| instance | concern | OK | CODE | TO-JSON |
+| layer | concern | OK | CODE | TO-JSON |
 |---|---|---:|---:|---:|
 | bootstrap | kg | 5 |  |  |
 | bootstrap-tools | content | 3 |  |  |
@@ -813,7 +813,7 @@ MOVE, SPLIT and AMBIGUOUS rows are listed in full. OK, CODE and TO-JSON rows are
 
 <details markdown="1"><summary>collapsed: OK 45</summary>
 
-| instance | concern | OK | CODE | TO-JSON |
+| layer | concern | OK | CODE | TO-JSON |
 |---|---|---:|---:|---:|
 | cat-harness | conduct | 1 |  |  |
 | cat-harness | content | 4 |  |  |
@@ -864,7 +864,7 @@ MOVE, SPLIT and AMBIGUOUS rows are listed in full. OK, CODE and TO-JSON rows are
 
 <details markdown="1"><summary>collapsed: OK 115, CODE 409</summary>
 
-| instance | concern | OK | CODE | TO-JSON |
+| layer | concern | OK | CODE | TO-JSON |
 |---|---|---:|---:|---:|
 | bootstrap-tools | content | 9 |  |  |
 | bootstrap-tools | kg | 3 |  |  |
@@ -945,7 +945,7 @@ MOVE, SPLIT and AMBIGUOUS rows are listed in full. OK, CODE and TO-JSON rows are
 
 <details markdown="1"><summary>collapsed: OK 9, CODE 197</summary>
 
-| instance | concern | OK | CODE | TO-JSON |
+| layer | concern | OK | CODE | TO-JSON |
 |---|---|---:|---:|---:|
 | cat-harness | conduct |  | 2 |  |
 | cat-harness | content | 7 | 79 |  |

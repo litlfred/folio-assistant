@@ -5,10 +5,10 @@
   {
    "id": "S_FeatureSignoff",
    "name": "Feature sign-off on issue",
-   "left": 26.97,
+   "left": 26.96,
    "top": 73.58,
    "box": {
-    "left": 19.65,
+    "left": 19.64,
     "top": 91.51,
     "width": 2.42,
     "height": 4.53
@@ -17,10 +17,10 @@
   {
    "id": "BA_Confirm",
    "name": "Confirm all criteria met",
-   "left": 42.12,
+   "left": 42.1,
    "top": 45.28,
    "box": {
-    "left": 34.8,
+    "left": 34.78,
     "top": 63.21,
     "width": 2.42,
     "height": 4.53
@@ -29,10 +29,10 @@
   {
    "id": "A_RecordSignoff",
    "name": "Record the sign-off attestation",
-   "left": 42.12,
+   "left": 42.1,
    "top": 6.6,
    "box": {
-    "left": 34.8,
+    "left": 34.78,
     "top": 24.53,
     "width": 2.42,
     "height": 4.53
@@ -41,10 +41,10 @@
   {
    "id": "Call_MergeToMain",
    "name": "Land the feature's PRs",
-   "left": 74.44,
+   "left": 74.41,
    "top": 6.6,
    "box": {
-    "left": 67.12,
+    "left": 67.09,
     "top": 24.53,
     "width": 2.42,
     "height": 4.53
@@ -53,10 +53,10 @@
   {
    "id": "A_Close",
    "name": "Close issue ONLY on BA authorisation",
-   "left": 89.6,
+   "left": 89.56,
    "top": 6.6,
    "box": {
-    "left": 82.27,
+    "left": 82.24,
     "top": 24.53,
     "width": 2.42,
     "height": 4.53
@@ -232,16 +232,8 @@
       "href": "../../../reference/skill-instructions/confirmation-waiver.html"
      },
      {
-      "name": "content-author",
-      "href": "../../../reference/skill-instructions/content-author.html"
-     },
-     {
       "name": "content-graph",
       "href": "../../../reference/skill-instructions/content-graph.html"
-     },
-     {
-      "name": "content-plan",
-      "href": "../../../reference/skill-instructions/content-plan.html"
      },
      {
       "name": "continual-progress",
@@ -413,22 +405,12 @@
   "Call_MergeToMain": {
    "id": "Call_MergeToMain",
    "name": "Land the feature's PRs",
-   "type": "bpmn:CallActivity",
+   "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Close/node/Call_MergeToMain",
    "stepHref": "crdm-close.html#step-Call_MergeToMain",
    "lane": "Agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Close/lane/Lane_Agent",
-   "skills": [
-    {
-     "name": "merge-to-main",
-     "href": "../../../reference/skill-instructions/merge-to-main.html"
-    }
-   ],
-   "calls": {
-    "name": "Merge to main",
-    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain",
-    "diagram": "merge-to-main.html"
-   },
+   "skills": [],
    "role": {
     "name": "authoring-agent",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
@@ -475,16 +457,8 @@
       "href": "../../../reference/skill-instructions/confirmation-waiver.html"
      },
      {
-      "name": "content-author",
-      "href": "../../../reference/skill-instructions/content-author.html"
-     },
-     {
       "name": "content-graph",
       "href": "../../../reference/skill-instructions/content-graph.html"
-     },
-     {
-      "name": "content-plan",
-      "href": "../../../reference/skill-instructions/content-plan.html"
      },
      {
       "name": "continual-progress",
@@ -719,16 +693,8 @@
       "href": "../../../reference/skill-instructions/confirmation-waiver.html"
      },
      {
-      "name": "content-author",
-      "href": "../../../reference/skill-instructions/content-author.html"
-     },
-     {
       "name": "content-graph",
       "href": "../../../reference/skill-instructions/content-graph.html"
-     },
-     {
-      "name": "content-plan",
-      "href": "../../../reference/skill-instructions/content-plan.html"
      },
      {
       "name": "continual-progress",

@@ -105,6 +105,10 @@
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/maintainedBy",
       "@type": "@id"
     },
+    "jsonSchema": {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/jsonSchema",
+      "@type": "@id"
+    },
     "module": "https://litlfred.github.io/cat-harness/v0/ns/module",
     "holdsGraph": {
       "@id": "http://purl.org/dc/terms/type",
@@ -363,7 +367,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "archimate-metamodel",
       "title": "Derive the metamodel an ArchiMate model uses, and check it against ArchiMate's relationship table",
-      "description": "For each model an instance's `cat-archimate.config.json` names: the element types it uses, with counts; every (source type, relationship, target type) pattern its relationships follow, with counts and ids; whether ArchiMate's relationship table (Appendix B of ArchiMate 3.2, as Archi holds it, committed as `archimate/schemas/archimate-relationships.json` in the tools layer) allows each pattern; and the placeholder elements, named after their own type, that a hand-drawn metamodel leaves in a model. Prints a report, JSON, Graphviz DOT or a Mermaid class diagram. `archimate-pages` draws the same result on each model's \"Metamodel in use\" page, so the metamodel is derived, never drawn.",
+      "description": "For each model a layer's `cat-archimate.config.json` names: the element types it uses, with counts; every (source type, relationship, target type) pattern its relationships follow, with counts and ids; whether ArchiMate's relationship table (Appendix B of ArchiMate 3.2, as Archi holds it, committed as `archimate/schemas/archimate-relationships.json` in the tools layer) allows each pattern; and the placeholder elements, named after their own type, that a hand-drawn metamodel leaves in a model. Prints a report, JSON, Graphviz DOT or a Mermaid class diagram. `archimate-pages` draws the same result on each model's \"Metamodel in use\" page, so the metamodel is derived, never drawn.",
       "install": {
         "none": true
       },
@@ -375,7 +379,7 @@
           {
             "name": "instance",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
-            "description": "The instance root whose ArchiMate models are read.",
+            "description": "The layer root whose ArchiMate models are read.",
             "required": true,
             "arg": {
               "flag": "--instance"

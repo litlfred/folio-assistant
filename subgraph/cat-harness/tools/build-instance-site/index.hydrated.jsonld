@@ -7,7 +7,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/build-instance-site.jsonld",
       "@type": "cat-harness:Tool",
-      "description": "From a checkout whose layers arrive by remote mount: mount the pinned closure, install, run the instance's own gates (`--pre`), compose the harness chrome for THIS instance, run its source steps, build with Jekyll at the base path read from the git remote (`/<repo>`, or `/<repo>/branches/<branch>` for a preview), run the post-build steps (mount-instance-docs, pdf-viewer, set-html-lang, publish-id-lookup, rail-standalone-pages), and check that every relative or base-rooted link in every page resolves to a file under the site, reading each page with an HTML parser. Any failing step stops the run; a link that does not resolve means nothing is published. It never decides to publish: only `--publish` does, and then a root publish keeps `branches/` and `_render-log/` on the branch, and a preview replaces only its own `branches/<branch>/`.",
+      "description": "From a checkout whose layers arrive by remote mount: mount the pinned closure, install, run the layer's own gates (`--pre`), compose the harness chrome for THIS layer, run its source steps, build with Jekyll at the base path read from the git remote (`/<repo>`, or `/<repo>/branches/<branch>` for a preview), run the post-build steps (mount-instance-docs, pdf-viewer, set-html-lang, publish-id-lookup, rail-standalone-pages), and check that every relative or base-rooted link in every page resolves to a file under the site, reading each page with an HTML parser. Any failing step stops the run; a link that does not resolve means nothing is published. It never decides to publish: only `--publish` does, and then a root publish keeps `branches/` and `_render-log/` on the branch, and a preview replaces only its own `branches/<branch>/`.",
       "install": {
         "none": true
       },
@@ -20,7 +20,7 @@
             "arg": {
               "flag": "--root"
             },
-            "description": "The instance checkout (holds `index.config.json`). Default: the working directory.",
+            "description": "The layer checkout (holds `index.config.json`). Default: the working directory.",
             "name": "root",
             "required": false,
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
@@ -29,7 +29,7 @@
             "arg": {
               "flag": "--instance"
             },
-            "description": "The declared instance name; must match the checkout's declaration.",
+            "description": "The declared layer name; must match the checkout's declaration.",
             "name": "instance",
             "required": true,
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug"
@@ -47,7 +47,7 @@
             "arg": {
               "flag": "--pre"
             },
-            "description": "A package script to run in the checkout first, as `bun run <name>` (repeatable): the instance's own gates. Any non-zero exit stops the build.",
+            "description": "A package script to run in the checkout first, as `bun run <name>` (repeatable): the layer's own gates. Any non-zero exit stops the build.",
             "name": "pre",
             "required": false,
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ScriptName"
@@ -129,11 +129,8 @@
           "ruby"
         ]
       },
-      "satisfies": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/skill/deployment-awareness",
-        "https://litlfred.github.io/folio-assistant/cat-harness/skill/remote-mount"
-      ],
-      "title": "Build, check and (on request) publish an instance's own site, or a branches/<branch> preview"
+      "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/remote-mount",
+      "title": "Build, check and (on request) publish a layer's own site, or a branches/<branch> preview"
     }
   ],
   "holdsGraph": [

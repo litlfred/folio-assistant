@@ -59,7 +59,7 @@ NO work-plan element on any activity: a work plan is harness machinery and a Boo
     <bpmn:exclusiveGateway id="GW_HarnessChosen" name="One harness?"/>
 
     <bpmn:task id="A_ReadLocation" name="Read what each location already is">
-      <bpmn:documentation>Ask the location, not your memory of it: a Knowledge Graph Data Store that carries a declaration at its root is ALREADY an instance, and it says so itself. `&lt;name&gt;.json` present and parsing is the whole test, and `bootstrap-kg-navigation` says what the three answers mean — absent (not an instance yet), present, and present-but-unreadable, which is an instance asserting something broken and is not a green light either.
+      <bpmn:documentation>Ask the location, not your memory of it: a Knowledge Graph Data Store that carries a declaration at its root is ALREADY a layer, and it says so itself. `&lt;name&gt;.json` present and parsing is the whole test, and `bootstrap-kg-navigation` says what the three answers mean — absent (not a layer yet), present, and present-but-unreadable, which is a layer asserting something broken and is not a green light either.
 
 Done before reading the chosen harness: a location held by another harness ends the process here.</bpmn:documentation>
       <bpmn:extensionElements><bootstrap.processes:skill ref="bootstrap-kg-navigation"/></bpmn:extensionElements>
@@ -71,7 +71,7 @@ Done before reading the chosen harness: a location held by another harness ends 
     </bpmn:task>
 
     <bpmn:exclusiveGateway id="GW_AlreadyInitialized" name="Already initialized?">
-      <bpmn:documentation>Three answers, not two. NOT YET: install. ALREADY, AS THE CHOSEN HARNESS: the install is not repeated — it goes straight to `complete-initialization`, which checks each step the declarations name and adds only what is missing, replacing nothing. ALREADY, AS SOMETHING ELSE (or a declaration that does not parse): logged and stopped, because re-initialising over an instance that has content, history and dependents is not recoverable by running anything again; what the Requestor does next is a new decision.</bpmn:documentation>
+      <bpmn:documentation>Three answers, not two. NOT YET: install. ALREADY, AS THE CHOSEN HARNESS: the install is not repeated — it goes straight to `complete-initialization`, which checks each step the declarations name and adds only what is missing, replacing nothing. ALREADY, AS SOMETHING ELSE (or a declaration that does not parse): logged and stopped, because re-initialising over a layer that has content, history and dependents is not recoverable by running anything again; what the Requestor does next is a new decision.</bpmn:documentation>
     </bpmn:exclusiveGateway>
 
     <bpmn:task id="A_ReadDeclaration" name="Read the harness's declaration and instructions">
@@ -97,9 +97,9 @@ Done before reading the chosen harness: a location held by another harness ends 
     </bpmn:task>
 
     <bpmn:task id="A_WriteRootReadme" name="Write the root README, if it is not there">
-      <bpmn:documentation>The repository now IS an instance of something, and nothing at its root says so. It carries a LINK to the harness that was installed and the OVERALL install status across every location — WHEN ABSENT, never replacing: where a README is already there, the link and status go in a marker pair the harness's own README tool maintains.
+      <bpmn:documentation>The repository now IS a layer instantiating a harness, and nothing at its root says so. It carries a LINK to the harness that was installed and the OVERALL install status across every location — WHEN ABSENT, never replacing: where a README is already there, the link and status go in a marker pair the harness's own README tool maintains.
 
-Initialization may create the README: the rule that a running process never writes an `instance-readme` governs an instance that already exists.</bpmn:documentation>
+Initialization may create the README: the rule that a running process never writes an `instance-readme` governs a layer that already exists.</bpmn:documentation>
       <bpmn:extensionElements><bootstrap.processes:skill ref="root-readme"/></bpmn:extensionElements>
     </bpmn:task>
 
@@ -117,7 +117,7 @@ Initialization may create the README: the rule that a running process never writ
       <bpmn:documentation>Installed, and every step the declarations name reported in its state. A step still open is not hidden by this end: it is in the report `complete-initialization` made, with what to do.</bpmn:documentation>
     </bpmn:endEvent>
     <bpmn:endEvent id="End_Failed" name="Failed">
-      <bpmn:documentation>Three ways in, and all are logged rather than retried: no harness was chosen, a location is already an instance of something else, or the instructions were not at the predetermined spot. Guessing a harness produces a repository set up as the wrong thing, which is worse than one not set up at all.</bpmn:documentation>
+      <bpmn:documentation>Three ways in, and all are logged rather than retried: no harness was chosen, a location is already a layer instantiating something else, or the instructions were not at the predetermined spot. Guessing a harness produces a repository set up as the wrong thing, which is worse than one not set up at all.</bpmn:documentation>
     </bpmn:endEvent>
 
     <bpmn:sequenceFlow id="SF_IH_1" sourceRef="Start_InitializeHarness" targetRef="A_DetermineHarness"/>
@@ -141,137 +141,140 @@ Initialization may create the README: the rule that a running process never writ
   <bpmndi:BPMNDiagram id="Diagram_Process_InitializeHarness">
     <bpmndi:BPMNPlane id="Plane_Process_InitializeHarness" bpmnElement="Collaboration_Process_InitializeHarness">
       <bpmndi:BPMNShape id="Shape_Participant_Process_InitializeHarness" bpmnElement="Participant_Process_InitializeHarness" isHorizontal="true">
-        <dc:Bounds x="140" y="80" width="2360" height="500" />
+        <dc:Bounds x="140" y="80" width="2560" height="704" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Lane_BootstrappingAgent" bpmnElement="Lane_BootstrappingAgent" isHorizontal="true">
-        <dc:Bounds x="170" y="80" width="2330" height="500" />
+        <dc:Bounds x="170" y="80" width="2530" height="704" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Start_InitializeHarness" bpmnElement="Start_InitializeHarness">
-        <dc:Bounds x="232" y="212" width="36" height="36" />
+        <dc:Bounds x="272" y="329" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_DetermineHarness" bpmnElement="A_DetermineHarness">
-        <dc:Bounds x="380" y="170" width="120" height="120" />
+        <dc:Bounds x="410" y="287" width="120" height="120" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_GW_HarnessChosen" bpmnElement="GW_HarnessChosen" isMarkerVisible="true">
-        <dc:Bounds x="605" y="205" width="50" height="50" />
+        <dc:Bounds x="675" y="322" width="50" height="50" />
         <bpmndi:BPMNLabel><dc:Bounds x="659" y="212.5" width="90" height="35" /></bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_ReadLocation" bpmnElement="A_ReadLocation">
-        <dc:Bounds x="745" y="440" width="150" height="80" />
+        <dc:Bounds x="870" y="457" width="120" height="120" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_GW_AlreadyInitialized" bpmnElement="GW_AlreadyInitialized" isMarkerVisible="true">
-        <dc:Bounds x="985" y="205" width="50" height="50" />
+        <dc:Bounds x="1135" y="322" width="50" height="50" />
         <bpmndi:BPMNLabel><dc:Bounds x="891" y="259" width="90" height="35" /></bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_ReadDeclaration" bpmnElement="A_ReadDeclaration">
-        <dc:Bounds x="1125" y="440" width="150" height="80" />
+        <dc:Bounds x="1330" y="457" width="120" height="120" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_GW_InstructionsFound" bpmnElement="GW_InstructionsFound" isMarkerVisible="true">
-        <dc:Bounds x="1365" y="205" width="50" height="50" />
+        <dc:Bounds x="1595" y="322" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_LogInstallStart" bpmnElement="A_LogInstallStart">
-        <dc:Bounds x="1520" y="170" width="120" height="120" />
+        <dc:Bounds x="1790" y="287" width="120" height="120" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_Install" bpmnElement="A_Install">
-        <dc:Bounds x="1710" y="170" width="120" height="120" />
+        <dc:Bounds x="1970" y="287" width="120" height="120" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_WriteRootReadme" bpmnElement="A_WriteRootReadme">
-        <dc:Bounds x="1900" y="170" width="120" height="120" />
+        <dc:Bounds x="2150" y="287" width="120" height="120" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_CompleteInitialization" bpmnElement="A_CompleteInitialization">
-        <dc:Bounds x="2090" y="170" width="120" height="120" />
+        <dc:Bounds x="2330" y="287" width="120" height="120" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_LogFailure" bpmnElement="A_LogFailure">
-        <dc:Bounds x="2075" y="92" width="150" height="80" />
+        <dc:Bounds x="2330" y="117" width="120" height="120" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_End_Installed" bpmnElement="End_Installed">
-        <dc:Bounds x="2322" y="212" width="36" height="36" />
+        <dc:Bounds x="2552" y="329" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_End_Failed" bpmnElement="End_Failed">
-        <dc:Bounds x="2322" y="112" width="36" height="36" />
+        <dc:Bounds x="2552" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Edge_SF_IH_1" bpmnElement="SF_IH_1">
-        <di:waypoint x="268" y="230" />
-        <di:waypoint x="380" y="230" />
+        <di:waypoint x="308" y="347" />
+        <di:waypoint x="410" y="347" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_IH_4" bpmnElement="SF_IH_4">
-        <di:waypoint x="500" y="230" />
-        <di:waypoint x="605" y="230" />
+        <di:waypoint x="530" y="347" />
+        <di:waypoint x="675" y="347" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_IH_5" bpmnElement="SF_IH_5">
-        <di:waypoint x="630" y="205" />
-        <di:waypoint x="630" y="130" />
-        <di:waypoint x="2075" y="130" />
+        <di:waypoint x="700" y="322" />
+        <di:waypoint x="700" y="177" />
+        <di:waypoint x="2330" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_IH_6" bpmnElement="SF_IH_6">
-        <di:waypoint x="630" y="255"/>
-        <di:waypoint x="630" y="480"/>
-        <di:waypoint x="745" y="480"/>
+        <di:waypoint x="700" y="372" />
+        <di:waypoint x="700" y="517" />
+        <di:waypoint x="870" y="517" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_IH_13" bpmnElement="SF_IH_13">
-        <di:waypoint x="820" y="440"/>
-        <di:waypoint x="820" y="230"/>
-        <di:waypoint x="985" y="230"/>
+        <di:waypoint x="930" y="457" />
+        <di:waypoint x="930" y="347" />
+        <di:waypoint x="1135" y="347" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_IH_14" bpmnElement="SF_IH_14">
-        <di:waypoint x="1010" y="205" />
-        <di:waypoint x="1010" y="130" />
-        <di:waypoint x="2075" y="130" />
-        <bpmndi:BPMNLabel><dc:Bounds x="1014" y="132" width="90" height="71" /></bpmndi:BPMNLabel>
+        <di:waypoint x="1160" y="322" />
+        <di:waypoint x="1160" y="101" />
+        <di:waypoint x="2390" y="101" />
+        <di:waypoint x="2390" y="117" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_IH_17" bpmnElement="SF_IH_17">
-        <di:waypoint x="1035" y="230" />
-        <di:waypoint x="1080" y="230" />
-        <di:waypoint x="1080" y="330" />
-        <di:waypoint x="2150" y="330" />
-        <di:waypoint x="2150" y="270" />
-        <bpmndi:BPMNLabel><dc:Bounds x="1084" y="244.5" width="90" height="71" /></bpmndi:BPMNLabel>
+        <di:waypoint x="1160" y="322" />
+        <di:waypoint x="1160" y="271" />
+        <di:waypoint x="2390" y="271" />
+        <di:waypoint x="2390" y="287" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_IH_15" bpmnElement="SF_IH_15">
-        <di:waypoint x="1010" y="255"/>
-        <di:waypoint x="1010" y="480"/>
-        <di:waypoint x="1125" y="480"/>
-        <bpmndi:BPMNLabel><dc:Bounds x="1014" y="358.5" width="90" height="18" /></bpmndi:BPMNLabel>
+        <di:waypoint x="1160" y="372" />
+        <di:waypoint x="1160" y="517" />
+        <di:waypoint x="1330" y="517" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_IH_7" bpmnElement="SF_IH_7">
-        <di:waypoint x="1200" y="440"/>
-        <di:waypoint x="1200" y="230"/>
-        <di:waypoint x="1365" y="230"/>
+        <di:waypoint x="1390" y="457" />
+        <di:waypoint x="1390" y="347" />
+        <di:waypoint x="1595" y="347" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_IH_8" bpmnElement="SF_IH_8">
-        <di:waypoint x="1390" y="205" />
-        <di:waypoint x="1390" y="130" />
-        <di:waypoint x="2075" y="130" />
+        <di:waypoint x="1620" y="322" />
+        <di:waypoint x="1620" y="177" />
+        <di:waypoint x="2330" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_IH_9" bpmnElement="SF_IH_9">
-        <di:waypoint x="1415" y="230" />
-        <di:waypoint x="1520" y="230" />
+        <di:waypoint x="1645" y="347" />
+        <di:waypoint x="1790" y="347" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_IH_10" bpmnElement="SF_IH_10">
-        <di:waypoint x="1640" y="230" />
-        <di:waypoint x="1710" y="230" />
+        <di:waypoint x="1910" y="347" />
+        <di:waypoint x="1970" y="347" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_IH_11" bpmnElement="SF_IH_11">
-        <di:waypoint x="1830" y="230" />
-        <di:waypoint x="1900" y="230" />
+        <di:waypoint x="2090" y="347" />
+        <di:waypoint x="2150" y="347" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_IH_16" bpmnElement="SF_IH_16">
-        <di:waypoint x="2020" y="230" />
-        <di:waypoint x="2090" y="230" />
+        <di:waypoint x="2270" y="347" />
+        <di:waypoint x="2330" y="347" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_IH_18" bpmnElement="SF_IH_18">
-        <di:waypoint x="2210" y="230" />
-        <di:waypoint x="2322" y="230" />
+        <di:waypoint x="2450" y="347" />
+        <di:waypoint x="2552" y="347" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_IH_12" bpmnElement="SF_IH_12">
-        <di:waypoint x="2225" y="130" />
-        <di:waypoint x="2322" y="130" />
+        <di:waypoint x="2450" y="177" />
+        <di:waypoint x="2552" y="177" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="Shape_DSR_knowledge_graph" bpmnElement="DSR_knowledge_graph"><dc:Bounds x="985" y="620" width="50" height="50" />
+      <bpmndi:BPMNShape id="Shape_DSR_knowledge_graph" bpmnElement="DSR_knowledge_graph"><dc:Bounds x="1135" y="662" width="50" height="50" />
         <bpmndi:BPMNLabel><dc:Bounds x="1039" y="627" width="90" height="36" /></bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Edge_DIA_A_ReadLocation" bpmnElement="DIA_A_ReadLocation"><di:waypoint x="1010" y="620"/><di:waypoint x="1010" y="595"/><di:waypoint x="820" y="595"/><di:waypoint x="820" y="520"/></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Edge_DIA_A_ReadDeclaration" bpmnElement="DIA_A_ReadDeclaration"><di:waypoint x="1010" y="620"/><di:waypoint x="1010" y="595"/><di:waypoint x="1200" y="595"/><di:waypoint x="1200" y="520"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_DIA_A_ReadLocation" bpmnElement="DIA_A_ReadLocation">
+        <di:waypoint x="1160" y="662" />
+        <di:waypoint x="1160" y="517" />
+        <di:waypoint x="990" y="517" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_DIA_A_ReadDeclaration" bpmnElement="DIA_A_ReadDeclaration">
+        <di:waypoint x="1185" y="687" />
+        <di:waypoint x="1390" y="687" />
+        <di:waypoint x="1390" y="577" /></bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>

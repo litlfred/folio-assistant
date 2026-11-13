@@ -7,7 +7,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/workflow-list.jsonld",
       "@type": "cat-harness:Tool",
-      "description": "The BPMN processes this instance defines, and the instances currently open against them.",
+      "description": "The BPMN processes this layer defines, and the layers currently open against them.",
       "install": {
         "none": true
       },
@@ -23,7 +23,7 @@
         "inputs": [],
         "outputs": [
           {
-            "description": "Each process, its policy, and its open instances.",
+            "description": "Each process, its policy, and its open layers.",
             "name": "processes",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
           }

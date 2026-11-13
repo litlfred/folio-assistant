@@ -105,6 +105,10 @@
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/maintainedBy",
       "@type": "@id"
     },
+    "jsonSchema": {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/jsonSchema",
+      "@type": "@id"
+    },
     "module": "https://litlfred.github.io/cat-harness/v0/ns/module",
     "holdsGraph": {
       "@id": "http://purl.org/dc/terms/type",
@@ -363,15 +367,15 @@
     "registry",
     "packages"
   ],
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/975bbe594a8246f34e8f7b01b01cdb11bee51ce1",
-  "sourceCommitSha": "975bbe594a8246f34e8f7b01b01cdb11bee51ce1",
-  "sourceTree": "8515b2cf3a678ffab43a222a3d099887cf9c3c1a",
-  "sourceCommitAt": "2026-11-08T14:29:02+01:00",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c51f9c4aaed9dc175be37d618a3c48c3027881b4",
+  "sourceCommitSha": "c51f9c4aaed9dc175be37d618a3c48c3027881b4",
+  "sourceTree": "41d9dd0b016cc2c8f14ac0a1e8ecff7110234a11",
+  "sourceCommitAt": "2026-11-13T08:55:02+01:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
-    "GraphTypology": 10,
-    "Subgraph": 9,
+    "GraphTypology": 11,
+    "Subgraph": 10,
     "Asset": 2
   },
   "@graph": [
@@ -388,6 +392,13 @@
       "name": "library",
       "renderable": false,
       "summary": "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, `structure.json` and, where the source was scanned, `ocr/page-NNN.txt`. Every knowledge-graph reference to a source resolves through here, never to a loose path or a bare URL."
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/web-app",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/GraphTypology",
+      "name": "web-app",
+      "renderable": false,
+      "summary": "A web app held as source and published as its own chrome-less page, built at publish by the web-app-build Tool and loaded only when a reader opens its route."
     },
     {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/document-kinds",
@@ -408,7 +419,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/GraphTypology",
       "name": "openapi",
       "renderable": false,
-      "summary": "OpenAPI 3 documents an instance holds, each verbatim beside a provenance node naming the repository, path and commit it was ingested from (cat-harness's `openapi` subgraph). Every operation in a document is a node of its own: a page and an IRI under the instance's docs."
+      "summary": "OpenAPI 3 documents a layer holds, each verbatim beside a provenance node naming the repository, path and commit it was ingested from (cat-harness's `openapi` subgraph). Every operation in a document is a node of its own: a page and an IRI under the layer's docs."
     },
     {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/fhir-artifact-index",
@@ -436,7 +447,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/GraphTypology",
       "name": "catalogue",
       "renderable": false,
-      "summary": "A remote catalogue modelled by reference — communities, collections and items of a corpus the instance does not hold. Every node declares whether its bytes are here (`materialized`), elsewhere (`referenced`) or unestablished (`unknown`), with no default. Distinct from `library`, which is content that IS here."
+      "summary": "A remote catalogue modelled by reference — communities, collections and items of a corpus the layer does not hold. Every node declares whether its bytes are here (`materialized`), elsewhere (`referenced`) or unestablished (`unknown`), with no default. Distinct from `library`, which is content that IS here."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/graphTypology/glossary",
@@ -598,6 +609,21 @@
       "readmePath": "translations/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/smart-trust/directory/smart-trust-translations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/smart-trust/directory/onboarding-game",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "onboarding-game",
+      "path": "onboarding-game/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/web-app"
+      ],
+      "description": "The GDHCN onboarding game, \"Join the Network\" (Vite, TypeScript, three.js; Apache-2.0, from carlsbox/gdhcn-onboarding-game, see NOTICE). Declared by web-app.json and built and published by the harness's `apps` visualiser (Tool web-app-build) at <locale>/<harness>/apps/onboarding-game/, with no site chrome; nothing else on the site loads it. Its UI strings are translated through translations/<locale>/apps/ (smart-trust#176, Q-GAME-5).",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/smart-trust/directory/onboarding-game"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/smart-trust/asset/agent-instructions",

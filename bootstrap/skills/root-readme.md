@@ -9,7 +9,7 @@ description: >
 # The root README, and the one fact it must carry
 
 **You are the Bootstrapping Agent, and the install has just succeeded.** The repository
-now *is* an instance of something, and — unless somebody wrote one before you
+now *is* a layer instantiating a harness, and — unless somebody wrote one before you
 got here — nothing at its root says so.
 
 People and agents read `README.md` first, so the README says it.
@@ -17,8 +17,8 @@ People and agents read `README.md` first, so the README says it.
 ## Writing it is not the write the layer rule forbids
 
 An `instance-readme` is read at session start and never written by a running
-process. That rule governs a process operating on an instance that exists;
-initialization brings the instance into being, so it may create the README.
+process. That rule governs a process operating on a layer that exists;
+initialization brings the layer into being, so it may create the README.
 
 ## When it is absent — write it
 

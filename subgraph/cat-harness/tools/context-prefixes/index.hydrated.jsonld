@@ -7,7 +7,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/context-prefixes.jsonld",
       "@type": "cat-harness:Tool",
-      "description": "Check every committed JSON-LD document that names the content context, or an instance's own generated context: every plain key is a declared term (never descending into an `@json` value), and no file path sits under an `@id`-coerced term. An empty corpus is a finding, never a clean run. Prefixes are checked by `jsonld:contexts --check`.",
+      "description": "Check every committed JSON-LD document that names the content context, or a layer's own generated context: every plain key is a declared term (never descending into an `@json` value), and no file path sits under an `@id`-coerced term. An empty corpus is a finding, never a clean run. Prefixes are checked by `jsonld:contexts --check`.",
       "install": {
         "none": true
       },

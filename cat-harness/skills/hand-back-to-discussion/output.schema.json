@@ -158,7 +158,7 @@
     },
     "stagingLinks": {
       "$ref": "#/definitions/stagingLinks",
-      "description": "When the question asks the person to look at changed pages: the staging preview, one deep link per changed page with the same page on main, shown in the chat copy. When there is no preview, say so in `missing`. Rule: cat-harness sdlc/skills/sdlc-core/staging-review.md §\"The deep-link rule\"."
+      "description": "When the question asks the person to look at changed pages: the staging preview, one deep link per changed page with the same page on main, shown in the chat copy. When there is no preview, say so in `missing`. Rule: cat-harness skills/authoring/content-lifecycle/feedback-deep-links.md."
     }
   },
   "additionalProperties": false,
@@ -232,7 +232,7 @@
         },
         "stagingLinks": {
           "$ref": "#/definitions/stagingLinks",
-          "description": "When the question asks the person to look at changed pages: the staging preview, one deep link per changed page with the same page on main, shown in the chat copy. When there is no preview, say so in `missing`. Rule: cat-harness sdlc/skills/sdlc-core/staging-review.md §\"The deep-link rule\"."
+          "description": "When the question asks the person to look at changed pages: the staging preview, one deep link per changed page with the same page on main, shown in the chat copy. When there is no preview, say so in `missing`. Rule: cat-harness skills/authoring/content-lifecycle/feedback-deep-links.md."
         }
       },
       "additionalProperties": false,
@@ -240,7 +240,7 @@
     },
     "stagingLinks": {
       "title": "Staging links",
-      "description": "The staging preview of the work a request for feedback is about: one deep link per changed page (the page and the anchor where the change sits) with the same page on main as `before`. Mirrors StagingComparison in schemas/sdlc/staging.ts. The rule is sdlc/skills/sdlc-core/staging-review.md §\"The deep-link rule\". Copied inline as `definitions.stagingLinks` into every skill contract that carries it; schemas/staging.test.ts fails when a copy drifts.",
+      "description": "The staging preview of the work a request for feedback is about: one deep link per changed page (the page and the anchor where the change sits) with the same page on main as `before`. Mirrors StagingComparison in schemas/sdlc/staging.ts. The rule is skills/authoring/content-lifecycle/feedback-deep-links.md. Copied inline as `definitions.stagingLinks` into every skill contract that carries it; schemas/staging.test.ts fails when a copy drifts.",
       "type": "object",
       "required": [
         "branch",

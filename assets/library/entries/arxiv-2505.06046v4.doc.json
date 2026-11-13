@@ -776,11 +776,11 @@
           "heading": false
         },
         {
-          "term": "page",
+          "term": "hierarchy",
           "heading": false
         },
         {
-          "term": "hierarchy",
+          "term": "page",
           "heading": false
         }
       ],
@@ -1106,12 +1106,12 @@
           "heading": false
         },
         {
-          "term": "judge",
-          "heading": false
-        },
-        {
           "term": "response",
           "heading": true
+        },
+        {
+          "term": "judge",
+          "heading": false
         }
       ],
       "extract": "Utilising the fact all questions are directly grounded in specific parts of the original source text we use an LLM as a Judge setup (Zheng et al., 2023; Gu et al., 2025) for the free form answer evaluation. We prompt a judge LLM (GPT-4o-Mini) with the question, ground truth answer, the LLM response, and six retrieved related chunks. The judge is asked to assess the response and provide a binary classification for",
@@ -2065,11 +2065,11 @@
       "heading": true
     },
     {
-      "term": "invalid mcqa",
+      "term": "government guidance",
       "heading": false
     },
     {
-      "term": "government guidance",
+      "term": "invalid mcqa",
       "heading": false
     },
     {

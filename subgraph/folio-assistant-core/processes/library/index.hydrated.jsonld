@@ -10,10 +10,10 @@
       "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/ingest-build-l1-kg.svg",
       "description": "Build the L1 knowledge graph from what ingestion derived: Dublin Core, the manifest, the assets, their binding and their links.",
       "enforcement": "advisory",
-      "flowCount": 7,
+      "flowCount": 8,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
       "name": "Ingestion subprocess — build the L1 knowledge graph",
-      "nodeCount": 8,
+      "nodeCount": 9,
       "sourcePath": "processes/library/ingest-build-l1-kg.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant-core/blob/main/processes/library/ingest-build-l1-kg.bpmn",
       "startNode": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg/node/StartEvent_Derived2",
@@ -65,6 +65,14 @@
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg/node/Task_Glossary",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg/node/Task_References"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg#flow/Flow_k5c",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg/node/Task_References",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg/node/Task_Link"
     },
     {
@@ -78,7 +86,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg/lane/Lane_0",
       "@type": "cat-harness:Lane",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
       "name": "Ingestion Engine (agent, runs unattended)",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg"
@@ -93,7 +101,7 @@
       "name": "L1 graph built",
       "nodeKind": "end",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -107,7 +115,7 @@
       "nodeKind": "start",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg#flow/Flow_k1",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -122,7 +130,7 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg#flow/Flow_k4",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
       "touchesWorkPlan": false
@@ -138,7 +146,7 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg#flow/Flow_k5",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
       "touchesWorkPlan": false
@@ -154,7 +162,7 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg#flow/Flow_k2",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
       "touchesWorkPlan": false
@@ -166,11 +174,11 @@
       "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg/lane/Lane_0",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
       "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg#flow/Flow_k5",
-      "name": "Read glossary and abbreviations into candidate terms",
+      "name": "Read glossary into candidate terms",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg#flow/Flow_k5b",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/glossary-terms",
       "touchesWorkPlan": false
@@ -181,12 +189,12 @@
       "bpmnType": "bpmn:Task",
       "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg/lane/Lane_0",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
-      "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg#flow/Flow_k5b",
+      "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg#flow/Flow_k5c",
       "name": "Link L1 nodes into the corpus graph",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg#flow/Flow_k6",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
       "touchesWorkPlan": false
@@ -202,9 +210,25 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg#flow/Flow_k3",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg/node/Task_References",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ServiceTask",
+      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg/lane/Lane_0",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg#flow/Flow_k5b",
+      "name": "Extract reference lists",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg#flow/Flow_k5c",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
+      "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/l1-document-ingestion",
       "touchesWorkPlan": false
     },
     {
@@ -468,16 +492,16 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent",
       "@type": "bootstrap:Process",
       "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/ingest-derive-content.svg",
-      "description": "Derive content from an ingested source's assets: the archive, technical metadata, images, audio, tabular data and provenance.",
+      "description": "Derive content from an ingested source's assets: the archive, technical metadata, figures and tables, images, audio, tabular data, footnotes and provenance. Every step is an arm of `bun run cat ingest` (cat-harness-tools scripts/ingest-document.ts), so a re-ingest re-derives all of them; none is a step somebody runs by hand afterwards.",
       "enforcement": "advisory",
-      "flowCount": 13,
+      "flowCount": 16,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
       "name": "Ingestion subprocess — derive content from the assets",
-      "nodeCount": 10,
+      "nodeCount": 12,
       "sourcePath": "processes/library/ingest-derive-content.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant-core/blob/main/processes/library/ingest-derive-content.bpmn",
       "startNode": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/node/StartEvent_Assets",
-      "summary": "Derive content from an ingested source's assets: the archive, technical metadata, images, audio, tabular data and provenance."
+      "summary": "Derive content from an ingested source's assets: the archive, technical metadata, figures and tables, images, audio, tabular data, footnotes and provenance."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent#flow/Flow_d1",
@@ -520,6 +544,30 @@
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/node/EndEvent_Derived"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent#flow/Flow_d14",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/node/Gateway_Fan",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/node/Task_Footnotes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent#flow/Flow_d15",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/node/Task_FiguresTables",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/node/Task_Image"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent#flow/Flow_d16",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/node/Task_Footnotes",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/node/Gateway_Join"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent#flow/Flow_d2",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/node/Gateway_Fan",
@@ -541,7 +589,7 @@
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/node/Gateway_Fan",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent",
-      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/node/Task_Image"
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/node/Task_FiguresTables"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent#flow/Flow_d5",
@@ -586,7 +634,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/lane/Lane_0",
       "@type": "cat-harness:Lane",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
       "name": "Ingestion Engine (agent, runs unattended)",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent"
@@ -601,7 +649,7 @@
       "name": "Derived",
       "nodeKind": "end",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -619,10 +667,11 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent#flow/Flow_d3",
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent#flow/Flow_d4",
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent#flow/Flow_d5",
-        "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent#flow/Flow_d6"
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent#flow/Flow_d6",
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent#flow/Flow_d14"
       ],
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -637,13 +686,14 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent#flow/Flow_d8",
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent#flow/Flow_d9",
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent#flow/Flow_d10",
-        "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent#flow/Flow_d11"
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent#flow/Flow_d11",
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent#flow/Flow_d16"
       ],
       "name": "All kinds done",
       "nodeKind": "parallel",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent#flow/Flow_d12",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -657,7 +707,7 @@
       "nodeKind": "start",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent#flow/Flow_d1",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -672,7 +722,7 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent#flow/Flow_d7",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
       "touchesWorkPlan": false
@@ -688,9 +738,41 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent#flow/Flow_d10",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/node/Task_FiguresTables",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ServiceTask",
+      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/lane/Lane_0",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent#flow/Flow_d4",
+      "name": "Extract figures and tables",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent#flow/Flow_d15",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
+      "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/node/Task_Footnotes",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ServiceTask",
+      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/lane/Lane_0",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent#flow/Flow_d14",
+      "name": "Footnotes and the marks that call them",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent#flow/Flow_d16",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
+      "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/l1-document-ingestion",
       "touchesWorkPlan": false
     },
     {
@@ -699,12 +781,12 @@
       "bpmnType": "bpmn:ServiceTask",
       "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/lane/Lane_0",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
-      "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent#flow/Flow_d4",
+      "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent#flow/Flow_d15",
       "name": "Narrative description per image, localized",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent#flow/Flow_d9",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
       "touchesWorkPlan": false
@@ -720,7 +802,7 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent#flow/Flow_d13",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
       "touchesWorkPlan": false
@@ -736,7 +818,7 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent#flow/Flow_d11",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
       "touchesWorkPlan": false
@@ -752,7 +834,7 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent#flow/Flow_d8",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
       "touchesWorkPlan": false
@@ -761,16 +843,16 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure",
       "@type": "bootstrap:Process",
       "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/ingest-extract-structure.svg",
-      "description": "Extract the structure of an uploaded source: its text layer, OCR where it has none, sections, structure and claim candidates.",
+      "description": "Extract the structure of an uploaded source: its text layer, OCR where it has none or where a page's text layer fails the page check, sections, structure and claim candidates. Every step is an arm or rung of `bun run cat ingest` (cat-harness-tools scripts/ingest-document.ts).",
       "enforcement": "advisory",
-      "flowCount": 8,
+      "flowCount": 9,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
       "name": "Ingestion subprocess — extract structure",
-      "nodeCount": 8,
+      "nodeCount": 9,
       "sourcePath": "processes/library/ingest-extract-structure.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant-core/blob/main/processes/library/ingest-extract-structure.bpmn",
       "startNode": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure/node/StartEvent_Binary",
-      "summary": "Extract the structure of an uploaded source: its text layer, OCR where it has none, sections, structure and claim candidates."
+      "summary": "Extract the structure of an uploaded source: its text layer, OCR where it has none or where a page's text layer fails the page check, sections, structure and claim candidates."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure#flow/Flow_e1",
@@ -804,7 +886,7 @@
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure/node/Task_ExtractText",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure",
-      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure/node/Task_Sections"
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure/node/Task_PageCheck"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure#flow/Flow_e5",
@@ -839,9 +921,17 @@
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure/node/EndEvent_Structured"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure#flow/Flow_e9",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure/node/Task_PageCheck",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure/node/Task_Sections"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure/lane/Lane_0",
       "@type": "cat-harness:Lane",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
       "name": "Ingestion Engine (agent, runs unattended)",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure"
@@ -856,7 +946,7 @@
       "name": "Structured",
       "nodeKind": "end",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -874,7 +964,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure#flow/Flow_e3"
       ],
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -888,7 +978,7 @@
       "nodeKind": "start",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure#flow/Flow_e1",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -903,7 +993,7 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure#flow/Flow_e8",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
       "touchesWorkPlan": false
@@ -919,7 +1009,7 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure#flow/Flow_e4",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
       "touchesWorkPlan": false
@@ -935,9 +1025,25 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure#flow/Flow_e5",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure/node/Task_PageCheck",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ServiceTask",
+      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure/lane/Lane_0",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure#flow/Flow_e4",
+      "name": "Check each page; OCR pages that fail",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure#flow/Flow_e9",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
+      "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/l1-document-ingestion",
       "touchesWorkPlan": false
     },
     {
@@ -947,14 +1053,14 @@
       "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure/lane/Lane_0",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure#flow/Flow_e4",
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure#flow/Flow_e9",
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure#flow/Flow_e5"
       ],
       "name": "Split into sections/*.md with doc_brief front-matter",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure#flow/Flow_e6",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
       "touchesWorkPlan": false
@@ -970,7 +1076,7 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure#flow/Flow_e7",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
       "touchesWorkPlan": false
@@ -981,10 +1087,10 @@
       "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/l1-document-ingestion.svg",
       "description": "L1 document ingestion — a document to the L1 source knowledge graph.\n\nThe harness holds only the basic, high-level document-ingestion flow; the detailed ingestion and cataloguing method is here.\n\nIT REFINES THE HARNESS FLOW BY CALLING IT. CallActivity_Basic runs the harness's `Process_Ingestion` first — accept the upload, put its metadata into the KG, catalogue the asset in library/ — and this process then reads the document into a complete L1 entry. That is the inversion the harness skill `library-ingestion` describes: the call points DOWN, from core to the harness, and nothing in the harness names this process. The theme branch's call into the harness's `ingest-theme.bpmn` is downward for the same reason; the four `ingest-*` phases sit beside this file. The method is the `l1-document-ingestion` skill.",
       "enforcement": "advisory",
-      "flowCount": 22,
+      "flowCount": 23,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
       "name": "L1 document ingestion — a document to the L1 source knowledge graph",
-      "nodeCount": 21,
+      "nodeCount": 22,
       "sourcePath": "processes/library/l1-document-ingestion.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant-core/blob/main/processes/library/l1-document-ingestion.bpmn",
       "startNode": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/StartEvent_Document",
@@ -1025,10 +1131,18 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion#flow/Flow_i12",
       "@type": "bootstrap:SequenceFlow",
-      "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/Task_SummaryQueue",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/Task_Errata",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/Task_Citeable"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion#flow/Flow_i12a",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/Task_SummaryQueue",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/Task_Errata"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion#flow/Flow_i1a",
@@ -1175,7 +1289,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/lane/Lane_1",
       "@type": "cat-harness:Lane",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
       "name": "Ingestion Engine (agent, runs unattended)",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion"
@@ -1191,9 +1305,9 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion#flow/Flow_i1a",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/library-ingestion",
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/library-ingestion",
       "touchesWorkPlan": false
     },
     {
@@ -1211,7 +1325,7 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion#flow/Flow_i5",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
       "touchesWorkPlan": false
@@ -1231,7 +1345,7 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion#flow/Flow_i4",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
       "touchesWorkPlan": false
@@ -1248,7 +1362,7 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion#flow/Flow_i3",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
       "touchesWorkPlan": false
@@ -1265,7 +1379,7 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion#flow/Flow_i6",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/l1-document-ingestion",
       "touchesWorkPlan": false
@@ -1281,9 +1395,9 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion#flow/Flow_theme_join",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/theme-art-intake",
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/theme-art-intake",
       "touchesWorkPlan": false
     },
     {
@@ -1294,11 +1408,11 @@
       "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/lane/Lane_1",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
       "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion#flow/Flow_i10",
-      "name": "Publish the extracted statements with source links",
+      "name": "Publish the extracted statements",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion#flow/Flow_i10b",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/publish-extracted-statements",
       "touchesWorkPlan": false
@@ -1314,9 +1428,9 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion#flow/SF_Bean_4",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/todo-manager",
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/todo-manager",
       "touchesWorkPlan": false
     },
     {
@@ -1330,9 +1444,9 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion#flow/SF_Bean_2",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/bean-coordination",
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/bean-coordination",
       "touchesWorkPlan": false
     },
     {
@@ -1345,7 +1459,7 @@
       "name": "Ingested",
       "nodeKind": "end",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -1359,7 +1473,7 @@
       "name": "Not yours — left alone",
       "nodeKind": "end",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -1377,7 +1491,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion#flow/SF_Bean_3"
       ],
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -1395,7 +1509,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion#flow/Flow_i9"
       ],
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -1413,7 +1527,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion#flow/Flow_theme_no"
       ],
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -1427,7 +1541,7 @@
       "nodeKind": "start",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion#flow/Flow_i1",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -1442,7 +1556,7 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion#flow/Flow_i11",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
       "touchesWorkPlan": false
@@ -1458,9 +1572,25 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion#flow/Flow_i2",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/Task_Errata",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ServiceTask",
+      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/lane/Lane_1",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion#flow/Flow_i12a",
+      "name": "Record errata in the source's own text",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion#flow/Flow_i12",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
+      "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/l1-document-ingestion",
       "touchesWorkPlan": false
     },
     {
@@ -1474,7 +1604,7 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion#flow/Flow_i2a",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
       "touchesWorkPlan": false
@@ -1490,9 +1620,9 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion#flow/Flow_i8",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/todo-manager",
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/todo-manager",
       "touchesWorkPlan": true,
       "workPlanOp": "note"
     },
@@ -1507,7 +1637,7 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion#flow/Flow_i10",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
       "touchesWorkPlan": false
@@ -1519,11 +1649,11 @@
       "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/lane/Lane_1",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
       "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion#flow/Flow_i10b",
-      "name": "Queue prose blocks for summary",
+      "name": "Summarise prose blocks, in every language",
       "nodeKind": "activity",
-      "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion#flow/Flow_i12",
+      "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion#flow/Flow_i12a",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/l1-document-ingestion",
       "touchesWorkPlan": false
@@ -1631,7 +1761,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate/lane/Lane_0",
       "@type": "cat-harness:Lane",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
       "name": "Ingestion Engine (agent, runs unattended)",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate"
@@ -1639,7 +1769,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate/lane/Lane_1",
       "@type": "cat-harness:Lane",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/reviewer",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
       "name": "Reviewer (SME or editor)",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate"
@@ -1654,7 +1784,7 @@
       "name": "Verdict recorded",
       "nodeKind": "end",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -1673,7 +1803,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate#flow/Flow_SourceWrong"
       ],
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/reviewer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -1691,7 +1821,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate#flow/Flow_g6"
       ],
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -1705,7 +1835,7 @@
       "nodeKind": "start",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate#flow/Flow_g1",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -1720,7 +1850,7 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate#flow/Flow_g2",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
       "touchesWorkPlan": false
@@ -1736,11 +1866,11 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate#flow/Flow_g5",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/reviewer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
       "relaxable": true,
       "requires": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
-        "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/adjudication"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/adjudication"
       ],
       "touchesWorkPlan": false
     },
@@ -1755,11 +1885,11 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate#flow/Flow_g3",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "requires": [
-        "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/translation-manager",
-        "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/untainted-verification"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/translation-manager",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/untainted-verification"
       ],
       "touchesWorkPlan": false
     },
@@ -1779,7 +1909,7 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate#flow/Flow_g7",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
       "touchesWorkPlan": true,
@@ -1861,7 +1991,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements/lane/Lane_0",
       "@type": "cat-harness:Lane",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
       "name": "Ingestion Engine (agent, runs unattended)",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements"
@@ -1876,7 +2006,7 @@
       "name": "Nothing to publish",
       "nodeKind": "end",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -1890,7 +2020,7 @@
       "name": "Statements published with source links",
       "nodeKind": "end",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -1908,7 +2038,7 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements#flow/Flow_p_none"
       ],
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -1922,7 +2052,7 @@
       "nodeKind": "start",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements#flow/Flow_p1",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -1937,7 +2067,7 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements#flow/Flow_p5",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/publish-extracted-statements",
       "touchesWorkPlan": false
@@ -1953,7 +2083,7 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements#flow/Flow_p2",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/publish-extracted-statements",
       "touchesWorkPlan": false
@@ -1969,7 +2099,7 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements#flow/Flow_p3",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/publish-extracted-statements",
       "touchesWorkPlan": false
@@ -1985,7 +2115,7 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements#flow/Flow_p4",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/publish-extracted-statements",
       "touchesWorkPlan": false

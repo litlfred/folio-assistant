@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness-tools/scripts/check-reference-direction.ts",
-    "script_hash": "c845ff4160b3"
+    "script_hash": "196766c5d539"
   },
   "subject": {
     "kind": "reference-direction",
@@ -35,11 +35,11 @@
       "entries": [
         {
           "instances": 12,
-          "occurrences": 6587,
+          "occurrences": 6761,
           "allowed": 0,
-          "wrongDirection": 8,
-          "wrongDirectionFiles": 6,
-          "exempt": 6579,
+          "wrongDirection": 43,
+          "wrongDirectionFiles": 34,
+          "exempt": 6718,
           "namesRepository": 0,
           "undetermined": 0,
           "pendingFiles": 0,
@@ -49,10 +49,110 @@
     },
     "wrong-direction": {
       "summary": "A.10 (owner, Q-B 2026-10-01): every file holding a wrong-direction reference — naming ONE instance above it or several — one entry per file and per instance it names. The backlog, recorded so that `--check` can tell an inherited pair from a NEW one: a file newly naming an instance above it, single destination or not, fails; one that stops is resolved. The fix is to REWORD in place (Q1), not to move the file.",
-      "count": 6,
+      "count": 34,
       "entries": [
         {
           "file": "bootstrap/models/models.json",
+          "target": "who-iris"
+        },
+        {
+          "file": "cat-harness-tools/.github/workflows/folio-site-publish.yml",
+          "target": "smart-trust"
+        },
+        {
+          "file": "cat-harness-tools/.github/workflows/layer-pr-checks.yml",
+          "target": "fhir-harness"
+        },
+        {
+          "file": "cat-harness-tools/schemas/content/document-errata.ts",
+          "target": "who-iris"
+        },
+        {
+          "file": "cat-harness-tools/schemas/content/document-footnotes.ts",
+          "target": "who-iris"
+        },
+        {
+          "file": "cat-harness-tools/schemas/kg/graph-typology-registry.ts",
+          "target": "smart-trust"
+        },
+        {
+          "file": "cat-harness-tools/schemas/process/role-graph.ts",
+          "target": "who-iris"
+        },
+        {
+          "file": "cat-harness-tools/schemas/ui/pdf-structure.ts",
+          "target": "who-iris"
+        },
+        {
+          "file": "cat-harness-tools/schemas/ui/web-app.ts",
+          "target": "smart-trust"
+        },
+        {
+          "file": "cat-harness-tools/scripts/build-instance-site.ts",
+          "target": "fhir-harness"
+        },
+        {
+          "file": "cat-harness-tools/scripts/check-l1-complete.ts",
+          "target": "who-iris"
+        },
+        {
+          "file": "cat-harness-tools/scripts/check-workflow-tools.ts",
+          "target": "fhir-harness"
+        },
+        {
+          "file": "cat-harness-tools/scripts/derive-at-publish.ts",
+          "target": "folio-assistant-sci"
+        },
+        {
+          "file": "cat-harness-tools/scripts/gen-library-viz.ts",
+          "target": "who-iris"
+        },
+        {
+          "file": "cat-harness-tools/scripts/gen-methodologies-viz.ts",
+          "target": "who-iris"
+        },
+        {
+          "file": "cat-harness-tools/scripts/gen-web-apps.ts",
+          "target": "smart-trust"
+        },
+        {
+          "file": "cat-harness-tools/scripts/ingest-document.ts",
+          "target": "who-iris"
+        },
+        {
+          "file": "cat-harness-tools/scripts/kg-export.ts",
+          "target": "folio-assistant-core"
+        },
+        {
+          "file": "cat-harness-tools/scripts/lib/library-document.ts",
+          "target": "who-iris"
+        },
+        {
+          "file": "cat-harness-tools/scripts/lib/shared-assets.ts",
+          "target": "fhir-harness"
+        },
+        {
+          "file": "cat-harness-tools/scripts/lib/site-prune.ts",
+          "target": "smart-immunizations"
+        },
+        {
+          "file": "cat-harness-tools/scripts/library-graph.ts",
+          "target": "who-iris"
+        },
+        {
+          "file": "cat-harness-tools/scripts/staging-banner.ts",
+          "target": "fhir-harness"
+        },
+        {
+          "file": "folio-assistant-core/processes/library/ingest-extract-structure.checklist.md",
+          "target": "who-iris"
+        },
+        {
+          "file": "folio-assistant-core/processes/library/l1-document-ingestion.bpmn",
+          "target": "who-iris"
+        },
+        {
+          "file": "folio-assistant-core/processes/library/l1-document-ingestion.checklist.md",
           "target": "who-iris"
         },
         {
@@ -64,11 +164,23 @@
           "target": "smart-base"
         },
         {
+          "file": "folio-assistant-core/scripts/references-extract.ts",
+          "target": "who-iris"
+        },
+        {
           "file": "folio-assistant-core/scripts/smart-approach-svg.ts",
           "target": "who-iris"
         },
         {
+          "file": "folio-assistant-core/skills/library/ingestion/l1-document-ingestion.md",
+          "target": "who-iris"
+        },
+        {
           "file": "folio-assistant-core/tools/diig-phases-svg/diig-phases-svg.ts",
+          "target": "who-iris"
+        },
+        {
+          "file": "folio-assistant-core/tools/references-extract/references-extract.ts",
           "target": "who-iris"
         },
         {
@@ -78,5 +190,5 @@
       ]
     }
   },
-  "total": 7
+  "total": 35
 }

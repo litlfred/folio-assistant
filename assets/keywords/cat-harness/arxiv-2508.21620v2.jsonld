@@ -1,0 +1,4682 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "arxiv-2508.21620v2",
+  "instance": "cat-harness",
+  "about": "library/arxiv-2508.21620v2",
+  "corpus": {
+    "library": "cat-harness/library/corpus",
+    "sections": 2232,
+    "terms": 15352
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "regret bound",
+        "score": 15.2406,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "𝑥𝑡 argmax𝑥",
+        "score": 12.3183,
+        "evidence": []
+      },
+      {
+        "term": "point 𝑥𝑡",
+        "score": 12.0554,
+        "evidence": []
+      },
+      {
+        "term": "unknown function",
+        "score": 11.8466,
+        "evidence": []
+      },
+      {
+        "term": "function 𝑓is",
+        "score": 11.8115,
+        "evidence": []
+      },
+      {
+        "term": "let 𝑋be",
+        "score": 11.4474,
+        "evidence": []
+      },
+      {
+        "term": "expected regret",
+        "score": 11.4308,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "mean function",
+        "score": 11.1369,
+        "evidence": []
+      },
+      {
+        "term": "decision function",
+        "score": 10.8596,
+        "evidence": []
+      },
+      {
+        "term": "function space",
+        "score": 10.6977,
+        "evidence": []
+      },
+      {
+        "term": "covariance function",
+        "score": 10.6685,
+        "evidence": []
+      },
+      {
+        "term": "union bound",
+        "score": 10.6241,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "𝑥𝑡 argmax𝑥",
+        "score": 478.6437,
+        "evidence": []
+      },
+      {
+        "term": "point 𝑥𝑡",
+        "score": 473.9947,
+        "evidence": []
+      },
+      {
+        "term": "regret bound",
+        "score": 325.2451,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "d𝑡",
+        "score": 316.2179,
+        "evidence": []
+      },
+      {
+        "term": "expected regret",
+        "score": 222.1724,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "argmax𝑎 𝜇𝑡",
+        "score": 221.2058,
+        "evidence": []
+      },
+      {
+        "term": "union bound",
+        "score": 205.1164,
+        "evidence": []
+      },
+      {
+        "term": "confidence bound",
+        "score": 198.9261,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "𝑎𝑡 argmax𝑎",
+        "score": 196.8009,
+        "evidence": []
+      },
+      {
+        "term": "unknown function",
+        "score": 193.9659,
+        "evidence": []
+      },
+      {
+        "term": "argmax𝑎 ˆ𝜇",
+        "score": 191.6381,
+        "evidence": []
+      },
+      {
+        "term": "instantaneous regret",
+        "score": 191.1948,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "regret bound",
+        "score": 15.6424,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "point 𝑥𝑡",
+        "score": 13.6068,
+        "evidence": []
+      },
+      {
+        "term": "𝑥𝑡 argmax𝑥",
+        "score": 13.3864,
+        "evidence": []
+      },
+      {
+        "term": "union bound",
+        "score": 11.0502,
+        "evidence": []
+      },
+      {
+        "term": "confidence bound",
+        "score": 10.9575,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "expected regret",
+        "score": 10.731,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "argmax𝑎 𝜇𝑡",
+        "score": 10.297,
+        "evidence": []
+      },
+      {
+        "term": "instantaneous regret",
+        "score": 10.2285,
+        "evidence": []
+      },
+      {
+        "term": "high-probability regret",
+        "score": 10.0647,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "upper bound",
+        "score": 10.0481,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "compute 𝜇𝑡",
+        "score": 9.4331,
+        "evidence": []
+      },
+      {
+        "term": "d𝑡",
+        "score": 8.9225,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "point 𝑥𝑡",
+        "score": 485.9766,
+        "evidence": []
+      },
+      {
+        "term": "𝑥𝑡 argmax𝑥",
+        "score": 483.3755,
+        "evidence": []
+      },
+      {
+        "term": "d𝑡",
+        "score": 359.9129,
+        "evidence": []
+      },
+      {
+        "term": "regret bound",
+        "score": 302.8277,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "argmax𝑎 𝜇𝑡",
+        "score": 201.5175,
+        "evidence": []
+      },
+      {
+        "term": "𝛽𝑡𝜎𝑡",
+        "score": 200.3243,
+        "evidence": []
+      },
+      {
+        "term": "union bound",
+        "score": 191.297,
+        "evidence": []
+      },
+      {
+        "term": "expected regret",
+        "score": 189.0202,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "compute 𝜇𝑡",
+        "score": 188.6901,
+        "evidence": []
+      },
+      {
+        "term": "confidence bound",
+        "score": 187.6593,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "upper bound",
+        "score": 185.762,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "high-probability regret",
+        "score": 173.091,
+        "evidence": [
+          "heading"
+        ]
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "regret bound",
+        "score": 15.6424,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "point 𝑥𝑡",
+        "score": 13.6068,
+        "evidence": []
+      },
+      {
+        "term": "𝑥𝑡 argmax𝑥",
+        "score": 13.3864,
+        "evidence": []
+      },
+      {
+        "term": "union bound",
+        "score": 11.0502,
+        "evidence": []
+      },
+      {
+        "term": "confidence bound",
+        "score": 10.9575,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "expected regret",
+        "score": 10.731,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "argmax𝑎 𝜇𝑡",
+        "score": 10.297,
+        "evidence": []
+      },
+      {
+        "term": "instantaneous regret",
+        "score": 10.2285,
+        "evidence": []
+      },
+      {
+        "term": "high-probability regret",
+        "score": 10.0647,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "upper bound",
+        "score": 10.0481,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "compute 𝜇𝑡",
+        "score": 9.4331,
+        "evidence": []
+      },
+      {
+        "term": "d𝑡",
+        "score": 8.9225,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "𝐾𝑇 log𝑇",
+        "score": 4132.7848,
+        "evidence": []
+      },
+      {
+        "term": "argmax𝑎 ˆ𝜇",
+        "score": 4040.8359,
+        "evidence": []
+      },
+      {
+        "term": "riemann zeta",
+        "score": 3991.5373,
+        "evidence": []
+      },
+      {
+        "term": "𝑟total 𝑟𝑡𝑎",
+        "score": 3990.2314,
+        "evidence": []
+      },
+      {
+        "term": "argmax𝑎 𝜇𝑡",
+        "score": 3799.8382,
+        "evidence": []
+      },
+      {
+        "term": "𝑎𝑡 argmax𝑎",
+        "score": 3748.0785,
+        "evidence": []
+      },
+      {
+        "term": "log-factors supressed",
+        "score": 3543.5087,
+        "evidence": []
+      },
+      {
+        "term": "𝑥𝑡 argmax𝑥",
+        "score": 3161.0304,
+        "evidence": []
+      },
+      {
+        "term": "𝛽𝑡is non-decreasing",
+        "score": 2659.7381,
+        "evidence": []
+      },
+      {
+        "term": "high-probability regret",
+        "score": 2271.8604,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "zeta function",
+        "score": 2230.8034,
+        "evidence": []
+      },
+      {
+        "term": "god doesn",
+        "score": 2192.7644,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-decision-making": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "decision-making",
+          "score": 1.712,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "theoretical analyses",
+          "score": 1.3205,
+          "evidence": []
+        },
+        {
+          "term": "decision theory",
+          "score": 1.3071,
+          "evidence": []
+        },
+        {
+          "term": "utility function",
+          "score": 0.9918,
+          "evidence": []
+        },
+        {
+          "term": "probability",
+          "score": 0.9349,
+          "evidence": []
+        },
+        {
+          "term": "frequentist",
+          "score": 0.8535,
+          "evidence": []
+        },
+        {
+          "term": "drug",
+          "score": 0.827,
+          "evidence": []
+        },
+        {
+          "term": "theories",
+          "score": 0.827,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "decision-making",
+          "score": 34.2019,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "probability",
+          "score": 19.1988,
+          "evidence": []
+        },
+        {
+          "term": "theoretical analyses",
+          "score": 19.1164,
+          "evidence": []
+        },
+        {
+          "term": "algorithms",
+          "score": 18.6706,
+          "evidence": []
+        },
+        {
+          "term": "decision theory",
+          "score": 18.3101,
+          "evidence": []
+        },
+        {
+          "term": "bayesian",
+          "score": 13.4753,
+          "evidence": []
+        },
+        {
+          "term": "utility function",
+          "score": 12.2183,
+          "evidence": []
+        },
+        {
+          "term": "frequentist",
+          "score": 11.8378,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "decision-making",
+          "score": 0.3033,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "decision theory",
+          "score": 0.2894,
+          "evidence": []
+        },
+        {
+          "term": "utility function",
+          "score": 0.1758,
+          "evidence": []
+        },
+        {
+          "term": "analysis",
+          "score": 0.1741,
+          "evidence": []
+        },
+        {
+          "term": "theoretical",
+          "score": 0.174,
+          "evidence": []
+        },
+        {
+          "term": "theoretical analyses",
+          "score": 0.174,
+          "evidence": []
+        },
+        {
+          "term": "study",
+          "score": 0.1709,
+          "evidence": []
+        },
+        {
+          "term": "work",
+          "score": 0.1626,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "algorithm",
+          "score": 3.0181,
+          "evidence": []
+        },
+        {
+          "term": "matrix",
+          "score": 2.7804,
+          "evidence": []
+        },
+        {
+          "term": "pmin",
+          "score": 2.421,
+          "evidence": []
+        },
+        {
+          "term": "decision theory",
+          "score": 2.37,
+          "evidence": []
+        },
+        {
+          "term": "walk",
+          "score": 2.2407,
+          "evidence": []
+        },
+        {
+          "term": "probability",
+          "score": 2.1858,
+          "evidence": []
+        },
+        {
+          "term": "decision-making",
+          "score": 1.9147,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "models",
+          "score": 1.9119,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "decision-making",
+          "score": 0.3033,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "decision theory",
+          "score": 0.2894,
+          "evidence": []
+        },
+        {
+          "term": "theoretical analyses",
+          "score": 0.1975,
+          "evidence": []
+        },
+        {
+          "term": "utility function",
+          "score": 0.1758,
+          "evidence": []
+        },
+        {
+          "term": "algorithms",
+          "score": 0.1372,
+          "evidence": []
+        },
+        {
+          "term": "probability",
+          "score": 0.1309,
+          "evidence": []
+        },
+        {
+          "term": "chapter",
+          "score": 0.1244,
+          "evidence": []
+        },
+        {
+          "term": "bayesian",
+          "score": 0.119,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "god",
+          "score": 53.6366,
+          "evidence": []
+        },
+        {
+          "term": "doctor",
+          "score": 43.871,
+          "evidence": []
+        },
+        {
+          "term": "𝑓after",
+          "score": 37.0045,
+          "evidence": []
+        },
+        {
+          "term": "argu",
+          "score": 31.4919,
+          "evidence": []
+        },
+        {
+          "term": "belief",
+          "score": 26.5746,
+          "evidence": []
+        },
+        {
+          "term": "pascal",
+          "score": 26.2301,
+          "evidence": []
+        },
+        {
+          "term": "𝐾actions",
+          "score": 23.3207,
+          "evidence": []
+        },
+        {
+          "term": "𝐾𝑇",
+          "score": 23.2053,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-001-bayesian-decision-theory": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "god doesn",
+          "score": 3.6311,
+          "evidence": []
+        },
+        {
+          "term": "god exists",
+          "score": 3.4231,
+          "evidence": []
+        },
+        {
+          "term": "don believe",
+          "score": 2.0088,
+          "evidence": []
+        },
+        {
+          "term": "posterior belief",
+          "score": 1.9478,
+          "evidence": []
+        },
+        {
+          "term": "utility function",
+          "score": 1.8281,
+          "evidence": []
+        },
+        {
+          "term": "bayesian",
+          "score": 1.3091,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "doctor",
+          "score": 1.2852,
+          "evidence": []
+        },
+        {
+          "term": "patient",
+          "score": 0.7894,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "god doesn",
+          "score": 114.7854,
+          "evidence": []
+        },
+        {
+          "term": "god exists",
+          "score": 113.2827,
+          "evidence": []
+        },
+        {
+          "term": "don believe",
+          "score": 43.1811,
+          "evidence": []
+        },
+        {
+          "term": "utility function",
+          "score": 41.201,
+          "evidence": []
+        },
+        {
+          "term": "posterior belief",
+          "score": 32.0573,
+          "evidence": []
+        },
+        {
+          "term": "doctor",
+          "score": 21.0525,
+          "evidence": []
+        },
+        {
+          "term": "bayesian",
+          "score": 17.9671,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "patient",
+          "score": 9.2392,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "utility function",
+          "score": 0.2637,
+          "evidence": []
+        },
+        {
+          "term": "bayesian",
+          "score": 0.2201,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "𝑥𝑡",
+          "score": 0.1867,
+          "evidence": []
+        },
+        {
+          "term": "decision",
+          "score": 0.1806,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "action",
+          "score": 0.1565,
+          "evidence": []
+        },
+        {
+          "term": "regret",
+          "score": 0.1488,
+          "evidence": []
+        },
+        {
+          "term": "reward",
+          "score": 0.1455,
+          "evidence": []
+        },
+        {
+          "term": "posterior belief",
+          "score": 0.1445,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "utility function",
+          "score": 5.0813,
+          "evidence": []
+        },
+        {
+          "term": "action",
+          "score": 3.4974,
+          "evidence": []
+        },
+        {
+          "term": "asr",
+          "score": 3.3146,
+          "evidence": []
+        },
+        {
+          "term": "subsidy",
+          "score": 2.8665,
+          "evidence": []
+        },
+        {
+          "term": "reward",
+          "score": 2.6516,
+          "evidence": []
+        },
+        {
+          "term": "defense",
+          "score": 2.4452,
+          "evidence": []
+        },
+        {
+          "term": "d𝑡",
+          "score": 2.3624,
+          "evidence": []
+        },
+        {
+          "term": "ψdmm",
+          "score": 2.1155,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "utility function",
+          "score": 0.2637,
+          "evidence": []
+        },
+        {
+          "term": "bayesian",
+          "score": 0.2201,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "decision",
+          "score": 0.1806,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "action",
+          "score": 0.1565,
+          "evidence": []
+        },
+        {
+          "term": "posterior belief",
+          "score": 0.1445,
+          "evidence": []
+        },
+        {
+          "term": "let",
+          "score": 0.1187,
+          "evidence": []
+        },
+        {
+          "term": "decision-making",
+          "score": 0.0897,
+          "evidence": []
+        },
+        {
+          "term": "theory",
+          "score": 0.08,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "god doesn",
+          "score": 1503.6576,
+          "evidence": []
+        },
+        {
+          "term": "god exists",
+          "score": 1264.2225,
+          "evidence": []
+        },
+        {
+          "term": "doctor",
+          "score": 943.209,
+          "evidence": []
+        },
+        {
+          "term": "𝑓after",
+          "score": 676.0042,
+          "evidence": []
+        },
+        {
+          "term": "pascal",
+          "score": 673.2288,
+          "evidence": []
+        },
+        {
+          "term": "argu",
+          "score": 641.5699,
+          "evidence": []
+        },
+        {
+          "term": "posterior belief",
+          "score": 552.4242,
+          "evidence": []
+        },
+        {
+          "term": "posteriori",
+          "score": 432.6534,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-002-frequentist-decision-theory": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "decision theory",
+          "score": 2.5855,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "frequentist",
+          "score": 2.154,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "decision function",
+          "score": 1.5551,
+          "evidence": []
+        },
+        {
+          "term": "worst-case risk",
+          "score": 1.2643,
+          "evidence": []
+        },
+        {
+          "term": "𝑢is",
+          "score": 1.0079,
+          "evidence": []
+        },
+        {
+          "term": "guideline",
+          "score": 0.932,
+          "evidence": []
+        },
+        {
+          "term": "notice",
+          "score": 0.8587,
+          "evidence": []
+        },
+        {
+          "term": "bayesian",
+          "score": 0.8259,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "decision theory",
+          "score": 36.2417,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "frequentist",
+          "score": 35.5134,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "decision function",
+          "score": 27.1724,
+          "evidence": []
+        },
+        {
+          "term": "worst-case risk",
+          "score": 18.3638,
+          "evidence": []
+        },
+        {
+          "term": "𝑢is",
+          "score": 14.035,
+          "evidence": []
+        },
+        {
+          "term": "guideline",
+          "score": 13.9984,
+          "evidence": []
+        },
+        {
+          "term": "bayesian",
+          "score": 13.4753,
+          "evidence": []
+        },
+        {
+          "term": "notice",
+          "score": 12.4659,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "decision function",
+          "score": 0.3282,
+          "evidence": []
+        },
+        {
+          "term": "decision theory",
+          "score": 0.3243,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "algorithm",
+          "score": 0.2003,
+          "evidence": []
+        },
+        {
+          "term": "action",
+          "score": 0.1994,
+          "evidence": []
+        },
+        {
+          "term": "regret",
+          "score": 0.1903,
+          "evidence": []
+        },
+        {
+          "term": "𝑥𝑡",
+          "score": 0.1668,
+          "evidence": []
+        },
+        {
+          "term": "probability",
+          "score": 0.154,
+          "evidence": []
+        },
+        {
+          "term": "policy",
+          "score": 0.1497,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "decision function",
+          "score": 3.3373,
+          "evidence": []
+        },
+        {
+          "term": "algorithm",
+          "score": 3.1002,
+          "evidence": []
+        },
+        {
+          "term": "action",
+          "score": 2.8441,
+          "evidence": []
+        },
+        {
+          "term": "decision theory",
+          "score": 2.5621,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health",
+          "score": 2.4363,
+          "evidence": []
+        },
+        {
+          "term": "policy",
+          "score": 2.159,
+          "evidence": []
+        },
+        {
+          "term": "ψdmm",
+          "score": 2.1204,
+          "evidence": []
+        },
+        {
+          "term": "rent",
+          "score": 2.0252,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "decision function",
+          "score": 0.3282,
+          "evidence": []
+        },
+        {
+          "term": "decision theory",
+          "score": 0.3243,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "action",
+          "score": 0.1994,
+          "evidence": []
+        },
+        {
+          "term": "policy",
+          "score": 0.1497,
+          "evidence": []
+        },
+        {
+          "term": "worst-case risk",
+          "score": 0.1284,
+          "evidence": []
+        },
+        {
+          "term": "chapter",
+          "score": 0.1186,
+          "evidence": []
+        },
+        {
+          "term": "optimal",
+          "score": 0.1079,
+          "evidence": []
+        },
+        {
+          "term": "notice",
+          "score": 0.1065,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "god",
+          "score": 97.5587,
+          "evidence": []
+        },
+        {
+          "term": "doctor",
+          "score": 78.208,
+          "evidence": []
+        },
+        {
+          "term": "𝑓after",
+          "score": 63.3674,
+          "evidence": []
+        },
+        {
+          "term": "frequentist",
+          "score": 58.1829,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pascal",
+          "score": 56.4412,
+          "evidence": []
+        },
+        {
+          "term": "argu",
+          "score": 53.9009,
+          "evidence": []
+        },
+        {
+          "term": "belief",
+          "score": 43.9627,
+          "evidence": []
+        },
+        {
+          "term": "posteriori",
+          "score": 35.2565,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-003-concentration-inequalities": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "concentration inequalities",
+          "score": 5.0022,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "chebyshev inequality",
+          "score": 2.4681,
+          "evidence": []
+        },
+        {
+          "term": "markov inequality",
+          "score": 2.3005,
+          "evidence": []
+        },
+        {
+          "term": "random event",
+          "score": 2.1912,
+          "evidence": []
+        },
+        {
+          "term": "let 𝑋be",
+          "score": 2.1433,
+          "evidence": []
+        },
+        {
+          "term": "random student",
+          "score": 2.0816,
+          "evidence": []
+        },
+        {
+          "term": "tighter bound",
+          "score": 2.0303,
+          "evidence": []
+        },
+        {
+          "term": "event argument",
+          "score": 1.742,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "concentration inequalities",
+          "score": 97.575,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "random event",
+          "score": 52.014,
+          "evidence": []
+        },
+        {
+          "term": "let 𝑋be",
+          "score": 51.7917,
+          "evidence": []
+        },
+        {
+          "term": "chebyshev inequality",
+          "score": 50.3426,
+          "evidence": []
+        },
+        {
+          "term": "markov inequality",
+          "score": 47.5937,
+          "evidence": []
+        },
+        {
+          "term": "random student",
+          "score": 46.9398,
+          "evidence": []
+        },
+        {
+          "term": "var",
+          "score": 36.6073,
+          "evidence": []
+        },
+        {
+          "term": "tighter bound",
+          "score": 36.5869,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "random event",
+          "score": 0.4573,
+          "evidence": []
+        },
+        {
+          "term": "let 𝑋be",
+          "score": 0.4324,
+          "evidence": []
+        },
+        {
+          "term": "bound",
+          "score": 0.4262,
+          "evidence": []
+        },
+        {
+          "term": "tighter bound",
+          "score": 0.4262,
+          "evidence": []
+        },
+        {
+          "term": "𝑥𝑡",
+          "score": 0.3761,
+          "evidence": []
+        },
+        {
+          "term": "theorem",
+          "score": 0.3738,
+          "evidence": []
+        },
+        {
+          "term": "probability",
+          "score": 0.3642,
+          "evidence": []
+        },
+        {
+          "term": "event argument",
+          "score": 0.362,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "random event",
+          "score": 8.0556,
+          "evidence": []
+        },
+        {
+          "term": "𝑥𝑡",
+          "score": 7.8108,
+          "evidence": []
+        },
+        {
+          "term": "optt",
+          "score": 7.0675,
+          "evidence": []
+        },
+        {
+          "term": "bound",
+          "score": 6.6809,
+          "evidence": []
+        },
+        {
+          "term": "tighter bound",
+          "score": 6.6809,
+          "evidence": []
+        },
+        {
+          "term": "probability",
+          "score": 4.8996,
+          "evidence": []
+        },
+        {
+          "term": "matrix",
+          "score": 4.8768,
+          "evidence": []
+        },
+        {
+          "term": "event argument",
+          "score": 4.7915,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "tighter bound",
+          "score": 0.4635,
+          "evidence": []
+        },
+        {
+          "term": "random event",
+          "score": 0.4573,
+          "evidence": []
+        },
+        {
+          "term": "let 𝑋be",
+          "score": 0.4324,
+          "evidence": []
+        },
+        {
+          "term": "theorem",
+          "score": 0.3738,
+          "evidence": []
+        },
+        {
+          "term": "probability",
+          "score": 0.3642,
+          "evidence": []
+        },
+        {
+          "term": "event argument",
+          "score": 0.362,
+          "evidence": []
+        },
+        {
+          "term": "expected value",
+          "score": 0.2935,
+          "evidence": []
+        },
+        {
+          "term": "markov inequality",
+          "score": 0.2785,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "concentration inequalities",
+          "score": 445.5026,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "𝐴𝑖",
+          "score": 254.9476,
+          "evidence": []
+        },
+        {
+          "term": "chebyshev inequality",
+          "score": 165.8058,
+          "evidence": []
+        },
+        {
+          "term": "r𝑛",
+          "score": 124.5722,
+          "evidence": []
+        },
+        {
+          "term": "indonesian",
+          "score": 121.0032,
+          "evidence": []
+        },
+        {
+          "term": "p𝑛",
+          "score": 120.6289,
+          "evidence": []
+        },
+        {
+          "term": "italian",
+          "score": 118.4499,
+          "evidence": []
+        },
+        {
+          "term": "markov inequality",
+          "score": 116.817,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-004-gaussian-tail-bounds": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "gaussian tail",
+          "score": 3.7523,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "𝑋be gaussian",
+          "score": 1.9966,
+          "evidence": []
+        },
+        {
+          "term": "let 𝑋be",
+          "score": 1.325,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "gaussian tail",
+          "score": 74.3666,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "𝑋be gaussian",
+          "score": 38.9343,
+          "evidence": []
+        },
+        {
+          "term": "let 𝑋be",
+          "score": 17.7838,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "bound",
+          "score": 0.1327,
+          "evidence": []
+        },
+        {
+          "term": "𝑥𝑡",
+          "score": 0.1256,
+          "evidence": []
+        },
+        {
+          "term": "let 𝑋be",
+          "score": 0.1224,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "matrix",
+          "score": 2.6932,
+          "evidence": []
+        },
+        {
+          "term": "𝑥𝑡",
+          "score": 1.7716,
+          "evidence": []
+        },
+        {
+          "term": "bound",
+          "score": 1.2365,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "gaussian tail",
+          "score": 0.1378,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "bound",
+          "score": 0.1327,
+          "evidence": []
+        },
+        {
+          "term": "let 𝑋be",
+          "score": 0.1224,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "gaussian tail",
+          "score": 211.0908,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "𝐴𝑖",
+          "score": 182.217,
+          "evidence": []
+        },
+        {
+          "term": "𝑋be gaussian",
+          "score": 178.9913,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-005-other-useful-inequalities": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "inequalities",
+          "score": 2.8082,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "concentration inequalities",
+          "score": 2.1643,
+          "evidence": []
+        },
+        {
+          "term": "𝐴𝑖",
+          "score": 1.6871,
+          "evidence": []
+        },
+        {
+          "term": "jensen inequality",
+          "score": 1.6648,
+          "evidence": []
+        },
+        {
+          "term": "perfect grade",
+          "score": 1.6428,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "inequalities",
+          "score": 57.6474,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "concentration inequalities",
+          "score": 39.1151,
+          "evidence": []
+        },
+        {
+          "term": "𝐴𝑖",
+          "score": 35.0875,
+          "evidence": []
+        },
+        {
+          "term": "jensen inequality",
+          "score": 24.7553,
+          "evidence": []
+        },
+        {
+          "term": "perfect grade",
+          "score": 24.6446,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "union bound",
+          "score": 0.3023,
+          "evidence": []
+        },
+        {
+          "term": "theorem",
+          "score": 0.1981,
+          "evidence": []
+        },
+        {
+          "term": "𝑥𝑡",
+          "score": 0.1978,
+          "evidence": []
+        },
+        {
+          "term": "probability",
+          "score": 0.1916,
+          "evidence": []
+        },
+        {
+          "term": "let",
+          "score": 0.179,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "union bound",
+          "score": 3.1157,
+          "evidence": []
+        },
+        {
+          "term": "𝑥𝑡",
+          "score": 2.9793,
+          "evidence": []
+        },
+        {
+          "term": "optt",
+          "score": 2.4978,
+          "evidence": []
+        },
+        {
+          "term": "probability",
+          "score": 1.9991,
+          "evidence": []
+        },
+        {
+          "term": "pmin",
+          "score": 1.9449,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "union bound",
+          "score": 0.3023,
+          "evidence": []
+        },
+        {
+          "term": "theorem",
+          "score": 0.1981,
+          "evidence": []
+        },
+        {
+          "term": "probability",
+          "score": 0.1916,
+          "evidence": []
+        },
+        {
+          "term": "let",
+          "score": 0.179,
+          "evidence": []
+        },
+        {
+          "term": "concave function",
+          "score": 0.1715,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "inequalities",
+          "score": 626.3039,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "𝐴𝑖",
+          "score": 565.2629,
+          "evidence": []
+        },
+        {
+          "term": "concentration inequalities",
+          "score": 475.7921,
+          "evidence": []
+        },
+        {
+          "term": "jensen inequality",
+          "score": 343.2439,
+          "evidence": []
+        },
+        {
+          "term": "r𝑛",
+          "score": 267.6351,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-frequentist-bandits": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "expected regret",
+          "score": 1.6943,
+          "evidence": []
+        },
+        {
+          "term": "𝑎𝑡",
+          "score": 1.5438,
+          "evidence": []
+        },
+        {
+          "term": "expected reward",
+          "score": 1.4056,
+          "evidence": []
+        },
+        {
+          "term": "frequentist",
+          "score": 1.077,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "𝑅𝑇",
+          "score": 1.0687,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "expected regret",
+          "score": 33.0428,
+          "evidence": []
+        },
+        {
+          "term": "𝑎𝑡",
+          "score": 30.5061,
+          "evidence": []
+        },
+        {
+          "term": "expected reward",
+          "score": 24.5475,
+          "evidence": []
+        },
+        {
+          "term": "𝑅𝑇",
+          "score": 17.2942,
+          "evidence": []
+        },
+        {
+          "term": "actions",
+          "score": 14.9163,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "expected regret",
+          "score": 0.3723,
+          "evidence": []
+        },
+        {
+          "term": "expected reward",
+          "score": 0.3316,
+          "evidence": []
+        },
+        {
+          "term": "algorithm",
+          "score": 0.2758,
+          "evidence": []
+        },
+        {
+          "term": "bandits",
+          "score": 0.2728,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "𝑥𝑡",
+          "score": 0.2638,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "algorithm",
+          "score": 8.8182,
+          "evidence": []
+        },
+        {
+          "term": "expected regret",
+          "score": 8.051,
+          "evidence": []
+        },
+        {
+          "term": "expected reward",
+          "score": 7.2861,
+          "evidence": []
+        },
+        {
+          "term": "bandits",
+          "score": 5.4551,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ˆ𝜇",
+          "score": 5.33,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "expected regret",
+          "score": 0.3723,
+          "evidence": []
+        },
+        {
+          "term": "expected reward",
+          "score": 0.3316,
+          "evidence": []
+        },
+        {
+          "term": "algorithm",
+          "score": 0.2758,
+          "evidence": []
+        },
+        {
+          "term": "bandits",
+          "score": 0.2728,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "action",
+          "score": 0.1816,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "ˆ𝜇",
+          "score": 302.3588,
+          "evidence": []
+        },
+        {
+          "term": "𝐾𝑇",
+          "score": 299.3697,
+          "evidence": []
+        },
+        {
+          "term": "𝐾actions",
+          "score": 297.2774,
+          "evidence": []
+        },
+        {
+          "term": "𝑁𝑡",
+          "score": 268.521,
+          "evidence": []
+        },
+        {
+          "term": "frequentist",
+          "score": 264.8698,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ]
+    },
+    "sec-007-explore-then-exploit": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "argmax𝑎 ˆ𝜇",
+          "score": 4.2422,
+          "evidence": []
+        },
+        {
+          "term": "𝑟total 𝑟𝑡𝑎",
+          "score": 3.1904,
+          "evidence": []
+        },
+        {
+          "term": "𝐾𝑇 log𝑇",
+          "score": 3.0656,
+          "evidence": []
+        },
+        {
+          "term": "expected regret",
+          "score": 2.0055,
+          "evidence": []
+        },
+        {
+          "term": "union bound",
+          "score": 1.8164,
+          "evidence": []
+        },
+        {
+          "term": "regret during",
+          "score": 1.7352,
+          "evidence": []
+        },
+        {
+          "term": "𝑅𝑇",
+          "score": 1.603,
+          "evidence": []
+        },
+        {
+          "term": "expected reward",
+          "score": 1.4779,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "argmax𝑎 ˆ𝜇",
+          "score": 158.6301,
+          "evidence": []
+        },
+        {
+          "term": "𝐾𝑇 log𝑇",
+          "score": 77.2786,
+          "evidence": []
+        },
+        {
+          "term": "𝑟total 𝑟𝑡𝑎",
+          "score": 72.7325,
+          "evidence": []
+        },
+        {
+          "term": "expected regret",
+          "score": 48.7876,
+          "evidence": []
+        },
+        {
+          "term": "𝑅𝑇",
+          "score": 40.3532,
+          "evidence": []
+        },
+        {
+          "term": "regret during",
+          "score": 39.839,
+          "evidence": []
+        },
+        {
+          "term": "union bound",
+          "score": 39.8044,
+          "evidence": []
+        },
+        {
+          "term": "expected reward",
+          "score": 27.4624,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "union bound",
+          "score": 1.0943,
+          "evidence": []
+        },
+        {
+          "term": "expected regret",
+          "score": 1.0561,
+          "evidence": []
+        },
+        {
+          "term": "𝑥𝑡",
+          "score": 0.9538,
+          "evidence": []
+        },
+        {
+          "term": "regret during",
+          "score": 0.7605,
+          "evidence": []
+        },
+        {
+          "term": "d𝑡",
+          "score": 0.7278,
+          "evidence": []
+        },
+        {
+          "term": "𝜇𝑡",
+          "score": 0.7061,
+          "evidence": []
+        },
+        {
+          "term": "𝛽𝑡𝜎𝑡",
+          "score": 0.6251,
+          "evidence": []
+        },
+        {
+          "term": "expected reward",
+          "score": 0.6037,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "argmax𝑎 ˆ𝜇",
+          "score": 38.3224,
+          "evidence": []
+        },
+        {
+          "term": "expected regret",
+          "score": 31.2147,
+          "evidence": []
+        },
+        {
+          "term": "𝐾𝑇 log𝑇",
+          "score": 27.3975,
+          "evidence": []
+        },
+        {
+          "term": "𝑟total 𝑟𝑡𝑎",
+          "score": 26.7707,
+          "evidence": []
+        },
+        {
+          "term": "algorithm",
+          "score": 25.5082,
+          "evidence": []
+        },
+        {
+          "term": "regret during",
+          "score": 25.3958,
+          "evidence": []
+        },
+        {
+          "term": "union bound",
+          "score": 24.2663,
+          "evidence": []
+        },
+        {
+          "term": "𝑎𝑡",
+          "score": 23.6439,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "union bound",
+          "score": 1.0943,
+          "evidence": []
+        },
+        {
+          "term": "expected regret",
+          "score": 1.0561,
+          "evidence": []
+        },
+        {
+          "term": "regret during",
+          "score": 0.8191,
+          "evidence": []
+        },
+        {
+          "term": "expected reward",
+          "score": 0.6037,
+          "evidence": []
+        },
+        {
+          "term": "𝑅𝑇",
+          "score": 0.5932,
+          "evidence": []
+        },
+        {
+          "term": "algorithm",
+          "score": 0.5862,
+          "evidence": []
+        },
+        {
+          "term": "𝑟total 𝑟𝑡𝑎",
+          "score": 0.5632,
+          "evidence": []
+        },
+        {
+          "term": "probability",
+          "score": 0.5547,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "𝐾𝑇 log𝑇",
+          "score": 1340.5779,
+          "evidence": []
+        },
+        {
+          "term": "argmax𝑎 ˆ𝜇",
+          "score": 1336.9171,
+          "evidence": []
+        },
+        {
+          "term": "𝑟total 𝑟𝑡𝑎",
+          "score": 1204.6344,
+          "evidence": []
+        },
+        {
+          "term": "𝐾actions",
+          "score": 707.3839,
+          "evidence": []
+        },
+        {
+          "term": "𝑁𝑡",
+          "score": 611.4789,
+          "evidence": []
+        },
+        {
+          "term": "𝐸holds",
+          "score": 601.7938,
+          "evidence": []
+        },
+        {
+          "term": "𝑎𝑡",
+          "score": 534.3932,
+          "evidence": []
+        },
+        {
+          "term": "𝐸is",
+          "score": 500.8432,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-008-upper-confidence-bound-ucb": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "𝑁𝑡",
+          "score": 2.6423,
+          "evidence": []
+        },
+        {
+          "term": "ucb",
+          "score": 2.4809,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "𝑎𝑡",
+          "score": 2.4411,
+          "evidence": []
+        },
+        {
+          "term": "ucb algorithm",
+          "score": 2.0117,
+          "evidence": []
+        },
+        {
+          "term": "ucb𝑡",
+          "score": 1.7853,
+          "evidence": []
+        },
+        {
+          "term": "log𝑇",
+          "score": 1.7844,
+          "evidence": []
+        },
+        {
+          "term": "bound",
+          "score": 1.6744,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "𝜇𝑡",
+          "score": 1.5689,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "𝑁𝑡",
+          "score": 105.2626,
+          "evidence": []
+        },
+        {
+          "term": "𝑎𝑡",
+          "score": 97.6194,
+          "evidence": []
+        },
+        {
+          "term": "ucb",
+          "score": 46.1179,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "log𝑇",
+          "score": 44.2705,
+          "evidence": []
+        },
+        {
+          "term": "ucb𝑡",
+          "score": 42.105,
+          "evidence": []
+        },
+        {
+          "term": "ucb algorithm",
+          "score": 39.6708,
+          "evidence": []
+        },
+        {
+          "term": "𝜇𝑡",
+          "score": 36.6073,
+          "evidence": []
+        },
+        {
+          "term": "𝑟total",
+          "score": 33.0602,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "bound",
+          "score": 1.5832,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "𝑥𝑡",
+          "score": 1.0168,
+          "evidence": []
+        },
+        {
+          "term": "ucb algorithm",
+          "score": 0.9704,
+          "evidence": []
+        },
+        {
+          "term": "regret",
+          "score": 0.8125,
+          "evidence": []
+        },
+        {
+          "term": "d𝑡",
+          "score": 0.7765,
+          "evidence": []
+        },
+        {
+          "term": "𝜇𝑡",
+          "score": 0.7482,
+          "evidence": []
+        },
+        {
+          "term": "𝛽𝑡𝜎𝑡",
+          "score": 0.6656,
+          "evidence": []
+        },
+        {
+          "term": "confidence",
+          "score": 0.635,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "bound",
+          "score": 36.709,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ucb algorithm",
+          "score": 30.8207,
+          "evidence": []
+        },
+        {
+          "term": "ˆ𝜇",
+          "score": 29.668,
+          "evidence": []
+        },
+        {
+          "term": "regret",
+          "score": 24.4335,
+          "evidence": []
+        },
+        {
+          "term": "𝑎𝑡",
+          "score": 23.2955,
+          "evidence": []
+        },
+        {
+          "term": "log𝑇",
+          "score": 22.2456,
+          "evidence": []
+        },
+        {
+          "term": "𝑁𝑡",
+          "score": 22.2233,
+          "evidence": []
+        },
+        {
+          "term": "𝑥𝑡",
+          "score": 17.9594,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "bound",
+          "score": 1.5832,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ucb algorithm",
+          "score": 0.9704,
+          "evidence": []
+        },
+        {
+          "term": "regret",
+          "score": 0.8125,
+          "evidence": []
+        },
+        {
+          "term": "𝜇𝑡",
+          "score": 0.7482,
+          "evidence": []
+        },
+        {
+          "term": "confidence",
+          "score": 0.635,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "upper",
+          "score": 0.5413,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "probability",
+          "score": 0.5255,
+          "evidence": []
+        },
+        {
+          "term": "let",
+          "score": 0.4598,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "ˆ𝜇",
+          "score": 664.1321,
+          "evidence": []
+        },
+        {
+          "term": "𝐾𝑇",
+          "score": 660.2398,
+          "evidence": []
+        },
+        {
+          "term": "𝐾actions",
+          "score": 657.5152,
+          "evidence": []
+        },
+        {
+          "term": "𝑁𝑡",
+          "score": 596.6386,
+          "evidence": []
+        },
+        {
+          "term": "log𝑇",
+          "score": 572.2903,
+          "evidence": []
+        },
+        {
+          "term": "𝑟total",
+          "score": 567.3756,
+          "evidence": []
+        },
+        {
+          "term": "𝐸holds",
+          "score": 559.1182,
+          "evidence": []
+        },
+        {
+          "term": "𝑟𝑡𝑎",
+          "score": 545.5219,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-009-gaussian-processes": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "covariance function",
+          "score": 1.7673,
+          "evidence": []
+        },
+        {
+          "term": "𝑥𝑖",
+          "score": 1.5616,
+          "evidence": []
+        },
+        {
+          "term": "gaussian",
+          "score": 1.4811,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "kernel",
+          "score": 1.327,
+          "evidence": []
+        },
+        {
+          "term": "gaussian process",
+          "score": 1.1742,
+          "evidence": []
+        },
+        {
+          "term": "probability distribution",
+          "score": 1.0166,
+          "evidence": []
+        },
+        {
+          "term": "rasmussen",
+          "score": 1.0079,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "𝑥𝑖",
+          "score": 36.6073,
+          "evidence": []
+        },
+        {
+          "term": "covariance function",
+          "score": 33.8398,
+          "evidence": []
+        },
+        {
+          "term": "kernel",
+          "score": 27.5671,
+          "evidence": []
+        },
+        {
+          "term": "gaussian",
+          "score": 22.913,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "gaussian process",
+          "score": 15.4438,
+          "evidence": []
+        },
+        {
+          "term": "rasmussen",
+          "score": 14.035,
+          "evidence": []
+        },
+        {
+          "term": "differentiable",
+          "score": 13.2241,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "covariance function",
+          "score": 0.2266,
+          "evidence": []
+        },
+        {
+          "term": "probability distribution",
+          "score": 0.218,
+          "evidence": []
+        },
+        {
+          "term": "𝑥𝑡",
+          "score": 0.1544,
+          "evidence": []
+        },
+        {
+          "term": "matrix",
+          "score": 0.1498,
+          "evidence": []
+        },
+        {
+          "term": "gaussian process",
+          "score": 0.139,
+          "evidence": []
+        },
+        {
+          "term": "bound",
+          "score": 0.1269,
+          "evidence": []
+        },
+        {
+          "term": "theorem",
+          "score": 0.1179,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "matrix",
+          "score": 2.996,
+          "evidence": []
+        },
+        {
+          "term": "ψdmm",
+          "score": 2.7621,
+          "evidence": []
+        },
+        {
+          "term": "probability distribution",
+          "score": 2.5751,
+          "evidence": []
+        },
+        {
+          "term": "gaussian process",
+          "score": 2.2831,
+          "evidence": []
+        },
+        {
+          "term": "𝑥𝑡",
+          "score": 2.0017,
+          "evidence": []
+        },
+        {
+          "term": "covariance function",
+          "score": 1.9225,
+          "evidence": []
+        },
+        {
+          "term": "bβdmm",
+          "score": 1.9206,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "covariance function",
+          "score": 0.2266,
+          "evidence": []
+        },
+        {
+          "term": "probability distribution",
+          "score": 0.218,
+          "evidence": []
+        },
+        {
+          "term": "gaussian process",
+          "score": 0.139,
+          "evidence": []
+        },
+        {
+          "term": "let",
+          "score": 0.1157,
+          "evidence": []
+        },
+        {
+          "term": "property",
+          "score": 0.0758,
+          "evidence": []
+        },
+        {
+          "term": "space",
+          "score": 0.0623,
+          "evidence": []
+        },
+        {
+          "term": "finite",
+          "score": 0.0571,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "𝑛𝐼",
+          "score": 348.5846,
+          "evidence": []
+        },
+        {
+          "term": "𝑥𝑖",
+          "score": 275.0567,
+          "evidence": []
+        },
+        {
+          "term": "rasmussen",
+          "score": 239.323,
+          "evidence": []
+        },
+        {
+          "term": "r𝑛",
+          "score": 217.9149,
+          "evidence": []
+        },
+        {
+          "term": "matérn",
+          "score": 210.0156,
+          "evidence": []
+        },
+        {
+          "term": "rbf",
+          "score": 210.0156,
+          "evidence": []
+        },
+        {
+          "term": "shorthands",
+          "score": 208.7523,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-010-posterior-inference": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "𝑥𝑖",
+          "score": 1.2916,
+          "evidence": []
+        },
+        {
+          "term": "𝑛𝐼",
+          "score": 1.0079,
+          "evidence": []
+        },
+        {
+          "term": "posterior",
+          "score": 0.9294,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "𝑥𝑖",
+          "score": 24.4049,
+          "evidence": []
+        },
+        {
+          "term": "𝑛𝐼",
+          "score": 14.035,
+          "evidence": []
+        },
+        {
+          "term": "posterior",
+          "score": 9.5324,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "𝑥𝑡",
+          "score": 0.106,
+          "evidence": []
+        },
+        {
+          "term": "posterior",
+          "score": 0.0869,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "function",
+          "score": 0.0865,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "matrix",
+          "score": 1.4233,
+          "evidence": []
+        },
+        {
+          "term": "𝑥𝑡",
+          "score": 1.1315,
+          "evidence": []
+        },
+        {
+          "term": "d𝑡",
+          "score": 0.6448,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "posterior",
+          "score": 0.0869,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "function",
+          "score": 0.0865,
+          "evidence": []
+        },
+        {
+          "term": "matrix",
+          "score": 0.0624,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "𝑛𝐼",
+          "score": 409.1775,
+          "evidence": []
+        },
+        {
+          "term": "𝑥𝑖",
+          "score": 319.7022,
+          "evidence": []
+        },
+        {
+          "term": "rasmussen",
+          "score": 263.4853,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-011-reproducing-kernel-hilbert-space": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "kernel",
+          "score": 2.0534,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "space",
+          "score": 1.4979,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "𝑥𝑖",
+          "score": 1.2916,
+          "evidence": []
+        },
+        {
+          "term": "function space",
+          "score": 1.2802,
+          "evidence": []
+        },
+        {
+          "term": "inner product",
+          "score": 1.2252,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "kernel",
+          "score": 33.0806,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "space",
+          "score": 26.5296,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "𝑥𝑖",
+          "score": 24.4049,
+          "evidence": []
+        },
+        {
+          "term": "function space",
+          "score": 20.9369,
+          "evidence": []
+        },
+        {
+          "term": "inner product",
+          "score": 16.2322,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "function space",
+          "score": 0.1619,
+          "evidence": []
+        },
+        {
+          "term": "𝑥𝑡",
+          "score": 0.1102,
+          "evidence": []
+        },
+        {
+          "term": "probability",
+          "score": 0.0837,
+          "evidence": []
+        },
+        {
+          "term": "d𝑡",
+          "score": 0.0827,
+          "evidence": []
+        },
+        {
+          "term": "matrix",
+          "score": 0.0787,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "matrix",
+          "score": 1.4506,
+          "evidence": []
+        },
+        {
+          "term": "function space",
+          "score": 1.3465,
+          "evidence": []
+        },
+        {
+          "term": "𝑥𝑡",
+          "score": 1.3371,
+          "evidence": []
+        },
+        {
+          "term": "algorithm",
+          "score": 1.1735,
+          "evidence": []
+        },
+        {
+          "term": "ψdmm",
+          "score": 1.1273,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "function space",
+          "score": 0.1619,
+          "evidence": []
+        },
+        {
+          "term": "probability",
+          "score": 0.0837,
+          "evidence": []
+        },
+        {
+          "term": "distribution",
+          "score": 0.065,
+          "evidence": []
+        },
+        {
+          "term": "posterior means",
+          "score": 0.0634,
+          "evidence": []
+        },
+        {
+          "term": "define",
+          "score": 0.0512,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "𝑛𝐼",
+          "score": 298.1687,
+          "evidence": []
+        },
+        {
+          "term": "kernel",
+          "score": 296.7146,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "𝑥𝑖",
+          "score": 232.1537,
+          "evidence": []
+        },
+        {
+          "term": "r𝑛",
+          "score": 191.6853,
+          "evidence": []
+        },
+        {
+          "term": "rasmussen",
+          "score": 191.0897,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-012-information-capacity": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "information capacity",
+          "score": 2.9759,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "𝛾𝑇",
+          "score": 1.6527,
+          "evidence": []
+        },
+        {
+          "term": "function 𝑓is",
+          "score": 1.6486,
+          "evidence": []
+        },
+        {
+          "term": "𝑥𝑡",
+          "score": 1.5746,
+          "evidence": []
+        },
+        {
+          "term": "covariance function",
+          "score": 1.5659,
+          "evidence": []
+        },
+        {
+          "term": "information gain",
+          "score": 1.4402,
+          "evidence": []
+        },
+        {
+          "term": "gain through",
+          "score": 1.405,
+          "evidence": []
+        },
+        {
+          "term": "mutual information",
+          "score": 1.3939,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "information capacity",
+          "score": 62.8086,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "𝑥𝑡",
+          "score": 36.6073,
+          "evidence": []
+        },
+        {
+          "term": "𝛾𝑇",
+          "score": 35.0875,
+          "evidence": []
+        },
+        {
+          "term": "information gain",
+          "score": 32.6702,
+          "evidence": []
+        },
+        {
+          "term": "function 𝑓is",
+          "score": 29.7393,
+          "evidence": []
+        },
+        {
+          "term": "gain through",
+          "score": 29.1977,
+          "evidence": []
+        },
+        {
+          "term": "covariance function",
+          "score": 28.527,
+          "evidence": []
+        },
+        {
+          "term": "mutual information",
+          "score": 28.2204,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "information capacity",
+          "score": 0.4877,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "𝑥𝑡",
+          "score": 0.4599,
+          "evidence": []
+        },
+        {
+          "term": "d𝑡",
+          "score": 0.3455,
+          "evidence": []
+        },
+        {
+          "term": "unknown function",
+          "score": 0.3347,
+          "evidence": []
+        },
+        {
+          "term": "function 𝑓is",
+          "score": 0.3258,
+          "evidence": []
+        },
+        {
+          "term": "𝜇𝑡",
+          "score": 0.3212,
+          "evidence": []
+        },
+        {
+          "term": "covariance function",
+          "score": 0.3133,
+          "evidence": []
+        },
+        {
+          "term": "𝛽𝑡𝜎𝑡",
+          "score": 0.2998,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "𝑥𝑡",
+          "score": 18.2654,
+          "evidence": []
+        },
+        {
+          "term": "d𝑡",
+          "score": 13.4062,
+          "evidence": []
+        },
+        {
+          "term": "𝛽𝑡𝜎𝑡",
+          "score": 7.9604,
+          "evidence": []
+        },
+        {
+          "term": "𝜇𝑡",
+          "score": 6.4372,
+          "evidence": []
+        },
+        {
+          "term": "information capacity",
+          "score": 5.4369,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "bound",
+          "score": 5.1026,
+          "evidence": []
+        },
+        {
+          "term": "x𝑡",
+          "score": 3.8417,
+          "evidence": []
+        },
+        {
+          "term": "unknown function",
+          "score": 3.7458,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "information capacity",
+          "score": 0.4877,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "𝑥𝑡",
+          "score": 0.4599,
+          "evidence": []
+        },
+        {
+          "term": "unknown function",
+          "score": 0.3347,
+          "evidence": []
+        },
+        {
+          "term": "function 𝑓is",
+          "score": 0.3258,
+          "evidence": []
+        },
+        {
+          "term": "covariance function",
+          "score": 0.3133,
+          "evidence": []
+        },
+        {
+          "term": "let",
+          "score": 0.2041,
+          "evidence": []
+        },
+        {
+          "term": "maximum information",
+          "score": 0.1915,
+          "evidence": []
+        },
+        {
+          "term": "information gain",
+          "score": 0.1776,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "𝑘𝑡",
+          "score": 97.565,
+          "evidence": []
+        },
+        {
+          "term": "cauchy-schwarz",
+          "score": 97.4881,
+          "evidence": []
+        },
+        {
+          "term": "supressed",
+          "score": 97.4881,
+          "evidence": []
+        },
+        {
+          "term": "high-probability",
+          "score": 97.4112,
+          "evidence": []
+        },
+        {
+          "term": "𝑇𝛾𝑇log",
+          "score": 97.3727,
+          "evidence": []
+        },
+        {
+          "term": "𝜎𝑡",
+          "score": 97.3497,
+          "evidence": []
+        },
+        {
+          "term": "𝛽𝑇",
+          "score": 97.3343,
+          "evidence": []
+        },
+        {
+          "term": "shorthands",
+          "score": 97.2842,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-013-useful-inequalities": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "borell-tis inequality",
+          "score": 1.6329,
+          "evidence": []
+        },
+        {
+          "term": "supremum",
+          "score": 0.6308,
+          "evidence": []
+        },
+        {
+          "term": "vaart",
+          "score": 0.5734,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "borell-tis inequality",
+          "score": 22.4036,
+          "evidence": []
+        },
+        {
+          "term": "supremum",
+          "score": 7.0175,
+          "evidence": []
+        },
+        {
+          "term": "vaart",
+          "score": 6.3244,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "𝑥𝑡",
+          "score": 0.1146,
+          "evidence": []
+        },
+        {
+          "term": "bound",
+          "score": 0.1065,
+          "evidence": []
+        },
+        {
+          "term": "theorem",
+          "score": 0.0893,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "𝑥𝑡",
+          "score": 1.4713,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 1.1249,
+          "evidence": []
+        },
+        {
+          "term": "bound",
+          "score": 0.9512,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "bound",
+          "score": 0.1065,
+          "evidence": []
+        },
+        {
+          "term": "theorem",
+          "score": 0.0893,
+          "evidence": []
+        },
+        {
+          "term": "let",
+          "score": 0.0757,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "borell-tis inequality",
+          "score": 186.8196,
+          "evidence": []
+        },
+        {
+          "term": "inequalities",
+          "score": 181.1081,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "𝐴𝑖",
+          "score": 161.3512,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-014-discrete-bayesian-optimization": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "bayesian optimization",
+          "score": 2.7181,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "point 𝑥𝑡",
+          "score": 2.106,
+          "evidence": []
+        },
+        {
+          "term": "acquisition function",
+          "score": 1.6282,
+          "evidence": []
+        },
+        {
+          "term": "unknown function",
+          "score": 1.5728,
+          "evidence": []
+        },
+        {
+          "term": "d𝑡",
+          "score": 1.461,
+          "evidence": []
+        },
+        {
+          "term": "𝑅𝑇",
+          "score": 1.3813,
+          "evidence": []
+        },
+        {
+          "term": "discrete",
+          "score": 1.2273,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "𝑟total",
+          "score": 1.1986,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "point 𝑥𝑡",
+          "score": 48.1763,
+          "evidence": []
+        },
+        {
+          "term": "bayesian optimization",
+          "score": 41.1577,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "unknown function",
+          "score": 35.56,
+          "evidence": []
+        },
+        {
+          "term": "acquisition function",
+          "score": 33.3077,
+          "evidence": []
+        },
+        {
+          "term": "𝑅𝑇",
+          "score": 28.8237,
+          "evidence": []
+        },
+        {
+          "term": "regret",
+          "score": 25.66,
+          "evidence": []
+        },
+        {
+          "term": "d𝑡",
+          "score": 25.2974,
+          "evidence": []
+        },
+        {
+          "term": "𝑟total",
+          "score": 19.8361,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "bayesian optimization",
+          "score": 1.5073,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "point 𝑥𝑡",
+          "score": 1.3356,
+          "evidence": []
+        },
+        {
+          "term": "d𝑡",
+          "score": 0.8826,
+          "evidence": []
+        },
+        {
+          "term": "regret",
+          "score": 0.8244,
+          "evidence": []
+        },
+        {
+          "term": "𝜇𝑡",
+          "score": 0.8233,
+          "evidence": []
+        },
+        {
+          "term": "𝛽𝑡𝜎𝑡",
+          "score": 0.7547,
+          "evidence": []
+        },
+        {
+          "term": "discrete",
+          "score": 0.7292,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "𝑅𝑇",
+          "score": 0.6649,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "point 𝑥𝑡",
+          "score": 36.6913,
+          "evidence": []
+        },
+        {
+          "term": "d𝑡",
+          "score": 31.5755,
+          "evidence": []
+        },
+        {
+          "term": "𝛽𝑡𝜎𝑡",
+          "score": 14.3055,
+          "evidence": []
+        },
+        {
+          "term": "regret",
+          "score": 13.5474,
+          "evidence": []
+        },
+        {
+          "term": "𝜇𝑡",
+          "score": 12.8309,
+          "evidence": []
+        },
+        {
+          "term": "bayesian optimization",
+          "score": 12.6153,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "algorithm",
+          "score": 10.0944,
+          "evidence": []
+        },
+        {
+          "term": "bound",
+          "score": 9.867,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "bayesian optimization",
+          "score": 1.5073,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "point 𝑥𝑡",
+          "score": 1.3356,
+          "evidence": []
+        },
+        {
+          "term": "d𝑡",
+          "score": 0.8826,
+          "evidence": []
+        },
+        {
+          "term": "regret",
+          "score": 0.8244,
+          "evidence": []
+        },
+        {
+          "term": "𝜇𝑡",
+          "score": 0.8233,
+          "evidence": []
+        },
+        {
+          "term": "discrete",
+          "score": 0.7292,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "𝑅𝑇",
+          "score": 0.6649,
+          "evidence": []
+        },
+        {
+          "term": "unknown function",
+          "score": 0.6356,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "ˆ𝜇",
+          "score": 204.5664,
+          "evidence": []
+        },
+        {
+          "term": "𝐾𝑇",
+          "score": 203.7247,
+          "evidence": []
+        },
+        {
+          "term": "𝐾actions",
+          "score": 203.1355,
+          "evidence": []
+        },
+        {
+          "term": "𝐸holds",
+          "score": 193.0783,
+          "evidence": []
+        },
+        {
+          "term": "𝑁𝑡",
+          "score": 191.5627,
+          "evidence": []
+        },
+        {
+          "term": "𝑟total",
+          "score": 186.3487,
+          "evidence": []
+        },
+        {
+          "term": "log𝑇",
+          "score": 183.5185,
+          "evidence": []
+        },
+        {
+          "term": "𝑟𝑡𝑎",
+          "score": 182.2993,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-015-gp-ucb-high-probability-regret-bound": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "regret bound",
+          "score": 4.4339,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "𝑥𝑡",
+          "score": 2.2436,
+          "evidence": []
+        },
+        {
+          "term": "confidence bound",
+          "score": 1.9279,
+          "evidence": []
+        },
+        {
+          "term": "union bound",
+          "score": 1.8571,
+          "evidence": []
+        },
+        {
+          "term": "gp-ucb",
+          "score": 1.8183,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "𝛽𝑡𝜎𝑡",
+          "score": 1.7994,
+          "evidence": []
+        },
+        {
+          "term": "𝐶𝑡",
+          "score": 1.7853,
+          "evidence": []
+        },
+        {
+          "term": "𝜇𝑡",
+          "score": 1.6766,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "regret bound",
+          "score": 109.8054,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "𝑥𝑡",
+          "score": 91.5182,
+          "evidence": []
+        },
+        {
+          "term": "𝛽𝑡𝜎𝑡",
+          "score": 46.2843,
+          "evidence": []
+        },
+        {
+          "term": "confidence bound",
+          "score": 45.6606,
+          "evidence": []
+        },
+        {
+          "term": "union bound",
+          "score": 42.8516,
+          "evidence": []
+        },
+        {
+          "term": "𝜇𝑡",
+          "score": 42.7085,
+          "evidence": []
+        },
+        {
+          "term": "𝐶𝑡",
+          "score": 42.105,
+          "evidence": []
+        },
+        {
+          "term": "d𝑡",
+          "score": 25.2974,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "regret bound",
+          "score": 4.6291,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "𝑥𝑡",
+          "score": 1.9148,
+          "evidence": []
+        },
+        {
+          "term": "union bound",
+          "score": 1.6267,
+          "evidence": []
+        },
+        {
+          "term": "confidence bound",
+          "score": 1.6167,
+          "evidence": []
+        },
+        {
+          "term": "d𝑡",
+          "score": 1.455,
+          "evidence": []
+        },
+        {
+          "term": "𝜇𝑡",
+          "score": 1.3575,
+          "evidence": []
+        },
+        {
+          "term": "𝛽𝑡𝜎𝑡",
+          "score": 1.2688,
+          "evidence": []
+        },
+        {
+          "term": "discrete bayesian",
+          "score": 1.2575,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "regret bound",
+          "score": 81.071,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "𝑥𝑡",
+          "score": 77.2537,
+          "evidence": []
+        },
+        {
+          "term": "d𝑡",
+          "score": 55.3448,
+          "evidence": []
+        },
+        {
+          "term": "𝛽𝑡𝜎𝑡",
+          "score": 33.9472,
+          "evidence": []
+        },
+        {
+          "term": "union bound",
+          "score": 28.815,
+          "evidence": []
+        },
+        {
+          "term": "𝜇𝑡",
+          "score": 28.0509,
+          "evidence": []
+        },
+        {
+          "term": "confidence bound",
+          "score": 27.9033,
+          "evidence": []
+        },
+        {
+          "term": "x𝑡",
+          "score": 16.5582,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "regret bound",
+          "score": 4.6291,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "𝑥𝑡",
+          "score": 1.9148,
+          "evidence": []
+        },
+        {
+          "term": "union bound",
+          "score": 1.6267,
+          "evidence": []
+        },
+        {
+          "term": "confidence bound",
+          "score": 1.6167,
+          "evidence": []
+        },
+        {
+          "term": "d𝑡",
+          "score": 1.455,
+          "evidence": []
+        },
+        {
+          "term": "𝜇𝑡",
+          "score": 1.3575,
+          "evidence": []
+        },
+        {
+          "term": "𝛽𝑡𝜎𝑡",
+          "score": 1.2688,
+          "evidence": []
+        },
+        {
+          "term": "discrete bayesian",
+          "score": 1.2575,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "high-probability",
+          "score": 882.5708,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "gp-ucb",
+          "score": 568.5157,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "𝛽𝑇",
+          "score": 447.7951,
+          "evidence": []
+        },
+        {
+          "term": "𝜎𝑡",
+          "score": 446.4931,
+          "evidence": []
+        },
+        {
+          "term": "𝑇𝛾𝑇log",
+          "score": 444.5402,
+          "evidence": []
+        },
+        {
+          "term": "cauchy-schwarz",
+          "score": 434.7757,
+          "evidence": []
+        },
+        {
+          "term": "supressed",
+          "score": 434.7757,
+          "evidence": []
+        },
+        {
+          "term": "𝑘𝑡",
+          "score": 428.2659,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-016-gp-ts-expected-regret-bound": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "regret bound",
+          "score": 3.9302,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "expected regret",
+          "score": 3.3885,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "d𝑡",
+          "score": 3.371,
+          "evidence": []
+        },
+        {
+          "term": "𝑥𝑡",
+          "score": 2.5372,
+          "evidence": []
+        },
+        {
+          "term": "𝛽𝑇",
+          "score": 1.6871,
+          "evidence": []
+        },
+        {
+          "term": "𝛽𝑡𝜎𝑡",
+          "score": 1.6839,
+          "evidence": []
+        },
+        {
+          "term": "𝜎𝑡",
+          "score": 1.505,
+          "evidence": []
+        },
+        {
+          "term": "discrete bayesian",
+          "score": 1.4289,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "d𝑡",
+          "score": 252.9744,
+          "evidence": []
+        },
+        {
+          "term": "𝑥𝑡",
+          "score": 134.2267,
+          "evidence": []
+        },
+        {
+          "term": "regret bound",
+          "score": 79.3332,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "expected regret",
+          "score": 66.0856,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "𝛽𝑡𝜎𝑡",
+          "score": 39.6722,
+          "evidence": []
+        },
+        {
+          "term": "𝛽𝑇",
+          "score": 35.0875,
+          "evidence": []
+        },
+        {
+          "term": "posterior",
+          "score": 33.3635,
+          "evidence": []
+        },
+        {
+          "term": "𝑅𝑇",
+          "score": 28.8237,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "regret bound",
+          "score": 4.7404,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "expected regret",
+          "score": 3.2866,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "𝑥𝑡",
+          "score": 2.0305,
+          "evidence": []
+        },
+        {
+          "term": "d𝑡",
+          "score": 1.5474,
+          "evidence": []
+        },
+        {
+          "term": "𝜇𝑡",
+          "score": 1.4345,
+          "evidence": []
+        },
+        {
+          "term": "discrete bayesian",
+          "score": 1.361,
+          "evidence": []
+        },
+        {
+          "term": "𝛽𝑡𝜎𝑡",
+          "score": 1.3442,
+          "evidence": []
+        },
+        {
+          "term": "bayesian optimization",
+          "score": 1.2643,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "d𝑡",
+          "score": 206.8001,
+          "evidence": []
+        },
+        {
+          "term": "𝑥𝑡",
+          "score": 160.0704,
+          "evidence": []
+        },
+        {
+          "term": "regret bound",
+          "score": 93.6514,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "expected regret",
+          "score": 69.5552,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "𝛽𝑡𝜎𝑡",
+          "score": 57.6424,
+          "evidence": []
+        },
+        {
+          "term": "𝜇𝑡",
+          "score": 39.0048,
+          "evidence": []
+        },
+        {
+          "term": "posterior",
+          "score": 32.4124,
+          "evidence": []
+        },
+        {
+          "term": "discrete bayesian",
+          "score": 28.7325,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "regret bound",
+          "score": 4.7404,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "expected regret",
+          "score": 3.2866,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "𝑥𝑡",
+          "score": 2.0305,
+          "evidence": []
+        },
+        {
+          "term": "d𝑡",
+          "score": 1.5474,
+          "evidence": []
+        },
+        {
+          "term": "𝜇𝑡",
+          "score": 1.4345,
+          "evidence": []
+        },
+        {
+          "term": "discrete bayesian",
+          "score": 1.361,
+          "evidence": []
+        },
+        {
+          "term": "𝛽𝑡𝜎𝑡",
+          "score": 1.3442,
+          "evidence": []
+        },
+        {
+          "term": "bayesian optimization",
+          "score": 1.2643,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "𝛽𝑇",
+          "score": 616.4689,
+          "evidence": []
+        },
+        {
+          "term": "𝜎𝑡",
+          "score": 609.9823,
+          "evidence": []
+        },
+        {
+          "term": "𝑇𝛾𝑇log",
+          "score": 600.2525,
+          "evidence": []
+        },
+        {
+          "term": "high-probability",
+          "score": 584.0361,
+          "evidence": []
+        },
+        {
+          "term": "d𝑡",
+          "score": 580.2873,
+          "evidence": []
+        },
+        {
+          "term": "cauchy-schwarz",
+          "score": 551.6033,
+          "evidence": []
+        },
+        {
+          "term": "supressed",
+          "score": 551.6033,
+          "evidence": []
+        },
+        {
+          "term": "𝛽𝑡",
+          "score": 524.595,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-017-continuous-bayesian-optimization": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "continuous bayesian",
+          "score": 4.2308,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "bayesian optimization",
+          "score": 2.9972,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "𝑥𝑡",
+          "score": 2.6364,
+          "evidence": []
+        },
+        {
+          "term": "𝛽𝑡𝜎𝑡",
+          "score": 2.2837,
+          "evidence": []
+        },
+        {
+          "term": "x𝑡",
+          "score": 2.2118,
+          "evidence": []
+        },
+        {
+          "term": "regret bound",
+          "score": 2.1763,
+          "evidence": []
+        },
+        {
+          "term": "union bound",
+          "score": 1.9987,
+          "evidence": []
+        },
+        {
+          "term": "𝜇𝑡",
+          "score": 1.9333,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "𝑥𝑡",
+          "score": 152.5304,
+          "evidence": []
+        },
+        {
+          "term": "continuous bayesian",
+          "score": 95.3773,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "𝛽𝑡𝜎𝑡",
+          "score": 85.9565,
+          "evidence": []
+        },
+        {
+          "term": "x𝑡",
+          "score": 70.1751,
+          "evidence": []
+        },
+        {
+          "term": "𝜇𝑡",
+          "score": 61.0122,
+          "evidence": []
+        },
+        {
+          "term": "regret bound",
+          "score": 51.8555,
+          "evidence": []
+        },
+        {
+          "term": "bayesian optimization",
+          "score": 48.2613,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "union bound",
+          "score": 44.4705,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "bayesian optimization",
+          "score": 2.6504,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "regret bound",
+          "score": 2.5167,
+          "evidence": []
+        },
+        {
+          "term": "continuous bayesian",
+          "score": 2.2704,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "𝑥𝑡",
+          "score": 2.12,
+          "evidence": []
+        },
+        {
+          "term": "union bound",
+          "score": 1.8004,
+          "evidence": []
+        },
+        {
+          "term": "d𝑡",
+          "score": 1.6077,
+          "evidence": []
+        },
+        {
+          "term": "𝜇𝑡",
+          "score": 1.4966,
+          "evidence": []
+        },
+        {
+          "term": "𝛽𝑡𝜎𝑡",
+          "score": 1.4081,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "𝑥𝑡",
+          "score": 116.8617,
+          "evidence": []
+        },
+        {
+          "term": "d𝑡",
+          "score": 66.7523,
+          "evidence": []
+        },
+        {
+          "term": "regret bound",
+          "score": 59.3548,
+          "evidence": []
+        },
+        {
+          "term": "𝛽𝑡𝜎𝑡",
+          "score": 53.9035,
+          "evidence": []
+        },
+        {
+          "term": "continuous bayesian",
+          "score": 51.6586,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "union bound",
+          "score": 46.0241,
+          "evidence": []
+        },
+        {
+          "term": "𝜇𝑡",
+          "score": 44.6961,
+          "evidence": []
+        },
+        {
+          "term": "bayesian optimization",
+          "score": 37.958,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "bayesian optimization",
+          "score": 2.6504,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "regret bound",
+          "score": 2.5167,
+          "evidence": []
+        },
+        {
+          "term": "continuous bayesian",
+          "score": 2.2704,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "𝑥𝑡",
+          "score": 2.12,
+          "evidence": []
+        },
+        {
+          "term": "union bound",
+          "score": 1.8004,
+          "evidence": []
+        },
+        {
+          "term": "d𝑡",
+          "score": 1.6077,
+          "evidence": []
+        },
+        {
+          "term": "𝜇𝑡",
+          "score": 1.4966,
+          "evidence": []
+        },
+        {
+          "term": "𝛽𝑡𝜎𝑡",
+          "score": 1.4081,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "𝑘𝑡",
+          "score": 356.8012,
+          "evidence": []
+        },
+        {
+          "term": "𝐶𝑡",
+          "score": 356.0179,
+          "evidence": []
+        },
+        {
+          "term": "cauchy-schwarz",
+          "score": 354.1688,
+          "evidence": []
+        },
+        {
+          "term": "supressed",
+          "score": 354.1688,
+          "evidence": []
+        },
+        {
+          "term": "riemann",
+          "score": 352.9939,
+          "evidence": []
+        },
+        {
+          "term": "𝑡𝜎",
+          "score": 352.9939,
+          "evidence": []
+        },
+        {
+          "term": "variances",
+          "score": 352.9939,
+          "evidence": []
+        },
+        {
+          "term": "zeta",
+          "score": 352.9939,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-018-acknowledgments": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "aad van",
+          "score": 1.8515,
+          "evidence": []
+        },
+        {
+          "term": "der vaart",
+          "score": 1.6113,
+          "evidence": []
+        },
+        {
+          "term": "cambridge university",
+          "score": 1.5132,
+          "evidence": []
+        },
+        {
+          "term": "university press",
+          "score": 1.3943,
+          "evidence": []
+        },
+        {
+          "term": "jon",
+          "score": 0.9092,
+          "evidence": []
+        },
+        {
+          "term": "bandit",
+          "score": 0.6533,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "aad van",
+          "score": 27.1704,
+          "evidence": []
+        },
+        {
+          "term": "cambridge university",
+          "score": 22.6016,
+          "evidence": []
+        },
+        {
+          "term": "van der",
+          "score": 22.2857,
+          "evidence": []
+        },
+        {
+          "term": "der vaart",
+          "score": 21.799,
+          "evidence": []
+        },
+        {
+          "term": "university press",
+          "score": 19.5668,
+          "evidence": []
+        },
+        {
+          "term": "jon",
+          "score": 12.6487,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "university press",
+          "score": 0.203,
+          "evidence": []
+        },
+        {
+          "term": "cambridge university",
+          "score": 0.1644,
+          "evidence": []
+        },
+        {
+          "term": "van der",
+          "score": 0.1359,
+          "evidence": []
+        },
+        {
+          "term": "science",
+          "score": 0.1295,
+          "evidence": []
+        },
+        {
+          "term": "𝑥𝑡",
+          "score": 0.1287,
+          "evidence": []
+        },
+        {
+          "term": "learning",
+          "score": 0.1214,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "university press",
+          "score": 3.8851,
+          "evidence": []
+        },
+        {
+          "term": "learning",
+          "score": 2.3477,
+          "evidence": []
+        },
+        {
+          "term": "cambridge university",
+          "score": 2.3276,
+          "evidence": []
+        },
+        {
+          "term": "science",
+          "score": 2.1747,
+          "evidence": []
+        },
+        {
+          "term": "journal",
+          "score": 1.8555,
+          "evidence": []
+        },
+        {
+          "term": "pages",
+          "score": 1.7488,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "university press",
+          "score": 0.203,
+          "evidence": []
+        },
+        {
+          "term": "cambridge university",
+          "score": 0.1644,
+          "evidence": []
+        },
+        {
+          "term": "van der",
+          "score": 0.1359,
+          "evidence": []
+        },
+        {
+          "term": "learning",
+          "score": 0.1214,
+          "evidence": []
+        },
+        {
+          "term": "aad van",
+          "score": 0.106,
+          "evidence": []
+        },
+        {
+          "term": "probability",
+          "score": 0.0841,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "aad",
+          "score": 126.2582,
+          "evidence": []
+        },
+        {
+          "term": "aad van",
+          "score": 126.2582,
+          "evidence": []
+        },
+        {
+          "term": "szepesvári",
+          "score": 119.4679,
+          "evidence": []
+        },
+        {
+          "term": "csaba",
+          "score": 115.4656,
+          "evidence": []
+        },
+        {
+          "term": "bdrt",
+          "score": 108.5576,
+          "evidence": []
+        },
+        {
+          "term": "russo",
+          "score": 103.2288,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

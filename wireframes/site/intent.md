@@ -14,7 +14,7 @@
 ## What it must show (read off the generator)
 
 - an `h1` "Published site" and one sentence saying where the listing comes from and what counts as a page
-- per declared `basic-cdn-site` directory: the instance and id, the branch and remote, then exactly one of three states
+- per declared `basic-cdn-site` directory: the layer and id, the branch and remote, then exactly one of three states
   - **present:** the tip, the totals, a Route / Pages / Files table of top-level routes, and a Preview table of `branches/<slug>/`
   - **empty:** git answered and the branch is absent or holds no files, said in words
   - **could not read:** git did not answer; the reason, and no table and no counts — never a zero standing in for "could not look"

@@ -7,7 +7,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/archimate-actors.jsonld",
       "@type": "cat-harness:Tool",
-      "description": "Actors come first: the IG's ActorDefinitions are written from the DAK's personas, and an ArchiMate model only points at them. For one model an instance's `cat-archimate.config.json` names, this reads every element carrying the Archi property `fhir-actor`, whose value is an ActorDefinition's canonical URL, and the IG's ActorDefinitions: FSH `InstanceOf: ActorDefinition` under `input/fsh/`, and FHIR JSON under `fsh-generated/resources/` or `input/resources/`, each canonical being `<sushi-config canonical>/ActorDefinition/<id>` unless its `url` says otherwise. It fails on a value that is not a canonical URL, a tag that names no ActorDefinition, an element kind that cannot be an actor (a data object, a goal), and a type mismatch (a `#person` actor on an application or technology element, a `#system` actor on a business actor or role). It warns about each ActorDefinition no element realizes; `--strict` makes that a failure. `--json` prints element → actors and actor → elements, for page back-links. It never writes an ActorDefinition or any FSH, and never matches boxes to actors by name.",
+      "description": "Actors come first: the IG's ActorDefinitions are written from the DAK's personas, and an ArchiMate model only points at them. For one model a layer's `cat-archimate.config.json` names, this reads every element carrying the Archi property `fhir-actor`, whose value is an ActorDefinition's canonical URL, and the IG's ActorDefinitions: FSH `InstanceOf: ActorDefinition` under `input/fsh/`, and FHIR JSON under `fsh-generated/resources/` or `input/resources/`, each canonical being `<sushi-config canonical>/ActorDefinition/<id>` unless its `url` says otherwise. It fails on a value that is not a canonical URL, a tag that names no ActorDefinition, an element kind that cannot be an actor (a data object, a goal), and a type mismatch (a `#person` actor on an application or technology element, a `#system` actor on a business actor or role). It warns about each ActorDefinition no element realizes; `--strict` makes that a failure. `--json` prints element → actors and actor → elements, for page back-links. It never writes an ActorDefinition or any FSH, and never matches boxes to actors by name.",
       "install": {
         "none": true
       },
@@ -20,7 +20,7 @@
             "arg": {
               "flag": "--instance"
             },
-            "description": "The instance root whose ArchiMate model is read.",
+            "description": "The layer root whose ArchiMate model is read.",
             "name": "instance",
             "required": true,
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
@@ -38,7 +38,7 @@
             "arg": {
               "flag": "--ig"
             },
-            "description": "The IG directory holding `sushi-config.yaml` and `input/fsh/`; absent, the instance root.",
+            "description": "The IG directory holding `sushi-config.yaml` and `input/fsh/`; absent, the layer root.",
             "name": "ig",
             "required": false,
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"

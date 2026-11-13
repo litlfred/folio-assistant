@@ -401,7 +401,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Read glossary and abbreviations into candidate terms"
+          "@value": "Read glossary into candidate terms"
         }
       ],
       "skos:definition": [
@@ -451,6 +451,26 @@
       ],
       "skos:notation": "Task_Manifest",
       "dcterms:source": "folio-assistant-core/processes/library/ingest-build-l1-kg.bpmn#Task_Manifest",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-bpmn-activities/process_buildl1kg.task_references",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Extract reference lists"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Each reference list of the source (a References, Bibliography or Further reading section, in any of the six UN languages) becomes folio-reference/v1 nodes with the Tool references-extract: one node per cited work, provenance extracted, derivedFrom the section it was read from, and printed the entry exactly as the source prints it. Only fields read without guessing are set (address, DOI, ISBN, year, access date); a cited IRIS item the library holds gets heldAt. The nodes are the document's own bibliography on the bibliography page. A source with no reference list skips this step with nothing written."
+        }
+      ],
+      "skos:notation": "Task_References",
+      "dcterms:source": "folio-assistant-core/processes/library/ingest-build-l1-kg.bpmn#Task_References",
       "skos:note": "candidate"
     },
     {
@@ -1281,7 +1301,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "QA gate: review dispositions against the people and the pull request"
+          "@value": "QA gate: check dispositions and PR"
         }
       ],
       "skos:definition": [
@@ -1474,6 +1494,46 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-bpmn-activities/process_derivecontent.task_figurestables",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Extract figures and tables"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The pdf-images.py, pdf-vector-labels.py and pdf-vector-figures.py arms extract the raster images and the figures drawn as vectors (grouped and rendered). For every table the document's structure declares, an agent reads the rendered page, checks cell text against the text layer, and writes tables/<label>.csv plus tables.csvw.json (folio-tabular-csvw/v1), with a draft description in the six UN languages; pdf-tables.py's grid is a cross-check, not the answer. Owner, 2026-11-11 (who-iris): \"actually extract the figures\" and \"any tables too\". Method: skill document-intake, \"Figures and captioned tables: describe, keep, transcribe\"."
+        }
+      ],
+      "skos:notation": "Task_FiguresTables",
+      "dcterms:source": "folio-assistant-core/processes/library/ingest-derive-content.bpmn#Task_FiguresTables",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-bpmn-activities/process_derivecontent.task_footnotes",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Footnotes and the marks that call them"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The pdf-footnotes.py arm (owner, 2026-11-11, \"also foot notes/marks\"): from the page layout, each note at the foot of a page and every superscript mark in the text that calls it, written to footnotes.json (folio-document-footnotes/v1) with the block that holds the page. The section text is not changed. Only a called note is a footnote; uncalled foot-of-page lines and marks with no note are listed, never dropped. OCR'd pages have no fonts and are reported unread. Method: skill l1-document-ingestion, \"Footnotes and their marks\"."
+        }
+      ],
+      "skos:notation": "Task_Footnotes",
+      "dcterms:source": "folio-assistant-core/processes/library/ingest-derive-content.bpmn#Task_Footnotes",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-bpmn-activities/process_derivecontent.task_image",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1486,7 +1546,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "NOT IMPLEMENTED; see docs/document-ingestion.md. Applies equally to an image EXTRACTED FROM A PDF, not only to an uploaded one."
+          "@value": "Applies equally to an image EXTRACTED FROM A PDF (Task_FiguresTables), not only to an uploaded one. An agent opens every image and vector render and records a verdict in the library's image-verdicts.json: role (figure, logo or decorative), the reason, and a draft description in English plus ar, zh, es, fr and ru, which the apply-image-verdicts.ts arm lays over images.json on every ingest. Images judged figure are kept as WebP, quality 80, at most 1600 px; logos, decorative fragments and page scans are not. Every description stays a draft until a person confirms it with `bun run cat narratives`. Method: skill document-intake, \"Figures and captioned tables: describe, keep, transcribe\"."
         }
       ],
       "skos:notation": "Task_Image",
@@ -1790,7 +1850,7 @@
         }
       ],
       "skos:notation": "Call_BeanCloseEnded",
-      "dcterms:source": "folio-assistant-core/processes/content/dsa-document-lifecycle.bpmn#Call_BeanCloseEnded",
+      "dcterms:source": "folio-assistant-core/dsa/processes/dsa-document-lifecycle.bpmn#Call_BeanCloseEnded",
       "skos:note": "candidate"
     },
     {
@@ -1810,7 +1870,7 @@
         }
       ],
       "skos:notation": "Call_BeanOpen",
-      "dcterms:source": "folio-assistant-core/processes/content/dsa-document-lifecycle.bpmn#Call_BeanOpen",
+      "dcterms:source": "folio-assistant-core/dsa/processes/dsa-document-lifecycle.bpmn#Call_BeanOpen",
       "skos:note": "candidate"
     },
     {
@@ -1830,7 +1890,7 @@
         }
       ],
       "skos:notation": "Call_BeanOpenChange",
-      "dcterms:source": "folio-assistant-core/processes/content/dsa-document-lifecycle.bpmn#Call_BeanOpenChange",
+      "dcterms:source": "folio-assistant-core/dsa/processes/dsa-document-lifecycle.bpmn#Call_BeanOpenChange",
       "skos:note": "candidate"
     },
     {
@@ -1850,7 +1910,7 @@
         }
       ],
       "skos:notation": "Call_PublicComment",
-      "dcterms:source": "folio-assistant-core/processes/content/dsa-document-lifecycle.bpmn#Call_PublicComment",
+      "dcterms:source": "folio-assistant-core/dsa/processes/dsa-document-lifecycle.bpmn#Call_PublicComment",
       "skos:note": "candidate"
     },
     {
@@ -1870,7 +1930,7 @@
         }
       ],
       "skos:notation": "Task_AgreeTerms",
-      "dcterms:source": "folio-assistant-core/processes/content/dsa-document-lifecycle.bpmn#Task_AgreeTerms",
+      "dcterms:source": "folio-assistant-core/dsa/processes/dsa-document-lifecycle.bpmn#Task_AgreeTerms",
       "skos:note": "candidate"
     },
     {
@@ -1890,7 +1950,7 @@
         }
       ],
       "skos:notation": "Task_AssignVersion",
-      "dcterms:source": "folio-assistant-core/processes/content/dsa-document-lifecycle.bpmn#Task_AssignVersion",
+      "dcterms:source": "folio-assistant-core/dsa/processes/dsa-document-lifecycle.bpmn#Task_AssignVersion",
       "skos:note": "candidate"
     },
     {
@@ -1910,7 +1970,7 @@
         }
       ],
       "skos:notation": "Task_Catalogue",
-      "dcterms:source": "folio-assistant-core/processes/content/dsa-document-lifecycle.bpmn#Task_Catalogue",
+      "dcterms:source": "folio-assistant-core/dsa/processes/dsa-document-lifecycle.bpmn#Task_Catalogue",
       "skos:note": "candidate"
     },
     {
@@ -1930,7 +1990,7 @@
         }
       ],
       "skos:notation": "Task_CheckOdrl",
-      "dcterms:source": "folio-assistant-core/processes/content/dsa-document-lifecycle.bpmn#Task_CheckOdrl",
+      "dcterms:source": "folio-assistant-core/dsa/processes/dsa-document-lifecycle.bpmn#Task_CheckOdrl",
       "skos:note": "candidate"
     },
     {
@@ -1950,7 +2010,7 @@
         }
       ],
       "skos:notation": "Task_ConsentCitation",
-      "dcterms:source": "folio-assistant-core/processes/content/dsa-document-lifecycle.bpmn#Task_ConsentCitation",
+      "dcterms:source": "folio-assistant-core/dsa/processes/dsa-document-lifecycle.bpmn#Task_ConsentCitation",
       "skos:note": "candidate"
     },
     {
@@ -1970,7 +2030,7 @@
         }
       ],
       "skos:notation": "Task_DecideChange",
-      "dcterms:source": "folio-assistant-core/processes/content/dsa-document-lifecycle.bpmn#Task_DecideChange",
+      "dcterms:source": "folio-assistant-core/dsa/processes/dsa-document-lifecycle.bpmn#Task_DecideChange",
       "skos:note": "candidate"
     },
     {
@@ -1990,7 +2050,7 @@
         }
       ],
       "skos:notation": "Task_DecideGrants",
-      "dcterms:source": "folio-assistant-core/processes/content/dsa-document-lifecycle.bpmn#Task_DecideGrants",
+      "dcterms:source": "folio-assistant-core/dsa/processes/dsa-document-lifecycle.bpmn#Task_DecideGrants",
       "skos:note": "candidate"
     },
     {
@@ -2010,7 +2070,7 @@
         }
       ],
       "skos:notation": "Task_DeriveOdrl",
-      "dcterms:source": "folio-assistant-core/processes/content/dsa-document-lifecycle.bpmn#Task_DeriveOdrl",
+      "dcterms:source": "folio-assistant-core/dsa/processes/dsa-document-lifecycle.bpmn#Task_DeriveOdrl",
       "skos:note": "candidate"
     },
     {
@@ -2030,7 +2090,7 @@
         }
       ],
       "skos:notation": "Task_EndDuties",
-      "dcterms:source": "folio-assistant-core/processes/content/dsa-document-lifecycle.bpmn#Task_EndDuties",
+      "dcterms:source": "folio-assistant-core/dsa/processes/dsa-document-lifecycle.bpmn#Task_EndDuties",
       "skos:note": "candidate"
     },
     {
@@ -2050,7 +2110,7 @@
         }
       ],
       "skos:notation": "Task_Hash",
-      "dcterms:source": "folio-assistant-core/processes/content/dsa-document-lifecycle.bpmn#Task_Hash",
+      "dcterms:source": "folio-assistant-core/dsa/processes/dsa-document-lifecycle.bpmn#Task_Hash",
       "skos:note": "candidate"
     },
     {
@@ -2070,7 +2130,7 @@
         }
       ],
       "skos:notation": "Task_HashSummary",
-      "dcterms:source": "folio-assistant-core/processes/content/dsa-document-lifecycle.bpmn#Task_HashSummary",
+      "dcterms:source": "folio-assistant-core/dsa/processes/dsa-document-lifecycle.bpmn#Task_HashSummary",
       "skos:note": "candidate"
     },
     {
@@ -2090,7 +2150,7 @@
         }
       ],
       "skos:notation": "Task_NewConsentNeeded",
-      "dcterms:source": "folio-assistant-core/processes/content/dsa-document-lifecycle.bpmn#Task_NewConsentNeeded",
+      "dcterms:source": "folio-assistant-core/dsa/processes/dsa-document-lifecycle.bpmn#Task_NewConsentNeeded",
       "skos:note": "candidate"
     },
     {
@@ -2110,7 +2170,7 @@
         }
       ],
       "skos:notation": "Task_OdrlCitesText",
-      "dcterms:source": "folio-assistant-core/processes/content/dsa-document-lifecycle.bpmn#Task_OdrlCitesText",
+      "dcterms:source": "folio-assistant-core/dsa/processes/dsa-document-lifecycle.bpmn#Task_OdrlCitesText",
       "skos:note": "candidate"
     },
     {
@@ -2130,7 +2190,7 @@
         }
       ],
       "skos:notation": "Task_PlainSummary",
-      "dcterms:source": "folio-assistant-core/processes/content/dsa-document-lifecycle.bpmn#Task_PlainSummary",
+      "dcterms:source": "folio-assistant-core/dsa/processes/dsa-document-lifecycle.bpmn#Task_PlainSummary",
       "skos:note": "candidate"
     },
     {
@@ -2150,7 +2210,7 @@
         }
       ],
       "skos:notation": "Task_Publish",
-      "dcterms:source": "folio-assistant-core/processes/content/dsa-document-lifecycle.bpmn#Task_Publish",
+      "dcterms:source": "folio-assistant-core/dsa/processes/dsa-document-lifecycle.bpmn#Task_Publish",
       "skos:note": "candidate"
     },
     {
@@ -2170,7 +2230,7 @@
         }
       ],
       "skos:notation": "Task_RecordLegalBasis",
-      "dcterms:source": "folio-assistant-core/processes/content/dsa-document-lifecycle.bpmn#Task_RecordLegalBasis",
+      "dcterms:source": "folio-assistant-core/dsa/processes/dsa-document-lifecycle.bpmn#Task_RecordLegalBasis",
       "skos:note": "candidate"
     },
     {
@@ -2190,7 +2250,7 @@
         }
       ],
       "skos:notation": "Task_Render",
-      "dcterms:source": "folio-assistant-core/processes/content/dsa-document-lifecycle.bpmn#Task_Render",
+      "dcterms:source": "folio-assistant-core/dsa/processes/dsa-document-lifecycle.bpmn#Task_Render",
       "skos:note": "candidate"
     },
     {
@@ -2210,7 +2270,7 @@
         }
       ],
       "skos:notation": "Task_Review",
-      "dcterms:source": "folio-assistant-core/processes/content/dsa-document-lifecycle.bpmn#Task_Review",
+      "dcterms:source": "folio-assistant-core/dsa/processes/dsa-document-lifecycle.bpmn#Task_Review",
       "skos:note": "candidate"
     },
     {
@@ -2230,7 +2290,7 @@
         }
       ],
       "skos:notation": "Task_SetStatus",
-      "dcterms:source": "folio-assistant-core/processes/content/dsa-document-lifecycle.bpmn#Task_SetStatus",
+      "dcterms:source": "folio-assistant-core/dsa/processes/dsa-document-lifecycle.bpmn#Task_SetStatus",
       "skos:note": "candidate"
     },
     {
@@ -2250,7 +2310,7 @@
         }
       ],
       "skos:notation": "Task_Sign",
-      "dcterms:source": "folio-assistant-core/processes/content/dsa-document-lifecycle.bpmn#Task_Sign",
+      "dcterms:source": "folio-assistant-core/dsa/processes/dsa-document-lifecycle.bpmn#Task_Sign",
       "skos:note": "candidate"
     },
     {
@@ -2270,7 +2330,7 @@
         }
       ],
       "skos:notation": "Task_SplitAnnexes",
-      "dcterms:source": "folio-assistant-core/processes/content/dsa-document-lifecycle.bpmn#Task_SplitAnnexes",
+      "dcterms:source": "folio-assistant-core/dsa/processes/dsa-document-lifecycle.bpmn#Task_SplitAnnexes",
       "skos:note": "candidate"
     },
     {
@@ -2290,7 +2350,7 @@
         }
       ],
       "skos:notation": "Task_WriteText",
-      "dcterms:source": "folio-assistant-core/processes/content/dsa-document-lifecycle.bpmn#Task_WriteText",
+      "dcterms:source": "folio-assistant-core/dsa/processes/dsa-document-lifecycle.bpmn#Task_WriteText",
       "skos:note": "candidate"
     },
     {
@@ -2886,11 +2946,31 @@
       ],
       "skos:definition": [
         {
-          "@value": "A document ingested this way keeps its text in ocr/ and only a stub in sections/, which the documented sections/ grep cannot see. That asymmetry is why the corpus-grep checklist has a fourth tier. The run also records WHICH SOFTWARE made the pages, in ocr/run-context.json: a folio-run-context/v1 (cat-harness schemas/run-context.ts, the record test runs and QA reports use for the same question), naming the OCR engine, the rasteriser and each language model with its version and the sha256 of the bytes that ran. Two OCRs of one scan can read differently (\"Manual\" and \"Manval\"), and without it neither could be told from the other or reproduced."
+          "@value": "Each page is read in the document's languages (--lang-hint, from dc.language.iso), narrowed to the script the page shows. A page Tesseract is unsure of (mean word confidence under 70) is read again with each other installed script added, and the most confident read is kept: a French article's Arabic abstract, or the Latin URLs in an Arabic document's references. A document ingested this way keeps its text in ocr/ and only a stub in sections/, which the documented sections/ grep cannot see. That asymmetry is why the corpus-grep checklist has a fourth tier. The run also records WHICH SOFTWARE made the pages, in ocr/run-context.json: a folio-run-context/v1 (cat-harness schemas/run-context.ts, the record test runs and QA reports use for the same question), naming the OCR engine, the rasteriser and each language model with its version and the sha256 of the bytes that ran. Two OCRs of one scan can read differently (\"Manual\" and \"Manval\"), and without it neither could be told from the other or reproduced."
         }
       ],
       "skos:notation": "Task_Ocr",
       "dcterms:source": "folio-assistant-core/processes/library/ingest-extract-structure.bpmn#Task_Ocr",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-bpmn-activities/process_extractstructure.task_pagecheck",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Check each page; OCR pages that fail"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Owner, 2026-11-11 (who-iris, card Q-ODD-1 = A): \"force OCR when a page's text layer fails a quality check\". A text layer can hold plenty of letters and still not be the page's text: accents mapped to Greek letters (\"dΘclaration\"), Persian set in the wrong Arabic code points, words split by kerning (\"au g m ente\"), fake-bold words printed twice, mojibake. cat-harness-tools scripts/_text_quality.py checks every page against the document's languages (dc.language.iso, or --lang-hint); the router then OCRs the document and pdf-structure.py --ocr takes the OCR text for the failing pages only, listing them in structure.json source.ocr_pages with the reason. When most pages of a document with no outline fail, the whole document is read from OCR, as for a scan. Method: skill l1-document-ingestion, \"A text layer that is not text\"."
+        }
+      ],
+      "skos:notation": "Task_PageCheck",
+      "dcterms:source": "folio-assistant-core/processes/library/ingest-extract-structure.bpmn#Task_PageCheck",
       "skos:note": "candidate"
     },
     {
@@ -2906,7 +2986,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Contextual retrieval: a chunk in isolation loses what makes it mean anything, so each section carries the document brief."
+          "@value": "Contextual retrieval: a chunk in isolation loses what makes it mean anything, so each section carries the document brief. An outline is set aside when its entries are machine bookmark names (_GoBack, _Hlk..., \"Blank Page\", a merged file's name) or when under half of them name a heading the pages print, and the contents are inferred instead (diagnostics.outline_rejected). A section that would hold more than half of a document of 20 pages or more (and over 8,000 words), or over 20,000 words anywhere, is cut at the headings inferred inside it, else one section per page (diagnostics.oversized_split). Owner, 2026-11-11: \"split single blocks that hold a whole book\". Method: skill l1-document-ingestion, \"An outline that is not contents, and a section too long to be a block\"."
         }
       ],
       "skos:notation": "Task_Sections",
@@ -3146,7 +3226,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "scripts/pages-bootstrap.ts: check the gh-pages branch first (absent is `unprovisioned`), derive the site URL from the git remote or the instance's config (its index.config.json entry), report whether a publish workflow exists and the Pages source it needs, and optionally probe until the site answers."
+          "@value": "scripts/pages-bootstrap.ts: check the gh-pages branch first (absent is `unprovisioned`), derive the site URL from the git remote or the layer's config (its index.config.json entry), report whether a publish workflow exists and the Pages source it needs, and optionally probe until the site answers."
         }
       ],
       "skos:notation": "Task_PagesBootstrap",
@@ -3186,7 +3266,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Mechanical, read-only: does the instance's config (its `index.config.json` entry; a legacy `<name>.config.json` only as a fallback) declare a contentType, does the working tree hold somebody's existing project, and what has the user actually said. These are the three inputs to folio-intent.dmn. Non-relaxable: scaffolding without looking first is how a folio gets written over somebody's project."
+          "@value": "Mechanical, read-only: does the layer's config (its `index.config.json` entry; a legacy `<name>.config.json` only as a fallback) declare a contentType, does the working tree hold somebody's existing project, and what has the user actually said. These are the three inputs to folio-intent.dmn. Non-relaxable: scaffolding without looking first is how a folio gets written over somebody's project."
         }
       ],
       "skos:notation": "Task_ReadFacts",
@@ -3266,7 +3346,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "content/, uploads/, library/, the first manifests, <slug>.json and index.config.json (the instance's config inline in its entry; no <slug>.config.json), the builder shim, AGENTS.md with its stubs, .mcp.json, the session-start hook and the beans store. On the overlay path it declares in index.config.json exactly the markers picked at Task_ChooseHarnessed, and none it was not given. Refuses rather than overwrites when a folio is already present."
+          "@value": "content/, uploads/, library/, the first manifests, <slug>.json and index.config.json (the layer's config inline in its entry; no <slug>.config.json), the builder shim, AGENTS.md with its stubs, .mcp.json, the session-start hook and the beans store. On the overlay path it declares in index.config.json exactly the markers picked at Task_ChooseHarnessed, and none it was not given. Refuses rather than overwrites when a folio is already present."
         }
       ],
       "skos:notation": "Task_Scaffold",
@@ -3641,7 +3721,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Publish the extracted statements with source links"
+          "@value": "Publish the extracted statements"
         }
       ],
       "skos:definition": [
@@ -3691,6 +3771,26 @@
       ],
       "skos:notation": "Task_Detect",
       "dcterms:source": "folio-assistant-core/processes/library/l1-document-ingestion.bpmn#Task_Detect",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-bpmn-activities/process_l1documentingestion.task_errata",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Record errata in the source's own text"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Owner, 2026-11-11 (who-iris, card Q-ODD-1 = A, and \"add to L1 doc schema errata\"). Reading the blocks to summarise them finds errors that are in the publication itself, not in the extraction: a title that says June 2006 over an introduction that says June 2005, a Spanish edition announcing nine recommendations where the English lists ten. The block stays as printed. The agent records an erratum in library/<bib-slug>/errata.json (folio-document-errata/v1): the kind, the block or page, the words as printed, the reading the evidence supports, the evidence, and its note as a draft narrative a person confirms in `bun run cat narratives`. An extraction defect is not an erratum: it is fixed by re-deriving the entry. ADVISORY: check:l1-complete reports errata and fails only on a file that does not mean what it says. Method: skill l1-document-ingestion, \"Errata: errors in the source's own text\"."
+        }
+      ],
+      "skos:notation": "Task_Errata",
+      "dcterms:source": "folio-assistant-core/processes/library/l1-document-ingestion.bpmn#Task_Errata",
       "skos:note": "candidate"
     },
     {
@@ -3761,12 +3861,12 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Queue prose blocks for summary"
+          "@value": "Summarise prose blocks, in every language"
         }
       ],
       "skos:definition": [
         {
-          "@value": "A QA sidecar of general document ingestion, drained slowly. Nothing is written to ENQUEUE a block: the queue is derived (every prose block in every declared library, minus those whose summaries.json record is a current draft or confirmation), so a promoted entry is in it the moment its blocks are. A re-ingested document whose text changed re-enters it on its own, because the record's source_hash no longer matches. What an agent doing ingestion work does here is DRAIN a few: `bun run cat summaries:next -- --n K` hands it the next K blocks with their text, it writes a short summary of each in its own words, and `bun run cat summaries:record` writes them into library/<bib-slug>/summaries.json as drafts naming the agent and its model. The block itself stays verbatim and `ingested`. ADVISORY, never a gate: this step does not hold up Task_Citeable, and check:l1-complete reports the backlog (`block-summaries`) without failing on it. Confirming or rejecting a draft is a person's act, in `bun run cat narratives`."
+          "@value": "A QA sidecar of general document ingestion, drained slowly. Nothing is written to ENQUEUE a block: the queue is derived (every prose block in every declared library, minus those whose summaries.json record is a current draft or confirmation), so a promoted entry is in it the moment its blocks are. A re-ingested document whose text changed re-enters it on its own, because the record's source_hash no longer matches. What an agent doing ingestion work does here is DRAIN a few: `bun run cat summaries:next -- --n K` hands it the next K blocks with their text, it writes a short summary of each in its own words, and `bun run cat summaries:record` writes them into library/<bib-slug>/summaries.json as drafts naming the agent and its model. The block itself stays verbatim and `ingested`. A library can ask for a summary in more than one language (who-iris: the six UN languages, owner 2026-11-11): the English draft, one in the document's own language read from the source, and translations of the English into the rest, each its own narrative in the block's slot. Method: skill l1-document-ingestion, \"Summarising prose blocks\". ADVISORY, never a gate: this step does not hold up Task_Citeable, and check:l1-complete reports the backlog (`block-summaries`) without failing on it. Confirming or rejecting a draft is a person's act, in `bun run cat narratives`."
         }
       ],
       "skos:notation": "Task_SummaryQueue",
@@ -4766,7 +4866,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "For every statement extracted from the library entries the artifact draws on, read three things off files: the statement verbatim, the library entry it came from, and the section of that entry, as a library reference (instance, library id, section id). The section's label is read from the entry's structure: its title and its locator in the source's own unit (a slide, a page, a cell range, a line range). For example \"Catch up schedule, slide 7\". A statement whose section cannot be resolved is NOT published without a link: it is reported, because a statement nobody can trace is the failure this process exists to prevent."
+          "@value": "For every statement extracted from the library entries the artifact draws on, read three things off files: the statement verbatim, the library entry it came from, and the section of that entry, as a library reference (layer, library id, section id). The section's label is read from the entry's structure: its title and its locator in the source's own unit (a slide, a page, a cell range, a line range). For example \"Catch up schedule, slide 7\". A statement whose section cannot be resolved is NOT published without a link: it is reported, because a statement nobody can trace is the failure this process exists to prevent."
         }
       ],
       "skos:notation": "Task_Collect",

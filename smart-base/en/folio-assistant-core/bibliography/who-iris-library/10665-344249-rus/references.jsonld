@@ -1,0 +1,27 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/folio/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "bibo": "http://purl.org/ontology/bibo/",
+    "fabio": "http://purl.org/spar/fabio/",
+    "dcterms:source": {
+      "@type": "@id"
+    },
+    "dcterms:hasVersion": {
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "@id": "references/10665-344249-rus",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "Global strategy on digital health 2020-2025",
+      "dcterms:issued": "D:20210702",
+      "dcterms:source": "who-iris/library/10665-344249-rus/manifest.jsonld",
+      "dcterms:hasVersion": "who-iris/library/10665-344249-rus"
+    }
+  ]
+}

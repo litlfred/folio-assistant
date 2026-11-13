@@ -1,0 +1,25 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/binary-release.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/binary-release",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "binary-release",
+      "title": "binary-release",
+      "summary": "Binary releases — what was published, under what version, with what digest.",
+      "module": "schemas/sdlc/binary-release.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-schemas",
+      "jsonSchema": [
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/binary-release/AssetDispositionSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/binary-release/BinaryReleaseSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/binary-release/ReleaseAssetSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/binary-release/ReleaseDigestSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/binary-release/ReleaseIdentitySchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/binary-release/ReleaseOriginRefSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/binary-release/ReleaseOriginSchema.schema.json"
+      ]
+    }
+  ]
+}

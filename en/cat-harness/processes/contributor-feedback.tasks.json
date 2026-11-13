@@ -5,108 +5,108 @@
   {
    "id": "Task_StartRow",
    "name": "Start a change-set row",
-   "left": 14.26,
+   "left": 19.67,
    "top": 6.72,
    "box": {
-    "left": 10.88,
+    "left": 14.48,
     "top": 20.9,
-    "width": 1.12,
+    "width": 1.72,
     "height": 3.58
    }
   },
   {
    "id": "Task_Propose",
    "name": "Propose a direction",
-   "left": 23.58,
+   "left": 30.4,
    "top": 30.6,
    "box": {
-    "left": 20.2,
+    "left": 25.21,
     "top": 44.78,
-    "width": 1.12,
+    "width": 1.72,
     "height": 3.58
    }
   },
   {
    "id": "Task_ReadyForAgent",
    "name": "Set Ready for agent to Yes",
-   "left": 31.97,
+   "left": 41.13,
    "top": 54.48,
    "box": {
-    "left": 28.59,
+    "left": 35.94,
     "top": 68.66,
-    "width": 1.12,
+    "width": 1.72,
     "height": 3.58
    }
   },
   {
    "id": "Task_EditInPullRequest",
    "name": "Edit the document in the row's pull request",
-   "left": 41.29,
+   "left": 51.86,
    "top": 30.6,
    "box": {
-    "left": 37.91,
+    "left": 46.67,
     "top": 44.78,
-    "width": 1.12,
+    "width": 1.72,
     "height": 3.58
    }
   },
   {
    "id": "Task_AnswerPreview",
    "name": "Review the preview and answer",
-   "left": 51.07,
+   "left": 51.86,
    "top": 6.72,
    "box": {
-    "left": 47.69,
+    "left": 46.67,
     "top": 20.9,
-    "width": 1.12,
+    "width": 1.72,
     "height": 3.58
    }
   },
   {
    "id": "Task_QaGate",
-   "name": "QA gate: review dispositions against the people and the pull request",
-   "left": 65.28,
+   "name": "QA gate: check dispositions and PR",
+   "left": 61.87,
    "top": 78.36,
    "box": {
-    "left": 61.91,
+    "left": 56.69,
     "top": 92.54,
-    "width": 1.12,
+    "width": 1.72,
     "height": 3.58
    }
   },
   {
    "id": "Task_ReadyForMerge",
    "name": "Set Ready for merge to Yes",
-   "left": 78.56,
+   "left": 79.76,
    "top": 54.48,
    "box": {
-    "left": 75.19,
+    "left": 74.57,
     "top": 68.66,
-    "width": 1.12,
+    "width": 1.72,
     "height": 3.58
    }
   },
   {
    "id": "Task_Merge",
    "name": "Merge the pull request",
-   "left": 85.09,
+   "left": 79.76,
    "top": 30.6,
    "box": {
-    "left": 81.71,
+    "left": 74.57,
     "top": 44.78,
-    "width": 1.12,
+    "width": 1.72,
     "height": 3.58
    }
   },
   {
    "id": "Task_CloseChangeSet",
    "name": "Close the change set: the issue, then the sheet row",
-   "left": 93.71,
-   "top": 32.84,
+   "left": 91.2,
+   "top": 30.6,
    "box": {
-    "left": 90.1,
-    "top": 42.54,
-    "width": 1.12,
+    "left": 86.01,
+    "top": 44.78,
+    "width": 1.72,
     "height": 3.58
    }
   }
@@ -199,16 +199,8 @@
       "href": "../../../reference/skill-instructions/confirmation-waiver.html"
      },
      {
-      "name": "content-author",
-      "href": "../../../reference/skill-instructions/content-author.html"
-     },
-     {
       "name": "content-graph",
       "href": "../../../reference/skill-instructions/content-graph.html"
-     },
-     {
-      "name": "content-plan",
-      "href": "../../../reference/skill-instructions/content-plan.html"
      },
      {
       "name": "continual-progress",
@@ -402,16 +394,6 @@
       "via": "author"
      },
      {
-      "name": "content-author",
-      "href": "../../../reference/skill-instructions/content-author.html",
-      "via": "author"
-     },
-     {
-      "name": "content-plan",
-      "href": "../../../reference/skill-instructions/content-plan.html",
-      "via": "author"
-     },
-     {
       "name": "content-review",
       "href": "../../../reference/skill-instructions/content-review.html",
       "via": "author"
@@ -517,16 +499,8 @@
       "href": "../../../reference/skill-instructions/confirmation-waiver.html"
      },
      {
-      "name": "content-author",
-      "href": "../../../reference/skill-instructions/content-author.html"
-     },
-     {
       "name": "content-graph",
       "href": "../../../reference/skill-instructions/content-graph.html"
-     },
-     {
-      "name": "content-plan",
-      "href": "../../../reference/skill-instructions/content-plan.html"
      },
      {
       "name": "continual-progress",
@@ -723,7 +697,7 @@
   },
   "Task_QaGate": {
    "id": "Task_QaGate",
-   "name": "QA gate: review dispositions against the people and the pull request",
+   "name": "QA gate: check dispositions and PR",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/Task_QaGate",
    "stepHref": "contributor-feedback.html#step-Task_QaGate",
@@ -749,10 +723,6 @@
       "name": "content-feedback",
       "href": "../../../reference/skill-instructions/content-feedback.html",
       "via": "reviewer"
-     },
-     {
-      "name": "content-publish",
-      "href": "../../../reference/skill-instructions/content-publish.html"
      },
      {
       "name": "content-review",
@@ -827,16 +797,6 @@
      {
       "name": "bpmn-authoring",
       "href": "../../../reference/skill-instructions/bpmn-authoring.html",
-      "via": "author"
-     },
-     {
-      "name": "content-author",
-      "href": "../../../reference/skill-instructions/content-author.html",
-      "via": "author"
-     },
-     {
-      "name": "content-plan",
-      "href": "../../../reference/skill-instructions/content-plan.html",
       "via": "author"
      },
      {
@@ -945,16 +905,8 @@
       "href": "../../../reference/skill-instructions/confirmation-waiver.html"
      },
      {
-      "name": "content-author",
-      "href": "../../../reference/skill-instructions/content-author.html"
-     },
-     {
       "name": "content-graph",
       "href": "../../../reference/skill-instructions/content-graph.html"
-     },
-     {
-      "name": "content-plan",
-      "href": "../../../reference/skill-instructions/content-plan.html"
      },
      {
       "name": "continual-progress",
@@ -1183,16 +1135,8 @@
       "href": "../../../reference/skill-instructions/confirmation-waiver.html"
      },
      {
-      "name": "content-author",
-      "href": "../../../reference/skill-instructions/content-author.html"
-     },
-     {
       "name": "content-graph",
       "href": "../../../reference/skill-instructions/content-graph.html"
-     },
-     {
-      "name": "content-plan",
-      "href": "../../../reference/skill-instructions/content-plan.html"
      },
      {
       "name": "continual-progress",

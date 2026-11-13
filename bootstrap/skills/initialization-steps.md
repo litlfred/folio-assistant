@@ -1,7 +1,7 @@
 ---
 name: initialization-steps
 description: >
-  Walk every initialization step the declarations name (the instance's own
+  Walk every initialization step the declarations name (the layer's own
   and each one it needs), check each before doing anything, do what can be
   done, ask for what only a person can do, and report every step as done,
   not done, could not determine, or stated.

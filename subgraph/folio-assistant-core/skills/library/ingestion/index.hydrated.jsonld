@@ -5,24 +5,6 @@
   "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
   "hasMember": [
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/audio-transcription",
-      "@type": "bootstrap:Skill",
-      "ambiguous": false,
-      "description": "Turn recorded speech (a meeting recording, a video with audio, an interview) into a transcript the library can cite, and choose WHICH open-source recogniser to run for the job: whisper.cpp by default, faster-whisper, WhisperX with pyannote, Vosk, NVIDIA Parakeet/Canary, or Distil-Whisper. Covers audio extraction, why two exports of one recogniser are one opinion, how to compare transcripts (WER, CER, DER), translation, and what blocks a run. Use when an upload contains audio or video, when someone asks which transcription tool to use, or before declaring a new transcription Tool.",
-      "hasIOContract": false,
-      "hasInstructions": true,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
-      "instructionLines": 145,
-      "instructionsPath": "skills/library/ingestion/audio-transcription.md",
-      "name": "audio-transcription",
-      "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/cafc699e08d4b54a1e81cb78cbb4983f9c8b3a0bd56602fbbd127877c5d7ff1e",
-        "bytes": 8211,
-        "sha256": "cafc699e08d4b54a1e81cb78cbb4983f9c8b3a0bd56602fbbd127877c5d7ff1e"
-      },
-      "title": "Audio transcription: which recogniser, when, and how to check it"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
@@ -30,13 +12,13 @@
       "hasIOContract": false,
       "hasInstructions": true,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
-      "instructionLines": 482,
+      "instructionLines": 534,
       "instructionsPath": "skills/library/ingestion/document-intake.md",
       "name": "document-intake",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8234c454d829e58fe1e9d2b02807e9bc898d08bc49248529094766fc391eaa99",
-        "bytes": 22721,
-        "sha256": "8234c454d829e58fe1e9d2b02807e9bc898d08bc49248529094766fc391eaa99"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/894467f6fe25f8baf017289dbb5f1518165cb508ed9c757555749c99ba910ad8",
+        "bytes": 25657,
+        "sha256": "894467f6fe25f8baf017289dbb5f1518165cb508ed9c757555749c99ba910ad8"
       },
       "title": "Document Intake"
     },
@@ -44,17 +26,17 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/figure-rebuild",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
-      "description": "Turn a source publication's figures into computable diagrams when a folio is built from its L1 entry. Every declared figure gets a block, and each one is rebuilt in the form its type calls for: an ArchiMate view, BPMN, DMN, a FHIR logical model, or an SVG generated from data, always from one schema-backed source. The PDF crop stays beside the rebuild as the cited source. The figure-coverage check counts what is missing and what is still only a picture.",
+      "description": "Turn a figure into a computable diagram: every figure of a source publication when a folio is built from its L1 entry, and any hand-drawn figure in a folio, an IG or a demonstrator that is redrawn from a source. Every declared figure gets a block, and each one is rebuilt in the form its type calls for: an ArchiMate view, BPMN, DMN, a FHIR logical model, or an SVG generated from data, always from one schema-backed source. The PDF crop stays beside the rebuild as the cited source, and the rebuild keeps the original's layout. The figure-coverage check counts what is missing and what is still only a picture.",
       "hasIOContract": false,
       "hasInstructions": true,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
-      "instructionLines": 263,
+      "instructionLines": 339,
       "instructionsPath": "skills/library/ingestion/figure-rebuild.md",
       "name": "figure-rebuild",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/57003f31b8a0cb9917fb06cc1110fcf9197dee37bbb06a653e4483e15a29acc1",
-        "bytes": 15142,
-        "sha256": "57003f31b8a0cb9917fb06cc1110fcf9197dee37bbb06a653e4483e15a29acc1"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/85ed62899c9017b42c53f741eb119db9e6eac2a855752192490e851e27b5a9e7",
+        "bytes": 19830,
+        "sha256": "85ed62899c9017b42c53f741eb119db9e6eac2a855752192490e851e27b5a9e7"
       },
       "title": "Figure rebuild: a figure is data, not a picture"
     },
@@ -84,13 +66,13 @@
       "hasIOContract": false,
       "hasInstructions": true,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
-      "instructionLines": 869,
+      "instructionLines": 1137,
       "instructionsPath": "skills/library/ingestion/l1-document-ingestion.md",
       "name": "l1-document-ingestion",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/835c1c36e42791d8599efed1a4d3788cd85a053401e6c45e4550b8b4f040b0e9",
-        "bytes": 48571,
-        "sha256": "835c1c36e42791d8599efed1a4d3788cd85a053401e6c45e4550b8b4f040b0e9"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/62c9bb34346636f09d22494e22720cb6a5d8bd400ea80c926e95167093e820ca",
+        "bytes": 63788,
+        "sha256": "62c9bb34346636f09d22494e22720cb6a5d8bd400ea80c926e95167093e820ca"
       },
       "title": "L1 document ingestion"
     },
@@ -106,9 +88,9 @@
       "instructionsPath": "skills/library/ingestion/publish-extracted-statements.md",
       "name": "publish-extracted-statements",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/dc67e5e171df2bd0c60f2594d34be76e0f743ea86b5e84f47708ee75d9c0ef5a",
-        "bytes": 6819,
-        "sha256": "dc67e5e171df2bd0c60f2594d34be76e0f743ea86b5e84f47708ee75d9c0ef5a"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fb4988690cc1284ef4bbf9d799ccd410dcfc8b547dcbd22a40b3af864b2eb1f0",
+        "bytes": 6813,
+        "sha256": "fb4988690cc1284ef4bbf9d799ccd410dcfc8b547dcbd22a40b3af864b2eb1f0"
       },
       "title": "Publish extracted statements with source links"
     },

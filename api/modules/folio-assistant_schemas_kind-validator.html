@@ -2,7 +2,7 @@
 &quot;validate a node&quot; from one case per schema into a lookup.</p><p>Skills' inputs and outputs are constrained by schemas through one common
 pattern, not a Tool per Zod schema. The parameter is the <strong>graph
 typology</strong>: <code>harness.json</code> already says which directory holds which kind,
-and GraphTypologyDef.validator supplies the schema.</p><p>A downstream instance inherits the platform's <code>tools/</code> graph but not its CI
+and GraphTypologyDef.validator supplies the schema.</p><p>A downstream layer inherits the platform's <code>tools/</code> graph but not its CI
 workflows, so this is how a folio built on the platform validates its own
 graph.</p><h2 id="three-states" class="tsd-anchor-link">Three states<a href="#three-states" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><table><thead><tr><th></th><th></th></tr></thead><tbody><tr><td><strong>resolved</strong></td><td>the kind declares a validator and it loaded</td></tr><tr><td><strong>undeclared</strong></td><td>the kind declares none — <em>could not determine</em>, never &quot;valid&quot;</td></tr><tr><td><strong>unresolvable</strong></td><td>it declares one that does not load — a defect, and loud</td></tr></tbody></table><p>Many kinds are <code>undeclared</code>, so collapsing it into success would report a
 clean sweep over most of the corpus. The result is a union, so a caller

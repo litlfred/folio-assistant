@@ -12,13 +12,8 @@
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/package/theming",
           "@type": "cat-harness:SkillPackage",
           "declaresSkill": [
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/create-sticky-note",
             "https://litlfred.github.io/folio-assistant/cat-harness/skill/site-presentation-assets",
             "https://litlfred.github.io/folio-assistant/cat-harness/skill/theme-art-intake",
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/theme-artefacts",
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/theme-contrast",
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/theme-declaration",
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/theme-generation",
             "https://litlfred.github.io/folio-assistant/cat-harness/skill/theming"
           ],
           "description": "Theming, split on PIPELINE STAGE first (intake -> declaration -> generation -> contrast), with producer/consumer as the direction each stage faces and per-artefact specialisation last. The owner chose that axis on 2026-09-20 — \"1 + 2, then specialized to 3\" — and the ordering matters more than the names: going artefact-first would duplicate intake and contrast into every surface, which is the shape that put the scrim rule in one skill's prose and let it be rediscovered rather than read. TWO SESSIONS BUILT THIS PACKAGE INDEPENDENTLY and the merge kept both halves: this LOCATION and the relocation of `create-sticky-note`, `site-presentation-assets` and `theme-art-intake` out of folio-core came from one; the stage split, the `theme:sheet` visualiser and the documentation entry came from the other, which had put them in a top-level `cat-harness/theming/`. The location here won on evidence rather than on arriving first — bean `lps0` measured that `kg-audit`'s `skillFiles()` walks a hardcoded `skills/`, so a top-level topical directory silently drops its skills out of skill QA, and `theme-art-intake` would have lost the sidecar it has here. Beans `1hvo`, `lps0`.",
@@ -27,25 +22,6 @@
           "name": "theming",
           "path": "skills/ui/theming",
           "version": "0.1.0"
-        },
-        {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/create-sticky-note",
-          "@type": "bootstrap:Skill",
-          "ambiguous": false,
-          "description": "Draft a sticky note from the conversation, choose its theme and its place, preview it, and only then attach it to a node.",
-          "hasIOContract": false,
-          "hasInstructions": true,
-          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/theming",
-          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
-          "instructionLines": 137,
-          "instructionsPath": "skills/ui/theming/create-sticky-note.md",
-          "name": "create-sticky-note",
-          "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4e66a2ab7398e8f79dbf242a1f58ce3ddd7c4a3af24940e81ccdfc63d0e26fc6",
-            "bytes": 6976,
-            "sha256": "4e66a2ab7398e8f79dbf242a1f58ce3ddd7c4a3af24940e81ccdfc63d0e26fc6"
-          },
-          "title": "Create a sticky note"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/site-presentation-assets",
@@ -60,9 +36,9 @@
           "instructionsPath": "skills/ui/theming/site-presentation-assets.md",
           "name": "site-presentation-assets",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/248fb7ba7d2002b8ddc19a0e86073df604c5aca9a4c44bc4d3ec1db897bc478a",
-            "bytes": 4293,
-            "sha256": "248fb7ba7d2002b8ddc19a0e86073df604c5aca9a4c44bc4d3ec1db897bc478a"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7080cee21a19d40d5078fae827fab430ab9c5665d4bcfb214de035a9b5a4027c",
+            "bytes": 4290,
+            "sha256": "7080cee21a19d40d5078fae827fab430ab9c5665d4bcfb214de035a9b5a4027c"
           },
           "title": "Site presentation assets — the node is the source, the stylesheet is a rendering"
         },
@@ -86,82 +62,6 @@
           "title": "Theme art intake"
         },
         {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/theme-artefacts",
-          "@type": "bootstrap:Skill",
-          "ambiguous": false,
-          "description": "The per-surface SPECIALISATION layer — sticky, landing board, docs background, navbar avatar. Only what DIFFERS lives here; the general rule lives in its stage. Read this last, after the stage that owns your question.",
-          "hasIOContract": false,
-          "hasInstructions": true,
-          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/theming",
-          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
-          "instructionLines": 210,
-          "instructionsPath": "skills/ui/theming/theme-artefacts.md",
-          "name": "theme-artefacts",
-          "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/43fd2fc526cf44e0b358ebb09974493e56db8323fc03696933e8be93f2de7fe1",
-            "bytes": 10597,
-            "sha256": "43fd2fc526cf44e0b358ebb09974493e56db8323fc03696933e8be93f2de7fe1"
-          },
-          "title": "Per-artefact specialisation"
-        },
-        {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/theme-contrast",
-          "@type": "bootstrap:Skill",
-          "ambiguous": false,
-          "description": "Why every scrim is measured over PURE BLACK rather than over the art actually in use, what the AAA floor is, and why the high-contrast pair declares no backdrop at all. The CONSUMER stage that says what the ink must survive.",
-          "hasIOContract": false,
-          "hasInstructions": true,
-          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/theming",
-          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
-          "instructionLines": 74,
-          "instructionsPath": "skills/ui/theming/theme-contrast.md",
-          "name": "theme-contrast",
-          "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9f9a3e6d146bc1be32494dbffd62642e21b79b089164dadcc48298425d1bb2b1",
-            "bytes": 3392,
-            "sha256": "9f9a3e6d146bc1be32494dbffd62642e21b79b089164dadcc48298425d1bb2b1"
-          },
-          "title": "Contrast: measured over the darkest thing that could be there"
-        },
-        {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/theme-declaration",
-          "@type": "bootstrap:Skill",
-          "ambiguous": false,
-          "description": "What a theme IS as data — the palette, the three required layouts, and the per-image regions (`textRegion`, `avatarRegion`). The PRODUCER stage: this is where a number is written down, and the rule is that geometry over art is declared rather than derived, because no amount of arithmetic on an aspect ratio can see where a picture is quiet.",
-          "hasIOContract": false,
-          "hasInstructions": true,
-          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/theming",
-          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
-          "instructionLines": 99,
-          "instructionsPath": "skills/ui/theming/theme-declaration.md",
-          "name": "theme-declaration",
-          "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b6f859dfc0e80832952506c6a7bbebd0882d6eee2c41c8934ed107d1dca51114",
-            "bytes": 4676,
-            "sha256": "b6f859dfc0e80832952506c6a7bbebd0882d6eee2c41c8934ed107d1dca51114"
-          },
-          "title": "Declaring a theme"
-        },
-        {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/theme-generation",
-          "@type": "bootstrap:Skill",
-          "ambiguous": false,
-          "description": "Turning a declared theme into CSS — `bun run cat themes:css` — and the single consumer-side failure this stage exists to stop: a theme with no CSS rule falls back to an opaque surface and paints over its own art.",
-          "hasIOContract": false,
-          "hasInstructions": true,
-          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/theming",
-          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
-          "instructionLines": 73,
-          "instructionsPath": "skills/ui/theming/theme-generation.md",
-          "name": "theme-generation",
-          "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ae436349cc1c8d03811563367ba4b4c0eec65ee52c7bb31a2b8478d1d2763d67",
-            "bytes": 3209,
-            "sha256": "ae436349cc1c8d03811563367ba4b4c0eec65ee52c7bb31a2b8478d1d2763d67"
-          },
-          "title": "Generating a theme's CSS"
-        },
-        {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/theming",
           "@type": "bootstrap:Skill",
           "ambiguous": false,
@@ -174,9 +74,9 @@
           "instructionsPath": "skills/ui/theming/theming.md",
           "name": "theming",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/42375a2dd7aea1d5855e2e820ac992eb6932b1012d5fc5e6e7e67baca7fd49b5",
-            "bytes": 4584,
-            "sha256": "42375a2dd7aea1d5855e2e820ac992eb6932b1012d5fc5e6e7e67baca7fd49b5"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7c4e4ace00cc0a1376749c10746a9e30f81c5dc90d82d487238a23a9f13f2a2b",
+            "bytes": 4529,
+            "sha256": "7c4e4ace00cc0a1376749c10746a9e30f81c5dc90d82d487238a23a9f13f2a2b"
           },
           "title": "Theming, split on the stage it fails at"
         }
@@ -199,23 +99,22 @@
             "https://litlfred.github.io/folio-assistant/cat-harness/skill/auto-docs",
             "https://litlfred.github.io/folio-assistant/cat-harness/skill/board-diagram-interchange",
             "https://litlfred.github.io/folio-assistant/cat-harness/skill/board-windows",
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/deployment-awareness",
             "https://litlfred.github.io/folio-assistant/cat-harness/skill/docs-generation",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/feature-staging",
             "https://litlfred.github.io/folio-assistant/cat-harness/skill/harness-tiles",
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/html-rendering-qc",
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/incremental-render",
             "https://litlfred.github.io/folio-assistant/cat-harness/skill/journey-maps",
             "https://litlfred.github.io/folio-assistant/cat-harness/skill/kg-viewer",
             "https://litlfred.github.io/folio-assistant/cat-harness/skill/liquid-templates",
             "https://litlfred.github.io/folio-assistant/cat-harness/skill/markdown-render-check",
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/pdf-inline-viewer",
             "https://litlfred.github.io/folio-assistant/cat-harness/skill/readme-sections",
             "https://litlfred.github.io/folio-assistant/cat-harness/skill/render-logging",
             "https://litlfred.github.io/folio-assistant/cat-harness/skill/render-order",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/rendered-verification",
             "https://litlfred.github.io/folio-assistant/cat-harness/skill/serving-renderings",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/staging-review",
             "https://litlfred.github.io/folio-assistant/cat-harness/skill/theme-ui-review",
             "https://litlfred.github.io/folio-assistant/cat-harness/skill/ui-accessibility",
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/visualizer-loading",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/web-apps",
             "https://litlfred.github.io/folio-assistant/cat-harness/skill/wireframe-design-review",
             "https://litlfred.github.io/folio-assistant/cat-harness/skill/wireframe-viewport-check"
           ],
@@ -230,7 +129,7 @@
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/archimate-models",
           "@type": "bootstrap:Skill",
           "ambiguous": false,
-          "description": "ArchiMate models as knowledge-graph content: how an instance declares the Archi models it holds, what the `archimate` subgraph gives every model, view, element and relationship (an IRI, a thin page, and every view drawn as SVG from the model's own diagram, and its metamodel derived and checked), how to version the models, how to wire them into a folio's staging build and navbar, how to count and lower the crossed lines in a view before committing it, why every view carries a plain-language key, why names are the source's own terms linked to their SKOS concepts, and why no Java, no Archi CLI and no Archi HTML report is ever part of the pipeline. Read before adding, authoring, publishing or rendering an `.archimate` file, before citing an ArchiMate element from prose, and before reaching for Archi's own tooling in CI.",
+          "description": "ArchiMate models as knowledge-graph content: how a layer declares the Archi models it holds, what the `archimate` subgraph gives every model, view, element and relationship (an IRI, a thin page, and every view drawn as SVG from the model's own diagram, and its metamodel derived and checked), how to version the models, how to wire them into a folio's staging build and navbar, how to count and lower the crossed lines in a view before committing it, why every view carries a plain-language key, why names are the source's own terms linked to their SKOS concepts, and why no Java, no Archi CLI and no Archi HTML report is ever part of the pipeline. Read before adding, authoring, publishing or rendering an `.archimate` file, before citing an ArchiMate element from prose, and before reaching for Archi's own tooling in CI.",
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/ui-core",
@@ -239,9 +138,9 @@
           "instructionsPath": "skills/ui/ui-core/archimate-models.md",
           "name": "archimate-models",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/457e8421ed016968e0860c15173e1aca1344bc6911e6f4b5a9b3eb4564a30bfc",
-            "bytes": 18107,
-            "sha256": "457e8421ed016968e0860c15173e1aca1344bc6911e6f4b5a9b3eb4564a30bfc"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/18fc5dd15e223675be879088f687895dbafa9f36a71d6e29a361c27df6dfa36f",
+            "bytes": 18082,
+            "sha256": "18fc5dd15e223675be879088f687895dbafa9f36a71d6e29a361c27df6dfa36f"
           },
           "title": "ArchiMate models — every view, element and relationship a node"
         },
@@ -296,36 +195,17 @@
           "instructionsPath": "skills/ui/ui-core/board-windows.md",
           "name": "board-windows",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4db86fcf66d362e5d51d496f68e1e4ff0b39b1489a8f82ac2cf16186f4b54c5d",
-            "bytes": 15002,
-            "sha256": "4db86fcf66d362e5d51d496f68e1e4ff0b39b1489a8f82ac2cf16186f4b54c5d"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f121fb1b6d1312d62d9b36bcb1aee0f0c18ab67c4f6c9a294e4331d60b5e34d3",
+            "bytes": 14990,
+            "sha256": "f121fb1b6d1312d62d9b36bcb1aee0f0c18ab67c4f6c9a294e4331d60b5e34d3"
           },
           "title": "Start in the avatar, open into a window"
-        },
-        {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/deployment-awareness",
-          "@type": "bootstrap:Skill",
-          "ambiguous": false,
-          "description": "The agent must know its UI surface — gh-pages, local server, with/without MCP, or chat discussion only — because deployment surfaces are declared architectural facts that decide which tools apply, forbid request-time assumptions, and require graceful degradation to chat.",
-          "hasIOContract": false,
-          "hasInstructions": true,
-          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/ui-core",
-          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
-          "instructionLines": 156,
-          "instructionsPath": "skills/ui/ui-core/deployment-awareness.md",
-          "name": "deployment-awareness",
-          "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d8812978f0641322de05d3a7c08f6e5758de1d2f1bb32fa6727b3ae053e30a59",
-            "bytes": 8371,
-            "sha256": "d8812978f0641322de05d3a7c08f6e5758de1d2f1bb32fa6727b3ae053e30a59"
-          },
-          "title": "Deployment awareness — UI surfaces, host constraints, and chat degradation"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/docs-generation",
           "@type": "bootstrap:Skill",
           "ambiguous": false,
-          "description": "How a checkout of this harness generates and publishes its docs site: regenerating derived references, composing the docs layers and each instance's site into one Jekyll source, building it with just-the-docs, the post-build passes, the TypeDoc API reference, the knowledge-graph export, and the full-replace publish to gh-pages and its branches/ previews.",
+          "description": "How a checkout of this harness generates and publishes its docs site: regenerating derived references, composing the docs layers and each layer's site into one Jekyll source, building it with just-the-docs, the post-build passes, the TypeDoc API reference, the knowledge-graph export, and the full-replace publish to gh-pages and its branches/ previews.",
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/ui-core",
@@ -334,11 +214,30 @@
           "instructionsPath": "skills/ui/ui-core/docs-generation.md",
           "name": "docs-generation",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9a3fca18fccf829dca2809f2187b860ac180d1f617d377aea5ba02e65b2b3c22",
-            "bytes": 4843,
-            "sha256": "9a3fca18fccf829dca2809f2187b860ac180d1f617d377aea5ba02e65b2b3c22"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f5b01ecdb59d9a7551d8840b7831d53745947b0e5339ad95792a1eeefbceae1c",
+            "bytes": 4577,
+            "sha256": "f5b01ecdb59d9a7551d8840b7831d53745947b0e5339ad95792a1eeefbceae1c"
           },
           "title": "Docs generation"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/feature-staging",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Manages feature-branch staging deployments under gh-pages/branches/<branch-slug>/ for before/after publication review comparison. Handles branch creation, staging deployment, commit SHA stamping, and cleanup.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/ui-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+          "instructionLines": 585,
+          "instructionsPath": "skills/ui/ui-core/feature-staging.md",
+          "name": "feature-staging",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/12827029f03a18db1ff587081b1935af3b06eaa2c8d87d9715f21d0e9ad662ea",
+            "bytes": 32274,
+            "sha256": "12827029f03a18db1ff587081b1935af3b06eaa2c8d87d9715f21d0e9ad662ea"
+          },
+          "title": "Feature-branch staging"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/harness-tiles",
@@ -353,65 +252,28 @@
           "instructionsPath": "skills/ui/ui-core/harness-tiles.md",
           "name": "harness-tiles",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a7fd94ef38499db81442f4c6cc8e9685305d6254d06d907c4962c65676c01650",
-            "bytes": 27422,
-            "sha256": "a7fd94ef38499db81442f4c6cc8e9685305d6254d06d907c4962c65676c01650"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1ad64d5f7b480b919efbd7c49f3af94e99422b3c3c55d8784e10835bca8132f7",
+            "bytes": 27310,
+            "sha256": "1ad64d5f7b480b919efbd7c49f3af94e99422b3c3c55d8784e10835bca8132f7"
           },
           "title": "A tile is the harness's, not the node's"
-        },
-        {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/html-rendering-qc",
-          "@type": "bootstrap:Skill",
-          "ambiguous": false,
-          "hasIOContract": false,
-          "hasInstructions": true,
-          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/ui-core",
-          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
-          "instructionLines": 86,
-          "instructionsPath": "skills/ui/ui-core/html-rendering-qc.md",
-          "name": "html-rendering-qc",
-          "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2a05d14ffc44ea7428202855110f7904c0e2da282c5440c55d91cde6a0751e9c",
-            "bytes": 2762,
-            "sha256": "2a05d14ffc44ea7428202855110f7904c0e2da282c5440c55d91cde6a0751e9c"
-          },
-          "title": "HTML Rendering QC"
-        },
-        {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/incremental-render",
-          "@type": "bootstrap:Skill",
-          "ambiguous": false,
-          "description": "Rendering only what changed — seeding a build from a previous render, the two edges that decide what must re-run, why a step declares GRAPH TYPOLOGIES rather than paths, and the rule that could-not-determine always re-renders rather than serving a stale page.",
-          "hasIOContract": false,
-          "hasInstructions": true,
-          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/ui-core",
-          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
-          "instructionLines": 170,
-          "instructionsPath": "skills/ui/ui-core/incremental-render.md",
-          "name": "incremental-render",
-          "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5cf6d0457daac1a508e25e2e00f7bc31734e4f28d6894b3e8fd441cce915903f",
-            "bytes": 7938,
-            "sha256": "5cf6d0457daac1a508e25e2e00f7bc31734e4f28d6894b3e8fd441cce915903f"
-          },
-          "title": "Incremental render — the cache is easy, the cascade is the work"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/journey-maps",
           "@type": "bootstrap:Skill",
           "ambiguous": false,
-          "description": "Journeys and workshops as knowledge-graph content: a DAK user scenario told as a journey map (`user-scenario` kind: ordered steps, per person what they do and feel, pain points, enablers, the record's trust state, and edges to stories, BPMN tasks, requirements, FHIR examples, building blocks and the DAK's data sets, decision tables and indicators), the `building-blocks` catalogue its steps use, a workshop that teaches from it (`workshop` kind: modules, objectives, questions for the room on each step, reference tables, sheets, job aids), the `journeys-viewer` visualiser that draws them for an instance and the layers it mounts, and the `check:journey-refs` gate that every reference they name resolves. Read before writing a journey or a workshop, before declaring the viewer, and before building a journey walkthrough app of your own.",
+          "description": "Journeys and workshops as knowledge-graph content: a DAK user scenario told as a journey map (`user-scenario` kind: ordered steps, per person what they do and feel, pain points, enablers, the record's trust state, and edges to stories, BPMN tasks, requirements, FHIR examples, building blocks and the DAK's data sets, decision tables and indicators), the `building-blocks` catalogue its steps use, a workshop that teaches from it (`workshop` kind: modules, objectives, questions for the room on each step, reference tables, sheets, job aids), the `journeys-viewer` visualiser that draws them for a layer and the layers it mounts, and the `check:journey-refs` gate that every reference they name resolves. Read before writing a journey or a workshop, before declaring the viewer, and before building a journey walkthrough app of your own.",
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/ui-core",
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
-          "instructionLines": 284,
+          "instructionLines": 338,
           "instructionsPath": "skills/ui/ui-core/journey-maps.md",
           "name": "journey-maps",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/737934ed4c5dabeebea527c7c88f37184370a2884610ae02d5169dbe0374b681",
-            "bytes": 17057,
-            "sha256": "737934ed4c5dabeebea527c7c88f37184370a2884610ae02d5169dbe0374b681"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4331926e77d9d03863d58142166f38acb9acd6820959f580399aa1c83b784ef5",
+            "bytes": 20476,
+            "sha256": "4331926e77d9d03863d58142166f38acb9acd6820959f580399aa1c83b784ef5"
           },
           "title": "Journey maps — journeys and workshops as nodes"
         },
@@ -428,9 +290,9 @@
           "instructionsPath": "skills/ui/ui-core/kg-viewer.md",
           "name": "kg-viewer",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/cbfba684a91b8ca94e45b7ebf69824b732eab1bd1d5eac4eaaa424f07320d824",
-            "bytes": 12986,
-            "sha256": "cbfba684a91b8ca94e45b7ebf69824b732eab1bd1d5eac4eaaa424f07320d824"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b58484a119aab69dcad9d4f8d1319eb599c60309bcb1773e41d92617e27c148c",
+            "bytes": 12961,
+            "sha256": "b58484a119aab69dcad9d4f8d1319eb599c60309bcb1773e41d92617e27c148c"
           },
           "title": "Rendering the knowledge graph"
         },
@@ -447,9 +309,9 @@
           "instructionsPath": "skills/ui/ui-core/liquid-templates.md",
           "name": "liquid-templates",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/84561a46244b82b1ccfc8c5282c2c0ca7bbed9b249daa71ceebb729c05887b36",
-            "bytes": 10440,
-            "sha256": "84561a46244b82b1ccfc8c5282c2c0ca7bbed9b249daa71ceebb729c05887b36"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/66455853aa38fa216ba21455e3b23275433326c0913eb586d64c06772c841115",
+            "bytes": 10280,
+            "sha256": "66455853aa38fa216ba21455e3b23275433326c0913eb586d64c06772c841115"
           },
           "title": "Liquid templates — layout only, every fact from the graph"
         },
@@ -472,25 +334,6 @@
           "title": "Markdown Render Check"
         },
         {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/pdf-inline-viewer",
-          "@type": "bootstrap:Skill",
-          "ambiguous": false,
-          "description": "Show a published PDF inside a generated page — search, scroll, jump to page, print and download — with the pinned pdf.js viewer the site build installs. Which two Tools do it, the publication-gate rule that decides whether a page may embed a document at all, why the viewer opens only allowlisted hosts, and the three pdf.js behaviours that were measured rather than assumed. Read before putting a PDF on a page, before bumping the pdf.js pin, and when an embedded viewer shows an empty frame.",
-          "hasIOContract": false,
-          "hasInstructions": true,
-          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/ui-core",
-          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
-          "instructionLines": 148,
-          "instructionsPath": "skills/ui/ui-core/pdf-inline-viewer.md",
-          "name": "pdf-inline-viewer",
-          "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/80917c79ec00e61734e6de1d8618facf50d6afb1958e757dcae2dc5e503842fc",
-            "bytes": 7588,
-            "sha256": "80917c79ec00e61734e6de1d8618facf50d6afb1958e757dcae2dc5e503842fc"
-          },
-          "title": "Inline PDF viewer — a pinned pdf.js, installed at build time"
-        },
-        {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/readme-sections",
           "@type": "bootstrap:Skill",
           "ambiguous": false,
@@ -503,9 +346,9 @@
           "instructionsPath": "skills/ui/ui-core/readme-sections.md",
           "name": "readme-sections",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3d0e1279b253707026c6b45b5af9ff169ed43493d0f38512161bc5f2c2dd2c89",
-            "bytes": 14434,
-            "sha256": "3d0e1279b253707026c6b45b5af9ff169ed43493d0f38512161bc5f2c2dd2c89"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5dec1b7bc18268b594b8e0b9d3527704719fc8870e923352397f7c7da734aaca",
+            "bytes": 14375,
+            "sha256": "5dec1b7bc18268b594b8e0b9d3527704719fc8870e923352397f7c7da734aaca"
           },
           "title": "A folio's README — the folio owns the file, the platform owns the markers"
         },
@@ -522,9 +365,9 @@
           "instructionsPath": "skills/ui/ui-core/render-logging.md",
           "name": "render-logging",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/79846f32f15a42cdcf3110aea19ab5de0856f1f7293281d4e50a88d90f40ba41",
-            "bytes": 9218,
-            "sha256": "79846f32f15a42cdcf3110aea19ab5de0856f1f7293281d4e50a88d90f40ba41"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5fa39289d83b7741ceed2054653fe9d2fc697c98d89984beaacf058cec84559c",
+            "bytes": 9214,
+            "sha256": "5fa39289d83b7741ceed2054653fe9d2fc697c98d89984beaacf058cec84559c"
           },
           "title": "Render logging — the publish branch keeps its own history"
         },
@@ -547,6 +390,25 @@
           "title": "Render order — flattening a dependency hierarchy, and the three stages"
         },
         {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/rendered-verification",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Confirm a UI change by LOOKING at it in a browser and sending the screenshots to the author, rather than describing it. Use whenever a change touches CSS, a Liquid/HTML template, a generated page, the navbar, a board, a sticky or any rendered surface — before claiming it works, and before asking the author to review it. Covers building the site locally, taking the REAL CI build off `gh-pages` when the question is theme chrome or layout, driving it with Playwright in this environment, measuring computed style rather than reading the stylesheet, hit-testing a control's centre because visible is not usable, asserting the conditions so a check cannot pass over an unstyled page, and the defect classes that are invisible to a green gate set.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/ui-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+          "instructionLines": 280,
+          "instructionsPath": "skills/ui/ui-core/rendered-verification.md",
+          "name": "rendered-verification",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9e6d607fca457fd168599546eed2d11cf56f867ea4a8aa1227734f7da6fc892d",
+            "bytes": 13869,
+            "sha256": "9e6d607fca457fd168599546eed2d11cf56f867ea4a8aa1227734f7da6fc892d"
+          },
+          "title": "/rendered-verification — look at it, then send the picture"
+        },
+        {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/serving-renderings",
           "@type": "bootstrap:Skill",
           "ambiguous": false,
@@ -558,11 +420,32 @@
           "instructionsPath": "skills/ui/ui-core/serving-renderings.md",
           "name": "serving-renderings",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2a610eb2f22cd1012dc02326810b0d08a6d352a2b32db07c43df730103f54631",
-            "bytes": 9527,
-            "sha256": "2a610eb2f22cd1012dc02326810b0d08a6d352a2b32db07c43df730103f54631"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/34f33349aca90868ea5ba012d6aec702f6105782076b8e79cd3d2065c5150167",
+            "bytes": 9503,
+            "sha256": "34f33349aca90868ea5ba012d6aec702f6105782076b8e79cd3d2065c5150167"
           },
           "title": "Serving a rendering — endpoints, MIME types, and what each host can enforce"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/staging-review",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Staging preview and before/after comparison for content review. Takes one optional string — what the reader wants to look at, in their own words — and returns a list of URLs, each looked up in the publish ref, with what is published at it and what to review there. Provides before (MAIN) and after (branches/) pairs so reviewers can compare rather than guess. Used by the CRDM feature development workflow, content authoring review sessions, and whenever a staging preview deploys or someone asks to see it.",
+          "hasIOContract": true,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/ui-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+          "inputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/staging-review/input.schema.json",
+          "instructionLines": 678,
+          "instructionsPath": "skills/ui/ui-core/staging-review.md",
+          "name": "staging-review",
+          "outputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/staging-review/output.schema.json",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/edb997daefbf2df3bcc46677e0994aa7a3d80d688fd7da35d8c6a025dd10c861",
+            "bytes": 33456,
+            "sha256": "edb997daefbf2df3bcc46677e0994aa7a3d80d688fd7da35d8c6a025dd10c861"
+          },
+          "title": "Staging review — before/after comparison"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/theme-ui-review",
@@ -577,9 +460,9 @@
           "instructionsPath": "skills/ui/ui-core/theme-ui-review.md",
           "name": "theme-ui-review",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9b5d81a91790625b98348699c7eefcc09e3e4abd94b262c31ec8c1df84d137c0",
-            "bytes": 5515,
-            "sha256": "9b5d81a91790625b98348699c7eefcc09e3e4abd94b262c31ec8c1df84d137c0"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5a7560e2ff66138bfcd0779ad5860c09124e1b0b76350d28c3b53ddb60b206c5",
+            "bytes": 5502,
+            "sha256": "5a7560e2ff66138bfcd0779ad5860c09124e1b0b76350d28c3b53ddb60b206c5"
           },
           "title": "At ingestion, and only at ingestion"
         },
@@ -596,30 +479,30 @@
           "instructionsPath": "skills/ui/ui-core/ui-accessibility.md",
           "name": "ui-accessibility",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fe5d2a13129b3c9be6b2d737bb0fdff7ce14517f1e8e9e4bcb95fb63dc794a34",
-            "bytes": 7923,
-            "sha256": "fe5d2a13129b3c9be6b2d737bb0fdff7ce14517f1e8e9e4bcb95fb63dc794a34"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d8e915dfe9db1e517f05f6c2f108acf9e53286e9ea78c310926a9c2f3245e4db",
+            "bytes": 7920,
+            "sha256": "d8e915dfe9db1e517f05f6c2f108acf9e53286e9ea78c310926a9c2f3245e4db"
           },
           "title": "All UI must follow accessibility guidelines"
         },
         {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/visualizer-loading",
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/web-apps",
           "@type": "bootstrap:Skill",
           "ambiguous": false,
-          "description": "The general strategy for a complex visualizer: the generated page carries identity, layout and a pointer, and its bulky or repeated content is fetched from the Knowledge Graph in the browser rather than baked into every page. What must stay server-side, how to fetch, how to stay equivalent to the render being replaced, and how to verify a page whose content is not in its HTML. Read before generating any page that shows a KG node's data at length: an IG artefact view, a graph viewer, a schema or sidecar view.",
+          "description": "Interactive web apps as knowledge-graph content: a layer holds an app's source in a directory of kind `web-app` (one `web-app.json`), its UI strings go through the harness's translation process like any template, and the harness's `apps` visualiser (Tool `web-app-build`) builds it at publish and writes it to its own route with no site chrome, loaded only when a reader opens it. Read before adding an app to any layer, before writing a publish script for one (do not), and when an app's build or translations fail.",
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/ui-core",
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
-          "instructionLines": 134,
-          "instructionsPath": "skills/ui/ui-core/visualizer-loading.md",
-          "name": "visualizer-loading",
+          "instructionLines": 120,
+          "instructionsPath": "skills/ui/ui-core/web-apps.md",
+          "name": "web-apps",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a8dfef62fb050b1080291eb98f8d3c2e239cff866ced094bb2a7abf5d94f7499",
-            "bytes": 6231,
-            "sha256": "a8dfef62fb050b1080291eb98f8d3c2e239cff866ced094bb2a7abf5d94f7499"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/34017731811fbfa06671ba904ef605566ff3ff4df693188b0c4c6989b32f760b",
+            "bytes": 6106,
+            "sha256": "34017731811fbfa06671ba904ef605566ff3ff4df693188b0c4c6989b32f760b"
           },
-          "title": "Visualizer loading — the page is layout, the graph is fetched"
+          "title": "Web apps — an app is content, the harness publishes it"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/wireframe-design-review",
@@ -636,9 +519,9 @@
           "name": "wireframe-design-review",
           "outputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/wireframe-design-review/output.schema.json",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c35eb8aeaea5a962f884cd6360dba4e0e96395887da7bf127b16337b8a058d65",
-            "bytes": 9361,
-            "sha256": "c35eb8aeaea5a962f884cd6360dba4e0e96395887da7bf127b16337b8a058d65"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/eb13328505db4a2665b4a86541b176dde0e86d7f1ae13e27c034d235efbeb09e",
+            "bytes": 9199,
+            "sha256": "eb13328505db4a2665b4a86541b176dde0e86d7f1ae13e27c034d235efbeb09e"
           },
           "title": "Wireframe design review"
         },

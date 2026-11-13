@@ -10,10 +10,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/author",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
       "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Author",
       "requires": [
-        "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/bean-coordination"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/bean-coordination"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -23,7 +23,7 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F02"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/dsa"
     }
   ]
 }

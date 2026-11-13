@@ -19,6 +19,10 @@
       "name": "no"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache#flow/Flow_11",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache#flow/Flow_2",
       "@type": "bootstrap:SequenceFlow"
     },
@@ -118,6 +122,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache/node/Task_Seed",
       "@type": "bootstrap:ProcessNode",
       "name": "Seed the cache branch"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache/node/Task_SizeReview",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Review the site's size"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstDeltaReview",
@@ -523,6 +532,136 @@
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Validate",
       "@type": "bootstrap:ProcessNode",
       "name": "Validate the cone (fhir_validate)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease",
+      "@type": "bootstrap:Process",
+      "name": "An IG release: the owner tags, a draft is built, the owner publishes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease#flow/Flow_1",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease#flow/Flow_10",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "a draft"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease#flow/Flow_11",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "published"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease#flow/Flow_12",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease#flow/Flow_2",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "tag pushed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease#flow/Flow_3",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "draft made"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease#flow/Flow_4",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease#flow/Flow_5",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease#flow/Flow_6",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease#flow/Flow_7",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "no"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease#flow/Flow_8",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "yes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease#flow/Flow_9",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "no release"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/lane/Lane_Check",
+      "@type": "cat-harness:Lane",
+      "name": "Release check (advisory)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/lane/Lane_Owner",
+      "@type": "cat-harness:Lane",
+      "name": "Owner (release authority, a person)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/lane/Lane_Runner",
+      "@type": "cat-harness:Lane",
+      "name": "IG release (GitHub runner: full build, draft release)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/node/End_InOrder",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Released"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/node/End_Released",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Release published"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/node/GW_Released",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Tag released?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/node/GW_Tagged",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Version tagged?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/node/Start_Check",
+      "@type": "bootstrap:ProcessNode",
+      "name": "AST refresh of main"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/node/Start_VersionSet",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Version set on main"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/node/Task_Check",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Check the current version's tag and release"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/node/Task_Publish",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Publish the draft release"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/node/Task_ReleaseBuild",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Build the tag in full and make the draft release"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/node/Task_RunRelease",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Run IG release (draft) by hand for the tag"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/node/Task_Tag",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Tag the IG's current version"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir",

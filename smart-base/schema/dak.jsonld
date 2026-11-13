@@ -1,0 +1,21 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/smart-base/schema/dak.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/schema/dak.jsonld",
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/schema/dak",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "dak",
+      "title": "dak",
+      "summary": "The **DAK** content type — a repository that is a WHO SMART Guidelines",
+      "module": "schemas/dak.ts",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-schemas",
+      "jsonSchema": [
+        "http://smart.who.int/base/schema/zod/dak/DakComponentSourceSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/dak/DakDeclarationSchema.schema.json"
+      ]
+    }
+  ]
+}

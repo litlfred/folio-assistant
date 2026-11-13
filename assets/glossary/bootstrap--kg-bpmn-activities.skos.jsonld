@@ -386,7 +386,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Before composing anything: what is already known, each fact with where it came from; which declaration governs the matter (the instance's `<name>.json`, the diagram the caller is in, the Skill its task names); what state is recorded; and whether the question has ALREADY been decided — by the person earlier in the conversation, or in a declaration that quotes their ruling. A settled question is not asked again: asking it reopens a decision and spends the person's attention twice. Read it, do not remember it: cite what you read. What the caller handed in is checked here, not re-derived."
+          "@value": "Before composing anything: what is already known, each fact with where it came from; which declaration governs the matter (the layer's `<name>.json`, the diagram the caller is in, the Skill its task names); what state is recorded; and whether the question has ALREADY been decided — by the person earlier in the conversation, or in a declaration that quotes their ruling. A settled question is not asked again: asking it reopens a decision and spends the person's attention twice. Read it, do not remember it: cite what you read. What the caller handed in is checked here, not re-derived."
         }
       ],
       "skos:notation": "A_DetermineContext",
@@ -706,7 +706,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Ask the location, not your memory of it: a Knowledge Graph Data Store that carries a declaration at its root is ALREADY an instance, and it says so itself. `<name>.json` present and parsing is the whole test, and `bootstrap-kg-navigation` says what the three answers mean — absent (not an instance yet), present, and present-but-unreadable, which is an instance asserting something broken and is not a green light either. Done before reading the chosen harness: a location held by another harness ends the process here."
+          "@value": "Ask the location, not your memory of it: a Knowledge Graph Data Store that carries a declaration at its root is ALREADY a layer, and it says so itself. `<name>.json` present and parsing is the whole test, and `bootstrap-kg-navigation` says what the three answers mean — absent (not a layer yet), present, and present-but-unreadable, which is a layer asserting something broken and is not a green light either. Done before reading the chosen harness: a location held by another harness ends the process here."
         }
       ],
       "skos:notation": "A_ReadLocation",
@@ -726,7 +726,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The repository now IS an instance of something, and nothing at its root says so. It carries a LINK to the harness that was installed and the OVERALL install status across every location — WHEN ABSENT, never replacing: where a README is already there, the link and status go in a marker pair the harness's own README tool maintains. Initialization may create the README: the rule that a running process never writes an `instance-readme` governs an instance that already exists."
+          "@value": "The repository now IS a layer instantiating a harness, and nothing at its root says so. It carries a LINK to the harness that was installed and the OVERALL install status across every location — WHEN ABSENT, never replacing: where a README is already there, the link and status go in a marker pair the harness's own README tool maintains. Initialization may create the README: the rule that a running process never writes an `instance-readme` governs a layer that already exists."
         }
       ],
       "skos:notation": "A_WriteRootReadme",

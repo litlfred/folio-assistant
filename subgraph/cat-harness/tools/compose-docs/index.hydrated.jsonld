@@ -7,7 +7,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/compose-docs.jsonld",
       "@type": "cat-harness:Tool",
-      "description": "Write the Jekyll source the docs site is built from: the base docs layer, the repository overlay on top (an overlay's `_config.yml` merged, every override reported), and each `composed` instance under its own name. `--staging` keeps staging-only visualisations; `--changed-files` stubs instances a branch does not reach. `--shell` writes the CHROME only — the layers' Jekyll machinery and assets, no page, no instance, and the host's generated includes empty — which an IG repository composes its IG into so its own site wears the main site's chrome.",
+      "description": "Write the Jekyll source the docs site is built from: the base docs layer, the repository overlay on top (an overlay's `_config.yml` merged, every override reported), and each `composed` layer under its own name. `--staging` keeps staging-only visualisations; `--changed-files` stubs layers a branch does not reach. `--shell` writes the CHROME only — the layers' Jekyll machinery and assets, no page, no layer, and the host's generated includes empty — which an IG repository composes its IG into so its own site wears the main site's chrome.",
       "install": {
         "none": true
       },
@@ -32,7 +32,7 @@
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
           },
           {
-            "description": "The branch's changed paths, one per line: instances it does not reach are stubbed.",
+            "description": "The branch's changed paths, one per line: layers it does not reach are stubbed.",
             "name": "changed-files",
             "required": false,
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
@@ -41,7 +41,7 @@
             "arg": {
               "flag": "--shell"
             },
-            "description": "The chrome only: Jekyll machinery and assets, no page and no composed instance; generated includes written empty.",
+            "description": "The chrome only: Jekyll machinery and assets, no page and no composed layer; generated includes written empty.",
             "name": "shell",
             "required": false,
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
@@ -49,7 +49,7 @@
         ],
         "outputs": [
           {
-            "description": "Files composed, with every override, merge, withheld file and carried or stubbed instance named.",
+            "description": "Files composed, with every override, merge, withheld file and carried or stubbed layer named.",
             "name": "files",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count"
           }

@@ -10,10 +10,10 @@
       "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/ig-ast-cache.svg",
       "description": "How an IG repository's own site is published, and how the AST it is built from is kept current (skill `ig-build-pipeline` §\"The AST cache lifecycle\").\n\nTHE RULE. An IG site is built from the IG Publisher AST read from the IG repository's cache branch `cat/fhir-harness/fhir-ast/<package id>`, never from Publisher HTML. The publish refuses an AST that is not valid for the commit it publishes (`ig-cache.sh restore` then `verify`). A later commit that changes no IG input (`sushi-config.yaml`, `ig.ini`, `input/`) does not make the AST stale.\n\nTHE REFRESH. The cache is written by ONE thing: fhir-harness's reusable workflow `.github/workflows/ig-ast-refresh.yml`, which an IG repository's Site publish calls as its first job (`ast`; template `templates/ig-repo-site/site-publish.yml`). It runs the Publisher through the AST exporter on a GitHub runner (Java, 10 GB heap, tx.fhir.org). It seeds the branch only from a commit on the default branch whose inputs equal the tip's.\n\nA valid AST is a cache, not a release: every page drawn from it carries the provisional mark (`ig-ast-delta`).",
       "enforcement": "advisory",
-      "flowCount": 10,
+      "flowCount": 11,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
       "name": "An IG site, built from the AST on its cache branch",
-      "nodeCount": 10,
+      "nodeCount": 11,
       "sourcePath": "processes/content/ig-ast-cache.bpmn",
       "sourceUrl": "https://github.com/litlfred/fhir-harness/blob/main/processes/content/ig-ast-cache.bpmn",
       "startNode": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache/node/Start_Publish",
@@ -35,6 +35,14 @@
       "name": "no",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache",
       "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache/node/End_NotSeeded"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache#flow/Flow_11",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache/node/Task_SizeReview",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache",
+      "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache/node/End_Published"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache#flow/Flow_2",
@@ -68,7 +76,7 @@
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache/node/Task_BuildSite",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache",
-      "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache/node/End_Published"
+      "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache/node/Task_SizeReview"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache#flow/Flow_6",
@@ -107,7 +115,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache/lane/Lane_PubMgr",
       "@type": "cat-harness:Lane",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/fhir-harness/role/publication-manager",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
       "name": "Publication manager (owner, or the agent the owner delegates to)",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache"
@@ -123,7 +131,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache/lane/Lane_Site",
       "@type": "cat-harness:Lane",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/fhir-harness/role/build-pipeline",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
       "name": "Site build (agent, stage-local)",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache"
@@ -148,11 +156,11 @@
       "bpmnType": "bpmn:EndEvent",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache/lane/Lane_Site",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
-      "incoming": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache#flow/Flow_5",
+      "incoming": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache#flow/Flow_11",
       "name": "Site published from the AST",
       "nodeKind": "end",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/build-pipeline",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -188,7 +196,7 @@
         "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache#flow/Flow_4"
       ],
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/build-pipeline",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -202,7 +210,7 @@
       "nodeKind": "start",
       "outgoing": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache#flow/Flow_1",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/publication-manager",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -217,7 +225,7 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache#flow/Flow_5",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/build-pipeline",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "relaxable": true,
       "requires": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-render-jekyll",
@@ -236,7 +244,7 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache#flow/Flow_6",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/publication-manager",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-build-pipeline",
       "touchesWorkPlan": false
@@ -271,7 +279,7 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache#flow/Flow_2",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/build-pipeline",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "relaxable": true,
       "requires": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-ast-delta",
@@ -292,7 +300,23 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/ig-publisher-service",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/compiled-artefact-cache",
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/compiled-artefact-cache",
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache/node/Task_SizeReview",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache/lane/Lane_Site",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache#flow/Flow_5",
+      "name": "Review the site's size",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache#flow/Flow_11",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-publication",
       "touchesWorkPlan": false
     },
     {
@@ -389,7 +413,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstDeltaReview/lane/Lane_Build",
       "@type": "cat-harness:Lane",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/fhir-harness/role/build-pipeline",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
       "name": "Incremental build (system)",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstDeltaReview"
@@ -397,7 +421,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstDeltaReview/lane/Lane_Review",
       "@type": "cat-harness:Lane",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/fhir-harness/role/qc-reviewer",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/qc-reviewer",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
       "name": "QC reviewer",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstDeltaReview"
@@ -412,7 +436,7 @@
       "name": "Delta accepted — on to the QC gates",
       "nodeKind": "end",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstDeltaReview",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/qc-reviewer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/qc-reviewer",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -426,7 +450,7 @@
       "name": "Coupling filed — run a full build",
       "nodeKind": "end",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstDeltaReview",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/qc-reviewer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/qc-reviewer",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -440,7 +464,7 @@
       "name": "Base stale — run a full build",
       "nodeKind": "end",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstDeltaReview",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/build-pipeline",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -458,7 +482,7 @@
         "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstDeltaReview#flow/Flow_8"
       ],
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstDeltaReview",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/qc-reviewer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/qc-reviewer",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -476,7 +500,7 @@
         "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstDeltaReview#flow/Flow_4"
       ],
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstDeltaReview",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/build-pipeline",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -490,7 +514,7 @@
       "nodeKind": "start",
       "outgoing": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstDeltaReview#flow/Flow_1",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstDeltaReview",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/build-pipeline",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -505,7 +529,7 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstDeltaReview#flow/Flow_5",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstDeltaReview",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/build-pipeline",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-ast-delta",
       "touchesWorkPlan": false
@@ -521,9 +545,9 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstDeltaReview#flow/Flow_9",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstDeltaReview",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/qc-reviewer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/qc-reviewer",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/todo-manager",
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/todo-manager",
       "touchesWorkPlan": true,
       "workPlanOp": "note"
     },
@@ -538,7 +562,7 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstDeltaReview#flow/Flow_6",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstDeltaReview",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/qc-reviewer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/qc-reviewer",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-ast-delta",
       "touchesWorkPlan": false
@@ -554,7 +578,7 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstDeltaReview#flow/Flow_2",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstDeltaReview",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/build-pipeline",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-ast-delta",
       "touchesWorkPlan": false
@@ -826,7 +850,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_Build",
       "@type": "cat-harness:Lane",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/fhir-harness/role/build-pipeline",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
       "name": "Incremental build (system)",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental"
@@ -834,7 +858,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_PubMgr",
       "@type": "cat-harness:Lane",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/fhir-harness/role/publication-manager",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
       "name": "Publication manager — deploy and seed",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental"
@@ -842,7 +866,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_Review",
       "@type": "cat-harness:Lane",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/fhir-harness/role/qc-reviewer",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/qc-reviewer",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
       "name": "PR reviewer / QC reviewer",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental"
@@ -907,7 +931,7 @@
       "name": "Preview published",
       "nodeKind": "end",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/qc-reviewer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/qc-reviewer",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -921,7 +945,7 @@
       "name": "IG site published, cache seeded",
       "nodeKind": "end",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/publication-manager",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -939,7 +963,7 @@
         "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental#flow/F25"
       ],
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/publication-manager",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -957,7 +981,7 @@
         "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental#flow/F22"
       ],
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/qc-reviewer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/qc-reviewer",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -976,7 +1000,7 @@
         "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental#flow/F04E"
       ],
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/build-pipeline",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -1023,7 +1047,7 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental#flow/F07",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/build-pipeline",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-publication",
       "touchesWorkPlan": false
@@ -1039,7 +1063,7 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental#flow/F05",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/build-pipeline",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-publication",
       "touchesWorkPlan": false
@@ -1055,9 +1079,9 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental#flow/F06",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/qc-reviewer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/qc-reviewer",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/quality-control",
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/quality-control",
       "touchesWorkPlan": false
     },
     {
@@ -1087,10 +1111,10 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental#flow/F26",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/publication-manager",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
       "relaxable": true,
       "requires": [
-        "https://litlfred.github.io/folio-assistant/fhir-harness/skill/content-publish",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-publish",
         "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-publication"
       ],
       "touchesWorkPlan": false
@@ -1106,9 +1130,9 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental#flow/F24",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/qc-reviewer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/qc-reviewer",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/content-publish",
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-publish",
       "touchesWorkPlan": false
     },
     {
@@ -1138,7 +1162,7 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental#flow/F16",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/build-pipeline",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-publication",
       "touchesWorkPlan": false
@@ -1156,7 +1180,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/fhir-modeller",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/todo-manager",
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/todo-manager",
       "touchesWorkPlan": true,
       "workPlanOp": "note"
     },
@@ -1173,7 +1197,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/fhir-modeller",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/todo-manager",
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/todo-manager",
       "touchesWorkPlan": true,
       "workPlanOp": "note"
     },
@@ -1188,7 +1212,7 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental#flow/F15",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/build-pipeline",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-publication",
       "touchesWorkPlan": false
@@ -1207,9 +1231,9 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental#flow/F19",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/qc-reviewer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/qc-reviewer",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/quality-control",
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/quality-control",
       "touchesWorkPlan": false
     },
     {
@@ -1225,7 +1249,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/fhir-modeller",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/todo-manager",
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/todo-manager",
       "touchesWorkPlan": true,
       "workPlanOp": "note"
     },
@@ -1240,7 +1264,7 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental#flow/F14",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/build-pipeline",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-publication",
       "touchesWorkPlan": false
@@ -1256,7 +1280,7 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental#flow/F02",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/build-pipeline",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-publication",
       "touchesWorkPlan": false
@@ -1272,7 +1296,7 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental#flow/F27",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/publication-manager",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-publication",
       "touchesWorkPlan": false
@@ -1288,7 +1312,7 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental#flow/F17",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/build-pipeline",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-publication",
       "touchesWorkPlan": false
@@ -1304,7 +1328,7 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental#flow/F08",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/build-pipeline",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/l3-fhir-authoring",
       "touchesWorkPlan": false
@@ -1323,6 +1347,336 @@
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/ig-publisher-service",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/fhir-validation",
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease",
+      "@type": "bootstrap:Process",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/ig-release.svg",
+      "description": "How an IG repository's release is cut, and how a missed one is caught up (skill `ig-binary-artefacts` §\"Releasing\"). (Owner, 2026-11-10: \"need to add this to process (and how to catchup if not tagged) of build\".)\n\nTHE RULE. A release is a governance decision. The owner tags the IG's CURRENT version from `sushi-config.yaml`, `v<version>`, on the default branch. The tag starts the IG's `ig-release.yml` caller, which builds the tag in full and makes a GitHub DRAFT release carrying `package.tgz` (and its R4/R4B variants), `ast-data.zip` and `SHA256SUMS`. The owner publishes the draft. An agent never chooses a version, never pushes a tag and never publishes a release.\n\nTHE CATCH-UP. Every AST refresh of the default branch runs `ig-release.ts check` (advisory, never failing the run): an untagged current version is reported with the commit that set it, for the owner to tag; a tag with no release is reported with the by-hand run of the release workflow; a draft is reported as waiting for the owner.\n\nThe site is not the release: it is published from the AST cache (`ig-ast-cache.bpmn`) and carries none of these files.",
+      "enforcement": "advisory",
+      "flowCount": 12,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
+      "name": "An IG release: the owner tags, a draft is built, the owner publishes",
+      "nodeCount": 11,
+      "sourcePath": "processes/content/ig-release.bpmn",
+      "sourceUrl": "https://github.com/litlfred/fhir-harness/blob/main/processes/content/ig-release.bpmn",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/node/Start_VersionSet",
+        "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/node/Start_Check"
+      ],
+      "summary": "How an IG repository's release is cut, and how a missed one is caught up (skill `ig-binary-artefacts` §\"Releasing\")."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease#flow/Flow_1",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/node/Start_VersionSet",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease",
+      "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/node/Task_Tag"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease#flow/Flow_10",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/node/GW_Released",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
+      "name": "a draft",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease",
+      "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/node/Task_Publish"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease#flow/Flow_11",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/node/GW_Released",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
+      "name": "published",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease",
+      "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/node/End_InOrder"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease#flow/Flow_12",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/node/Task_RunRelease",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease",
+      "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/node/Task_ReleaseBuild"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease#flow/Flow_2",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/node/Task_Tag",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
+      "name": "tag pushed",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease",
+      "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/node/Task_ReleaseBuild"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease#flow/Flow_3",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/node/Task_ReleaseBuild",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
+      "name": "draft made",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease",
+      "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/node/Task_Publish"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease#flow/Flow_4",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/node/Task_Publish",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease",
+      "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/node/End_Released"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease#flow/Flow_5",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/node/Start_Check",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease",
+      "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/node/Task_Check"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease#flow/Flow_6",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/node/Task_Check",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease",
+      "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/node/GW_Tagged"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease#flow/Flow_7",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/node/GW_Tagged",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease",
+      "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/node/Task_Tag"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease#flow/Flow_8",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/node/GW_Tagged",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease",
+      "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/node/GW_Released"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease#flow/Flow_9",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/node/GW_Released",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
+      "name": "no release",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease",
+      "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/node/Task_RunRelease"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/lane/Lane_Check",
+      "@type": "cat-harness:Lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
+      "name": "Release check (advisory)",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/lane/Lane_Owner",
+      "@type": "cat-harness:Lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
+      "name": "Owner (release authority, a person)",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/lane/Lane_Runner",
+      "@type": "cat-harness:Lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/fhir-harness/role/ig-publisher-service",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
+      "name": "IG release (GitHub runner: full build, draft release)",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/node/End_InOrder",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:EndEvent",
+      "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/lane/Lane_Check",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease#flow/Flow_11",
+      "name": "Released",
+      "nodeKind": "end",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/node/End_Released",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:EndEvent",
+      "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/lane/Lane_Owner",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease#flow/Flow_4",
+      "name": "Release published",
+      "nodeKind": "end",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/node/GW_Released",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/lane/Lane_Check",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease#flow/Flow_8",
+      "name": "Tag released?",
+      "nodeKind": "exclusive",
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease#flow/Flow_9",
+        "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease#flow/Flow_10",
+        "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease#flow/Flow_11"
+      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/node/GW_Tagged",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/lane/Lane_Check",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease#flow/Flow_6",
+      "name": "Version tagged?",
+      "nodeKind": "exclusive",
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease#flow/Flow_7",
+        "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease#flow/Flow_8"
+      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/node/Start_Check",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:StartEvent",
+      "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/lane/Lane_Check",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
+      "name": "AST refresh of main",
+      "nodeKind": "start",
+      "outgoing": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease#flow/Flow_5",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/node/Start_VersionSet",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:StartEvent",
+      "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/lane/Lane_Owner",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
+      "name": "Version set on main",
+      "nodeKind": "start",
+      "outgoing": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease#flow/Flow_1",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/node/Task_Check",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ServiceTask",
+      "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/lane/Lane_Check",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease#flow/Flow_5",
+      "name": "Check the current version's tag and release",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease#flow/Flow_6",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-binary-artefacts",
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/node/Task_Publish",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:UserTask",
+      "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/lane/Lane_Owner",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease#flow/Flow_3",
+        "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease#flow/Flow_10"
+      ],
+      "name": "Publish the draft release",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease#flow/Flow_4",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
+      "relaxable": false,
+      "requires": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-binary-artefacts",
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/node/Task_ReleaseBuild",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ServiceTask",
+      "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/lane/Lane_Runner",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease#flow/Flow_2",
+        "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease#flow/Flow_12"
+      ],
+      "name": "Build the tag in full and make the draft release",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease#flow/Flow_3",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease",
+      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/ig-publisher-service",
+      "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-binary-artefacts",
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/node/Task_RunRelease",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:UserTask",
+      "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/lane/Lane_Owner",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease#flow/Flow_9",
+      "name": "Run IG release (draft) by hand for the tag",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease#flow/Flow_12",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
+      "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-binary-artefacts",
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/node/Task_Tag",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:UserTask",
+      "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease/lane/Lane_Owner",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease#flow/Flow_1",
+        "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease#flow/Flow_7"
+      ],
+      "name": "Tag the IG's current version",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease#flow/Flow_2",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgRelease",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
+      "relaxable": false,
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-binary-artefacts",
+        "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-publication"
+      ],
       "touchesWorkPlan": false
     },
     {
@@ -1451,7 +1805,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/lane/Lane_Build",
       "@type": "cat-harness:Lane",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/fhir-harness/role/build-pipeline",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
       "name": "Build pipeline — SUSHI · validator · IG Publisher",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir"
@@ -1467,7 +1821,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/lane/Lane_PubMgr",
       "@type": "cat-harness:Lane",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/fhir-harness/role/publication-manager",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
       "name": "Publication manager",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir"
@@ -1475,7 +1829,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/lane/Lane_Qc",
       "@type": "cat-harness:Lane",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/fhir-harness/role/qc-reviewer",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/qc-reviewer",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
       "name": "QC reviewer",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir"
@@ -1491,9 +1845,9 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir#flow/C11b",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/build-pipeline",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/publish-extracted-statements",
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/publish-extracted-statements",
       "touchesWorkPlan": false
     },
     {
@@ -1506,7 +1860,7 @@
       "name": "Published IG site",
       "nodeKind": "end",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/publication-manager",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -1524,7 +1878,7 @@
         "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir#flow/C11"
       ],
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/qc-reviewer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/qc-reviewer",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -1542,7 +1896,7 @@
         "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir#flow/C07"
       ],
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/build-pipeline",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -1591,7 +1945,7 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir#flow/C12",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/build-pipeline",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-publication",
       "touchesWorkPlan": false
@@ -1607,11 +1961,12 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir#flow/C13",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/publication-manager",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
       "relaxable": true,
       "requires": [
-        "https://litlfred.github.io/folio-assistant/fhir-harness/skill/content-publish",
-        "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-publication"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-publish",
+        "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-publication",
+        "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-binary-artefacts"
       ],
       "touchesWorkPlan": false
     },
@@ -1628,7 +1983,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/fhir-modeller",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/todo-manager",
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/todo-manager",
       "touchesWorkPlan": true,
       "workPlanOp": "note"
     },
@@ -1643,9 +1998,9 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir#flow/C08",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/qc-reviewer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/qc-reviewer",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/quality-control",
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/quality-control",
       "touchesWorkPlan": false
     },
     {
@@ -1659,7 +2014,7 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir#flow/C04",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/build-pipeline",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/l3-fhir-authoring",
       "touchesWorkPlan": false
@@ -1675,7 +2030,7 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir#flow/C05",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/build-pipeline",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/fhir-validation",
       "touchesWorkPlan": false
@@ -1822,7 +2177,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/lane/Lane_BA",
       "@type": "cat-harness:Lane",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/fhir-harness/role/business-analyst",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
       "name": "Business analyst — design review",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview"
@@ -1830,7 +2185,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/lane/Lane_Build",
       "@type": "cat-harness:Lane",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/fhir-harness/role/build-pipeline",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
       "name": "Build pipeline — rendering, screenshots, fidelity",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview"
@@ -1838,7 +2193,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/lane/Lane_Clinical",
       "@type": "cat-harness:Lane",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/fhir-harness/role/clinical-sme",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/clinical-sme",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
       "name": "Clinical reviewer — the staged form",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview"
@@ -1865,9 +2220,9 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview#flow/Flow_8",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/business-analyst",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/wireframe-design-review",
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/wireframe-design-review",
       "touchesWorkPlan": false
     },
     {
@@ -1880,7 +2235,7 @@
       "name": "Form accepted",
       "nodeKind": "end",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/clinical-sme",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/clinical-sme",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -1898,7 +2253,7 @@
         "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview#flow/Flow_13"
       ],
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/clinical-sme",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/clinical-sme",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -1916,7 +2271,7 @@
         "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview#flow/Flow_6"
       ],
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/build-pipeline",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -1963,7 +2318,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/fhir-modeller",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/staging-review",
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/staging-review",
       "touchesWorkPlan": false
     },
     {
@@ -1977,7 +2332,7 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview#flow/Flow_7",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/build-pipeline",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/fhir-questionnaire-wireframe",
       "touchesWorkPlan": false
@@ -2028,7 +2383,7 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview#flow/Flow_11",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/clinical-sme",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/clinical-sme",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/fhir-questionnaire-wireframe",
       "touchesWorkPlan": false
@@ -2044,9 +2399,9 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview#flow/Flow_4",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/build-pipeline",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/wireframe-design-review",
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/wireframe-design-review",
       "touchesWorkPlan": false
     },
     {
@@ -2060,9 +2415,9 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview#flow/Flow_9",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/build-pipeline",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/feature-staging",
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/feature-staging",
       "touchesWorkPlan": false
     },
     {
@@ -2078,7 +2433,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview",
       "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/fhir-modeller",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/content-feedback",
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-feedback",
       "touchesWorkPlan": false
     }
   ],

@@ -199,6 +199,8 @@
     }
   ],
   "processes": {
+    "Process_NamedQueryExecution": [],
+    "Process_NQuadsDistribution": [],
     "Process_ContentAcquisition": [
       "Process_AskThePerson"
     ],
@@ -237,7 +239,6 @@
     ],
     "Process_Review": [
       "Process_CodeReview",
-      "Process_NarrativeCodeReview",
       "Process_NarrativeReview"
     ],
     "Process_VoiceReview": [
@@ -251,10 +252,7 @@
       "Process_AskThePerson"
     ],
     "Process_KgSeparationCutover": [],
-    "Process_KgSeparationMove": [
-      "Process_PublishVerification",
-      "Process_UpstreamAdoption"
-    ],
+    "Process_KgSeparationMove": [],
     "Process_KgSeparationPrepare": [],
     "Process_KgSeparation": [
       "Process_AskThePerson",
@@ -266,8 +264,6 @@
     "Process_KgToPortal": [],
     "Process_MountDependency": [],
     "Process_MountSubgraph": [],
-    "Process_NamedQueryExecution": [],
-    "Process_NQuadsDistribution": [],
     "Process_CodeReview": [],
     "Process_SliceSqlitePublish": [],
     "Process_SubKgLifecycle": [
@@ -276,15 +272,13 @@
       "Process_KgSeparationCutover",
       "Process_KgSeparationMove"
     ],
-    "Process_ActorRoleAdministration": [
-      "Process_CodeChangeReview"
-    ],
+    "Process_ActorRoleAdministration": [],
+    "Process_Adjudication": [],
     "Process_AskThePerson": [
       "Process_HumanAgentDiscussion"
     ],
     "Process_CRDM_Close": [
-      "Process_Adjudication",
-      "Process_MergeToMain"
+      "Process_Adjudication"
     ],
     "Process_CRDM_DataModel": [
       "Process_AskThePerson"
@@ -313,7 +307,14 @@
       "Process_Adjudication",
       "Process_AskThePerson"
     ],
+    "Process_CriterionAdjudication": [
+      "Process_Adjudication"
+    ],
     "Process_HandBackToDiscussion": [
+      "Process_AskThePerson"
+    ],
+    "Process_OptionsAnalysis": [],
+    "Process_RelatedWork": [
       "Process_AskThePerson"
     ],
     "Process_RenderKgToCdn": [],
@@ -330,12 +331,14 @@
     ],
     "Process_RenderLog": [],
     "Process_ThemeUIReview": [],
+    "Process_WebAppPublish": [
+      "Process_MultiLocaleTranslation"
+    ],
     "Process_WireframeDesignReview": [
       "Process_CriterionAdjudication",
       "Process_OptionsAnalysis"
     ],
     "Process_ActivityLog": [],
-    "Process_Adjudication": [],
     "Process_BeanClose": [],
     "Process_BeanDrain": [
       "Process_BeanClose",
@@ -357,9 +360,6 @@
     ],
     "Process_CodeQualityGates": [
       "Process_QaPublish"
-    ],
-    "Process_CriterionAdjudication": [
-      "Process_Adjudication"
     ],
     "Process_DocsSite": [
       "Process_PublishAlert",
@@ -401,7 +401,6 @@
     "Process_NarrativeCodeReview": [
       "Process_CriterionAdjudication"
     ],
-    "Process_OptionsAnalysis": [],
     "Process_PrChecksPresent": [
       "Process_TrackedWatch"
     ],
@@ -411,9 +410,6 @@
     "Process_PublishVerification": [],
     "Process_QaPublish": [],
     "Process_QaReportSigning": [],
-    "Process_RelatedWork": [
-      "Process_AskThePerson"
-    ],
     "Process_RepoHealth": [
       "Process_TrackedWatch"
     ],
@@ -450,6 +446,7 @@
     "Process_IgAstCache": [],
     "Process_IgAstDeltaReview": [],
     "Process_IgIncremental": [],
+    "Process_IgRelease": [],
     "Process_L3Fhir": [
       "Process_PublishExtractedStatements"
     ],
@@ -457,6 +454,11 @@
       "Process_WireframeDesignReview"
     ],
     "Process_IgDocsSiteCompose": [],
+    "Process_DsaDocumentLifecycle": [
+      "Process_BeanClose",
+      "Process_BeanOpen",
+      "Process_PublicComment"
+    ],
     "Process_GettingStarted": [
       "Process_AskThePerson",
       "Process_BeanClose",
@@ -497,11 +499,6 @@
       "Process_BeanOpen",
       "Process_Editing",
       "Process_PublicCommentRelease"
-    ],
-    "Process_DsaDocumentLifecycle": [
-      "Process_BeanClose",
-      "Process_BeanOpen",
-      "Process_PublicComment"
     ],
     "Process_Editing": [
       "Process_BeanClose",

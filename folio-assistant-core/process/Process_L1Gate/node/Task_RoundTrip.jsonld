@@ -10,11 +10,11 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:ServiceTask",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/ingestion-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate/lane/Lane_0",
       "requires": [
-        "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/translation-manager",
-        "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/untainted-verification"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/translation-manager",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/untainted-verification"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,

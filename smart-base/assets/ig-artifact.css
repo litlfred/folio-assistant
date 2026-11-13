@@ -5,13 +5,14 @@
 :root[data-fa-scheme="dark"]{--iga-fg:#e6edf3;--iga-bg:#0d1117;--iga-muted:#9198a1;--iga-line:#3d444d;--iga-soft:#151b23;--iga-link:#6cb6ff;--iga-held:#3fb950;--iga-ref:#9198a1;--iga-err:#ff7b72}
 /* The body's colours, font and margin, and the content's links, are the page layout's (body:has(.fa-page-main)), so a page this file is linked to for the bar alone (an OpenAPI page) keeps its own. */
 /* The thin pages' own header, where publisher-pages has not given them the IG's bar: the bar's look. */
-.iga-top{background:var(--ig-topbar-bg,#1c4b7c);color:#fff}
+.iga-top{background:var(--ig-topbar-bg,#2d4271);color:#fff}
 .iga-top a{color:#fff;text-decoration:none}
 .iga-top .iga-home{font-weight:600}
-.ig-search-top{background:var(--ig-topbar-bg,#1c4b7c);color:#fff}
+.ig-search-top{background:var(--ig-topbar-bg,#2d4271);color:#fff}
 .ig-search-top>.ig-search-home{color:#fff;text-decoration:none;font-weight:600}
 .iga h1{margin:.5rem 0 .25rem}
 .iga-key code,.iga code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;overflow-wrap:anywhere}
+.iga-inline-img{max-height:1.5em;width:auto;vertical-align:middle}
 .iga-sub{color:var(--iga-muted);margin:.25rem 0}
 .iga-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(10rem,1fr));gap:.5rem;margin:1rem 0}
 .iga-stat{border:1px solid var(--iga-line);border-radius:6px;padding:.5rem .75rem;background:var(--iga-soft)}
@@ -50,7 +51,27 @@ body>#ig-footer{margin-top:0}
 @media (max-width:40rem){.iga-identity,.iga-identity tbody,.iga-identity tr,.iga-identity th,.iga-identity td{display:block;width:auto}.iga-identity th{border-bottom:0}.iga-grid{grid-template-columns:repeat(auto-fill,minmax(9.5rem,1fr))}#ig-footer{padding:1rem .75rem}}
 /* The IG's list pages (artifacts.html, toc.html). */
 .igi-count{color:var(--iga-muted)}
-.igi-jump{margin:.5rem 0 1rem;line-height:1.9}
+/* artifacts.html: the guide and a Contents card on its right, a neutral card (owner, 2026-11-10, layout C); the tables run full width below. */
+.igi-head{display:grid;grid-template-columns:minmax(0,1fr) 18rem;gap:1.5rem;align-items:start;margin:1rem 0}
+.igi-head>.igi-guide{margin:0}
+.igi-head>.igi-contents{grid-column:-2}
+/* IG-CONTENTS-CARD: the Contents card, shared by artifacts.html and the narrative pages (`IG_CONTENTS_CSS` in build-ig-site.ts reads these lines for the standalone layout). */
+.igi-contents{border:1px solid var(--iga-line,#d1d9e0);border-radius:8px;background:var(--iga-bg,transparent);box-shadow:0 1px 3px rgba(0,0,0,.08);padding:.75rem 1rem;font-size:.9rem;box-sizing:border-box}
+.igi-contents-title{margin:0 0 .5rem;font-weight:600;font-size:.78rem;text-transform:uppercase;letter-spacing:.04em;color:var(--iga-muted,#59636e)}
+.igi-contents ul{list-style:none;margin:0;padding:0}
+.igi-contents li{display:flex;align-items:baseline;gap:.5rem;margin:.2rem 0;padding:0}
+.igi-contents li::before{content:none;display:none}
+.igi-contents li[hidden]{display:none}
+.igi-contents li>a{flex:1;min-width:0;text-decoration:none;color:var(--iga-link,#0b5cad);overflow-wrap:anywhere}
+.igi-contents li>a:hover{text-decoration:underline}
+.igi-n{color:var(--iga-muted,#59636e);font-size:.78rem;font-variant-numeric:tabular-nums;background:var(--iga-soft,#f6f8fa);border-radius:1em;padding:0 .45em}
+/* A narrative page: the card floats at the top right, as the Publisher's "Contents:" box does; a heading's rule stops short of it. */
+.ig-main>.igi-contents,.fa-page-main>.igi-contents{float:right;width:18rem;margin:0 0 1rem 1.5rem}
+.ig-main>.igi-contents~h2,.fa-page-main>.igi-contents~h2{display:flow-root}
+@media (max-width:50rem){.ig-main>.igi-contents,.fa-page-main>.igi-contents{float:none;width:auto;margin:1rem 0}}
+/* /IG-CONTENTS-CARD */
+@media (max-width:50rem){.igi-head{display:block}.igi-head>.igi-guide{margin:0 0 1rem}}
+@media print{.igi-contents{box-shadow:none}}
 .igi-filter{width:100%;max-width:30rem;box-sizing:border-box;padding:.4rem .6rem;margin:0 0 .5rem;font:inherit;color:var(--iga-fg);background:var(--iga-bg);border:1px solid var(--iga-line);border-radius:6px}
 .igi-table td:first-child{width:35%}
 .igi-table thead th{white-space:nowrap;overflow-wrap:normal}
@@ -75,7 +96,7 @@ body>#ig-footer{margin-top:0}
 .iga-only{display:block;margin:.5rem 0}
 .iga-constraints{margin:0;padding-left:1.1rem}
 /* The IG's top bar (build-ig-site.ts IG_TOPBAR_CSS, kept identical by its test): the title on its own line, the menu as dropdowns below it. */
-.ig-topbar{display:flex;flex-wrap:wrap;align-items:center;gap:.25rem 1rem;padding:.5rem 1.5rem;background:var(--ig-topbar-bg,#1c4b7c);color:#fff;font-size:.95rem}
+.ig-topbar{display:flex;flex-wrap:wrap;align-items:center;gap:.25rem 1rem;padding:.5rem 1.5rem;background:var(--ig-topbar-bg,#2d4271);color:#fff;font-size:.95rem}
 .ig-topbar a{color:#fff;text-decoration:none}
 .ig-topbar-home{flex:0 0 100%;font-weight:600}
 body:has(> .fa-glass-handle) .ig-topbar.fa-page-bar{padding-top:2.25rem}
@@ -83,7 +104,7 @@ body:has(> .fa-glass-handle) .ig-topbar.fa-page-bar{padding-top:2.25rem}
 .ig-topbar-group summary{cursor:pointer;list-style:none}
 .ig-topbar-group summary::after{content:" \25BE"}
 .ig-topbar-group ul{position:absolute;z-index:20;margin:.25rem 0 0;padding:.25rem 0;min-width:16rem;list-style:none;background:#fff;border:1px solid #ccc;box-shadow:0 2px 6px rgba(0,0,0,.15)}
-.ig-topbar-group li a{display:block;padding:.25rem .75rem;color:#1c4b7c}
+.ig-topbar-group li a{display:block;padding:.25rem .75rem;color:#2d4271}
 .ig-topbar-group li a:hover{background:#eef3f8}
 .ig-topbar .ig-topbar-group ul > li{margin:0;padding:0}
 .ig-topbar .ig-topbar-group ul > li::before{content:none;display:none}
@@ -92,10 +113,6 @@ html:not([data-fa-scheme="light"]) .ig-topbar-group li a{color:#cfe0f7}
 html:not([data-fa-scheme="light"]) .ig-topbar-group li a:hover{background:#3a3943}
 .ig-main{max-width:none;padding:1rem 1.5rem 3rem}
 .ig-edit{margin-top:2rem;font-size:.85rem}
-.ig-src{font-size:.7em;text-decoration:none;opacity:.45;margin-left:.25em}
-.ig-src:hover{opacity:1}
-.ig-feedback{font-size:.7em;text-decoration:none;opacity:.55;margin-left:.15em}
-.ig-feedback:hover{opacity:1}
 /* The IG's search box in the header (ig-search.ts IG_SEARCH_CSS, kept identical by its test). */
 .ig-search{position:relative;z-index:1000;margin-left:auto;flex:0 1 18rem;min-width:10rem}
 .ig-search-label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}

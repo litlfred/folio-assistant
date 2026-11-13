@@ -5,6 +5,170 @@
   "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
   "hasSubgraph": [
     {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/process/crdm/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/package/crdm",
+          "@type": "cat-harness:SkillPackage",
+          "declaresSkill": [
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/crdm-data-model",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/crdm-detect",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/crdm-impact-analysis",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/crdm-needs-assessment",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/crdm-recorded-walkthrough",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/crdm-requirements-template",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/crdm-requirements-workflow"
+          ],
+          "description": "CRDM — the requirements methodology: how a feature request becomes agreed, signed-off requirements. Its seven skills — three governing the methodology, three detailing a single phase (needs assessment, the requirements template, impact analysis), and one for eliciting requirements from a recorded walkthrough; its eight diagrams live in the layer's own `processes/`. RELOCATED 2026-09-22 from `methodologies/crdm/` on the owner's \"dont bury sub-graph assets\", which also brought this package into skill QA for the first time: bean `lps0` measured that `kg-audit`'s `skillFiles()` walks a hardcoded `skills/`, so while these three sat under `methodologies/` they were silently outside it — and `check:skills` had never validated this manifest, which is why it was missing every field below.",
+          "hasManifest": true,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+          "name": "crdm",
+          "path": "skills/process/crdm",
+          "version": "0.1.0"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/crdm-data-model",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "The CRDM data-modelling phase — when in the requirements process a model is built, what it is built from, who confirms it, and what it hands to the phases either side. The technique it invokes is `data-modelling`; this skill carries only the sequencing and the sign-off.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/crdm",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+          "instructionLines": 81,
+          "instructionsPath": "skills/process/crdm/crdm-data-model.md",
+          "name": "crdm-data-model",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d6cee7949198402cbd132cc8c78f0da0ef87530069b004ed6beb53f863ce5d0b",
+            "bytes": 3325,
+            "sha256": "d6cee7949198402cbd132cc8c78f0da0ef87530069b004ed6beb53f863ce5d0b"
+          },
+          "title": "CRDM — the data-modelling phase"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/crdm-detect",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Detect when a request needs requirements agreed before anything is built, and which of the two parallel requirements methodologies governs it.",
+          "hasIOContract": true,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/crdm",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+          "inputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/crdm-detect/input.schema.json",
+          "instructionLines": 281,
+          "instructionsPath": "skills/process/crdm/crdm-detect.md",
+          "name": "crdm-detect",
+          "outputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/crdm-detect/output.schema.json",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1e7919b334cc40b4af31e9ee4f358e2e25d9ea8c631c2fccb991f1f2d8fe6868",
+            "bytes": 13018,
+            "sha256": "1e7919b334cc40b4af31e9ee4f358e2e25d9ea8c631c2fccb991f1f2d8fe6868"
+          },
+          "title": "Feature-request detection (CRDM trigger)"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/crdm-impact-analysis",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Guide for CRDM Phase 4 — Impact Analysis and Migration Planning. Systematic scan across 7 dimensions: schema, pipeline, adapter, folio, skill, migration, and test/documentation impact. Produces a structured assessment for posting to the GitHub issue.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/crdm",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+          "instructionLines": 134,
+          "instructionsPath": "skills/process/crdm/crdm-impact-analysis.md",
+          "name": "crdm-impact-analysis",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/01a70e71f914b385e0596f5f7520139b0520bc47628150d5a42d53a2f87f70e3",
+            "bytes": 3851,
+            "sha256": "01a70e71f914b385e0596f5f7520139b0520bc47628150d5a42d53a2f87f70e3"
+          },
+          "title": "Phase 4 — Impact analysis (detail)"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/crdm-needs-assessment",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Facilitate Phase 1 (Needs Assessment) of the CRDM requirements workflow. Guide the BA through stakeholder identification, source material gathering, and synthesising a domain-language needs statement. Post to the GitHub issue and iterate until the BA confirms the need is correctly captured.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/crdm",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+          "instructionLines": 113,
+          "instructionsPath": "skills/process/crdm/crdm-needs-assessment.md",
+          "name": "crdm-needs-assessment",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/20db6c742d9109ed641e942e27a8bd4323eef0ff47243c39f99b177a7558be79",
+            "bytes": 4085,
+            "sha256": "20db6c742d9109ed641e942e27a8bd4323eef0ff47243c39f99b177a7558be79"
+          },
+          "title": "Phase 1 — Needs assessment (detail)"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/crdm-recorded-walkthrough",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Turn a recorded requirements walkthrough (a video call where a business analyst demonstrates a feature and a stakeholder asks for changes) into CRDM Phase 3 requirements with evidence: transcripts compared, an independent transcript where one can be made, screenshots cut at the moments the speakers point at the screen, and every requirement traced to a timestamp. Use when someone uploads a meeting recording, a Teams/Zoom transcript (.vtt, .docx) or both, and asks for requirements from it.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/crdm",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+          "instructionLines": 84,
+          "instructionsPath": "skills/process/crdm/crdm-recorded-walkthrough.md",
+          "name": "crdm-recorded-walkthrough",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d25fc6521accaf790ac61254ddf4c52aa03f8d9af03af29644ee1ffe19c4ee91",
+            "bytes": 4180,
+            "sha256": "d25fc6521accaf790ac61254ddf4c52aa03f8d9af03af29644ee1ffe19c4ee91"
+          },
+          "title": "Requirements from a recorded walkthrough"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/crdm-requirements-template",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Guide and template for CRDM Phase 3 — Requirements Definition. Helps the agent structure requirements from conversation using a REQ-### format with acceptance criteria, priority, and traceability.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/crdm",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+          "instructionLines": 217,
+          "instructionsPath": "skills/process/crdm/crdm-requirements-template.md",
+          "name": "crdm-requirements-template",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/30f9e956777835f633070d28e5e78dd90ce187a1320ce04f2e60670b3c876626",
+            "bytes": 11413,
+            "sha256": "30f9e956777835f633070d28e5e78dd90ce187a1320ce04f2e60670b3c876626"
+          },
+          "title": "Phase 3 — Requirements definition (detail)"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/crdm-requirements-workflow",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/crdm",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+          "instructionLines": 560,
+          "instructionsPath": "skills/process/crdm/crdm-requirements-workflow.md",
+          "name": "crdm-requirements-workflow",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f4b1c911148951cec0d372e8143b010e0cbf21097b0b2ba0b62509b5afe10cd6",
+            "bytes": 32515,
+            "sha256": "f4b1c911148951cec0d372e8143b010e0cbf21097b0b2ba0b62509b5afe10cd6"
+          },
+          "title": "CRDM requirements workflow"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "skills/process/crdm",
+      "path": "skills/process/crdm/"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/process/process-core/",
       "@type": "bootstrap:Subgraph",
       "hasMember": [
@@ -12,13 +176,20 @@
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/package/process-core",
           "@type": "cat-harness:SkillPackage",
           "declaresSkill": [
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/adjudication",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/ci-health",
             "https://litlfred.github.io/folio-assistant/cat-harness/skill/compiled-artefact-cache",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/decision-audit",
             "https://litlfred.github.io/folio-assistant/cat-harness/skill/decision-methodology-selector",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/git-friendly-churn",
             "https://litlfred.github.io/folio-assistant/cat-harness/skill/methodology-adoption",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/platform-gates",
             "https://litlfred.github.io/folio-assistant/cat-harness/skill/role-model",
             "https://litlfred.github.io/folio-assistant/cat-harness/skill/swimlane-glossary",
             "https://litlfred.github.io/folio-assistant/cat-harness/skill/swot-analysis",
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/task-authorization"
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/task-authorization",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/untainted-verification",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/upstream-version-adoption"
           ],
           "description": "The process model's supporting knowledge: the role model and task authorization, the swimlane glossary, and how a methodology is chosen and adopted (decision-methodology-selector, methodology-adoption, swot-analysis). Moved out of folio-core into the process topic (bean 9umr, owner ruling 2026-09-30); workflow (BPMN/DMN authoring and the engine's state) and raci are its siblings in the same topic.",
           "hasManifest": true,
@@ -26,6 +197,44 @@
           "name": "process-core",
           "path": "skills/process/process-core",
           "version": "0.1.0"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/adjudication",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Settle a review that reached no mechanical or consensus agreement. What makes a disagreement adjudicable, the shape its implementations share, why the adjudication LEADS the criterion while the checker's entry is kept beneath it, and the dispensation that records the reason — scoped to a version, never precedent.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/process-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+          "instructionLines": 239,
+          "instructionsPath": "skills/process/process-core/adjudication.md",
+          "name": "adjudication",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/771067b11646f23eaa4103293f1bdac07ae4019ca732f0fe7211f6b9071064ec",
+            "bytes": 13453,
+            "sha256": "771067b11646f23eaa4103293f1bdac07ae4019ca732f0fe7211f6b9071064ec"
+          },
+          "title": "Adjudication — judgement, when the mechanism ran out of facts"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/ci-health",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "A red workflow looks exactly like a green one from inside a checkout. How to read a default-branch health report, the three verdicts that keep it honest, why a watchdog needs both a session-start print and an unattended run, and the separate external question the Pages deployments need.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/process-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+          "instructionLines": 295,
+          "instructionsPath": "skills/process/process-core/ci-health.md",
+          "name": "ci-health",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/50eadbfaec3c743b5403fa8f454ccf5d76d3197af4e123cfa358cb22ed8c19c9",
+            "bytes": 16451,
+            "sha256": "50eadbfaec3c743b5403fa8f454ccf5d76d3197af4e123cfa358cb22ed8c19c9"
+          },
+          "title": "CI health — a red workflow looks exactly like a green one from in here"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/compiled-artefact-cache",
@@ -36,15 +245,34 @@
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/process-core",
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
-          "instructionLines": 97,
+          "instructionLines": 99,
           "instructionsPath": "skills/process/process-core/compiled-artefact-cache.md",
           "name": "compiled-artefact-cache",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5c20c81f5421a88f4e5b153145e72cd00e9063c8ed5bc89f9088c2320e7d34e7",
-            "bytes": 6036,
-            "sha256": "5c20c81f5421a88f4e5b153145e72cd00e9063c8ed5bc89f9088c2320e7d34e7"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3dc4d1be8d98db83e6ef5d8336dddb57ac84698376e48f8a2eb1e7b5732d7a75",
+            "bytes": 6282,
+            "sha256": "3dc4d1be8d98db83e6ef5d8336dddb57ac84698376e48f8a2eb1e7b5732d7a75"
           },
           "title": "Compiled Artefact Cache"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/decision-audit",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Record why a decision was made, or why a finding in it was left. Required of whoever adjudicates a gate, and of the agent that assembles the citations for them. Every overrule of a mechanical finding carries a note, and every note cites corpus evidence.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/process-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+          "instructionLines": 92,
+          "instructionsPath": "skills/process/process-core/decision-audit.md",
+          "name": "decision-audit",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4928f4de5d8bad86a34da13755011a549d7ac9d457dd04a4d87f87b608aed0e5",
+            "bytes": 4543,
+            "sha256": "4928f4de5d8bad86a34da13755011a549d7ac9d457dd04a4d87f87b608aed0e5"
+          },
+          "title": "A decision is not a finding, and neither is a substitute for the other"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/decision-methodology-selector",
@@ -66,6 +294,25 @@
           "title": "Decision methodology selector"
         },
         {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/git-friendly-churn",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Write files that git keeps many versions of (caches, published sites, generated indexes) so each new version costs a small delta, not a whole copy. The rules: the same bytes when nothing changed, stable paths, per-build facts kept apart, no compressed blobs, and how to measure it.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/process-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+          "instructionLines": 136,
+          "instructionsPath": "skills/process/process-core/git-friendly-churn.md",
+          "name": "git-friendly-churn",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a45f0ff6189e06765905827a8c0938a70b1b4a0be458602b4c2f4915864008cb",
+            "bytes": 6580,
+            "sha256": "a45f0ff6189e06765905827a8c0938a70b1b4a0be458602b4c2f4915864008cb"
+          },
+          "title": "Files git keeps many versions of"
+        },
+        {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/methodology-adoption",
           "@type": "bootstrap:Skill",
           "ambiguous": false,
@@ -78,11 +325,30 @@
           "instructionsPath": "skills/process/process-core/methodology-adoption.md",
           "name": "methodology-adoption",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8b45bdc3ee0f6675ae26dfb49511540107e47e8df617fc1894fc6ffe3e682422",
-            "bytes": 11696,
-            "sha256": "8b45bdc3ee0f6675ae26dfb49511540107e47e8df617fc1894fc6ffe3e682422"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7fad86c0d8ae5fdb39dafb6b5a2f954b5d8fb36ca8fe3936346201db865a9263",
+            "bytes": 11693,
+            "sha256": "7fad86c0d8ae5fdb39dafb6b5a2f954b5d8fb36ca8fe3936346201db865a9263"
           },
           "title": "Adopting a methodology, and choosing between them"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/platform-gates",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "`bun test` passing is not the gates passing. What to run before you push, why the list is derived from the CI workflow rather than written down, and what a `*:check` failure is actually telling you to do.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/process-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+          "instructionLines": 230,
+          "instructionsPath": "skills/process/process-core/platform-gates.md",
+          "name": "platform-gates",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/56456728455a94261b68eae195e4813b7c1ee355d04ee95a1104d1c4176ca0b6",
+            "bytes": 9979,
+            "sha256": "56456728455a94261b68eae195e4813b7c1ee355d04ee95a1104d1c4176ca0b6"
+          },
+          "title": "The platform's own gates — run what CI will run"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/role-model",
@@ -97,9 +363,9 @@
           "instructionsPath": "skills/process/process-core/role-model.md",
           "name": "role-model",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e8cb3047b6555703d16de6938ed5a3ab106f9a97feaec53de866ea3487644b81",
-            "bytes": 32661,
-            "sha256": "e8cb3047b6555703d16de6938ed5a3ab106f9a97feaec53de866ea3487644b81"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fb1a74ce884f999fcfbde667fce705605b01fb90e17513a0ae9f4ea7519dccfa",
+            "bytes": 32618,
+            "sha256": "fb1a74ce884f999fcfbde667fce705605b01fb90e17513a0ae9f4ea7519dccfa"
           },
           "title": "Roles are swimlanes"
         },
@@ -115,9 +381,9 @@
           "instructionsPath": "skills/process/process-core/swimlane-glossary.md",
           "name": "swimlane-glossary",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/802788c81518731d862526fe2a44d6d3b2db8159d146ffbf85a747c23a4af0b0",
-            "bytes": 6789,
-            "sha256": "802788c81518731d862526fe2a44d6d3b2db8159d146ffbf85a747c23a4af0b0"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/bf7528803b60ee6de5490a1ee24ded4aa419d0d27002ed859e9a3df7cfcfdab8",
+            "bytes": 6769,
+            "sha256": "bf7528803b60ee6de5490a1ee24ded4aa419d0d27002ed859e9a3df7cfcfdab8"
           },
           "title": "Swimlane Glossary Skill"
         },
@@ -134,9 +400,9 @@
           "instructionsPath": "skills/process/process-core/swot-analysis.md",
           "name": "swot-analysis",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2a562c978b1f4e37094f0df2331f697a36b157280e8411bebd76a1879795503a",
-            "bytes": 4033,
-            "sha256": "2a562c978b1f4e37094f0df2331f697a36b157280e8411bebd76a1879795503a"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/13fe062ee096746413b9f5f671a27856f2c071758891bccc9e980fe62fecf87d",
+            "bytes": 4036,
+            "sha256": "13fe062ee096746413b9f5f671a27856f2c071758891bccc9e980fe62fecf87d"
           },
           "title": "Running a SWOT scan"
         },
@@ -158,6 +424,44 @@
             "sha256": "850bc15d43b5a348c4d8094f2576baaf98fa9a4874d01b0a5793d81294264cf5"
           },
           "title": "Task authorization — four questions before every task"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/untainted-verification",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "The party that produced an artefact does not write the verdict on it. How a checker and an adjudicator are dispatched with controlled context, the three rules that make it a measurement rather than a ritual, and the third state that lets it gate at all.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/process-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+          "instructionLines": 167,
+          "instructionsPath": "skills/process/process-core/untainted-verification.md",
+          "name": "untainted-verification",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1ba07a95a4d24ba7e92b700ec631e734f9c28b6ea6523059b99e90fce2dec42e",
+            "bytes": 8583,
+            "sha256": "1ba07a95a4d24ba7e92b700ec631e734f9c28b6ea6523059b99e90fce2dec42e"
+          },
+          "title": "Untainted verification — the producer never writes the verdict"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/upstream-version-adoption",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Watch a pinned upstream dependency for a new release, and take a candidate version through impact analysis, an MVP build, review and a person's adopt/hold/decline decision. Reusable per pin — the theme is the first tenant, not the only one.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/process-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+          "instructionLines": 198,
+          "instructionsPath": "skills/process/process-core/upstream-version-adoption.md",
+          "name": "upstream-version-adoption",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b87a38e18ceef04604323a00e48820e6c0d759017b17745dd7c8d6fe6f99336c",
+            "bytes": 9745,
+            "sha256": "b87a38e18ceef04604323a00e48820e6c0d759017b17745dd7c8d6fe6f99336c"
+          },
+          "title": "Adopting an upstream version bump"
         }
       ],
       "holdsGraph": [
@@ -227,7 +531,7 @@
             "https://litlfred.github.io/folio-assistant/cat-harness/skill/specification-compiled-agents",
             "https://litlfred.github.io/folio-assistant/cat-harness/skill/workflow-state"
           ],
-          "description": "BPMN navigation and workflow management: how a process is authored, where an instance keeps its position, and which store answers which question. Split out of folio-core, which held 97 skills — a package that holds everything is one nobody can be pointed at.",
+          "description": "BPMN navigation and workflow management: how a process is authored, where a layer keeps its position, and which store answers which question. Split out of folio-core, which held 97 skills — a package that holds everything is one nobody can be pointed at.",
           "hasManifest": true,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
           "name": "workflow",
@@ -286,9 +590,9 @@
           "instructionsPath": "skills/process/workflow/bpmn-processes.md",
           "name": "bpmn-processes",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/98b60877682f3ecba679c1dc0d6d56d926de7308f35569ea8e56a8d40153dd99",
-            "bytes": 17165,
-            "sha256": "98b60877682f3ecba679c1dc0d6d56d926de7308f35569ea8e56a8d40153dd99"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5d41e51cb9f6c0f322cc4969219fa5b6e42e05d5bcd3e1a170fe8f72b954814d",
+            "bytes": 17113,
+            "sha256": "5d41e51cb9f6c0f322cc4969219fa5b6e42e05d5bcd3e1a170fe8f72b954814d"
           },
           "title": "Processes are BPMN, and the diagrams are executable"
         },
@@ -344,9 +648,9 @@
           "instructionsPath": "skills/process/workflow/process-state.md",
           "name": "process-state",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c7b947af291ad34747fb8d56835b400478cd2bb4acbcacf4009b1f188edbabfa",
-            "bytes": 15749,
-            "sha256": "c7b947af291ad34747fb8d56835b400478cd2bb4acbcacf4009b1f188edbabfa"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7362589a7eb6326f5657d549f3beb18b1824e961fbeb4a69f169e55ec550475b",
+            "bytes": 15645,
+            "sha256": "7362589a7eb6326f5657d549f3beb18b1824e961fbeb4a69f169e55ec550475b"
           },
           "title": "Process state — the task you are in, inside the process you are running"
         },
@@ -359,13 +663,13 @@
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/workflow",
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
-          "instructionLines": 72,
+          "instructionLines": 71,
           "instructionsPath": "skills/process/workflow/render-kg-to-cdn.md",
           "name": "render-kg-to-cdn",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/cc75deab3158419afd78bb8b248cfd45f028f50a8d254a4ba062645a4d1107ab",
-            "bytes": 3652,
-            "sha256": "cc75deab3158419afd78bb8b248cfd45f028f50a8d254a4ba062645a4d1107ab"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4e529f86030d68004ed7238a4945aa529c3a0b4449dbbe9c92a3f1e60addd0d0",
+            "bytes": 3484,
+            "sha256": "4e529f86030d68004ed7238a4945aa529c3a0b4449dbbe9c92a3f1e60addd0d0"
           },
           "title": "Render a Knowledge Graph to a CDN"
         },
@@ -382,9 +686,9 @@
           "instructionsPath": "skills/process/workflow/session-context.md",
           "name": "session-context",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/83f73785553c7ba784e5f490f9cfa88a7a85c986eb38553211c38ae894755976",
-            "bytes": 6686,
-            "sha256": "83f73785553c7ba784e5f490f9cfa88a7a85c986eb38553211c38ae894755976"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/02a86fa7db54fe3f8a810a8315d54b6ab935571d5a9c8344c15c8b8714e04c21",
+            "bytes": 6603,
+            "sha256": "02a86fa7db54fe3f8a810a8315d54b6ab935571d5a9c8344c15c8b8714e04c21"
           },
           "title": "Session context"
         },
@@ -439,9 +743,9 @@
           "instructionsPath": "skills/process/workflow/workflow-state.md",
           "name": "workflow-state",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d28f309651bb4f1d448051c7c6cafb367c1190a8653c3b5e26c469ffdf53afe3",
-            "bytes": 7030,
-            "sha256": "d28f309651bb4f1d448051c7c6cafb367c1190a8653c3b5e26c469ffdf53afe3"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1c20841c76d32948b8fa810f83a4593153c7d3eb7d68b5f35f39bb0678bc8dba",
+            "bytes": 6765,
+            "sha256": "1c20841c76d32948b8fa810f83a4593153c7d3eb7d68b5f35f39bb0678bc8dba"
           },
           "title": "State in a running process"
         }

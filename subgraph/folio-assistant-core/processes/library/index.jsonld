@@ -34,6 +34,10 @@
       "@type": "bootstrap:SequenceFlow"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg#flow/Flow_k5c",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg#flow/Flow_k6",
       "@type": "bootstrap:SequenceFlow"
     },
@@ -70,7 +74,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg/node/Task_Glossary",
       "@type": "bootstrap:ProcessNode",
-      "name": "Read glossary and abbreviations into candidate terms"
+      "name": "Read glossary into candidate terms"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg/node/Task_Link",
@@ -81,6 +85,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg/node/Task_Manifest",
       "@type": "bootstrap:ProcessNode",
       "name": "Write manifest.jsonld referencing it"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg/node/Task_References",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Extract reference lists"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeepDocumentResearch",
@@ -208,6 +217,18 @@
       "@type": "bootstrap:SequenceFlow"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent#flow/Flow_d14",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent#flow/Flow_d15",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent#flow/Flow_d16",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent#flow/Flow_d2",
       "@type": "bootstrap:SequenceFlow"
     },
@@ -275,6 +296,16 @@
       "name": "Transcribe and translate audio"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/node/Task_FiguresTables",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Extract figures and tables"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/node/Task_Footnotes",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Footnotes and the marks that call them"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/node/Task_Image",
       "@type": "bootstrap:ProcessNode",
       "name": "Narrative description per image, localized"
@@ -334,6 +365,10 @@
       "@type": "bootstrap:SequenceFlow"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure#flow/Flow_e9",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure/lane/Lane_0",
       "@type": "cat-harness:Lane",
       "name": "Ingestion Engine (agent, runs unattended)"
@@ -369,6 +404,11 @@
       "name": "OCR to ocr/page-*.txt"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure/node/Task_PageCheck",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Check each page; OCR pages that fail"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure/node/Task_Sections",
       "@type": "bootstrap:ProcessNode",
       "name": "Split into sections/*.md with doc_brief front-matter"
@@ -401,6 +441,10 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion#flow/Flow_i12",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion#flow/Flow_i12a",
       "@type": "bootstrap:SequenceFlow"
     },
     {
@@ -515,7 +559,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/CallActivity_PublishStatements",
       "@type": "bootstrap:ProcessNode",
-      "name": "Publish the extracted statements with source links"
+      "name": "Publish the extracted statements"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/Call_BeanClose",
@@ -568,6 +612,11 @@
       "name": "Detect media type, mint a doc id"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/Task_Errata",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Record errata in the source's own text"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/Task_Licence",
       "@type": "bootstrap:ProcessNode",
       "name": "Establish the licence from the upload"
@@ -585,7 +634,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/Task_SummaryQueue",
       "@type": "bootstrap:ProcessNode",
-      "name": "Queue prose blocks for summary"
+      "name": "Summarise prose blocks, in every language"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate",

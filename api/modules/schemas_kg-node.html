@@ -3,11 +3,11 @@ actor, a bean-graph node, a skill, a process. <strong><code>title</code> is what
 sees, <code>description</code> is the sentence under it</strong> — one spelling for every
 node type. Both optional in general; a node type may require either, and
 <code>kg-audit</code> reports a role with no narrative.</p><h2 id="is-not-and-not" class="tsd-anchor-link"><code>title</code> is not <code>id</code>, and not <code>name</code><a href="#is-not-and-not" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p><code>id</code> is the handle other nodes reference. <code>name</code> — where a node still has one
-— is the instance's own identifier, the thing <code>harness.json</code> calls
+— is the layer's own identifier, the thing <code>harness.json</code> calls
 <code>folio-assistant</code> and publishes artefacts under. <code>title</code> is display text,
 may contain punctuation an identifier could not, and is <strong>translatable</strong>.
 <code>C@T Harness</code> is a title; <code>cat-harness</code> is a name.</p><p><strong>The default is no title.</strong> <a href="../functions/schemas_kg-node.displayTitle.html" class="tsd-kind-function">displayTitle</a> falls back to <code>name</code>, so
-an instance whose display text should match its repository omits <code>title</code>
+a layer whose display text should match its repository omits <code>title</code>
 rather than repeating <code>name</code>.</p><h2 id="translatable-means-extractable" class="tsd-anchor-link">Translatable means extractable<a href="#translatable-means-extractable" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p><a href="../variables/schemas_kg-node.KG_NODE_LABEL_FIELDS.html" class="tsd-kind-variable">KG_NODE_LABEL_FIELDS</a> is the list a translation extractor reads.
 Nothing else in a KG declaration is offered for translation: an id, a path
 or a graph typology is structure, and translating structure is how a

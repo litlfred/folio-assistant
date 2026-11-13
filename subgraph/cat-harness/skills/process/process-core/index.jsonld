@@ -10,15 +10,48 @@
       "name": "process-core"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/adjudication",
+      "@type": "bootstrap:Skill",
+      "name": "adjudication",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/771067b11646f23eaa4103293f1bdac07ae4019ca732f0fe7211f6b9071064ec",
+        "bytes": 13453,
+        "sha256": "771067b11646f23eaa4103293f1bdac07ae4019ca732f0fe7211f6b9071064ec"
+      },
+      "title": "Adjudication — judgement, when the mechanism ran out of facts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/ci-health",
+      "@type": "bootstrap:Skill",
+      "name": "ci-health",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/50eadbfaec3c743b5403fa8f454ccf5d76d3197af4e123cfa358cb22ed8c19c9",
+        "bytes": 16451,
+        "sha256": "50eadbfaec3c743b5403fa8f454ccf5d76d3197af4e123cfa358cb22ed8c19c9"
+      },
+      "title": "CI health — a red workflow looks exactly like a green one from in here"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/compiled-artefact-cache",
       "@type": "bootstrap:Skill",
       "name": "compiled-artefact-cache",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5c20c81f5421a88f4e5b153145e72cd00e9063c8ed5bc89f9088c2320e7d34e7",
-        "bytes": 6036,
-        "sha256": "5c20c81f5421a88f4e5b153145e72cd00e9063c8ed5bc89f9088c2320e7d34e7"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3dc4d1be8d98db83e6ef5d8336dddb57ac84698376e48f8a2eb1e7b5732d7a75",
+        "bytes": 6282,
+        "sha256": "3dc4d1be8d98db83e6ef5d8336dddb57ac84698376e48f8a2eb1e7b5732d7a75"
       },
       "title": "Compiled Artefact Cache"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/decision-audit",
+      "@type": "bootstrap:Skill",
+      "name": "decision-audit",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4928f4de5d8bad86a34da13755011a549d7ac9d457dd04a4d87f87b608aed0e5",
+        "bytes": 4543,
+        "sha256": "4928f4de5d8bad86a34da13755011a549d7ac9d457dd04a4d87f87b608aed0e5"
+      },
+      "title": "A decision is not a finding, and neither is a substitute for the other"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/decision-methodology-selector",
@@ -32,24 +65,46 @@
       "title": "Decision methodology selector"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/git-friendly-churn",
+      "@type": "bootstrap:Skill",
+      "name": "git-friendly-churn",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a45f0ff6189e06765905827a8c0938a70b1b4a0be458602b4c2f4915864008cb",
+        "bytes": 6580,
+        "sha256": "a45f0ff6189e06765905827a8c0938a70b1b4a0be458602b4c2f4915864008cb"
+      },
+      "title": "Files git keeps many versions of"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/methodology-adoption",
       "@type": "bootstrap:Skill",
       "name": "methodology-adoption",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8b45bdc3ee0f6675ae26dfb49511540107e47e8df617fc1894fc6ffe3e682422",
-        "bytes": 11696,
-        "sha256": "8b45bdc3ee0f6675ae26dfb49511540107e47e8df617fc1894fc6ffe3e682422"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7fad86c0d8ae5fdb39dafb6b5a2f954b5d8fb36ca8fe3936346201db865a9263",
+        "bytes": 11693,
+        "sha256": "7fad86c0d8ae5fdb39dafb6b5a2f954b5d8fb36ca8fe3936346201db865a9263"
       },
       "title": "Adopting a methodology, and choosing between them"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/platform-gates",
+      "@type": "bootstrap:Skill",
+      "name": "platform-gates",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/56456728455a94261b68eae195e4813b7c1ee355d04ee95a1104d1c4176ca0b6",
+        "bytes": 9979,
+        "sha256": "56456728455a94261b68eae195e4813b7c1ee355d04ee95a1104d1c4176ca0b6"
+      },
+      "title": "The platform's own gates — run what CI will run"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/role-model",
       "@type": "bootstrap:Skill",
       "name": "role-model",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e8cb3047b6555703d16de6938ed5a3ab106f9a97feaec53de866ea3487644b81",
-        "bytes": 32661,
-        "sha256": "e8cb3047b6555703d16de6938ed5a3ab106f9a97feaec53de866ea3487644b81"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fb1a74ce884f999fcfbde667fce705605b01fb90e17513a0ae9f4ea7519dccfa",
+        "bytes": 32618,
+        "sha256": "fb1a74ce884f999fcfbde667fce705605b01fb90e17513a0ae9f4ea7519dccfa"
       },
       "title": "Roles are swimlanes"
     },
@@ -58,9 +113,9 @@
       "@type": "bootstrap:Skill",
       "name": "swimlane-glossary",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/802788c81518731d862526fe2a44d6d3b2db8159d146ffbf85a747c23a4af0b0",
-        "bytes": 6789,
-        "sha256": "802788c81518731d862526fe2a44d6d3b2db8159d146ffbf85a747c23a4af0b0"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/bf7528803b60ee6de5490a1ee24ded4aa419d0d27002ed859e9a3df7cfcfdab8",
+        "bytes": 6769,
+        "sha256": "bf7528803b60ee6de5490a1ee24ded4aa419d0d27002ed859e9a3df7cfcfdab8"
       },
       "title": "Swimlane Glossary Skill"
     },
@@ -69,9 +124,9 @@
       "@type": "bootstrap:Skill",
       "name": "swot-analysis",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2a562c978b1f4e37094f0df2331f697a36b157280e8411bebd76a1879795503a",
-        "bytes": 4033,
-        "sha256": "2a562c978b1f4e37094f0df2331f697a36b157280e8411bebd76a1879795503a"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/13fe062ee096746413b9f5f671a27856f2c071758891bccc9e980fe62fecf87d",
+        "bytes": 4036,
+        "sha256": "13fe062ee096746413b9f5f671a27856f2c071758891bccc9e980fe62fecf87d"
       },
       "title": "Running a SWOT scan"
     },
@@ -85,6 +140,28 @@
         "sha256": "850bc15d43b5a348c4d8094f2576baaf98fa9a4874d01b0a5793d81294264cf5"
       },
       "title": "Task authorization — four questions before every task"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/untainted-verification",
+      "@type": "bootstrap:Skill",
+      "name": "untainted-verification",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1ba07a95a4d24ba7e92b700ec631e734f9c28b6ea6523059b99e90fce2dec42e",
+        "bytes": 8583,
+        "sha256": "1ba07a95a4d24ba7e92b700ec631e734f9c28b6ea6523059b99e90fce2dec42e"
+      },
+      "title": "Untainted verification — the producer never writes the verdict"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/upstream-version-adoption",
+      "@type": "bootstrap:Skill",
+      "name": "upstream-version-adoption",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b87a38e18ceef04604323a00e48820e6c0d759017b17745dd7c8d6fe6f99336c",
+        "bytes": 9745,
+        "sha256": "b87a38e18ceef04604323a00e48820e6c0d759017b17745dd7c8d6fe6f99336c"
+      },
+      "title": "Adopting an upstream version bump"
     }
   ],
   "holdsGraph": [

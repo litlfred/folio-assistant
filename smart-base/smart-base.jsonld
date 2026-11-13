@@ -105,6 +105,10 @@
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/maintainedBy",
       "@type": "@id"
     },
+    "jsonSchema": {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/jsonSchema",
+      "@type": "@id"
+    },
     "module": "https://litlfred.github.io/cat-harness/v0/ns/module",
     "holdsGraph": {
       "@id": "http://purl.org/dc/terms/type",
@@ -363,10 +367,10 @@
     "registry",
     "packages"
   ],
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/975bbe594a8246f34e8f7b01b01cdb11bee51ce1",
-  "sourceCommitSha": "975bbe594a8246f34e8f7b01b01cdb11bee51ce1",
-  "sourceTree": "8515b2cf3a678ffab43a222a3d099887cf9c3c1a",
-  "sourceCommitAt": "2026-11-08T14:29:02+01:00",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c51f9c4aaed9dc175be37d618a3c48c3027881b4",
+  "sourceCommitSha": "c51f9c4aaed9dc175be37d618a3c48c3027881b4",
+  "sourceTree": "41d9dd0b016cc2c8f14ac0a1e8ecff7110234a11",
+  "sourceCommitAt": "2026-11-13T08:55:02+01:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -379,7 +383,8 @@
     "Role": 3,
     "Subgraph": 29,
     "Asset": 3,
-    "Tool": 15
+    "Tool": 15,
+    "Schema": 8
   },
   "@graph": [
     {
@@ -1053,7 +1058,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
       "name": "Programme manager",
       "partOf": "http://smart.who.int/base/process/Process_DIIG",
-      "bindsRole": "http://smart.who.int/base/role/programme-manager",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
       "inSubgraph": "http://smart.who.int/base/directory/processes"
     },
     {
@@ -1061,7 +1066,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
       "name": "Business analyst",
       "partOf": "http://smart.who.int/base/process/Process_DIIG",
-      "bindsRole": "http://smart.who.int/base/role/business-analyst",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "inSubgraph": "http://smart.who.int/base/directory/processes"
     },
     {
@@ -1071,7 +1076,7 @@
       "nodeKind": "start",
       "bpmnType": "bpmn:StartEvent",
       "partOf": "http://smart.who.int/base/process/Process_DIIG",
-      "performedBy": "http://smart.who.int/base/role/programme-manager",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
       "inLane": "http://smart.who.int/base/process/Process_DIIG/lane/Lane_ProgrammeManager",
       "requires": [],
       "touchesWorkPlan": false,
@@ -1089,10 +1094,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_DIIG",
-      "performedBy": "http://smart.who.int/base/role/programme-manager",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
       "inLane": "http://smart.who.int/base/process/Process_DIIG/lane/Lane_ProgrammeManager",
       "requires": [
-        "http://smart.who.int/base/skill/methodology-adoption"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/methodology-adoption"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -1111,10 +1116,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_DIIG",
-      "performedBy": "http://smart.who.int/base/role/business-analyst",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "inLane": "http://smart.who.int/base/process/Process_DIIG/lane/Lane_BusinessAnalyst",
       "requires": [
-        "http://smart.who.int/base/skill/methodology-adoption"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/methodology-adoption"
       ],
       "touchesWorkPlan": true,
       "workPlanOp": "note",
@@ -1135,10 +1140,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_DIIG",
-      "performedBy": "http://smart.who.int/base/role/business-analyst",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "inLane": "http://smart.who.int/base/process/Process_DIIG/lane/Lane_BusinessAnalyst",
       "requires": [
-        "http://smart.who.int/base/skill/methodology-adoption"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/methodology-adoption"
       ],
       "touchesWorkPlan": true,
       "workPlanOp": "note",
@@ -1158,10 +1163,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_DIIG",
-      "performedBy": "http://smart.who.int/base/role/business-analyst",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "inLane": "http://smart.who.int/base/process/Process_DIIG/lane/Lane_BusinessAnalyst",
       "requires": [
-        "http://smart.who.int/base/skill/methodology-adoption"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/methodology-adoption"
       ],
       "touchesWorkPlan": true,
       "workPlanOp": "note",
@@ -1181,7 +1186,7 @@
       "nodeKind": "exclusive",
       "bpmnType": "bpmn:ExclusiveGateway",
       "partOf": "http://smart.who.int/base/process/Process_DIIG",
-      "performedBy": "http://smart.who.int/base/role/business-analyst",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "inLane": "http://smart.who.int/base/process/Process_DIIG/lane/Lane_BusinessAnalyst",
       "requires": [],
       "touchesWorkPlan": false,
@@ -1202,10 +1207,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_DIIG",
-      "performedBy": "http://smart.who.int/base/role/programme-manager",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
       "inLane": "http://smart.who.int/base/process/Process_DIIG/lane/Lane_ProgrammeManager",
       "requires": [
-        "http://smart.who.int/base/skill/methodology-adoption"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/methodology-adoption"
       ],
       "touchesWorkPlan": true,
       "workPlanOp": "note",
@@ -1225,10 +1230,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_DIIG",
-      "performedBy": "http://smart.who.int/base/role/business-analyst",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "inLane": "http://smart.who.int/base/process/Process_DIIG/lane/Lane_BusinessAnalyst",
       "requires": [
-        "http://smart.who.int/base/skill/methodology-adoption"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/methodology-adoption"
       ],
       "touchesWorkPlan": true,
       "workPlanOp": "note",
@@ -1248,10 +1253,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_DIIG",
-      "performedBy": "http://smart.who.int/base/role/programme-manager",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
       "inLane": "http://smart.who.int/base/process/Process_DIIG/lane/Lane_ProgrammeManager",
       "requires": [
-        "http://smart.who.int/base/skill/methodology-adoption"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/methodology-adoption"
       ],
       "touchesWorkPlan": true,
       "workPlanOp": "note",
@@ -1271,10 +1276,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_DIIG",
-      "performedBy": "http://smart.who.int/base/role/programme-manager",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
       "inLane": "http://smart.who.int/base/process/Process_DIIG/lane/Lane_ProgrammeManager",
       "requires": [
-        "http://smart.who.int/base/skill/methodology-adoption"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/methodology-adoption"
       ],
       "touchesWorkPlan": true,
       "workPlanOp": "note",
@@ -1295,7 +1300,7 @@
       "nodeKind": "exclusive",
       "bpmnType": "bpmn:ExclusiveGateway",
       "partOf": "http://smart.who.int/base/process/Process_DIIG",
-      "performedBy": "http://smart.who.int/base/role/programme-manager",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
       "inLane": "http://smart.who.int/base/process/Process_DIIG/lane/Lane_ProgrammeManager",
       "requires": [],
       "touchesWorkPlan": false,
@@ -1316,10 +1321,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_DIIG",
-      "performedBy": "http://smart.who.int/base/role/programme-manager",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
       "inLane": "http://smart.who.int/base/process/Process_DIIG/lane/Lane_ProgrammeManager",
       "requires": [
-        "http://smart.who.int/base/skill/methodology-adoption"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/methodology-adoption"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -1338,7 +1343,7 @@
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "http://smart.who.int/base/process/Process_DIIG",
-      "performedBy": "http://smart.who.int/base/role/programme-manager",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
       "inLane": "http://smart.who.int/base/process/Process_DIIG/lane/Lane_ProgrammeManager",
       "requires": [],
       "touchesWorkPlan": false,
@@ -1356,10 +1361,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "http://smart.who.int/base/process/Process_DIIG",
-      "performedBy": "http://smart.who.int/base/role/programme-manager",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
       "inLane": "http://smart.who.int/base/process/Process_DIIG/lane/Lane_ProgrammeManager",
       "requires": [
-        "http://smart.who.int/base/skill/bean-coordination"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/bean-coordination"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -1378,7 +1383,7 @@
       "nodeKind": "exclusive",
       "bpmnType": "bpmn:ExclusiveGateway",
       "partOf": "http://smart.who.int/base/process/Process_DIIG",
-      "performedBy": "http://smart.who.int/base/role/programme-manager",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
       "inLane": "http://smart.who.int/base/process/Process_DIIG/lane/Lane_ProgrammeManager",
       "requires": [],
       "touchesWorkPlan": false,
@@ -1399,7 +1404,7 @@
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "http://smart.who.int/base/process/Process_DIIG",
-      "performedBy": "http://smart.who.int/base/role/programme-manager",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
       "inLane": "http://smart.who.int/base/process/Process_DIIG/lane/Lane_ProgrammeManager",
       "requires": [],
       "touchesWorkPlan": false,
@@ -1417,10 +1422,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "http://smart.who.int/base/process/Process_DIIG",
-      "performedBy": "http://smart.who.int/base/role/programme-manager",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
       "inLane": "http://smart.who.int/base/process/Process_DIIG/lane/Lane_ProgrammeManager",
       "requires": [
-        "http://smart.who.int/base/skill/todo-manager"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/todo-manager"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -1880,7 +1885,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
       "name": "DTH lead (programme manager)",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
-      "bindsRole": "http://smart.who.int/base/role/programme-manager",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
     },
     {
@@ -1888,7 +1893,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
       "name": "Work plan (beans)",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
-      "bindsRole": "http://smart.who.int/base/role/work-plan",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/work-plan",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
     },
     {
@@ -1896,7 +1901,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
       "name": "Librarian",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
-      "bindsRole": "http://smart.who.int/base/role/librarian",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/librarian",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
     },
     {
@@ -1904,7 +1909,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
       "name": "Business analyst",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
-      "bindsRole": "http://smart.who.int/base/role/business-analyst",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
     },
     {
@@ -1912,7 +1917,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
       "name": "Terminologist",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
-      "bindsRole": "http://smart.who.int/base/role/terminologist",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/terminologist",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
     },
     {
@@ -1920,7 +1925,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
       "name": "Architect group and handbook owners",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
-      "bindsRole": "http://smart.who.int/base/role/reviewer",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
     },
     {
@@ -1928,7 +1933,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
       "name": "TWG and contributors",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
-      "bindsRole": "http://smart.who.int/base/role/feedback-provider",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/feedback-provider",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
     },
     {
@@ -1936,7 +1941,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
       "name": "Editor",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
-      "bindsRole": "http://smart.who.int/base/role/editor",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/editor",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
     },
     {
@@ -1944,7 +1949,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
       "name": "Publication manager",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
-      "bindsRole": "http://smart.who.int/base/role/publication-manager",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
     },
     {
@@ -1954,7 +1959,7 @@
       "nodeKind": "start",
       "bpmnType": "bpmn:StartEvent",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
-      "performedBy": "http://smart.who.int/base/role/programme-manager",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
       "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Lead",
       "requires": [],
       "touchesWorkPlan": false,
@@ -1972,10 +1977,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:UserTask",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
-      "performedBy": "http://smart.who.int/base/role/programme-manager",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
       "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Lead",
       "requires": [
-        "http://smart.who.int/base/skill/content-plan"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-plan"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -1994,10 +1999,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:UserTask",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
-      "performedBy": "http://smart.who.int/base/role/programme-manager",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
       "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Lead",
       "requires": [
-        "http://smart.who.int/base/skill/content-plan"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-plan"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -2016,10 +2021,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
-      "performedBy": "http://smart.who.int/base/role/business-analyst",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Analyst",
       "requires": [
-        "http://smart.who.int/base/skill/document-structure"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/document-structure"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -2038,10 +2043,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
-      "performedBy": "http://smart.who.int/base/role/work-plan",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/work-plan",
       "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_WorkPlan",
       "requires": [
-        "http://smart.who.int/base/skill/todo-manager"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/todo-manager"
       ],
       "touchesWorkPlan": true,
       "relaxable": true,
@@ -2060,10 +2065,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
-      "performedBy": "http://smart.who.int/base/role/work-plan",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/work-plan",
       "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_WorkPlan",
       "requires": [
-        "http://smart.who.int/base/skill/todo-manager"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/todo-manager"
       ],
       "touchesWorkPlan": true,
       "workPlanOp": "note",
@@ -2083,10 +2088,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
-      "performedBy": "http://smart.who.int/base/role/librarian",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/librarian",
       "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Librarian",
       "requires": [
-        "http://smart.who.int/base/skill/library-ingestion"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/library-ingestion"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -2105,10 +2110,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
-      "performedBy": "http://smart.who.int/base/role/librarian",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/librarian",
       "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Librarian",
       "requires": [
-        "http://smart.who.int/base/skill/l1-document-ingestion"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/l1-document-ingestion"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -2127,10 +2132,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
-      "performedBy": "http://smart.who.int/base/role/librarian",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/librarian",
       "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Librarian",
       "requires": [
-        "http://smart.who.int/base/skill/l1-coverage"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/l1-coverage"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -2149,10 +2154,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
-      "performedBy": "http://smart.who.int/base/role/business-analyst",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Analyst",
       "requires": [
-        "http://smart.who.int/base/skill/publish-extracted-statements"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/publish-extracted-statements"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -2171,10 +2176,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
-      "performedBy": "http://smart.who.int/base/role/librarian",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/librarian",
       "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Librarian",
       "requires": [
-        "http://smart.who.int/base/skill/todo-manager"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/todo-manager"
       ],
       "touchesWorkPlan": true,
       "workPlanOp": "note",
@@ -2194,10 +2199,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
-      "performedBy": "http://smart.who.int/base/role/business-analyst",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Analyst",
       "requires": [
-        "http://smart.who.int/base/skill/document-structure"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/document-structure"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -2216,10 +2221,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
-      "performedBy": "http://smart.who.int/base/role/business-analyst",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Analyst",
       "requires": [
-        "http://smart.who.int/base/skill/document-authoring"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/document-authoring"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -2238,10 +2243,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
-      "performedBy": "http://smart.who.int/base/role/terminologist",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/terminologist",
       "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Terminologist",
       "requires": [
-        "http://smart.who.int/base/skill/terminology-management"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/terminology-management"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -2260,10 +2265,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
-      "performedBy": "http://smart.who.int/base/role/business-analyst",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Analyst",
       "requires": [
-        "http://smart.who.int/base/skill/content-plan"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-plan"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -2282,10 +2287,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:UserTask",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
-      "performedBy": "http://smart.who.int/base/role/feedback-provider",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/feedback-provider",
       "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Contributors",
       "requires": [
-        "http://smart.who.int/base/skill/content-feedback"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-feedback"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -2304,10 +2309,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
-      "performedBy": "http://smart.who.int/base/role/feedback-provider",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/feedback-provider",
       "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Contributors",
       "requires": [
-        "http://smart.who.int/base/skill/todo-manager"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/todo-manager"
       ],
       "touchesWorkPlan": true,
       "workPlanOp": "note",
@@ -2327,7 +2332,7 @@
       "nodeKind": "exclusive",
       "bpmnType": "bpmn:ExclusiveGateway",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
-      "performedBy": "http://smart.who.int/base/role/business-analyst",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Analyst",
       "requires": [],
       "touchesWorkPlan": false,
@@ -2348,7 +2353,7 @@
       "nodeKind": "parallel",
       "bpmnType": "bpmn:ParallelGateway",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
-      "performedBy": "http://smart.who.int/base/role/business-analyst",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Analyst",
       "requires": [],
       "touchesWorkPlan": false,
@@ -2375,7 +2380,7 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
-      "performedBy": "http://smart.who.int/base/role/business-analyst",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Analyst",
       "requires": [
         "http://smart.who.int/base/skill/l2-dak-authoring",
@@ -2399,7 +2404,7 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
-      "performedBy": "http://smart.who.int/base/role/business-analyst",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Analyst",
       "requires": [
         "http://smart.who.int/base/skill/l2-dak-authoring",
@@ -2423,10 +2428,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
-      "performedBy": "http://smart.who.int/base/role/business-analyst",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Analyst",
       "requires": [
-        "http://smart.who.int/base/skill/bpmn-authoring",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/bpmn-authoring",
         "http://smart.who.int/base/skill/l2-component-edit-review"
       ],
       "touchesWorkPlan": false,
@@ -2447,10 +2452,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
-      "performedBy": "http://smart.who.int/base/role/business-analyst",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Analyst",
       "requires": [
-        "http://smart.who.int/base/skill/dmn-authoring",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/dmn-authoring",
         "http://smart.who.int/base/skill/l2-component-edit-review"
       ],
       "touchesWorkPlan": false,
@@ -2471,7 +2476,7 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
-      "performedBy": "http://smart.who.int/base/role/business-analyst",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Analyst",
       "requires": [
         "http://smart.who.int/base/skill/l2-dak-authoring",
@@ -2496,10 +2501,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
-      "performedBy": "http://smart.who.int/base/role/business-analyst",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Analyst",
       "requires": [
-        "http://smart.who.int/base/skill/document-authoring",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/document-authoring",
         "http://smart.who.int/base/skill/l2-component-edit-review"
       ],
       "touchesWorkPlan": false,
@@ -2520,10 +2525,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
-      "performedBy": "http://smart.who.int/base/role/business-analyst",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Analyst",
       "requires": [
-        "http://smart.who.int/base/skill/archimate-models",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/archimate-models",
         "http://smart.who.int/base/skill/l2-component-edit-review"
       ],
       "touchesWorkPlan": false,
@@ -2544,10 +2549,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
-      "performedBy": "http://smart.who.int/base/role/business-analyst",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Analyst",
       "requires": [
-        "http://smart.who.int/base/skill/terminology-management",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/terminology-management",
         "http://smart.who.int/base/skill/l2-component-edit-review"
       ],
       "touchesWorkPlan": false,
@@ -2568,7 +2573,7 @@
       "nodeKind": "parallel",
       "bpmnType": "bpmn:ParallelGateway",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
-      "performedBy": "http://smart.who.int/base/role/business-analyst",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Analyst",
       "requires": [],
       "touchesWorkPlan": false,
@@ -2595,7 +2600,7 @@
       "nodeKind": "parallel",
       "bpmnType": "bpmn:ParallelGateway",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
-      "performedBy": "http://smart.who.int/base/role/business-analyst",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Analyst",
       "requires": [],
       "touchesWorkPlan": false,
@@ -2616,10 +2621,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
-      "performedBy": "http://smart.who.int/base/role/business-analyst",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Analyst",
       "requires": [
-        "http://smart.who.int/base/skill/content-validate"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-validate"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -2638,10 +2643,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:UserTask",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
-      "performedBy": "http://smart.who.int/base/role/reviewer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
       "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Reviewers",
       "requires": [
-        "http://smart.who.int/base/skill/content-review"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-review"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -2660,7 +2665,7 @@
       "nodeKind": "parallel",
       "bpmnType": "bpmn:ParallelGateway",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
-      "performedBy": "http://smart.who.int/base/role/business-analyst",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Analyst",
       "requires": [],
       "touchesWorkPlan": false,
@@ -2681,10 +2686,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
-      "performedBy": "http://smart.who.int/base/role/business-analyst",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Analyst",
       "requires": [
-        "http://smart.who.int/base/skill/todo-manager"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/todo-manager"
       ],
       "touchesWorkPlan": true,
       "workPlanOp": "note",
@@ -2704,10 +2709,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:UserTask",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
-      "performedBy": "http://smart.who.int/base/role/feedback-provider",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/feedback-provider",
       "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Contributors",
       "requires": [
-        "http://smart.who.int/base/skill/content-feedback"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-feedback"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -2726,10 +2731,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
-      "performedBy": "http://smart.who.int/base/role/editor",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/editor",
       "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Editor",
       "requires": [
-        "http://smart.who.int/base/skill/public-comment"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/public-comment"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -2748,7 +2753,7 @@
       "nodeKind": "exclusive",
       "bpmnType": "bpmn:ExclusiveGateway",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
-      "performedBy": "http://smart.who.int/base/role/editor",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/editor",
       "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Editor",
       "requires": [],
       "touchesWorkPlan": false,
@@ -2769,10 +2774,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
-      "performedBy": "http://smart.who.int/base/role/editor",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/editor",
       "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Editor",
       "requires": [
-        "http://smart.who.int/base/skill/todo-manager"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/todo-manager"
       ],
       "touchesWorkPlan": true,
       "workPlanOp": "note",
@@ -2792,10 +2797,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
-      "performedBy": "http://smart.who.int/base/role/editor",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/editor",
       "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Editor",
       "requires": [
-        "http://smart.who.int/base/skill/public-comment"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/public-comment"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -2814,10 +2819,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
-      "performedBy": "http://smart.who.int/base/role/editor",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/editor",
       "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Editor",
       "requires": [
-        "http://smart.who.int/base/skill/todo-manager"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/todo-manager"
       ],
       "touchesWorkPlan": true,
       "workPlanOp": "note",
@@ -2837,10 +2842,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:UserTask",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
-      "performedBy": "http://smart.who.int/base/role/feedback-provider",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/feedback-provider",
       "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Contributors",
       "requires": [
-        "http://smart.who.int/base/skill/content-feedback"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-feedback"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -2859,10 +2864,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
-      "performedBy": "http://smart.who.int/base/role/editor",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/editor",
       "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Editor",
       "requires": [
-        "http://smart.who.int/base/skill/public-comment"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/public-comment"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -2881,10 +2886,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
-      "performedBy": "http://smart.who.int/base/role/editor",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/editor",
       "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Editor",
       "requires": [
-        "http://smart.who.int/base/skill/todo-manager"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/todo-manager"
       ],
       "touchesWorkPlan": true,
       "workPlanOp": "note",
@@ -2904,10 +2909,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
-      "performedBy": "http://smart.who.int/base/role/editor",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/editor",
       "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Editor",
       "requires": [
-        "http://smart.who.int/base/skill/quality-control"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/quality-control"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -2926,10 +2931,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
-      "performedBy": "http://smart.who.int/base/role/publication-manager",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
       "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Publisher",
       "requires": [
-        "http://smart.who.int/base/skill/document-publishing"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/document-publishing"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -2948,7 +2953,7 @@
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
-      "performedBy": "http://smart.who.int/base/role/publication-manager",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
       "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Publisher",
       "requires": [],
       "touchesWorkPlan": false,
@@ -3225,7 +3230,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
       "name": "Programme manager / technical officer",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
-      "bindsRole": "http://smart.who.int/base/role/programme-manager",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
     },
     {
@@ -3233,7 +3238,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
       "name": "Work plan — beans (shared by humans and agents)",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
-      "bindsRole": "http://smart.who.int/base/role/work-plan",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/work-plan",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
     },
     {
@@ -3241,7 +3246,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
       "name": "Business analyst",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
-      "bindsRole": "http://smart.who.int/base/role/business-analyst",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
     },
     {
@@ -3249,7 +3254,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
       "name": "Terminologist",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
-      "bindsRole": "http://smart.who.int/base/role/terminologist",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/terminologist",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
     },
     {
@@ -3257,7 +3262,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
       "name": "Clinical SME",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
-      "bindsRole": "http://smart.who.int/base/role/clinical-sme",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/clinical-sme",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
     },
     {
@@ -3267,7 +3272,7 @@
       "nodeKind": "start",
       "bpmnType": "bpmn:StartEvent",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
-      "performedBy": "http://smart.who.int/base/role/programme-manager",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
       "inLane": "http://smart.who.int/base/process/Process_L2Dak/lane/Lane_Programme",
       "requires": [],
       "touchesWorkPlan": false,
@@ -3285,10 +3290,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:UserTask",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
-      "performedBy": "http://smart.who.int/base/role/programme-manager",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
       "inLane": "http://smart.who.int/base/process/Process_L2Dak/lane/Lane_Programme",
       "requires": [
-        "http://smart.who.int/base/skill/content-plan"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-plan"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -3307,7 +3312,7 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:UserTask",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
-      "performedBy": "http://smart.who.int/base/role/business-analyst",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "inLane": "http://smart.who.int/base/process/Process_L2Dak/lane/Lane_Analyst",
       "requires": [
         "http://smart.who.int/base/skill/dak-l1-library"
@@ -3329,10 +3334,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
-      "performedBy": "http://smart.who.int/base/role/business-analyst",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "inLane": "http://smart.who.int/base/process/Process_L2Dak/lane/Lane_Analyst",
       "requires": [
-        "http://smart.who.int/base/skill/publish-extracted-statements"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/publish-extracted-statements"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -3351,10 +3356,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
-      "performedBy": "http://smart.who.int/base/role/work-plan",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/work-plan",
       "inLane": "http://smart.who.int/base/process/Process_L2Dak/lane/Lane_WorkPlan",
       "requires": [
-        "http://smart.who.int/base/skill/todo-manager"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/todo-manager"
       ],
       "touchesWorkPlan": true,
       "workPlanOp": "note",
@@ -3374,7 +3379,7 @@
       "nodeKind": "exclusive",
       "bpmnType": "bpmn:ExclusiveGateway",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
-      "performedBy": "http://smart.who.int/base/role/business-analyst",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "inLane": "http://smart.who.int/base/process/Process_L2Dak/lane/Lane_Analyst",
       "requires": [],
       "touchesWorkPlan": false,
@@ -3395,7 +3400,7 @@
       "nodeKind": "parallel",
       "bpmnType": "bpmn:ParallelGateway",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
-      "performedBy": "http://smart.who.int/base/role/business-analyst",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "inLane": "http://smart.who.int/base/process/Process_L2Dak/lane/Lane_Analyst",
       "requires": [],
       "touchesWorkPlan": false,
@@ -3420,7 +3425,7 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
-      "performedBy": "http://smart.who.int/base/role/business-analyst",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "inLane": "http://smart.who.int/base/process/Process_L2Dak/lane/Lane_Analyst",
       "requires": [
         "http://smart.who.int/base/skill/l2-dak-authoring",
@@ -3444,10 +3449,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
-      "performedBy": "http://smart.who.int/base/role/business-analyst",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "inLane": "http://smart.who.int/base/process/Process_L2Dak/lane/Lane_Analyst",
       "requires": [
-        "http://smart.who.int/base/skill/bpmn-authoring",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/bpmn-authoring",
         "http://smart.who.int/base/skill/l2-component-edit-review"
       ],
       "touchesWorkPlan": false,
@@ -3468,10 +3473,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
-      "performedBy": "http://smart.who.int/base/role/business-analyst",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "inLane": "http://smart.who.int/base/process/Process_L2Dak/lane/Lane_Analyst",
       "requires": [
-        "http://smart.who.int/base/skill/dmn-authoring",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/dmn-authoring",
         "http://smart.who.int/base/skill/l2-component-edit-review"
       ],
       "touchesWorkPlan": false,
@@ -3492,7 +3497,7 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
-      "performedBy": "http://smart.who.int/base/role/business-analyst",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "inLane": "http://smart.who.int/base/process/Process_L2Dak/lane/Lane_Analyst",
       "requires": [
         "http://smart.who.int/base/skill/l2-dak-authoring",
@@ -3516,7 +3521,7 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
-      "performedBy": "http://smart.who.int/base/role/business-analyst",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "inLane": "http://smart.who.int/base/process/Process_L2Dak/lane/Lane_Analyst",
       "requires": [
         "http://smart.who.int/base/skill/l2-dak-authoring",
@@ -3541,10 +3546,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
-      "performedBy": "http://smart.who.int/base/role/terminologist",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/terminologist",
       "inLane": "http://smart.who.int/base/process/Process_L2Dak/lane/Lane_Terminologist",
       "requires": [
-        "http://smart.who.int/base/skill/terminology-management",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/terminology-management",
         "http://smart.who.int/base/skill/l2-component-edit-review"
       ],
       "touchesWorkPlan": false,
@@ -3565,7 +3570,7 @@
       "nodeKind": "parallel",
       "bpmnType": "bpmn:ParallelGateway",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
-      "performedBy": "http://smart.who.int/base/role/business-analyst",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "inLane": "http://smart.who.int/base/process/Process_L2Dak/lane/Lane_Analyst",
       "requires": [],
       "touchesWorkPlan": false,
@@ -3590,7 +3595,7 @@
       "nodeKind": "parallel",
       "bpmnType": "bpmn:ParallelGateway",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
-      "performedBy": "http://smart.who.int/base/role/business-analyst",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "inLane": "http://smart.who.int/base/process/Process_L2Dak/lane/Lane_Analyst",
       "requires": [],
       "touchesWorkPlan": false,
@@ -3611,10 +3616,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:UserTask",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
-      "performedBy": "http://smart.who.int/base/role/clinical-sme",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/clinical-sme",
       "inLane": "http://smart.who.int/base/process/Process_L2Dak/lane/Lane_Sme",
       "requires": [
-        "http://smart.who.int/base/skill/content-review"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-review"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -3633,7 +3638,7 @@
       "nodeKind": "exclusive",
       "bpmnType": "bpmn:ExclusiveGateway",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
-      "performedBy": "http://smart.who.int/base/role/clinical-sme",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/clinical-sme",
       "inLane": "http://smart.who.int/base/process/Process_L2Dak/lane/Lane_Sme",
       "requires": [],
       "touchesWorkPlan": false,
@@ -3654,10 +3659,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:UserTask",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
-      "performedBy": "http://smart.who.int/base/role/business-analyst",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "inLane": "http://smart.who.int/base/process/Process_L2Dak/lane/Lane_Analyst",
       "requires": [
-        "http://smart.who.int/base/skill/content-validate"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-validate"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -3676,7 +3681,7 @@
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
-      "performedBy": "http://smart.who.int/base/role/clinical-sme",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/clinical-sme",
       "inLane": "http://smart.who.int/base/process/Process_L2Dak/lane/Lane_Sme",
       "requires": [],
       "touchesWorkPlan": false,
@@ -3694,7 +3699,7 @@
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
-      "performedBy": "http://smart.who.int/base/role/business-analyst",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "inLane": "http://smart.who.int/base/process/Process_L2Dak/lane/Lane_Analyst",
       "requires": [],
       "touchesWorkPlan": false,
@@ -3712,10 +3717,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
-      "performedBy": "http://smart.who.int/base/role/work-plan",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/work-plan",
       "inLane": "http://smart.who.int/base/process/Process_L2Dak/lane/Lane_WorkPlan",
       "requires": [
-        "http://smart.who.int/base/skill/bean-coordination"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/bean-coordination"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -3734,7 +3739,7 @@
       "nodeKind": "exclusive",
       "bpmnType": "bpmn:ExclusiveGateway",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
-      "performedBy": "http://smart.who.int/base/role/work-plan",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/work-plan",
       "inLane": "http://smart.who.int/base/process/Process_L2Dak/lane/Lane_WorkPlan",
       "requires": [],
       "touchesWorkPlan": false,
@@ -3755,7 +3760,7 @@
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
-      "performedBy": "http://smart.who.int/base/role/work-plan",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/work-plan",
       "inLane": "http://smart.who.int/base/process/Process_L2Dak/lane/Lane_WorkPlan",
       "requires": [],
       "touchesWorkPlan": false,
@@ -3773,10 +3778,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
-      "performedBy": "http://smart.who.int/base/role/business-analyst",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "inLane": "http://smart.who.int/base/process/Process_L2Dak/lane/Lane_Analyst",
       "requires": [
-        "http://smart.who.int/base/skill/todo-manager"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/todo-manager"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -3795,10 +3800,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
-      "performedBy": "http://smart.who.int/base/role/clinical-sme",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/clinical-sme",
       "inLane": "http://smart.who.int/base/process/Process_L2Dak/lane/Lane_Sme",
       "requires": [
-        "http://smart.who.int/base/skill/todo-manager"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/todo-manager"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -3939,7 +3944,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
       "name": "Authoring agent",
       "partOf": "http://smart.who.int/base/process/Process_L2ComponentEditReview",
-      "bindsRole": "http://smart.who.int/base/role/authoring-agent",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
     },
     {
@@ -3947,7 +3952,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
       "name": "Component reviewer (person)",
       "partOf": "http://smart.who.int/base/process/Process_L2ComponentEditReview",
-      "bindsRole": "http://smart.who.int/base/role/reviewer",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
     },
     {
@@ -3957,7 +3962,7 @@
       "nodeKind": "start",
       "bpmnType": "bpmn:StartEvent",
       "partOf": "http://smart.who.int/base/process/Process_L2ComponentEditReview",
-      "performedBy": "http://smart.who.int/base/role/authoring-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inLane": "http://smart.who.int/base/process/Process_L2ComponentEditReview/lane/Lane_Agent",
       "requires": [],
       "touchesWorkPlan": false,
@@ -3975,7 +3980,7 @@
       "nodeKind": "exclusive",
       "bpmnType": "bpmn:ExclusiveGateway",
       "partOf": "http://smart.who.int/base/process/Process_L2ComponentEditReview",
-      "performedBy": "http://smart.who.int/base/role/authoring-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inLane": "http://smart.who.int/base/process/Process_L2ComponentEditReview/lane/Lane_Agent",
       "requires": [],
       "touchesWorkPlan": false,
@@ -3996,7 +4001,7 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_L2ComponentEditReview",
-      "performedBy": "http://smart.who.int/base/role/authoring-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inLane": "http://smart.who.int/base/process/Process_L2ComponentEditReview/lane/Lane_Agent",
       "requires": [
         "http://smart.who.int/base/skill/l2-component-edit-review"
@@ -4018,12 +4023,12 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_L2ComponentEditReview",
-      "performedBy": "http://smart.who.int/base/role/authoring-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inLane": "http://smart.who.int/base/process/Process_L2ComponentEditReview/lane/Lane_Agent",
       "requires": [
-        "http://smart.who.int/base/skill/content-validate",
-        "http://smart.who.int/base/skill/content-test",
-        "http://smart.who.int/base/skill/artefact-reachability"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-validate",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-test",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/artefact-reachability"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -4042,11 +4047,11 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_L2ComponentEditReview",
-      "performedBy": "http://smart.who.int/base/role/authoring-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inLane": "http://smart.who.int/base/process/Process_L2ComponentEditReview/lane/Lane_Agent",
       "requires": [
-        "http://smart.who.int/base/skill/before-after-preview",
-        "http://smart.who.int/base/skill/feature-staging"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/before-after-preview",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/feature-staging"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -4065,7 +4070,7 @@
       "nodeKind": "parallel",
       "bpmnType": "bpmn:ParallelGateway",
       "partOf": "http://smart.who.int/base/process/Process_L2ComponentEditReview",
-      "performedBy": "http://smart.who.int/base/role/authoring-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inLane": "http://smart.who.int/base/process/Process_L2ComponentEditReview/lane/Lane_Agent",
       "requires": [],
       "touchesWorkPlan": false,
@@ -4086,7 +4091,7 @@
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "http://smart.who.int/base/process/Process_L2ComponentEditReview",
-      "performedBy": "http://smart.who.int/base/role/authoring-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inLane": "http://smart.who.int/base/process/Process_L2ComponentEditReview/lane/Lane_Agent",
       "requires": [],
       "touchesWorkPlan": false,
@@ -4104,11 +4109,11 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_L2ComponentEditReview",
-      "performedBy": "http://smart.who.int/base/role/authoring-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inLane": "http://smart.who.int/base/process/Process_L2ComponentEditReview/lane/Lane_Agent",
       "requires": [
-        "http://smart.who.int/base/skill/staging-review",
-        "http://smart.who.int/base/skill/interaction-modality"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/staging-review",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/interaction-modality"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -4127,11 +4132,11 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "http://smart.who.int/base/process/Process_L2ComponentEditReview",
-      "performedBy": "http://smart.who.int/base/role/reviewer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
       "inLane": "http://smart.who.int/base/process/Process_L2ComponentEditReview/lane/Lane_Reviewer",
       "requires": [
-        "http://smart.who.int/base/skill/content-review",
-        "http://smart.who.int/base/skill/visual-diff",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-review",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/visual-diff",
         "http://smart.who.int/base/skill/l2-component-edit-review"
       ],
       "touchesWorkPlan": false,
@@ -4151,7 +4156,7 @@
       "nodeKind": "exclusive",
       "bpmnType": "bpmn:ExclusiveGateway",
       "partOf": "http://smart.who.int/base/process/Process_L2ComponentEditReview",
-      "performedBy": "http://smart.who.int/base/role/reviewer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
       "inLane": "http://smart.who.int/base/process/Process_L2ComponentEditReview/lane/Lane_Reviewer",
       "requires": [],
       "touchesWorkPlan": false,
@@ -4173,7 +4178,7 @@
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "http://smart.who.int/base/process/Process_L2ComponentEditReview",
-      "performedBy": "http://smart.who.int/base/role/reviewer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
       "inLane": "http://smart.who.int/base/process/Process_L2ComponentEditReview/lane/Lane_Reviewer",
       "requires": [],
       "touchesWorkPlan": false,
@@ -4191,10 +4196,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_L2ComponentEditReview",
-      "performedBy": "http://smart.who.int/base/role/authoring-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inLane": "http://smart.who.int/base/process/Process_L2ComponentEditReview/lane/Lane_Agent",
       "requires": [
-        "http://smart.who.int/base/skill/todo-manager",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/todo-manager",
         "http://smart.who.int/base/skill/l2-component-edit-review"
       ],
       "touchesWorkPlan": false,
@@ -4214,7 +4219,7 @@
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "http://smart.who.int/base/process/Process_L2ComponentEditReview",
-      "performedBy": "http://smart.who.int/base/role/authoring-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inLane": "http://smart.who.int/base/process/Process_L2ComponentEditReview/lane/Lane_Agent",
       "requires": [],
       "touchesWorkPlan": false,
@@ -4271,7 +4276,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
       "name": "FHIR modeller",
       "partOf": "http://smart.who.int/base/process/Process_DakL3Ig",
-      "bindsRole": "http://smart.who.int/base/role/fhir-modeller",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/fhir-modeller",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
     },
     {
@@ -4281,7 +4286,7 @@
       "nodeKind": "start",
       "bpmnType": "bpmn:StartEvent",
       "partOf": "http://smart.who.int/base/process/Process_DakL3Ig",
-      "performedBy": "http://smart.who.int/base/role/fhir-modeller",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/fhir-modeller",
       "inLane": "http://smart.who.int/base/process/Process_DakL3Ig/lane/Lane_Modeller",
       "requires": [],
       "touchesWorkPlan": false,
@@ -4299,10 +4304,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:UserTask",
       "partOf": "http://smart.who.int/base/process/Process_DakL3Ig",
-      "performedBy": "http://smart.who.int/base/role/fhir-modeller",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/fhir-modeller",
       "inLane": "http://smart.who.int/base/process/Process_DakL3Ig/lane/Lane_Modeller",
       "requires": [
-        "http://smart.who.int/base/skill/l3-fhir-authoring",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/l3-fhir-authoring",
         "http://smart.who.int/base/skill/l2-dak-authoring"
       ],
       "touchesWorkPlan": false,
@@ -4322,10 +4327,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "http://smart.who.int/base/process/Process_DakL3Ig",
-      "performedBy": "http://smart.who.int/base/role/fhir-modeller",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/fhir-modeller",
       "inLane": "http://smart.who.int/base/process/Process_DakL3Ig/lane/Lane_Modeller",
       "requires": [
-        "http://smart.who.int/base/skill/l3-fhir-authoring"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/l3-fhir-authoring"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -4344,7 +4349,7 @@
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "http://smart.who.int/base/process/Process_DakL3Ig",
-      "performedBy": "http://smart.who.int/base/role/fhir-modeller",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/fhir-modeller",
       "inLane": "http://smart.who.int/base/process/Process_DakL3Ig/lane/Lane_Modeller",
       "requires": [],
       "touchesWorkPlan": false,
@@ -4441,7 +4446,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
       "name": "Programme Manager",
       "partOf": "http://smart.who.int/base/process/Process_Planning",
-      "bindsRole": "http://smart.who.int/base/role/programme-manager",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
     },
     {
@@ -4451,7 +4456,7 @@
       "nodeKind": "start",
       "bpmnType": "bpmn:StartEvent",
       "partOf": "http://smart.who.int/base/process/Process_Planning",
-      "performedBy": "http://smart.who.int/base/role/programme-manager",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
       "inLane": "http://smart.who.int/base/process/Process_Planning/lane/Lane_Planning",
       "requires": [],
       "touchesWorkPlan": false,
@@ -4469,10 +4474,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_Planning",
-      "performedBy": "http://smart.who.int/base/role/programme-manager",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
       "inLane": "http://smart.who.int/base/process/Process_Planning/lane/Lane_Planning",
       "requires": [
-        "http://smart.who.int/base/skill/content-plan"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-plan"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -4491,10 +4496,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_Planning",
-      "performedBy": "http://smart.who.int/base/role/programme-manager",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
       "inLane": "http://smart.who.int/base/process/Process_Planning/lane/Lane_Planning",
       "requires": [
-        "http://smart.who.int/base/skill/raci"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/raci"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -4513,10 +4518,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_Planning",
-      "performedBy": "http://smart.who.int/base/role/programme-manager",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
       "inLane": "http://smart.who.int/base/process/Process_Planning/lane/Lane_Planning",
       "requires": [
-        "http://smart.who.int/base/skill/methodology-adoption"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/methodology-adoption"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -4535,7 +4540,7 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_Planning",
-      "performedBy": "http://smart.who.int/base/role/programme-manager",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
       "inLane": "http://smart.who.int/base/process/Process_Planning/lane/Lane_Planning",
       "requires": [
         "http://smart.who.int/base/skill/dak-l1-library"
@@ -4557,10 +4562,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_Planning",
-      "performedBy": "http://smart.who.int/base/role/programme-manager",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
       "inLane": "http://smart.who.int/base/process/Process_Planning/lane/Lane_Planning",
       "requires": [
-        "http://smart.who.int/base/skill/release-epic-planning"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/release-epic-planning"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -4579,10 +4584,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_Planning",
-      "performedBy": "http://smart.who.int/base/role/programme-manager",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
       "inLane": "http://smart.who.int/base/process/Process_Planning/lane/Lane_Planning",
       "requires": [
-        "http://smart.who.int/base/skill/content-plan"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-plan"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -4601,10 +4606,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_Planning",
-      "performedBy": "http://smart.who.int/base/role/programme-manager",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
       "inLane": "http://smart.who.int/base/process/Process_Planning/lane/Lane_Planning",
       "requires": [
-        "http://smart.who.int/base/skill/todo-manager"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/todo-manager"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -4623,7 +4628,7 @@
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "http://smart.who.int/base/process/Process_Planning",
-      "performedBy": "http://smart.who.int/base/role/programme-manager",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
       "inLane": "http://smart.who.int/base/process/Process_Planning/lane/Lane_Planning",
       "requires": [],
       "touchesWorkPlan": false,
@@ -4766,7 +4771,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
       "name": "Authoring agent",
       "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
-      "bindsRole": "http://smart.who.int/base/role/authoring-agent",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
     },
     {
@@ -4782,7 +4787,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
       "name": "Terminologist / ontologist reviewer (person)",
       "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
-      "bindsRole": "http://smart.who.int/base/role/terminologist",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/terminologist",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
     },
     {
@@ -4792,7 +4797,7 @@
       "nodeKind": "start",
       "bpmnType": "bpmn:StartEvent",
       "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
-      "performedBy": "http://smart.who.int/base/role/authoring-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inLane": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_Agent",
       "requires": [],
       "touchesWorkPlan": false,
@@ -4810,7 +4815,7 @@
       "nodeKind": "exclusive",
       "bpmnType": "bpmn:ExclusiveGateway",
       "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
-      "performedBy": "http://smart.who.int/base/role/authoring-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inLane": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_Agent",
       "requires": [],
       "touchesWorkPlan": false,
@@ -4832,7 +4837,7 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
-      "performedBy": "http://smart.who.int/base/role/authoring-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inLane": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_Agent",
       "requires": [
         "http://smart.who.int/base/skill/classify-and-code-content",
@@ -4855,12 +4860,12 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
-      "performedBy": "http://smart.who.int/base/role/authoring-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inLane": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_Agent",
       "requires": [
         "http://smart.who.int/base/skill/classify-and-code-content",
         "http://smart.who.int/base/skill/recommendation-scenarios",
-        "http://smart.who.int/base/skill/glossary-terms"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/glossary-terms"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -4879,11 +4884,11 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
-      "performedBy": "http://smart.who.int/base/role/authoring-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inLane": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_Agent",
       "requires": [
-        "http://smart.who.int/base/skill/staging-review",
-        "http://smart.who.int/base/skill/interaction-modality"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/staging-review",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/interaction-modality"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -4902,7 +4907,7 @@
       "nodeKind": "exclusive",
       "bpmnType": "bpmn:ExclusiveGateway",
       "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
-      "performedBy": "http://smart.who.int/base/role/authoring-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inLane": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_Agent",
       "requires": [],
       "touchesWorkPlan": false,
@@ -4928,7 +4933,7 @@
       "requires": [
         "http://smart.who.int/base/skill/classify-and-code-content",
         "http://smart.who.int/base/skill/recommendation-extraction",
-        "http://smart.who.int/base/skill/content-review"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-review"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -4968,14 +4973,14 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:UserTask",
       "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
-      "performedBy": "http://smart.who.int/base/role/terminologist",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/terminologist",
       "inLane": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_Terminologist",
       "requires": [
         "http://smart.who.int/base/skill/classify-and-code-content",
-        "http://smart.who.int/base/skill/ontologist",
-        "http://smart.who.int/base/skill/glossary-terms",
-        "http://smart.who.int/base/skill/terminology-management",
-        "http://smart.who.int/base/skill/content-review"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/ontologist",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/glossary-terms",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/terminology-management",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-review"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -4995,7 +5000,7 @@
       "nodeKind": "exclusive",
       "bpmnType": "bpmn:ExclusiveGateway",
       "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
-      "performedBy": "http://smart.who.int/base/role/terminologist",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/terminologist",
       "inLane": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_Terminologist",
       "requires": [],
       "touchesWorkPlan": false,
@@ -5016,7 +5021,7 @@
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
-      "performedBy": "http://smart.who.int/base/role/terminologist",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/terminologist",
       "inLane": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_Terminologist",
       "requires": [],
       "touchesWorkPlan": false,
@@ -5357,7 +5362,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
       "name": "Requester (country team / implementer)",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "bindsRole": "http://smart.who.int/base/role/user",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
     },
     {
@@ -5365,7 +5370,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
       "name": "Authoring agent",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "bindsRole": "http://smart.who.int/base/role/authoring-agent",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
     },
     {
@@ -5373,7 +5378,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
       "name": "Human adjudicators",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "bindsRole": "http://smart.who.int/base/role/reviewer",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
     },
     {
@@ -5383,7 +5388,7 @@
       "nodeKind": "start",
       "bpmnType": "bpmn:StartEvent",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "performedBy": "http://smart.who.int/base/role/user",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
       "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_User",
       "requires": [],
       "touchesWorkPlan": false,
@@ -5401,7 +5406,7 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:UserTask",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "performedBy": "http://smart.who.int/base/role/user",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
       "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_User",
       "requires": [
         "http://smart.who.int/base/skill/guideline-use-case"
@@ -5423,7 +5428,7 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "performedBy": "http://smart.who.int/base/role/authoring-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Agent",
       "requires": [
         "http://smart.who.int/base/skill/dak-l1-library"
@@ -5445,7 +5450,7 @@
       "nodeKind": "parallel",
       "bpmnType": "bpmn:ParallelGateway",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "performedBy": "http://smart.who.int/base/role/authoring-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Agent",
       "requires": [],
       "touchesWorkPlan": false,
@@ -5466,10 +5471,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "performedBy": "http://smart.who.int/base/role/reviewer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
       "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Adjudicators",
       "requires": [
-        "http://smart.who.int/base/skill/content-review"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-review"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -5488,7 +5493,7 @@
       "nodeKind": "exclusive",
       "bpmnType": "bpmn:ExclusiveGateway",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "performedBy": "http://smart.who.int/base/role/authoring-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Agent",
       "requires": [],
       "touchesWorkPlan": false,
@@ -5509,7 +5514,7 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "performedBy": "http://smart.who.int/base/role/authoring-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Agent",
       "requires": [
         "http://smart.who.int/base/skill/recommendation-extraction",
@@ -5532,7 +5537,7 @@
       "nodeKind": "parallel",
       "bpmnType": "bpmn:ParallelGateway",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "performedBy": "http://smart.who.int/base/role/authoring-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Agent",
       "requires": [],
       "touchesWorkPlan": false,
@@ -5553,10 +5558,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "performedBy": "http://smart.who.int/base/role/reviewer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
       "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Adjudicators",
       "requires": [
-        "http://smart.who.int/base/skill/content-review",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-review",
         "http://smart.who.int/base/skill/recommendation-extraction"
       ],
       "touchesWorkPlan": false,
@@ -5576,7 +5581,7 @@
       "nodeKind": "exclusive",
       "bpmnType": "bpmn:ExclusiveGateway",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "performedBy": "http://smart.who.int/base/role/authoring-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Agent",
       "requires": [],
       "touchesWorkPlan": false,
@@ -5597,12 +5602,12 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "performedBy": "http://smart.who.int/base/role/authoring-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Agent",
       "requires": [
         "http://smart.who.int/base/skill/l2-dependency-choice",
         "http://smart.who.int/base/skill/smart-base-tools",
-        "http://smart.who.int/base/skill/decision-comparison"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/decision-comparison"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -5621,7 +5626,7 @@
       "nodeKind": "parallel",
       "bpmnType": "bpmn:ParallelGateway",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "performedBy": "http://smart.who.int/base/role/authoring-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Agent",
       "requires": [],
       "touchesWorkPlan": false,
@@ -5642,11 +5647,11 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "performedBy": "http://smart.who.int/base/role/reviewer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
       "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Adjudicators",
       "requires": [
-        "http://smart.who.int/base/skill/content-review",
-        "http://smart.who.int/base/skill/decision-audit"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-review",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/decision-audit"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -5665,15 +5670,15 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "performedBy": "http://smart.who.int/base/role/authoring-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Agent",
       "requires": [
         "http://smart.who.int/base/skill/l2-dak-authoring",
         "http://smart.who.int/base/skill/smart-base-tools",
         "http://smart.who.int/base/skill/dak-preprocessing",
         "http://smart.who.int/base/skill/dak-postprocessing",
-        "http://smart.who.int/base/skill/wireframe-design-review",
-        "http://smart.who.int/base/skill/feature-staging"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/wireframe-design-review",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/feature-staging"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -5693,7 +5698,7 @@
       "nodeKind": "parallel",
       "bpmnType": "bpmn:ParallelGateway",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "performedBy": "http://smart.who.int/base/role/authoring-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Agent",
       "requires": [],
       "touchesWorkPlan": false,
@@ -5714,13 +5719,13 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "performedBy": "http://smart.who.int/base/role/reviewer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
       "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Adjudicators",
       "requires": [
-        "http://smart.who.int/base/skill/content-review",
-        "http://smart.who.int/base/skill/staging-review",
-        "http://smart.who.int/base/skill/visual-diff",
-        "http://smart.who.int/base/skill/wireframe-design-review"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-review",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/staging-review",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/visual-diff",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/wireframe-design-review"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -5739,13 +5744,13 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "performedBy": "http://smart.who.int/base/role/authoring-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Agent",
       "requires": [
         "http://smart.who.int/base/skill/l3-dependency-choice",
         "http://smart.who.int/base/skill/ig-artifact-ingestion",
         "http://smart.who.int/base/skill/smart-base-tools",
-        "http://smart.who.int/base/skill/decision-comparison"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/decision-comparison"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -5764,7 +5769,7 @@
       "nodeKind": "parallel",
       "bpmnType": "bpmn:ParallelGateway",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "performedBy": "http://smart.who.int/base/role/authoring-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Agent",
       "requires": [],
       "touchesWorkPlan": false,
@@ -5785,11 +5790,11 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "performedBy": "http://smart.who.int/base/role/reviewer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
       "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Adjudicators",
       "requires": [
-        "http://smart.who.int/base/skill/content-review",
-        "http://smart.who.int/base/skill/decision-audit"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-review",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/decision-audit"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -5808,7 +5813,7 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "performedBy": "http://smart.who.int/base/role/authoring-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Agent",
       "requires": [
         "http://smart.who.int/base/skill/l3-readiness"
@@ -5830,7 +5835,7 @@
       "nodeKind": "exclusive",
       "bpmnType": "bpmn:ExclusiveGateway",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "performedBy": "http://smart.who.int/base/role/authoring-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Agent",
       "requires": [],
       "touchesWorkPlan": false,
@@ -5851,13 +5856,13 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "performedBy": "http://smart.who.int/base/role/authoring-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Agent",
       "requires": [
-        "http://smart.who.int/base/skill/l3-fhir-authoring",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/l3-fhir-authoring",
         "http://smart.who.int/base/skill/l2-dak-authoring",
         "http://smart.who.int/base/skill/smart-base-tools",
-        "http://smart.who.int/base/skill/feature-staging"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/feature-staging"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -5876,7 +5881,7 @@
       "nodeKind": "parallel",
       "bpmnType": "bpmn:ParallelGateway",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "performedBy": "http://smart.who.int/base/role/authoring-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Agent",
       "requires": [],
       "touchesWorkPlan": false,
@@ -5897,14 +5902,14 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "performedBy": "http://smart.who.int/base/role/reviewer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
       "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Adjudicators",
       "requires": [
-        "http://smart.who.int/base/skill/content-review",
-        "http://smart.who.int/base/skill/staging-review",
-        "http://smart.who.int/base/skill/ig-ast-delta",
-        "http://smart.who.int/base/skill/wireframe-design-review",
-        "http://smart.who.int/base/skill/fhir-questionnaire-wireframe"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-review",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/staging-review",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/ig-ast-delta",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/wireframe-design-review",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/fhir-questionnaire-wireframe"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -5923,7 +5928,7 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:UserTask",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "performedBy": "http://smart.who.int/base/role/user",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
       "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_User",
       "requires": [
         "http://smart.who.int/base/skill/l4-application-brief"
@@ -5945,10 +5950,10 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "performedBy": "http://smart.who.int/base/role/authoring-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Agent",
       "requires": [
-        "http://smart.who.int/base/skill/wireframe-design-review"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/wireframe-design-review"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -5967,7 +5972,7 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "performedBy": "http://smart.who.int/base/role/authoring-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Agent",
       "requires": [
         "http://smart.who.int/base/skill/l4-application-build"
@@ -5989,7 +5994,7 @@
       "nodeKind": "parallel",
       "bpmnType": "bpmn:ParallelGateway",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "performedBy": "http://smart.who.int/base/role/authoring-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Agent",
       "requires": [],
       "touchesWorkPlan": false,
@@ -6010,12 +6015,12 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "performedBy": "http://smart.who.int/base/role/reviewer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
       "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Adjudicators",
       "requires": [
-        "http://smart.who.int/base/skill/content-review",
-        "http://smart.who.int/base/skill/staging-review",
-        "http://smart.who.int/base/skill/wireframe-design-review"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-review",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/staging-review",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/wireframe-design-review"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -6034,7 +6039,7 @@
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "performedBy": "http://smart.who.int/base/role/authoring-agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Agent",
       "requires": [],
       "touchesWorkPlan": false,
@@ -6052,7 +6057,7 @@
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "performedBy": "http://smart.who.int/base/role/reviewer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
       "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Adjudicators",
       "requires": [],
       "touchesWorkPlan": false,
@@ -6070,7 +6075,7 @@
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "performedBy": "http://smart.who.int/base/role/reviewer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
       "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Adjudicators",
       "requires": [],
       "touchesWorkPlan": false,
@@ -6088,7 +6093,7 @@
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "performedBy": "http://smart.who.int/base/role/reviewer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
       "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Adjudicators",
       "requires": [],
       "touchesWorkPlan": false,
@@ -6106,7 +6111,7 @@
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "performedBy": "http://smart.who.int/base/role/reviewer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
       "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Adjudicators",
       "requires": [],
       "touchesWorkPlan": false,
@@ -6124,7 +6129,7 @@
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "performedBy": "http://smart.who.int/base/role/reviewer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
       "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Adjudicators",
       "requires": [],
       "touchesWorkPlan": false,
@@ -6142,7 +6147,7 @@
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "performedBy": "http://smart.who.int/base/role/reviewer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
       "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Adjudicators",
       "requires": [],
       "touchesWorkPlan": false,
@@ -6160,7 +6165,7 @@
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "performedBy": "http://smart.who.int/base/role/reviewer",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
       "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Adjudicators",
       "requires": [],
       "touchesWorkPlan": false,
@@ -6760,7 +6765,8 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/GraphTypology",
       "name": "tools",
       "renderable": false,
-      "summary": "Tool definitions — themselves nodes in the KG, per the repo taxonomy."
+      "summary": "Tool definitions — themselves nodes in the KG, per the repo taxonomy.",
+      "validatorRef": "schemas/tools/tool.ts#ToolDefinitionSchema"
     },
     {
       "@id": "https://litlfred.github.io/bootstrap/v0/ns/graphTypology/skills",
@@ -6774,21 +6780,24 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/GraphTypology",
       "name": "processes",
       "renderable": false,
-      "summary": "A Subgraph of Processes: BPMN diagrams that coordinate Tasks, and the decision tables their gateways compute from."
+      "summary": "A Subgraph of Processes: BPMN diagrams that coordinate Tasks, and the decision tables their gateways compute from.",
+      "validatorNotApplicable": "its nodes are `.bpmn` and `.dmn` — XML, counted 2026-09-24 as 77 and 9. A Zod schema parses JSON, so one here would be a category error; `check:workflows`, `xml-comment-check` and `check-process-documentation` grade them instead."
     },
     {
       "@id": "https://litlfred.github.io/bootstrap/v0/ns/graphTypology/scenarios",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/GraphTypology",
       "name": "scenarios",
       "renderable": false,
-      "summary": "A Subgraph of Roles: the responsibilities an Actor takes on, and who takes them on."
+      "summary": "A Subgraph of Roles: the responsibilities an Actor takes on, and who takes them on.",
+      "validatorRef": "schemas/process/role-graph.ts#RoleGraphSchema"
     },
     {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/methodology",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/GraphTypology",
       "name": "methodology",
       "renderable": false,
-      "summary": "Judgement methodologies, adopted whole and kept independent — parallel ways to reach a decision, selected by context."
+      "summary": "Judgement methodologies, adopted whole and kept independent — parallel ways to reach a decision, selected by context.",
+      "validatorNotApplicable": "its nodes are markdown — 12 files, counted 2026-09-24. `check-methodology-evidence` grades what matters about them, which is whether each cited source actually exists in a library."
     },
     {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/docs",
@@ -6802,7 +6811,8 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/GraphTypology",
       "name": "code-list",
       "renderable": false,
-      "summary": "Closed sets of codes — adjudication answers, the namespaces this project mints — one file per list, every code carrying its definition and source, published as SKOS."
+      "summary": "Closed sets of codes — adjudication answers, the namespaces this project mints — one file per list, every code carrying its definition and source, published as SKOS.",
+      "validatorRef": "schemas/library/code-list.ts#CodeListSchema"
     },
     {
       "@id": "https://litlfred.github.io/bootstrap/v0/ns/graphTypology/schemas",
@@ -6823,7 +6833,8 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/GraphTypology",
       "name": "code",
       "renderable": false,
-      "summary": "Source code -- the modules, scripts and entry points an instance holds. Declared so that code is scannable at all: an undeclared file is one no checker has a reason to look at. Being declared here says nothing about whether a Tool node claims it, which is a separate question and a separate axis."
+      "summary": "Source code -- the modules, scripts and entry points an instance holds. Declared so that code is scannable at all: an undeclared file is one no checker has a reason to look at. Being declared here says nothing about whether a Tool node claims it, which is a separate question and a separate axis.",
+      "validatorNotApplicable": "its nodes are TypeScript — 1793 files, counted 2026-09-24. `tsc` is the validator for code, and `check:partition` plus `check-code-accounting` grade the graph over it."
     },
     {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/library",
@@ -6837,14 +6848,16 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/GraphTypology",
       "name": "voices",
       "renderable": false,
-      "summary": "Editorial voice profiles — one JSON each, carrying `\"$schema\": \"folio-voice/v1\"`. Every rule cites the ingested source or KG node it was derived from. Opt-in per folio."
+      "summary": "Editorial voice profiles — one JSON each, carrying `\"$schema\": \"folio-voice/v1\"`. Every rule cites the ingested source or KG node it was derived from. Opt-in per folio.",
+      "validatorRef": "schemas/content/voices.ts#VoiceProfileSchema"
     },
     {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/themes",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/GraphTypology",
       "name": "themes",
       "renderable": false,
-      "summary": "Themes derived from an instance's own sources — one Theme node each, carrying `kind: sticky | webpage | publication`. The palette vocabulary is shared across every kind and only the geometry varies; every value cites where it was measured."
+      "summary": "Themes derived from an instance's own sources — one Theme node each, carrying `kind: sticky | webpage | publication`. The palette vocabulary is shared across every kind and only the geometry varies; every value cites where it was measured.",
+      "validatorRef": "schemas/ui/theme.ts#ThemeSchema"
     },
     {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/document-kinds",
@@ -6858,7 +6871,8 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/GraphTypology",
       "name": "translation-sources",
       "renderable": false,
-      "summary": "POT templates, PO catalogues and their `TranslationNode` manifests, one directory per target locale. The INPUT to injection; the rendered output is ordinary content that declares its own `lang`."
+      "summary": "POT templates, PO catalogues and their `TranslationNode` manifests, one directory per target locale. The INPUT to injection; the rendered output is ordinary content that declares its own `lang`.",
+      "validatorRef": "schemas/content/translation.ts#TranslationConfigSchema"
     },
     {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/fhir-artifact-index",
@@ -6872,7 +6886,8 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/GraphTypology",
       "name": "ig-pages",
       "renderable": false,
-      "summary": "The pages of a FHIR Implementation Guide mirror, generated from its artefact index and the chrome of its template chain. Carried beside `docs` on the same directory: `docs` is how the site mounts them, and this kind is what says they are derived."
+      "summary": "The pages of a FHIR Implementation Guide mirror, generated from its artefact index and the chrome of its template chain. Carried beside `docs` on the same directory: `docs` is how the site mounts them, and this kind is what says they are derived.",
+      "validatorNotApplicable": "its nodes are `.md` pages written wholly by `fhir-harness/scripts/gen-ig-pages.ts`, and `derived` besides, so a finding against one is a finding against the generator; `<ig>:pages:check` grades their currency."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/graphTypology/glossary",
@@ -6886,7 +6901,8 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/GraphTypology",
       "name": "l1-extraction",
       "renderable": false,
-      "summary": "What the recommendation-extraction skill read out of ONE library entry, held beside it at `library/<entry>/l1-extraction/` when the same instance holds the entry, or at `l1-extractions/<entry>/` when the entry lives in another instance (smart-base's handbook extraction, whose source moved to who-iris on 2026-10-30, who-iris#107): the L1 A-Box graph (`l1.json`, JSON-LD against the WHO SMART L1 ontology), the L2 scenario candidates derived from it (`scenarios/scenario-candidates.l2.json`), and the curation, vocabulary and run context that produced them. A sub-graph of `library`: nested in an entry, it is published with the entry beside the entry's manifest; held apart, its own viewer (`scripts/gen-l1-extraction-pages.ts`) publishes it. It is never a folder named for an entry another library holds, which reads as a second copy of that entry and makes the library ingest refuse the duplicate slug."
+      "summary": "What the recommendation-extraction skill read out of ONE library entry, held beside it at `library/<entry>/l1-extraction/` when the same instance holds the entry, or at `l1-extractions/<entry>/` when the entry lives in another instance (smart-base's handbook extraction, whose source moved to who-iris on 2026-10-30, who-iris#107): the L1 A-Box graph (`l1.json`, JSON-LD against the WHO SMART L1 ontology), the L2 scenario candidates derived from it (`scenarios/scenario-candidates.l2.json`), and the curation, vocabulary and run context that produced them. A sub-graph of `library`: nested in an entry, it is published with the entry beside the entry's manifest; held apart, its own viewer (`scripts/gen-l1-extraction-pages.ts`) publishes it. It is never a folder named for an entry another library holds, which reads as a second copy of that entry and makes the library ingest refuse the duplicate slug.",
+      "validatorNotApplicable": "It holds several node kinds typed in different places. Its two graph documents are JSON-LD that carry an `@context` and no `$schema`, so a per-family validator cannot select them; they are validated against the L1 ontology (and the `l1-library` extension) by `kg/src/validate.ts`, which `scripts/l1-recommendation-candidates.ts` runs on every write. Its other files are inputs and provenance of that run (`l1-recommendation-candidates/v1`, `l1-scenario-vocabulary/v1`, `folio-run-context/v1`, a curation YAML), each read and checked by the script that consumes it. One runnable validator here would grade all of them against whichever single shape it named."
     },
     {
       "@id": "http://smart.who.int/base/role/l1-extraction-reviewer",
@@ -8265,6 +8281,102 @@
       },
       "satisfies": [
         "http://smart.who.int/base/skill/classify-and-code-content"
+      ]
+    },
+    {
+      "@id": "http://smart.who.int/base/schema/dak-annexes",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "dak-annexes",
+      "title": "dak-annexes",
+      "summary": "The two formats of the `web-annex` kind (`typologies/web-annex.json`): a WHO",
+      "module": "schemas/dak-annexes.ts",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-schemas",
+      "jsonSchema": [
+        "http://smart.who.int/base/schema/zod/dak-annexes/DakAnnexSheetSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/dak-annexes/DakDataDictionaryAnnexSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/dak-annexes/DakSwimlaneMapSchema.schema.json"
+      ]
+    },
+    {
+      "@id": "http://smart.who.int/base/schema/dak-blocks",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "dak-blocks",
+      "title": "dak-blocks",
+      "summary": "WHO SMART Guidelines content blocks — the `dak` adapter.",
+      "module": "schemas/dak-blocks.ts",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-schemas"
+    },
+    {
+      "@id": "http://smart.who.int/base/schema/dak-content-type",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "dak-content-type",
+      "title": "dak-content-type",
+      "summary": "The `dak` and `sushi` content types — registered by the WHO layer, not by core.",
+      "module": "schemas/dak-content-type.ts",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-schemas"
+    },
+    {
+      "@id": "http://smart.who.int/base/schema/dak-jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "dak-jsonld",
+      "title": "dak-jsonld",
+      "summary": "JSON-LD typing for the `dak` adapter's block kinds.",
+      "module": "schemas/dak-jsonld.ts",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-schemas"
+    },
+    {
+      "@id": "http://smart.who.int/base/schema/dak-kinds",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "dak-kinds",
+      "title": "dak-kinds",
+      "summary": "The `dak` adapter's vocabulary — its block kinds, their builder names and",
+      "module": "schemas/dak-kinds.ts",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-schemas"
+    },
+    {
+      "@id": "http://smart.who.int/base/schema/dak",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "dak",
+      "title": "dak",
+      "summary": "The **DAK** content type — a repository that is a WHO SMART Guidelines",
+      "module": "schemas/dak.ts",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-schemas",
+      "jsonSchema": [
+        "http://smart.who.int/base/schema/zod/dak/DakComponentSourceSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/dak/DakDeclarationSchema.schema.json"
+      ]
+    },
+    {
+      "@id": "http://smart.who.int/base/schema/dth-step-table",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "dth-step-table",
+      "title": "dth-step-table",
+      "summary": "Shared DTH step-table schema (`INPUTS | STEPS | RESOURCES | OUTPUTS | RISKS | MITIGATION`),",
+      "module": "schemas/dth-step-table.ts",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-schemas",
+      "jsonSchema": [
+        "http://smart.who.int/base/schema/zod/dth-step-table/DthDakOutputKindSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/dth-step-table/DthRiskMitigationRowSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/dth-step-table/DthRoleIdSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/dth-step-table/DthStepEntrySchema.schema.json",
+        "http://smart.who.int/base/schema/zod/dth-step-table/DthStepGroupSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/dth-step-table/DthStepInputSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/dth-step-table/DthStepOutputSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/dth-step-table/DthStepResourceSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/dth-step-table/DthStepTableSchema.schema.json",
+        "http://smart.who.int/base/schema/zod/dth-step-table/DthStepTableSourceSchema.schema.json"
+      ]
+    },
+    {
+      "@id": "http://smart.who.int/base/schema/guideline-portfolio",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "guideline-portfolio",
+      "title": "guideline-portfolio",
+      "summary": "The WHO SMART Guidelines portfolio: the umbrella knowledge graph that links",
+      "module": "schemas/guideline-portfolio.ts",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-schemas",
+      "jsonSchema": [
+        "http://smart.who.int/base/schema/zod/guideline-portfolio/GuidelinePortfolioSchema.schema.json"
       ]
     }
   ]

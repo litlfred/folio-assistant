@@ -76,6 +76,19 @@
                   ],
                   "additionalProperties": false
                 }
+              },
+              "ast": {
+                "type": "object",
+                "properties": {
+                  "commit": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{40}$"
+                  }
+                },
+                "required": [
+                  "commit"
+                ],
+                "additionalProperties": false
               }
             },
             "required": [

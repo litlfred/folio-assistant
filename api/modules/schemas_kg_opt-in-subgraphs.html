@@ -5,11 +5,15 @@ the one that declares it — unless that layer lists it, qualified
 <code>&lt;instance&gt;.&lt;directory id&gt;</code>, in its own <code>enableSubgraphs</code>.</p><p><strong>The folio root decides, and nothing is inherited.</strong> A layer's list
 enables the sub-graphs for ITSELF. So every reader asks
 <a href="../functions/schemas_kg_opt-in-subgraphs.enabledSubgraphs.html" class="tsd-kind-function">enabledSubgraphs</a> of the root it is resolving FOR — the folio, the
-downstream of a mount, the instance whose own resolution it is — never of
-the layer that declared the sub-graph.</p><p><strong>A development override.</strong> <code>CAT_SUBGRAPHS</code> (<code>+cat-harness.sdlc,-x.y</code>)
+downstream of a mount, the layer whose own resolution it is — never of
+the layer that declared the sub-graph.</p><p><strong>A mounted layer is resolved for the root that mounted it.</strong> Owner,
+2026-11-12, card Q-OPTIN-DIRS A: <em>&quot;CI checks should align on opt in/out&quot;</em>.
+The mount laid the layer down with the mounting root's list, so a check
+resolving the mounted layer reads that list too, never the layer's own
+(<code>defaultEnabledSubgraphs</code> in <code>cat-harness.ts</code>).</p><p><strong>A development override.</strong> <code>CAT_SUBGRAPHS</code> (<code>+cat-harness.sdlc,-x.y</code>)
 adjusts the root's list, so a dev session in any checkout can turn one on
 without editing a declaration. Unset in CI, and in every agent test context.</p><p><strong>Switched off is invisible, not deleted.</strong> A switched-off sub-graph — and
-everything declared from within it, in any member instance — is left out
+everything declared from within it, in any member layer — is left out
 of what the agent is given: the resolved directories, the skill overlay,
 the served Tool groups and a mount's default directory list. An explicit
 mount override naming it still mounts it, and the harness's own machinery

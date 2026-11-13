@@ -7,7 +7,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/navbar-include.jsonld",
       "@type": "cat-harness:Tool",
-      "description": "Render `_includes/generated/navbar-footer.html` from `docs/_data/harness.json` with the same renderer every railed page uses. With `--instance`, render the navbar of an IG repository's OWN site instead — that instance first, then what it needs; its own pages at this site's root, every other link to the main site at `--link-root` — into the shell that site is built from.",
+      "description": "Render `_includes/generated/navbar-footer.html` from `docs/_data/harness.json` with the same renderer every railed page uses. With `--instance`, render the navbar of an IG repository's OWN site instead — that layer first, then what it needs; its own pages at this site's root, every other link to the main site at `--link-root` — into the shell that site is built from.",
       "install": {
         "none": true
       },
@@ -26,13 +26,13 @@
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
           },
           {
-            "description": "The instance whose own site this navbar is for.",
+            "description": "The layer whose own site this navbar is for.",
             "name": "instance",
             "required": false,
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug"
           },
           {
-            "description": "With `--instance`: the main site's URL, for every link that is not this instance's own.",
+            "description": "With `--instance`: the main site's URL, for every link that is not this layer's own.",
             "name": "link-root",
             "required": false,
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"

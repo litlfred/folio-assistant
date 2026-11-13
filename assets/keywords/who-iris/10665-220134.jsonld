@@ -1,0 +1,324 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-220134",
+  "instance": "who-iris",
+  "about": "library/10665-220134",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7908,
+    "terms": 73102
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "vaccination certificate",
+        "score": 1.5015,
+        "evidence": []
+      },
+      {
+        "term": "certificate requirements",
+        "score": 1.3102,
+        "evidence": []
+      },
+      {
+        "term": "exigés",
+        "score": 0.9077,
+        "evidence": []
+      },
+      {
+        "term": "certificats",
+        "score": 0.8298,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "vaccination certificate",
+        "score": 25.1637,
+        "evidence": []
+      },
+      {
+        "term": "certificate requirements",
+        "score": 20.0302,
+        "evidence": []
+      },
+      {
+        "term": "exigés",
+        "score": 14.7324,
+        "evidence": []
+      },
+      {
+        "term": "certificats",
+        "score": 12.8214,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "vaccination certificate",
+        "score": 0.2099,
+        "evidence": []
+      },
+      {
+        "term": "des",
+        "score": 0.1508,
+        "evidence": []
+      },
+      {
+        "term": "les",
+        "score": 0.1496,
+        "evidence": []
+      },
+      {
+        "term": "pour",
+        "score": 0.1066,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "les",
+        "score": 3.3943,
+        "evidence": []
+      },
+      {
+        "term": "vaccination certificate",
+        "score": 3.3349,
+        "evidence": []
+      },
+      {
+        "term": "des",
+        "score": 2.8938,
+        "evidence": []
+      },
+      {
+        "term": "ddcc",
+        "score": 2.4991,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "vaccination certificate",
+        "score": 0.2099,
+        "evidence": []
+      },
+      {
+        "term": "des",
+        "score": 0.1508,
+        "evidence": []
+      },
+      {
+        "term": "les",
+        "score": 0.1496,
+        "evidence": []
+      },
+      {
+        "term": "dans",
+        "score": 0.1028,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "如果没有",
+        "score": 120.3792,
+        "evidence": []
+      },
+      {
+        "term": "巴西登革热",
+        "score": 88.4646,
+        "evidence": []
+      },
+      {
+        "term": "感染者",
+        "score": 68.5086,
+        "evidence": []
+      },
+      {
+        "term": "平等主义",
+        "score": 67.7639,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "page-001": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "vaccination certificate",
+          "score": 1.5015,
+          "evidence": []
+        },
+        {
+          "term": "certificate requirements",
+          "score": 1.3102,
+          "evidence": []
+        },
+        {
+          "term": "exigés",
+          "score": 0.9077,
+          "evidence": []
+        },
+        {
+          "term": "certificats",
+          "score": 0.8298,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "vaccination certificate",
+          "score": 25.1637,
+          "evidence": []
+        },
+        {
+          "term": "certificate requirements",
+          "score": 20.0302,
+          "evidence": []
+        },
+        {
+          "term": "exigés",
+          "score": 14.7324,
+          "evidence": []
+        },
+        {
+          "term": "certificats",
+          "score": 12.8214,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "vaccination certificate",
+          "score": 0.2099,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.1508,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.1496,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.1066,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les",
+          "score": 3.3943,
+          "evidence": []
+        },
+        {
+          "term": "vaccination certificate",
+          "score": 3.3349,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 2.8938,
+          "evidence": []
+        },
+        {
+          "term": "ddcc",
+          "score": 2.4991,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "vaccination certificate",
+          "score": 0.2099,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.1508,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.1496,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.1028,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 120.3792,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 88.4646,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 68.5086,
+          "evidence": []
+        },
+        {
+          "term": "平等主义",
+          "score": 67.7639,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

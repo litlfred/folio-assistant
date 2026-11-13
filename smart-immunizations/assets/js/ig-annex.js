@@ -3,7 +3,7 @@
  *
  * A page carries `<div class="fa-annex" data-src="…json" data-columns="a|b">`.
  * The JSON is `{ title, source: { label }, sheets: [{ name, columns: [{ key,
- * label }], rows: string[][] }] }`, held in the instance's graph and copied to
+ * label }], rows: string[][] }] }`, held in the layer's graph and copied to
  * `assets/annex/` by build-ig-site. Loaded on demand rather than baked into
  * the page (owner, 2026-10-10: "dynamically loaded … i dont want full excel").
  *

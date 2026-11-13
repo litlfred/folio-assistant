@@ -13,12 +13,14 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/ask-the-person",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/communication-language",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/confirmation-waiver",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/continual-progress",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/decision-comparison",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/deletion-requires-confirmation",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/getting-started",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/hand-back-to-discussion",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/harness-projections",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/interaction-modality",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/opening-brief",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/repo-conversion",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/retry-backoff",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/symbiotic-interaction",
@@ -47,9 +49,9 @@
       "instructionsPath": "skills/conduct/conduct-core/agent-memory.md",
       "name": "agent-memory",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1f9aa88899ea737cc7ba6da532baab5c426dd00f211682c568c10cb5af3fd321",
-        "bytes": 10532,
-        "sha256": "1f9aa88899ea737cc7ba6da532baab5c426dd00f211682c568c10cb5af3fd321"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/67bf5fffc8ce317bc8a8c8e29c288d435b00b150b78d069b4cad13f933ae2ee1",
+        "bytes": 10491,
+        "sha256": "67bf5fffc8ce317bc8a8c8e29c288d435b00b150b78d069b4cad13f933ae2ee1"
       },
       "title": "Subagent memory — what a durable entry may claim"
     },
@@ -66,9 +68,9 @@
       "instructionsPath": "skills/conduct/conduct-core/agent-permissions.md",
       "name": "agent-permissions",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/26bf52782d11cd3a259b0bc686a141a72f665f4e8e0bd763db78a48f81066989",
-        "bytes": 7663,
-        "sha256": "26bf52782d11cd3a259b0bc686a141a72f665f4e8e0bd763db78a48f81066989"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8d79170abd56f7e6a62b6548b94649106af81a44d779b39ca1769855aaeb51c0",
+        "bytes": 7579,
+        "sha256": "8d79170abd56f7e6a62b6548b94649106af81a44d779b39ca1769855aaeb51c0"
       },
       "title": "Agent permissions — asked for, explained, granted by a person, recorded"
     },
@@ -106,9 +108,9 @@
       "instructionsPath": "skills/conduct/conduct-core/communication-language.md",
       "name": "communication-language",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/110383079f7b56279f161671357d51c29cb43bca712b15e542672d81751f3cfe",
-        "bytes": 5339,
-        "sha256": "110383079f7b56279f161671357d51c29cb43bca712b15e542672d81751f3cfe"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1881d61eadc5cf77060c5082a0de5fc58346a9ddae5bbb0c3afbfea11f909a23",
+        "bytes": 5299,
+        "sha256": "1881d61eadc5cf77060c5082a0de5fc58346a9ddae5bbb0c3afbfea11f909a23"
       },
       "title": "The language you communicate in"
     },
@@ -125,11 +127,30 @@
       "instructionsPath": "skills/conduct/conduct-core/confirmation-waiver.md",
       "name": "confirmation-waiver",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/6c8ec1b919e5d586279d0070e77d06b9b2efa20f536095c15853cf1253cbd867",
-        "bytes": 7483,
-        "sha256": "6c8ec1b919e5d586279d0070e77d06b9b2efa20f536095c15853cf1253cbd867"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fe3007083e88a0c4d54773c919bcdf1e375cc88568311edf6f375c2f194003e1",
+        "bytes": 7152,
+        "sha256": "fe3007083e88a0c4d54773c919bcdf1e375cc88568311edf6f375c2f194003e1"
       },
       "title": "A confirmation can be waived — by the person who is owed it"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/continual-progress",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Make in-flight work trackable by others in real time — open a PR from the first commit, push small coherent increments continuously (never hoard uncommitted work), keep a live status checklist in the PR body, and post brief intent on the PR + any overlapping sibling PRs. Use on any multi-step or long-running task, especially when siblings/agents or the author may need to follow, cherry-pick, or take over mid-flight.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/conduct-core",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+      "instructionLines": 351,
+      "instructionsPath": "skills/conduct/conduct-core/continual-progress.md",
+      "name": "continual-progress",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/14ff763fdc7975ad05479ae45c6df1ea9409d6bf26ecec9959a60fac1362ff31",
+        "bytes": 18644,
+        "sha256": "14ff763fdc7975ad05479ae45c6df1ea9409d6bf26ecec9959a60fac1362ff31"
+      },
+      "title": "/continual-progress — trackable, always-PR'd, continually-committed work"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/decision-comparison",
@@ -144,9 +165,9 @@
       "instructionsPath": "skills/conduct/conduct-core/decision-comparison.md",
       "name": "decision-comparison",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/804ff6f7ac8d2d003b20565232980c4ee94a993be2bdb0595ec52934f4e5331b",
-        "bytes": 4087,
-        "sha256": "804ff6f7ac8d2d003b20565232980c4ee94a993be2bdb0595ec52934f4e5331b"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/599361aca76485cd093a7e8ba4c64f30be55012f0600e81dfc6d3cd431f1743c",
+        "bytes": 4032,
+        "sha256": "599361aca76485cd093a7e8ba4c64f30be55012f0600e81dfc6d3cd431f1743c"
       },
       "title": "The comparison goes BEFORE the question, not inside the options"
     },
@@ -163,9 +184,9 @@
       "instructionsPath": "skills/conduct/conduct-core/deletion-requires-confirmation.md",
       "name": "deletion-requires-confirmation",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/270bd626fff4d25ce48e59f7b01e6804f59e1ede06976acf95fa2dbab6455cab",
-        "bytes": 11175,
-        "sha256": "270bd626fff4d25ce48e59f7b01e6804f59e1ede06976acf95fa2dbab6455cab"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b925cd36bab8468d3c64f25f1d959aacc408390249303ad07419ba0232e53652",
+        "bytes": 11084,
+        "sha256": "b925cd36bab8468d3c64f25f1d959aacc408390249303ad07419ba0232e53652"
       },
       "title": "Deletion requires explicit confirmation"
     },
@@ -173,7 +194,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/getting-started",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
-      "description": "Triage what a person means when they ask to create a folio, and route them. Five requests share one sentence — a folio in a new repo, folio-assistant overlaid on an existing repo, a second folio in an instance that already has one, a content object they called a folio, or something the filesystem cannot tell apart. Reads the repository facts, runs them through the folio-intent decision table, asks a selectable question for what facts cannot settle, scaffolds, and reports the published URL. Use whenever a user asks to create, start, set up, or initialise a folio, a paper, a DAK, an IG, or \"folio-assistant\" itself.",
+      "description": "Triage what a person means when they ask to create a folio, and route them. Five requests share one sentence — a folio in a new repo, folio-assistant overlaid on an existing repo, a second folio in a layer that already has one, a content object they called a folio, or something the filesystem cannot tell apart. Reads the repository facts, runs them through the folio-intent decision table, asks a selectable question for what facts cannot settle, scaffolds, and reports the published URL. Use whenever a user asks to create, start, set up, or initialise a folio, a paper, a DAK, an IG, or \"folio-assistant\" itself.",
       "hasIOContract": false,
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/conduct-core",
@@ -182,9 +203,9 @@
       "instructionsPath": "skills/conduct/conduct-core/getting-started.md",
       "name": "getting-started",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2eb80ed091bef9a81c6b6a882e1b0a5eccad91c1a741b81e3868be47b23f7351",
-        "bytes": 16696,
-        "sha256": "2eb80ed091bef9a81c6b6a882e1b0a5eccad91c1a741b81e3868be47b23f7351"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/aac2e0273d6f9f0ceac1339375c8871c883bf8d5129ab3add65236b460c90ebb",
+        "bytes": 16641,
+        "sha256": "aac2e0273d6f9f0ceac1339375c8871c883bf8d5129ab3add65236b460c90ebb"
       },
       "title": "/getting-started — what did they actually ask for?"
     },
@@ -222,9 +243,9 @@
       "instructionsPath": "skills/conduct/conduct-core/harness-projections.md",
       "name": "harness-projections",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/cab569ce058369ce4a7554ba7884019f350e2bbd6b1b54210e19402c21efb682",
-        "bytes": 6308,
-        "sha256": "cab569ce058369ce4a7554ba7884019f350e2bbd6b1b54210e19402c21efb682"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e98b09cd5470a48b15bff7701492c6809776232d43cd90a2bcaa52c677ead0dc",
+        "bytes": 6285,
+        "sha256": "e98b09cd5470a48b15bff7701492c6809776232d43cd90a2bcaa52c677ead0dc"
       },
       "title": "Harness projections: CI writes them, the owner consents to every hand edit"
     },
@@ -241,11 +262,30 @@
       "instructionsPath": "skills/conduct/conduct-core/interaction-modality.md",
       "name": "interaction-modality",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d5a67657f3e523545e98241eaa56ddd68ba39f4a593f825444450207e10a846b",
-        "bytes": 30698,
-        "sha256": "d5a67657f3e523545e98241eaa56ddd68ba39f4a593f825444450207e10a846b"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8814f3e6b2565eadcf87f9b240f80082076697c8f806e57505dacfb0e7c6ce3f",
+        "bytes": 30605,
+        "sha256": "8814f3e6b2565eadcf87f9b240f80082076697c8f806e57505dacfb0e7c6ce3f"
       },
       "title": "/interaction-modality — ask in a form the person can answer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/opening-brief",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Brief a work item or a topic BEFORE touching anything: what you are doing and why it is worth doing, what you already know and with what provenance, how you plan to do it and what would falsify the approach. Scales with irreversibility, not line count.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/conduct-core",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+      "instructionLines": 226,
+      "instructionsPath": "skills/conduct/conduct-core/opening-brief.md",
+      "name": "opening-brief",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/64770f2f0d3dc75c5e7d4e38a1972c10eef1bfbd43a6e4ab32e0c6252808ab54",
+        "bytes": 11742,
+        "sha256": "64770f2f0d3dc75c5e7d4e38a1972c10eef1bfbd43a6e4ab32e0c6252808ab54"
+      },
+      "title": "Opening brief — brief the topic before you touch anything"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/repo-conversion",
@@ -260,9 +300,9 @@
       "instructionsPath": "skills/conduct/conduct-core/repo-conversion.md",
       "name": "repo-conversion",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9583c0933b8c57ddfa84c5f635bb064cc4914445f708143a1549e100e87e23af",
-        "bytes": 14770,
-        "sha256": "9583c0933b8c57ddfa84c5f635bb064cc4914445f708143a1549e100e87e23af"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b4129c8f635d40abb79c670480a6a8e9d6ad5e710f3b96c54af58af17e6280ed",
+        "bytes": 14711,
+        "sha256": "b4129c8f635d40abb79c670480a6a8e9d6ad5e710f3b96c54af58af17e6280ed"
       },
       "title": "/repo-conversion — folio-assistant over a repo that already has a life"
     },
@@ -279,9 +319,9 @@
       "instructionsPath": "skills/conduct/conduct-core/retry-backoff.md",
       "name": "retry-backoff",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/6db4ca70d30852019a8f69a121f26a9dfedcb3703acd094fc739102da9c28145",
-        "bytes": 4496,
-        "sha256": "6db4ca70d30852019a8f69a121f26a9dfedcb3703acd094fc739102da9c28145"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/16aaffde047aa8355020f5ce8941218979474cc839c5b6d3d1203320b3a8b6aa",
+        "bytes": 4445,
+        "sha256": "16aaffde047aa8355020f5ce8941218979474cc839c5b6d3d1203320b3a8b6aa"
       },
       "title": "consulted: reference material nobody performs — a PRINCIPLE, not a procedure: every heading is an argument (\"Retrying a definitive answer is not caution\", \"Jitter is not decoration here\"), and it names no actor and no trigger. It is read when writing retry code, never performed as a step."
     },
@@ -298,9 +338,9 @@
       "instructionsPath": "skills/conduct/conduct-core/symbiotic-interaction.md",
       "name": "symbiotic-interaction",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d039e64ce52348f72c841d191d949c2a72a85e850c3d994613a54c258fffcc73",
-        "bytes": 10126,
-        "sha256": "d039e64ce52348f72c841d191d949c2a72a85e850c3d994613a54c258fffcc73"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3cb6e8d3c01ec6f28174034bfa9af163f4e10d2b70b2a8e69ccd49bc4da406ca",
+        "bytes": 10103,
+        "sha256": "3cb6e8d3c01ec6f28174034bfa9af163f4e10d2b70b2a8e69ccd49bc4da406ca"
       },
       "title": "symbiotic-interaction — the three registers of author input"
     },
@@ -336,9 +376,9 @@
       "instructionsPath": "skills/conduct/conduct-core/unverified-constraints.md",
       "name": "unverified-constraints",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/6f69ee3502dbec7d3d31911dd2bf903966a5d64fbe382c58eeb9e6de0a1224a8",
-        "bytes": 3041,
-        "sha256": "6f69ee3502dbec7d3d31911dd2bf903966a5d64fbe382c58eeb9e6de0a1224a8"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/43d917160a1e7630fad465749a7dbf464251f3f83714b3fb6a51d051d1ff100f",
+        "bytes": 3037,
+        "sha256": "43d917160a1e7630fad465749a7dbf464251f3f83714b3fb6a51d051d1ff100f"
       },
       "title": "consulted: reference material nobody performs — a DISCIPLINE. \"Never encode a constraint you have not verified\" is a rule that governs other work; its headings are the argument and the worked case. Nobody performs it as a task."
     },
@@ -355,9 +395,9 @@
       "instructionsPath": "skills/conduct/conduct-core/where-does-this-go.md",
       "name": "where-does-this-go",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/54beaf4515a5fd12dd286ee30112243ecf943fa9da58f6f3854562c6841d9895",
-        "bytes": 5301,
-        "sha256": "54beaf4515a5fd12dd286ee30112243ecf943fa9da58f6f3854562c6841d9895"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a86f7f74207211003e328ba8734b4317d727c83f6e3b4d40e6de1562c53ce11f",
+        "bytes": 5040,
+        "sha256": "a86f7f74207211003e328ba8734b4317d727c83f6e3b4d40e6de1562c53ce11f"
       },
       "title": "Where does this go? — the question, then the skill that answers it"
     },

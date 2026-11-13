@@ -20,7 +20,7 @@
             "arg": {
               "flag": "--out"
             },
-            "description": "Write every `<stem>.checklist.md` into this one directory instead. Default: each beside its diagram, in the instance that owns it; the harness site's `assets/workflows/checklists` holds those of the instances below the harness.",
+            "description": "Write every `<stem>.checklist.md` into this one directory instead. Default: each beside its diagram, in the layer that owns it; the harness site's `assets/workflows/checklists` holds those of the layers below the harness.",
             "name": "out",
             "required": false,
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
@@ -37,7 +37,7 @@
         ],
         "outputs": [
           {
-            "description": "One committed `<stem>.checklist.md` per diagram in every instance, beside its `.bpmn`.",
+            "description": "One committed `<stem>.checklist.md` per diagram in every layer, beside its `.bpmn`.",
             "name": "checklists",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
           }

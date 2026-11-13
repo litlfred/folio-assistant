@@ -1761,7 +1761,8 @@
    exactly how this tab reached 1.37:1. */
 .fa-lang-tab.is-unavailable {
   color: var(--fa-sidelang-muted);
-  cursor: default;
+  cursor: not-allowed;
+  text-decoration: line-through;
 }
 
 .fa-lang-tab.is-current {
@@ -1945,7 +1946,8 @@ a.fa-lang-tab:hover:not(.is-current) {
    and take the ratio with it. */
 .fa-page-lang-tab.is-unavailable {
   color: var(--fa-langbar-muted);
-  cursor: default;
+  cursor: not-allowed;
+  text-decoration: line-through;
 }
 
 .fa-page-lang-tab.is-current {
@@ -1966,6 +1968,170 @@ a.fa-lang-tab:hover:not(.is-current) {
 a.fa-page-lang-tab:hover:not(.is-current) {
   background: var(--fa-langbar-hover-bg);
 }
+
+/* ── The bar's controls, as on the reference site ─────────────────────────
+ *
+ * Owner, 2026-11-10: "on who-iris, smart-* and dth-* pages have styling
+ * match who.int especialy for language and search parts". In a page's own
+ * top bar (`.fa-page-bar`) the search is a large magnifier that opens the
+ * field as a panel under the bar (`mountBarSearch` in docs-ui.js), and the
+ * language picker is a translate glyph, "Select language" in bold and a
+ * chevron, opening a dropdown of the languages named in their own languages.
+ * Both take the bar's own text colour (white on the bar), so they need no
+ * colour of their own on it; the panels they open carry measured pairs:
+ *   light  #1f2933 / #ffffff 14.76:1   muted #6b7280 / #ffffff 4.83:1
+ *          hover #1f2933 / #eef3f8 13.22:1
+ *   dark   #e6edf3 / #2f2e35 11.37:1   muted #a3abb5 / #2f2e35 5.79:1
+ *          hover #e6edf3 / #3a3943 9.63:1
+ * A page with no bar keeps the band's globe and magnifier, unchanged. */
+.fa-page-bar {
+  --fa-barpanel-bg: #ffffff;
+  --fa-barpanel-fg: #1f2933;
+  --fa-barpanel-muted: #6b7280;
+  --fa-barpanel-hover: #eef3f8;
+  --fa-barpanel-edge: #c8d1dc;
+  --fa-barpanel-accent: #0b5cad;
+}
+html:not([data-fa-scheme="light"]) .fa-page-bar {
+  --fa-barpanel-bg: #2f2e35;
+  --fa-barpanel-fg: #e6edf3;
+  --fa-barpanel-muted: #a3abb5;
+  --fa-barpanel-hover: #3a3943;
+  --fa-barpanel-edge: #44434d;
+  --fa-barpanel-accent: #9ec5fe;
+}
+
+/* Search: the magnifier, then the field in a panel under it when open. */
+.fa-bar-search {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  margin-inline-start: auto;
+}
+.fa-bar-search-toggle,
+.fa-page-lang-bar[data-fa-slotted] .fa-page-lang-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  min-width: 2.75rem;
+  padding: 0 0.5rem;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+.fa-bar-search-toggle svg { display: block; width: 1.9rem; height: 1.9rem; }
+.fa-bar-search-toggle:hover,
+.fa-bar-search[data-open="true"] > .fa-bar-search-toggle,
+.fa-page-lang-bar[data-fa-slotted] .fa-page-lang-toggle:hover,
+.fa-page-lang-bar[data-fa-slotted] .fa-page-lang-toggle[aria-expanded="true"] {
+  background: rgba(255, 255, 255, 0.14);
+}
+.fa-bar-search-toggle:focus-visible,
+.fa-page-lang-bar[data-fa-slotted] .fa-page-lang-toggle:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+.fa-bar-search[data-open="false"] > .ig-search,
+.fa-bar-search[data-open="false"] > .search { display: none !important; }
+/* The theme's own `.search` rules are `!important` at its desktop width
+   (position, width, height); these name the bar and the wrapper as well,
+   so the panel wins there too. */
+.fa-page-bar .fa-bar-search[data-open="true"] > .ig-search,
+.fa-page-bar .fa-bar-search[data-open="true"] > .search {
+  position: absolute !important;
+  top: calc(100% + 0.4rem);
+  inset-inline-end: 0;
+  z-index: 1001;
+  display: block;
+  box-sizing: border-box;
+  width: min(28rem, calc(100vw - 2rem)) !important;
+  height: auto !important;
+  min-width: 0;
+  margin: 0;
+  padding: 0.5rem;
+  flex: none;
+  background: var(--fa-barpanel-bg);
+  color: var(--fa-barpanel-fg);
+  border: 1px solid var(--fa-barpanel-edge);
+  border-radius: 6px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+}
+.fa-page-bar .fa-bar-search[data-open="true"] .ig-search-input,
+.fa-page-bar .fa-bar-search[data-open="true"] .search-input {
+  font-size: 1rem;
+  padding: 0.5rem 0.75rem;
+}
+
+/* Language: translate glyph, bold "Select language", chevron; a dropdown. */
+.fa-page-lang-bar[data-fa-slotted] { position: relative; padding: 0; background: transparent; border: 0; box-shadow: none; color: inherit; }
+.fa-page-lang-bar[data-fa-slotted] .fa-page-lang-toggle {
+  gap: 0.6rem;
+  font-weight: 700;
+  font-size: 1.1rem;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+.fa-page-lang-glyph svg { display: block; width: 1.75rem; height: 1.75rem; }
+.fa-page-lang-chevron svg { display: block; width: 1rem; height: 1rem; transition: transform 0.15s; }
+.fa-page-lang-toggle[aria-expanded="true"] .fa-page-lang-chevron svg { transform: rotate(180deg); }
+/* A phone keeps the glyph and the chevron; the words need the room. */
+@media (max-width: 40rem) {
+  .fa-page-lang-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+}
+.fa-page-lang-bar[data-fa-slotted] .fa-page-lang-list {
+  position: absolute;
+  top: calc(100% + 0.4rem);
+  inset-inline-end: 0;
+  z-index: 1001;
+  display: block;
+  min-width: 13rem;
+  margin: 0;
+  padding: 0.35rem 0;
+  list-style: none;
+  background: var(--fa-barpanel-bg);
+  border: 1px solid var(--fa-barpanel-edge);
+  border-radius: 6px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+}
+.fa-page-lang-bar[data-fa-slotted][data-open="false"] .fa-page-lang-list { display: none; }
+.fa-page-lang-bar[data-fa-slotted] .fa-page-lang-list > li { margin: 0; padding: 0; }
+.fa-page-lang-bar[data-fa-slotted] .fa-page-lang-list > li::before { content: none; display: none; }
+.fa-page-lang-bar[data-fa-slotted] .fa-page-lang-list a.fa-page-lang-tab,
+.fa-page-lang-bar[data-fa-slotted] .fa-page-lang-list span.fa-page-lang-tab {
+  display: block;
+  padding: 0.55rem 1.1rem;
+  border-radius: 0;
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--fa-barpanel-fg);
+  background: transparent;
+  text-align: start;
+}
+/* A language you can switch to keeps the picker's measured link token
+   (light #1d4ed8 / #ffffff 6.70:1, dark #9ec5fe / #2f2e35 7.59:1). */
+.fa-page-lang-bar[data-fa-slotted] .fa-page-lang-list a.fa-page-lang-tab:not(.is-current) { color: var(--fa-langbar-link); }
+.fa-page-lang-bar[data-fa-slotted] .fa-page-lang-list a.fa-page-lang-tab:hover:not(.is-current) { background: var(--fa-barpanel-hover); }
+.fa-page-lang-bar[data-fa-slotted] .fa-page-lang-list a.fa-page-lang-tab.is-current,
+.fa-page-lang-bar[data-fa-slotted] .fa-page-lang-list span.fa-page-lang-tab.is-current {
+  color: var(--fa-barpanel-fg);
+  background: transparent;
+  font-weight: 700;
+  box-shadow: inset 4px 0 0 var(--fa-barpanel-accent);
+}
+[dir="rtl"] .fa-page-lang-bar[data-fa-slotted] .fa-page-lang-list .fa-page-lang-tab.is-current { box-shadow: inset -4px 0 0 var(--fa-barpanel-accent); }
+/* Not yet translated, in the IG bar: the muted token (4.83:1 light, 5.79:1
+   dark) alone read as one more language to pick (owner, 2026-11-11, card
+   Q-TRP-2 "A. Keep all six, clearly faded"). A strike-through marks it as
+   unavailable without lowering the ratio, which `opacity` would. */
+.fa-page-lang-bar[data-fa-slotted] .fa-page-lang-list span.fa-page-lang-tab.is-unavailable {
+  color: var(--fa-barpanel-muted);
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+.fa-page-lang-bar[data-fa-slotted] .fa-page-lang-list a.fa-page-lang-tab.is-remembered:not(.is-current) { text-decoration: underline; box-shadow: none; }
 
 /* ── Per-block QA badge (bean g6yr) ─────────────────────────────────
  *
@@ -4102,6 +4268,14 @@ a.fa-tile[data-fa-readonly]:focus-visible {
 [data-fa-pin]:hover [data-fa-pin-control],
 [data-fa-pin-control]:focus-visible,
 [data-fa-pin-control][aria-pressed="true"] { opacity: 1; filter: none; }
+/* Owner, 2026-11-09: "no indication if a bookmark has been selected or
+ * not". Full colour alone is not enough: hovering a block lights every
+ * control. A pressed control also keeps a tinted tile with an accent ring. */
+[data-fa-pin-control][aria-pressed="true"]:not(.bp-bookmark) {
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--link, #0b5cad) 24%, transparent);
+  box-shadow: inset 0 0 0 1.5px var(--link, #0b5cad);
+}
 .fa-glass-kind-avatar { --fa-avatar-size: 2rem; color: var(--fa-glass-accent); }
 .fa-glass-asset-name {
   flex: 1 1 auto;

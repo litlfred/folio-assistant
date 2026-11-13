@@ -7,7 +7,7 @@
     "counts": {
       "done": 13,
       "not-done": 0,
-      "could-not-determine": 5,
+      "could-not-determine": 6,
       "stated": 0
     },
     "steps": [
@@ -90,6 +90,14 @@
         "detail": "holds translation-sources"
       },
       {
+        "id": "directory:onboarding-game",
+        "namedBy": "smart-trust",
+        "what": "declared directory onboarding-game/ exists",
+        "state": "could-not-determine",
+        "detail": "not mounted in this index checkout (index.lock.json brings part of this instance only)",
+        "action": "check it in the instance's own repository"
+      },
+      {
         "id": "asset:agent-instructions",
         "namedBy": "smart-trust",
         "what": "declared agent-instructions AGENTS.md exists",
@@ -149,7 +157,7 @@
       {
         "id": "initialization",
         "state": "unknown",
-        "label": "5 setup step(s) could not be checked from here"
+        "label": "6 setup step(s) could not be checked from here"
       },
       {
         "id": "repository",

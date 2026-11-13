@@ -411,9 +411,9 @@
         "skos:Concept"
       ],
       "label": "archimate",
-      "comment": "ArchiMate models an instance holds, as Archi `.archimate` files (plain XML or Archi's zipped archive), named by `cat-archimate.config.json` (cat-harness's `archimate` subgraph). Every view, element and relationship in a model is a node of its own: a page and an IRI, keyed by Archi's own id, and every view is drawn as SVG from the model's diagram.",
+      "comment": "ArchiMate models a layer holds, as Archi `.archimate` files (plain XML or Archi's zipped archive), named by `cat-archimate.config.json` (cat-harness's `archimate` subgraph). Every view, element and relationship in a model is a node of its own: a page and an IRI, keyed by Archi's own id, and every view is drawn as SVG from the model's diagram.",
       "prefLabel": "archimate",
-      "definition": "ArchiMate models an instance holds, as Archi `.archimate` files (plain XML or Archi's zipped archive), named by `cat-archimate.config.json` (cat-harness's `archimate` subgraph). Every view, element and relationship in a model is a node of its own: a page and an IRI, keyed by Archi's own id, and every view is drawn as SVG from the model's diagram.",
+      "definition": "ArchiMate models a layer holds, as Archi `.archimate` files (plain XML or Archi's zipped archive), named by `cat-archimate.config.json` (cat-harness's `archimate` subgraph). Every view, element and relationship in a model is a node of its own: a page and an IRI, keyed by Archi's own id, and every view is drawn as SVG from the model's diagram.",
       "notation": "cat-harness:graphTypology/archimate",
       "inScheme": "https://litlfred.github.io/cat-harness/v0/ns/",
       "isDefinedBy": "https://litlfred.github.io/cat-harness/v0/ns/",
@@ -636,9 +636,9 @@
         "skos:Concept"
       ],
       "label": "catalogue",
-      "comment": "A remote catalogue modelled by reference — communities, collections and items of a corpus the instance does not hold. Every node declares whether its bytes are here (`materialized`), elsewhere (`referenced`) or unestablished (`unknown`), with no default. Distinct from `library`, which is content that IS here.",
+      "comment": "A remote catalogue modelled by reference — communities, collections and items of a corpus the layer does not hold. Every node declares whether its bytes are here (`materialized`), elsewhere (`referenced`) or unestablished (`unknown`), with no default. Distinct from `library`, which is content that IS here.",
       "prefLabel": "catalogue",
-      "definition": "A remote catalogue modelled by reference — communities, collections and items of a corpus the instance does not hold. Every node declares whether its bytes are here (`materialized`), elsewhere (`referenced`) or unestablished (`unknown`), with no default. Distinct from `library`, which is content that IS here.",
+      "definition": "A remote catalogue modelled by reference — communities, collections and items of a corpus the layer does not hold. Every node declares whether its bytes are here (`materialized`), elsewhere (`referenced`) or unestablished (`unknown`), with no default. Distinct from `library`, which is content that IS here.",
       "notation": "cat-harness:graphTypology/catalogue",
       "inScheme": "https://litlfred.github.io/cat-harness/v0/ns/",
       "isDefinedBy": "https://litlfred.github.io/cat-harness/v0/ns/",
@@ -1101,9 +1101,9 @@
         "skos:Concept"
       ],
       "label": "openapi",
-      "comment": "OpenAPI 3 documents an instance holds, each verbatim beside a provenance node naming the repository, path and commit it was ingested from (cat-harness's `openapi` subgraph). Every operation in a document is a node of its own: a page and an IRI under the instance's docs.",
+      "comment": "OpenAPI 3 documents a layer holds, each verbatim beside a provenance node naming the repository, path and commit it was ingested from (cat-harness's `openapi` subgraph). Every operation in a document is a node of its own: a page and an IRI under the layer's docs.",
       "prefLabel": "openapi",
-      "definition": "OpenAPI 3 documents an instance holds, each verbatim beside a provenance node naming the repository, path and commit it was ingested from (cat-harness's `openapi` subgraph). Every operation in a document is a node of its own: a page and an IRI under the instance's docs.",
+      "definition": "OpenAPI 3 documents a layer holds, each verbatim beside a provenance node naming the repository, path and commit it was ingested from (cat-harness's `openapi` subgraph). Every operation in a document is a node of its own: a page and an IRI under the layer's docs.",
       "notation": "cat-harness:graphTypology/openapi",
       "inScheme": "https://litlfred.github.io/cat-harness/v0/ns/",
       "isDefinedBy": "https://litlfred.github.io/cat-harness/v0/ns/",
@@ -1660,6 +1660,21 @@
       "prefLabel": "web-annex",
       "definition": "A WHO publication's web annexes, L1 or L2, held as data in the knowledge graph rather than as the files WHO attaches to the publication: a DAK's core data dictionary workbook as JSON (`dak-data-dictionary/v1`, loaded on demand by the IG site's annex view), and the declared mapping from its generic personas to the swimlanes of its business-process figures (`dak-swimlanes/v1`). Every node says which publication it is an annex of (`annexOf`: a library entry when one is held, else the parent's IRIS handle), what the publication calls it (`label`, e.g. \"Web Annex A\"), its own IRIS handle only when WHO gave it a record (`iris`), and the document-kind section it serves (`section`, e.g. `dak#core-data-elements` or `l1#annexes`).",
       "notation": "cat-harness:graphTypology/web-annex",
+      "inScheme": "https://litlfred.github.io/cat-harness/v0/ns/",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/v0/ns/",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:graphTypology/web-app",
+      "@type": [
+        "bootstrap:GraphTypology",
+        "skos:Concept"
+      ],
+      "label": "web-app",
+      "comment": "A web app held as source and published as its own chrome-less page, built at publish by the web-app-build Tool and loaded only when a reader opens its route.",
+      "prefLabel": "web-app",
+      "definition": "A web app held as source and published as its own chrome-less page, built at publish by the web-app-build Tool and loaded only when a reader opens its route.",
+      "notation": "cat-harness:graphTypology/web-app",
       "inScheme": "https://litlfred.github.io/cat-harness/v0/ns/",
       "isDefinedBy": "https://litlfred.github.io/cat-harness/v0/ns/",
       "layer": "harness"
@@ -2979,6 +2994,21 @@
       "prefLabel": "maintainedBy",
       "definition": "The tool that generates and keeps this artefact current.",
       "notation": "cat-harness:maintainedBy",
+      "inScheme": "https://litlfred.github.io/cat-harness/v0/ns/",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/v0/ns/",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:jsonSchema",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "jsonSchema",
+      "comment": "The published JSON Schema rendering of one of a schema module's public exports.",
+      "prefLabel": "jsonSchema",
+      "definition": "The published JSON Schema rendering of one of a schema module's public exports.",
+      "notation": "cat-harness:jsonSchema",
       "inScheme": "https://litlfred.github.io/cat-harness/v0/ns/",
       "isDefinedBy": "https://litlfred.github.io/cat-harness/v0/ns/",
       "layer": "harness"

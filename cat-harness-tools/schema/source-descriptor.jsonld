@@ -1,0 +1,20 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/source-descriptor.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/source-descriptor",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "source-descriptor",
+      "title": "source-descriptor",
+      "summary": "How to enumerate a corpus you will never hold, and how to ask it for a subset.",
+      "module": "schemas/library/source-descriptor.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-schemas",
+      "jsonSchema": [
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/source-descriptor/IdentifierSystemSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/source-descriptor/SourceDescriptorSchema.schema.json"
+      ]
+    }
+  ]
+}

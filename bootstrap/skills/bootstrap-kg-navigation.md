@@ -18,7 +18,7 @@ on yet — see [`AGENTS.md`](../AGENTS.md).
 Three facts carry the whole model, and every one of them is checkable by
 reading:
 
-1. **An instance declares the directories it scans**, in its declaration at its
+1. **A layer declares the directories it scans**, in its declaration at its
    root. Each entry is an id, a path, and the **kinds of graph** found there.
 2. **A directory is a place to look, not a type.** One may hold more than one
    part of a graph, so the directory does not say what its files are —
@@ -44,7 +44,7 @@ trusting a copy.
 ## Do this, in order
 
 1. **Read the repository's declaration.** If there is none, this repository is not
-   an instance yet, and that is the case bootstrap exists for.
+   a layer yet, and that is the case bootstrap exists for.
 2. **Find the entry whose `graphTypologies` name the kind you want.** In
    bootstrap they are named for what they hold: `skills`, `processes`,
    `scenarios` (the Roles), `schemas` and `models`. The entry's `path` is relative to
@@ -62,10 +62,10 @@ trusting a copy.
 
 | what you found | what it means | what to do |
 |---|---|---|
-| no declaration | not an instance yet | this is bootstrap's case — continue |
-| a declaration that will not parse | an instance asserting something broken | **stop and say so**; do not fall back |
+| no declaration | not a layer yet | this is bootstrap's case — continue |
+| a declaration that will not parse | a layer asserting something broken | **stop and say so**; do not fall back |
 | a declared directory that is not there | the declaration is wrong | **stop and say so** — scanning nothing and reporting a clean run is the defect |
-| no declaration for a kind you want | this instance has none of it | that is an answer, not a failure |
+| no declaration for a kind you want | this layer has none of it | that is an answer, not a failure |
 
 ## What this skill is NOT
 

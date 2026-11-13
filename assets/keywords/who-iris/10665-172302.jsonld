@@ -1,0 +1,938 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-172302",
+  "instance": "who-iris",
+  "about": "library/10665-172302",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7908,
+    "terms": 73102
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "gpv activities",
+        "score": 3.4001,
+        "evidence": []
+      },
+      {
+        "term": "immunization delivery",
+        "score": 2.1824,
+        "evidence": []
+      },
+      {
+        "term": "vaccines",
+        "score": 1.6599,
+        "evidence": []
+      },
+      {
+        "term": "epi",
+        "score": 1.5623,
+        "evidence": []
+      },
+      {
+        "term": "global programme",
+        "score": 1.4326,
+        "evidence": []
+      },
+      {
+        "term": "poliomyelitis",
+        "score": 1.4147,
+        "evidence": []
+      },
+      {
+        "term": "vrd",
+        "score": 1.2792,
+        "evidence": []
+      },
+      {
+        "term": "subgroup",
+        "score": 1.193,
+        "evidence": []
+      },
+      {
+        "term": "working paper",
+        "score": 1.1006,
+        "evidence": []
+      },
+      {
+        "term": "health sector",
+        "score": 0.9977,
+        "evidence": []
+      },
+      {
+        "term": "country level",
+        "score": 0.9956,
+        "evidence": []
+      },
+      {
+        "term": "world health",
+        "score": 0.947,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "gpv activities",
+        "score": 65.7285,
+        "evidence": []
+      },
+      {
+        "term": "immunization delivery",
+        "score": 41.3021,
+        "evidence": []
+      },
+      {
+        "term": "vaccines",
+        "score": 34.4224,
+        "evidence": []
+      },
+      {
+        "term": "epi",
+        "score": 26.1898,
+        "evidence": []
+      },
+      {
+        "term": "global programme",
+        "score": 22.6473,
+        "evidence": []
+      },
+      {
+        "term": "subgroup",
+        "score": 18.6863,
+        "evidence": []
+      },
+      {
+        "term": "poliomyelitis",
+        "score": 18.2558,
+        "evidence": []
+      },
+      {
+        "term": "vrd",
+        "score": 16.565,
+        "evidence": []
+      },
+      {
+        "term": "eradication",
+        "score": 14.1814,
+        "evidence": []
+      },
+      {
+        "term": "health sector",
+        "score": 12.7842,
+        "evidence": []
+      },
+      {
+        "term": "country level",
+        "score": 12.685,
+        "evidence": []
+      },
+      {
+        "term": "working paper",
+        "score": 12.5071,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "world health",
+        "score": 0.5816,
+        "evidence": []
+      },
+      {
+        "term": "vaccine",
+        "score": 0.5528,
+        "evidence": []
+      },
+      {
+        "term": "health sector",
+        "score": 0.4946,
+        "evidence": []
+      },
+      {
+        "term": "immunization delivery",
+        "score": 0.4874,
+        "evidence": []
+      },
+      {
+        "term": "vaccination",
+        "score": 0.3899,
+        "evidence": []
+      },
+      {
+        "term": "global programme",
+        "score": 0.3682,
+        "evidence": []
+      },
+      {
+        "term": "country level",
+        "score": 0.3494,
+        "evidence": []
+      },
+      {
+        "term": "countries",
+        "score": 0.3093,
+        "evidence": []
+      },
+      {
+        "term": "national",
+        "score": 0.2942,
+        "evidence": []
+      },
+      {
+        "term": "children",
+        "score": 0.239,
+        "evidence": []
+      },
+      {
+        "term": "doses",
+        "score": 0.2298,
+        "evidence": []
+      },
+      {
+        "term": "influenza",
+        "score": 0.2171,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "vaccine",
+        "score": 11.29,
+        "evidence": []
+      },
+      {
+        "term": "immunization delivery",
+        "score": 11.2727,
+        "evidence": []
+      },
+      {
+        "term": "world health",
+        "score": 8.7069,
+        "evidence": []
+      },
+      {
+        "term": "vaccination",
+        "score": 8.5551,
+        "evidence": []
+      },
+      {
+        "term": "health sector",
+        "score": 7.6655,
+        "evidence": []
+      },
+      {
+        "term": "doses",
+        "score": 5.7196,
+        "evidence": []
+      },
+      {
+        "term": "catch-up",
+        "score": 5.7052,
+        "evidence": []
+      },
+      {
+        "term": "piri",
+        "score": 5.4972,
+        "evidence": []
+      },
+      {
+        "term": "mumps",
+        "score": 5.2747,
+        "evidence": []
+      },
+      {
+        "term": "country level",
+        "score": 4.4787,
+        "evidence": []
+      },
+      {
+        "term": "district",
+        "score": 3.4674,
+        "evidence": []
+      },
+      {
+        "term": "immz",
+        "score": 3.4384,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "world health",
+        "score": 0.5816,
+        "evidence": []
+      },
+      {
+        "term": "vaccine",
+        "score": 0.5528,
+        "evidence": []
+      },
+      {
+        "term": "health sector",
+        "score": 0.4946,
+        "evidence": []
+      },
+      {
+        "term": "immunization delivery",
+        "score": 0.4874,
+        "evidence": []
+      },
+      {
+        "term": "global programme",
+        "score": 0.3682,
+        "evidence": []
+      },
+      {
+        "term": "country level",
+        "score": 0.3494,
+        "evidence": []
+      },
+      {
+        "term": "countries",
+        "score": 0.3093,
+        "evidence": []
+      },
+      {
+        "term": "national",
+        "score": 0.2942,
+        "evidence": []
+      },
+      {
+        "term": "children",
+        "score": 0.239,
+        "evidence": []
+      },
+      {
+        "term": "gpv activities",
+        "score": 0.2095,
+        "evidence": []
+      },
+      {
+        "term": "coverage",
+        "score": 0.1906,
+        "evidence": []
+      },
+      {
+        "term": "research",
+        "score": 0.1883,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "并提供一",
+        "score": 62.618,
+        "evidence": []
+      },
+      {
+        "term": "这一点很重要",
+        "score": 54.1727,
+        "evidence": []
+      },
+      {
+        "term": "如果没有",
+        "score": 42.3587,
+        "evidence": []
+      },
+      {
+        "term": "et-ot",
+        "score": 37.7272,
+        "evidence": []
+      },
+      {
+        "term": "ge-9e",
+        "score": 37.7272,
+        "evidence": []
+      },
+      {
+        "term": "s-t",
+        "score": 37.7272,
+        "evidence": []
+      },
+      {
+        "term": "savd",
+        "score": 37.7272,
+        "evidence": []
+      },
+      {
+        "term": "seo",
+        "score": 37.7272,
+        "evidence": []
+      },
+      {
+        "term": "stow",
+        "score": 37.7272,
+        "evidence": []
+      },
+      {
+        "term": "svo",
+        "score": 37.7272,
+        "evidence": []
+      },
+      {
+        "term": "巴西登革热",
+        "score": 36.2016,
+        "evidence": []
+      },
+      {
+        "term": "捐助者",
+        "score": 34.9063,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "page-001": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "gpv",
+          "score": 1.487,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 1.0076,
+          "evidence": []
+        },
+        {
+          "term": "epi",
+          "score": 0.8716,
+          "evidence": []
+        },
+        {
+          "term": "poliomyelitis",
+          "score": 0.8674,
+          "evidence": []
+        },
+        {
+          "term": "eradication",
+          "score": 0.8007,
+          "evidence": []
+        },
+        {
+          "term": "global programme",
+          "score": 0.7677,
+          "evidence": []
+        },
+        {
+          "term": "vaccines",
+          "score": 0.664,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 0.648,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "gpv",
+          "score": 33.1299,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 25.6335,
+          "evidence": []
+        },
+        {
+          "term": "epi",
+          "score": 15.7139,
+          "evidence": []
+        },
+        {
+          "term": "eradication",
+          "score": 14.1814,
+          "evidence": []
+        },
+        {
+          "term": "global programme",
+          "score": 13.1628,
+          "evidence": []
+        },
+        {
+          "term": "poliomyelitis",
+          "score": 12.1705,
+          "evidence": []
+        },
+        {
+          "term": "vaccines",
+          "score": 10.3267,
+          "evidence": []
+        },
+        {
+          "term": "subgroup",
+          "score": 9.3431,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "world health",
+          "score": 0.3272,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 0.2749,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.2117,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.2104,
+          "evidence": []
+        },
+        {
+          "term": "global programme",
+          "score": 0.1798,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.1279,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 0.124,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.122,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "vaccine",
+          "score": 6.1319,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 5.7149,
+          "evidence": []
+        },
+        {
+          "term": "world health",
+          "score": 4.9966,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 4.9618,
+          "evidence": []
+        },
+        {
+          "term": "catch-up",
+          "score": 3.5261,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 3.4474,
+          "evidence": []
+        },
+        {
+          "term": "piri",
+          "score": 3.4237,
+          "evidence": []
+        },
+        {
+          "term": "mumps",
+          "score": 2.4564,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "world health",
+          "score": 0.3272,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 0.2749,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.2117,
+          "evidence": []
+        },
+        {
+          "term": "global programme",
+          "score": 0.1798,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 0.0771,
+          "evidence": []
+        },
+        {
+          "term": "delivery",
+          "score": 0.0564,
+          "evidence": []
+        },
+        {
+          "term": "efforts",
+          "score": 0.0538,
+          "evidence": []
+        },
+        {
+          "term": "epi",
+          "score": 0.04,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "并提供一",
+          "score": 38.0616,
+          "evidence": []
+        },
+        {
+          "term": "s-t",
+          "score": 35.0021,
+          "evidence": []
+        },
+        {
+          "term": "et-ot",
+          "score": 35.0021,
+          "evidence": []
+        },
+        {
+          "term": "ge-9e",
+          "score": 35.0021,
+          "evidence": []
+        },
+        {
+          "term": "savd",
+          "score": 35.0021,
+          "evidence": []
+        },
+        {
+          "term": "seo",
+          "score": 35.0021,
+          "evidence": []
+        },
+        {
+          "term": "stow",
+          "score": 35.0021,
+          "evidence": []
+        },
+        {
+          "term": "svo",
+          "score": 35.0021,
+          "evidence": []
+        }
+      ]
+    },
+    "page-002": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "gpv",
+          "score": 1.2808,
+          "evidence": []
+        },
+        {
+          "term": "vaccines",
+          "score": 0.9959,
+          "evidence": []
+        },
+        {
+          "term": "health sector",
+          "score": 0.6987,
+          "evidence": []
+        },
+        {
+          "term": "epi",
+          "score": 0.6907,
+          "evidence": []
+        },
+        {
+          "term": "funds",
+          "score": 0.6024,
+          "evidence": []
+        },
+        {
+          "term": "subgroup",
+          "score": 0.5965,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.5038,
+          "evidence": []
+        },
+        {
+          "term": "become",
+          "score": 0.5005,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "gpv",
+          "score": 24.8474,
+          "evidence": []
+        },
+        {
+          "term": "vaccines",
+          "score": 24.0957,
+          "evidence": []
+        },
+        {
+          "term": "epi",
+          "score": 10.4759,
+          "evidence": []
+        },
+        {
+          "term": "subgroup",
+          "score": 9.3431,
+          "evidence": []
+        },
+        {
+          "term": "health sector",
+          "score": 9.2993,
+          "evidence": []
+        },
+        {
+          "term": "funds",
+          "score": 9.066,
+          "evidence": []
+        },
+        {
+          "term": "become",
+          "score": 7.3849,
+          "evidence": []
+        },
+        {
+          "term": "regular",
+          "score": 7.2193,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "vaccine",
+          "score": 0.2779,
+          "evidence": []
+        },
+        {
+          "term": "health sector",
+          "score": 0.2548,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 0.1945,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.1795,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.1663,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.1618,
+          "evidence": []
+        },
+        {
+          "term": "influenza",
+          "score": 0.1498,
+          "evidence": []
+        },
+        {
+          "term": "pandemic",
+          "score": 0.119,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "vaccine",
+          "score": 5.1581,
+          "evidence": []
+        },
+        {
+          "term": "health sector",
+          "score": 3.9688,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 3.63,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 3.5934,
+          "evidence": []
+        },
+        {
+          "term": "mumps",
+          "score": 2.8184,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 2.2721,
+          "evidence": []
+        },
+        {
+          "term": "immz",
+          "score": 2.2225,
+          "evidence": []
+        },
+        {
+          "term": "catch-up",
+          "score": 2.1791,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "vaccine",
+          "score": 0.2779,
+          "evidence": []
+        },
+        {
+          "term": "health sector",
+          "score": 0.2548,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 0.1945,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.1663,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.1618,
+          "evidence": []
+        },
+        {
+          "term": "activities",
+          "score": 0.1185,
+          "evidence": []
+        },
+        {
+          "term": "global",
+          "score": 0.1061,
+          "evidence": []
+        },
+        {
+          "term": "support",
+          "score": 0.1031,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "并提供一",
+          "score": 24.5563,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 22.3446,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 20.3776,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 19.8079,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 18.4936,
+          "evidence": []
+        },
+        {
+          "term": "可能会",
+          "score": 18.4764,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 18.3661,
+          "evidence": []
+        },
+        {
+          "term": "更大利益",
+          "score": 16.8829,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

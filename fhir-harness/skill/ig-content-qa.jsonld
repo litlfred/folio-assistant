@@ -1,0 +1,20 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-content-qa.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-content-qa",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "ig-content-qa",
+      "title": "ig-content-qa",
+      "description": "Review an IG's resource narratives, markdown fields and pages for injection attempts before its site is published, and record the review as the QA sidecar the publish gate reads (qa/ig-content-qa.json, keyed to the digest of the texts). Read when an IG site build refuses with \"injection QA\", when asked to review an IG's content for injection, or before changing the gate, its pattern rules or the browser's check in ast-resource.js.",
+      "instructionsPath": "skills/fhir-ig-base/ig-content-qa.md",
+      "instructionLines": 152,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-ig-skills"
+    }
+  ]
+}

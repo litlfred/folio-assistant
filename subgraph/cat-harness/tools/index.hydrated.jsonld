@@ -71,7 +71,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/archimate-actors.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Actors come first: the IG's ActorDefinitions are written from the DAK's personas, and an ArchiMate model only points at them. For one model an instance's `cat-archimate.config.json` names, this reads every element carrying the Archi property `fhir-actor`, whose value is an ActorDefinition's canonical URL, and the IG's ActorDefinitions: FSH `InstanceOf: ActorDefinition` under `input/fsh/`, and FHIR JSON under `fsh-generated/resources/` or `input/resources/`, each canonical being `<sushi-config canonical>/ActorDefinition/<id>` unless its `url` says otherwise. It fails on a value that is not a canonical URL, a tag that names no ActorDefinition, an element kind that cannot be an actor (a data object, a goal), and a type mismatch (a `#person` actor on an application or technology element, a `#system` actor on a business actor or role). It warns about each ActorDefinition no element realizes; `--strict` makes that a failure. `--json` prints element → actors and actor → elements, for page back-links. It never writes an ActorDefinition or any FSH, and never matches boxes to actors by name.",
+          "description": "Actors come first: the IG's ActorDefinitions are written from the DAK's personas, and an ArchiMate model only points at them. For one model a layer's `cat-archimate.config.json` names, this reads every element carrying the Archi property `fhir-actor`, whose value is an ActorDefinition's canonical URL, and the IG's ActorDefinitions: FSH `InstanceOf: ActorDefinition` under `input/fsh/`, and FHIR JSON under `fsh-generated/resources/` or `input/resources/`, each canonical being `<sushi-config canonical>/ActorDefinition/<id>` unless its `url` says otherwise. It fails on a value that is not a canonical URL, a tag that names no ActorDefinition, an element kind that cannot be an actor (a data object, a goal), and a type mismatch (a `#person` actor on an application or technology element, a `#system` actor on a business actor or role). It warns about each ActorDefinition no element realizes; `--strict` makes that a failure. `--json` prints element → actors and actor → elements, for page back-links. It never writes an ActorDefinition or any FSH, and never matches boxes to actors by name.",
           "install": {
             "none": true
           },
@@ -84,7 +84,7 @@
                 "arg": {
                   "flag": "--instance"
                 },
-                "description": "The instance root whose ArchiMate model is read.",
+                "description": "The layer root whose ArchiMate model is read.",
                 "name": "instance",
                 "required": true,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
@@ -102,7 +102,7 @@
                 "arg": {
                   "flag": "--ig"
                 },
-                "description": "The IG directory holding `sushi-config.yaml` and `input/fsh/`; absent, the instance root.",
+                "description": "The IG directory holding `sushi-config.yaml` and `input/fsh/`; absent, the layer root.",
                 "name": "ig",
                 "required": false,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
@@ -158,7 +158,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/archimate-blocks.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "For each table an instance's `cat-archimate.config.json` lists under `tables`, rewrites the block's Markdown table from an `archimate-relationship-rules/v1` file (`relationship-rules`: source, relationship, target, note; `relationship-types`: picture, verb, meaning), keeping the caption and footnotes. For each figure under `figures` that names an `svg`, writes the view as SVG (the same drawing as the view's page). For a rules table that names a `model`, reports the rules the model never uses, the relationships no rule covers, the rules ArchiMate's relationship table refuses, and the relationship types the rules use without a meaning. The rules are in charge: nothing is rewritten from the model.",
+          "description": "For each table a layer's `cat-archimate.config.json` lists under `tables`, rewrites the block's Markdown table from an `archimate-relationship-rules/v1` file (`relationship-rules`: source, relationship, target, note; `relationship-types`: picture, verb, meaning), keeping the caption and footnotes. For each figure under `figures` that names an `svg`, writes the view as SVG (the same drawing as the view's page). For a rules table that names a `model`, reports the rules the model never uses, the relationships no rule covers, the rules ArchiMate's relationship table refuses, and the relationship types the rules use without a meaning. The rules are in charge: nothing is rewritten from the model.",
           "install": {
             "none": true
           },
@@ -171,7 +171,7 @@
                 "arg": {
                   "flag": "--instance"
                 },
-                "description": "The instance root whose config, models, rules and blocks are read.",
+                "description": "The layer root whose config, models, rules and blocks are read.",
                 "name": "instance",
                 "required": true,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
@@ -227,7 +227,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/archimate-check.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "The ArchiMate gate (graph typology `archimate`): every model an instance's `cat-archimate.config.json` names is held, parses (Archi's native XML or its zipped archive), and resolves — every box in every view draws an element the model holds, every relationship's ends are in the model — and no `.archimate` file is held that the config does not name.",
+          "description": "The ArchiMate gate (graph typology `archimate`): every model a layer's `cat-archimate.config.json` names is held, parses (Archi's native XML or its zipped archive), and resolves — every box in every view draws an element the model holds, every relationship's ends are in the model — and no `.archimate` file is held that the config does not name.",
           "install": {
             "none": true
           },
@@ -240,7 +240,7 @@
                 "arg": {
                   "flag": "--instance"
                 },
-                "description": "The instance root whose `archimate` directory is checked.",
+                "description": "The layer root whose `archimate` directory is checked.",
                 "name": "instance",
                 "required": true,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
@@ -262,7 +262,7 @@
             ]
           },
           "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/archimate-models",
-          "title": "Check an instance's ArchiMate models against its config"
+          "title": "Check a layer's ArchiMate models against its config"
         }
       ],
       "holdsGraph": [
@@ -443,7 +443,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/archimate-metamodel.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "For each model an instance's `cat-archimate.config.json` names: the element types it uses, with counts; every (source type, relationship, target type) pattern its relationships follow, with counts and ids; whether ArchiMate's relationship table (Appendix B of ArchiMate 3.2, as Archi holds it, committed as `archimate/schemas/archimate-relationships.json` in the tools layer) allows each pattern; and the placeholder elements, named after their own type, that a hand-drawn metamodel leaves in a model. Prints a report, JSON, Graphviz DOT or a Mermaid class diagram. `archimate-pages` draws the same result on each model's \"Metamodel in use\" page, so the metamodel is derived, never drawn.",
+          "description": "For each model a layer's `cat-archimate.config.json` names: the element types it uses, with counts; every (source type, relationship, target type) pattern its relationships follow, with counts and ids; whether ArchiMate's relationship table (Appendix B of ArchiMate 3.2, as Archi holds it, committed as `archimate/schemas/archimate-relationships.json` in the tools layer) allows each pattern; and the placeholder elements, named after their own type, that a hand-drawn metamodel leaves in a model. Prints a report, JSON, Graphviz DOT or a Mermaid class diagram. `archimate-pages` draws the same result on each model's \"Metamodel in use\" page, so the metamodel is derived, never drawn.",
           "install": {
             "none": true
           },
@@ -456,7 +456,7 @@
                 "arg": {
                   "flag": "--instance"
                 },
-                "description": "The instance root whose ArchiMate models are read.",
+                "description": "The layer root whose ArchiMate models are read.",
                 "name": "instance",
                 "required": true,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
@@ -521,7 +521,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/archimate-pages.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Write a JSON-LD node and a thin page for each model an instance's `cat-archimate.config.json` names and for every view, element and relationship in it — keyed by Archi's own ids — plus the normalised model the pages' one loader draws from, and every view drawn as SVG from the model's own bounds and bendpoints in ArchiMate's notation, each box a link to its element. `--out` writes into a site being built — the data at the graph's path, the pages at the route of the visualiser the instance declares for this Tool, `<locale>/<harness>/<id>/`; without it the files go into the graph and `--check` gates them.",
+          "description": "Write a JSON-LD node and a thin page for each model a layer's `cat-archimate.config.json` names and for every view, element and relationship in it — keyed by Archi's own ids — plus the normalised model the pages' one loader draws from, and every view drawn as SVG from the model's own bounds and bendpoints in ArchiMate's notation, each box a link to its element. `--out` writes into a site being built — the data at the graph's path, the pages at the route of the visualiser the layer declares for this Tool, `<locale>/<harness>/<id>/`; without it the files go into the graph and `--check` gates them.",
           "install": {
             "none": true
           },
@@ -534,7 +534,7 @@
                 "arg": {
                   "flag": "--instance"
                 },
-                "description": "The instance root.",
+                "description": "The layer root.",
                 "name": "instance",
                 "required": true,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
@@ -543,7 +543,7 @@
                 "arg": {
                   "flag": "--out"
                 },
-                "description": "A site being built: the data lands at `<out>/<graph path>/` and the pages at `<out>/<locale>/<harness>/<id>/`, the route of the instance's one visualiser `renderedBy` this Tool (none declared: nothing is written). Absent, they are written into the graph, which must be `served: true`.",
+                "description": "A site being built: the data lands at `<out>/<graph path>/` and the pages at `<out>/<locale>/<harness>/<id>/`, the route of the layer's one visualiser `renderedBy` this Tool (none declared: nothing is written). Absent, they are written into the graph, which must be `served: true`.",
                 "name": "out",
                 "required": false,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
@@ -616,6 +616,15 @@
                 "name": "site",
                 "required": false,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--scope"
+                },
+                "description": "A scoped site build: the comma-separated instances whose pages this writer writes (the IG and the layer it lands on); every other instance's pages are linked on that layer's own site. Passed by the tools layer's `visualiser-writers.ts` (owner, 2026-11-08, Q-SZ-2 \"B\"). Absent: every instance.",
+                "name": "scope",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/IdList"
               }
             ],
             "outputs": [
@@ -716,7 +725,7 @@
                 "arg": {
                   "flag": "--out"
                 },
-                "description": "Write every `<stem>.checklist.md` into this one directory instead. Default: each beside its diagram, in the instance that owns it; the harness site's `assets/workflows/checklists` holds those of the instances below the harness.",
+                "description": "Write every `<stem>.checklist.md` into this one directory instead. Default: each beside its diagram, in the layer that owns it; the harness site's `assets/workflows/checklists` holds those of the layers below the harness.",
                 "name": "out",
                 "required": false,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
@@ -733,7 +742,7 @@
             ],
             "outputs": [
               {
-                "description": "One committed `<stem>.checklist.md` per diagram in every instance, beside its `.bpmn`.",
+                "description": "One committed `<stem>.checklist.md` per diagram in every layer, beside its `.bpmn`.",
                 "name": "checklists",
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
               }
@@ -815,7 +824,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/build-instance-site.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "From a checkout whose layers arrive by remote mount: mount the pinned closure, install, run the instance's own gates (`--pre`), compose the harness chrome for THIS instance, run its source steps, build with Jekyll at the base path read from the git remote (`/<repo>`, or `/<repo>/branches/<branch>` for a preview), run the post-build steps (mount-instance-docs, pdf-viewer, set-html-lang, publish-id-lookup, rail-standalone-pages), and check that every relative or base-rooted link in every page resolves to a file under the site, reading each page with an HTML parser. Any failing step stops the run; a link that does not resolve means nothing is published. It never decides to publish: only `--publish` does, and then a root publish keeps `branches/` and `_render-log/` on the branch, and a preview replaces only its own `branches/<branch>/`.",
+          "description": "From a checkout whose layers arrive by remote mount: mount the pinned closure, install, run the layer's own gates (`--pre`), compose the harness chrome for THIS layer, run its source steps, build with Jekyll at the base path read from the git remote (`/<repo>`, or `/<repo>/branches/<branch>` for a preview), run the post-build steps (mount-instance-docs, pdf-viewer, set-html-lang, publish-id-lookup, rail-standalone-pages), and check that every relative or base-rooted link in every page resolves to a file under the site, reading each page with an HTML parser. Any failing step stops the run; a link that does not resolve means nothing is published. It never decides to publish: only `--publish` does, and then a root publish keeps `branches/` and `_render-log/` on the branch, and a preview replaces only its own `branches/<branch>/`.",
           "install": {
             "none": true
           },
@@ -828,7 +837,7 @@
                 "arg": {
                   "flag": "--root"
                 },
-                "description": "The instance checkout (holds `index.config.json`). Default: the working directory.",
+                "description": "The layer checkout (holds `index.config.json`). Default: the working directory.",
                 "name": "root",
                 "required": false,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
@@ -837,7 +846,7 @@
                 "arg": {
                   "flag": "--instance"
                 },
-                "description": "The declared instance name; must match the checkout's declaration.",
+                "description": "The declared layer name; must match the checkout's declaration.",
                 "name": "instance",
                 "required": true,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug"
@@ -855,7 +864,7 @@
                 "arg": {
                   "flag": "--pre"
                 },
-                "description": "A package script to run in the checkout first, as `bun run <name>` (repeatable): the instance's own gates. Any non-zero exit stops the build.",
+                "description": "A package script to run in the checkout first, as `bun run <name>` (repeatable): the layer's own gates. Any non-zero exit stops the build.",
                 "name": "pre",
                 "required": false,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ScriptName"
@@ -937,11 +946,8 @@
               "ruby"
             ]
           },
-          "satisfies": [
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/deployment-awareness",
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/remote-mount"
-          ],
-          "title": "Build, check and (on request) publish an instance's own site, or a branches/<branch> preview"
+          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/remote-mount",
+          "title": "Build, check and (on request) publish a layer's own site, or a branches/<branch> preview"
         }
       ],
       "holdsGraph": [
@@ -957,7 +963,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/cat-harness-schema.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "The zod definition of `<name>.json` — what an instance may declare about itself — and the published JSON Schema generated from it.",
+          "description": "The zod definition of `<name>.json` — what a layer may declare about itself — and the published JSON Schema generated from it.",
           "install": {
             "none": true
           },
@@ -988,7 +994,7 @@
           "maintainsFrom": "schemas/kg/cat-harness.ts",
           "name": "cat-harness-schema",
           "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/kg-export",
-          "title": "Instance declaration schema"
+          "title": "Layer declaration schema"
         }
       ],
       "holdsGraph": [
@@ -1037,6 +1043,129 @@
       ],
       "name": "tools/check-tools",
       "path": "tools/check-tools/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/ci-bootstrap-pages/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/ci-bootstrap-pages.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Dispatch bootstrap-tools' `pages.yml`: stage the README site and graph with `scripts/site.ts` and commit them onto `gh-pages`. Started with the standard GitHub CLI; the run is watched with `gh run watch`.",
+          "install": {
+            "cli": "gh"
+          },
+          "invoke": {
+            "shell": "gh workflow run pages.yml"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "flag": "--repo"
+                },
+                "description": "The repository whose workflow is run. Default: the current one.",
+                "name": "repo",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoFullName"
+              },
+              {
+                "arg": {
+                  "flag": "--ref"
+                },
+                "description": "The branch to run it on. Default: the default branch.",
+                "name": "ref",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Branch"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "The dispatched run; its outcome is read with `gh run watch` or `gh run view`.",
+                "name": "run",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+              }
+            ]
+          },
+          "name": "ci-bootstrap-pages",
+          "requirements": {
+            "network": true,
+            "runtime": [
+              "gh"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/bootstrap-tools/skill/render-kg-to-github-pages",
+          "title": "Publish bootstrap-tools' site"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/ci-bootstrap-pages",
+      "path": "tools/ci-bootstrap-pages/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/ci-docs-site/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/ci-docs-site.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Dispatch the index's `docs-site.yml`: security gate, regenerate, compose each layer's site, build, export the graph, verify, restore previews, publish to gh-pages, judge the built site. Started with the standard GitHub CLI; the run is watched with `gh run watch`.",
+          "install": {
+            "cli": "gh"
+          },
+          "invoke": {
+            "shell": "gh workflow run docs-site.yml"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "flag": "--repo"
+                },
+                "description": "The repository whose workflow is run. Default: the current one.",
+                "name": "repo",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoFullName"
+              },
+              {
+                "arg": {
+                  "flag": "--ref"
+                },
+                "description": "The branch to run it on. Default: the default branch.",
+                "name": "ref",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Branch"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "The dispatched run; its outcome is read with `gh run watch` or `gh run view`.",
+                "name": "run",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+              }
+            ]
+          },
+          "name": "ci-docs-site",
+          "requirements": {
+            "network": true,
+            "runtime": [
+              "gh"
+            ]
+          },
+          "satisfies": [
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/render-kg-to-cdn",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/docs-generation"
+          ],
+          "title": "Build and publish the platform docs site"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/ci-docs-site",
+      "path": "tools/ci-docs-site/"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/ci-health/",
@@ -1112,13 +1241,193 @@
       "path": "tools/ci-health/"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/ci-post-merge-regen/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/ci-post-merge-regen.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Dispatch `post-merge-regen.yml` (a layer's caller of `layer-post-merge-regen.yml`, or the index's own): regenerate every derived file from its source on main and open the regeneration PR. Started with the standard GitHub CLI; the run is watched with `gh run watch`.",
+          "install": {
+            "cli": "gh"
+          },
+          "invoke": {
+            "shell": "gh workflow run post-merge-regen.yml"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "flag": "--repo"
+                },
+                "description": "The repository whose workflow is run. Default: the current one.",
+                "name": "repo",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoFullName"
+              },
+              {
+                "arg": {
+                  "flag": "--ref"
+                },
+                "description": "The branch to run it on. Default: the default branch.",
+                "name": "ref",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Branch"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "The dispatched run; its outcome is read with `gh run watch` or `gh run view`.",
+                "name": "run",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+              }
+            ]
+          },
+          "name": "ci-post-merge-regen",
+          "requirements": {
+            "network": true,
+            "runtime": [
+              "gh"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/docs-generation",
+          "title": "Regenerate derived files after a merge"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/ci-post-merge-regen",
+      "path": "tools/ci-post-merge-regen/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/ci-publish-context/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/ci-publish-context.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Dispatch the layer's `publish-context.yml`, which calls the tools layer's reusable `layer-publish-context.yml` to publish the layer's graph context at the needs it is pinned to. Started with the standard GitHub CLI; the run is watched with `gh run watch`.",
+          "install": {
+            "cli": "gh"
+          },
+          "invoke": {
+            "shell": "gh workflow run publish-context.yml"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "flag": "--repo"
+                },
+                "description": "The repository whose workflow is run. Default: the current one.",
+                "name": "repo",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoFullName"
+              },
+              {
+                "arg": {
+                  "flag": "--ref"
+                },
+                "description": "The branch to run it on. Default: the default branch.",
+                "name": "ref",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Branch"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "The dispatched run; its outcome is read with `gh run watch` or `gh run view`.",
+                "name": "run",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+              }
+            ]
+          },
+          "name": "ci-publish-context",
+          "requirements": {
+            "network": true,
+            "runtime": [
+              "gh"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/kg-export",
+          "title": "Publish a layer's JSON-LD context"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/ci-publish-context",
+      "path": "tools/ci-publish-context/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/ci-publish-subgraph-index/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/ci-publish-subgraph-index.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Dispatch the layer's `publish-subgraph-index.yml`, which calls `layer-publish-subgraph-index.yml` to package and publish the layer's sub-graph index. Started with the standard GitHub CLI; the run is watched with `gh run watch`.",
+          "install": {
+            "cli": "gh"
+          },
+          "invoke": {
+            "shell": "gh workflow run publish-subgraph-index.yml"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "flag": "--repo"
+                },
+                "description": "The repository whose workflow is run. Default: the current one.",
+                "name": "repo",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoFullName"
+              },
+              {
+                "arg": {
+                  "flag": "--ref"
+                },
+                "description": "The branch to run it on. Default: the default branch.",
+                "name": "ref",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Branch"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "The dispatched run; its outcome is read with `gh run watch` or `gh run view`.",
+                "name": "run",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+              }
+            ]
+          },
+          "name": "ci-publish-subgraph-index",
+          "requirements": {
+            "network": true,
+            "runtime": [
+              "gh"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/npm-kg-distribution",
+          "title": "Publish a layer's sub-graph index package"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/ci-publish-subgraph-index",
+      "path": "tools/ci-publish-subgraph-index/"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/compose-docs/",
       "@type": "bootstrap:Subgraph",
       "hasMember": [
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/compose-docs.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Write the Jekyll source the docs site is built from: the base docs layer, the repository overlay on top (an overlay's `_config.yml` merged, every override reported), and each `composed` instance under its own name. `--staging` keeps staging-only visualisations; `--changed-files` stubs instances a branch does not reach. `--shell` writes the CHROME only — the layers' Jekyll machinery and assets, no page, no instance, and the host's generated includes empty — which an IG repository composes its IG into so its own site wears the main site's chrome.",
+          "description": "Write the Jekyll source the docs site is built from: the base docs layer, the repository overlay on top (an overlay's `_config.yml` merged, every override reported), and each `composed` layer under its own name. `--staging` keeps staging-only visualisations; `--changed-files` stubs layers a branch does not reach. `--shell` writes the CHROME only — the layers' Jekyll machinery and assets, no page, no layer, and the host's generated includes empty — which an IG repository composes its IG into so its own site wears the main site's chrome.",
           "install": {
             "none": true
           },
@@ -1143,7 +1452,7 @@
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
               },
               {
-                "description": "The branch's changed paths, one per line: instances it does not reach are stubbed.",
+                "description": "The branch's changed paths, one per line: layers it does not reach are stubbed.",
                 "name": "changed-files",
                 "required": false,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
@@ -1152,7 +1461,7 @@
                 "arg": {
                   "flag": "--shell"
                 },
-                "description": "The chrome only: Jekyll machinery and assets, no page and no composed instance; generated includes written empty.",
+                "description": "The chrome only: Jekyll machinery and assets, no page and no composed layer; generated includes written empty.",
                 "name": "shell",
                 "required": false,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
@@ -1160,7 +1469,7 @@
             ],
             "outputs": [
               {
-                "description": "Files composed, with every override, merge, withheld file and carried or stubbed instance named.",
+                "description": "Files composed, with every override, merge, withheld file and carried or stubbed layer named.",
                 "name": "files",
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count"
               }
@@ -1479,7 +1788,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/context-prefixes.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Check every committed JSON-LD document that names the content context, or an instance's own generated context: every plain key is a declared term (never descending into an `@json` value), and no file path sits under an `@id`-coerced term. An empty corpus is a finding, never a clean run. Prefixes are checked by `jsonld:contexts --check`.",
+          "description": "Check every committed JSON-LD document that names the content context, or a layer's own generated context: every plain key is a declared term (never descending into an `@json` value), and no file path sits under an `@id`-coerced term. An empty corpus is a finding, never a clean run. Prefixes are checked by `jsonld:contexts --check`.",
           "install": {
             "none": true
           },
@@ -1610,7 +1919,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/declaration-resolution.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Read every instance declaration in the checkout and resolve what it names: `directories` (and those declared from within) through `check:declared-dirs`, `assets` through `check:declared-assets`, `visualisers[].renderedBy` through `check:visualiser-routes`, `needs` through the instance-graph resolver, and `visualisers[].coversKinds` against the graph typologies registered IN THIS CHECKOUT — its own and those a mounted layer contributes, read from the checkout under inspection rather than from where the harness module sits. A declaration that does not parse is a finding. One verdict per instance and field, naming the gate that decided it. Exit 0 every reference resolves, 1 one does not, 2 could not determine; a certain finding is reported before anything undetermined.",
+          "description": "Read every layer declaration in the checkout and resolve what it names: `directories` (and those declared from within) through `check:declared-dirs`, `assets` through `check:declared-assets`, `visualisers[].renderedBy` through `check:visualiser-routes`, `needs` through the instance-graph resolver, and `visualisers[].coversKinds` against the graph typologies registered IN THIS CHECKOUT — its own and those a mounted layer contributes, read from the checkout under inspection rather than from where the harness module sits. A declaration that does not parse is a finding. One verdict per layer and field, naming the gate that decided it. Exit 0 every reference resolves, 1 one does not, 2 could not determine; a certain finding is reported before anything undetermined.",
           "install": {
             "none": true
           },
@@ -1640,7 +1949,7 @@
             ],
             "outputs": [
               {
-                "description": "Unresolved references per instance and field, and what could not be determined; entries examined per field.",
+                "description": "Unresolved references per layer and field, and what could not be determined; entries examined per field.",
                 "name": "findings",
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count"
               }
@@ -1722,7 +2031,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/document-kinds-viewer.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Render each declared document-kinds directory: every kind's structure, sections and sources, one page per subject instance.",
+          "description": "Render each declared document-kinds directory: every kind's structure, sections and sources, one page per subject layer.",
           "install": {
             "none": true
           },
@@ -2080,57 +2389,6 @@
       "path": "tools/folio-viewer/"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/gates-merged/",
-      "@type": "bootstrap:Subgraph",
-      "hasMember": [
-        {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/gates-merged.jsonld",
-          "@type": "cat-harness:Tool",
-          "description": "Build this branch merged with the current base in a throwaway worktree and run the full `bun run cat gates` there — the state a merge will actually produce, which neither the branch's CI nor the base's CI evaluates. Exit 0 passes, 1 conflicts or fails, 2 could not determine (never read as clean). The working copy is never touched.",
-          "install": {
-            "none": true
-          },
-          "invoke": {
-            "shell": "bun run cat check:merged"
-          },
-          "io": {
-            "inputs": [
-              {
-                "arg": {
-                  "flag": "--base"
-                },
-                "description": "The base branch to merge with; `main` when omitted. Fetched first.",
-                "name": "base",
-                "required": false,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Branch"
-              }
-            ],
-            "outputs": [
-              {
-                "description": "The gate report for the merged tree, or the conflicting paths.",
-                "name": "report",
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
-              }
-            ]
-          },
-          "name": "gates-merged",
-          "requirements": {
-            "network": true,
-            "runtime": [
-              "bun"
-            ]
-          },
-          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/prepare-merge",
-          "title": "Gates on the merged tree"
-        }
-      ],
-      "holdsGraph": [
-        "cat-harness:graphTypology/tools"
-      ],
-      "name": "tools/gates-merged",
-      "path": "tools/gates-merged/"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/gates/",
       "@type": "bootstrap:Subgraph",
       "hasMember": [
@@ -2182,7 +2440,6 @@
           },
           "satisfies": [
             "https://litlfred.github.io/folio-assistant/cat-harness/skill/platform-gates",
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/prepare-merge",
             "https://litlfred.github.io/folio-assistant/cat-harness/skill/continual-progress"
           ],
           "title": "The platform's quality gates"
@@ -2329,7 +2586,7 @@
           "io": {
             "inputs": [
               {
-                "description": "The instance root whose Knowledge Graph is rendered, or a tree a caller already rendered and verified.",
+                "description": "The layer root whose Knowledge Graph is rendered, or a tree a caller already rendered and verified.",
                 "name": "root",
                 "required": true,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
@@ -2382,779 +2639,6 @@
       ],
       "name": "tools/gh-pages",
       "path": "tools/gh-pages/"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/github-branches/",
-      "@type": "bootstrap:Subgraph",
-      "hasMember": [
-        {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/github-branches.jsonld",
-          "@type": "cat-harness:Tool",
-          "description": "List the branch names of the current checkout's GitHub project, as the forge reports them.",
-          "install": {
-            "cli": "gh"
-          },
-          "invoke": {
-            "shell": "gh api --paginate --jq .[].name repos/{owner}/{repo}/branches"
-          },
-          "io": {
-            "inputs": [],
-            "outputs": [
-              {
-                "description": "One branch name per line.",
-                "name": "branches",
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
-              }
-            ]
-          },
-          "name": "github-branches",
-          "requirements": {
-            "network": true
-          },
-          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/coordinate",
-          "title": "List branches (GitHub)"
-        }
-      ],
-      "holdsGraph": [
-        "cat-harness:graphTypology/tools"
-      ],
-      "name": "tools/github-branches",
-      "path": "tools/github-branches/"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/github-pr-checks/",
-      "@type": "bootstrap:Subgraph",
-      "hasMember": [
-        {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/github-pr-checks.jsonld",
-          "@type": "cat-harness:Tool",
-          "description": "Read the check runs of one pull request and their state.",
-          "install": {
-            "cli": "gh"
-          },
-          "invoke": {
-            "shell": "gh pr checks"
-          },
-          "io": {
-            "inputs": [
-              {
-                "arg": {
-                  "positional": 0
-                },
-                "description": "Absent: the change proposal of the current branch.",
-                "name": "number",
-                "required": false,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ChangeProposalNumber"
-              }
-            ],
-            "outputs": [
-              {
-                "description": "One line per check run: name, state, elapsed time, link.",
-                "name": "checks",
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
-              }
-            ]
-          },
-          "name": "github-pr-checks",
-          "requirements": {
-            "network": true
-          },
-          "satisfies": [
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/prepare-merge-auto",
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/watch"
-          ],
-          "title": "Read a pull request's checks (GitHub)"
-        }
-      ],
-      "holdsGraph": [
-        "cat-harness:graphTypology/tools"
-      ],
-      "name": "tools/github-pr-checks",
-      "path": "tools/github-pr-checks/"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/github-pr-comment/",
-      "@type": "bootstrap:Subgraph",
-      "hasMember": [
-        {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/github-pr-comment.jsonld",
-          "@type": "cat-harness:Tool",
-          "description": "Add a comment to one pull request. The comment is read from stdin, never from the command line.",
-          "install": {
-            "cli": "gh"
-          },
-          "invoke": {
-            "shell": "gh pr comment --body-file -"
-          },
-          "io": {
-            "inputs": [
-              {
-                "arg": {
-                  "positional": 0
-                },
-                "description": "Absent: the change proposal of the current branch.",
-                "name": "number",
-                "required": false,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ChangeProposalNumber"
-              },
-              {
-                "arg": {
-                  "stdin": true
-                },
-                "description": "The comment.",
-                "name": "body",
-                "required": true,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
-              }
-            ],
-            "outputs": [
-              {
-                "description": "The comment created, as the forge CLI prints it.",
-                "name": "url",
-                "render": {
-                  "as": "url",
-                  "reason": "a reader follows it to the comment; the scheme is checked before it reaches an href"
-                },
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Url"
-              }
-            ]
-          },
-          "name": "github-pr-comment",
-          "requirements": {
-            "network": true
-          },
-          "satisfies": [
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/prepare-merge-auto",
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/coordinate"
-          ],
-          "title": "Comment on a pull request (GitHub)"
-        }
-      ],
-      "holdsGraph": [
-        "cat-harness:graphTypology/tools"
-      ],
-      "name": "tools/github-pr-comment",
-      "path": "tools/github-pr-comment/"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/github-pr-files/",
-      "@type": "bootstrap:Subgraph",
-      "hasMember": [
-        {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/github-pr-files.jsonld",
-          "@type": "cat-harness:Tool",
-          "description": "List the paths one pull request changes.",
-          "install": {
-            "cli": "gh"
-          },
-          "invoke": {
-            "shell": "gh pr diff --name-only"
-          },
-          "io": {
-            "inputs": [
-              {
-                "arg": {
-                  "positional": 0
-                },
-                "description": "Absent: the change proposal of the current branch.",
-                "name": "number",
-                "required": false,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ChangeProposalNumber"
-              }
-            ],
-            "outputs": [
-              {
-                "description": "One repository path per line.",
-                "name": "files",
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
-              }
-            ]
-          },
-          "name": "github-pr-files",
-          "requirements": {
-            "network": true
-          },
-          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/coordinate",
-          "title": "List a pull request's changed files (GitHub)"
-        }
-      ],
-      "holdsGraph": [
-        "cat-harness:graphTypology/tools"
-      ],
-      "name": "tools/github-pr-files",
-      "path": "tools/github-pr-files/"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/github-pr-list/",
-      "@type": "bootstrap:Subgraph",
-      "hasMember": [
-        {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/github-pr-list.jsonld",
-          "@type": "cat-harness:Tool",
-          "description": "List the open pull requests of the current checkout's GitHub project, optionally only those from one branch.",
-          "install": {
-            "cli": "gh"
-          },
-          "invoke": {
-            "shell": "gh pr list"
-          },
-          "io": {
-            "inputs": [
-              {
-                "arg": {
-                  "flag": "--head"
-                },
-                "description": "Only proposals whose source branch is this.",
-                "name": "branch",
-                "required": false,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Branch"
-              }
-            ],
-            "outputs": [
-              {
-                "description": "One line per open change proposal: number, title, source branch.",
-                "name": "proposals",
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
-              }
-            ]
-          },
-          "name": "github-pr-list",
-          "requirements": {
-            "network": true
-          },
-          "satisfies": [
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/prepare-merge-auto",
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/pickup",
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/coordinate"
-          ],
-          "title": "List pull requests (GitHub)"
-        }
-      ],
-      "holdsGraph": [
-        "cat-harness:graphTypology/tools"
-      ],
-      "name": "tools/github-pr-list",
-      "path": "tools/github-pr-list/"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/github-pr-request-review/",
-      "@type": "bootstrap:Subgraph",
-      "hasMember": [
-        {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/github-pr-request-review.jsonld",
-          "@type": "cat-harness:Tool",
-          "description": "Ask one or more accounts to review a pull request. Adds to the reviewers already requested.",
-          "install": {
-            "cli": "gh"
-          },
-          "invoke": {
-            "shell": "gh pr edit"
-          },
-          "io": {
-            "inputs": [
-              {
-                "arg": {
-                  "positional": 0
-                },
-                "description": "Absent: the change proposal of the current branch.",
-                "name": "number",
-                "required": false,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ChangeProposalNumber"
-              },
-              {
-                "arg": {
-                  "flag": "--add-reviewer"
-                },
-                "name": "reviewers",
-                "repeated": true,
-                "required": true,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Login"
-              }
-            ],
-            "outputs": [
-              {
-                "description": "The pull request.",
-                "name": "url",
-                "render": {
-                  "as": "url",
-                  "reason": "a reader follows it to the proposal; the scheme is checked before it reaches an href"
-                },
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Url"
-              }
-            ]
-          },
-          "name": "github-pr-request-review",
-          "requirements": {
-            "network": true
-          },
-          "satisfies": [
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/pickup",
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/prepare-merge-auto"
-          ],
-          "title": "Request review on a pull request (GitHub)"
-        }
-      ],
-      "holdsGraph": [
-        "cat-harness:graphTypology/tools"
-      ],
-      "name": "tools/github-pr-request-review",
-      "path": "tools/github-pr-request-review/"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/github-pr-resolve-thread/",
-      "@type": "bootstrap:Subgraph",
-      "hasMember": [
-        {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/github-pr-resolve-thread.jsonld",
-          "@type": "cat-harness:Tool",
-          "description": "Mark one review thread on a pull request as resolved. A GitHub thread id names its pull request, so no number is needed.",
-          "install": {
-            "cli": "gh"
-          },
-          "invoke": {
-            "shell": "bun run cat github:resolve-thread"
-          },
-          "io": {
-            "inputs": [
-              {
-                "arg": {
-                  "positional": 0
-                },
-                "description": "The review thread's node id, e.g. PRRT_kwDO…",
-                "name": "thread",
-                "required": true,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ReviewThreadId"
-              }
-            ],
-            "outputs": []
-          },
-          "name": "github-pr-resolve-thread",
-          "requirements": {
-            "network": true
-          },
-          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/coordinate",
-          "title": "Resolve a review thread on a pull request (GitHub)"
-        }
-      ],
-      "holdsGraph": [
-        "cat-harness:graphTypology/tools"
-      ],
-      "name": "tools/github-pr-resolve-thread",
-      "path": "tools/github-pr-resolve-thread/"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/github-pr-view/",
-      "@type": "bootstrap:Subgraph",
-      "hasMember": [
-        {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/github-pr-view.jsonld",
-          "@type": "cat-harness:Tool",
-          "description": "Read one pull request: title, state, body, and its comments and reviews.",
-          "install": {
-            "cli": "gh"
-          },
-          "invoke": {
-            "shell": "gh pr view --comments"
-          },
-          "io": {
-            "inputs": [
-              {
-                "arg": {
-                  "positional": 0
-                },
-                "description": "Absent: the change proposal of the current branch.",
-                "name": "number",
-                "required": false,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ChangeProposalNumber"
-              }
-            ],
-            "outputs": [
-              {
-                "description": "The proposal as the forge prints it, comments included.",
-                "name": "proposal",
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
-              }
-            ]
-          },
-          "name": "github-pr-view",
-          "requirements": {
-            "network": true
-          },
-          "satisfies": [
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/prepare-merge-auto",
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/pickup",
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/watch",
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/coordinate"
-          ],
-          "title": "Read a pull request (GitHub)"
-        }
-      ],
-      "holdsGraph": [
-        "cat-harness:graphTypology/tools"
-      ],
-      "name": "tools/github-pr-view",
-      "path": "tools/github-pr-view/"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/gitlab-branches/",
-      "@type": "bootstrap:Subgraph",
-      "hasMember": [
-        {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/gitlab-branches.jsonld",
-          "@type": "cat-harness:Tool",
-          "description": "List the branch names of the current checkout's GitLab project, as the forge reports them.",
-          "install": {
-            "cli": "glab"
-          },
-          "invoke": {
-            "shell": "glab api --paginate projects/:id/repository/branches"
-          },
-          "io": {
-            "inputs": [],
-            "outputs": [
-              {
-                "description": "The branches as the API returns them, one JSON object each.",
-                "name": "branches",
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
-              }
-            ]
-          },
-          "name": "gitlab-branches",
-          "requirements": {
-            "network": true
-          },
-          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/coordinate",
-          "title": "List branches (GitLab)"
-        }
-      ],
-      "holdsGraph": [
-        "cat-harness:graphTypology/tools"
-      ],
-      "name": "tools/gitlab-branches",
-      "path": "tools/gitlab-branches/"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/gitlab-mr-comment/",
-      "@type": "bootstrap:Subgraph",
-      "hasMember": [
-        {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/gitlab-mr-comment.jsonld",
-          "@type": "cat-harness:Tool",
-          "description": "Add a comment to one merge request. The comment is read from stdin, never from the command line.",
-          "install": {
-            "cli": "glab"
-          },
-          "invoke": {
-            "shell": "glab mr note create"
-          },
-          "io": {
-            "inputs": [
-              {
-                "arg": {
-                  "positional": 0
-                },
-                "description": "Absent: the change proposal of the current branch.",
-                "name": "number",
-                "required": false,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ChangeProposalNumber"
-              },
-              {
-                "arg": {
-                  "stdin": true
-                },
-                "description": "The comment.",
-                "name": "body",
-                "required": true,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
-              }
-            ],
-            "outputs": [
-              {
-                "description": "The comment created, as the forge CLI prints it.",
-                "name": "url",
-                "render": {
-                  "as": "url",
-                  "reason": "a reader follows it to the comment; the scheme is checked before it reaches an href"
-                },
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Url"
-              }
-            ]
-          },
-          "name": "gitlab-mr-comment",
-          "requirements": {
-            "network": true
-          },
-          "satisfies": [
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/prepare-merge-auto",
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/coordinate"
-          ],
-          "title": "Comment on a merge request (GitLab)"
-        }
-      ],
-      "holdsGraph": [
-        "cat-harness:graphTypology/tools"
-      ],
-      "name": "tools/gitlab-mr-comment",
-      "path": "tools/gitlab-mr-comment/"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/gitlab-mr-files/",
-      "@type": "bootstrap:Subgraph",
-      "hasMember": [
-        {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/gitlab-mr-files.jsonld",
-          "@type": "cat-harness:Tool",
-          "description": "List the paths one merge request changes.",
-          "install": {
-            "cli": "glab"
-          },
-          "invoke": {
-            "shell": "bun run cat gitlab:mr-files"
-          },
-          "io": {
-            "inputs": [
-              {
-                "arg": {
-                  "positional": 0
-                },
-                "description": "Absent: the change proposal of the current branch.",
-                "name": "number",
-                "required": false,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ChangeProposalNumber"
-              }
-            ],
-            "outputs": [
-              {
-                "description": "One repository path per line.",
-                "name": "files",
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
-              }
-            ]
-          },
-          "name": "gitlab-mr-files",
-          "requirements": {
-            "network": true
-          },
-          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/coordinate",
-          "title": "List a merge request's changed files (GitLab)"
-        }
-      ],
-      "holdsGraph": [
-        "cat-harness:graphTypology/tools"
-      ],
-      "name": "tools/gitlab-mr-files",
-      "path": "tools/gitlab-mr-files/"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/gitlab-mr-list/",
-      "@type": "bootstrap:Subgraph",
-      "hasMember": [
-        {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/gitlab-mr-list.jsonld",
-          "@type": "cat-harness:Tool",
-          "description": "List the open merge requests of the current checkout's GitLab project, optionally only those from one branch.",
-          "install": {
-            "cli": "glab"
-          },
-          "invoke": {
-            "shell": "glab mr list"
-          },
-          "io": {
-            "inputs": [
-              {
-                "arg": {
-                  "flag": "--source-branch"
-                },
-                "description": "Only proposals whose source branch is this.",
-                "name": "branch",
-                "required": false,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Branch"
-              }
-            ],
-            "outputs": [
-              {
-                "description": "One line per open change proposal: number, title, source branch.",
-                "name": "proposals",
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
-              }
-            ]
-          },
-          "name": "gitlab-mr-list",
-          "requirements": {
-            "network": true
-          },
-          "satisfies": [
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/prepare-merge-auto",
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/pickup",
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/coordinate"
-          ],
-          "title": "List merge requests (GitLab)"
-        }
-      ],
-      "holdsGraph": [
-        "cat-harness:graphTypology/tools"
-      ],
-      "name": "tools/gitlab-mr-list",
-      "path": "tools/gitlab-mr-list/"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/gitlab-mr-request-review/",
-      "@type": "bootstrap:Subgraph",
-      "hasMember": [
-        {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/gitlab-mr-request-review.jsonld",
-          "@type": "cat-harness:Tool",
-          "description": "Ask one or more users to review a merge request. Adds to the reviewers already requested.",
-          "install": {
-            "cli": "glab"
-          },
-          "invoke": {
-            "shell": "bun run cat gitlab:request-review"
-          },
-          "io": {
-            "inputs": [
-              {
-                "arg": {
-                  "positional": 0
-                },
-                "description": "Absent: the merge request of the current branch.",
-                "name": "number",
-                "required": false,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ChangeProposalNumber"
-              },
-              {
-                "arg": {
-                  "positional": 1
-                },
-                "description": "GitLab usernames, without the @.",
-                "name": "reviewers",
-                "repeated": true,
-                "required": true,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/GitLabUsername"
-              }
-            ],
-            "outputs": []
-          },
-          "name": "gitlab-mr-request-review",
-          "requirements": {
-            "network": true
-          },
-          "satisfies": [
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/pickup",
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/prepare-merge-auto"
-          ],
-          "title": "Request review on a merge request (GitLab)"
-        }
-      ],
-      "holdsGraph": [
-        "cat-harness:graphTypology/tools"
-      ],
-      "name": "tools/gitlab-mr-request-review",
-      "path": "tools/gitlab-mr-request-review/"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/gitlab-mr-resolve-thread/",
-      "@type": "bootstrap:Subgraph",
-      "hasMember": [
-        {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/gitlab-mr-resolve-thread.jsonld",
-          "@type": "cat-harness:Tool",
-          "description": "Mark one discussion on a merge request as resolved.",
-          "install": {
-            "cli": "glab"
-          },
-          "invoke": {
-            "shell": "glab mr note resolve"
-          },
-          "io": {
-            "inputs": [
-              {
-                "arg": {
-                  "positional": 0
-                },
-                "description": "Absent: the merge request of the current branch.",
-                "name": "number",
-                "required": false,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ChangeProposalNumber"
-              },
-              {
-                "arg": {
-                  "positional": 1
-                },
-                "description": "The discussion id, or a prefix of 8 or more of it.",
-                "name": "thread",
-                "required": true,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ReviewThreadId"
-              }
-            ],
-            "outputs": []
-          },
-          "name": "gitlab-mr-resolve-thread",
-          "requirements": {
-            "network": true
-          },
-          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/coordinate",
-          "title": "Resolve a review thread on a merge request (GitLab)"
-        }
-      ],
-      "holdsGraph": [
-        "cat-harness:graphTypology/tools"
-      ],
-      "name": "tools/gitlab-mr-resolve-thread",
-      "path": "tools/gitlab-mr-resolve-thread/"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/gitlab-mr-view/",
-      "@type": "bootstrap:Subgraph",
-      "hasMember": [
-        {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/gitlab-mr-view.jsonld",
-          "@type": "cat-harness:Tool",
-          "description": "Read one merge request: title, state, body, and its comments and reviews.",
-          "install": {
-            "cli": "glab"
-          },
-          "invoke": {
-            "shell": "glab mr view --comments"
-          },
-          "io": {
-            "inputs": [
-              {
-                "arg": {
-                  "positional": 0
-                },
-                "description": "Absent: the change proposal of the current branch.",
-                "name": "number",
-                "required": false,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ChangeProposalNumber"
-              }
-            ],
-            "outputs": [
-              {
-                "description": "The proposal as the forge prints it, comments included.",
-                "name": "proposal",
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
-              }
-            ]
-          },
-          "name": "gitlab-mr-view",
-          "requirements": {
-            "network": true
-          },
-          "satisfies": [
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/prepare-merge-auto",
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/pickup",
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/watch",
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/coordinate"
-          ],
-          "title": "Read a merge request (GitLab)"
-        }
-      ],
-      "holdsGraph": [
-        "cat-harness:graphTypology/tools"
-      ],
-      "name": "tools/gitlab-mr-view",
-      "path": "tools/gitlab-mr-view/"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/handover-screen/",
@@ -3229,7 +2713,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/harness-state.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "For every harness in the checkout, run bootstrap's setup check without performing anything or touching the network, and write one `folio-harness-state/v1` file: each step in its state, the first step not done (its position) with what to do next, and health badges that are the harness's own (setup steps; the instance's committed health report, unknown without one). A recommendation is said, never acted on.",
+          "description": "For every harness in the checkout, run bootstrap's setup check without performing anything or touching the network, and write one `folio-harness-state/v1` file: each step in its state, the first step not done (its position) with what to do next, and health badges that are the harness's own (setup steps; the layer's committed health report, unknown without one). A recommendation is said, never acted on.",
           "install": {
             "none": true
           },
@@ -3299,7 +2783,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/ig-folio-site-workflow.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Dispatch the IG repository's `folio-site.yml` (copied from the IG layer's `ig-repo-site` template): on a runner it composes the harness chrome for THIS instance (`compose-docs --shell --instance`, `gen-navbar-include`), composes the IG at the root of that Jekyll shell (`stage-ig-sites --compose-at-root`), builds it with Jekyll so every IG page wears the theme's side bar, search box and icon row, publishes the instance's served directories, rails any page Jekyll did not lay out (`rail-standalone-pages --foreign-site --instance`), stamps the platform that built it (`folio-build.json`), and on the default branch deploys the whole site to the `gh-pages` root. It reports platform drift against sibling sites and re-dispatches the IGs this one depends on when a token allows.",
+          "description": "Dispatch the IG repository's `folio-site.yml` (copied from the IG layer's `ig-repo-site` template): on a runner it composes the harness chrome for THIS layer (`compose-docs --shell --instance`, `gen-navbar-include`), composes the IG at the root of that Jekyll shell (`stage-ig-sites --compose-at-root`), builds it with Jekyll so every IG page wears the theme's side bar, search box and icon row, publishes the layer's served directories, rails any page Jekyll did not lay out (`rail-standalone-pages --foreign-site --instance`), stamps the platform that built it (`folio-build.json`), and on the default branch deploys the whole site to the `gh-pages` root. It reports platform drift against sibling sites and re-dispatches the IGs this one depends on when a token allows.",
           "install": {
             "none": true
           },
@@ -3362,7 +2846,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/index-config-migrate.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Write the root `index.config.json` (`folio-index-config/v1`) that says which instances the checkout instantiates, where each comes from (`source.local` or `source.remote`) and which owns `/` (`site.landing`), from the root `*.config.json` files and the declaration's `remoteMounts`. With `--write` it moves `remoteMounts` off the declaration into `source.remote` entries, writes the generated `.gitignore` block, and renames a legacy `<name>.mount-lock.json` to `index.lock.json`. Without a flag it prints the index it would write. Idempotent: a re-run merges what the declaration gained, and refuses an entry the index already holds differently. A root config naming no instance is reported as `unmatched-config` and not imported, because what to do with it is a person's decision.",
+          "description": "Write the root `index.config.json` (`folio-index-config/v1`) that says which layers the checkout instantiates, where each comes from (`source.local` or `source.remote`) and which owns `/` (`site.landing`), from the root `*.config.json` files and the declaration's `remoteMounts`. With `--write` it moves `remoteMounts` off the declaration into `source.remote` entries, writes the generated `.gitignore` block, and renames a legacy `<name>.mount-lock.json` to `index.lock.json`. Without a flag it prints the index it would write. Idempotent: a re-run merges what the declaration gained, and refuses an entry the index already holds differently. A root config naming no layer is reported as `unmatched-config` and not imported, because what to do with it is a person's decision.",
           "install": {
             "none": true
           },
@@ -3572,7 +3056,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/instantiate-harness.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "The scripted step of the initiation process (getting-started.bpmn, the repo-conversion skill §4). Reads the harness's declaration at its pin and every `needs`, transitively (a need beside the instance that needs it unless --repo-of says otherwise, at its default branch's tip unless --pin says otherwise, its declaration's name checked), seeds them all into the repository's index.config.json with the consent given (`remote-mount --seed --whole`), sets `site.landing` to the harness, `site.agentRun` and `mountApprovers`, mounts the closure (`remote-mount`: index.lock.json and the .gitignore mounts block), installs it as root workspaces with the hoisted linker, writes the root bootstrap (`.github/cat.ts` and `.github/mount-from-lock.sh` from cat-harness-tools `templates/root-bootstrap/`) and sets the root's `cat` script to `bun .github/cat.ts`, so `bun run cat …` mounts the layers itself on a later fresh clone, re-renders the agent surface from the mounted generators, runs the harness's `instantiate:<harness>` checkout script when a mounted layer declares it, and commits on a branch (default harness/<harness>). Then, unless --local, pushes the branch, provisions gh-pages when absent (`pages-bootstrap --provision`), opens the setup-only PR, runs `prepare:<harness>` when declared (what the site is built from and nobody commits, such as an IG's AST) and renders the branch's preview at gh-pages branches/<branch>/ (`stage-local`); with --local the site is built and composed and nothing is pushed. It imports only node:*, so it runs from a fresh clone of cat-harness-tools before anything is mounted: it lays the platform's own closure, at the pins the repository will mount, into a temporary root to run the mount from. On a repository with nothing mounted yet, run the same file from a fresh clone: `git clone --depth 1 https://github.com/litlfred/cat-harness-tools /tmp/cht && bun run /tmp/cht/scripts/instantiate-harness.ts …`. Two more flags, not declared as ports because no constrained type carries them yet: `--pin <name>=<sha>` pins one instance of the closure, `--repo-of <name>=<owner/repo>` says where a need lives.",
+          "description": "The scripted step of the initiation process (getting-started.bpmn, the repo-conversion skill §4). Reads the harness's declaration at its pin and every `needs`, transitively (a need beside the layer that needs it unless --repo-of says otherwise, at its default branch's tip unless --pin says otherwise, its declaration's name checked), seeds them all into the repository's index.config.json with the consent given (`remote-mount --seed --whole`), sets `site.landing` to the harness, `site.agentRun` and `mountApprovers`, mounts the closure (`remote-mount`: index.lock.json and the .gitignore mounts block), installs it as root workspaces with the hoisted linker, writes the root bootstrap (`.github/cat.ts` and `.github/mount-from-lock.sh` from cat-harness-tools `templates/root-bootstrap/`) and sets the root's `cat` script to `bun .github/cat.ts`, so `bun run cat …` mounts the layers itself on a later fresh clone, re-renders the agent surface from the mounted generators, runs the harness's `instantiate:<harness>` checkout script when a mounted layer declares it, and commits on a branch (default harness/<harness>). Then, unless --local, pushes the branch, provisions gh-pages when absent (`pages-bootstrap --provision`), opens the setup-only PR, runs `prepare:<harness>` when declared (what the site is built from and nobody commits, such as an IG's AST) and renders the branch's preview at gh-pages branches/<branch>/ (`stage-local`); with --local the site is built and composed and nothing is pushed. It imports only node:*, so it runs from a fresh clone of cat-harness-tools before anything is mounted: it lays the platform's own closure, at the pins the repository will mount, into a temporary root to run the mount from. On a repository with nothing mounted yet, run the same file from a fresh clone: `git clone --depth 1 https://github.com/litlfred/cat-harness-tools /tmp/cht && bun run /tmp/cht/scripts/instantiate-harness.ts …`. Two more flags, not declared as ports because no constrained type carries them yet: `--pin <name>=<sha>` pins one layer of the closure, `--repo-of <name>=<owner/repo>` says where a need lives.",
           "install": {
             "none": true
           },
@@ -3694,7 +3178,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/journey-refs.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Read every `user-scenario` and `workshop` node in the checkout through the instances' declared directories, with the journeys viewer's own resolver, and resolve what each names: actors (`personas`, a step's `lead`, `experiences[].actor`, `handoff.from`/`to`, `illustrationStyle.cast[].actor`), user stories, `realisedBy` BPMN files (instance-relative) and the element ids in them, `uses` blocks in a directory declaring `building-blocks`, `req:` requirements, FHIR examples and a step's `dak` assets (data sets, decision tables, indicators) in a `fhir-artifact-index` (could not determine while the index is built at publish), `illustration.src` files, `follows`/`partOf`/`parts`/`includes` journeys (parts and includes forming no cycle; an `includes` held against the call activity its step's `realisedBy` names, could not determine when the call names no process), the `trustLadder` code list and each `record.state` code of it, and ArchiMate `views`; and each workshop's `scenarios`, `steps[]` `{scenario, step}` and `<scenario>#<step>` refs; each device screen's `owner` and `personCard` actors, its `steps[]` `{scenario, step}`, and the FHIR examples its `qr` and `recordList` blocks name; and every persona's `avatar` image path. Every journey is a DAK user scenario (the kind `specialises` it): its DAK personas, the roles its persona actors play, must be non-empty and each a declared role; a persona may be an actor or (0.4.0) a role. What is derived is not also written: a listed part's `follows` or `partOf`, personas equal to the parts', a lead equal to the lanes' first actor, are each a redundant finding, and a 0.4.0 step with no experiences whose lanes no persona plays is a finding. A node that does not parse is a finding. One line per finding, naming the instance, file and step. Exit 0 every reference resolves (or no instance holds a journey or a workshop, which is said); 1 one does not; 2 the declarations could not be read.",
+          "description": "Read every `user-scenario` and `workshop` node in the checkout through the layers' declared directories, with the journeys viewer's own resolver, and resolve what each names: actors (`personas`, a step's `lead`, `experiences[].actor`, `handoff.from`/`to`, `illustrationStyle.cast[].actor`), user stories, `realisedBy` BPMN files (instance-relative) and the element ids in them, `uses` blocks in a directory declaring `building-blocks`, `req:` requirements, FHIR examples and a step's `dak` assets (data sets, decision tables, indicators) in a `fhir-artifact-index` (could not determine while the index is built at publish), `illustration.src` files, `follows`/`partOf`/`parts`/`includes` journeys (parts and includes forming no cycle; an `includes` held against the call activity its step's `realisedBy` names, could not determine when the call names no process), the `trustLadder` code list and each `record.state` code of it, and ArchiMate `views`; and each workshop's `scenarios`, `steps[]` `{scenario, step}` and `<scenario>#<step>` refs; each device screen's `owner` and `personCard` actors, its `steps[]` `{scenario, step}`, and the FHIR examples its `qr` and `recordList` blocks name; and every persona's `avatar` image path. Every journey is a DAK user scenario (the kind `specialises` it): its DAK personas, the roles its persona actors play, must be non-empty and each a declared role; a persona may be an actor or (0.4.0) a role. What is derived is not also written: a listed part's `follows` or `partOf`, personas equal to the parts', a lead equal to the lanes' first actor, are each a redundant finding, and a 0.4.0 step with no experiences whose lanes no persona plays is a finding. A node that does not parse is a finding. One line per finding, naming the layer, file and step. Exit 0 every reference resolves (or no layer holds a journey or a workshop, which is said); 1 one does not; 2 the declarations could not be read.",
           "install": {
             "none": true
           },
@@ -3754,7 +3238,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/journeys-viewer.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Draw every journey (`user-scenario`) and workshop (`workshop`) in the checkout as static pages at the route of the visualiser an instance declares for this Tool, `<locale>/<instance>/<id>/`: an index of all journeys, grouped by instance (each a sub-graph page), each parent's `parts` nested under it in its order with optional and repeating parts marked (an older file's `partOf` children after them, ordered along `follows`), and a plain DAK user scenario with no steps listed as one; one page per journey, its parts in order and the journeys it is a part of, a journey map with a lane and a feeling curve per persona, then each step, linked to the journey it `includes`, with its BPMN drawing (the step's flow nodes highlighted), user stories, requirements, FHIR examples, building blocks, the DAK assets it uses (data sets, decision tables and indicators, linked into the IG) and ArchiMate views; and the workshop layer, the questions for the room on each step, a page per workshop and per module, job aids, and printable A3/A4 sheets; and each device screen (`device-screen`) that shows a step a workshop presents, drawn as a static device mock (phone, tablet, scanner, desktop, kiosk) with its owner beside it, in the workshop's Device Demo, linked both ways with the walkthrough. A persona's picture (`meta.persona.avatar`) is drawn wherever the persona appears. Instances below the declaring one are read through their declarations, so a downstream site shows the journeys of the layers it mounts too.",
+          "description": "Draw every journey (`user-scenario`) and workshop (`workshop`) in the checkout as static pages at the route of the visualiser a layer declares for this Tool, `<locale>/<instance>/<id>/`: an index of all journeys, grouped by layer (each a sub-graph page), each parent's `parts` nested under it in its order with optional and repeating parts marked (an older file's `partOf` children after them, ordered along `follows`), and a plain DAK user scenario with no steps listed as one; one page per journey, its parts in order and the journeys it is a part of, a journey map with a lane and a feeling curve per persona, then each step, linked to the journey it `includes`, with its BPMN drawing (the step's flow nodes highlighted), user stories, requirements, FHIR examples, building blocks, the DAK assets it uses (data sets, decision tables and indicators, linked into the IG) and ArchiMate views; and the workshop layer, the questions for the room on each step, a page per workshop and per module, job aids, and printable A3/A4 sheets; and each device screen (`device-screen`) that shows a step a workshop presents, drawn as a static device mock (phone, tablet, scanner, desktop, kiosk) with its owner beside it, in the workshop's Device Demo, linked both ways with the walkthrough. A persona's picture (`meta.persona.avatar`) is drawn wherever the persona appears. Layers below the declaring one are read through their declarations, so a downstream site shows the journeys of the layers it mounts too.",
           "install": {
             "none": true
           },
@@ -3767,7 +3251,7 @@
                 "arg": {
                   "flag": "--instance"
                 },
-                "description": "The instance whose `visualisers` declare this Tool: the pages go to that visualiser's route. One that declares none gets nothing, and the run exits 78 (not applicable).",
+                "description": "The layer whose `visualisers` declare this Tool: the pages go to that visualiser's route. One that declares none gets nothing, and the run exits 78 (not applicable).",
                 "name": "instance",
                 "required": true,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
@@ -3776,7 +3260,7 @@
                 "arg": {
                   "flag": "--site"
                 },
-                "description": "A site being built: the pages are written at the declared route under it. Absent, under the instance's own site directory. The route is this Tool's alone and is replaced whole.",
+                "description": "A site being built: the pages are written at the declared route under it. Absent, under the layer's own site directory. The route is this Tool's alone and is replaced whole.",
                 "name": "site",
                 "required": false,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
@@ -3806,143 +3290,6 @@
       ],
       "name": "tools/journeys-viewer",
       "path": "tools/journeys-viewer/"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/judge-tree/",
-      "@type": "bootstrap:Subgraph",
-      "hasMember": [
-        {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/judge-tree.jsonld",
-          "@type": "cat-harness:Tool",
-          "description": "Run the layer PR-check gates and tests on a composed tree (head) and on its base, or reuse a stored verdict whose digest is the base tree's, compare them with the layer-pr-checks compare scripts, and write a verdict record: {treeDigest, runner {kind agent|github-actions|local, id}, startedAt, finishedAt, gates [{name, exit, seconds, skipped?}], tests {total, failed, new}, verdict green|red|unknown}. With a token it publishes the verdict as the commit status `judge-tree`; `check` answers whether any runner judged a digest green; `sample` re-runs a seeded few gates of a record.",
-          "install": {
-            "none": true
-          },
-          "invoke": {
-            "shell": "bun run cat judge:tree judge"
-          },
-          "io": {
-            "inputs": [
-              {
-                "arg": {
-                  "flag": "--lock"
-                },
-                "description": "The index.lock.json whose fixity digests name every instance but the caller.",
-                "name": "lock",
-                "required": true,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
-              },
-              {
-                "arg": {
-                  "flag": "--caller"
-                },
-                "description": "The caller as owner/name (or its lock instance): the entry replaced by its PR tree. Every runner must name it the same way.",
-                "name": "caller",
-                "required": true,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoFullName"
-              },
-              {
-                "arg": {
-                  "flag": "--caller-dir"
-                },
-                "description": "The caller's git checkout; its HEAD^{tree} (or --sha's) is the PR tree.",
-                "name": "caller-dir",
-                "required": false,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
-              },
-              {
-                "arg": {
-                  "flag": "--sha"
-                },
-                "description": "The head commit: whose tree is read from --caller-dir, and where the status is published.",
-                "name": "sha",
-                "required": false,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/CommitSha"
-              },
-              {
-                "arg": {
-                  "flag": "--root"
-                },
-                "description": "The mounted index with the caller swapped in, where run-gates.py runs.",
-                "name": "root",
-                "required": false,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
-              },
-              {
-                "arg": {
-                  "flag": "--instance"
-                },
-                "description": "The own instance(s) run-gates.py judges; repeatable.",
-                "name": "instance",
-                "required": false,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/InstanceId"
-              },
-              {
-                "arg": {
-                  "flag": "--base-verdict"
-                },
-                "description": "A stored verdict record standing in for the base run; refused unless its treeDigest is the base tree's (--base-tree).",
-                "name": "base-verdict",
-                "required": false,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
-              },
-              {
-                "arg": {
-                  "flag": "--base-root"
-                },
-                "description": "A mounted base tree to run the gates on instead.",
-                "name": "base-root",
-                "required": false,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
-              },
-              {
-                "arg": {
-                  "flag": "--test-path"
-                },
-                "description": "What `bun test` runs on each side; none means no tests.",
-                "name": "test-path",
-                "required": false,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
-              },
-              {
-                "arg": {
-                  "flag": "--publish"
-                },
-                "description": "Post the commit status `judge-tree` when GITHUB_TOKEN/GH_TOKEN is set; without one, the record file is the verdict.",
-                "name": "publish",
-                "required": false,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
-              }
-            ],
-            "outputs": [
-              {
-                "description": "The verdict record, `<records-dir>/<treeDigest>.json` unless --out names it; valid against the tools layer's `schemas/verdict-record.schema.json`. Three exit codes: 0 green, 1 red, 2 COULD NOT DETERMINE (no judging scripts, a stored base verdict for another tree, a compare script that crashed, or no gate ran). 2 is never green, and neither is a verdict for another digest.",
-                "name": "record",
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
-              }
-            ]
-          },
-          "name": "judge-tree",
-          "requirements": {
-            "network": false,
-            "runtime": [
-              "bun",
-              "python3",
-              "git"
-            ]
-          },
-          "satisfies": [
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/platform-gates",
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/prepare-merge"
-          ],
-          "title": "Judge a tree and record the verdict by digest"
-        }
-      ],
-      "holdsGraph": [
-        "cat-harness:graphTypology/tools"
-      ],
-      "name": "tools/judge-tree",
-      "path": "tools/judge-tree/"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/kg-audit/",
@@ -4016,7 +3363,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/kg-graph-export.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Dump this instance's knowledge graph — skills, BPMN activities and their lanes, roles, actors, directories — to one JSON-LD document for publication. The export is data; something else draws it.",
+          "description": "Dump this layer's knowledge graph — skills, BPMN activities and their lanes, roles, actors, directories — to one JSON-LD document for publication. The export is data; something else draws it.",
           "install": {
             "none": true
           },
@@ -4228,7 +3575,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/kg-viewer.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Render the instance's published knowledge graph as one page: facets by kind and sub-graph, search, a node's properties, its edges and back-links, and the graph's own gaps — reading the JSON-LD document at the site root rather than carrying a copy.",
+          "description": "Render the layer's published knowledge graph as one page: facets by kind and sub-graph, search, a node's properties, its edges and back-links, and the graph's own gaps — reading the JSON-LD document at the site root rather than carrying a copy.",
           "install": {
             "none": true
           },
@@ -4339,7 +3686,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/library-viewer.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Render each declared library directory — its entries, intakes and avatars — as a page per subject instance, and give every entry its own path IRI (<library>/<instance>/<id>/): a materialized thin shell that loads the entry from the published projection, with its JSON-LD manifest as the alternate.",
+          "description": "Render each declared library directory — its entries, intakes and avatars — as a page per subject layer, and give every entry its own path IRI (<library>/<instance>/<id>/): a materialized thin shell that loads the entry from the published projection, with its JSON-LD manifest as the alternate.",
           "install": {
             "none": true
           },
@@ -4365,6 +3712,15 @@
                 "name": "site",
                 "required": false,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--scope"
+                },
+                "description": "A scoped site build: the comma-separated instances whose pages this writer writes (the IG and the layer it lands on); every other instance's pages are linked on that layer's own site. Passed by the tools layer's `visualiser-writers.ts` (owner, 2026-11-08, Q-SZ-2 \"B\"). Absent: every instance.",
+                "name": "scope",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/IdList"
               }
             ],
             "outputs": [
@@ -4491,7 +3847,7 @@
                 "arg": {
                   "flag": "--instance"
                 },
-                "description": "Instance declaring the graph, e.g. `cat-harness`.",
+                "description": "Layer declaring the graph, e.g. `cat-harness`.",
                 "name": "instance",
                 "required": false,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug"
@@ -4500,7 +3856,7 @@
                 "arg": {
                   "flag": "--graph"
                 },
-                "description": "Graph id within the instance, e.g. `skills`.",
+                "description": "Graph id within the layer, e.g. `skills`.",
                 "name": "graph",
                 "required": false,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug"
@@ -4566,7 +3922,7 @@
                 "arg": {
                   "flag": "--instance"
                 },
-                "description": "Instance declaring the graph, e.g. `cat-harness`.",
+                "description": "Layer declaring the graph, e.g. `cat-harness`.",
                 "name": "instance",
                 "required": false,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug"
@@ -4575,7 +3931,7 @@
                 "arg": {
                   "flag": "--graph"
                 },
-                "description": "Graph id within the instance, e.g. `library`.",
+                "description": "Graph id within the layer, e.g. `library`.",
                 "name": "graph",
                 "required": false,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug"
@@ -4610,7 +3966,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/lsi-viewer.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Render every committed LSI index — dimensions as two poles, narrow-dimension and near-duplicate findings — and which declared prose graphs still need one.",
+          "description": "Render the Indexing evidence page: for each indexing method, the held papers it rests on and the skills, Tools and processes that apply it, and the indexing skills with no evidence yet; and its Keywords page (`keywords/`), the derived keywords graph as an A–Z index with the six extraction variants side by side and their agreement with headings, author keywords and the glossaries. Index health is the `lsi-indexes` check of `bun run cat health`.",
           "install": {
             "none": true
           },
@@ -4654,7 +4010,7 @@
             ]
           },
           "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/graph-rendering",
-          "title": "Latent semantic index viewer"
+          "title": "Indexing evidence viewer"
         }
       ],
       "holdsGraph": [
@@ -4662,92 +4018,6 @@
       ],
       "name": "tools/lsi-viewer",
       "path": "tools/lsi-viewer/"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/mcp-capture/",
-      "@type": "bootstrap:Subgraph",
-      "hasMember": [
-        {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/mcp-capture.jsonld",
-          "@type": "cat-harness:Tool",
-          "description": "Read the real tool surface from the registrars by mounting each against a capture object — the same objects the server asks, so the Zod shapes and their optionality are the served ones rather than a reading of the source.",
-          "install": {
-            "none": true
-          },
-          "invoke": {
-            "shell": "bun run cat mcp:capture"
-          },
-          "io": {
-            "inputs": [
-              {
-                "arg": {
-                  "flag": "--json"
-                },
-                "description": "Emit `{tools, problems}` as JSON for a consumer, instead of the table for a reader.",
-                "name": "json",
-                "required": false,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
-              }
-            ],
-            "outputs": [
-              {
-                "description": "One row per served tool with its module and its required/optional keys. Three exit codes: 0 the surface was captured whole, 2 one or more modules COULD NOT BE READ so the capture is incomplete, and no equivalence verdict may be drawn from it. There is no exit 1 — this tool reports what is served and never judges it.",
-                "name": "surface",
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
-              }
-            ]
-          },
-          "name": "mcp-capture",
-          "requirements": {
-            "network": false,
-            "runtime": [
-              "bun"
-            ]
-          },
-          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/mcp-contract",
-          "title": "What this instance's MCP server serves"
-        }
-      ],
-      "holdsGraph": [
-        "cat-harness:graphTypology/tools"
-      ],
-      "name": "tools/mcp-capture",
-      "path": "tools/mcp-capture/"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/mcp-server-image/",
-      "@type": "bootstrap:Subgraph",
-      "hasMember": [
-        {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/mcp-server-image.jsonld",
-          "@type": "cat-harness:Tool",
-          "description": "Build and run the folio MCP server as one image carrying Bun, TeX Live, Lean, lean-lsp-mcp and the generated Python set — the image `deploy/` serves behind the auth gateway. Run it with `docker run -i --rm paper-assistant --stdio`, or `--http` on port 8080.",
-          "install": {
-            "container": "bun run cat mcp:image"
-          },
-          "invoke": {
-            "manual": true
-          },
-          "io": {
-            "inputs": [],
-            "outputs": []
-          },
-          "name": "mcp-server-image",
-          "requirements": {
-            "network": true,
-            "runtime": [
-              "docker"
-            ]
-          },
-          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/deployment-auth",
-          "title": "folio MCP server, as a container"
-        }
-      ],
-      "holdsGraph": [
-        "cat-harness:graphTypology/tools"
-      ],
-      "name": "tools/mcp-server-image",
-      "path": "tools/mcp-server-image/"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/memory-checkpoint/",
@@ -4927,221 +4197,6 @@
       "path": "tools/memory-recall/"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/merge-leftover/",
-      "@type": "bootstrap:Subgraph",
-      "hasMember": [
-        {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/merge-leftover.jsonld",
-          "@type": "cat-harness:Tool",
-          "description": "After a train merged, compare a PR's head with the base path by path and say whether what it still changes is ONLY generated files, generated README regions, or changes the base already carries (its patch applies in reverse to the base): `landed`, `not-landed` with the authored paths still different, or `could-not-determine`, which is never shown as clean. Only reports; closing the PR stays a steward action.",
-          "install": {
-            "none": true
-          },
-          "invoke": {
-            "shell": "bun run cat merge:leftover"
-          },
-          "io": {
-            "inputs": [
-              {
-                "arg": {
-                  "positional": 0
-                },
-                "description": "The PR number or branch. On the command line a PR may be pinned as `N:<sha>`.",
-                "name": "member",
-                "required": true,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Branch"
-              },
-              {
-                "arg": {
-                  "flag": "--base"
-                },
-                "description": "The base the train landed on; default `origin/main`.",
-                "name": "base",
-                "required": false,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Branch"
-              }
-            ],
-            "outputs": [
-              {
-                "description": "`merge-leftover/v1` on stdout. Exit 0 landed, 1 not-landed, 2 could not determine.",
-                "name": "report",
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
-              }
-            ]
-          },
-          "name": "merge-leftover",
-          "requirements": {
-            "network": true,
-            "runtime": [
-              "bun"
-            ]
-          },
-          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/merge-conflict-patterns",
-          "title": "Merge leftover (has a PR's intent landed?)"
-        }
-      ],
-      "holdsGraph": [
-        "cat-harness:graphTypology/tools"
-      ],
-      "name": "tools/merge-leftover",
-      "path": "tools/merge-leftover/"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/merge-overlap/",
-      "@type": "bootstrap:Subgraph",
-      "hasMember": [
-        {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/merge-overlap.jsonld",
-          "@type": "cat-harness:Tool",
-          "description": "For the open PRs (via `gh`, or a list of branches), report which pairs would conflict: pairwise overlap on AUTHORED paths, with generated paths excluded using the merge-conflict-patterns declaration; which PRs touch a shared declaration (an instance's `<instance>.json`, `roles.json`, `package.json`, `bun.lock`, schemas, BPMN/DMN); and which touch the harness layer's directory or its tools layer's. A PR that could not be measured makes no pair independent. JSON (`merge-overlap/v1`), the conflict-prediction input for composing trains.",
-          "install": {
-            "none": true
-          },
-          "invoke": {
-            "shell": "bun run cat merge:overlap"
-          },
-          "io": {
-            "inputs": [
-              {
-                "arg": {
-                  "flag": "--base"
-                },
-                "description": "The base each PR is diffed against from its fork point; default `origin/main`.",
-                "name": "base",
-                "required": false,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Branch"
-              },
-              {
-                "arg": {
-                  "positional": 0
-                },
-                "description": "Branches to compare instead of the open PRs; with none, the open PRs come from `gh`.",
-                "name": "branches",
-                "repeated": true,
-                "required": false,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Branch"
-              }
-            ],
-            "outputs": [
-              {
-                "description": "`merge-overlap/v1` on stdout: per member `authored_paths`, `region_paths`, `touches_shared`, the two harness flags; every pair that is not independent, with why.",
-                "name": "report",
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
-              }
-            ]
-          },
-          "name": "merge-overlap",
-          "requirements": {
-            "network": true,
-            "runtime": [
-              "bun"
-            ]
-          },
-          "satisfies": [
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/merge-conflict-patterns",
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/coordinate"
-          ],
-          "title": "Merge overlap (conflict prediction)"
-        }
-      ],
-      "holdsGraph": [
-        "cat-harness:graphTypology/tools"
-      ],
-      "name": "tools/merge-overlap",
-      "path": "tools/merge-overlap/"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/merge-train/",
-      "@type": "bootstrap:Subgraph",
-      "hasMember": [
-        {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/merge-train.jsonld",
-          "@type": "cat-harness:Tool",
-          "description": "Build a train branch from a base SHA: merge each member (a PR number or branch) with `merge-base.ts --no-regen`, refusing — never hand-resolving — a member whose conflicts no declared pattern covers; then one `bun run cat regen`, `check:l1-complete --write`, every check an instance declares `afterMerge` (its declared writer run when red), and `kg:audit:all:check`; then merge `origin/main`, taking main's side of generated conflicts and regenerating once more. Emits a `merge-train-report/v1` JSON report. Never pushes, opens or merges a PR.",
-          "install": {
-            "none": true
-          },
-          "invoke": {
-            "shell": "bun run cat merge:train"
-          },
-          "io": {
-            "inputs": [
-              {
-                "arg": {
-                  "flag": "--base"
-                },
-                "description": "The commit the train branch starts from.",
-                "name": "base",
-                "required": true,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/CommitSha"
-              },
-              {
-                "arg": {
-                  "flag": "--branch"
-                },
-                "description": "The train branch to create; default `merge-train/<base>-<time>`.",
-                "name": "branch",
-                "required": false,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Branch"
-              },
-              {
-                "arg": {
-                  "flag": "--dry-run"
-                },
-                "description": "Simulate with `git merge-tree`: classify each member's conflicts against the simulated train and change nothing.",
-                "name": "dry-run",
-                "required": false,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
-              },
-              {
-                "arg": {
-                  "flag": "--no-main"
-                },
-                "description": "Skip merging `origin/main` into the train.",
-                "name": "no-main",
-                "required": false,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
-              },
-              {
-                "arg": {
-                  "positional": 0
-                },
-                "description": "PR numbers or branches, in train order. On the command line a PR may be pinned to the head CI saw as `N:<sha>`.",
-                "name": "members",
-                "repeated": true,
-                "required": true,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Branch"
-              }
-            ],
-            "outputs": [
-              {
-                "description": "`merge-train-report/v1` on stdout: members merged, refused with reasons and conflicted paths, the checks run, main's merge, and the head. Exit 0 built, 1 needs a person, 2 could not start.",
-                "name": "report",
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
-              }
-            ]
-          },
-          "name": "merge-train",
-          "requirements": {
-            "network": true,
-            "runtime": [
-              "bun"
-            ]
-          },
-          "satisfies": [
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/merge-conflict-patterns",
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/prepare-merge"
-          ],
-          "title": "Merge train"
-        }
-      ],
-      "holdsGraph": [
-        "cat-harness:graphTypology/tools"
-      ],
-      "name": "tools/merge-train",
-      "path": "tools/merge-train/"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/methodologies-viewer/",
       "@type": "bootstrap:Subgraph",
       "hasMember": [
@@ -5174,6 +4229,15 @@
                 "name": "site",
                 "required": false,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--scope"
+                },
+                "description": "A scoped site build: the comma-separated instances whose pages this writer writes (the IG and the layer it lands on); every other instance's pages are linked on that layer's own site. Passed by the tools layer's `visualiser-writers.ts` (owner, 2026-11-08, Q-SZ-2 \"B\"). Absent: every instance.",
+                "name": "scope",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/IdList"
               }
             ],
             "outputs": [
@@ -5208,7 +4272,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/mount-from-lock.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Lay down every remote mount `index.lock.json` records — each instance fetched at the lock's full SHA (sparse, blob-filtered), each directory verified against its `treeDigest`, a mismatch undone and reported — importing only `node:*`, so it runs on a fresh clone before any layer is present. It never decides what to mount: `remote-mount` writes the lock (and checks trust); this only replays it. Refuses to write over a path with tracked files or bytes that no longer hash to the lock. Exit 0 mounted/current, 1 missing, 2 could-not-determine.",
+          "description": "Lay down every remote mount `index.lock.json` records — each layer fetched at the lock's full SHA (sparse, blob-filtered), each directory verified against its `treeDigest`, a mismatch undone and reported — importing only `node:*`, so it runs on a fresh clone before any layer is present. It never decides what to mount: `remote-mount` writes the lock (and checks trust); this only replays it. Refuses to write over a path with tracked files or bytes that no longer hash to the lock. Exit 0 mounted/current, 1 missing, 2 could-not-determine.",
           "install": {
             "none": true
           },
@@ -5221,7 +4285,7 @@
                 "arg": {
                   "flag": "--root"
                 },
-                "description": "The instance root whose lock is replayed. Default: the working directory.",
+                "description": "The layer root whose lock is replayed. Default: the working directory.",
                 "name": "root",
                 "required": false,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
@@ -5238,7 +4302,7 @@
             ],
             "outputs": [
               {
-                "description": "Per instance: mounted, current, missing or could-not-determine.",
+                "description": "Per layer: mounted, current, missing or could-not-determine.",
                 "name": "outcomes",
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count"
               }
@@ -5313,7 +4377,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/navbar-include.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Render `_includes/generated/navbar-footer.html` from `docs/_data/harness.json` with the same renderer every railed page uses. With `--instance`, render the navbar of an IG repository's OWN site instead — that instance first, then what it needs; its own pages at this site's root, every other link to the main site at `--link-root` — into the shell that site is built from.",
+          "description": "Render `_includes/generated/navbar-footer.html` from `docs/_data/harness.json` with the same renderer every railed page uses. With `--instance`, render the navbar of an IG repository's OWN site instead — that layer first, then what it needs; its own pages at this site's root, every other link to the main site at `--link-root` — into the shell that site is built from.",
           "install": {
             "none": true
           },
@@ -5332,13 +4396,13 @@
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
               },
               {
-                "description": "The instance whose own site this navbar is for.",
+                "description": "The layer whose own site this navbar is for.",
                 "name": "instance",
                 "required": false,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug"
               },
               {
-                "description": "With `--instance`: the main site's URL, for every link that is not this instance's own.",
+                "description": "With `--instance`: the main site's URL, for every link that is not this layer's own.",
                 "name": "link-root",
                 "required": false,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
@@ -5481,8 +4545,7 @@
           },
           "satisfies": [
             "https://litlfred.github.io/folio-assistant/cat-harness/skill/npm-kg-distribution",
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/remote-mount",
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/package-release"
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/remote-mount"
           ],
           "title": "Package manager and registry client for npm and GitHub Packages"
         }
@@ -5556,112 +4619,13 @@
       "path": "tools/ns-vocabulary/"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/open-work-lookup/",
-      "@type": "bootstrap:Subgraph",
-      "hasMember": [
-        {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/open-work-lookup.jsonld",
-          "@type": "cat-harness:Tool",
-          "description": "Answer whether a path, a path prefix or a bean id appears on a repository's default branch or on the head of any of its open pull requests, and where: the PR number, head branch, first commit author and creation time. A path or prefix matches files at the default branch and files each open PR changes; a bean id matches PR titles, bodies and head branch names. Repositories or PRs that could not be read are listed, so an empty answer is never mistaken for absence.",
-          "install": {
-            "none": true
-          },
-          "invoke": {
-            "inProcess": {
-              "module": "scripts/open-work-lookup.ts"
-            },
-            "shell": "bun run cat lookup:open-work"
-          },
-          "io": {
-            "inputs": [
-              {
-                "arg": {
-                  "flag": "--path"
-                },
-                "description": "An exact repository path.",
-                "name": "path",
-                "required": false,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
-              },
-              {
-                "arg": {
-                  "flag": "--prefix"
-                },
-                "description": "A directory or file-name prefix; every path under or starting with it matches.",
-                "name": "prefix",
-                "required": false,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
-              },
-              {
-                "arg": {
-                  "flag": "--bean"
-                },
-                "description": "A bean id, full or short.",
-                "name": "bean",
-                "required": false,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/BeanId"
-              },
-              {
-                "arg": {
-                  "flag": "--repo"
-                },
-                "description": "Repositories to search. Repeat. Defaults to the current checkout's origin.",
-                "name": "repo",
-                "repeated": true,
-                "required": false,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoFullName"
-              },
-              {
-                "arg": {
-                  "flag": "--json"
-                },
-                "description": "Emit `definitions.lookup` as JSON.",
-                "name": "json",
-                "required": false,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
-              }
-            ],
-            "outputs": [
-              {
-                "description": "One line per hit: repository, default branch or PR number, head, author, when, and what matched. Then what could not be read. Exactly one of path, prefix or bean must be given. With --json, `definitions.lookup` of schemas/skills/bean-drain/output.schema.json.",
-                "name": "lookup",
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
-              },
-              {
-                "description": "With --json, the hits as one `OpenWorkLookup` record, with what could not be read. Programs read this; people read `lookup`.",
-                "name": "result",
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/OpenWorkLookup"
-              }
-            ]
-          },
-          "name": "open-work-lookup",
-          "requirements": {
-            "network": true,
-            "runtime": [
-              "bun"
-            ]
-          },
-          "satisfies": [
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/bean-coordination",
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/issue-working"
-          ],
-          "title": "Does a path or bean exist on main or any open PR"
-        }
-      ],
-      "holdsGraph": [
-        "cat-harness:graphTypology/tools"
-      ],
-      "name": "tools/open-work-lookup",
-      "path": "tools/open-work-lookup/"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/openapi-ingest-rendered/",
       "@type": "bootstrap:Subgraph",
       "hasMember": [
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/openapi-ingest-rendered.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Ingest the OpenAPI documents an instance's `cat-openapi.config.json` lists under `rendered` by fetching each published spec URL (https), verbatim, with a provenance recording the URL, when it was fetched and the document's sha256 — a URL has no commit, so the digest pins the bytes. A failed fetch or bytes that are not OpenAPI 3 write nothing and never replace a held copy.",
+          "description": "Ingest the OpenAPI documents a layer's `cat-openapi.config.json` lists under `rendered` by fetching each published spec URL (https), verbatim, with a provenance recording the URL, when it was fetched and the document's sha256 — a URL has no commit, so the digest pins the bytes. A failed fetch or bytes that are not OpenAPI 3 write nothing and never replace a held copy.",
           "install": {
             "none": true
           },
@@ -5674,7 +4638,7 @@
                 "arg": {
                   "flag": "--instance"
                 },
-                "description": "The instance root holding `cat-openapi.config.json` and the declared `openapi` directory.",
+                "description": "The layer root holding `cat-openapi.config.json` and the declared `openapi` directory.",
                 "name": "instance",
                 "required": true,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
@@ -5721,7 +4685,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/openapi-ingest-source.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Ingest the OpenAPI documents an instance's `cat-openapi.config.json` lists under `documents` from a local checkout of their repository, read AT a branch, tag or commit (`git show`), verbatim, with a provenance recording the resolved commit and the document's sha256. `--check` verifies the committed copies offline.",
+          "description": "Ingest the OpenAPI documents a layer's `cat-openapi.config.json` lists under `documents` from a local checkout of their repository, read AT a branch, tag or commit (`git show`), verbatim, with a provenance recording the resolved commit and the document's sha256. `--check` verifies the committed copies offline.",
           "install": {
             "none": true
           },
@@ -5734,7 +4698,7 @@
                 "arg": {
                   "flag": "--instance"
                 },
-                "description": "The instance root holding `cat-openapi.config.json` and the declared `openapi` directory.",
+                "description": "The layer root holding `cat-openapi.config.json` and the declared `openapi` directory.",
                 "name": "instance",
                 "required": true,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
@@ -5791,7 +4755,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/openapi-pages.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Render every OpenAPI document an instance's `openapi` graph holds at the visualiser's route: a hub, a page per instance listing its documents, and a page per document and per operation, drawn from the document copied beside them.",
+          "description": "Render every OpenAPI document a layer's `openapi` graph holds at the visualiser's route: a hub, a page per layer listing its documents, and a page per document and per operation, drawn from the document copied beside them.",
           "install": {
             "none": true
           },
@@ -5851,7 +4815,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/pack-tarball.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Build an npm tarball (.tgz) of an instance using `bun pm pack`, compute its size and SHA-256 digest, and record it as a `folio-binary-release/v1` state node.",
+          "description": "Build an npm tarball (.tgz) of a layer using `bun pm pack`, compute its size and SHA-256 digest, and record it as a `folio-binary-release/v1` state node.",
           "install": {
             "none": true
           },
@@ -5864,7 +4828,7 @@
                 "arg": {
                   "flag": "--root"
                 },
-                "description": "Instance root containing package.json (default: cwd).",
+                "description": "Layer root containing package.json (default: cwd).",
                 "name": "root",
                 "required": false,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
@@ -5935,11 +4899,8 @@
               "bun"
             ]
           },
-          "satisfies": [
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/package-release",
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/npm-kg-distribution"
-          ],
-          "title": "Package instance into an npm tarball and record binary release"
+          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/npm-kg-distribution",
+          "title": "Package layer into an npm tarball and record binary release"
         }
       ],
       "holdsGraph": [
@@ -5955,7 +4916,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/package-exports.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Derive a package's `package.json` `exports` from the instance declaration beside it: a directory declared with graph typology `code` (top level or from within) AND named in `files` is exported as `./<dir>/*.js → ./<dir>/*.ts` and `./<dir>/* → ./<dir>/*`; a declared code directory that is not shipped (`test/`) stays private. Keys without `*` are named entry points, kept as written and checked to point into an exported directory. Without `--write` it reports each difference; with it, it rewrites `exports`. Exit 0 in agreement, 1 drift, 2 cannot tell (no declaration, no `package.json`, or no shipped code directory).",
+          "description": "Derive a package's `package.json` `exports` from the layer declaration beside it: a directory declared with graph typology `code` (top level or from within) AND named in `files` is exported as `./<dir>/*.js → ./<dir>/*.ts` and `./<dir>/* → ./<dir>/*`; a declared code directory that is not shipped (`test/`) stays private. Keys without `*` are named entry points, kept as written and checked to point into an exported directory. Without `--write` it reports each difference; with it, it rewrites `exports`. Exit 0 in agreement, 1 drift, 2 cannot tell (no declaration, no `package.json`, or no shipped code directory).",
           "install": {
             "none": true
           },
@@ -5968,7 +4929,7 @@
                 "arg": {
                   "flag": "--root"
                 },
-                "description": "The instance whose package to check. Default: the instance holding the script.",
+                "description": "The layer whose package to check. Default: the layer holding the script.",
                 "name": "root",
                 "required": false,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
@@ -6047,7 +5008,7 @@
           },
           "name": "package-release-manual",
           "requirements": {},
-          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/package-release",
+          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/npm-kg-distribution",
           "title": "Package release by hand"
         }
       ],
@@ -6121,10 +5082,7 @@
               "gh"
             ]
           },
-          "satisfies": [
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/package-release",
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/npm-kg-distribution"
-          ],
+          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/npm-kg-distribution",
           "title": "Release package via GitHub Actions release workflow"
         }
       ],
@@ -6401,127 +5359,6 @@
       "path": "tools/pdf-cover/"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/pdf-viewer-embed/",
-      "@type": "bootstrap:Subgraph",
-      "hasMember": [
-        {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/pdf-viewer-embed.jsonld",
-          "@type": "cat-harness:Tool",
-          "description": "Print the HTML fragment that shows a PDF in the installed viewer: a lazily loaded frame whose address is derived from the page's own location (so one page works at the site root, under a project base and under a staging preview), plus plain open and download links that work without it.",
-          "install": {
-            "none": true
-          },
-          "invoke": {
-            "shell": "bun run cat pdf:viewer --embed"
-          },
-          "io": {
-            "inputs": [
-              {
-                "arg": {
-                  "stdin": true
-                },
-                "description": "One JSON object: `src` (the PDF's URL, which must fall under a prefix `pdf-viewer-install` was given, or the viewer refuses it on screen), `title` (what the document is; the frame's accessible name), `route` (a regular expression over the page's pathname whose group 1 is the site root — the `folio-mount.ts` convention) and optionally `page` (open at this 1-based page). On stdin because a title and a regular expression are free text.",
-                "name": "spec",
-                "required": true,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
-              }
-            ],
-            "outputs": [
-              {
-                "description": "The HTML fragment on stdout. TypeScript callers import `embed` from the module that implements this Tool instead.",
-                "name": "fragment",
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
-              }
-            ]
-          },
-          "name": "pdf-viewer-embed",
-          "requirements": {
-            "network": false,
-            "runtime": [
-              "bun"
-            ]
-          },
-          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/pdf-inline-viewer",
-          "title": "Embed a PDF inline in a page"
-        }
-      ],
-      "holdsGraph": [
-        "cat-harness:graphTypology/tools"
-      ],
-      "name": "tools/pdf-viewer-embed",
-      "path": "tools/pdf-viewer-embed/"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/pdf-viewer-install/",
-      "@type": "bootstrap:Subgraph",
-      "hasMember": [
-        {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/pdf-viewer-install.jsonld",
-          "@type": "cat-harness:Tool",
-          "description": "Download the pinned pdf.js release (legacy build), verify its SHA-256, copy the parts a site needs into `<site>/assets/vendor/pdfjs/`, and add the shim that opens `?src=` only for the allowlisted URL prefixes or the site's own origin. Nothing is committed: the viewer exists only in the built site.",
-          "install": {
-            "none": true
-          },
-          "invoke": {
-            "shell": "bun run cat pdf:viewer"
-          },
-          "io": {
-            "inputs": [
-              {
-                "arg": {
-                  "flag": "--site"
-                },
-                "description": "The built site directory, `_site` in both site workflows.",
-                "name": "site",
-                "required": true,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
-              },
-              {
-                "arg": {
-                  "flag": "--allow"
-                },
-                "description": "An https URL prefix the viewer may open, ending in `/`. Repeat the flag for more than one. `same-origin-only` is the explicit way to allow none — an omitted flag is a usage error, because a viewer that refuses every CDN document would otherwise ship green.",
-                "name": "allow",
-                "required": true,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Url"
-              },
-              {
-                "arg": {
-                  "flag": "--zip"
-                },
-                "description": "A local copy of the release zip, for offline runs and tests. Its hash is checked exactly as a download's would be.",
-                "name": "zip",
-                "required": false,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
-              }
-            ],
-            "outputs": [
-              {
-                "description": "One line on stdout: version, destination, file count, and the prefixes it will open. Exit 2 on a usage error; a hash mismatch or a release missing a kept path throws, refusing the install.",
-                "name": "summary",
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
-              }
-            ]
-          },
-          "name": "pdf-viewer-install",
-          "requirements": {
-            "network": true,
-            "runtime": [
-              "bun",
-              "unzip"
-            ]
-          },
-          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/pdf-inline-viewer",
-          "title": "Install the inline PDF viewer into a built site"
-        }
-      ],
-      "holdsGraph": [
-        "cat-harness:graphTypology/tools"
-      ],
-      "name": "tools/pdf-viewer-install",
-      "path": "tools/pdf-viewer-install/"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/pin-actions/",
       "@type": "bootstrap:Subgraph",
       "hasMember": [
@@ -6654,6 +5491,15 @@
                 "name": "site",
                 "required": false,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--scope"
+                },
+                "description": "A scoped site build: the comma-separated instances whose pages this writer writes (the IG and the layer it lands on); every other instance's pages are linked on that layer's own site. Passed by the tools layer's `visualiser-writers.ts` (owner, 2026-11-08, Q-SZ-2 \"B\"). Absent: every instance.",
+                "name": "scope",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/IdList"
               }
             ],
             "outputs": [
@@ -6680,6 +5526,86 @@
       ],
       "name": "tools/processes-viewer",
       "path": "tools/processes-viewer/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/publish-gh-pages/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/publish-gh-pages.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Lay a built `_site` onto a `gh-pages` checkout as a FULL REPLACE and push it, keeping the open pull requests' staging previews: each attempt re-reads the branch, re-runs restore-staging and keep-shared-payloads against what is on it now, replaces the tree, commits `docs(gh-pages): site from <sha>` and pushes. A rejected push is rebuilt, never rebased (a rebase would re-apply the replace over a preview a sibling just deployed), up to three attempts. A restore that cannot read the branch stops the publish. A site that matches the branch is a no-op, not a failure. It publishes and does not verify: the workflow's verify step runs after it.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run cat pages:publish"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "flag": "--site"
+                },
+                "description": "The built site to publish (env SITE).",
+                "name": "site",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--state"
+                },
+                "description": "restore-staging's record file; keep-shared-payloads keeps its directory at `<state>.keep` (env STATE).",
+                "name": "state",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--commit"
+                },
+                "description": "The commit the site was built from, named in the pages commit message (env COMMIT_SHA).",
+                "name": "commit",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/CommitSha"
+              },
+              {
+                "arg": {
+                  "flag": "--pages-dir"
+                },
+                "description": "A git checkout whose `origin` holds the `gh-pages` branch (env PAGES_DIR).",
+                "name": "pagesDir",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "`published on attempt <n>`, or `nothing to publish`; any other exit is a publish that did not happen.",
+                "name": "result",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+              }
+            ]
+          },
+          "name": "publish-gh-pages",
+          "requirements": {
+            "network": true,
+            "runtime": [
+              "bash",
+              "bun",
+              "git"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/render-kg-to-cdn",
+          "title": "Publish a built site to gh-pages as a full replace"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/publish-gh-pages",
+      "path": "tools/publish-gh-pages/"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/qa-sweep/",
@@ -6765,7 +5691,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/rail-standalone-pages.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "A LAST pass over the finished site: inject the shared navbar (`lib/navbar.ts`, the same component the site sidebar draws) into every page that carries none — standalone viewers, generated instance pages, and each IG site built by `stage-ig-sites`. A page under an `igSite` instance's route is railed as THAT instance's page (its name, mark and graphs); a page may declare its own section (`data-fa-visualiser-nav`) and its label (`fa-visualiser-label`). Mount routes are left to the mount pass, and a page that declines (`folio-navbar: none`) is left bare.",
+          "description": "A LAST pass over the finished site: inject the shared navbar (`lib/navbar.ts`, the same component the site sidebar draws) into every page that carries none — standalone viewers, generated layer pages, and each IG site built by `stage-ig-sites`. A page under an `igSite` layer's route is railed as THAT layer's page (its name, mark and graphs); a page may declare its own section (`data-fa-visualiser-nav`) and its label (`fa-visualiser-label`). Mount routes are left to the mount pass, and a page that declines (`folio-navbar: none`) is left bare.",
           "install": {
             "none": true
           },
@@ -6781,7 +5707,7 @@
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
               },
               {
-                "description": "The instance whose site this is (`cat-harness`).",
+                "description": "The layer whose site this is (`cat-harness`).",
                 "name": "built",
                 "required": true,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug"
@@ -6796,7 +5722,7 @@
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
               },
               {
-                "description": "With `--foreign-site`: the instance whose own site this is. Its name, mark and graphs head the navbar, and Harnesses lists it (linking to this site's root) and the harnesses it is built on.",
+                "description": "With `--foreign-site`: the layer whose own site this is. Its name, mark and graphs head the navbar, and Harnesses lists it (linking to this site's root) and the harnesses it is built on.",
                 "name": "instance",
                 "required": false,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug"
@@ -6903,7 +5829,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/readme-sync.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Rewrite each generated README region, and only where the README already carries that section's marker pair. Nothing outside a marked region is touched. The instance's AGENTS.md is synced too, for the `skills:index` index only: the skills the instance publishes, or, past 32 KiB, their directories with the full list in SKILLS.md.",
+          "description": "Rewrite each generated README region, and only where the README already carries that section's marker pair. Nothing outside a marked region is touched. The layer's AGENTS.md is synced too, for the `skills:index` index only: the skills the layer publishes, or, past 32 KiB, their directories with the full list in SKILLS.md.",
           "install": {
             "none": true
           },
@@ -6982,71 +5908,13 @@
       "path": "tools/readme-sync/"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/release-please/",
-      "@type": "bootstrap:Subgraph",
-      "hasMember": [
-        {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/release-please.jsonld",
-          "@type": "cat-harness:Tool",
-          "description": "Propose the next version of each package from conventional-commit messages, open a release PR with the CHANGELOG and version bump, and — when that PR is merged — create the tag and GitHub release. Does not publish to a registry. Declared here, not configured: no config file and no tag exist in this repository.",
-          "install": {
-            "cli": "npm install -g release-please (or the GitHub Action googleapis/release-please-action@v4)"
-          },
-          "invoke": {
-            "shell": "release-please release-pr"
-          },
-          "io": {
-            "inputs": [
-              {
-                "description": "The package being released. release-please proposes every package it is configured for; this is the one whose tag is wanted.",
-                "name": "package",
-                "required": true,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/PackageName"
-              },
-              {
-                "arg": {
-                  "flag": "--repo-url"
-                },
-                "description": "owner/name of the repository the release is made in; the current one when absent.",
-                "name": "repo",
-                "required": false,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoFullName"
-              }
-            ],
-            "outputs": [
-              {
-                "description": "The tag created when the release PR merges, `<package>-v<version>`.",
-                "name": "tag",
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
-              }
-            ]
-          },
-          "name": "release-please",
-          "requirements": {
-            "network": true,
-            "runtime": [
-              "node",
-              "release-please"
-            ]
-          },
-          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/package-release",
-          "title": "release-please (declared, not configured here)"
-        }
-      ],
-      "holdsGraph": [
-        "cat-harness:graphTypology/tools"
-      ],
-      "name": "tools/release-please",
-      "path": "tools/release-please/"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/remote-mount/",
       "@type": "bootstrap:Subgraph",
       "hasMember": [
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/remote-mount.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Lay down each declared remote mount — a `source.remote` instance in the root `index.config.json`, or, in a folio with no index, a `remoteMounts` entry on its declaration (both at once is refused) — and its dependency closure, from another repository at a full commit SHA. Write the lock, `index.lock.json` (a legacy `<name>.mount-lock.json` is read, and renamed onto it when rewritten), and, with an index, regenerate the root `.gitignore` block that ignores each mount path. It READS the declared mounts and never writes them: a tool that changes a mount writes through `writeDeclaredMounts` into `index.config.json`. Before anything is checked out, each mount must pass the trust gate (`schemas/kg/mount-trust.ts`, rule H8): a person's consent recorded for THIS pin, or a signature in a declared trust network. No signature verifier exists yet, so a signature alone is could-not-determine and does not mount. Unsigned and unconsented is refused. `--staging` mounts for a preview and needs neither. A directory id an override or `mountDefaults` names may be one the instance declares in its `<name>.json` or one it declares FROM WITHIN a declared directory (`skills/skills.json` naming `voices`), resolved at the pin through `instanceDirectories`; an id in neither is refused at plan time. `tools` on an override names Tools by id and mounts each one runnable: its definition (`<tools dir>/<id>/<id>.ts`), its implementation (the `inProcess.module`, or the script its `bun run cat <key>` resolves to) and their import closure, walked by bootstrap-tools' `importClosure` (the one closure walker), as every declared directory that closure touches — the lock still records directories only. A `hydrated` mount lays each chosen directory down as its published `index.hydrated.jsonld` only: read from the pin's git tree when a commit carries it, otherwise fetched from the pin's subgraph index package (the `subgraph-index-<sha>` release asset `subgraph-index-package` publishes), its tarball checked against its `folio-binary-release/v1` record, its manifest against the repository, pin and harness asked for, and each file against its sha256, `SubgraphHydratedSchema` and the subgraph IRI; the lock records the package's URL and sha256 so a replay fetches the same bytes. `--check` compares the disk against the lock and never fetches. When a run CHANGES the lock, it then re-renders the agent surface (`skill:commands` → `.claude/commands/`, `agent-memory` → `.claude/agent-memory/` and `.agents/`) from the checkout root, so a re-pin commit carries the skills and memory the new layers define; a generator that fails fails the run, and `--no-agent-surface` opts out.",
+          "description": "Lay down each declared remote mount — a `source.remote` layer in the root `index.config.json`, or, in a folio with no index, a `remoteMounts` entry on its declaration (both at once is refused) — and its dependency closure, from another repository at a full commit SHA. Write the lock, `index.lock.json` (a legacy `<name>.mount-lock.json` is read, and renamed onto it when rewritten), and, with an index, regenerate the root `.gitignore` block that ignores each mount path. It READS the declared mounts and never writes them: a tool that changes a mount writes through `writeDeclaredMounts` into `index.config.json`. Before anything is checked out, each mount must pass the trust gate (`schemas/kg/mount-trust.ts`, rule H8): a person's consent recorded for THIS pin, or a signature in a declared trust network. No signature verifier exists yet, so a signature alone is could-not-determine and does not mount. Unsigned and unconsented is refused. `--staging` mounts for a preview and needs neither. A directory id an override or `mountDefaults` names may be one the layer declares in its `<name>.json` or one it declares FROM WITHIN a declared directory (`skills/skills.json` naming `voices`), resolved at the pin through `instanceDirectories`; an id in neither is refused at plan time. `tools` on an override names Tools by id and mounts each one runnable: its definition (`<tools dir>/<id>/<id>.ts`), its implementation (the `inProcess.module`, or the script its `bun run cat <key>` resolves to) and their import closure, walked by bootstrap-tools' `importClosure` (the one closure walker), as every declared directory that closure touches — the lock still records directories only. A `hydrated` mount lays each chosen directory down as its published `index.hydrated.jsonld` only: read from the pin's git tree when a commit carries it, otherwise fetched from the pin's subgraph index package (the `subgraph-index-<sha>` release asset `subgraph-index-package` publishes), its tarball checked against its `folio-binary-release/v1` record, its manifest against the repository, pin and harness asked for, and each file against its sha256, `SubgraphHydratedSchema` and the subgraph IRI; the lock records the package's URL and sha256 so a replay fetches the same bytes. `--check` compares the disk against the lock and never fetches. When a run CHANGES the lock, it then re-renders the agent surface (`skill:commands` → `.claude/commands/`, `agent-memory` → `.claude/agent-memory/` and `.agents/`) from the checkout root, so a re-pin commit carries the skills and memory the new layers define; a generator that fails fails the run, and `--no-agent-surface` opts out.",
           "install": {
             "none": true
           },
@@ -7059,7 +5927,7 @@
                 "arg": {
                   "flag": "--instance"
                 },
-                "description": "The downstream instance root; omitted, every declaring instance in the checkout.",
+                "description": "The downstream layer root; omitted, every declaring layer in the checkout.",
                 "name": "instance",
                 "required": false,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
@@ -7095,7 +5963,7 @@
                 "arg": {
                   "flag": "--no-install"
                 },
-                "description": "Lay the pinned bytes down without `bun install` in each mounted instance that carries a `package.json`. By default the install runs (`--production`; `--install-all` keeps devDependencies), so the mounted tools run; it writes only `node_modules/`, which no mount digest covers, so `--check` still passes.",
+                "description": "Lay the pinned bytes down without `bun install` in each mounted layer that carries a `package.json`. By default the install runs (`--production`; `--install-all` keeps devDependencies), so the mounted tools run; it writes only `node_modules/`, which no mount digest covers, so `--check` still passes.",
                 "name": "noInstall",
                 "required": false,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
@@ -7104,7 +5972,7 @@
                 "arg": {
                   "flag": "--seed"
                 },
-                "description": "`<name>=<owner/repo>@<40-char sha>`: create or re-pin that remote instance in `index.config.json` instead of mounting, writing its `trust.consent` for that pin in the same write (needs `consentBy` and `evidence`; repeatable; `--whole` mounts every tracked file). Refused while a mount it moves has edits the lock does not hold, since the next mount would leave that mount at the old commit; `fresh` lets it through.",
+                "description": "`<name>=<owner/repo>@<40-char sha>`: create or re-pin that remote layer in `index.config.json` instead of mounting, writing its `trust.consent` for that pin in the same write (needs `consentBy` and `evidence`; repeatable; `--whole` mounts every tracked file). Refused while a mount it moves has edits the lock does not hold, since the next mount would leave that mount at the old commit; `fresh` lets it through.",
                 "name": "seed",
                 "required": false,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/MountSeed"
@@ -7166,7 +6034,7 @@
             ],
             "outputs": [
               {
-                "description": "Per instance: mounted, local, skipped, missing (including refused by the trust gate) or could-not-determine.",
+                "description": "Per layer: mounted, local, skipped, missing (including refused by the trust gate) or could-not-determine.",
                 "name": "outcomes",
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count"
               }
@@ -7546,7 +6414,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/schemas-viewer.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Render each declared schema directory as a page per subject instance, over one shared data index.",
+          "description": "Render each declared schema directory as a page per subject layer, over one shared data index.",
           "install": {
             "none": true
           },
@@ -7874,7 +6742,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/serve-rendering-py.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Serve an instance's renderings over local HTTP with their declared media types using Python 3 standard library. The publication host wherever GitHub Pages is absent, and the only host that can enforce `application/ld+json` at all.",
+          "description": "Serve a layer's renderings over local HTTP with their declared media types using Python 3 standard library. The publication host wherever GitHub Pages is absent, and the only host that can enforce `application/ld+json` at all.",
           "install": {
             "none": true
           },
@@ -7938,7 +6806,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/serve-rendering.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Serve an instance's renderings over local HTTP with their declared media types. The publication host wherever GitHub Pages is absent, and the only host that can enforce `application/ld+json` at all.",
+          "description": "Serve a layer's renderings over local HTTP with their declared media types. The publication host wherever GitHub Pages is absent, and the only host that can enforce `application/ld+json` at all.",
           "install": {
             "none": true
           },
@@ -7996,69 +6864,63 @@
       "path": "tools/serve-rendering/"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/sibling-sessions/",
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/shared-assets/",
       "@type": "bootstrap:Subgraph",
       "hasMember": [
         {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/sibling-sessions.jsonld",
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/shared-assets.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "List the Claude Code sessions that have committed to this repository in a time window, from the `Claude-Session:` trailer on commits across ALL branches — with each one's commit count, first and last commit, latest subject, and the branches containing its tip. The session API cannot see a sibling session, so the trailer is the only durable session identity here and a session's state is INFERRED from its branch; whether a session is still running is not knowable from a checkout and is deliberately not reported.",
+          "description": "Write each shared directory of a built site (its `assets/…` laid out as a built site) to `<out>/shared/<dir>/<key>/` with a `.shared.json`, so sites on one host load one copy instead of one each. A directory already there is left alone. This is the host side of the shared-assets step `build-instance-site` runs when a checkout declares `site.sharedAssets`; run on its own, it stages an IG build, or any built site, into a host site root.",
           "install": {
             "none": true
           },
           "invoke": {
-            "inProcess": {
-              "module": "scripts/sibling-sessions.ts"
-            },
-            "shell": "bun run cat sessions"
+            "shell": "bun run cat site:shared-assets stage"
           },
           "io": {
             "inputs": [
               {
                 "arg": {
-                  "flag": "--since"
+                  "flag": "--site"
                 },
-                "description": "The window: `4h`, `2d`, `1w`, or an ISO date. Defaults to one day.",
-                "name": "since",
-                "required": false,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/TimeWindow"
+                "description": "A directory laid out as a built site, holding `assets/…`.",
+                "name": "site",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
               },
               {
                 "arg": {
-                  "flag": "--json"
+                  "flag": "--out"
                 },
-                "description": "Emit the sweep as JSON rather than the report.",
-                "name": "json",
-                "required": false,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+                "description": "The host site root the shared directories are written under.",
+                "name": "out",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
               }
             ],
             "outputs": [
               {
-                "description": "One entry per session, most recently active first, plus the number of commits examined and how many carried no trailer. A window with NO commits exits non-zero rather than reporting 'no siblings' — a sweep over nothing has not found anything.",
-                "name": "report",
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
-              },
-              {
-                "description": "With --json, the sweep as one `SessionSweep` record: the sessions, the commits examined and how many carried no trailer. Programs read this; people read `report`.",
-                "name": "result",
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/SessionSweep"
+                "description": "One line per shared directory: `staged` or `already there`, with its path under `shared/`.",
+                "name": "staged",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
               }
             ]
           },
-          "name": "sibling-sessions",
+          "name": "shared-assets",
           "requirements": {
-            "network": false
+            "runtime": [
+              "bun"
+            ]
           },
-          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/bean-coordination",
-          "title": "Sibling sessions in a window"
+          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/docs-generation",
+          "title": "Stage a site's shared asset directories where the host serves them"
         }
       ],
       "holdsGraph": [
         "cat-harness:graphTypology/tools"
       ],
-      "name": "tools/sibling-sessions",
-      "path": "tools/sibling-sessions/"
+      "name": "tools/shared-assets",
+      "path": "tools/shared-assets/"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/site-build-local/",
@@ -8160,7 +7022,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/site-search-scopes.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "The site search index cut into one index per scope — each declared instance, each target locale, and the platform — plus `assets/js/search/manifest.json` naming them, so a reader's search loads its own scope rather than the whole site. Run on the assembled site after the index is written or borrowed.",
+          "description": "The site search index cut into one index per scope — each declared layer, each target locale, and the platform — plus `assets/js/search/manifest.json` naming them, so a reader's search loads its own scope rather than the whole site. Run on the assembled site after the index is written or borrowed.",
           "install": {
             "none": true
           },
@@ -8380,7 +7242,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/skill-list.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Every skill this instance can resolve, with its one-line summary. The entry point AGENTS.md sends an agent to first.",
+          "description": "Every skill this layer can resolve, with its one-line summary. The entry point AGENTS.md sends an agent to first.",
           "install": {
             "none": true
           },
@@ -8848,10 +7710,7 @@
           "requirements": {
             "network": false
           },
-          "satisfies": [
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/role-model",
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/coordinate"
-          ],
+          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/role-model",
           "title": "Stakeholder map"
         }
       ],
@@ -8894,6 +7753,15 @@
                 "name": "site",
                 "required": false,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--scope"
+                },
+                "description": "A scoped site build: the comma-separated instances whose pages this writer writes (the IG and the layer it lands on); every other instance's pages are linked on that layer's own site. Passed by the tools layer's `visualiser-writers.ts` (owner, 2026-11-08, Q-SZ-2 \"B\"). Absent: every instance.",
+                "name": "scope",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/IdList"
               }
             ],
             "outputs": [
@@ -9016,7 +7884,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/subgraph-index-package.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Pack every built `index.jsonld` and `index.hydrated.jsonld` under an instance's `<docs>/subgraph/<harness>/` into ONE npm package for one pin — `<harness>-subgraph-index@0.0.0-pin.<sha>`, with a `folio-subgraph-index/v1` manifest giving each file's sha256 — through `pack-tarball` (`bun pm pack`), which also writes the tarball's `folio-binary-release/v1` record. The reusable workflow `layer-publish-subgraph-index.yml` attaches both to the GitHub release `subgraph-index-<sha>`, where `remote-mount` finds them for a `hydrated` source whose pin's git tree holds no index file (they are `builtAtPublish`, so none does). It builds nothing: run `subgraph:jsonld` first. No subgraph files under the instance is a refusal, never an empty package.",
+          "description": "Pack every built `index.jsonld` and `index.hydrated.jsonld` under a layer's `<docs>/subgraph/<harness>/` into ONE npm package for one pin — `<harness>-subgraph-index@0.0.0-pin.<sha>`, with a `folio-subgraph-index/v1` manifest giving each file's sha256 — through `pack-tarball` (`bun pm pack`), which also writes the tarball's `folio-binary-release/v1` record. The reusable workflow `layer-publish-subgraph-index.yml` attaches both to the GitHub release `subgraph-index-<sha>`, where `remote-mount` finds them for a `hydrated` source whose pin's git tree holds no index file (they are `builtAtPublish`, so none does). It builds nothing: run `subgraph:jsonld` first. No subgraph files under the layer is a refusal, never an empty package.",
           "install": {
             "none": true
           },
@@ -9029,7 +7897,7 @@
                 "arg": {
                   "flag": "--root"
                 },
-                "description": "The instance root whose `<docs>/subgraph/<name>/` is packed.",
+                "description": "The layer root whose `<docs>/subgraph/<name>/` is packed.",
                 "name": "root",
                 "required": true,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
@@ -9111,7 +7979,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/subgraph-readmes.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Write a README for every directory an instance declares, from the declaration and the files themselves: the declared title and description, the Graph Typologies, and one row per file described from the file, with 'used by' only where a diagram records it. Renders the Liquid templates in `tools/templates/readme/`, part of the tools graph, which may include one another with Jekyll-style include tags. Writes only between `<!-- kg:subgraph:begin -->` and `:end`; a README without the markers is left alone and reported. Records every missing title, missing or over-long description, absent directory and unmarked README in `test/results/subgraph-readmes.qa-results.json`.",
+          "description": "Write a README for every directory a layer declares, from the declaration and the files themselves: the declared title and description, the Graph Typologies, and one row per file described from the file, with 'used by' only where a diagram records it. Renders the Liquid templates in `tools/templates/readme/`, part of the tools graph, which may include one another with Jekyll-style include tags. Writes only between `<!-- kg:subgraph:begin -->` and `:end`; a README without the markers is left alone and reported. Records every missing title, missing or over-long description, absent directory and unmarked README in `test/results/subgraph-readmes.qa-results.json`.",
           "install": {
             "none": true
           },
@@ -9165,7 +8033,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/subgraph-resolve.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Say where a declared subgraph gets its content — the checkout's own directory, a declared repository branch (with its keying), or a branch family (with its prefix, key and repository) — after the instance config's `subgraphSources` override by id, and which layer answered. The same `declaredSubgraph` resolver the KG export, the publishers and the mount tool use, so a shell sees the answer they act on.",
+          "description": "Say where a declared subgraph gets its content — the checkout's own directory, a declared repository branch (with its keying), or a branch family (with its prefix, key and repository) — after the layer config's `subgraphSources` override by id, and which layer answered. The same `declaredSubgraph` resolver the KG export, the publishers and the mount tool use, so a shell sees the answer they act on.",
           "install": {
             "none": true
           },
@@ -9201,7 +8069,7 @@
             ],
             "outputs": [
               {
-                "description": "One line per subgraph: its source kind and location, its declarer, and `declaredIn`. Exit 1 when no instance declares the id, 2 when the declaration contradicts itself or names an undeclared branch.",
+                "description": "One line per subgraph: its source kind and location, its declarer, and `declaredIn`. Exit 1 when no layer declares the id, 2 when the declaration contradicts itself or names an undeclared branch.",
                 "name": "source",
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
               }
@@ -9231,7 +8099,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/theme-viewer.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Render every theme in the checkout, the platform's and each instance's declared themes, with palette, contrast and art.",
+          "description": "Render every theme in the checkout, the platform's and each layer's declared themes, with palette, contrast and art.",
           "install": {
             "none": true
           },
@@ -9475,7 +8343,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/tools-viewer.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Render this instance's Tool nodes, and the skills each satisfies, as one page.",
+          "description": "Render this layer's Tool nodes, and the skills each satisfies, as one page.",
           "install": {
             "none": true
           },
@@ -10177,7 +9045,7 @@
             ],
             "outputs": [
               {
-                "description": "The object-model diagram, in the instance's declared uml directory.",
+                "description": "The object-model diagram, in the layer's declared uml directory.",
                 "name": "diagram",
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
               }
@@ -10255,64 +9123,13 @@
       "path": "tools/uml-overview/"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/upload-step-docs/",
-      "@type": "bootstrap:Subgraph",
-      "hasMember": [
-        {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/upload-step-docs.jsonld",
-          "@type": "cat-harness:Tool",
-          "description": "Render document ingestion's FIRST step as a reference page, generated from the Tool nodes that implement it: the step, its lane and role, its skill and every Tool whose `satisfies` names that skill, with each Tool's description, installation, invocation, typed ports and selection triple. Everything but the process file's own path is derived — the start event, the activity its single outgoing flow reaches, and that activity's skill — so a step inserted, renamed or re-pointed moves the page rather than staling a literal. Refuses rather than emitting a partial page when the start event flows nowhere or to more than one place, when the first step is not an activity, when it names no skill or several, or when NO Tool satisfies that skill — the last because an empty page reads as a documented absence of mechanism, which is a finding rather than a document.",
-          "install": {
-            "none": true
-          },
-          "invoke": {
-            "shell": "bun run cat upload-step:docs"
-          },
-          "io": {
-            "inputs": [
-              {
-                "arg": {
-                  "flag": "--check"
-                },
-                "description": "Compare against the committed page and fail if stale, instead of writing.",
-                "name": "check",
-                "required": false,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
-              }
-            ],
-            "outputs": [
-              {
-                "description": "`docs/reference/upload-step/index.md`, under the instance's declared site directory. Never hand-edited.",
-                "name": "page",
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
-              }
-            ]
-          },
-          "name": "upload-step-docs",
-          "requirements": {
-            "network": false,
-            "runtime": [
-              "bun"
-            ]
-          },
-          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/docs-generation",
-          "title": "The upload step, from its Tools"
-        }
-      ],
-      "holdsGraph": [
-        "cat-harness:graphTypology/tools"
-      ],
-      "name": "tools/upload-step-docs",
-      "path": "tools/upload-step-docs/"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/upload-url/",
       "@type": "bootstrap:Subgraph",
       "hasMember": [
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/upload-url.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Compose the forge URL a person can drop a file at, from the instance's own declaration: the `uploads` graph's directory, resolved against the ROOT its scope names, expressed relative to the repository, and appended to the origin remote as GitHub's `/upload/<branch>/<path>`. Every failure is NAMED and no URL is guessed — no declaration, no declared `uploads` graph, a declared queue absent from disk, no `origin` remote, and a non-github.com remote each return a reason and a remedy instead. The declared path is relative to the INSTANCE and a forge URL needs it relative to the REPOSITORY, so pasting the declared path can mint a 404.",
+          "description": "Compose the forge URL a person can drop a file at, from the layer's own declaration: the `uploads` graph's directory, resolved against the ROOT its scope names, expressed relative to the repository, and appended to the origin remote as GitHub's `/upload/<branch>/<path>`. Every failure is NAMED and no URL is guessed — no declaration, no declared `uploads` graph, a declared queue absent from disk, no `origin` remote, and a non-github.com remote each return a reason and a remedy instead. The declared path is relative to the LAYER and a forge URL needs it relative to the REPOSITORY, so pasting the declared path can mint a 404.",
           "install": {
             "none": true
           },
@@ -10366,7 +9183,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/uploads-viewer.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Render each declared uploads directory's intakes as a page per subject instance.",
+          "description": "Render each declared uploads directory's intakes as a page per subject layer.",
           "install": {
             "none": true
           },
@@ -10522,7 +9339,7 @@
           "io": {
             "inputs": [
               {
-                "description": "The table's id, resolved from this instance's declared `vocab-mapping` directories. An unknown id is an error naming the directories searched, never an empty result.",
+                "description": "The table's id, resolved from this layer's declared `vocab-mapping` directories. An unknown id is an error naming the directories searched, never an empty result.",
                 "name": "table",
                 "required": true,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug"
@@ -10563,7 +9380,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/voices-viewer.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Render each declared voices directory as a page per subject instance.",
+          "description": "Render each declared voices directory as a page per subject layer.",
           "install": {
             "none": true
           },
@@ -10615,6 +9432,76 @@
       ],
       "name": "tools/voices-viewer",
       "path": "tools/voices-viewer/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/web-app-build/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/web-app-build.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Build every declared `web-app` directory in the checkout and publish each at its own route, `<locale>/<harness>/apps/<id>/`, with no site chrome (every page marked `folio-navbar: none`), plus an `apps/` index in the site's chrome listing each app with its languages and size. Before building, each locale's translated UI strings are written from the layer's `translations/<locale>/apps/<id>.po` to the app's `i18n.out`, so building is the injection. `--extract` writes the translation templates; `--check` validates the declarations and translations and builds nothing.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run cat web-apps:build"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "flag": "--check"
+                },
+                "description": "Validate every declaration (manifest, build script, lockfile, route clashes) and translation (templates current, placeholders kept, no stale entries); build nothing.",
+                "name": "check",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              },
+              {
+                "arg": {
+                  "flag": "--extract"
+                },
+                "description": "Write each app's translation templates, `translations/<locale>/apps/<id>.pot`, in the declaring layer: the app's \"refresh the templates\" step of the translation process.",
+                "name": "extract",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              },
+              {
+                "arg": {
+                  "flag": "--site"
+                },
+                "description": "A site being built: write the apps and the index at their declared route under it instead of under the harness's own site directory.",
+                "name": "site",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "Each app's build under `<locale>/<harness>/apps/<id>/`, and the index page at `<locale>/<harness>/apps/`.",
+                "name": "pages",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "web-app-build",
+          "requirements": {
+            "network": true,
+            "runtime": [
+              "bun",
+              "node"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/graph-rendering",
+          "title": "Web app build"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/web-app-build",
+      "path": "tools/web-app-build/"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/wireframe-check/",
@@ -10773,83 +9660,6 @@
       ],
       "name": "tools/witness-conformance",
       "path": "tools/witness-conformance/"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/witness-parity/",
-      "@type": "bootstrap:Subgraph",
-      "hasMember": [
-        {
-          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/witness-parity.jsonld",
-          "@type": "cat-harness:Tool",
-          "description": "Re-run a computation witness's producer and say whether it reproduces the committed witness. Reads the command from `invocation.reproduce` (else `python3 <scriptFile>`) and the recorded package versions from `environment`; on a version mismatch it stops at `unknown`, since a different environment is not a reproduction test. Otherwise it runs the COMMITTED producer in a scratch git worktree, so the folio's own checkout is never written, and compares the result with the committed witness with run-specific fields (commit, timing, environment) masked at every depth. `pass`, `fail` (with the differing JSON paths), or `unknown` (mismatch, non-zero exit, timeout, no witness written).",
-          "install": {
-            "none": true
-          },
-          "invoke": {
-            "shell": "bun run cat witness:parity"
-          },
-          "io": {
-            "inputs": [
-              {
-                "description": "One or more `*.witness.json` paths, committed at HEAD.",
-                "name": "witness",
-                "required": true,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
-              },
-              {
-                "arg": {
-                  "flag": "--timeout"
-                },
-                "description": "Seconds before a run counts as `unknown`. Default 300.",
-                "name": "timeout",
-                "required": false,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count"
-              },
-              {
-                "arg": {
-                  "flag": "--force"
-                },
-                "description": "Run despite an environment mismatch; the verdict is then marked advisory.",
-                "name": "force",
-                "required": false,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
-              },
-              {
-                "arg": {
-                  "flag": "--json"
-                },
-                "description": "Machine-readable output.",
-                "name": "json",
-                "required": false,
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
-              }
-            ],
-            "outputs": [
-              {
-                "description": "One line per witness: pass, fail or unknown, with the reason, any environment mismatch and the differing paths. Exit 1 when any witness fails; `unknown` alone exits 0.",
-                "name": "verdicts",
-                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
-              }
-            ]
-          },
-          "name": "witness-parity",
-          "requirements": {
-            "network": false,
-            "runtime": [
-              "bun",
-              "git",
-              "bash"
-            ]
-          },
-          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/directory-conventions",
-          "title": "Witness reproduction check"
-        }
-      ],
-      "holdsGraph": [
-        "cat-harness:graphTypology/tools"
-      ],
-      "name": "tools/witness-parity",
-      "path": "tools/witness-parity/"
     }
   ],
   "holdsGraph": [

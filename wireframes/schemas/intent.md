@@ -7,9 +7,9 @@
 
 All three are written by `cat-harness/scripts/gen-schema-viz.ts`. It is a zero-dependency viewer that fetches its projection (`assets/schemas/index.json`) relative to its own location. The drawing uses `cat-harness` (812 declarations, 122 modules, 517 edges, 8 undetermined). The others use the same layout with less data: the content core 60 / 11 / 31, large-datasets 11 / 2 / 1.
 
-Instances folded into cat-harness (`detangle`, `bootstrap-tools`) render on the `cat-harness` page, so they have no page of their own.
+Layers folded into cat-harness (`detangle`, `bootstrap-tools`) render on the `cat-harness` page, so they have no page of their own.
 
-**Who it is for:** the owner or a maintainer reading an instance's schemas. The page must be browsable: "a navigation requirement rather than a poster requirement".
+**Who it is for:** the owner or a maintainer reading a layer's schemas. The page must be browsable: "a navigation requirement rather than a poster requirement".
 
 **What they need to do:**
 - browse and search the declarations, and narrow them by kind (interface, type-alias, zod-object, …) and by module

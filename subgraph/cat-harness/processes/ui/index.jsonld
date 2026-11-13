@@ -479,7 +479,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ThemeUIReview/node/A_Branding",
       "@type": "bootstrap:ProcessNode",
-      "name": "Branding: does it read as this instance?"
+      "name": "Branding: does it read as this layer?"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ThemeUIReview/node/A_Inventory",
@@ -515,6 +515,118 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ThemeUIReview/node/Start_TUR",
       "@type": "bootstrap:ProcessNode",
       "name": "Graphical assets ingested"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WebAppPublish",
+      "@type": "bootstrap:Process",
+      "name": "Publish a web app — declared, translated, built at its own route"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WebAppPublish#flow/SF_Process_WebAppPublish_1",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WebAppPublish#flow/SF_Process_WebAppPublish_10",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WebAppPublish#flow/SF_Process_WebAppPublish_2",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WebAppPublish#flow/SF_Process_WebAppPublish_3",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WebAppPublish#flow/SF_Process_WebAppPublish_4",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WebAppPublish#flow/SF_Process_WebAppPublish_5",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WebAppPublish#flow/SF_Process_WebAppPublish_6",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "yes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WebAppPublish#flow/SF_Process_WebAppPublish_7",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "no"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WebAppPublish#flow/SF_Process_WebAppPublish_8",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WebAppPublish#flow/SF_Process_WebAppPublish_9",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WebAppPublish/lane/Lane_Author",
+      "@type": "cat-harness:Lane",
+      "name": "App author"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WebAppPublish/lane/Lane_Pipeline",
+      "@type": "cat-harness:Lane",
+      "name": "CI/CD Pipeline"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WebAppPublish/lane/Lane_Translators",
+      "@type": "cat-harness:Lane",
+      "name": "Translators"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WebAppPublish/node/A_Build",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Build into its own chrome-less route"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WebAppPublish/node/A_Check",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Check the declaration and translations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WebAppPublish/node/A_Declare",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Declare the web-app directory"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WebAppPublish/node/A_Extract",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Extract the app's translation templates"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WebAppPublish/node/A_Fix",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Fix the declaration or the catalog"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WebAppPublish/node/A_Size",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Review the size against its budget"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WebAppPublish/node/Call_Translate",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Translate into each locale"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WebAppPublish/node/End_Process_WebAppPublish",
+      "@type": "bootstrap:ProcessNode",
+      "name": "App published at its own route"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WebAppPublish/node/GW_Valid",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Declaration and translations valid?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WebAppPublish/node/Start_Process_WebAppPublish",
+      "@type": "bootstrap:ProcessNode",
+      "name": "App source committed in a layer"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WireframeDesignReview",

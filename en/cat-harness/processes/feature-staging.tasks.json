@@ -3,152 +3,258 @@
  "process": "Process_FeatureStaging",
  "markers": [
   {
+   "id": "Task_Defer",
+   "name": "Defer build and queue verify sweep",
+   "left": 30.18,
+   "top": 6.11,
+   "box": {
+    "left": 24.85,
+    "top": 16.67,
+    "width": 1.76,
+    "height": 2.67
+   }
+  },
+  {
    "id": "Task_Build",
    "name": "Build the docs site",
-   "left": 31.01,
-   "top": 2.78,
+   "left": 45.59,
+   "top": 6.11,
    "box": {
-    "left": 23.69,
-    "top": 13.33,
-    "width": 2.42,
+    "left": 40.27,
+    "top": 16.67,
+    "width": 1.76,
     "height": 2.67
    }
   },
   {
    "id": "Task_Deploy",
    "name": "Push to the CDN under branches/",
-   "left": 46.16,
-   "top": 2.78,
+   "left": 66.15,
+   "top": 6.11,
    "box": {
-    "left": 38.84,
-    "top": 13.33,
-    "width": 2.42,
+    "left": 60.83,
+    "top": 16.67,
+    "width": 1.76,
     "height": 2.67
    }
   },
   {
    "id": "Task_LogRendered",
    "name": "Append `rendered` to the render log",
-   "left": 61.31,
-   "top": 2.78,
+   "left": 76.72,
+   "top": 6.11,
    "box": {
-    "left": 53.99,
-    "top": 13.33,
-    "width": 2.42,
+    "left": 71.4,
+    "top": 16.67,
+    "width": 1.76,
     "height": 2.67
    }
   },
   {
    "id": "Task_Comment",
    "name": "Comment the preview URL on the PR",
-   "left": 76.46,
-   "top": 2.78,
+   "left": 92.14,
+   "top": 6.11,
    "box": {
-    "left": 69.14,
-    "top": 13.33,
-    "width": 2.42,
+    "left": 86.82,
+    "top": 16.67,
+    "width": 1.76,
     "height": 2.67
    }
   },
   {
    "id": "Task_Slug",
    "name": "Derive the slug from the head ref",
-   "left": 31.01,
+   "left": 22.54,
    "top": 21.67,
    "box": {
-    "left": 23.69,
+    "left": 17.22,
     "top": 32.22,
-    "width": 2.42,
+    "width": 1.76,
     "height": 2.67
    }
   },
   {
    "id": "Task_Remove",
    "name": "Remove the preview and log it",
-   "left": 65.35,
+   "left": 47.5,
    "top": 21.67,
    "box": {
-    "left": 58.03,
+    "left": 42.18,
     "top": 32.22,
-    "width": 2.42,
+    "width": 1.76,
     "height": 2.67
    }
   },
   {
    "id": "Task_LogRetained",
    "name": "Append `retained`, with why it stays",
-   "left": 65.35,
+   "left": 47.5,
    "top": 38.33,
    "box": {
-    "left": 58.03,
+    "left": 42.18,
     "top": 48.89,
-    "width": 2.42,
+    "width": 1.76,
     "height": 2.67
    }
   },
   {
    "id": "Task_Notice",
    "name": "Post the retention notice on the PR",
-   "left": 80.51,
+   "left": 58.52,
    "top": 38.33,
    "box": {
-    "left": 73.18,
+    "left": 53.19,
     "top": 48.89,
-    "width": 2.42,
+    "width": 1.76,
     "height": 2.67
    }
   },
   {
    "id": "Task_Validate",
    "name": "Check the slug and its confirmation",
-   "left": 31.01,
+   "left": 22.54,
    "top": 57.22,
    "box": {
-    "left": 23.69,
+    "left": 17.22,
     "top": 67.78,
-    "width": 2.42,
+    "width": 1.76,
     "height": 2.67
    }
   },
   {
    "id": "Task_Preflight",
    "name": "Re-evaluate liveness AT REMOVAL TIME",
-   "left": 46.16,
+   "left": 33.55,
    "top": 57.22,
    "box": {
-    "left": 38.84,
+    "left": 28.23,
     "top": 67.78,
-    "width": 2.42,
+    "width": 1.76,
     "height": 2.67
    }
   },
   {
    "id": "Task_RemoveDisp",
    "name": "Remove it AND append `removed` — one commit",
-   "left": 80.51,
+   "left": 58.52,
    "top": 57.22,
    "box": {
-    "left": 73.18,
+    "left": 53.19,
     "top": 67.78,
-    "width": 2.42,
+    "width": 1.76,
     "height": 2.67
    }
   },
   {
    "id": "H_Confirm",
    "name": "Repeat the slug, exactly, to confirm",
-   "left": 19.7,
+   "left": 14.32,
    "top": 85.56,
    "box": {
-    "left": 12.37,
+    "left": 8.99,
     "top": 96.11,
-    "width": 2.42,
+    "width": 1.76,
     "height": 2.67
    }
   }
  ],
  "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_FeatureStaging",
  "tasks": {
+  "Task_Defer": {
+   "id": "Task_Defer",
+   "name": "Defer build and queue verify sweep",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_FeatureStaging/node/Task_Defer",
+   "stepHref": "feature-staging.html#step-Task_Defer",
+   "lane": "CI/CD Pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_FeatureStaging/lane/Lane_Ci",
+   "skills": [
+    {
+     "name": "feature-staging",
+     "href": "../../../reference/skill-instructions/feature-staging.html"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health",
+      "href": "../../../reference/skill-instructions/ci-health.html"
+     },
+     {
+      "name": "compiled-artefact-cache",
+      "href": "../../../reference/skill-instructions/compiled-artefact-cache.html"
+     },
+     {
+      "name": "content-test",
+      "href": "../../../reference/skill-instructions/content-test.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../reference/skill-instructions/content-validate.html"
+     },
+     {
+      "name": "feature-staging",
+      "href": "../../../reference/skill-instructions/feature-staging.html"
+     },
+     {
+      "name": "harness-projections",
+      "href": "../../../reference/skill-instructions/harness-projections.html"
+     },
+     {
+      "name": "kg-separation",
+      "href": "../../../reference/skill-instructions/kg-separation.html"
+     },
+     {
+      "name": "platform-gates",
+      "href": "../../../reference/skill-instructions/platform-gates.html"
+     },
+     {
+      "name": "prepare-merge",
+      "href": "../../../reference/skill-instructions/prepare-merge.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../reference/skill-instructions/publish-verification.html"
+     },
+     {
+      "name": "qa-reports",
+      "href": "../../../reference/skill-instructions/qa-reports.html"
+     },
+     {
+      "name": "remote-mount",
+      "href": "../../../reference/skill-instructions/remote-mount.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../reference/skill-instructions/render-kg-to-cdn.html"
+     },
+     {
+      "name": "sub-kg-lifecycle",
+      "href": "../../../reference/skill-instructions/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../reference/skill-instructions/translation-manager.html"
+     },
+     {
+      "name": "upstream-version-adoption",
+      "href": "../../../reference/skill-instructions/upstream-version-adoption.html"
+     },
+     {
+      "name": "watch",
+      "href": "../../../reference/skill-instructions/watch.html"
+     }
+    ]
+   }
+  },
   "Task_Build": {
    "id": "Task_Build",
    "name": "Build the docs site",
@@ -175,10 +281,6 @@
      {
       "name": "compiled-artefact-cache",
       "href": "../../../reference/skill-instructions/compiled-artefact-cache.html"
-     },
-     {
-      "name": "content-publish",
-      "href": "../../../reference/skill-instructions/content-publish.html"
      },
      {
       "name": "content-test",
@@ -280,10 +382,6 @@
       "href": "../../../reference/skill-instructions/compiled-artefact-cache.html"
      },
      {
-      "name": "content-publish",
-      "href": "../../../reference/skill-instructions/content-publish.html"
-     },
-     {
       "name": "content-test",
       "href": "../../../reference/skill-instructions/content-test.html"
      },
@@ -376,10 +474,6 @@
      {
       "name": "compiled-artefact-cache",
       "href": "../../../reference/skill-instructions/compiled-artefact-cache.html"
-     },
-     {
-      "name": "content-publish",
-      "href": "../../../reference/skill-instructions/content-publish.html"
      },
      {
       "name": "content-test",
@@ -476,10 +570,6 @@
       "href": "../../../reference/skill-instructions/compiled-artefact-cache.html"
      },
      {
-      "name": "content-publish",
-      "href": "../../../reference/skill-instructions/content-publish.html"
-     },
-     {
       "name": "content-test",
       "href": "../../../reference/skill-instructions/content-test.html"
      },
@@ -574,10 +664,6 @@
       "href": "../../../reference/skill-instructions/compiled-artefact-cache.html"
      },
      {
-      "name": "content-publish",
-      "href": "../../../reference/skill-instructions/content-publish.html"
-     },
-     {
       "name": "content-test",
       "href": "../../../reference/skill-instructions/content-test.html"
      },
@@ -670,10 +756,6 @@
      {
       "name": "compiled-artefact-cache",
       "href": "../../../reference/skill-instructions/compiled-artefact-cache.html"
-     },
-     {
-      "name": "content-publish",
-      "href": "../../../reference/skill-instructions/content-publish.html"
      },
      {
       "name": "content-test",
@@ -774,10 +856,6 @@
       "href": "../../../reference/skill-instructions/compiled-artefact-cache.html"
      },
      {
-      "name": "content-publish",
-      "href": "../../../reference/skill-instructions/content-publish.html"
-     },
-     {
       "name": "content-test",
       "href": "../../../reference/skill-instructions/content-test.html"
      },
@@ -870,10 +948,6 @@
      {
       "name": "compiled-artefact-cache",
       "href": "../../../reference/skill-instructions/compiled-artefact-cache.html"
-     },
-     {
-      "name": "content-publish",
-      "href": "../../../reference/skill-instructions/content-publish.html"
      },
      {
       "name": "content-test",
@@ -970,10 +1044,6 @@
       "href": "../../../reference/skill-instructions/compiled-artefact-cache.html"
      },
      {
-      "name": "content-publish",
-      "href": "../../../reference/skill-instructions/content-publish.html"
-     },
-     {
       "name": "content-test",
       "href": "../../../reference/skill-instructions/content-test.html"
      },
@@ -1068,10 +1138,6 @@
       "href": "../../../reference/skill-instructions/compiled-artefact-cache.html"
      },
      {
-      "name": "content-publish",
-      "href": "../../../reference/skill-instructions/content-publish.html"
-     },
-     {
       "name": "content-test",
       "href": "../../../reference/skill-instructions/content-test.html"
      },
@@ -1164,10 +1230,6 @@
      {
       "name": "compiled-artefact-cache",
       "href": "../../../reference/skill-instructions/compiled-artefact-cache.html"
-     },
-     {
-      "name": "content-publish",
-      "href": "../../../reference/skill-instructions/content-publish.html"
      },
      {
       "name": "content-test",

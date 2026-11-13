@@ -62,7 +62,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose/lane/Lane_Build",
       "@type": "cat-harness:Lane",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/fhir-harness/role/build-pipeline",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
       "name": "Host docs site build (CI runner)",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose"
@@ -77,7 +77,7 @@
       "name": "Each IG composed; build list handed to the host",
       "nodeKind": "end",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/build-pipeline",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -91,7 +91,7 @@
       "nodeKind": "start",
       "outgoing": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose#flow/Flow_1",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/build-pipeline",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -106,7 +106,7 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose#flow/Flow_5",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/build-pipeline",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-render-jekyll",
       "touchesWorkPlan": false
@@ -122,7 +122,7 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose#flow/Flow_2",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/build-pipeline",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-build-pipeline",
       "touchesWorkPlan": false
@@ -138,7 +138,7 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose#flow/Flow_3",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/build-pipeline",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-build-pipeline",
       "touchesWorkPlan": false
@@ -154,7 +154,7 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose#flow/Flow_4",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/build-pipeline",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "relaxable": true,
       "requires": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-render-jekyll",

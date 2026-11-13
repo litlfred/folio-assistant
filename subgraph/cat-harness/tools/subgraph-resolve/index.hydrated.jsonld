@@ -7,7 +7,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/subgraph-resolve.jsonld",
       "@type": "cat-harness:Tool",
-      "description": "Say where a declared subgraph gets its content — the checkout's own directory, a declared repository branch (with its keying), or a branch family (with its prefix, key and repository) — after the instance config's `subgraphSources` override by id, and which layer answered. The same `declaredSubgraph` resolver the KG export, the publishers and the mount tool use, so a shell sees the answer they act on.",
+      "description": "Say where a declared subgraph gets its content — the checkout's own directory, a declared repository branch (with its keying), or a branch family (with its prefix, key and repository) — after the layer config's `subgraphSources` override by id, and which layer answered. The same `declaredSubgraph` resolver the KG export, the publishers and the mount tool use, so a shell sees the answer they act on.",
       "install": {
         "none": true
       },
@@ -43,7 +43,7 @@
         ],
         "outputs": [
           {
-            "description": "One line per subgraph: its source kind and location, its declarer, and `declaredIn`. Exit 1 when no instance declares the id, 2 when the declaration contradicts itself or names an undeclared branch.",
+            "description": "One line per subgraph: its source kind and location, its declarer, and `declaredIn`. Exit 1 when no layer declares the id, 2 when the declaration contradicts itself or names an undeclared branch.",
             "name": "source",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
           }

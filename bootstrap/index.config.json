@@ -1,6 +1,6 @@
 {
   "$schema": "folio-index-config/v1",
-  "instances": [
+  "layers": [
     {
       "name": "bootstrap",
       "source": {
@@ -8,6 +8,11 @@
           "at": "."
         }
       }
+    }
+  ],
+  "harnesses": [
+    {
+      "name": "bootstrap"
     }
   ]
 }

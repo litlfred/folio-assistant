@@ -1,0 +1,71 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/references-extract/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/references-extract.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Split each library entry's reference lists (a References, Bibliography or Further reading section or heading, in the six UN languages and Portuguese) into folio-reference/v1 nodes in the instance's declared `references` directory, one per cited work, keyed `<doc-id>.<section>.<n>`: provenance extracted, derivedFrom the section file, printed the entry verbatim, and only the fields read without guessing (URL, DOI, ISBN, year, access date). The bibliography page lists them as the document's own bibliography. `--check` writes nothing and fails when a node is stale.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat references:extract"
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "flag": "--instance"
+            },
+            "description": "The instance root whose library sections are read and whose references directory is written.",
+            "name": "instance",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--entry"
+            },
+            "description": "One library entry's slug, to extract only its lists.",
+            "name": "entry",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--check"
+            },
+            "description": "Fail if a node is stale, instead of writing.",
+            "name": "check",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "The extracted reference nodes: `<references dir>/<doc-id>.<section>.<n>.json`.",
+            "name": "references",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ]
+      },
+      "name": "references-extract",
+      "requirements": {
+        "network": false,
+        "runtime": [
+          "bun"
+        ]
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/l1-document-ingestion",
+      "title": "Reference lists to reference nodes"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/references-extract",
+  "path": "tools/references-extract/"
+}

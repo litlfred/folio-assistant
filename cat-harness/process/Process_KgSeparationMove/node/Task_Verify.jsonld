@@ -8,16 +8,13 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
       "name": "Every identifier dereferences",
       "nodeKind": "activity",
-      "bpmnType": "bpmn:CallActivity",
+      "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparationMove",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparationMove/lane/Lane_Pipeline",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/skill/publish-verification"
-      ],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
-      "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PublishVerification",
       "incoming": [
         "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparationMove#flow/F9"
       ],

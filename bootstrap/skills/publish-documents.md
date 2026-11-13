@@ -35,7 +35,7 @@ Each document carries its `@context` inline, so publishing the document
 publishes its context. A harness whose documents name an external context
 publishes that context the same way, at its own IRI.
 
-**No `iriBase`, no addresses.** An instance that declares none has nothing
+**No `iriBase`, no addresses.** A layer that declares none has nothing
 here to publish, and says so rather than reporting a pass over nothing.
 
 ## Where each goes

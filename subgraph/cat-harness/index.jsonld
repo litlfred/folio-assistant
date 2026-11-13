@@ -434,9 +434,9 @@
       "@type": "bootstrap:Asset",
       "name": "agent-instructions",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/267c5aa5bc99b5447a916233d2816652785e825c9322833f208da086d1193f1f",
-        "bytes": 19337,
-        "sha256": "267c5aa5bc99b5447a916233d2816652785e825c9322833f208da086d1193f1f"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7d1164ce90b524385b057051ee98579337c665b52d310159a07aeb549890b531",
+        "bytes": 18732,
+        "sha256": "7d1164ce90b524385b057051ee98579337c665b52d310159a07aeb549890b531"
       },
       "title": "AGENTS.md — cat-harness"
     },
@@ -445,9 +445,9 @@
       "@type": "bootstrap:Asset",
       "name": "bootstrap-initialization",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b2fd4b0a95dcc6af369516a3c4605b9b2ae54612b01e7ddc9b541f443a41c7e6",
-        "bytes": 6170,
-        "sha256": "b2fd4b0a95dcc6af369516a3c4605b9b2ae54612b01e7ddc9b541f443a41c7e6"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/07b0ce84111f9cfcf7eb636df5b67e3b1f66dbd262b957f1a6dd04c87a55a6ee",
+        "bytes": 6110,
+        "sha256": "07b0ce84111f9cfcf7eb636df5b67e3b1f66dbd262b957f1a6dd04c87a55a6ee"
       },
       "title": "Initializing into folio-assistant"
     },
@@ -456,9 +456,9 @@
       "@type": "bootstrap:Asset",
       "name": "instance-readme",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d18a0c1671f747145c869aa1c58a570e3c4e197469bfbd2fcd6ad472c7856165",
-        "bytes": 14054,
-        "sha256": "d18a0c1671f747145c869aa1c58a570e3c4e197469bfbd2fcd6ad472c7856165"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3744cd0c2f90ac522499746bfdf94461ff32c86472ecb2b35f34b335f1d3d1c9",
+        "bytes": 14048,
+        "sha256": "3744cd0c2f90ac522499746bfdf94461ff32c86472ecb2b35f34b335f1d3d1c9"
       },
       "title": "cat-harness"
     },
@@ -467,9 +467,9 @@
       "@type": "bootstrap:Asset",
       "name": "npm-manifest",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a41eb5ab2ab58d812f8c8c1ae4379ba31f8620f0eac222ada914b701bf035fc1",
-        "bytes": 1142,
-        "sha256": "a41eb5ab2ab58d812f8c8c1ae4379ba31f8620f0eac222ada914b701bf035fc1"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/da8ef1a6cc3d1c2584475a6515783a3e54c5e45ebf59672373bb19d548a693d0",
+        "bytes": 1233,
+        "sha256": "da8ef1a6cc3d1c2584475a6515783a3e54c5e45ebf59672373bb19d548a693d0"
       },
       "title": "package.json"
     },
@@ -478,9 +478,9 @@
       "@type": "bootstrap:Asset",
       "name": "unkinded-baseline",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fdf2f2f257bdbb4575055ad18917f2b7504a5548f0613a752843f8a2ba2c88c6",
-        "bytes": 8245,
-        "sha256": "fdf2f2f257bdbb4575055ad18917f2b7504a5548f0613a752843f8a2ba2c88c6"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/900c83fb4040ccd0952082bbf24791e7c078f6ba869253507d47dfcc0fe53f83",
+        "bytes": 8339,
+        "sha256": "900c83fb4040ccd0952082bbf24791e7c078f6ba869253507d47dfcc0fe53f83"
       },
       "title": "Unkinded families — cat-harness"
     },
@@ -745,6 +745,12 @@
       "title": "DCMI Metadata Terms"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/foaf",
+      "@type": "cat-harness:ExternalSchema",
+      "name": "foaf",
+      "title": "FOAF Vocabulary Specification"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/hl7-fhir",
       "@type": "cat-harness:ExternalSchema",
       "name": "hl7-fhir",
@@ -833,6 +839,12 @@
       "@type": "cat-harness:ExternalSchema",
       "name": "w3c-odrl",
       "title": "ODRL Information Model 2.2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/w3c-org",
+      "@type": "cat-harness:ExternalSchema",
+      "name": "w3c-org",
+      "title": "The Organization Ontology"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/w3c-owl2",
@@ -1399,6 +1411,18 @@
       "title": "diff-renderers"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/document-errata",
+      "@type": "cat-harness:Schema",
+      "name": "document-errata",
+      "title": "document-errata"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/document-footnotes",
+      "@type": "cat-harness:Schema",
+      "name": "document-footnotes",
+      "title": "document-footnotes"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/document-image",
       "@type": "cat-harness:Schema",
       "name": "document-image",
@@ -1591,6 +1615,12 @@
       "title": "lean-packages"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/library-iri",
+      "@type": "cat-harness:Schema",
+      "name": "library-iri",
+      "title": "library-iri"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/library-keywords",
       "@type": "cat-harness:Schema",
       "name": "library-keywords",
@@ -1703,6 +1733,12 @@
       "@type": "cat-harness:Schema",
       "name": "pinned-terminology",
       "title": "pinned-terminology"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/portfolio",
+      "@type": "cat-harness:Schema",
+      "name": "portfolio",
+      "title": "portfolio"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/process-element-id",
@@ -2233,6 +2269,12 @@
       "title": "waiver"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/web-app",
+      "@type": "cat-harness:Schema",
+      "name": "web-app",
+      "title": "web-app"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/webpage",
       "@type": "cat-harness:Schema",
       "name": "webpage",
@@ -2265,16 +2307,29 @@
   ],
   "hasSubgraph": [
     "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/archimate/",
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/editorial/",
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/editorial/skills/",
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/integrations/",
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/integrations/tools/",
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/kg-ops/",
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/kg-ops/processes/",
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/kg-ops/skills/",
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/kg-ops/tools/",
     "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/library/",
     "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/library/corpus/",
     "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/library/processes/",
     "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/library/skills/",
     "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/openapi/",
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/platform-ui/",
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/platform-ui/skills/",
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/platform-ui/tools/",
     "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/processes/",
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/research/",
     "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/scenarios/",
     "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/sdlc/",
     "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/sdlc/processes/",
     "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/sdlc/skills/",
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/sdlc/tools/",
     "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/",
     "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/",
     "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/work-plan/",

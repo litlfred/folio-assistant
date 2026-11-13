@@ -7,7 +7,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/ig-artifact-jsonld.jsonld",
       "@type": "cat-harness:Tool",
-      "description": "`write` turns an artefact index into `artifact/<Type>-<id>.jsonld` (and a `.json` twin) under a docs root: one `folio-ig-artifact-jsonld/v1` node per artefact, in borrowed vocabularies only (the FHIR RDF class, dcterms, schema.org, PROV), naming the artefact's canonical URL, its representations and, for a compiled copy, what built it. `check` is the kind's QA: over a BUILT site, every artefact has its node and no node is an orphan, each node is its own file's, its twin matches, and every local resource it names is on the site. It also writes and checks the index node, `artifact/index.jsonld` (`folio-ig-artifact-index-jsonld/v1`): every artefact once, each entry naming its node. These are the assets the thin pages render.",
+      "description": "`write` turns an artefact index into `artifact/<Type>-<id>.jsonld` under a docs root, with no `.json` twin: one `folio-ig-artifact-jsonld/v1` node per artefact, in borrowed vocabularies only (the FHIR RDF class, dcterms, schema.org, PROV), naming the artefact's canonical URL, its representations and, for a compiled copy, what built it. With `--root-resources` (the IG site's default) the first representation is the reduced `<Type>-<id>.json` the site serves at its root (`local`), the second the full copy in the AST cache by raw URL (`mirror`), and each index entry names the root file (`schema:contentUrl`). `check` is the kind's QA: over a BUILT site, every artefact has its node and no node is an orphan, each node is its own file's, no `.json` twin is served beside it, and every local resource it names is on the site. It also writes and checks the index node, `artifact/index.jsonld` (`folio-ig-artifact-index-jsonld/v1`): every artefact once, each entry naming its node. These are the assets the thin pages render.",
       "install": {
         "none": true
       },
@@ -47,10 +47,16 @@
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Url"
           },
           {
-            "description": "`write`: where compiled resource files are served, from the docs root.",
+            "description": "`write`: where compiled resource files are served, from the docs root, or the AST cache commit's raw base (then a `mirror`).",
             "name": "compiled-data",
             "required": false,
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "description": "`write`: the site serves each compiled resource at its root as `<Type>-<id>.json`; each node lists it first.",
+            "name": "root-resources",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
           }
         ],
         "outputs": [

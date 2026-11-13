@@ -6,10 +6,10 @@ on the theme. It was written first, and it is wrong, because <strong>this module
 platform code that a downstream folio inherits.</strong> <code>landing.html</code> already
 states the consequence it was guarding against:</p><blockquote><p>a downstream folio should not inherit a grumpy cat it did not choose.</p></blockquote><p>A literal path would give every folio depending on this platform a theme
 pointing at three <code>.webp</code>s that exist only here — a guaranteed 404 in any
-instance that did not happen to copy them, and the <em>same</em> defect class as
+layer that did not happen to copy them, and the <em>same</em> defect class as
 bean <code>blv9</code> (link-shaped values nothing checks resolve).</p><p>Naming a role instead inverts it. The theme says <em>&quot;my backdrop is whatever
 this instance declares as its <code>landing</code> art&quot;</em>; <code>harness.json</code> says what that
-is. An instance with its own art gets its own; an instance with none gets no
+is. A layer with its own art gets its own; a layer with none gets no
 backdrop and renders palette-only, which is an already-tested state rather
 than a broken one. <code>5oai</code> resolved exactly this before the field existed:
 <em>&quot;reuse <code>images[].role</code> rather than invent an avatar vocabulary … a new

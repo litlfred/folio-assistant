@@ -1,0 +1,21 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-author.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-author",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "content-author",
+      "title": "Content Authoring",
+      "instructionsPath": "skills/content/content-lifecycle-ext/content-author.md",
+      "instructionLines": 48,
+      "inputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/content-author/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/content-author/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills"
+    }
+  ]
+}

@@ -78,7 +78,7 @@ NO work-plan element, and isExecutable is false, for the reasons initialize-harn
     <bpmn:startEvent id="Start_HumanAgentDiscussion" name="Something only a person can supply is needed"/>
 
     <bpmn:task id="A_DetermineContext" name="Determine the context: what is known, and already decided">
-      <bpmn:documentation>Before composing anything: what is already known, each fact with where it came from; which declaration governs the matter (the instance's `&lt;name&gt;.json`, the diagram the caller is in, the Skill its task names); what state is recorded; and whether the question has ALREADY been decided — by the person earlier in the conversation, or in a declaration that quotes their ruling. A settled question is not asked again: asking it reopens a decision and spends the person's attention twice. Read it, do not remember it: cite what you read. What the caller handed in is checked here, not re-derived.</bpmn:documentation>
+      <bpmn:documentation>Before composing anything: what is already known, each fact with where it came from; which declaration governs the matter (the layer's `&lt;name&gt;.json`, the diagram the caller is in, the Skill its task names); what state is recorded; and whether the question has ALREADY been decided — by the person earlier in the conversation, or in a declaration that quotes their ruling. A settled question is not asked again: asking it reopens a decision and spends the person's attention twice. Read it, do not remember it: cite what you read. What the caller handed in is checked here, not re-derived.</bpmn:documentation>
       <bpmn:extensionElements><bootstrap.processes:skill ref="human-agent-discussion"/></bpmn:extensionElements>
     </bpmn:task>
 
@@ -189,184 +189,183 @@ NO work-plan element, and isExecutable is false, for the reasons initialize-harn
   <bpmndi:BPMNDiagram id="Diagram_Process_HumanAgentDiscussion">
     <bpmndi:BPMNPlane id="Plane_Process_HumanAgentDiscussion" bpmnElement="Collaboration_Process_HumanAgentDiscussion">
       <bpmndi:BPMNShape id="Shape_Participant_Process_HumanAgentDiscussion" bpmnElement="Participant_Process_HumanAgentDiscussion" isHorizontal="true">
-        <dc:Bounds x="140" y="80" width="2640" height="560"/>
+        <dc:Bounds x="140" y="80" width="3200" height="728" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Lane_Agent" bpmnElement="Lane_Agent" isHorizontal="true">
-        <dc:Bounds x="170" y="80" width="2610" height="360"/>
+        <dc:Bounds x="170" y="80" width="3170" height="534" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Lane_Requestor" bpmnElement="Lane_Requestor" isHorizontal="true">
-        <dc:Bounds x="170" y="440" width="2610" height="200"/>
+        <dc:Bounds x="170" y="614" width="3170" height="194" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Start_HumanAgentDiscussion" bpmnElement="Start_HumanAgentDiscussion">
-        <dc:Bounds x="232" y="242" width="36" height="36"/>
+        <dc:Bounds x="272" y="329" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_DetermineContext" bpmnElement="A_DetermineContext">
-        <dc:Bounds x="320" y="220" width="150" height="80"/>
+        <dc:Bounds x="410" y="287" width="120" height="120" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_DetermineRoles" bpmnElement="A_DetermineRoles">
-        <dc:Bounds x="510" y="220" width="150" height="80"/>
+        <dc:Bounds x="590" y="287" width="120" height="120" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_DetermineProcess" bpmnElement="A_DetermineProcess">
-        <dc:Bounds x="700" y="220" width="150" height="80"/>
+        <dc:Bounds x="770" y="287" width="120" height="120" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_GW_Determined" bpmnElement="GW_Determined" isMarkerVisible="true">
-        <dc:Bounds x="890" y="235" width="50" height="50"/>
+        <dc:Bounds x="1035" y="322" width="50" height="50" />
         <bpmndi:BPMNLabel><dc:Bounds x="855" y="180" width="120" height="40"/></bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_AskUndeterminedFirst" bpmnElement="A_AskUndeterminedFirst">
-        <dc:Bounds x="840" y="330" width="150" height="80"/>
+        <dc:Bounds x="1000" y="457" width="120" height="120" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_GiveContext" bpmnElement="A_GiveContext">
-        <dc:Bounds x="1030" y="220" width="150" height="80"/>
+        <dc:Bounds x="1230" y="287" width="120" height="120" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_LayOutOptions" bpmnElement="A_LayOutOptions">
-        <dc:Bounds x="1220" y="220" width="150" height="80"/>
+        <dc:Bounds x="1410" y="287" width="120" height="120" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_Recommend" bpmnElement="A_Recommend">
-        <dc:Bounds x="1410" y="220" width="150" height="80"/>
+        <dc:Bounds x="1590" y="287" width="120" height="120" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_PutQuestion" bpmnElement="A_PutQuestion">
-        <dc:Bounds x="1600" y="220" width="150" height="80"/>
+        <dc:Bounds x="1770" y="287" width="120" height="120" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_Answer" bpmnElement="A_Answer">
-        <dc:Bounds x="1790" y="500" width="150" height="80"/>
+        <dc:Bounds x="1950" y="651" width="120" height="120" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_GW_WhatCameBack" bpmnElement="GW_WhatCameBack" isMarkerVisible="true">
-        <dc:Bounds x="2030" y="235" width="50" height="50"/>
+        <dc:Bounds x="2215" y="322" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_FollowUp" bpmnElement="A_FollowUp">
-        <dc:Bounds x="1980" y="330" width="150" height="80"/>
+        <dc:Bounds x="2180" y="457" width="120" height="120" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_GW_DefaultAllowed" bpmnElement="GW_DefaultAllowed" isMarkerVisible="true">
-        <dc:Bounds x="2220" y="125" width="50" height="50"/>
+        <dc:Bounds x="2495" y="152" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_RecordAnswer" bpmnElement="A_RecordAnswer">
-        <dc:Bounds x="2360" y="220" width="150" height="80"/>
+        <dc:Bounds x="2690" y="287" width="120" height="120" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_GW_WhichQuestion" bpmnElement="GW_WhichQuestion" isMarkerVisible="true">
-        <dc:Bounds x="2560" y="235" width="50" height="50"/>
+        <dc:Bounds x="2955" y="322" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_ApplyDefault" bpmnElement="A_ApplyDefault">
-        <dc:Bounds x="2360" y="110" width="150" height="80"/>
+        <dc:Bounds x="2690" y="117" width="120" height="120" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_RecordUnsettled" bpmnElement="A_RecordUnsettled">
-        <dc:Bounds x="2360" y="330" width="150" height="80"/>
+        <dc:Bounds x="2690" y="457" width="120" height="120" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_End_Answered" bpmnElement="End_Answered">
-        <dc:Bounds x="2682" y="242" width="36" height="36"/>
+        <dc:Bounds x="3192" y="329" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_End_Defaulted" bpmnElement="End_Defaulted">
-        <dc:Bounds x="2682" y="132" width="36" height="36"/>
+        <dc:Bounds x="3192" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_End_Unsettled" bpmnElement="End_Unsettled">
-        <dc:Bounds x="2682" y="352" width="36" height="36"/>
+        <dc:Bounds x="3192" y="499" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Edge_SF_HAD_1" bpmnElement="SF_HAD_1">
-        <di:waypoint x="268" y="260"/>
-        <di:waypoint x="320" y="260"/>
+        <di:waypoint x="308" y="347" />
+        <di:waypoint x="410" y="347" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_HAD_P1" bpmnElement="SF_HAD_P1">
-        <di:waypoint x="470" y="260"/>
-        <di:waypoint x="510" y="260"/>
+        <di:waypoint x="530" y="347" />
+        <di:waypoint x="590" y="347" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_HAD_P2" bpmnElement="SF_HAD_P2">
-        <di:waypoint x="660" y="260"/>
-        <di:waypoint x="700" y="260"/>
+        <di:waypoint x="710" y="347" />
+        <di:waypoint x="770" y="347" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_HAD_P3" bpmnElement="SF_HAD_P3">
-        <di:waypoint x="850" y="260"/>
-        <di:waypoint x="890" y="260"/>
+        <di:waypoint x="890" y="347" />
+        <di:waypoint x="1035" y="347" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_HAD_P4" bpmnElement="SF_HAD_P4">
-        <di:waypoint x="940" y="260"/>
-        <di:waypoint x="1030" y="260"/>
+        <di:waypoint x="1085" y="347" />
+        <di:waypoint x="1230" y="347" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_HAD_P5" bpmnElement="SF_HAD_P5">
-        <di:waypoint x="915" y="285"/>
-        <di:waypoint x="915" y="330"/>
+        <di:waypoint x="1060" y="372" />
+        <di:waypoint x="1060" y="457" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_HAD_P6" bpmnElement="SF_HAD_P6">
-        <di:waypoint x="990" y="370"/>
-        <di:waypoint x="1105" y="370"/>
-        <di:waypoint x="1105" y="300"/>
+        <di:waypoint x="1120" y="517" />
+        <di:waypoint x="1290" y="517" />
+        <di:waypoint x="1290" y="407" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_HAD_2" bpmnElement="SF_HAD_2">
-        <di:waypoint x="1180" y="260"/>
-        <di:waypoint x="1220" y="260"/>
+        <di:waypoint x="1350" y="347" />
+        <di:waypoint x="1410" y="347" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_HAD_3" bpmnElement="SF_HAD_3">
-        <di:waypoint x="1370" y="260"/>
-        <di:waypoint x="1410" y="260"/>
+        <di:waypoint x="1530" y="347" />
+        <di:waypoint x="1590" y="347" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_HAD_4" bpmnElement="SF_HAD_4">
-        <di:waypoint x="1560" y="260"/>
-        <di:waypoint x="1600" y="260"/>
+        <di:waypoint x="1710" y="347" />
+        <di:waypoint x="1770" y="347" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_HAD_5" bpmnElement="SF_HAD_5">
-        <di:waypoint x="1675" y="300"/>
-        <di:waypoint x="1675" y="540"/>
-        <di:waypoint x="1790" y="540"/>
+        <di:waypoint x="1830" y="407" />
+        <di:waypoint x="1830" y="711" />
+        <di:waypoint x="1950" y="711" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_HAD_6" bpmnElement="SF_HAD_6">
-        <di:waypoint x="1865" y="500"/>
-        <di:waypoint x="1865" y="260"/>
-        <di:waypoint x="2030" y="260"/>
+        <di:waypoint x="2010" y="651" />
+        <di:waypoint x="2010" y="347" />
+        <di:waypoint x="2215" y="347" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_HAD_7" bpmnElement="SF_HAD_7">
-        <di:waypoint x="2080" y="260"/>
-        <di:waypoint x="2360" y="260"/>
+        <di:waypoint x="2265" y="347" />
+        <di:waypoint x="2690" y="347" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_HAD_8" bpmnElement="SF_HAD_8">
-        <di:waypoint x="2055" y="285"/>
-        <di:waypoint x="2055" y="330"/>
+        <di:waypoint x="2240" y="372" />
+        <di:waypoint x="2240" y="457" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_HAD_9" bpmnElement="SF_HAD_9">
-        <di:waypoint x="2055" y="410"/>
-        <di:waypoint x="2055" y="540"/>
-        <di:waypoint x="1940" y="540"/>
+        <di:waypoint x="2240" y="577" />
+        <di:waypoint x="2240" y="711" />
+        <di:waypoint x="2070" y="711" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_HAD_10" bpmnElement="SF_HAD_10">
-        <di:waypoint x="2055" y="235"/>
-        <di:waypoint x="2055" y="150"/>
-        <di:waypoint x="2220" y="150"/>
+        <di:waypoint x="2240" y="322" />
+        <di:waypoint x="2240" y="177" />
+        <di:waypoint x="2495" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_HAD_11" bpmnElement="SF_HAD_11">
-        <di:waypoint x="2270" y="150"/>
-        <di:waypoint x="2360" y="150"/>
+        <di:waypoint x="2545" y="177" />
+        <di:waypoint x="2690" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_HAD_12" bpmnElement="SF_HAD_12">
-        <di:waypoint x="2245" y="175"/>
-        <di:waypoint x="2245" y="370"/>
-        <di:waypoint x="2360" y="370"/>
+        <di:waypoint x="2520" y="202" />
+        <di:waypoint x="2520" y="517" />
+        <di:waypoint x="2690" y="517" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_HAD_13" bpmnElement="SF_HAD_13">
-        <di:waypoint x="2080" y="260"/>
-        <di:waypoint x="2145" y="260"/>
-        <di:waypoint x="2145" y="370"/>
-        <di:waypoint x="2360" y="370"/>
+        <di:waypoint x="2265" y="347" />
+        <di:waypoint x="2477.5" y="347" />
+        <di:waypoint x="2477.5" y="517" />
+        <di:waypoint x="2690" y="517" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_HAD_14" bpmnElement="SF_HAD_14">
-        <di:waypoint x="2510" y="260"/>
-        <di:waypoint x="2560" y="260"/>
+        <di:waypoint x="2810" y="347" />
+        <di:waypoint x="2955" y="347" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_HAD_P7" bpmnElement="SF_HAD_P7">
-        <di:waypoint x="2610" y="260"/>
-        <di:waypoint x="2682" y="260"/>
+        <di:waypoint x="3005" y="347" />
+        <di:waypoint x="3192" y="347" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_HAD_P8" bpmnElement="SF_HAD_P8">
-        <di:waypoint x="2585" y="235"/>
-        <di:waypoint x="2585" y="96"/>
-        <di:waypoint x="395" y="96"/>
-        <di:waypoint x="395" y="220"/>
-        <bpmndi:BPMNLabel><dc:Bounds x="1400" y="100" width="200" height="14"/></bpmndi:BPMNLabel>
+        <di:waypoint x="2980" y="322" />
+        <di:waypoint x="2980" y="265" />
+        <di:waypoint x="470" y="265" />
+        <di:waypoint x="470" y="287" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_HAD_15" bpmnElement="SF_HAD_15">
-        <di:waypoint x="2510" y="150"/>
-        <di:waypoint x="2682" y="150"/>
+        <di:waypoint x="2810" y="177" />
+        <di:waypoint x="3192" y="177" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_HAD_16" bpmnElement="SF_HAD_16">
-        <di:waypoint x="2510" y="370"/>
-        <di:waypoint x="2682" y="370"/>
+        <di:waypoint x="2810" y="517" />
+        <di:waypoint x="3192" y="517" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

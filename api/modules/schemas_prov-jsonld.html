@@ -3,13 +3,13 @@ properties; emitted as bare strings they expand to literals and nothing
 joins an activity to its actor. The <code>linked-data</code> voice (in the content
 core's <code>skills/voices/linked-data</code>) states the rules this module follows;
 each is cited there to the held W3C text.</p><h2 id="what-it-emits" class="tsd-anchor-link">What it emits<a href="#what-it-emits" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>PROV-JSONLD's shape (W3C Member Submission 2024-08-25, held at
-<code>cat-harness/library/kg/w3c-2024-prov-jsonld/</code>): an <code>Activity</code> node, and
+<code>cat-harness/library/corpus/kg/w3c-2024-prov-jsonld/</code>): an <code>Activity</code> node, and
 each qualified association as its own <code>Association</code> node whose <code>activity</code>,
 <code>agent</code>, <code>role</code> and <code>plan</code> are the context's TERMS — so its coercions and
 its <code>@reverse</code> mapping to <code>prov:qualifiedAssociation</code> apply (rule
 <code>ld-coercion-belongs-to-the-term</code>).</p><h2 id="where-a-link-points" class="tsd-anchor-link">Where a link points<a href="#where-a-link-points" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>At the node's release address, the rule <code>check:node-iris</code> enforces:
 <code>&lt;iriBase&gt;v&lt;major&gt;/&lt;path in its knowledge graph&gt;[/&lt;node&gt;]</code>, read through
-the OWNING instance's declaration (<code>releaseIris</code>). An actor is
+the OWNING layer's declaration (<code>releaseIris</code>). An actor is
 <code>scenarios/actors/&lt;id&gt;</code>, a role <code>scenarios/roles/&lt;id&gt;</code>, a plan step
 <code>&lt;dir&gt;/&lt;process file stem&gt;/&lt;task&gt;</code>. A node inside a document is a path
 segment under it, never a <code>#</code> fragment, so each has its own page.</p><p><strong>Three states, never two.</strong> When the owner is found and declares an

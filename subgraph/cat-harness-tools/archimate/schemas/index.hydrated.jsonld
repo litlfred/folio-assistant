@@ -21,6 +21,75 @@
       "name": "cat-harness-tools-archimate-schemas",
       "path": "archimate/schemas/",
       "readmePath": "archimate/schemas/README.md"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/archimate",
+      "@type": "cat-harness:Schema",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-archimate-schemas",
+      "jsonSchema": [
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/archimate/ArchimateConfigFigureSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/archimate/ArchimateConfigModelSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/archimate/ArchimateConfigSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/archimate/ArchimateConfigTableSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/archimate/ArchimateElementSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/archimate/ArchimateModelSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/archimate/ArchimatePropertySchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/archimate/ArchimateRelationshipSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/archimate/ArchimateViewConnectionSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/archimate/ArchimateViewNodeSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/archimate/ArchimateViewSchema.schema.json"
+      ],
+      "module": "archimate/schemas/archimate.ts",
+      "name": "archimate",
+      "summary": "The ArchiMate harness's shapes: what a layer declares, and how an Archi",
+      "title": "archimate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/diagrams",
+      "@type": "cat-harness:Schema",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-archimate-schemas",
+      "jsonSchema": [
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/diagrams/DataAccessSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/diagrams/DataAttributeSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/diagrams/DataClassSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/diagrams/DataModelSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/diagrams/DataRelationshipSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/diagrams/FshLogicalFieldSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/diagrams/FshLogicalModelSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/diagrams/SequenceDiagramSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/diagrams/SequenceMessageKindSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/diagrams/SequenceMessageSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/diagrams/SequenceParticipantSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/diagrams/SequenceSetSchema.schema.json"
+      ],
+      "module": "archimate/schemas/diagrams.ts",
+      "name": "diagrams",
+      "summary": "Derived UML data class diagrams and sequence diagrams from an ArchiMate model",
+      "title": "diagrams"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/metamodel",
+      "@type": "cat-harness:Schema",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-archimate-schemas",
+      "jsonSchema": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/metamodel/RelationshipTableSchema.schema.json",
+      "module": "archimate/schemas/metamodel.ts",
+      "name": "metamodel",
+      "summary": "The metamodel a model actually uses, derived from the model and checked",
+      "title": "metamodel"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/rules",
+      "@type": "cat-harness:Schema",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-archimate-schemas",
+      "jsonSchema": [
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/rules/RelationshipRuleSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/rules/RelationshipRulesSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/rules/RelationshipTypeEntrySchema.schema.json"
+      ],
+      "module": "archimate/schemas/rules.ts",
+      "name": "rules",
+      "summary": "`archimate-relationship-rules/v1`: the relationships a reference",
+      "title": "rules"
     }
   ],
   "name": "archimate/schemas",

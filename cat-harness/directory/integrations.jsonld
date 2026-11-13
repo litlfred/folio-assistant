@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/cat-harness/directory/integrations.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/directory/integrations",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "integrations",
+      "path": "integrations/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/cat-harness"
+      ],
+      "description": "The integrations sub-graph — a NAMED SUB-GRAPH of the harness, OPT-IN like `sdlc`: off in every layer unless that layer lists `cat-harness.integrations` in its own `enableSubgraphs` (owner, 2026-11-10, card Q-SG-1 C, wave 1). It holds the Tool definitions that bind the harness to an outside service: the git hosts' change-proposal tools (`github-pr-*`, `github-branches`, `gitlab-mr-*`, `gitlab-branches`, whose operations `skills-and-tools` names), the MCP capture and server-image tools, and `upload-step-docs`. The graph inside it, `integrations-tools`, is declared FROM WITHIN, in `integrations/graph.json`. Their implementations stay in the tools layer (https://github.com/litlfred/cat-harness-tools).",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/integrations"
+    }
+  ]
+}

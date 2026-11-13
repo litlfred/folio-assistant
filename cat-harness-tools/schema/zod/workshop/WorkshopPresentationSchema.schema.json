@@ -62,6 +62,100 @@
             "minLength": 1
           }
         },
+        "tagRows": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string",
+                "minLength": 1
+              },
+              "icon": {
+                "type": "string",
+                "enum": [
+                  "baby",
+                  "person",
+                  "family",
+                  "clinician",
+                  "health-worker",
+                  "hospital",
+                  "clinic",
+                  "home",
+                  "phone",
+                  "tablet",
+                  "qr",
+                  "paper",
+                  "wifi-off",
+                  "wifi",
+                  "shield-check",
+                  "calendar-check",
+                  "stethoscope",
+                  "link",
+                  "transfer",
+                  "globe",
+                  "key",
+                  "lock",
+                  "database",
+                  "tent",
+                  "bus",
+                  "plane",
+                  "scale",
+                  "coins",
+                  "shuffle"
+                ]
+              },
+              "tables": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9][a-z0-9-]*$"
+                }
+              }
+            },
+            "required": [
+              "label",
+              "tables"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "cover": {
+          "type": "object",
+          "properties": {
+            "fields": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "table": {
+              "type": "string",
+              "pattern": "^[a-z0-9][a-z0-9-]*$"
+            }
+          },
+          "additionalProperties": false
+        },
+        "inspector": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string",
+              "minLength": 1
+            },
+            "key": {
+              "type": "string",
+              "minLength": 1
+            },
+            "hint": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "additionalProperties": false
+        },
         "presenterNote": {
           "type": "string",
           "minLength": 1
@@ -162,6 +256,69 @@
             ],
             "additionalProperties": false
           }
+        },
+        "architecture": {
+          "type": "object",
+          "properties": {
+            "model": {
+              "type": "string",
+              "minLength": 1
+            },
+            "root": {
+              "type": "string",
+              "minLength": 1
+            },
+            "countries": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "group": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "label": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "code": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "group"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "shared": {
+              "type": "string",
+              "minLength": 1
+            },
+            "title": {
+              "type": "string",
+              "minLength": 1
+            },
+            "intro": {
+              "type": "string",
+              "minLength": 1
+            },
+            "notes": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "required": [
+            "model",
+            "root",
+            "countries"
+          ],
+          "additionalProperties": false
         },
         "closingQuestion": {
           "type": "string",
