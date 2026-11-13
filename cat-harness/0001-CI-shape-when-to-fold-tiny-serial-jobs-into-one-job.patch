@@ -1,0 +1,216 @@
+From f63cd799c897386ff6db4420b0a1cbf8d54153ce Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Fri, 13 Nov 2026 21:42:49 +0000
+Subject: [PATCH] CI shape: when to fold tiny serial jobs into one job
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Owner ruling, 2026-11-13: card "A. Collapse into one job", then "update
+skills and processes to see when need to do so". Measured: one content
+layer's run took 23 min for about 2.5 min of work, its five small serial
+jobs each queuing for a runner (9m29s, 1m, 1m45s, 3m43s, 4m22s).
+
+- ci-health §"A slow workflow can be mostly waiting": when to act (median
+  queue wait over run time, or a serial chain of more than 2 jobs each
+  under 1 min); how to see it (Actions API job created_at, started_at and
+  completed_at, as medians over recent default-branch runs; a tools report
+  is to come); what stays separate (heavy or parallel shards, other
+  permissions, runners or environments, check names read by merge:guard,
+  branch protection or verdict reuse, unless the readers move too); and
+  who looks (the weekly CI health review, which opens a work item).
+- ci-health-watch.bpmn: the weekly check step measures job shape too;
+  .pot files regenerated.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01VQDpPc2tT1vUufdyDbQTBz
+---
+ sdlc/processes/ci-health-watch.bpmn           |  2 +-
+ skills/process/process-core/ci-health.md      | 43 +++++++++++++++++++
+ translations/ar/processes/ci-health-watch.pot |  4 +-
+ translations/es/processes/ci-health-watch.pot |  4 +-
+ translations/fr/processes/ci-health-watch.pot |  4 +-
+ translations/ru/processes/ci-health-watch.pot |  4 +-
+ translations/zh/processes/ci-health-watch.pot |  4 +-
+ 7 files changed, 54 insertions(+), 11 deletions(-)
+
+diff --git a/sdlc/processes/ci-health-watch.bpmn b/sdlc/processes/ci-health-watch.bpmn
+index 052c884..b42f5a8 100644
+--- a/sdlc/processes/ci-health-watch.bpmn
++++ b/sdlc/processes/ci-health-watch.bpmn
+@@ -45,7 +45,7 @@ The verdict is reported through the shared `tracked-watch` process (Process_Trac
+     <bpmn:task id="Task_Check" name="Run check:ci-health, WRITING the report file">
+       <bpmn:documentation>Run check:ci-health --out, writing the report file before any exit path. Exit 0 clean, 1 live failures, 2 could not check. bun also exits 1 on an uncaught exception, so an exit 1 with no report file is a crash and is treated as could-not-check.
+ 
+-Where its verdict comes from: Asked of the `verdict` output that the `check` step of .github/workflows/ci-health.yml writes, not of the raw exit code. `check:ci-health` exits 0 clean, 1 live failure(s), 2 could not check; an exit 1 with no report file is a crash and is reclassified as could-not-check, as is any other code. `no` is verdict == 'unknown': the last step runs `exit 1` and no issue step runs, so the tracking issue is left untouched. `yes` is verdict != 'unknown', the guard on the label step and so on both issue paths.</bpmn:documentation>
++Where its verdict comes from: Asked of the `verdict` output that the `check` step of .github/workflows/ci-health.yml writes, not of the raw exit code. `check:ci-health` exits 0 clean, 1 live failure(s), 2 could not check; an exit 1 with no report file is a crash and is reclassified as could-not-check, as is any other code. `no` is verdict == 'unknown': the last step runs `exit 1` and no issue step runs, so the tracking issue is left untouched. `yes` is verdict != 'unknown', the guard on the label step and so on both issue paths. Weekly, also measure each workflow's job shape (owner, 2026-11-13, card "A. Collapse into one job"): from the Actions API, each job's queue wait (started_at minus created_at) and run time (completed_at minus started_at), as medians over recent default-branch runs. A job whose median wait exceeds its run time, or a serial chain of more than 2 jobs each under 1 minute, is a candidate to fold into one job as steps: open a work item naming it. Heavy or parallel shards, jobs with other permissions or runners, and jobs whose check names merge:guard, branch protection or verdict reuse read stay separate (skill ci-health).</bpmn:documentation>
+       <bpmn:extensionElements>
+         <bootstrap.processes:skill ref="ci-health"/>
+       </bpmn:extensionElements>
+diff --git a/skills/process/process-core/ci-health.md b/skills/process/process-core/ci-health.md
+index 23a5021..00ca6bb 100644
+--- a/skills/process/process-core/ci-health.md
++++ b/skills/process/process-core/ci-health.md
+@@ -261,6 +261,49 @@ Wire it in when those checks become recordable.
+ 
+ A failed traced run is asked again untraced, so the verdict is always the check's own.
+ 
++## A slow workflow can be mostly waiting: fold tiny serial jobs into one
++
++Owner ruling, 2026-11-13 (card "A. Collapse into one job", then "update
++skills and processes to see when need to do so"). Each job waits for its
++own runner, so a chain of small jobs pays that wait once per link.
++Measured: one content layer's run took 23 minutes for about 2.5
++minutes of work. Its five small serial jobs each queued for a runner, for
++9m29s, 1m, 1m45s, 3m43s and 4m22s.
++
++**When to act.** A job is a candidate to become a step of its neighbour
++when either holds:
++
++- its median queue wait is longer than its median run time; or
++- it is one of more than 2 jobs in a serial chain (`needs:`) that each run
++  in under 1 minute.
++
++**How to see it.** Measure each job from the Actions API (`GET
++/repos/<owner>/<repo>/actions/runs/<run>/jobs`):
++
++- its wait is `started_at − created_at`;
++- its run time is `completed_at − started_at`.
++
++Take the median over the workflow's recent runs on the default branch,
++not one run, because a single wait says more about the runner pool that
++minute than about the workflow. The tools layer will add the report. Until
++it does, the weekly review below measures by hand.
++
++**What stays a separate job**, even when it is small:
++
++- a heavy job, or a set of parallel shards: folding them makes the run
++  longer, not shorter;
++- a job that needs different permissions, a different runner, or a
++  different environment;
++- a job whose check name something reads: `merge:guard`, branch
++  protection's required checks, or verdict reuse. Fold it only together
++  with every reader of that name, in the same change.
++
++**Who looks, and when.** The weekly CI health review
++(`ci-health-watch.bpmn`, the `check:ci-health` step) also looks at job
++shape. When a workflow crosses either threshold, it opens a work item
++naming the workflow, the jobs, the measured medians, and which of them
++must stay separate. The fold itself is an ordinary PR.
++
+ ## Step names describe what the check does, not merely its passing invariant
+ 
+ A CI step named solely after its passing invariant misdescribes any failure
+diff --git a/translations/ar/processes/ci-health-watch.pot b/translations/ar/processes/ci-health-watch.pot
+index 9cc2781..39b89da 100644
+--- a/translations/ar/processes/ci-health-watch.pot
++++ b/translations/ar/processes/ci-health-watch.pot
+@@ -5,7 +5,7 @@
+ msgid ""
+ msgstr ""
+ "Project-Id-Version: ci-health-watch\n"
+-"POT-Creation-Date: 2026-11-01T10:26:29.615Z\n"
++"POT-Creation-Date: 2026-11-13T21:42:29.432Z\n"
+ "PO-Revision-Date: \n"
+ "Last-Translator: \n"
+ "Language: ar\n"
+@@ -36,7 +36,7 @@ msgstr ""
+ 
+ #: sdlc/processes/ci-health-watch.bpmn:46
+ #. Diagram element documentation
+-msgid "Run check:ci-health --out, writing the report file before any exit path. Exit 0 clean, 1 live failures, 2 could not check. bun also exits 1 on an uncaught exception, so an exit 1 with no report file is a crash and is treated as could-not-check. Where its verdict comes from: Asked of the `verdict` output that the `check` step of .github/workflows/ci-health.yml writes, not of the raw exit code. `check:ci-health` exits 0 clean, 1 live failure(s), 2 could not check; an exit 1 with no report file is a crash and is reclassified as could-not-check, as is any other code. `no` is verdict == 'unknown': the last step runs `exit 1` and no issue step runs, so the tracking issue is left untouched. `yes` is verdict != 'unknown', the guard on the label step and so on both issue paths."
++msgid "Run check:ci-health --out, writing the report file before any exit path. Exit 0 clean, 1 live failures, 2 could not check. bun also exits 1 on an uncaught exception, so an exit 1 with no report file is a crash and is treated as could-not-check. Where its verdict comes from: Asked of the `verdict` output that the `check` step of .github/workflows/ci-health.yml writes, not of the raw exit code. `check:ci-health` exits 0 clean, 1 live failure(s), 2 could not check; an exit 1 with no report file is a crash and is reclassified as could-not-check, as is any other code. `no` is verdict == 'unknown': the last step runs `exit 1` and no issue step runs, so the tracking issue is left untouched. `yes` is verdict != 'unknown', the guard on the label step and so on both issue paths. Weekly, also measure each workflow's job shape (owner, 2026-11-13, card \"A. Collapse into one job\"): from the Actions API, each job's queue wait (started_at minus created_at) and run time (completed_at minus started_at), as medians over recent default-branch runs. A job whose median wait exceeds its run time, or a serial chain of more than 2 jobs each under 1 minute, is a candidate to fold into one job as steps: open a work item naming it. Heavy or parallel shards, jobs with other permissions or runners, and jobs whose check names merge:guard, branch protection or verdict reuse read stay separate (skill ci-health)."
+ msgstr ""
+ 
+ #: sdlc/processes/ci-health-watch.bpmn:45
+diff --git a/translations/es/processes/ci-health-watch.pot b/translations/es/processes/ci-health-watch.pot
+index 2286c5b..0c10138 100644
+--- a/translations/es/processes/ci-health-watch.pot
++++ b/translations/es/processes/ci-health-watch.pot
+@@ -5,7 +5,7 @@
+ msgid ""
+ msgstr ""
+ "Project-Id-Version: ci-health-watch\n"
+-"POT-Creation-Date: 2026-11-01T10:26:29.615Z\n"
++"POT-Creation-Date: 2026-11-13T21:42:29.433Z\n"
+ "PO-Revision-Date: \n"
+ "Last-Translator: \n"
+ "Language: es\n"
+@@ -36,7 +36,7 @@ msgstr ""
+ 
+ #: sdlc/processes/ci-health-watch.bpmn:46
+ #. Diagram element documentation
+-msgid "Run check:ci-health --out, writing the report file before any exit path. Exit 0 clean, 1 live failures, 2 could not check. bun also exits 1 on an uncaught exception, so an exit 1 with no report file is a crash and is treated as could-not-check. Where its verdict comes from: Asked of the `verdict` output that the `check` step of .github/workflows/ci-health.yml writes, not of the raw exit code. `check:ci-health` exits 0 clean, 1 live failure(s), 2 could not check; an exit 1 with no report file is a crash and is reclassified as could-not-check, as is any other code. `no` is verdict == 'unknown': the last step runs `exit 1` and no issue step runs, so the tracking issue is left untouched. `yes` is verdict != 'unknown', the guard on the label step and so on both issue paths."
++msgid "Run check:ci-health --out, writing the report file before any exit path. Exit 0 clean, 1 live failures, 2 could not check. bun also exits 1 on an uncaught exception, so an exit 1 with no report file is a crash and is treated as could-not-check. Where its verdict comes from: Asked of the `verdict` output that the `check` step of .github/workflows/ci-health.yml writes, not of the raw exit code. `check:ci-health` exits 0 clean, 1 live failure(s), 2 could not check; an exit 1 with no report file is a crash and is reclassified as could-not-check, as is any other code. `no` is verdict == 'unknown': the last step runs `exit 1` and no issue step runs, so the tracking issue is left untouched. `yes` is verdict != 'unknown', the guard on the label step and so on both issue paths. Weekly, also measure each workflow's job shape (owner, 2026-11-13, card \"A. Collapse into one job\"): from the Actions API, each job's queue wait (started_at minus created_at) and run time (completed_at minus started_at), as medians over recent default-branch runs. A job whose median wait exceeds its run time, or a serial chain of more than 2 jobs each under 1 minute, is a candidate to fold into one job as steps: open a work item naming it. Heavy or parallel shards, jobs with other permissions or runners, and jobs whose check names merge:guard, branch protection or verdict reuse read stay separate (skill ci-health)."
+ msgstr ""
+ 
+ #: sdlc/processes/ci-health-watch.bpmn:45
+diff --git a/translations/fr/processes/ci-health-watch.pot b/translations/fr/processes/ci-health-watch.pot
+index 8fbcc46..b296da4 100644
+--- a/translations/fr/processes/ci-health-watch.pot
++++ b/translations/fr/processes/ci-health-watch.pot
+@@ -5,7 +5,7 @@
+ msgid ""
+ msgstr ""
+ "Project-Id-Version: ci-health-watch\n"
+-"POT-Creation-Date: 2026-11-01T10:26:29.615Z\n"
++"POT-Creation-Date: 2026-11-13T21:42:29.433Z\n"
+ "PO-Revision-Date: \n"
+ "Last-Translator: \n"
+ "Language: fr\n"
+@@ -36,7 +36,7 @@ msgstr ""
+ 
+ #: sdlc/processes/ci-health-watch.bpmn:46
+ #. Diagram element documentation
+-msgid "Run check:ci-health --out, writing the report file before any exit path. Exit 0 clean, 1 live failures, 2 could not check. bun also exits 1 on an uncaught exception, so an exit 1 with no report file is a crash and is treated as could-not-check. Where its verdict comes from: Asked of the `verdict` output that the `check` step of .github/workflows/ci-health.yml writes, not of the raw exit code. `check:ci-health` exits 0 clean, 1 live failure(s), 2 could not check; an exit 1 with no report file is a crash and is reclassified as could-not-check, as is any other code. `no` is verdict == 'unknown': the last step runs `exit 1` and no issue step runs, so the tracking issue is left untouched. `yes` is verdict != 'unknown', the guard on the label step and so on both issue paths."
++msgid "Run check:ci-health --out, writing the report file before any exit path. Exit 0 clean, 1 live failures, 2 could not check. bun also exits 1 on an uncaught exception, so an exit 1 with no report file is a crash and is treated as could-not-check. Where its verdict comes from: Asked of the `verdict` output that the `check` step of .github/workflows/ci-health.yml writes, not of the raw exit code. `check:ci-health` exits 0 clean, 1 live failure(s), 2 could not check; an exit 1 with no report file is a crash and is reclassified as could-not-check, as is any other code. `no` is verdict == 'unknown': the last step runs `exit 1` and no issue step runs, so the tracking issue is left untouched. `yes` is verdict != 'unknown', the guard on the label step and so on both issue paths. Weekly, also measure each workflow's job shape (owner, 2026-11-13, card \"A. Collapse into one job\"): from the Actions API, each job's queue wait (started_at minus created_at) and run time (completed_at minus started_at), as medians over recent default-branch runs. A job whose median wait exceeds its run time, or a serial chain of more than 2 jobs each under 1 minute, is a candidate to fold into one job as steps: open a work item naming it. Heavy or parallel shards, jobs with other permissions or runners, and jobs whose check names merge:guard, branch protection or verdict reuse read stay separate (skill ci-health)."
+ msgstr ""
+ 
+ #: sdlc/processes/ci-health-watch.bpmn:45
+diff --git a/translations/ru/processes/ci-health-watch.pot b/translations/ru/processes/ci-health-watch.pot
+index c13d60a..fbcd4ef 100644
+--- a/translations/ru/processes/ci-health-watch.pot
++++ b/translations/ru/processes/ci-health-watch.pot
+@@ -5,7 +5,7 @@
+ msgid ""
+ msgstr ""
+ "Project-Id-Version: ci-health-watch\n"
+-"POT-Creation-Date: 2026-11-01T10:26:29.615Z\n"
++"POT-Creation-Date: 2026-11-13T21:42:29.433Z\n"
+ "PO-Revision-Date: \n"
+ "Last-Translator: \n"
+ "Language: ru\n"
+@@ -36,7 +36,7 @@ msgstr ""
+ 
+ #: sdlc/processes/ci-health-watch.bpmn:46
+ #. Diagram element documentation
+-msgid "Run check:ci-health --out, writing the report file before any exit path. Exit 0 clean, 1 live failures, 2 could not check. bun also exits 1 on an uncaught exception, so an exit 1 with no report file is a crash and is treated as could-not-check. Where its verdict comes from: Asked of the `verdict` output that the `check` step of .github/workflows/ci-health.yml writes, not of the raw exit code. `check:ci-health` exits 0 clean, 1 live failure(s), 2 could not check; an exit 1 with no report file is a crash and is reclassified as could-not-check, as is any other code. `no` is verdict == 'unknown': the last step runs `exit 1` and no issue step runs, so the tracking issue is left untouched. `yes` is verdict != 'unknown', the guard on the label step and so on both issue paths."
++msgid "Run check:ci-health --out, writing the report file before any exit path. Exit 0 clean, 1 live failures, 2 could not check. bun also exits 1 on an uncaught exception, so an exit 1 with no report file is a crash and is treated as could-not-check. Where its verdict comes from: Asked of the `verdict` output that the `check` step of .github/workflows/ci-health.yml writes, not of the raw exit code. `check:ci-health` exits 0 clean, 1 live failure(s), 2 could not check; an exit 1 with no report file is a crash and is reclassified as could-not-check, as is any other code. `no` is verdict == 'unknown': the last step runs `exit 1` and no issue step runs, so the tracking issue is left untouched. `yes` is verdict != 'unknown', the guard on the label step and so on both issue paths. Weekly, also measure each workflow's job shape (owner, 2026-11-13, card \"A. Collapse into one job\"): from the Actions API, each job's queue wait (started_at minus created_at) and run time (completed_at minus started_at), as medians over recent default-branch runs. A job whose median wait exceeds its run time, or a serial chain of more than 2 jobs each under 1 minute, is a candidate to fold into one job as steps: open a work item naming it. Heavy or parallel shards, jobs with other permissions or runners, and jobs whose check names merge:guard, branch protection or verdict reuse read stay separate (skill ci-health)."
+ msgstr ""
+ 
+ #: sdlc/processes/ci-health-watch.bpmn:45
+diff --git a/translations/zh/processes/ci-health-watch.pot b/translations/zh/processes/ci-health-watch.pot
+index 542096e..5db8cca 100644
+--- a/translations/zh/processes/ci-health-watch.pot
++++ b/translations/zh/processes/ci-health-watch.pot
+@@ -5,7 +5,7 @@
+ msgid ""
+ msgstr ""
+ "Project-Id-Version: ci-health-watch\n"
+-"POT-Creation-Date: 2026-11-01T10:26:29.616Z\n"
++"POT-Creation-Date: 2026-11-13T21:42:29.433Z\n"
+ "PO-Revision-Date: \n"
+ "Last-Translator: \n"
+ "Language: zh\n"
+@@ -36,7 +36,7 @@ msgstr ""
+ 
+ #: sdlc/processes/ci-health-watch.bpmn:46
+ #. Diagram element documentation
+-msgid "Run check:ci-health --out, writing the report file before any exit path. Exit 0 clean, 1 live failures, 2 could not check. bun also exits 1 on an uncaught exception, so an exit 1 with no report file is a crash and is treated as could-not-check. Where its verdict comes from: Asked of the `verdict` output that the `check` step of .github/workflows/ci-health.yml writes, not of the raw exit code. `check:ci-health` exits 0 clean, 1 live failure(s), 2 could not check; an exit 1 with no report file is a crash and is reclassified as could-not-check, as is any other code. `no` is verdict == 'unknown': the last step runs `exit 1` and no issue step runs, so the tracking issue is left untouched. `yes` is verdict != 'unknown', the guard on the label step and so on both issue paths."
++msgid "Run check:ci-health --out, writing the report file before any exit path. Exit 0 clean, 1 live failures, 2 could not check. bun also exits 1 on an uncaught exception, so an exit 1 with no report file is a crash and is treated as could-not-check. Where its verdict comes from: Asked of the `verdict` output that the `check` step of .github/workflows/ci-health.yml writes, not of the raw exit code. `check:ci-health` exits 0 clean, 1 live failure(s), 2 could not check; an exit 1 with no report file is a crash and is reclassified as could-not-check, as is any other code. `no` is verdict == 'unknown': the last step runs `exit 1` and no issue step runs, so the tracking issue is left untouched. `yes` is verdict != 'unknown', the guard on the label step and so on both issue paths. Weekly, also measure each workflow's job shape (owner, 2026-11-13, card \"A. Collapse into one job\"): from the Actions API, each job's queue wait (started_at minus created_at) and run time (completed_at minus started_at), as medians over recent default-branch runs. A job whose median wait exceeds its run time, or a serial chain of more than 2 jobs each under 1 minute, is a candidate to fold into one job as steps: open a work item naming it. Heavy or parallel shards, jobs with other permissions or runners, and jobs whose check names merge:guard, branch protection or verdict reuse read stay separate (skill ci-health)."
+ msgstr ""
+ 
+ #: sdlc/processes/ci-health-watch.bpmn:45
+-- 
+2.43.0
+
