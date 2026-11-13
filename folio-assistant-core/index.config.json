@@ -1,0 +1,131 @@
+{
+  "$schema": "folio-index-config/v1",
+  "layers": [
+    {
+      "name": "folio-assistant-core",
+      "source": {
+        "local": {
+          "at": "."
+        }
+      },
+      "site": {
+        "build": {
+          "home": "docs/index.md",
+          "keep": [
+            "v0",
+            "ns",
+            "0.1.0"
+          ]
+        }
+      }
+    },
+    {
+      "name": "cat-harness",
+      "source": {
+        "remote": {
+          "repository": "litlfred/cat-harness",
+          "ref": "edaa380219fbc4f949db2c1f2e08c9a45e6a26ad",
+          "overrides": {
+            "cat-harness": {
+              "whole": true
+            },
+            "bootstrap": {
+              "skip": true
+            },
+            "bootstrap-tools": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-12",
+              "ref": "edaa380219fbc4f949db2c1f2e08c9a45e6a26ad",
+              "evidence": "Owner litlfred, 2026-11-12: smart-ra#242 bottom-up re-pin (owner 'a b then c', step c), Q-CASCADE-FREEZE B (re-pin just the moved layer), Q-CONSENT-1 A, merge window Q-WIN-1 C. Core T2b: cat-harness to main edaa380 (cat-harness#1281), so core's lock and cat-harness's agree on bootstrap-tools bbdaffb."
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "cat-harness-tools",
+      "source": {
+        "remote": {
+          "repository": "litlfred/cat-harness-tools",
+          "ref": "49b2eb15b14b52ae19422876bcc825607ebe22f4",
+          "overrides": {
+            "cat-harness-tools": {
+              "whole": true
+            },
+            "cat-harness": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-12",
+              "ref": "49b2eb15b14b52ae19422876bcc825607ebe22f4",
+              "evidence": "litlfred, 2026-11-12, merge-manager thread: owner card Q-CONSENT-1 = A (re-pin + merge window to ~21:05Z 11-12, Q-WIN-1 C); bottom-up re-pin T2 (smart-ra#242), follow-up to Q-RA-241 A (Q-CASCADE-FREEZE B: mains read at re-pin). Coordinator session session_01EucfRpkvK7d4FJyuqypQzm."
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "bootstrap",
+      "source": {
+        "remote": {
+          "repository": "litlfred/bootstrap",
+          "ref": "17204fe9ed49e87b165bf0a8b626b6c69329a2a6",
+          "overrides": {
+            "bootstrap": {
+              "whole": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-12",
+              "ref": "17204fe9ed49e87b165bf0a8b626b6c69329a2a6",
+              "evidence": "litlfred, 2026-11-12, merge-manager thread: owner card Q-CONSENT-1 = A (re-pin + merge window to ~21:05Z 11-12, Q-WIN-1 C); bottom-up re-pin T2 (smart-ra#242), follow-up to Q-RA-241 A (Q-CASCADE-FREEZE B: mains read at re-pin). Coordinator session session_01EucfRpkvK7d4FJyuqypQzm."
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "bootstrap-tools",
+      "source": {
+        "remote": {
+          "repository": "litlfred/bootstrap-tools",
+          "ref": "bbdaffb757007bf0c4fe0ce4d21018491df308a9",
+          "overrides": {
+            "bootstrap-tools": {
+              "whole": true
+            },
+            "bootstrap": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-12",
+              "ref": "bbdaffb757007bf0c4fe0ce4d21018491df308a9",
+              "evidence": "litlfred, 2026-11-12, merge-manager thread: owner card Q-CONSENT-1 = A (re-pin + merge window to ~21:05Z 11-12, Q-WIN-1 C); bottom-up re-pin T2 (smart-ra#242), follow-up to Q-RA-241 A (Q-CASCADE-FREEZE B: mains read at re-pin). Coordinator session session_01EucfRpkvK7d4FJyuqypQzm."
+            }
+          }
+        }
+      }
+    }
+  ],
+  "harnesses": [
+    {
+      "name": "folio-assistant-core"
+    }
+  ],
+  "site": {
+    "landing": "folio-assistant-core"
+  }
+}
