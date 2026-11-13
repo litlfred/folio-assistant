@@ -1,0 +1,50 @@
+From b628246c328f352c404760f047e17d2f75674c66 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Fri, 13 Nov 2026 17:26:21 +0000
+Subject: [PATCH] merge-steward role: declare its lane holding (needed-when,
+ election, stall)
+
+The follow-up to cat-harness#1116 and the tools layer's lane-holding schema
+(owner rulings, 2026-11-07): the merge-steward role now declares, in data,
+the rules its prose already states. The lane is needed with 2+ active
+sessions and more than 10 queued runs, the oldest queued run over 30
+minutes, or conflicting PRs. The election is the P0 owner, else the
+earliest-created session. A lone session holds the lane for itself. The
+announcement is "merge manager: <session id>". Requests are acknowledged
+within 10 minutes, and a holder silent for more than 30 minutes is stalled.
+
+Verified on a fresh mount of folio-assistant main (tools pin ed3c8eb, which
+contains the schema): the role parses with RoleDefSchema; laneNeeded and
+electHolder read it as intended; kind:register:check, kind:json-schemas:check,
+kind:table:check, check:skills, readme:sync:check and
+check:reference-direction pass; 40 role test files: 801 pass, 2 fail, the
+same 2 as without this change.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01VQDpPc2tT1vUufdyDbQTBz
+---
+ scenarios/roles.json | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/scenarios/roles.json b/scenarios/roles.json
+index a20163c..748d2bf 100644
+--- a/scenarios/roles.json
++++ b/scenarios/roles.json
+@@ -517,6 +517,14 @@
+       "id": "merge-steward",
+       "title": "Merge steward",
+       "description": "Stewards writes to ONE watched ref -- a long-lived branch several processes write and something downstream consumes serially. The ref is a parameter of the LANE INSTANCE, not of this persona, so `main`, `gh-pages` and each `cat/cat-harness/*` store branch can each have a steward without a schema change; a ref qualifies when a declaring directory's `storage` (or `source`) names it, or it is `main`/`gh-pages`. On `main` that work is a merge train: composes it from the queue, attributes and ejects on red, lands at the tested SHA. On a route-keyed ref it is coalescing: batches the writes arriving in one window into a single write. Decides nothing the reprioritisation table or the owner has not -- placement is computed by merge-priority.dmn, and landing waits for the owner's release, given in the steward's own session as one card per batch. Records decisions on queue entries and windows, never the host's facts. On `main` the lane is conditional: it is held while two or more active sessions have ready PRs in the same repositories and their merges slow each other down (contended runners, or PRs that conflict with or supersede each other), and lapses when that stops. With none active the sibling sessions elect one by a fixed rule (the owner of the P0 PR, else the earliest-created active session); a lone session is its own steward. The holder acknowledges each merge request within a heartbeat window, and a holder that stalls is replaced by re-election without it (owner rulings, 2026-11-07; skill merge-manager-watcher).",
++      "holding": {
++        "neededWhen": {"minActiveSessions": 2, "maxQueuedRuns": 10, "maxOldestQueuedMinutes": 30, "conflictsCount": true},
++        "election": ["owns-p0", "earliest-created"],
++        "loneSessionHolds": true,
++        "announce": "merge manager: <session id>",
++        "heartbeatMinutes": 10,
++        "stalledAfterMinutes": 30
++      },
+       "actorKinds": [
+         "agent"
+       ],
+-- 
+2.43.0
+
