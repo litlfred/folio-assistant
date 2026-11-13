@@ -38,4 +38,4 @@ Plus `bpmn_author/validators/bpmn_xml_validator.py` (well-formed, root element, 
 
 ## Progress
 
-- PR open and queued for Merge Manager: https://github.com/litlfred/smart-base/pull/391 (`18c1a83b2dcbeeef8596a4f0d991662c3bdc10b9`).
+- PR open and queued for Merge Manager: https://github.com/litlfred/smart-base/pull/391 (`8a28b6110dea80c1506dea5f8bb1e9131e278c2f`).
