@@ -1,0 +1,57 @@
+{
+  "$schema": "tool-definition/v1",
+  "tool": {
+    "id": "latexmk-compile",
+    "title": "LaTeX compilation (latexmk)",
+    "description": "Compile LaTeX source documents into PDF using latexmk with safe shell-escape isolation across CI events.",
+    "install": {
+      "none": true
+    },
+    "invoke": {
+      "shell": "bun run cat latex:compile"
+    },
+    "io": {
+      "inputs": [
+        {
+          "name": "tex",
+          "schema": {
+            "$type": "RepoPath"
+          },
+          "description": "The TeX source file to compile (e.g. main.tex).",
+          "required": true,
+          "arg": {
+            "positional": 0
+          }
+        },
+        {
+          "name": "args",
+          "schema": {
+            "$type": "Text"
+          },
+          "description": "Additional arguments to forward to latexmk.",
+          "required": false
+        }
+      ],
+      "outputs": [
+        {
+          "name": "pdf",
+          "schema": {
+            "$type": "RepoPath"
+          },
+          "description": "The compiled PDF document. Exits 2 if the source file is missing (could-not-determine)."
+        }
+      ]
+    },
+    "satisfies": [
+      "latex-compilation"
+    ],
+    "requires": {
+      "runtime": [
+        "bash",
+        "latexmk",
+        "pdflatex"
+      ],
+      "network": false
+    }
+  }
+}
