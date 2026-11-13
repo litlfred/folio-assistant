@@ -2,7 +2,7 @@
 # folio-assistant-tgaj
 $schema: bean/1.0.0
 title: 'smart-base: one BPMN swimlane/actor validator in L2-bpmn/tools/, replacing four'
-status: in-progress
+status: completed
 type: task
 priority: normal
 tags:
@@ -11,7 +11,7 @@ tags:
     - bpmn
     - github-skills
 created_at: 2026-11-13T12:07:20Z
-updated_at: 2026-11-13T22:15:00Z
+updated_at: 2026-11-13T23:40:00Z
 parent: folio-assistant-95e7
 ---
 
@@ -38,5 +38,5 @@ Plus `bpmn_author/validators/bpmn_xml_validator.py` (well-formed, root element, 
 
 ## Progress
 
-- PR open and queued for Merge Manager (`ready-to-merge` + `merge-guard: success`): https://github.com/litlfred/smart-base/pull/386 (`86a857b604c8a0325f07fee61e593203be6bdeeb`, merged with `main` `8ae44b240b`; `smart-base/L2-bpmn/tools/bpmn-validate/`, `smart-base/L2-bpmn/tools/bpmn-graphviz-layout/`, `.github/workflows/bpmn-validate.yml`, and `input/bpmn/` path fixes, coordinated with `#385`).
+- Merged in https://github.com/litlfred/smart-base/pull/386 (`86a857b604c8a0325f07fee61e593203be6bdeeb` -> `572e22701b407b23701588d6c85341cb75585ec8` at `2026-11-13T23:01:46Z`; `smart-base/L2-bpmn/tools/bpmn-validate/`, `smart-base/L2-bpmn/tools/bpmn-graphviz-layout/`, `.github/workflows/bpmn-validate.yml`, and `input/bpmn/` path fixes, coordinated with `#385`).
 - Duplicate PR https://github.com/litlfred/smart-base/pull/391 closed and `ready-to-merge` removed in favor of `#386` so the Merge Manager queue has no conflict.

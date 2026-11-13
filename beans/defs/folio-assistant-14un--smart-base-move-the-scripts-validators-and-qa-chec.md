@@ -9,7 +9,7 @@ tags:
     - smart-base
     - subgraphs
 created_at: 2026-11-13T12:07:20Z
-updated_at: 2026-11-13T22:54:00Z
+updated_at: 2026-11-13T23:40:00Z
 parent: folio-assistant-95e7
 ---
 
@@ -46,6 +46,6 @@ Harness-wide items stay at the root: `skills/content/authoring-who-smart-guideli
   - `#387`: Added `requires: ["smart-base.smart-base-L1"]` on `smart-base-L2` and `requires: ["smart-base.smart-base-L2"]` on `smart-base-L3` in `smart-base/smart-base.json`, and moved `recommendation-scenarios.md` and `schemas/skills/recommendation-scenarios/` from `L2/` into `L1/` (resolving `check:optin-refs` for `L1/processes/classify-and-code-content.bpmn`).
 - **L2-bpmn / L2-dmn subgraph slice (`litlfred/smart-base#385`, branch `claude/l2-bpmn-dmn-scripts-into-subgraph`, head `56210a1240bd51fce581aa2be814df9fde508867`, merged to `main` at `8ae44b240b`):**
   - Moved `visio-svg-bpmn.{ts,test.ts,feature}` into `smart-base/L2-bpmn/scripts/` (`l2-bpmn-scripts` in `smart-base/L2-bpmn/graph.json`). Documented why `qa-checkers/dak-bpmn-has-process.json`, `qa-checkers/dak-dmn-has-decision-table.json` (`loadContributions` reads instance-root `qa-checkers/` only) and `scripts/smart-base-transform.py` (coupled CLI invoked by `dak-pre-export.sh`) remain in place.
-- **L3 subgraph slice (`litlfred/smart-base#389`, branch `claude/l3-scripts-and-tools-subgraph`, head `ca4afb040da359dfa5fa3e3ef22835fd44002fe0`):**
+- **L3 subgraph slice (`litlfred/smart-base#389`, branch `claude/l3-scripts-and-tools-subgraph`, head `aa8e3e2736ace50e579848c446964a355108fece`):**
   - Moved `terminology-lookup.ts` (+ `.test.ts` + `.feature`), `ig-site-sidecars.ts` (+ `.test.ts` + `.feature`), `ig-dak-metadata.ts` (+ `.test.ts` + `.feature`), `check-ig-citations.ts` (+ `.test.ts` + `.feature`), and `dak-pre-export.sh` from `smart-base/scripts/` into `smart-base/L3/scripts/` (`l3-scripts` in `smart-base/L3/graph.json`), and moved `smart-fhir-cache-seed.ts` into `smart-base/L3/tools/smart-fhir-cache-seed/`.
-- `#383` (`3b24de2`), `#384` (`6df978c`), `#385` (`8ae44b240b`), and `#387` (`2c67ff1`) are merged to `main`; `#389` (`ca4afb040da359dfa5fa3e3ef22835fd44002fe0`) is green on fast-tier CI, has `ready-to-merge` + `ready: ca4afb040da359dfa5fa3e3ef22835fd44002fe0` + `merge-guard: success` (8/8 checks passing), and is queued for the Merge Manager.
+- `#383` (`3b24de2`), `#384` (`6df978c`), `#385` (`8ae44b240b`), and `#387` (`2c67ff1`) are merged to `main`; `#389` (`aa8e3e2736ace50e579848c446964a355108fece`) is rebased onto `main` (`#386`), has `ready-to-merge` + `ready: aa8e3e2736ace50e579848c446964a355108fece`, and is running full-tier CI (`full=true`) for the Merge Manager.
