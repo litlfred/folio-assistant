@@ -1,0 +1,140 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/cat-harness/v0/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "cat-harness": "https://litlfred.github.io/cat-harness/v0/ns/"
+  },
+  "dcterms:description": "Provenance moved out of the narrative of domain-fencing.md: who decided, when, and under which work item or proposal. The document keeps the rules and their reasons; this log is rendered in its footer.",
+  "@graph": [
+    {
+      "@id": "kg-ops/skills/kg-ops/domain-fencing.md",
+      "@type": "prov:Entity",
+      "prov:wasInfluencedBy": [
+        {
+          "@id": "kg-ops/skills/kg-ops/domain-fencing.md#provenance-1"
+        },
+        {
+          "@id": "kg-ops/skills/kg-ops/domain-fencing.md#provenance-2"
+        },
+        {
+          "@id": "kg-ops/skills/kg-ops/domain-fencing.md#provenance-3"
+        },
+        {
+          "@id": "kg-ops/skills/kg-ops/domain-fencing.md#provenance-4"
+        },
+        {
+          "@id": "kg-ops/skills/kg-ops/domain-fencing.md#provenance-5"
+        },
+        {
+          "@id": "kg-ops/skills/kg-ops/domain-fencing.md#provenance-6"
+        },
+        {
+          "@id": "kg-ops/skills/kg-ops/domain-fencing.md#provenance-7"
+        },
+        {
+          "@id": "kg-ops/skills/kg-ops/domain-fencing.md#provenance-8"
+        },
+        {
+          "@id": "kg-ops/skills/kg-ops/domain-fencing.md#provenance-9"
+        },
+        {
+          "@id": "kg-ops/skills/kg-ops/domain-fencing.md#provenance-10"
+        },
+        {
+          "@id": "kg-ops/skills/kg-ops/domain-fencing.md#provenance-11"
+        }
+      ]
+    },
+    {
+      "@id": "kg-ops/skills/kg-ops/domain-fencing.md#provenance-1",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "history",
+      "cat-harness:section": "",
+      "prov:value": "---\nname: domain-fencing\ndescription: >-\n  How a domain-specific rule is kept out of the platform without being lost —\n  the opt-in axis mechanism, the one criterion that should use it and does not,\n  and the test for whether a rule generalizes at all.\n---"
+    },
+    {
+      "@id": "kg-ops/skills/kg-ops/domain-fencing.md#provenance-2",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "history",
+      "cat-harness:section": "The mechanism already exists and works",
+      "prov:value": "## The one that did not use it, and now does"
+    },
+    {
+      "@id": "kg-ops/skills/kg-ops/domain-fencing.md#provenance-3",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "history",
+      "cat-harness:section": "The one that did not use it, and now does",
+      "prov:value": "It read a Lean file *and* hardcoded one folio's six directory names, while\nsitting on the platform's structural axis alongside eight criteria that are\ngenuinely generic. It is now fenced behind `qaAxes: [\"archimedean-wall\"]`."
+    },
+    {
+      "@id": "kg-ops/skills/kg-ops/domain-fencing.md#provenance-4",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "history",
+      "cat-harness:section": "The one that did not use it, and now does",
+      "prov:value": "### Two things the fencing turned up, both by running it"
+    },
+    {
+      "@id": "kg-ops/skills/kg-ops/domain-fencing.md#provenance-5",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "bean",
+      "cat-harness:section": "Two things the fencing turned up, both by running it",
+      "prov:value": "**The registry and the watcher bucket had to be gated together.** `q-usage`\nalready did this (`WATCHER_CRITERIA_BY_AXIS` spreads conditionally); the\ndetangler bucket is built from the array, so leaving `DETANGLER_WATCHER_CRITERIA`\nalone would have named a criterion the registry never registered — a watcher\naxis reporting on nothing and looking clean doing it, which is bean `dh4f`.",
+      "cat-harness:refs": [
+        "bean dh4f"
+      ]
+    },
+    {
+      "@id": "kg-ops/skills/kg-ops/domain-fencing.md#provenance-6",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "history",
+      "cat-harness:section": "Two things the fencing turned up, both by running it",
+      "prov:value": "**The mechanism could not be verified ON from inside this repository** when\nthis was written, and finding out why was worth more than the fence.\n`folioOptionalAxes()` resolves its config through `findContentRepoRoot()`,\nwhich stopped at the nearest declared folio directory — `cat-harness/folio/` —\nwhile the config sat one level up. So it read no config at all here, and\nneither did `readDeclaredFolioProfile()`: it returned\n`\"undetermined (no <name>.config.json)\"` from the resolved root and `\"document\"` from the actual\nrepository root."
+    },
+    {
+      "@id": "kg-ops/skills/kg-ops/domain-fencing.md#provenance-7",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "history",
+      "cat-harness:section": "Two things the fencing turned up, both by running it",
+      "prov:value": "> **Re-measured 2026-09-21, and the resolution half no longer reproduces.**\n> `findContentRepoRoot()` now returns `cat-harness/`, not `cat-harness/folio/`,\n> and `readDeclaredFolioProfile()` returns `document` from **both** roots —\n> `cat-harness.config.json` for the resolved one, `folio-assistant.config.json`\n> for the repository root. The declaration/config split gave `cat-harness` a\n> config of its own and the walk now finds one — **both config files sit at the\n> repository root**, named for their instance rather than placed inside it,\n> which is why looking in `cat-harness/` for one turns up nothing.\n>\n> **But the resolver is not what controls this criterion, and the consequence\n> below never occurred.** Measured on the same day under bean `zq3f`, which\n> opened to check exactly that and closed by falsifying its own premise:\n>\n> - **The fence is the mechanism, not the resolver.** Probed here,\n>   `folioOptionalAxes()` is `[]` and `inRegistry` is `false` — neither config\n>   declares `qaAxes`, so `detangler-archimedean-wall` is not registered at\n>   all. What stops it firing is the `archimedean-wall` opt-in this very\n>   section introduced. `folio-optional-axes.test.ts` pins both states and is\n>   the evidence to read first.\n> - **There were never any bad verdicts.** 122 `block-qa` sidecars and 113\n>   witnesses carry the criterion, and **every one records `\"result\": \"n/a\"`**\n>   — not one `critical`, not one finding. The paragraph below describes a\n>   harm that did not happen for this criterion; what the sidecars record is\n>   that it was evaluated and found not applicable.\n> - **\"235\" was a grep artefact.** `grep -rl` counts files CONTAINING a\n>   string, so it swept witnesses in with sidecars and counted a substring\n>   rather than a verdict — the same error shape as `cat-harness.json`\n>   containing `harness.json`, one directory over, and it reached a skill and\n>   a PR body before anything parsed it.\n>\n> Read the paragraph below as the reasoning that motivated the fence, not as a\n> live defect. Reading a fixed resolver as a fixed defect would have been one\n> error; reading it as *the* fix was the one actually made.",
+      "cat-harness:refs": [
+        "bean zq3f",
+        "2026-09-21"
+      ],
+      "dcterms:date": [
+        "2026-09-21"
+      ]
+    },
+    {
+      "@id": "kg-ops/skills/kg-ops/domain-fencing.md#provenance-8",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "history",
+      "cat-harness:section": "Two things the fencing turned up, both by running it",
+      "prov:value": "**That is not fixed here.** Moving the config or widening the walk changes what\nevery consumer sees — including the MCP adapter `src/index.ts` selects — and is\nits own change with its own measurement. Recorded rather than acted on, which\nis the rule below about residue applied to the tool doing the fencing."
+    },
+    {
+      "@id": "kg-ops/skills/kg-ops/domain-fencing.md#provenance-9",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "history",
+      "cat-harness:section": "Two things the fencing turned up, both by running it",
+      "prov:value": "### The residue was measured, and it came back clean"
+    },
+    {
+      "@id": "kg-ops/skills/kg-ops/domain-fencing.md#provenance-10",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "history",
+      "cat-harness:section": "There is a precedent for exactly that repair",
+      "prov:value": "`detangler-topic-coherence` was de-math'd once already. It had a hardcoded\n`DETANGLER_CHAPTER_KEYWORDS` table; that table migrated out to a folio-supplied\n`topic-keywords.json`, and the criterion stayed. **The mechanism survived, the\ndata left.** That is the shape of the repair, and it is the same shape as\n`repo-partition.ts`'s open problem — roughly 400 of its 1,180 lines are this\nrepository's exception list inlined into a tool whose algorithm is generic."
+    },
+    {
+      "@id": "kg-ops/skills/kg-ops/domain-fencing.md#provenance-11",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "bean",
+      "cat-harness:section": "The test for whether a rule generalizes",
+      "prov:value": "The examples below are drawn from the science layer's audits. They are\ndescribed here, not named: that layer names this skill from its side, and\nlists which of its skills each example comes from (bean `syiq`).",
+      "cat-harness:refs": [
+        "bean syiq"
+      ]
+    }
+  ]
+}
