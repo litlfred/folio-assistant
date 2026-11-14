@@ -1,0 +1,34 @@
+{
+  "@context": [
+    "https://litlfred.github.io/cat-harness/ns/context/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/",
+      "folio-assistant-core": "https://litlfred.github.io/folio-assistant-core/v0/ns/"
+    }
+  ],
+  "@id": "library/arxiv-2607.00053v1/blocks/figure-vfig-p002",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../figures/vfig-p002.png",
+  "pageStart": 2,
+  "pageEnd": 2,
+  "narrative": [
+    {
+      "text": "Figure 1: SWE-Router overview diagram. The left panel shows Conventional LLM Routing, where task prompt q is classified by router r_hat(q) to weak m1 or strong m2, facing high Bayes error due to lack of trajectory context. The right panel shows SWE-Router: weak model m1 executes K exploration steps; value head r_hat(T_<=K) evaluates partial trajectory to predict m1 success, continuing with m1 if high or escalating to strong m2 restarted from q if low.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude",
+        "model": "claude-opus-5"
+      },
+      "drafted_at": "2026-10-09",
+      "lang": "en"
+    }
+  ],
+  "derivedFrom": "library/arxiv-2607.00053v1/sections/sec-003",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/source/arxiv-2607.00053v1",
+  "provenance": "ingested"
+}

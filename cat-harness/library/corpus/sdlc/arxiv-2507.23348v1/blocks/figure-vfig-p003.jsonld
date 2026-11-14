@@ -1,0 +1,34 @@
+{
+  "@context": [
+    "https://litlfred.github.io/cat-harness/ns/context/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/",
+      "folio-assistant-core": "https://litlfred.github.io/folio-assistant-core/v0/ns/"
+    }
+  ],
+  "@id": "library/arxiv-2507.23348v1/blocks/figure-vfig-p003",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../figures/vfig-p003.png",
+  "pageStart": 3,
+  "pageEnd": 3,
+  "narrative": [
+    {
+      "text": "Figure 1: Motivating example comparing Individual Exploration vs Competitive Debate on Django issue 11999. Under Individual Exploration, the agent focuses on django/db/models/base.py:_get_FIELD_display (lines 939-944) attempting runtime fallback display logic (marked \"Wrong place!\"). Under Competitive Debate, the debate identifies and modifies db/models/fields/__init__.py:Field.contribute_to_class (lines 765-767) to check for an existing method before attaching default implementation, exactly matching the Golden Patch (marked \"Correct place!\").",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude",
+        "model": "claude-opus-5"
+      },
+      "drafted_at": "2026-10-09",
+      "lang": "en"
+    }
+  ],
+  "derivedFrom": "library/arxiv-2507.23348v1/sections/sec-002",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/source/arxiv-2507.23348v1",
+  "provenance": "ingested"
+}
