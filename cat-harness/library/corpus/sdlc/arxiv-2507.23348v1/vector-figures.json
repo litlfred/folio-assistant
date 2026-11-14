@@ -1,0 +1,1393 @@
+{
+  "$schema": "folio-vector-figures/v1",
+  "doc_id": "arxiv-2507.23348v1",
+  "figures": [
+    {
+      "id": "vfig-p003",
+      "file": "figures/vfig-p003.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "at": "2026-10-09",
+        "saw": "Figure 1 on page 3: Motivating example comparing Individual Exploration vs Competitive Debate on Django-11999.",
+        "page": 3
+      },
+      "page": 3,
+      "rotation": 0,
+      "captionLabels": [
+        "1"
+      ],
+      "region": [
+        79.02,
+        83.69,
+        532.9,
+        327.49
+      ],
+      "assembly": {
+        "drawings": 66,
+        "background": 0,
+        "groups": [
+          {
+            "bbox": [
+              79.02,
+              83.69,
+              532.9,
+              327.49
+            ],
+            "drawings": 66,
+            "pageEdge": false,
+            "rendered": true,
+            "labels": [
+              "Individual",
+              "Exploration",
+              "***stage 1***",
+              "instruction:",
+              "Enhance the _get_FIELD_display method in",
+              "django/db/models/base.py to support custom display",
+              "methods by checking for a user-defined get_FOO_display",
+              "method (where FOO is the field name) before falling back to",
+              "the default display logic.",
+              "context:",
+              "django/db/models/base.py:Model._get_FIELD_display, lines",
+              "939-944",
+              "Competitive",
+              "Debate",
+              "***stage 1***",
+              "instruction:",
+              "Modify the contribute_to_class method in",
+              "db/models/fields/__init__.py to check for existing",
+              "get_FIELD_display method before setting the default",
+              "implementation",
+              "context:",
+              "db/models/fields/__init__.py:Field.contribute_to_class, lines",
+              "765-767",
+              "Debate",
+              "Localization Chains",
+              "Wrong place!",
+              "Correct place!",
+              "Localization Chain",
+              "Modification Plan",
+              "Modification Plan",
+              "Cannot override get_FOO_display() in",
+              "Django 2.2+.",
+              "Description",
+              "I cannot override the get_FIELD_display function on",
+              "models since version 2.2. It works in version 2.1.",
+              "Example:",
+              "class FooBar(models.Model):",
+              "foo_bar = models.CharField(_(“foo”), choices=[(1,",
+              "'foo'), (2, 'bar')])",
+              "def __str__(self):",
+              "return self.get_foo_bar_display()",
+              "# This returns 'foo' or 'bar' in 2.2, but 'something' in",
+              "2.1",
+              "def get_foo_bar_display(self):",
+              "return \"something\"",
+              "What I expect is that I should be able to override this",
+              "function.",
+              "--- a/django/db/models/fields/__init__.py",
+              "+++ b/django/db/models/fields/__init__.py",
+              "@@ -763,8 +763,12 @@",
+              "def contribute_to_class(self, cls, name,",
+              "private_only=False)",
+              "…",
+              "-",
+              "setattr(cls, 'get_%s_display' % self.name,",
+              "-",
+              "partialmethod(cls._get_FIELD_display,",
+              "field=self))",
+              "+            if not hasattr(cls, 'get_%s_display' %",
+              "self.name):",
+              "+                setattr(cls,",
+              "+                    'get_%s_display' % self.name,",
+              "+                    partialmethod(cls._get_FIELD_display,",
+              "field=self),",
+              "+                )",
+              "Golden Patch：",
+              "Issue django-11999："
+            ]
+          }
+        ],
+        "boxes": [
+          {
+            "id": "b0",
+            "bbox": [
+              79.02,
+              83.69,
+              532.9,
+              327.49
+            ],
+            "parent": null,
+            "labels": [
+              "Individual",
+              "Exploration",
+              "Competitive",
+              "Debate",
+              "Debate"
+            ]
+          },
+          {
+            "id": "b1",
+            "bbox": [
+              79.99,
+              218.5,
+              182.53,
+              316.67
+            ],
+            "parent": "b0",
+            "labels": [
+              "--- a/django/db/models/fields/__init__.py",
+              "+++ b/django/db/models/fields/__init__.py",
+              "@@ -763,8 +763,12 @@",
+              "private_only=False)",
+              "…",
+              "-",
+              "setattr(cls, 'get_%s_display' % self.name,",
+              "-",
+              "partialmethod(cls._get_FIELD_display,",
+              "field=self))",
+              "+            if not hasattr(cls, 'get_%s_display' %",
+              "self.name):",
+              "+                setattr(cls,",
+              "+                    'get_%s_display' % self.name,",
+              "+                    partialmethod(cls._get_FIELD_display,",
+              "field=self),",
+              "+                )",
+              "Golden Patch："
+            ]
+          },
+          {
+            "id": "b2",
+            "bbox": [
+              394.04,
+              94.67,
+              532.56,
+              166.36
+            ],
+            "parent": "b0",
+            "labels": [
+              "***stage 1***",
+              "instruction:",
+              "Enhance the _get_FIELD_display method in",
+              "django/db/models/base.py to support custom display",
+              "methods by checking for a user-defined get_FOO_display",
+              "method (where FOO is the field name) before falling back to",
+              "the default display logic.",
+              "context:",
+              "django/db/models/base.py:Model._get_FIELD_display, lines",
+              "939-944",
+              "Wrong place!"
+            ]
+          },
+          {
+            "id": "b3",
+            "bbox": [
+              393.54,
+              181.84,
+              532.56,
+              260.53
+            ],
+            "parent": "b0",
+            "labels": [
+              "***stage 1***",
+              "instruction:",
+              "Correct place!"
+            ]
+          },
+          {
+            "id": "b4",
+            "bbox": [
+              383.8,
+              210.14,
+              464.8,
+              271.26
+            ],
+            "parent": "b0",
+            "labels": [
+              "db/models/fields/__init__.py to check for existing",
+              "get_FIELD_display method before setting the default",
+              "implementation",
+              "context:",
+              "db/models/fields/__init__.py:Field.contribute_to_class, lines",
+              "765-767"
+            ]
+          },
+          {
+            "id": "b5",
+            "bbox": [
+              230.55,
+              173.1,
+              308.61,
+              182.84
+            ],
+            "parent": "b0",
+            "labels": [
+              "Localization Chains"
+            ]
+          },
+          {
+            "id": "b6",
+            "bbox": [
+              230.55,
+              84.92,
+              308.61,
+              94.67
+            ],
+            "parent": "b0",
+            "labels": [
+              "Localization Chain"
+            ]
+          },
+          {
+            "id": "b7",
+            "bbox": [
+              393.54,
+              85.3,
+              457.62,
+              94.92
+            ],
+            "parent": "b0",
+            "labels": [
+              "Modification Plan"
+            ]
+          },
+          {
+            "id": "b8",
+            "bbox": [
+              393.42,
+              172.6,
+              456.99,
+              182.34
+            ],
+            "parent": "b0",
+            "labels": [
+              "Modification Plan"
+            ]
+          },
+          {
+            "id": "b9",
+            "bbox": [
+              79.36,
+              83.74,
+              182.28,
+              214.51
+            ],
+            "parent": "b0",
+            "labels": [
+              "Cannot override get_FOO_display() in",
+              "Django 2.2+.",
+              "Description",
+              "I cannot override the get_FIELD_display function on",
+              "models since version 2.2. It works in version 2.1.",
+              "Example:",
+              "class FooBar(models.Model):",
+              "foo_bar = models.CharField(_(“foo”), choices=[(1,",
+              "'foo'), (2, 'bar')])",
+              "def __str__(self):",
+              "return self.get_foo_bar_display()",
+              "# This returns 'foo' or 'bar' in 2.2, but 'something' in",
+              "2.1",
+              "def get_foo_bar_display(self):",
+              "return \"something\"",
+              "What I expect is that I should be able to override this",
+              "function.",
+              "Issue django-11999："
+            ]
+          },
+          {
+            "id": "b10",
+            "bbox": [
+              96.04,
+              248.67,
+              134.26,
+              253.41
+            ],
+            "parent": "b1",
+            "labels": [
+              "def contribute_to_class(self, cls, name,"
+            ]
+          },
+          {
+            "id": "b11",
+            "bbox": [
+              424.14,
+              205.7,
+              468.23,
+              210.7
+            ],
+            "parent": "b3",
+            "labels": [
+              "Modify the contribute_to_class method in"
+            ]
+          }
+        ],
+        "unlabelledClosedShapes": 25,
+        "connectors": [
+          {
+            "from": "b3",
+            "to": "b10",
+            "bbox": [
+              134.13,
+              205.7,
+              423.72,
+              248.63
+            ]
+          }
+        ],
+        "between": [],
+        "outside": 64
+      },
+      "shows": [
+        "1"
+      ],
+      "narrative": [
+        {
+          "text": "Figure 1: Motivating example comparing Individual Exploration vs Competitive Debate on Django issue 11999. Under Individual Exploration, the agent focuses on django/db/models/base.py:_get_FIELD_display (lines 939-944) attempting runtime fallback display logic (marked \"Wrong place!\"). Under Competitive Debate, the debate identifies and modifies db/models/fields/__init__.py:Field.contribute_to_class (lines 765-767) to check for an existing method before attaching default implementation, exactly matching the Golden Patch (marked \"Correct place!\").",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude",
+            "model": "claude-opus-5"
+          },
+          "drafted_at": "2026-10-09",
+          "lang": "en"
+        }
+      ]
+    },
+    {
+      "id": "vfig-p004",
+      "file": "figures/vfig-p004.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "at": "2026-10-09",
+        "saw": "Figure 2 on page 4: Overview of the three-stage SWE-Debate framework.",
+        "page": 4
+      },
+      "page": 4,
+      "rotation": 0,
+      "captionLabels": [
+        "2"
+      ],
+      "region": [
+        77.9,
+        83.69,
+        531.75,
+        314.45
+      ],
+      "assembly": {
+        "drawings": 130,
+        "background": 0,
+        "groups": [
+          {
+            "bbox": [
+              77.9,
+              83.69,
+              531.75,
+              314.45
+            ],
+            "drawings": 130,
+            "pageEdge": false,
+            "rendered": true,
+            "labels": [
+              "InitialEnitity1：",
+              "get_foo_bar_display",
+              "InitialEnitityk-1:",
+              "FooBar",
+              "InitialEnitityk：",
+              "get_FIELD_display",
+              "Debate",
+              "Round1",
+              "Round2",
+              "Round3",
+              "Modification Plan Debate",
+              "<plan>",
+              "***stage 1***",
+              "instruction:",
+              "Modify the contribute_to_class",
+              "method in",
+              "db/models/fields/__init__.py to",
+              "check for existing",
+              "get_FIELD_display method",
+              "before setting the default",
+              "implementation",
+              "context:",
+              "db/models/fields/__init__.py:Fi",
+              "eld.contribute_to_class, lines",
+              "765-767",
+              "***stage 2***",
+              "……",
+              "</plan>",
+              "Extract Initial Entities",
+              "Fault Propagation Traces Proposal",
+              "Localization Chain Selection",
+              "Synthesize Modification Plan",
+              "Entity",
+              "Contain",
+              "Inherit",
+              "Import",
+              "Invoke",
+              "Chain 1",
+              "Chain 2",
+              "Chain 3",
+              "Chain N",
+              "Editor",
+              "Patch",
+              "Environment",
+              "MCTS",
+              "Issue django-11999：",
+              "Cannot override get_FOO_display()",
+              "in Django 2.2+.",
+              "Description",
+              "I cannot override the",
+              "get_FIELD_display function on",
+              "models since version 2.2. It works in",
+              "version 2.1.",
+              "Example:",
+              "class FooBar(models.Model):",
+              "foo_bar = models.CharField(_(\"foo\"),",
+              "choices=[(1, 'foo'), (2, 'bar')])",
+              "def __str__(self):",
+              "return self.get_foo_bar_display()",
+              "# This returns 'foo' or 'bar' in 2.2,",
+              "but 'something' in 2.1",
+              "def get_foo_bar_display(self):",
+              "return \"something\"",
+              "What I expect is that I should be",
+              "able to override this function.",
+              "Best Chain"
+            ]
+          }
+        ],
+        "boxes": [
+          {
+            "id": "b0",
+            "bbox": [
+              77.9,
+              83.69,
+              531.75,
+              314.45
+            ],
+            "parent": null,
+            "labels": [
+              "Modification Plan Debate",
+              "Extract Initial Entities",
+              "Fault Propagation Traces Proposal",
+              "Localization Chain Selection",
+              "Synthesize Modification Plan",
+              "Editor",
+              "Patch",
+              "MCTS"
+            ]
+          },
+          {
+            "id": "b1",
+            "bbox": [
+              178.86,
+              107.33,
+              227.16,
+              123.09
+            ],
+            "parent": "b0",
+            "labels": [
+              "InitialEnitity1：",
+              "get_foo_bar_display"
+            ]
+          },
+          {
+            "id": "b2",
+            "bbox": [
+              178.86,
+              144.61,
+              226.01,
+              159.09
+            ],
+            "parent": "b0",
+            "labels": [
+              "InitialEnitityk-1:",
+              "FooBar"
+            ]
+          },
+          {
+            "id": "b3",
+            "bbox": [
+              178.86,
+              167.04,
+              226.01,
+              182.03
+            ],
+            "parent": "b0",
+            "labels": [
+              "InitialEnitityk：",
+              "get_FIELD_display"
+            ]
+          },
+          {
+            "id": "b4",
+            "bbox": [
+              279.7,
+              211.5,
+              422.18,
+              301.45
+            ],
+            "parent": "b0",
+            "labels": [
+              "Round1",
+              "Round2",
+              "Round3"
+            ]
+          },
+          {
+            "id": "b5",
+            "bbox": [
+              187.96,
+              207.78,
+              258.94,
+              310.03
+            ],
+            "parent": "b0",
+            "labels": [
+              "<plan>",
+              "***stage 1***",
+              "instruction:",
+              "Modify the contribute_to_class",
+              "method in",
+              "db/models/fields/__init__.py to",
+              "check for existing",
+              "get_FIELD_display method",
+              "before setting the default",
+              "implementation",
+              "context:",
+              "db/models/fields/__init__.py:Fi",
+              "eld.contribute_to_class, lines",
+              "765-767",
+              "***stage 2***",
+              "……",
+              "</plan>"
+            ]
+          },
+          {
+            "id": "b6",
+            "bbox": [
+              442.3,
+              226.62,
+              519.82,
+              255.19
+            ],
+            "parent": "b0",
+            "labels": [
+              "Best Chain"
+            ]
+          },
+          {
+            "id": "b7",
+            "bbox": [
+              247.92,
+              94.39,
+              519.82,
+              190.49
+            ],
+            "parent": "b0",
+            "labels": [
+              "Debate",
+              "Entity",
+              "Contain",
+              "Inherit",
+              "Import",
+              "Invoke",
+              "Chain 1",
+              "Chain 2",
+              "Chain 3",
+              "Chain N"
+            ]
+          },
+          {
+            "id": "b8",
+            "bbox": [
+              89.55,
+              252.37,
+              135.55,
+              301.45
+            ],
+            "parent": "b0",
+            "labels": [
+              "Environment"
+            ]
+          },
+          {
+            "id": "b9",
+            "bbox": [
+              78.08,
+              86.25,
+              148.17,
+              202.59
+            ],
+            "parent": "b0",
+            "labels": [
+              "Issue django-11999：",
+              "Cannot override get_FOO_display()",
+              "in Django 2.2+.",
+              "Description",
+              "I cannot override the",
+              "get_FIELD_display function on",
+              "models since version 2.2. It works in",
+              "version 2.1.",
+              "Example:",
+              "class FooBar(models.Model):",
+              "foo_bar = models.CharField(_(\"foo\"),",
+              "choices=[(1, 'foo'), (2, 'bar')])",
+              "def __str__(self):",
+              "return self.get_foo_bar_display()",
+              "# This returns 'foo' or 'bar' in 2.2,",
+              "but 'something' in 2.1",
+              "def get_foo_bar_display(self):",
+              "return \"something\"",
+              "What I expect is that I should be",
+              "able to override this function."
+            ]
+          }
+        ],
+        "unlabelledClosedShapes": 63,
+        "connectors": [
+          {
+            "from": "b6",
+            "to": "b0",
+            "bbox": [
+              436.09,
+              255.13,
+              481.07,
+              264.74
+            ]
+          },
+          {
+            "from": "b6",
+            "to": "b0",
+            "bbox": [
+              481.06,
+              255.13,
+              526.08,
+              264.66
+            ]
+          }
+        ],
+        "between": [],
+        "outside": 69
+      },
+      "shows": [
+        "2"
+      ],
+      "narrative": [
+        {
+          "text": "Figure 2: Overview of the SWE-Debate framework showing three interconnected stages: (1) Fault Propagation Traces Proposal, which extracts initial entities from the issue description (e.g., get_foo_bar_display, FooBar, get_FIELD_display) and traverses the static dependency graph along Contain, Inherit, Import, and Invoke edges to generate localization chains 1..N; (2) Multi-Agent Debate, consisting of Round 1 Localization Chain Selection via competitive ranking/voting to choose the Best Chain, Round 2 Modification Plan Proposal & Competitive Refinement where N=5 agents debate alternative strategies, and Round 3 Synthesizing a concrete <plan> via a discriminator; and (3) Patch Generation via Monte Carlo Tree Search (MCTS), where Search, Plan, and Edit actions navigate repository states to produce the final patch.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude",
+            "model": "claude-opus-5"
+          },
+          "drafted_at": "2026-10-09",
+          "lang": "en"
+        }
+      ]
+    },
+    {
+      "id": "vfig-p008",
+      "file": "figures/vfig-p008.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "at": "2026-10-09",
+        "saw": "Figure 3 on page 8: Line chart of file localization accuracy Acc@1(File) across reasoning chain depths 1, 3, 5, and 7.",
+        "page": 8
+      },
+      "page": 8,
+      "rotation": 0,
+      "captionLabels": [
+        "3"
+      ],
+      "region": [
+        53.8,
+        83.69,
+        558.2,
+        557.84
+      ],
+      "assembly": {
+        "drawings": 34,
+        "background": 0,
+        "groups": [
+          {
+            "bbox": [
+              53.8,
+              159.94,
+              294.05,
+              226.47
+            ],
+            "drawings": 2,
+            "pageEdge": false,
+            "rendered": true,
+            "labels": [
+              "Finding 3: SWE-Debate achieves 81.67% file-level localization",
+              "accuracy, surpassing the strongest baseline by 3.93%, demon-",
+              "strating that graph-guided fault propagation traces combined",
+              "with competitive debate enable more accurate fault localization",
+              "than individual exploration approaches."
+            ]
+          },
+          {
+            "bbox": [
+              88.71,
+              446.4,
+              256.89,
+              557.84
+            ],
+            "drawings": 29,
+            "pageEdge": false,
+            "rendered": true,
+            "labels": [
+              "1",
+              "3",
+              "5",
+              "7",
+              "Chain Depth",
+              "0.65",
+              "0.70",
+              "0.75",
+              "0.80",
+              "0.85",
+              "0.90",
+              "Acc@1(File)",
+              "70.7%",
+              "72.0%",
+              "86.7%",
+              "82.7%"
+            ]
+          },
+          {
+            "bbox": [
+              317.95,
+              83.69,
+              558.2,
+              148.2
+            ],
+            "drawings": 2,
+            "pageEdge": false,
+            "rendered": true,
+            "labels": [
+              "Finding 4: A chain depth of 5 achieves the best trade-off be-",
+              "tween reasoning depth and relevance, yielding the highest lo-",
+              "calization accuracy. Further increases introduce distracting in-",
+              "formation that hinders effective decision-making during the",
+              "debate."
+            ]
+          }
+        ],
+        "boxes": [
+          {
+            "id": "b0",
+            "bbox": [
+              53.8,
+              159.94,
+              294.05,
+              226.47
+            ],
+            "parent": null,
+            "labels": [
+              "Finding 3: SWE-Debate achieves 81.67% file-level localization",
+              "accuracy, surpassing the strongest baseline by 3.93%, demon-",
+              "strating that graph-guided fault propagation traces combined",
+              "with competitive debate enable more accurate fault localization",
+              "than individual exploration approaches."
+            ]
+          },
+          {
+            "id": "b1",
+            "bbox": [
+              88.71,
+              446.4,
+              256.89,
+              557.84
+            ],
+            "parent": null,
+            "labels": [
+              "1",
+              "3",
+              "5",
+              "7",
+              "Chain Depth",
+              "0.65",
+              "0.70",
+              "0.75",
+              "0.80",
+              "0.85",
+              "0.90",
+              "Acc@1(File)"
+            ]
+          },
+          {
+            "id": "b2",
+            "bbox": [
+              115.81,
+              447.81,
+              255.48,
+              539.57
+            ],
+            "parent": "b1",
+            "labels": [
+              "70.7%",
+              "72.0%",
+              "86.7%",
+              "82.7%"
+            ]
+          },
+          {
+            "id": "b3",
+            "bbox": [
+              317.95,
+              83.69,
+              558.2,
+              148.2
+            ],
+            "parent": null,
+            "labels": [
+              "Finding 4: A chain depth of 5 achieves the best trade-off be-",
+              "tween reasoning depth and relevance, yielding the highest lo-",
+              "calization accuracy. Further increases introduce distracting in-",
+              "formation that hinders effective decision-making during the",
+              "debate."
+            ]
+          }
+        ],
+        "unlabelledClosedShapes": 16,
+        "connectors": [
+          {
+            "from": null,
+            "to": null,
+            "bbox": [
+              53.8,
+              698.54,
+              101.62,
+              698.54
+            ]
+          }
+        ],
+        "between": [
+          "substantial improvement, with SWE-Debate achieving 81.67% com-",
+          "pared to LocAgent’s 77.74%. This shows that competitive multi-",
+          "agent debate can enhance even domain-specific approaches. The",
+          "reason is that our debate process forces agents to systematically",
+          "evaluate competing localization hypotheses, preventing premature",
+          "convergence on suboptimal solutions.",
+          "5.4",
+          "RQ4: Impact of the Chain Depth.",
+          "To investigate the optimal configuration for multi-agent reason-",
+          "ing in software fault localization, we study the impact of chain",
+          "depth on localization performance. To balance computational effi-",
+          "ciency with representative evaluation, we constructed a dataset of",
+          "75 instances, termed SWE-Bench-Verified-S, consisting of 50 sam-",
+          "ples from SWE-Bench-verified-mini 3 and 25 additional instances",
+          "randomly selected in SWE-Bench-Verified.",
+          "Figure 3 shows the impact of varying chain depth in the com-",
+          "petitive debate process on this dataset. We observe that increasing",
+          "the chain depth from 1 to 5 consistently boosts file-level localiza-",
+          "tion accuracy, reaching a peak Acc@1(File) of 86.7%. This suggests",
+          "that deeper reasoning chains enable more effective exploration of",
+          "the code graph, capturing complex dependencies and contextual",
+          "signals that shallow chains often miss. These results highlight the",
+          "benefits of multi-step reasoning in guiding the model toward more",
+          "informed and accurate localization decisions.",
+          "5.5",
+          "Case Study",
+          "To further verify the effectiveness of SWE-debate in actual use,",
+          "we analyzed a case in SWE-bench. In this case, we investigate an",
+          "issue in SymPy related to the incorrect evaluation of powers ap-",
+          "plied to TensorProduct expressions. Specifically, expressions like",
+          "TensorProduct(1,Pauli(3))*TensorProduct(1,Pauli(3)) fail",
+          "to simplify into TensorProduct(1,1) or 1, even though Pauli(3)**2",
+          "=1. This failure arises because neither the expand(tensorproduct",
+          "=True) method nor the tensor_product_simp function are equipped",
+          "to handle exponentiation of TensorProduct objects. The issue",
+          "is non-trivial as it requires coordinated reasoning over symbolic",
+          "power expressions and tensor algebra simplification.",
+          "Our method first generates localization chains based on graph-",
+          "based reasoning over symbolic dependencies, and then applies a",
+          "Multi-Agent Debate process to guide the repair. In the first stage,",
+          "the agent constructs multiple candidate localization chains. Among",
+          "the generated candidates, Chain 2 demonstrates high accuracy by",
+          "precisely capturing all necessary modules involved in the failure,",
+          "such as tensor_product_simp_Mul, tensor_product_simp, and",
+          "TensorProduct.eval_expand_tensorproduct. This chain provides",
+          "a comprehensive view of the symbolic rewriting pipeline for tensor",
+          "expressions, effectively guiding the system to the correct set of",
+          "files and even narrowing down the specific functions requiring",
+          "modification.",
+          "Based on this chain, our debate process formulates a multi-",
+          "stage plan. It proposes a four-step approach: first, modifying the",
+          "simplification logic in tensor_product_simp; second, updating",
+          "tensor_product_simp_Mul to support powers; third, extending",
+          "eval_expand_tensorproduct for power handling; and fourth, adding",
+          "an _eval_power method in the TensorProduct class. The edit de-",
+          "rived from this plan introduces a recursive rule that distributes the",
+          "exponent over the arguments of a TensorProduct, enabling cor-",
+          "rect evaluation of symbolic powers. Notably, all modified functions",
+          "were covered by the selected localization chain, demonstrating the",
+          "accuracy and completeness of our code navigation strategy.",
+          "This case highlights the strength of our method in both locating"
+        ],
+        "outside": 26
+      },
+      "shows": [
+        "3"
+      ],
+      "narrative": [
+        {
+          "text": "Figure 3: Impact of Chain Depth on file-level localization accuracy Acc@1(File) evaluated on SWE-Bench-Verified-S (75 instances). Acc@1(File) increases from 70.7% at depth 1, to 72.0% at depth 3, peaking at 86.7% at depth 5, before declining to 82.7% at depth 7 due to extraneous noise in excessively long dependency chains.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude",
+            "model": "claude-opus-5"
+          },
+          "drafted_at": "2026-10-09",
+          "lang": "en"
+        }
+      ]
+    },
+    {
+      "id": "vfig-p009",
+      "file": "figures/vfig-p009.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "at": "2026-10-09",
+        "saw": "Figure 4 on page 9: Case study of SWE-Debate resolving sympy-13974 (powers of TensorProduct).",
+        "page": 9
+      },
+      "page": 9,
+      "rotation": 0,
+      "captionLabels": [
+        "4"
+      ],
+      "region": [
+        103.12,
+        83.68,
+        506.65,
+        383.52
+      ],
+      "assembly": {
+        "drawings": 27,
+        "background": 0,
+        "groups": [
+          {
+            "bbox": [
+              103.12,
+              83.68,
+              506.65,
+              383.52
+            ],
+            "drawings": 27,
+            "pageEdge": false,
+            "rendered": true,
+            "labels": [
+              "Issue: Evaluating powers of `TensorProduct`",
+              "Powers of tensor product expressions are not possible to evaluate with either",
+              "`expand(tensorproduct=True)` method nor the `tensor_product_simp`function.",
+              ". . . . . .",
+              "<plan>",
+              "***stage 1***",
+              "instruction: Modify the tensor_product_simp function to handle Pow expressions . . .",
+              "context: physics/quantum/tensorproduct.py:tensor_product_simp (lines 348-393)",
+              "***stage 2***",
+              "instruction: Update tensor_product_simp_Mul to recognize and handle . . .",
+              "context: physics/quantum/tensorproduct.py:tensor_product_simp_Mul (lines 271-345)",
+              "***stage 3***",
+              "instruction: Extend _eval_expand_tensorproduct to handle Pow expressions . . .",
+              "context:",
+              "physics/quantum/tensorproduct.py:TensorProduct._eval_expand_tensorproduct (lines",
+              "241-258)",
+              "***stage 4***",
+              "instruction: Add a _eval_power method to the TensorProduct class to handle power . . .",
+              "context: physics/quantum/tensorproduct.py:TensorProduct class (lines 49-268)",
+              "</plan>",
+              "--- a/sympy/physics/quantum/tensorproduct.py",
+              "+++ b/sympy/physics/quantum/tensorproduct.py",
+              "@@ -142,6 +142,20 @@",
+              "def _eval_adjoint(self):",
+              "return TensorProduct(*[Dagger(i) for i in self.args])",
+              "+",
+              "+    def _eval_power(self, exponent):+",
+              "+        return TensorProduct(*[arg**exponent for arg in self.args])",
+              "def _eval_rewrite(self, pattern, rule, **hints):",
+              "sargs = self.args",
+              "@@ -382,7 +396,10 @@",
+              "if isinstance(e, Add):",
+              "return Add(*[tensor_product_simp(arg) for arg in e.args])",
+              "elif isinstance(e, Pow):",
+              "-",
+              "return tensor_product_simp(e.base) ** e.exp",
+              "+        base = tensor_product_simp(e.base)",
+              "+        if isinstance(base, TensorProduct):",
+              "+            return TensorProduct(*[arg**e.exp for arg in base.args])",
+              "+        return base ** e.exp",
+              "elif isinstance(e, Mul):",
+              "Plan",
+              "Generate",
+              "Localization Chain",
+              "Chain1：",
+              "['physics/paulialgebra.py:Pauli’,",
+              "'physics/paulialgebra.py:Pauli._eval_power',",
+              "'physics/quantum/gate.py:CGate._eval_power',",
+              "'physics/quantum/operator.py:HermitianOperator._eval_power',",
+              "'simplify/powsimp.py:_denest_pow’]",
+              "Chain2：",
+              "['physics/paulialgebra.py:evaluate_pauli_product',",
+              "'physics/quantum/tensorproduct.py:TensorProduct._eval_expand_tensorproduct',",
+              "'tensor/functions.py:TensorProduct',",
+              "'physics/quantum/tensorproduct.py:TensorProduct._eval_rewrite',",
+              "'diffgeom/diffgeom.py:TensorProduct.__new__']",
+              "Chain3：",
+              "['tensor/tensor.py', 'tensor/tensor.py:TensMul’,",
+              "'tensor/tensor.py:TensMul._flatten’,",
+              "'tensor/tensor.py:TensMul.__new__',",
+              "'physics/quantum/tensorproduct.py:TensorProduct.__new__',",
+              "'tensor/functions.py:TensorProduct.__new__’]",
+              "Chain4：",
+              "['physics/quantum/tensorproduct.py:TensorProduct',",
+              "'physics/quantum/tensorproduct.py:tensor_product_simp_Mul',",
+              "'physics/quantum/tensorproduct.py:tensor_product_simp',",
+              "'physics/quantum/tensorproduct.py:TensorProduct._eval_expand_tensorproduct ',",
+              "'matrices/expressions/matmul.py:MatMul.doit’, ]",
+              "Chain5：",
+              "['physics/quantum/tensorproduct.py:TensorProduct',",
+              "'physics/quantum/tensorproduct.py:tensor_product_simp_Mul',",
+              "'core/mul.py:Mul._eval_power’,",
+              "'core/power.py:Pow._eval_expand_power_base',",
+              "'core/power.py:Pow._eval_expand_power_base.pred']",
+              "Debate",
+              "Edit",
+              "location",
+              "location",
+              "location",
+              "location",
+              "location"
+            ]
+          }
+        ],
+        "boxes": [
+          {
+            "id": "b0",
+            "bbox": [
+              103.12,
+              83.68,
+              506.65,
+              383.52
+            ],
+            "parent": null,
+            "labels": [
+              "Debate"
+            ]
+          },
+          {
+            "id": "b1",
+            "bbox": [
+              115.41,
+              92.32,
+              289.54,
+              123.26
+            ],
+            "parent": "b0",
+            "labels": [
+              "Issue: Evaluating powers of `TensorProduct`",
+              "Powers of tensor product expressions are not possible to evaluate with either",
+              "`expand(tensorproduct=True)` method nor the `tensor_product_simp`function.",
+              ". . . . . ."
+            ]
+          },
+          {
+            "id": "b2",
+            "bbox": [
+              318.64,
+              131.45,
+              503.04,
+              220.48
+            ],
+            "parent": "b0",
+            "labels": [
+              "instruction: Modify the tensor_product_simp function to handle Pow expressions . . .",
+              "context: physics/quantum/tensorproduct.py:tensor_product_simp (lines 348-393)",
+              "instruction: Update tensor_product_simp_Mul to recognize and handle . . .",
+              "context: physics/quantum/tensorproduct.py:tensor_product_simp_Mul (lines 271-345)",
+              "instruction: Extend _eval_expand_tensorproduct to handle Pow expressions . . .",
+              "physics/quantum/tensorproduct.py:TensorProduct._eval_expand_tensorproduct (lines",
+              "instruction: Add a _eval_power method to the TensorProduct class to handle power . . .",
+              "context: physics/quantum/tensorproduct.py:TensorProduct class (lines 49-268)"
+            ]
+          },
+          {
+            "id": "b3",
+            "bbox": [
+              115.41,
+              164.1,
+              300.79,
+              377.73
+            ],
+            "parent": "b0",
+            "labels": [
+              "Chain1：",
+              "['physics/paulialgebra.py:Pauli’,",
+              "'physics/paulialgebra.py:Pauli._eval_power',",
+              "'physics/quantum/gate.py:CGate._eval_power',",
+              "'physics/quantum/operator.py:HermitianOperator._eval_power',",
+              "'simplify/powsimp.py:_denest_pow’]",
+              "Chain2：",
+              "['physics/paulialgebra.py:evaluate_pauli_product',",
+              "'physics/quantum/tensorproduct.py:TensorProduct._eval_expand_tensorproduct',",
+              "'tensor/functions.py:TensorProduct',",
+              "'physics/quantum/tensorproduct.py:TensorProduct._eval_rewrite',",
+              "'diffgeom/diffgeom.py:TensorProduct.__new__']",
+              "Chain3：",
+              "['tensor/tensor.py', 'tensor/tensor.py:TensMul’,",
+              "'tensor/tensor.py:TensMul._flatten’,",
+              "'tensor/tensor.py:TensMul.__new__',",
+              "'physics/quantum/tensorproduct.py:TensorProduct.__new__',",
+              "'tensor/functions.py:TensorProduct.__new__’]",
+              "Chain5：",
+              "['physics/quantum/tensorproduct.py:TensorProduct',",
+              "'physics/quantum/tensorproduct.py:tensor_product_simp_Mul',",
+              "'core/mul.py:Mul._eval_power’,",
+              "'core/power.py:Pow._eval_expand_power_base',",
+              "'core/power.py:Pow._eval_expand_power_base.pred']"
+            ]
+          },
+          {
+            "id": "b4",
+            "bbox": [
+              318.27,
+              254.1,
+              503.04,
+              377.73
+            ],
+            "parent": "b0",
+            "labels": [
+              "return TensorProduct(*[Dagger(i) for i in self.args])",
+              "+    def _eval_power(self, exponent):+",
+              "+        return TensorProduct(*[arg**exponent for arg in self.args])",
+              "def _eval_rewrite(self, pattern, rule, **hints):",
+              "sargs = self.args",
+              "@@ -382,7 +396,10 @@",
+              "if isinstance(e, Add):",
+              "return Add(*[tensor_product_simp(arg) for arg in e.args])",
+              "elif isinstance(e, Pow):",
+              "-",
+              "return tensor_product_simp(e.base) ** e.exp",
+              "+        base = tensor_product_simp(e.base)",
+              "+        if isinstance(base, TensorProduct):",
+              "+            return TensorProduct(*[arg**e.exp for arg in base.args])",
+              "+        return base ** e.exp",
+              "elif isinstance(e, Mul):"
+            ]
+          },
+          {
+            "id": "b5",
+            "bbox": [
+              348.23,
+              125.46,
+              373.54,
+              133.78
+            ],
+            "parent": "b0",
+            "labels": [
+              "Plan"
+            ]
+          },
+          {
+            "id": "b6",
+            "bbox": [
+              131.91,
+              140.14,
+              194.52,
+              155.3
+            ],
+            "parent": "b0",
+            "labels": [
+              "Generate",
+              "Localization Chain"
+            ]
+          },
+          {
+            "id": "b7",
+            "bbox": [
+              371.1,
+              232.58,
+              397.88,
+              244.57
+            ],
+            "parent": "b0",
+            "labels": [
+              "Edit"
+            ]
+          },
+          {
+            "id": "b8",
+            "bbox": [
+              118.46,
+              293.48,
+              296.26,
+              335.54
+            ],
+            "parent": "b3",
+            "labels": [
+              "Chain4：",
+              "['physics/quantum/tensorproduct.py:TensorProduct',",
+              "'physics/quantum/tensorproduct.py:tensor_product_simp_Mul',",
+              "'physics/quantum/tensorproduct.py:tensor_product_simp',",
+              "'physics/quantum/tensorproduct.py:TensorProduct._eval_expand_tensorproduct ',",
+              "'matrices/expressions/matmul.py:MatMul.doit’, ]"
+            ]
+          },
+          {
+            "id": "b9",
+            "bbox": [
+              296.25,
+              108.16,
+              368.25,
+              293.52
+            ],
+            "parent": "b0",
+            "labels": [
+              "<plan>",
+              "***stage 1***",
+              "***stage 2***",
+              "***stage 3***",
+              "context:",
+              "241-258)",
+              "***stage 4***",
+              "</plan>",
+              "@@ -142,6 +142,20 @@",
+              "def _eval_adjoint(self):",
+              "+"
+            ]
+          },
+          {
+            "id": "b10",
+            "bbox": [
+              353.65,
+              209.65,
+              375.35,
+              296.06
+            ],
+            "parent": "b0",
+            "labels": [
+              "--- a/sympy/physics/quantum/tensorproduct.py",
+              "+++ b/sympy/physics/quantum/tensorproduct.py"
+            ]
+          },
+          {
+            "id": "b11",
+            "bbox": [
+              213.72,
+              248.11,
+              237.57,
+              257.28
+            ],
+            "parent": "b3",
+            "labels": [
+              "location"
+            ]
+          },
+          {
+            "id": "b12",
+            "bbox": [
+              322.31,
+              231.48,
+              346.03,
+              240.53
+            ],
+            "parent": "b9",
+            "labels": [
+              "location"
+            ]
+          },
+          {
+            "id": "b13",
+            "bbox": [
+              412.19,
+              272.69,
+              435.91,
+              281.86
+            ],
+            "parent": "b4",
+            "labels": [
+              "location"
+            ]
+          },
+          {
+            "id": "b14",
+            "bbox": [
+              255.42,
+              148.7,
+              279.26,
+              157.87
+            ],
+            "parent": "b0",
+            "labels": [
+              "location"
+            ]
+          },
+          {
+            "id": "b15",
+            "bbox": [
+              349.7,
+              247.62,
+              373.54,
+              256.79
+            ],
+            "parent": "b0",
+            "labels": [
+              "location"
+            ]
+          }
+        ],
+        "unlabelledClosedShapes": 11,
+        "connectors": [],
+        "between": [],
+        "outside": 57
+      },
+      "shows": [
+        "4"
+      ],
+      "narrative": [
+        {
+          "text": "Figure 4: Case study of SWE-Debate resolving SymPy issue 13974 regarding powers of TensorProduct expressions. Five localization chains are evaluated; Chain 2 correctly identifies physics/quantum/tensorproduct.py. The debate synthesizes a 4-stage modification plan: (1) update tensor_product_simp, (2) update tensor_product_simp_Mul, (3) extend _eval_expand_tensorproduct, and (4) add _eval_power to TensorProduct. The patch diff in sympy/physics/quantum/tensorproduct.py shows adding _eval_power (distributing exponent over args) and handling Pow in tensor_product_simp.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude",
+            "model": "claude-opus-5"
+          },
+          "drafted_at": "2026-10-09",
+          "lang": "en"
+        }
+      ]
+    }
+  ]
+}
