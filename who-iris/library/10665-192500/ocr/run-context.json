@@ -1,0 +1,95 @@
+{
+  "$schema": "folio-run-context/v1",
+  "platform": {
+    "commit": "2120f3d46dc915be1e4f5d065e8479cb2d467b2b"
+  },
+  "mounts": {
+    "state": "locked",
+    "lock": {
+      "file": "index.lock.json",
+      "sha256": "e5746931ff2404860cdc2ca5eecdc5053b602eb5a7aa21a430b2f2db574ba596"
+    },
+    "instances": [
+      {
+        "instance": "bootstrap",
+        "repository": "litlfred/bootstrap",
+        "sha": "fdc84b22c30ace4b9476e56fa1cac2117e5aaf0a"
+      },
+      {
+        "instance": "bootstrap-tools",
+        "repository": "litlfred/bootstrap-tools",
+        "sha": "b31c5346b0b2803354423511b6d18b599b7bdc41"
+      },
+      {
+        "instance": "cat-harness",
+        "repository": "litlfred/cat-harness",
+        "sha": "65a51c0d1285fb6d3aa0c78bfb1bda0a0e716d8b"
+      },
+      {
+        "instance": "cat-harness-tools",
+        "repository": "litlfred/cat-harness-tools",
+        "sha": "5fd3192292698c30f065c2ae70e96d6a748f614e"
+      },
+      {
+        "instance": "folio-assistant-core",
+        "repository": "litlfred/folio-assistant-core",
+        "sha": "fe82de48efa3a636e11fccbdf4eecf72816c79c2"
+      }
+    ]
+  },
+  "releases": [
+    {
+      "state": "provisioned",
+      "release": "tesseract@5.3.4",
+      "digest": {
+        "algorithm": "sha256",
+        "digest": "9f831cab7525c3dab04af41bda35182af7ea1df9dceeaaa2f3bf207ac45c06a5"
+      }
+    },
+    {
+      "state": "provisioned",
+      "release": "pdftoppm@24.02.0",
+      "digest": {
+        "algorithm": "sha256",
+        "digest": "43a3c46cc7c98ab3741050d805dc35153f9b5d2bbe045fd3cc2701d9bc79387d"
+      }
+    },
+    {
+      "state": "provisioned",
+      "release": "tessdata-ara@1:4.1.0-2",
+      "digest": {
+        "algorithm": "sha256",
+        "digest": "e3206d3dc87fd50c24a0fb9f01838615911d25168f4e64415244b67d2bb3e729"
+      }
+    },
+    {
+      "state": "provisioned",
+      "release": "tessdata-rus@1:4.1.0-2",
+      "digest": {
+        "algorithm": "sha256",
+        "digest": "e16e5e036cce1d9ec2b00063cf8b54472625b9e14d893a169e2b0dedeb4df225"
+      }
+    },
+    {
+      "state": "provisioned",
+      "release": "tessdata-osd@1:4.1.0-2",
+      "digest": {
+        "algorithm": "sha256",
+        "digest": "9cf5d576fcc47564f11265841e5ca839001e7e6f38ff7f7aacf46d15a96b00ff"
+      }
+    }
+  ],
+  "invoker": {
+    "kind": "system",
+    "id": "cat-harness-tools/scripts/pdf-ocr.py",
+    "script_hash": "8377bfbd0eeec174cac9ca82575fc0a8fbecc45a4b56e8d673b0daccdf4321bd"
+  },
+  "inputs": [
+    {
+      "hash": "c59a5ebeb960",
+      "inputs": [
+        "../fetch/_ingest/10665-192500/10665-192500.pdf"
+      ]
+    }
+  ]
+}
