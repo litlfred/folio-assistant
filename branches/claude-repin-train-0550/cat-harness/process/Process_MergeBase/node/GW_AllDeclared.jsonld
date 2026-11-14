@@ -1,0 +1,35 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/cat-harness/process/Process_MergeBase/node/GW_AllDeclared.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-train-0550",
+    "sha": "211176b48990d1a2382a2913a91794b72853a53c",
+    "pr": "3124/merge",
+    "run": "43611082734"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/cat-harness/process/Process_MergeBase/node/GW_AllDeclared",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Every path resolvable?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/cat-harness/process/Process_MergeBase",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/cat-harness/process/Process_MergeBase/lane/Lane_Command",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/cat-harness/process/Process_MergeBase#flow/m5"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/cat-harness/process/Process_MergeBase#flow/m6",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/cat-harness/process/Process_MergeBase#flow/m7"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeBase/node/GW_AllDeclared"
+    }
+  ]
+}

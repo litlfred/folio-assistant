@@ -1,0 +1,54 @@
+{
+  "$ref": "#/definitions/ReferencedLink",
+  "definitions": {
+    "ReferencedLink": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "label": {
+              "type": "string",
+              "minLength": 1
+            },
+            "url": {
+              "type": "string",
+              "format": "uri"
+            }
+          },
+          "required": [
+            "label",
+            "url"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "label": {
+              "type": "string",
+              "minLength": 1
+            },
+            "site_path": {
+              "type": "string",
+              "pattern": "^[a-z0-9][a-z0-9._/-]*$"
+            }
+          },
+          "required": [
+            "label",
+            "site_path"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/referenced-source/ReferencedLinkSchema.schema.json",
+  "title": "ReferencedLinkSchema",
+  "description": "Generated from `ReferencedLinkSchema` in schemas/library/referenced-source.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-train-0550",
+    "sha": "211176b48990d1a2382a2913a91794b72853a53c",
+    "pr": "3124/merge",
+    "run": "43611082734"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/cat-harness-tools/cat-harness-tools.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/cat-harness-tools/schema/site-indexes.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/cat-harness-tools/cat-harness-tools.jsonld",
+  "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/site-indexes.jsonld",
+  "staging": {
+    "branch": "claude/repin-train-0550",
+    "sha": "211176b48990d1a2382a2913a91794b72853a53c",
+    "pr": "3124/merge",
+    "run": "43611082734"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/site-indexes",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "site-indexes",
+      "title": "site-indexes",
+      "summary": "The published index files the site's viewers read — each `$schema` family",
+      "module": "schemas/ui/site-indexes.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-schemas",
+      "jsonSchema": [
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/site-indexes/BeanIndexItemSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/site-indexes/BeanIndexSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/site-indexes/BlockSummaryViewSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/site-indexes/FolioGraphProjectionSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/site-indexes/LibraryDocumentSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/site-indexes/LibraryDocumentViewSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/site-indexes/LibraryEntrySchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/site-indexes/LibraryIndexEntrySchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/site-indexes/LibraryIndexSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/site-indexes/MilestonePlanSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/site-indexes/MilestoneRollupSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/site-indexes/QaIndexBadgeSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/site-indexes/QaIndexSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/site-indexes/QaTranslationPagesSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/site-indexes/SchemaGraphIndexSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/site-indexes/TranslationStatusSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/site-indexes/VoicesIndexSchema.schema.json"
+      ]
+    }
+  ]
+}

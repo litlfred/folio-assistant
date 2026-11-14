@@ -1,0 +1,200 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="../../assets/css/just-the-docs-default.css"><link rel="stylesheet" href="../../assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><script src="../../assets/js/vendor/lunr.min.js"></script><script src="../../assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>Injection | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="Injection" /><meta property="og:locale" content="en_US" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="Injection" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "reference-skill-instructions-injection-boundaries",
+    "src": "../../assets/qa/reference-skill-instructions-injection-boundaries/page.translation.json",
+    "index": "../../assets/qa/reference-skill-instructions-injection-boundaries/qa-index.json",
+    "list": "../../assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"../../assets/translation-status/index.json",
+  "reviewSrc":"../../assets/translation-status/review.json"
+}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"../../folio-assistant-core/","jsonld":"../../folio-assistant-core/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="../../assets/harness/site.json"><meta name="fa-todo-src" content="../../assets/todos/index.json"><meta name="fa-todo-graph" content="../../todos.jsonld"><meta name="fa-zoom-src" content="../../assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;]"><meta name="fa-baseurl" content="../.."><meta name="fa-staging" content="preview"><meta name="fa-search-index" content="published"><meta name="fa-beans-src" content="../../assets/beans/index.json"><meta name="fa-processes-src" content="../../subgraph/index.jsonld"><meta name="fa-build-src" content="../../build.json"><meta name="fa-fsh-guts-src" content="../../fsh-guts.json"><link rel="stylesheet" href="../../assets/css/navbar-row.css?v=7d7d00921e0f"><link rel="stylesheet" href="../../assets/css/docs-ui.css?v=48f434c0df5b"><link rel="stylesheet" href="../../assets/css/narrow-viewport.css?v=173ef819dbf2"><link rel="stylesheet" href="../../assets/css/themes.css?v=37c8ab192a5f"><link rel="stylesheet" href="../../assets/css/uml.css?v=e677f91cbf66"><link rel="stylesheet" href="../../assets/css/avatars.css?v=9c44b2be99db"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","scenarios","schemas","skills","software-library","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="../../assets/js/harness-data.js" defer></script><script src="../../assets/js/kg-render.js" defer></script><script src="../../assets/js/navbar-row.js?v=7fdc9b6882fa" defer></script><script src="../../assets/js/docs-ui.js?v=4a389697004c" defer></script><script src="../../assets/js/edit-links.js?v=7b072444cbb5" defer></script><script src="../../assets/js/translation-review.js?v=1902d883e072" defer></script><script src="../../assets/js/code-highlight.js?v=0f94772226c3" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><style id="fa-page-ground" data-instance="cat-harness">
+  /* Grumpy cyborg agents, the theme of cat-harness. */
+  :root { --fa-page-scrim: rgba(39, 38, 43, 0.85); --fa-text-scrim: rgba(39, 38, 43, 0.96); }
+  :root[data-fa-scheme="light"] { --fa-page-scrim: rgba(255, 255, 255, 0.85); --fa-text-scrim: rgba(255, 255, 255, 0.96); }
+  /* The root carries the art, so it covers the whole viewport however short
+     the page; the body is made see-through so the art is not painted over. */
+  html:root body { background-color: transparent; }
+  html body .main-content { background-color: var(--fa-text-scrim); border-radius: 6px; }
+  html:root {
+    background-image:
+      linear-gradient(var(--fa-page-scrim), var(--fa-page-scrim)),
+      url("../../assets/img/harness/landing-grumpy-cyborg-agents-laptop.webp");
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: cover;
+    background-attachment: fixed;
+  }
+  @media (max-width: 48rem) {
+    html:root {
+      background-image:
+        linear-gradient(var(--fa-page-scrim), var(--fa-page-scrim)),
+        url("../../assets/img/harness/landing-grumpy-cyborg-agents-card.webp");
+    }
+  }
+  @media (max-width: 30rem) {
+    html:root {
+      background-image:
+        linear-gradient(var(--fa-page-scrim), var(--fa-page-scrim)),
+        url("../../assets/img/harness/landing-grumpy-cyborg-agents-mobile.webp");
+    }
+  }
+  /* Print and forced colours get the plain page: art is decoration. */
+  @media print, (forced-colors: active) {
+    html:root { background-image: none; }
+  }
+</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-giobbw31pa.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-giobbw31pa","here":"/reference/skill-instructions/injection-boundaries.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#workflow-expressions-the-remedy-is-not-quoting","label":"Workflow expressions: the remedy is not quoting","children":[{"href":"#stepsoutputs-is-not-a-class--it-is-a-pipe","label":"steps.*.outputs is not a class — it is a PIPE","depth":1},{"href":"#script-blocks-are-the-second-surface","label":"script: blocks are the SECOND surface","depth":1}],"fold":"2 sub-sections"},{"href":"#shell-strings-pass-an-argv-not-a-sentence","label":"Shell strings: pass an argv, not a sentence"},{"href":"#archives--refusal-is-not-containment--check-the-member-type","label":"Archives: ..-refusal is not containment — check the member TYPE","children":[{"href":"#parsing-the-listing-and-reporting-a-refusal","label":"Parsing the listing, and reporting a refusal","depth":1}],"fold":"1 sub-section"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:var(--fa-font-sans,system-ui,sans-serif)">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+var b=document.querySelector('[data-fa-staging-banner]'),d=document.querySelector('[data-fa-staging-detail]');
+if(b)document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');
+var m=location.pathname.match(/^(.*\/(?:branches|STAGING)\/[^/]+\/)/);
+if(!m){if(d)d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+var s=document.createElement('script');s.src=m[1]+'staging-banner.js';
+s.onerror=function(){if(d)d.textContent='\u2014 build details unavailable';};
+(document.head||document.documentElement).appendChild(s);
+})();</script><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><nav aria-label="Breadcrumb" class="breadcrumb-nav"><ol class="breadcrumb-nav-list"><li class="breadcrumb-nav-list-item"><a href="../../reference/">Reference</a></li><li class="breadcrumb-nav-list-item"><a href="../../reference/skill-instructions/">Skill instructions</a></li><li class="breadcrumb-nav-list-item"><span>Injection</span></li></ol></nav><div id="main-content" class="main-content"><main><blockquote class="note"><p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/conduct/security/injection-boundaries.md"><code class="language-plaintext highlighter-rouge">cat-harness/skills/conduct/security/injection-boundaries.md</code></a> — do not edit here.</p><p><a href="https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/conduct/security/injection-boundaries.md" class="fa-edit-source" data-fa-link="edit" data-src="cat-harness/skills/conduct/security/injection-boundaries.md" data-repo="litlfred/folio-assistant">✎ Edit this page’s source</a></p></blockquote><h1 id="injection--the-value-became-program"><a href="#injection--the-value-became-program" class="anchor-heading" aria-labelledby="injection--the-value-became-program"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Injection — the value became program
+  
+  
+</h1><h2 id="workflow-expressions-the-remedy-is-not-quoting"><a href="#workflow-expressions-the-remedy-is-not-quoting" class="anchor-heading" aria-labelledby="workflow-expressions-the-remedy-is-not-quoting"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Workflow expressions: the remedy is not quoting
+  
+  
+</h2><p>A <code class="language-plaintext highlighter-rouge">${{ }}</code> expression is substituted into the script <strong>text</strong> before bash parses
+it, so a value containing a quote closes the surrounding string and the rest
+executes. <code class="language-plaintext highlighter-rouge">check-workflow-injection.ts</code> demonstrates the payload rather than
+asserting it, and its three bands are worth knowing:</p><div class="table-wrapper"><table><thead><tr><th>class</th><th>example</th><th>verdict</th></tr></thead><tbody><tr><td><strong>free text</strong></td><td><code class="language-plaintext highlighter-rouge">pull_request.title</code>, <code class="language-plaintext highlighter-rouge">.body</code>, <code class="language-plaintext highlighter-rouge">comment.body</code>, a dispatch input</td><td>FAIL</td></tr><tr><td><strong>constrained</strong></td><td><code class="language-plaintext highlighter-rouge">pull_request.number</code>, <code class="language-plaintext highlighter-rouge">head_ref</code>, <code class="language-plaintext highlighter-rouge">repository.name</code></td><td>reported and baselined</td></tr><tr><td><strong>safe</strong></td><td><code class="language-plaintext highlighter-rouge">github.workspace</code>, <code class="language-plaintext highlighter-rouge">matrix.*</code>, <code class="language-plaintext highlighter-rouge">secrets.*</code></td><td>not reported</td></tr></tbody></table></div><p>The fix is <code class="language-plaintext highlighter-rouge">env:</code> plus <code class="language-plaintext highlighter-rouge">"$VAR"</code>, where bash sees a value rather than source.</p><h3 id="stepsoutputs-is-not-a-class--it-is-a-pipe"><a href="#stepsoutputs-is-not-a-class--it-is-a-pipe" class="anchor-heading" aria-labelledby="stepsoutputs-is-not-a-class--it-is-a-pipe"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">steps.*.outputs</code> is not a class — it is a PIPE
+  
+  
+</h3><p>A step output holds whatever the step put in it, so it has no severity of its
+own:</p><div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="pi">-</span> <span class="na">id</span><span class="pi">:</span> <span class="s">version</span>
+  <span class="na">env</span><span class="pi">:</span>
+    <span class="na">INPUT_VERSION</span><span class="pi">:</span> <span class="s">${{ github.event.inputs.version }}</span>   <span class="c1"># free text — FAIL band</span>
+  <span class="na">run</span><span class="pi">:</span> <span class="pi">|</span>
+    <span class="s">echo "$VERSION" &gt;&gt; "$GITHUB_OUTPUT"                 # ...written out</span>
+<span class="c1"># a later step:</span>
+  <span class="na">run</span><span class="pi">:</span> <span class="pi">|</span>
+    <span class="s">mv *.tgz "pkg-${{ steps.version.outputs.version }}.tgz"</span>
+</code></pre></div></div><p>A dispatch of <code class="language-plaintext highlighter-rouge">1.0";id;"</code> renders <code class="language-plaintext highlighter-rouge">mv *.tgz "pkg-1.0";id;".tgz"</code> and runs <code class="language-plaintext highlighter-rouge">id</code>.
+<strong><code class="language-plaintext highlighter-rouge">env:</code> protects the step that binds, not the value’s onward journey.</strong></p><p><strong>Provenance is resolved, not assumed.</strong> <code class="language-plaintext highlighter-rouge">resolveProvenance</code> reads each step
+that writes <code class="language-plaintext highlighter-rouge">$GITHUB_OUTPUT</code>, takes the worst severity among the expressions
+that step binds, and a consumption of its output inherits it — keyed
+<code class="language-plaintext highlighter-rouge">job.stepId</code>, since step outputs are job-scoped and two jobs may reuse an id. A
+job’s <code class="language-plaintext highlighter-rouge">outputs:</code> block is followed one more hop, so <code class="language-plaintext highlighter-rouge">needs.&lt;job&gt;.outputs.&lt;name&gt;</code>
+inherits too. <strong>Enumerate the whole band, not the examples an audit named.</strong></p><p><strong>Graded free text even when sanitised, on purpose.</strong> A producer that reduces
+its value to <code class="language-plaintext highlighter-rouge">[A-Za-z0-9._-]</code> with a <code class="language-plaintext highlighter-rouge">sed</code> cannot carry a payload, but the gate
+does not decide per site whether a sanitiser is good enough: it reports the
+site and takes an <code class="language-plaintext highlighter-rouge">env:</code> line as the answer. This is stricter than
+<a href="../../reference/skill-instructions/untrusted-input.html"><code class="language-plaintext highlighter-rouge">untrusted-input</code></a>, which lists <em>“an output
+your own workflow sanitised”</em> as trusted for a person reading the workflow. A
+reviewer may conclude a value is fine; the gate makes sure somebody concluded
+it.</p><h3 id="script-blocks-are-the-second-surface"><a href="#script-blocks-are-the-second-surface" class="anchor-heading" aria-labelledby="script-blocks-are-the-second-surface"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">script:</code> blocks are the SECOND surface
+  
+  
+</h3><p><code class="language-plaintext highlighter-rouge">actions/github-script</code> runs JavaScript, and <code class="language-plaintext highlighter-rouge">${{ }}</code> is substituted into its
+source text the same way, although <code class="language-plaintext highlighter-rouge">script:</code> sits under <code class="language-plaintext highlighter-rouge">with:</code>. <strong>A scope
+exclusion is a place defects collect, not a place they are absent.</strong></p><p><strong>One position there is worse than any in bash.</strong> Inside a template literal
+<code class="language-plaintext highlighter-rouge">${…}</code> is <em>evaluated</em>, so a value need not close a quote to become program, and
+git accepts such branch names:</p><div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git check-ref-format --branch 'a${process.exit(1)}b'   → LEGAL
+git check-ref-format --branch 'x`id`'                  → LEGAL
+git check-ref-format --branch 'x${7*7}'                → refused, for the `*`
+</code></pre></div></div><p>A raw fork branch name interpolated into a template literal is arbitrary
+JavaScript execution reachable by opening a fork PR.</p><p><strong>The remedy differs, so it is a separate surface and not a wider regex.</strong> A
+<code class="language-plaintext highlighter-rouge">script:</code> block is Node: bind on the step’s <code class="language-plaintext highlighter-rouge">env:</code> and read <code class="language-plaintext highlighter-rouge">process.env.VAR</code>
+(e.g. <code class="language-plaintext highlighter-rouge">const slug = process.env.SLUG</code>). The gate emits a different sentence,
+and <code class="language-plaintext highlighter-rouge">baselineKey</code> carries the surface — the same expression in the two surfaces
+is two decisions.</p><p><strong>Position is deliberately NOT modelled.</strong> Deciding whether an interpolation
+sits inside a template literal means tracking backticks across lines, and a
+detector that quietly missed the multi-line case would be worse than none. The
+bands grade the value.</p><h2 id="shell-strings-pass-an-argv-not-a-sentence"><a href="#shell-strings-pass-an-argv-not-a-sentence" class="anchor-heading" aria-labelledby="shell-strings-pass-an-argv-not-a-sentence"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Shell strings: pass an argv, not a sentence
+  
+  
+</h2><p><code class="language-plaintext highlighter-rouge">execSync("tar xzf " + name)</code> hands bash a program. <code class="language-plaintext highlighter-rouge">execFileSync("tar", ["xzf",
+name])</code> has no shell to parse, so a filename can never become a command. Prefer
+the argv form even where nothing is attacker-controlled today, so it cannot
+become so by an edit somewhere else.</p><p>An argv still leaves <strong>argument</strong> injection: a value beginning with <code class="language-plaintext highlighter-rouge">-</code> can be
+read as a flag. Where a value is a filename, <code class="language-plaintext highlighter-rouge">--</code> before it, or a <code class="language-plaintext highlighter-rouge">./</code> prefix,
+settles it.</p><h2 id="archives--refusal-is-not-containment--check-the-member-type"><a href="#archives--refusal-is-not-containment--check-the-member-type" class="anchor-heading" aria-labelledby="archives--refusal-is-not-containment--check-the-member-type"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Archives: <code class="language-plaintext highlighter-rouge">..</code>-refusal is not containment — check the member TYPE
+  
+  
+</h2><p>GNU tar refuses a <code class="language-plaintext highlighter-rouge">..</code> member and strips a leading <code class="language-plaintext highlighter-rouge">/</code>, so traversal <strong>by
+spelling</strong> is covered by tar itself. What that does not cover is a <strong>link
+member</strong>, which writes through to its target — the same residual class the
+lexical path check has.</p><p><strong>Refuse on the member’s TYPE, and make it a whitelist.</strong> <code class="language-plaintext highlighter-rouge">tar tvzf</code> (not <code class="language-plaintext highlighter-rouge">tzf</code>)
+puts the type in the first character of the mode; accept only <code class="language-plaintext highlighter-rouge">-</code> (regular file)
+and <code class="language-plaintext highlighter-rouge">d</code> (directory). Then extract with <code class="language-plaintext highlighter-rouge">--no-same-owner --no-same-permissions</code>.
+A whitelist, because a refuse-list admits whatever tar feature nobody thought
+of, and a source archive has no legitimate device, fifo or link member.</p><p><strong>Name checks cannot substitute:</strong></p><div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-rw-r--r-- root/root  2 2026-09-26 12:13 main.tex        ← accepted
+lrwxrwxrwx root/root  0 2026-09-26 12:13 evil.tex -&gt; /etc/passwd
+hrw-r--r-- root/root  0 2026-09-26 12:13 hard.tex        ← hardlink
+</code></pre></div></div><p>The symlink member is named <code class="language-plaintext highlighter-rouge">evil.tex</code>: <strong>not absolute, no <code class="language-plaintext highlighter-rouge">..</code>, no NUL</strong>. It
+passes every name check there is. Only the type distinguishes it.</p><h3 id="parsing-the-listing-and-reporting-a-refusal"><a href="#parsing-the-listing-and-reporting-a-refusal" class="anchor-heading" aria-labelledby="parsing-the-listing-and-reporting-a-refusal"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Parsing the listing, and reporting a refusal
+  
+  
+</h3><p><strong>The member name is everything after the FIFTH field of a <code class="language-plaintext highlighter-rouge">tvzf</code> line</strong>, so a
+name containing spaces survives intact. <strong>Parse a listing against real output
+(e.g. a tarball with a space in a member name), never against its shape as you
+remember it.</strong></p><p><strong>A refusal is not a format mismatch.</strong> An unsafe-member refusal must not be
+swallowed by a “might be a single file” fallback: it gets a distinct error
+type, so a handler can answer 422 for a hostile archive and carry on for a file
+that is not a tarball.</p></main><hr><footer><details class="fa-provenance" id="fa-provenance" data-fa-provenance-count="9"><summary class="fa-provenance-summary">Provenance (9)</summary><p class="fa-provenance-lead">Who decided, when, and under which work item. This record was moved out of the text of the page.</p><h3 class="fa-provenance-section"><code>steps.*.outputs</code> is not a class — it is a PIPE</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="bean"><span class="fa-provenance-kind">bean</span> <span class="fa-provenance-refs"><code>bean 6bhf</code> <code>2026-09-26</code></span><div class="fa-provenance-text">A step output holds whatever the step put in it, so it has no severity of its own. It was in the <strong>safe</strong> band above, unconditionally, until 2026-09-26, and the consequence was live rather than theoretical (bean <code>6bhf</code>):<br><br>``<code>yaml - id: version env: INPUT_VERSION: ${{ github.event.inputs.version }}   # free text — FAIL band run: | echo &quot;$VERSION&quot; &gt;&gt; &quot;$GITHUB_OUTPUT&quot;                 # ...written out # a later step: run: | mv *.tgz &quot;folio-assistant-${{ steps.version.outputs.version }}.tgz&quot; </code>``</div></li><li class="fa-provenance-entry" data-fa-provenance-kind="bean"><span class="fa-provenance-kind">bean</span> <span class="fa-provenance-refs"><code>2026-09-18</code> <code>2026-09-22</code></span><div class="fa-provenance-text"><strong>This was already written down, four days before the gate was.</strong> [<code>untrusted-input</code>](../conduct-core/untrusted-input.md) §&quot;What counts as attacker-controlled&quot; has listed *&quot;anything derived from them — including a <code>steps.*.outputs.*</code> that merely passed one through&quot;* since 2026-09-18, with a measured example from this very corpus: the staging workflow bound <code>head.ref</code> to <code>env</code> in one step and wrote the <strong>raw</strong> branch to <code>$GITHUB_OUTPUT</code>. The gate, written 2026-09-22, then classified <code>steps.*.outputs</code> safe unconditionally. So this is <code>1wef</code>&#39;s own lesson one turn further round — <em>&quot;somebody had understood this hazard exactly, nothing checked it&quot;</em> — except that this time the thing that did not check it was <strong>the check</strong>. When a gate and a skill disagree, one of them is a claim nobody tested; find out which before trusting either.</div></li><li class="fa-provenance-entry" data-fa-provenance-kind="history"><span class="fa-provenance-kind">history</span><div class="fa-provenance-text">&gt; <strong>The measurement that missed it is the part worth carrying.</strong> This gap was &gt; first recorded as <em>latent</em>, on the evidence that *&quot;every <code>&gt;&gt; $GITHUB_OUTPUT</code> &gt; write of a reason or title is a literal&quot;*. That was true. It asked about <strong>two</strong> &gt; members of the free-text band — a reason and a title — while the <strong>third</strong>, a &gt; dispatch input, was the one being written. A measurement scoped to the &gt; instances an audit happened to name is exactly as narrow as a fix scoped to &gt; them, which is <code>path-containment</code>&#39;s lesson in the same bean on the same day. &gt; <strong>Enumerate the band, not its examples.</strong></div></li></ul><h3 class="fa-provenance-section"><code>script:</code> blocks are the SECOND surface — decided yes (bean <code>j0zs</code>)</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="bean"><span class="fa-provenance-kind">bean</span> <span class="fa-provenance-refs"><code>bean j0zs</code></span><div class="fa-provenance-text">### <code>script:</code> blocks are the SECOND surface — decided yes (bean <code>j0zs</code>)</div></li><li class="fa-provenance-entry" data-fa-provenance-kind="history"><span class="fa-provenance-kind">history</span> <span class="fa-provenance-refs"><code>2026-09-26</code></span><div class="fa-provenance-text"><code>actions/github-script</code> runs JavaScript, and <code>${{ }}</code> is substituted into its source text the same way. The gate read <code>run:</code> only until 2026-09-26, on the reasoning that <code>with:</code> is where values are passed safely — and <code>script:</code> lives <em>under</em> <code>with:</code>, so the scope line and the remedy line collided at exactly one key. That collision was the question; <strong>the measurement answered it.</strong></div></li><li class="fa-provenance-entry" data-fa-provenance-kind="history"><span class="fa-provenance-kind">history</span><div class="fa-provenance-text"><code>feature-staging.yml</code> interpolated the <strong>raw fork branch name</strong> into a template literal, in a step whose sibling two jobs down binds the same value to <code>env:</code> and explains why. So it was arbitrary JavaScript execution reachable by opening a fork PR, capped only by <code>pull_request</code>&#39;s read-only token.</div></li><li class="fa-provenance-entry" data-fa-provenance-kind="history"><span class="fa-provenance-kind">history</span><div class="fa-provenance-text">&gt; <strong>And the remedy was already in the corpus, in the workflow next door.</strong> &gt; <code>folio-staging.yml</code> does the same job — comment the staging URL on the PR — and &gt; has always written <code>const slug = process.env.SLUG</code> and &gt; `<code> **Branch:** \</code>${process.env.BRANCH}\<code> </code><code>. Two files doing one job, one &gt; right and one wrong, and nothing checked which pattern a file used. That is &gt; </code>1wef`&#39;s lesson a third time, in the surface the gate had declared out of &gt; scope: <strong>a scope exclusion is a place defects collect, not a place they are &gt; absent.</strong></div></li></ul><h3 class="fa-provenance-section">Archives: <code>..</code>-refusal is not containment — check the member TYPE</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="bean"><span class="fa-provenance-kind">bean</span> <span class="fa-provenance-refs"><code>bean 6bhf</code> <code>2026-09-26</code></span><div class="fa-provenance-text"><strong>Why the name checks cannot substitute</strong>, measured 2026-09-26 against a real archive (bean <code>6bhf</code>):<br><br>``<code> -rw-r--r-- root/root  2 2026-09-26 12:13 main.tex        ← accepted lrwxrwxrwx root/root  0 2026-09-26 12:13 evil.tex -&gt; /etc/passwd hrw-r--r-- root/root  0 2026-09-26 12:13 hard.tex        ← hardlink </code>``</div></li></ul><h3 class="fa-provenance-section">Two defects the fix itself carried, both found by running it</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="history"><span class="fa-provenance-kind">history</span><div class="fa-provenance-text">### Two defects the fix itself carried, both found by running it<br><br>**The member name is everything after the FIFTH field of a <code>tvzf</code> line.** Six was written first, which ate the first word of every name — <code>sub/a b c.tex</code> became <code>b c.tex</code>, so the containment check ran on a path that was never in the archive: a guard reading clean while examining a fabrication. Re-reading the regex would not have shown it; building a tarball with a space in a member name did, immediately. <strong>Parse a listing against real output, never against its shape as you remember it.</strong><br><br><strong>A refusal is not a format mismatch.</strong> The unsafe-member <code>throw</code> landed in a bare <code>catch { /* might be a single file */ }</code>, so a refused archive fell through to the next format guess with nothing logged — an operator could not tell a hostile archive from a file that was not a tarball. Two states collapsed into one, which is <code>ci-health</code>&#39;s rule at a different layer. A distinct error type is what lets a handler answer 422 for one and carry on for the other.</div></li></ul></details><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

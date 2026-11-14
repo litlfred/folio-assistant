@@ -1,0 +1,37 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_RecordStep.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/repin-train-0550",
+    "sha": "211176b48990d1a2382a2913a91794b72853a53c",
+    "pr": "3124/merge",
+    "run": "43611082734"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_RecordStep",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Record agent step on each row it wrote",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/folio-assistant-core/process/Process_ReviewLogWatch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/folio-assistant-core/process/Process_ReviewLogWatch/lane/Lane_Watcher",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/folio-assistant-core/skill/review-sheet-agent-columns"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/folio-assistant-core/process/Process_RecordAgentStep",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF07"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF10"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_RecordStep"
+    }
+  ]
+}

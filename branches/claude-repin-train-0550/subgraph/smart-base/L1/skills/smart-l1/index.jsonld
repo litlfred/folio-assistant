@@ -1,0 +1,101 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L1/skills/smart-l1/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "http://smart.who.int/base/skill/classify-and-code-content",
+      "@type": "bootstrap:Skill",
+      "name": "classify-and-code-content",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b152f69c327c8fdc80a8182554be27aa9e6434fb765a4c9fa974e0eb838107d3",
+        "bytes": 7142,
+        "sha256": "b152f69c327c8fdc80a8182554be27aa9e6434fb765a4c9fa974e0eb838107d3"
+      },
+      "title": "classify-and-code-content"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/dak-l1-library",
+      "@type": "bootstrap:Skill",
+      "name": "dak-l1-library",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2461c27f0e9062615decde6092eb84ea0251b65eb4bc875a6b1262900958568e",
+        "bytes": 10480,
+        "sha256": "2461c27f0e9062615decde6092eb84ea0251b65eb4bc875a6b1262900958568e"
+      },
+      "title": "dak-l1-library"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/grade",
+      "@type": "bootstrap:Skill",
+      "name": "grade",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/22daf20d31a9b1dc7b1595dc9b7ecd3afdd51c33352afad5c587ce6373f217a0",
+        "bytes": 4787,
+        "sha256": "22daf20d31a9b1dc7b1595dc9b7ecd3afdd51c33352afad5c587ce6373f217a0"
+      },
+      "title": "grade"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/indicator-extraction",
+      "@type": "bootstrap:Skill",
+      "name": "indicator-extraction",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/19181ada1f7dfb32e38704bf74b34799e191adf7bff336bb508cacff9c077d71",
+        "bytes": 5673,
+        "sha256": "19181ada1f7dfb32e38704bf74b34799e191adf7bff336bb508cacff9c077d71"
+      },
+      "title": "indicator-extraction"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/recommendation-candidates",
+      "@type": "bootstrap:Skill",
+      "name": "recommendation-candidates",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/cde2b53da1a1713c0415b84dee539d5997720297ae3543d5c4cf764b8e3458ab",
+        "bytes": 2046,
+        "sha256": "cde2b53da1a1713c0415b84dee539d5997720297ae3543d5c4cf764b8e3458ab"
+      },
+      "title": "recommendation-candidates"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/recommendation-extraction",
+      "@type": "bootstrap:Skill",
+      "name": "recommendation-extraction",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2f4481e7dedf7b14c2e4cac7b023d1a7353735b6078dd08e655e86021281b08f",
+        "bytes": 21001,
+        "sha256": "2f4481e7dedf7b14c2e4cac7b023d1a7353735b6078dd08e655e86021281b08f"
+      },
+      "title": "recommendation-extraction"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/recommendation-scenarios",
+      "@type": "bootstrap:Skill",
+      "name": "recommendation-scenarios",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9ddc006168cc35812dd122d2c1e6694bbed476e64faf3f82b668f04fc5452002",
+        "bytes": 2175,
+        "sha256": "9ddc006168cc35812dd122d2c1e6694bbed476e64faf3f82b668f04fc5452002"
+      },
+      "title": "recommendation-scenarios"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/transcription-verbatim",
+      "@type": "bootstrap:Skill",
+      "name": "transcription-verbatim",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7a627edf0f00784fc9bba90bd983795b35e272f6f346755a7ef5cade154858c1",
+        "bytes": 2626,
+        "sha256": "7a627edf0f00784fc9bba90bd983795b35e272f6f346755a7ef5cade154858c1"
+      },
+      "title": "transcription-verbatim"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "L1/skills/smart-l1",
+  "path": "L1/skills/smart-l1/"
+}

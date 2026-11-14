@@ -1,0 +1,46 @@
+{
+  "$ref": "#/definitions/Evidence",
+  "definitions": {
+    "Evidence": {
+      "type": "object",
+      "properties": {
+        "location": {
+          "type": "string",
+          "description": "file:line, a spreadsheet sheet and cell, or a BPMN element id."
+        },
+        "quote": {
+          "type": "string",
+          "description": "Verbatim text from the source."
+        },
+        "artifact": {
+          "type": "string",
+          "description": "The generated artifact affected, where one exists."
+        },
+        "by": {
+          "type": "string",
+          "description": "Who made the judgement. Required by tier 2 when derivation is decided: a person's choice between candidates is only reviewable if it says whose it was."
+        },
+        "at": {
+          "type": "string",
+          "format": "date",
+          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$",
+          "description": "When the judgement was made. Required by tier 2 when derivation is decided."
+        }
+      },
+      "required": [
+        "location"
+      ],
+      "additionalProperties": false,
+      "description": "Where this came from in the DAK. Required on anything not mechanically derived, for the same reason a failing check must quote its source: an assertion with nothing to point at is the confident wrong answer the package exists to prevent."
+    }
+  },
+  "$id": "http://smart.who.int/base/schema/zod/graph/EvidenceSchema.schema.json",
+  "title": "EvidenceSchema",
+  "description": "Generated from `EvidenceSchema` in L1/schemas/graph.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-train-0550",
+    "sha": "211176b48990d1a2382a2913a91794b72853a53c",
+    "pr": "3124/merge",
+    "run": "43611082734"
+  }
+}

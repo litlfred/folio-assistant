@@ -1,0 +1,2933 @@
+{
+  "$schema": "folio-library-document/v1",
+  "id": "arxiv-2505.06046v4",
+  "title": "Healthy LLMs? Benchmarking LLM Knowledge of UK Government Public Health Information",
+  "variant": "pdf",
+  "pages": 27,
+  "tocSource": "outline",
+  "tocMethod": null,
+  "toc": [
+    {
+      "level": 1,
+      "title": "Introduction",
+      "number": null,
+      "page": 1,
+      "pageLabel": "1",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-000-introduction"
+    },
+    {
+      "level": 1,
+      "title": "Related work",
+      "number": null,
+      "page": 2,
+      "pageLabel": "2",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-001-related-work"
+    },
+    {
+      "level": 2,
+      "title": "MCQA LLM evaluations",
+      "number": null,
+      "page": 2,
+      "pageLabel": "2",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-002-mcqa-llm-evaluations"
+    },
+    {
+      "level": 2,
+      "title": "Synthetic MCQA datasets",
+      "number": null,
+      "page": 3,
+      "pageLabel": "3",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-003-synthetic-mcqa-datasets"
+    },
+    {
+      "level": 2,
+      "title": "Public health evaluations",
+      "number": null,
+      "page": 3,
+      "pageLabel": "3",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-004-public-health-evaluations"
+    },
+    {
+      "level": 1,
+      "title": "Methods",
+      "number": null,
+      "page": 4,
+      "pageLabel": "4",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-005-methods"
+    },
+    {
+      "level": 2,
+      "title": "UK public health information",
+      "number": null,
+      "page": 4,
+      "pageLabel": "4",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-006-uk-public-health-information"
+    },
+    {
+      "level": 2,
+      "title": "Pre-processing and chunking",
+      "number": null,
+      "page": 4,
+      "pageLabel": "4",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-007-pre-processing-and-chunking"
+    },
+    {
+      "level": 2,
+      "title": "Question generation",
+      "number": null,
+      "page": 4,
+      "pageLabel": "4",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-008-question-generation"
+    },
+    {
+      "level": 2,
+      "title": "Automated MCQA error detection and sampling",
+      "number": null,
+      "page": 4,
+      "pageLabel": "4",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-009-automated-mcqa-error-detection-and-sampling"
+    },
+    {
+      "level": 2,
+      "title": "Final MCQA benchmark dataset",
+      "number": null,
+      "page": 5,
+      "pageLabel": "5",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-010-final-mcqa-benchmark-dataset"
+    },
+    {
+      "level": 2,
+      "title": "Human expert quality assurance",
+      "number": null,
+      "page": 5,
+      "pageLabel": "5",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-011-human-expert-quality-assurance"
+    },
+    {
+      "level": 1,
+      "title": "Model evaluation approach",
+      "number": null,
+      "page": 5,
+      "pageLabel": "5",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-012-model-evaluation-approach"
+    },
+    {
+      "level": 2,
+      "title": "Benchmark subsets",
+      "number": null,
+      "page": 6,
+      "pageLabel": "6",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-013-benchmark-subsets"
+    },
+    {
+      "level": 2,
+      "title": "Human baseline",
+      "number": null,
+      "page": 6,
+      "pageLabel": "6",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-015-human-baseline"
+    },
+    {
+      "level": 2,
+      "title": "Experimental setup",
+      "number": null,
+      "page": 6,
+      "pageLabel": "6",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-016-experimental-setup"
+    },
+    {
+      "level": 3,
+      "title": "Free form response evaluation",
+      "number": null,
+      "page": 6,
+      "pageLabel": "6",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-017-free-form-response-evaluation"
+    },
+    {
+      "level": 1,
+      "title": "Results",
+      "number": null,
+      "page": 6,
+      "pageLabel": "6",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-014-results"
+    },
+    {
+      "level": 2,
+      "title": "PubHealthBench - overall MCQA benchmark results",
+      "number": null,
+      "page": 6,
+      "pageLabel": "6",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-018-pubhealthbench---overall-mcqa-benchmark-results"
+    },
+    {
+      "level": 2,
+      "title": "PubHealthBench - results by topic area and audience",
+      "number": null,
+      "page": 7,
+      "pageLabel": "7",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-019-pubhealthbench---results-by-topic-area-and-audie"
+    },
+    {
+      "level": 2,
+      "title": "PubHealthBench-FreeForm results",
+      "number": null,
+      "page": 8,
+      "pageLabel": "8",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-020-pubhealthbench-freeform-results"
+    },
+    {
+      "level": 1,
+      "title": "Discussion",
+      "number": null,
+      "page": 8,
+      "pageLabel": "8",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-021-discussion"
+    },
+    {
+      "level": 1,
+      "title": "Limitations",
+      "number": null,
+      "page": 9,
+      "pageLabel": "9",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-022-limitations"
+    },
+    {
+      "level": 1,
+      "title": "Conclusion",
+      "number": null,
+      "page": 9,
+      "pageLabel": "9",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-023-conclusion"
+    },
+    {
+      "level": 1,
+      "title": "Ethics Statement",
+      "number": null,
+      "page": 10,
+      "pageLabel": "10",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-024-ethics-statement"
+    },
+    {
+      "level": 1,
+      "title": "Reproducibility Statement",
+      "number": null,
+      "page": 10,
+      "pageLabel": "10",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-025-reproducibility-statement"
+    },
+    {
+      "level": 1,
+      "title": "Appendix",
+      "number": null,
+      "page": 14,
+      "pageLabel": "14",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-026-appendix"
+    },
+    {
+      "level": 2,
+      "title": "Automated MCQA error detection",
+      "number": null,
+      "page": 14,
+      "pageLabel": "14",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-027-automated-mcqa-error-detection"
+    },
+    {
+      "level": 2,
+      "title": "Additional benchmark statistics",
+      "number": null,
+      "page": 16,
+      "pageLabel": "16",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-028-additional-benchmark-statistics"
+    },
+    {
+      "level": 2,
+      "title": "MCQA generation prompts",
+      "number": null,
+      "page": 17,
+      "pageLabel": "17",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-029-mcqa-generation-prompts"
+    },
+    {
+      "level": 2,
+      "title": "Human manual annotation",
+      "number": null,
+      "page": 18,
+      "pageLabel": "18",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-030-human-manual-annotation"
+    },
+    {
+      "level": 3,
+      "title": "Estimating the benchmark error rate",
+      "number": null,
+      "page": 18,
+      "pageLabel": "18",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-031-estimating-the-benchmark-error-rate"
+    },
+    {
+      "level": 3,
+      "title": "Human baseline",
+      "number": null,
+      "page": 20,
+      "pageLabel": "20",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-032-human-baseline"
+    },
+    {
+      "level": 2,
+      "title": "Experimental setup and compute resources",
+      "number": null,
+      "page": 20,
+      "pageLabel": "20",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-033-experimental-setup-and-compute-resources"
+    },
+    {
+      "level": 2,
+      "title": "PubHealthBench prompts",
+      "number": null,
+      "page": 21,
+      "pageLabel": "21",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-034-pubhealthbench-prompts"
+    },
+    {
+      "level": 2,
+      "title": "Free form evaluation - LLM as a Judge setup",
+      "number": null,
+      "page": 21,
+      "pageLabel": "21",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-035-free-form-evaluation---llm-as-a-judge-setup"
+    },
+    {
+      "level": 3,
+      "title": "Judge model comparisons",
+      "number": null,
+      "page": 22,
+      "pageLabel": "22",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-036-judge-model-comparisons"
+    },
+    {
+      "level": 3,
+      "title": "Error analysis",
+      "number": null,
+      "page": 22,
+      "pageLabel": "22",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-037-error-analysis"
+    },
+    {
+      "level": 3,
+      "title": "Problematic response examples",
+      "number": null,
+      "page": 24,
+      "pageLabel": "24",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-038-problematic-response-examples"
+    },
+    {
+      "level": 2,
+      "title": "Confidence intervals",
+      "number": null,
+      "page": 26,
+      "pageLabel": "26",
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-039-confidence-intervals"
+    }
+  ],
+  "sections": [
+    {
+      "id": "sec-front-matter",
+      "number": null,
+      "title": "Front matter",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 1,
+      "labelStart": "1",
+      "labelEnd": "1",
+      "words": 291,
+      "summary": {
+        "text": "Title, authors and abstract: 'Healthy LLMs? Benchmarking LLM Knowledge of UK Government Public Health Information' by Joshua Harris and ten colleagues at the UK Health Security Agency. The abstract introduces PubHealthBench (over 8000 questions from 687 current UK government guidance documents, generated by an automated pipeline) and reports that GPT-4.5, GPT-4.1 and o1 exceed 90% MCQA accuracy and beat humans using cursory search, while no model scores above 75% on free-form answers, so safeguards may still be needed. Ends with the caption of Figure 1 (Full/Reviewed and FreeForm accuracy with 95% Wilson CIs).",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "public health",
+          "heading": false
+        },
+        {
+          "term": "pubhealthbench",
+          "heading": false
+        },
+        {
+          "term": "free form",
+          "heading": false
+        },
+        {
+          "term": "form responses",
+          "heading": false
+        },
+        {
+          "term": "model accuracy",
+          "heading": false
+        },
+        {
+          "term": "mcqa",
+          "heading": false
+        },
+        {
+          "term": "llms",
+          "heading": false
+        },
+        {
+          "term": "infor",
+          "heading": false
+        }
+      ],
+      "extract": "Preprint. HEALTHY LLMS? BENCHMARKING LLM KNOWL- EDGE OF UK GOVERNMENT PUBLIC HEALTH INFOR- MATION Joshua Harris†, Fan Grayson, Felix Feldman, Timothy Laurence, Toby Nonnenmacher, Oliver Higgins, Leo Loman, Selina Patel, Thomas Finnie, Samuel Collins, Michael Borowitz UK Health Security Agency (UKHSA) ABSTRACT As Large Language Models (LLMs) become widely accessible, a detailed un- derstanding of their knowledge",
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-2505.06046v4/blocks/prose-sec-front-matter",
+        "library/arxiv-2505.06046v4/blocks/figure-img-p001-1",
+        "library/arxiv-2505.06046v4/blocks/figure-img-p001-2"
+      ]
+    },
+    {
+      "id": "sec-000-introduction",
+      "number": null,
+      "title": "Introduction",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 2,
+      "labelStart": "1",
+      "labelEnd": "2",
+      "words": 571,
+      "summary": {
+        "text": "Introduction: argues that LLM chatbots could change how UK public health guidance is retrieved and shared, that no benchmark covers public health or UK Government guidance, and that frequent revisions make current guidance hard for LLMs. Lists four contributions: PubHealthBench, an MCQA benchmark of over 8000 questions generated from more than 500 UKHSA documents on gov.uk (Full and a manually Reviewed subset); PubHealthBench-FreeForm, judged by a grounded LLM judge; evaluations of 24 LLMs; and a human expert review of 800 questions plus a search-engine human baseline from 5 people on 600 questions.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "health guidance",
+          "heading": false
+        },
+        {
+          "term": "public health",
+          "heading": false
+        },
+        {
+          "term": "reviewed subset",
+          "heading": false
+        },
+        {
+          "term": "response benchmark",
+          "heading": false
+        },
+        {
+          "term": "human baseline",
+          "heading": false
+        },
+        {
+          "term": "mcqa",
+          "heading": false
+        },
+        {
+          "term": "broad range",
+          "heading": false
+        },
+        {
+          "term": "across broad",
+          "heading": false
+        }
+      ],
+      "extract": "Public health guidance represents an important source of information for UK residents and experts to inform personal, professional, and clinical decision making. The release of highly capable Large Language Models (LLMs) (Minaee et al., 2025), and particularly chatbots (OpenAI, 2022), could †joshua.harris@ukhsa.gov.uk 1 arXiv:2505.06046v4 [cs.CL] 9 Mar 2026 Preprint. represent a significant shift in how public",
+      "extractCut": true
+    },
+    {
+      "id": "sec-001-related-work",
+      "number": null,
+      "title": "Related work",
+      "level": 1,
+      "pageStart": 2,
+      "pageEnd": 2,
+      "labelStart": "2",
+      "labelEnd": "2",
+      "words": 1,
+      "summary": {
+        "text": "Heading-only block: the section number 2.1 under 'Related work', with no body text; the subsections follow as separate blocks.",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "2.1",
+      "extractCut": false
+    },
+    {
+      "id": "sec-002-mcqa-llm-evaluations",
+      "number": null,
+      "title": "MCQA LLM evaluations",
+      "level": 2,
+      "pageStart": 2,
+      "pageEnd": 3,
+      "labelStart": "2",
+      "labelEnd": "3",
+      "words": 197,
+      "summary": {
+        "text": "Related work on MCQA evaluations: domain knowledge of LLMs has long been tested with existing human exams (e.g. the USMLE in medicine), then with broad benchmarks such as MMLU and the corrected, harder MMLU-Pro, and with domain sets such as GPQA and ARC for science. Includes the footnotes that most included guidance is English public health guidance in English only, and the GOV.UK reuse policy link, plus the caption of Figure 2 (example questions).",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "mcqa",
+          "heading": true
+        },
+        {
+          "term": "evaluations",
+          "heading": true
+        },
+        {
+          "term": "llm",
+          "heading": true
+        },
+        {
+          "term": "llm knowledge",
+          "heading": false
+        },
+        {
+          "term": "mmlu",
+          "heading": false
+        },
+        {
+          "term": "medical",
+          "heading": false
+        }
+      ],
+      "extract": "Using Multiple-Choice Question Answering (MCQA) to assess the knowledge of LLMs is well established in the literature. Earlier work evaluating LLM knowledge in specific domains often used existing MCQA human assessments and exams (OpenAI, 2023; Bommarito et al., 2023; Jin et al., 2020; Pal et al., 2022), for example in the medical domain using evaluations from the US Medical Licensing Examination (USMLE) (Kung et",
+      "extractCut": true
+    },
+    {
+      "id": "sec-003-synthetic-mcqa-datasets",
+      "number": null,
+      "title": "Synthetic MCQA datasets",
+      "level": 2,
+      "pageStart": 3,
+      "pageEnd": 3,
+      "labelStart": "3",
+      "labelEnd": "3",
+      "words": 119,
+      "summary": {
+        "text": "Related work on synthetic MCQA datasets: automated question generation grounded in corpora, including GPT-4-Turbo-generated distractors for MMLU-Pro, human-LLM pipelines for SuperGPQA and for tropical and infectious disease evaluation, and the fully automated YourBench framework for MMLU-style evaluations from new documents.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "shashidhar",
+          "heading": false
+        },
+        {
+          "term": "mcqa",
+          "heading": true
+        },
+        {
+          "term": "mmlu",
+          "heading": false
+        },
+        {
+          "term": "corpora",
+          "heading": false
+        }
+      ],
+      "extract": "There is increasing research investigating automated approaches to MCQA generation grounded in existing corpora (Shashidhar et al., 2025; Guinet et al., 2024; Ghazaryan et al., 2024). To de- velop MMLU-Pro, Wang et al. (2024) use GPT4-Turbo to generate answer options, as well as to augment the option lists found in other LLM benchmarks (primarily MMLU) with additional dis- tractors. Similarly a combined human-LLM",
+      "extractCut": true
+    },
+    {
+      "id": "sec-004-public-health-evaluations",
+      "number": null,
+      "title": "Public health evaluations",
+      "level": 2,
+      "pageStart": 3,
+      "pageEnd": 4,
+      "labelStart": "3",
+      "labelEnd": "4",
+      "words": 142,
+      "summary": {
+        "text": "Related work on public health evaluations: clinical medicine has benchmarks but public health (prevention, environmental hazards, community interventions, outbreaks) has none. The nearest work assessed ChatGPT 3.5 on 119 UK Faculty of Public Health Diplomate exam questions, Ayers et al. on 23 questions in 4 domains, and Harris et al. on classification and extraction from guidance text. Carries the caption of Figure 3, the MCQA generation pipeline.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "public health",
+          "heading": true
+        },
+        {
+          "term": "evaluations",
+          "heading": true
+        },
+        {
+          "term": "dfph",
+          "heading": false
+        },
+        {
+          "term": "chatgpt",
+          "heading": false
+        },
+        {
+          "term": "questions",
+          "heading": false
+        }
+      ],
+      "extract": "While there exists a range of benchmarks within clinical medicine (Jin et al., 2020; Pal et al., 2022; Arora et al., 2025), the public health domain, which focuses on areas such as prevention, environmental hazards, community interventions, and managing infectious disease outbreaks, does not have an existing LLM benchmark. In public health, the closest evaluations to those in this paper were performed by Davies et",
+      "extractCut": true
+    },
+    {
+      "id": "sec-005-methods",
+      "number": null,
+      "title": "Methods",
+      "level": 1,
+      "pageStart": 4,
+      "pageEnd": 4,
+      "labelStart": "4",
+      "labelEnd": "4",
+      "words": 88,
+      "summary": {
+        "text": "Methods overview: an automated pipeline (Figure 3) extracts text, chunks it into sections, generates MCQA samples and filters to a high-quality subset. Automation is chosen because manual authoring of thousands of questions is slow, guidance is revised often, and the approach extends to other knowledge bases.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "mcqa samples",
+          "heading": false
+        },
+        {
+          "term": "amenable",
+          "heading": false
+        },
+        {
+          "term": "chunk",
+          "heading": false
+        }
+      ],
+      "extract": "To generate our MCQA benchmark we develop an automated pipeline (Figure 3) to extract free text from documents, chunk it into sections, generate MCQA samples, and filter to a high quality subset. We focus on an automated approach for three reasons: (1) generating thousands of MCQA samples manually is highly time consuming, (2) public health guidance is frequently revised and so any approach needs to be amenable to",
+      "extractCut": true
+    },
+    {
+      "id": "sec-006-uk-public-health-information",
+      "number": null,
+      "title": "UK public health information",
+      "level": 2,
+      "pageStart": 4,
+      "pageEnd": 4,
+      "labelStart": "4",
+      "labelEnd": "4",
+      "words": 103,
+      "summary": {
+        "text": "Data collection: 1,150 current UK Government guidance documents in HTML and PDF were collected from gov.uk. The sources are public and probably in pre-training data, but because every question and answer option is synthetically generated, the benchmark itself cannot have been in training data.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "health",
+          "heading": true
+        },
+        {
+          "term": "government",
+          "heading": false
+        },
+        {
+          "term": "corpus",
+          "heading": false
+        }
+      ],
+      "extract": "Public health covers a very broad range of topics from biosecurity to tackling health inequalities. To assess LLMs’ knowledge of UK guidance across these areas we collect a large corpus of 1,150 current UK Government guidance documents from the UK Government website (gov.uk) in HTML and PDF formats. Using publicly available source documents is necessary for making the benchmark applicable to the real-world and so we",
+      "extractCut": true
+    },
+    {
+      "id": "sec-007-pre-processing-and-chunking",
+      "number": null,
+      "title": "Pre-processing and chunking",
+      "level": 2,
+      "pageStart": 4,
+      "pageEnd": 4,
+      "labelStart": "4",
+      "labelEnd": "4",
+      "words": 137,
+      "summary": {
+        "text": "Pre-processing and chunking: HTML is converted to markdown; PDFs go through two stages, raw text extraction with existing tools and then GPT-4o-mini vision re-extraction of each page given the page image, the raw text and the header hierarchy. Documents are split on markdown headers into 20,488 section chunks, each carrying its parent headers for context.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "markdown headers",
+          "heading": false
+        },
+        {
+          "term": "pdf",
+          "heading": false
+        },
+        {
+          "term": "existing tools",
+          "heading": false
+        },
+        {
+          "term": "hierarchy",
+          "heading": false
+        },
+        {
+          "term": "page",
+          "heading": false
+        }
+      ],
+      "extract": "HTML documents are pre-processed and converted into markdown format. PDF document extrac- tion is more challenging. Therefore, we use a two stage pipeline to achieve the requisite performance on PDF documents. We first extract the raw text from the PDFs using existing tools. We then use OpenAI’s GPT-4o-mini vision LLM via the API, prompting the model to extract the text from the image (including markdown headers).",
+      "extractCut": true
+    },
+    {
+      "id": "sec-008-question-generation",
+      "number": null,
+      "title": "Question generation",
+      "level": 2,
+      "pageStart": 4,
+      "pageEnd": 4,
+      "labelStart": "4",
+      "labelEnd": "4",
+      "words": 191,
+      "summary": {
+        "text": "Question generation: an LLM first filters out chunks with no public health recommendation and chunks over about 2000 words, leaving 7,946. Llama-3.3-70B-Instruct then writes two questions per chunk, each with one correct answer and six distractors, using a one-shot chain-of-thought prompt with JSON output and the neighbouring chunks as context, giving 15,666 well-formed candidate questions.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "text chunks",
+          "heading": false
+        },
+        {
+          "term": "question",
+          "heading": true
+        },
+        {
+          "term": "filter out",
+          "heading": false
+        },
+        {
+          "term": "public health",
+          "heading": false
+        },
+        {
+          "term": "mcqa",
+          "heading": false
+        },
+        {
+          "term": "recommendations",
+          "heading": false
+        }
+      ],
+      "extract": "Guidance documents often contain significant background information and operational details that do not directly relate to UK public health recommendations. Therefore, in order to generate relevant questions we first use an LLM to classify each chunk into whether it contains a public health recom- mendation and filter out any chunks that do not. We also filter out chunks exceeding ˜2000 words. This reduces the total",
+      "extractCut": true
+    },
+    {
+      "id": "sec-009-automated-mcqa-error-detection-and-sampling",
+      "number": null,
+      "title": "Automated MCQA error detection and sampling",
+      "level": 2,
+      "pageStart": 4,
+      "pageEnd": 5,
+      "labelStart": "4",
+      "labelEnd": "5",
+      "words": 122,
+      "summary": {
+        "text": "Automated error detection and sampling: Llama-3-70B-Instruct flags potentially invalid questions, reducing 15,666 candidates to 14,440 (details in Appendix A.1). Questions from withdrawn guidance are removed and HTML and PDF sources are balanced; about 4,000 unused PDF-derived questions are kept as an internal hold-out set.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "pdf documents",
+          "heading": false
+        },
+        {
+          "term": "mcqa",
+          "heading": true
+        },
+        {
+          "term": "questions",
+          "heading": false
+        },
+        {
+          "term": "detection",
+          "heading": true
+        }
+      ],
+      "extract": "To check consistency with the source text and improve the quality of our question set, we use LLMs to filter potentially invalid questions. For full details of the approach and evaluation see Appendix A.1. We select the Llama-3-70bn-Instruct model for this error detection step and filter the 15,666 candidate MCQA questions down to 14,440 that were not flagged as containing poten- tial errors. Finally, we remove",
+      "extractCut": true
+    },
+    {
+      "id": "sec-010-final-mcqa-benchmark-dataset",
+      "number": null,
+      "title": "Final MCQA benchmark dataset",
+      "level": 2,
+      "pageStart": 5,
+      "pageEnd": 5,
+      "labelStart": "5",
+      "labelEnd": "5",
+      "words": 74,
+      "summary": {
+        "text": "The final benchmark: PubHealthBench has 8,090 MCQA questions across public, clinical and professional guidance, 10 topic areas and 352 guidance areas, from 687 documents. Includes the captions of Figure 4 (questions by topic and audience) and Figure 5 (review steps).",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "topic area",
+          "heading": false
+        },
+        {
+          "term": "public health",
+          "heading": false
+        },
+        {
+          "term": "benchmark",
+          "heading": true
+        }
+      ],
+      "extract": "Overall, the final public benchmark (PubHealthBench) consists of 8,090 MCQA questions covering public, clinical, and professional guidance across 10 public health topic areas, and 352 guidance areas, sourced from 687 documents containing UK Government public health information. Figure 4 provides a breakdown of the benchmark by topic area and the intended audience for the guidance. Figure 4: PubHealthBench questions",
+      "extractCut": true
+    },
+    {
+      "id": "sec-011-human-expert-quality-assurance",
+      "number": null,
+      "title": "Human expert quality assurance",
+      "level": 2,
+      "pageStart": 5,
+      "pageEnd": 5,
+      "labelStart": "5",
+      "labelEnd": "5",
+      "words": 155,
+      "summary": {
+        "text": "Human expert quality assurance: a random sample of 800 questions (about 10%) was reviewed manually, giving an estimated 5.5% (4.1–7.3%, 95% Wilson CI) ambiguous or invalid questions. Most invalid ones had a distractor as good as the answer, so with guessing between two plausible answers the estimated upper bound on the score is about 97%.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "invalid questions",
+          "heading": false
+        },
+        {
+          "term": "correct answer",
+          "heading": false
+        },
+        {
+          "term": "ambiguous",
+          "heading": false
+        },
+        {
+          "term": "benchmark",
+          "heading": false
+        },
+        {
+          "term": "guesses",
+          "heading": false
+        }
+      ],
+      "extract": "To quality assure the benchmark and estimate the underlying rate of invalid questions, we manually review a random sample of 800 questions (c.10% of the benchmark). Based on this manual review we estimate the rate of ambiguous or invalid questions in the full benchmark to be approximately 5.5% (4.1%-7.3%, 95% Wilson score CI) in the final dataset. See Appendix A.4 for annotation details. However, the majority of",
+      "extractCut": true
+    },
+    {
+      "id": "sec-012-model-evaluation-approach",
+      "number": null,
+      "title": "Model evaluation approach",
+      "level": 1,
+      "pageStart": 5,
+      "pageEnd": 6,
+      "labelStart": "5",
+      "labelEnd": "6",
+      "words": 57,
+      "summary": {
+        "text": "Model evaluation approach: 24 open-weight and proprietary LLMs are assessed, including GPT-4.5, Claude-Sonnet-3.7, Gemma-3, o1, Phi-4, OLMo-2 and Llama-3.3.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "olmo",
+          "heading": false
+        },
+        {
+          "term": "abdin",
+          "heading": false
+        },
+        {
+          "term": "phi",
+          "heading": false
+        }
+      ],
+      "extract": "To understand the level of knowledge current open-weight and proprietary LLMs have about UK Government public health guidance, we assess 24 models on PubHealthBench, including: GPT- 4.5 (OpenAI, 2025a), Claude-Sonnet-3.7 (Anthropic, 2025), Gemma-3 (Team, 2025), o1 (OpenAI, 2024), Phi-4 (Abdin et al., 2024), OLMo-2 (OLMo et al., 2025), and Llama-3.3 (Grattafiori et al., 2024). 5 Preprint. 4.1",
+      "extractCut": false
+    },
+    {
+      "id": "sec-013-benchmark-subsets",
+      "number": null,
+      "title": "Benchmark subsets",
+      "level": 2,
+      "pageStart": 6,
+      "pageEnd": 6,
+      "labelStart": "6",
+      "labelEnd": "6",
+      "words": 0,
+      "summary": null,
+      "keywords": [],
+      "extract": null,
+      "extractCut": false
+    },
+    {
+      "id": "sec-014-results",
+      "number": null,
+      "title": "Results",
+      "level": 1,
+      "pageStart": 6,
+      "pageEnd": 6,
+      "labelStart": "6",
+      "labelEnd": "6",
+      "words": 144,
+      "summary": {
+        "text": "The three benchmark variants: PubHealthBench-Full (the whole MCQA set, broken down by topic); PubHealthBench-Reviewed (760 expert-reviewed questions, reported with and without the ones judged invalid, and used instead of Full for the most expensive models); and PubHealthBench-FreeForm (the same reviewed questions asked without options, answers judged against the source by a grounded LLM judge).",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "full benchmark",
+          "heading": false
+        },
+        {
+          "term": "pubhealthbench-reviewed",
+          "heading": false
+        },
+        {
+          "term": "mcqa",
+          "heading": false
+        },
+        {
+          "term": "reviewed",
+          "heading": false
+        },
+        {
+          "term": "broadest",
+          "heading": false
+        }
+      ],
+      "extract": "PubHealthBench-Full - the full MCQA benchmark, providing the broadest assessment of LLM capabilities. This enables us to provide results across granular topic areas within public health. PubHealthBench-Reviewed - the random test subset of 760 MCQA questions that have been man- ually reviewed by human experts, we report results both including and excluding questions classified as ambiguous or invalid so as to make",
+      "extractCut": true
+    },
+    {
+      "id": "sec-015-human-baseline",
+      "number": null,
+      "title": "Human baseline",
+      "level": 2,
+      "pageStart": 6,
+      "pageEnd": 6,
+      "labelStart": "6",
+      "labelEnd": "6",
+      "words": 111,
+      "summary": {
+        "text": "Human baseline: non-specialist test takers answered 600 questions with search engines but no AI tools, at about 2 minutes per question, and scored 88%, roughly 9 points below the 97% upper bound. This is meant to simulate a member of the public looking up guidance quickly (Appendix A.4).",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "test takers",
+          "heading": false
+        },
+        {
+          "term": "upper bound",
+          "heading": false
+        },
+        {
+          "term": "baseline",
+          "heading": true
+        },
+        {
+          "term": "human",
+          "heading": true
+        }
+      ],
+      "extract": "In addition to estimating the theoretical upper bound (97%), we also provide baseline human perfor- mance for comparability (Figure 5). Human test takers answered the MCQA samples with access to search engines but without any LLM or AI enabled tools. Test takers were not trained public health specialists, and were encouraged to take no longer than 2 minutes per question. Under these con- ditions, humans scored 88%",
+      "extractCut": true
+    },
+    {
+      "id": "sec-016-experimental-setup",
+      "number": null,
+      "title": "Experimental setup",
+      "level": 2,
+      "pageStart": 6,
+      "pageEnd": 6,
+      "labelStart": "6",
+      "labelEnd": "6",
+      "words": 108,
+      "summary": {
+        "text": "Experimental setup: prompts and answer extraction follow MMLU-Pro, but evaluation is zero-shot to resemble a chatbot query, with chain of thought only where a model does it by default (reasoning models). No model is given tools, search or document repositories.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "setup",
+          "heading": true
+        },
+        {
+          "term": "mmlu-pro",
+          "heading": false
+        },
+        {
+          "term": "comparability",
+          "heading": false
+        }
+      ],
+      "extract": "We closely follow the prompts and answer extraction used in the MMLU-Pro benchmark (Wang et al., 2024). However, as with the human baseline, in our LLM evaluations we seek to replicate a similar query setup to that which might occur when interacting with a chatbot or within a simple LLM based application. Therefore, we focus on zero-shot prompting (see Appendix A.6 for the prompt templates), and only use CoT when it",
+      "extractCut": true
+    },
+    {
+      "id": "sec-017-free-form-response-evaluation",
+      "number": null,
+      "title": "Free form response evaluation",
+      "level": 3,
+      "pageStart": 6,
+      "pageEnd": 6,
+      "labelStart": "6",
+      "labelEnd": "6",
+      "words": 94,
+      "summary": {
+        "text": "Free-form evaluation: because each question is grounded in a source chunk, an LLM judge (GPT-4o-Mini) receives the question, the ground-truth answer, the model's response and six retrieved related chunks, and gives a binary verdict on whether the response is consistent with the source and the correct MCQA answer (Appendix A.7).",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "ground truth",
+          "heading": false
+        },
+        {
+          "term": "response",
+          "heading": true
+        },
+        {
+          "term": "judge",
+          "heading": false
+        }
+      ],
+      "extract": "Utilising the fact all questions are directly grounded in specific parts of the original source text we use an LLM as a Judge setup (Zheng et al., 2023; Gu et al., 2025) for the free form answer evaluation. We prompt a judge LLM (GPT-4o-Mini) with the question, ground truth answer, the LLM response, and six retrieved related chunks. The judge is asked to assess the response and provide a binary classification for",
+      "extractCut": true
+    },
+    {
+      "id": "sec-018-pubhealthbench---overall-mcqa-benchmark-results",
+      "number": null,
+      "title": "PubHealthBench - overall MCQA benchmark results",
+      "level": 2,
+      "pageStart": 6,
+      "pageEnd": 7,
+      "labelStart": "6",
+      "labelEnd": "7",
+      "words": 857,
+      "summary": {
+        "text": "Overall MCQA results: Full and Reviewed accuracies agree closely (correlation over 0.99, rank correlation 0.98, under 1 point mean difference). Tables 1–3 give accuracy by topic area, by audience, and with and without refusals or invalid questions: GPT-4.5 leads at 92.5% overall on Full, Gemma-3-1B is lowest at 47.6%, and GPT-4.5, GPT-4.1 and o1 exceed 90% on Reviewed, above the human baseline. Most 5–15B open-weight models exceed 75%. Reasoning models (o1, o3-Mini) gain little over non-reasoning ones, and models still get about 60% of invalid questions right, supporting the ~97% upper bound.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "mcqa",
+          "heading": true
+        },
+        {
+          "term": "pubhealthbench-full zero-shot",
+          "heading": false
+        },
+        {
+          "term": "zero-shot accuracy",
+          "heading": false
+        },
+        {
+          "term": "benchmark",
+          "heading": true
+        },
+        {
+          "term": "o3-mini",
+          "heading": false
+        },
+        {
+          "term": "overall",
+          "heading": true
+        },
+        {
+          "term": "generate benchmark",
+          "heading": false
+        },
+        {
+          "term": "refusals",
+          "heading": false
+        }
+      ],
+      "extract": "For the 21 models run on the PubHealthBench-Full (Table 1) and the PubHealthBench-Reviewed subset (Table 3), we find a very high correlation in overall accuracy between the two sets, with a correlation coefficient of over 0.99, a rank correlation of 0.98, and an average absolute score difference of under 1 percentage point. Therefore, we compare overall results directly for models only run on PubHealthBench-Reviewed",
+      "extractCut": true
+    },
+    {
+      "id": "sec-019-pubhealthbench---results-by-topic-area-and-audie",
+      "number": null,
+      "title": "PubHealthBench - results by topic area and audience",
+      "level": 2,
+      "pageStart": 7,
+      "pageEnd": 8,
+      "labelStart": "7",
+      "labelEnd": "8",
+      "words": 111,
+      "summary": {
+        "text": "Results by topic and audience: models do consistently better on Climate and Health and on Health Protection in Inclusion Health Settings, and worse on Chemicals and Toxicology. They know guidance for the general public best and clinical guidance least; GPT-4.5 reaches 96% on public guidance. Figure 6 shows each model's deviation from its overall score by topic and audience.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "guidance audience",
+          "heading": false
+        },
+        {
+          "term": "topic",
+          "heading": true
+        },
+        {
+          "term": "pubhealthbench-full",
+          "heading": false
+        },
+        {
+          "term": "area",
+          "heading": true
+        }
+      ],
+      "extract": "Breaking down PubHealthBench-Full results by topic area (Table 1), we find consistently higher per- formance across models on Climate and Health and Health Protection in Inclusion Health Settings guidance. While LLMs generally performed worse on Chemicals and Toxicology (Figure 6). 1Results on the PubHealthBench-Reviewed subset. 7 Preprint. Looking at results by guidance audience (Table 2), we find LLMs have better",
+      "extractCut": true
+    },
+    {
+      "id": "sec-020-pubhealthbench-freeform-results",
+      "number": null,
+      "title": "PubHealthBench-FreeForm results",
+      "level": 2,
+      "pageStart": 8,
+      "pageEnd": 8,
+      "labelStart": "8",
+      "labelEnd": "8",
+      "words": 192,
+      "summary": {
+        "text": "Free-form results: the setting is harder because there are no options to prompt recall or allow elimination and because models can add inconsistent information. Scores fall by up to 60 points; the best model, o1, scores 74% with the smallest drop (−17 points). Three other judges agree closely. Drops vary widely: Phi-4-14B falls over 45 points while Gemma-3-12B falls about as much as the leading proprietary models. Public guidance is again answered best.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "mcqa",
+          "heading": false
+        },
+        {
+          "term": "ppts",
+          "heading": false
+        },
+        {
+          "term": "free form",
+          "heading": false
+        },
+        {
+          "term": "llms",
+          "heading": false
+        },
+        {
+          "term": "guidance",
+          "heading": false
+        },
+        {
+          "term": "comparable",
+          "heading": false
+        }
+      ],
+      "extract": "The free form response setup is substantially more challenging for a few reasons: (1) it requires recalling the correct guidance information without any hints from MCQA options, (2) it introduces the possibility of LLMs hallucinating additional information that may be inconsistent with the source text, and (3) the correct answer cannot be inferred via elimination of the other answer options. As a result, all models",
+      "extractCut": true
+    },
+    {
+      "id": "sec-021-discussion",
+      "number": null,
+      "title": "Discussion",
+      "level": 1,
+      "pageStart": 8,
+      "pageEnd": 9,
+      "labelStart": "8",
+      "labelEnd": "9",
+      "words": 591,
+      "summary": {
+        "text": "Discussion: leading LLMs know UK public health guidance well, even though 31% of questions came from documents updated in 2024, after many training cut-offs. Free-form performance is much lower, mainly from omitting or contradicting guidance rather than adding extra advice; o1's problematic answers often concern the timing of interventions. Tables 4 and 5 give free-form accuracy by audience and the MCQA-to-free-form drop per model (from −17 for o1 to −63 for Phi-4-4B). The gap between large and small (1–15B) models widens from 10–20 points in MCQA to over 35 in free form, so small models carry real hallucination risk. Models do best on guidance for the general public, the highest-risk users of chatbots.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "health guidance",
+          "heading": false
+        },
+        {
+          "term": "public health",
+          "heading": false
+        },
+        {
+          "term": "mcqa questions",
+          "heading": false
+        },
+        {
+          "term": "judge llm",
+          "heading": false
+        },
+        {
+          "term": "free form",
+          "heading": false
+        },
+        {
+          "term": "freeform",
+          "heading": false
+        },
+        {
+          "term": "claude-haiku",
+          "heading": false
+        },
+        {
+          "term": "command-r-32b",
+          "heading": false
+        }
+      ],
+      "extract": "Our results suggest that current SOTA LLMs, both proprietary and open-weight, in general have a very high level of knowledge across UK public health guidance. This is particularly notable given 31% of the MCQA questions were based on guidance documents that were at least partially updated within 2024 (see Appendix A.2), after many of the LLMs’ training data cut-off date. However, we find that performance is",
+      "extractCut": true
+    },
+    {
+      "id": "sec-022-limitations",
+      "number": null,
+      "title": "Limitations",
+      "level": 1,
+      "pageStart": 9,
+      "pageEnd": 9,
+      "labelStart": "9",
+      "labelEnd": "9",
+      "words": 164,
+      "summary": {
+        "text": "Limitations: MCQA and single-turn free form cover only some ways LLMs are used; multi-turn, image, adjacent-topic and tool-using queries need study. The data are English-language, openly licensed UK Government guidance that may be in training data, so results may not transfer to other countries, languages or health settings.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "public health",
+          "heading": false
+        },
+        {
+          "term": "llm performance",
+          "heading": false
+        },
+        {
+          "term": "incorporated",
+          "heading": false
+        },
+        {
+          "term": "further work",
+          "heading": false
+        },
+        {
+          "term": "topics",
+          "heading": false
+        }
+      ],
+      "extract": "Whilst we have attempted to include a broad range of topics and two LLM response formats (MCQA and free form), a limitation is that this still only represents a few of the ways LLMs could be used to retrieve public health information. Further work investigating different types of public health query is needed, for example, multi-turn interactions, queries including images, queries about topics that are related to",
+      "extractCut": true
+    },
+    {
+      "id": "sec-023-conclusion",
+      "number": null,
+      "title": "Conclusion",
+      "level": 1,
+      "pageStart": 9,
+      "pageEnd": 10,
+      "labelStart": "9",
+      "labelEnd": "10",
+      "words": 136,
+      "summary": {
+        "text": "Conclusion: an automated pipeline produced PubHealthBench to test LLM knowledge of current UK Government public health guidance, evaluated in full, reviewed and free-form versions across 10 topics and 3 audiences. Proprietary LLMs know the guidance well, but matching it in free-form answers remains a challenge; the authors hope the benchmark supports further evaluation and safer deployment.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "health guidance",
+          "heading": false
+        },
+        {
+          "term": "public health",
+          "heading": false
+        },
+        {
+          "term": "free form",
+          "heading": false
+        },
+        {
+          "term": "llms across",
+          "heading": false
+        },
+        {
+          "term": "risks",
+          "heading": false
+        }
+      ],
+      "extract": "In this paper we use an automated pipeline to generate a new benchmark, PubHealthBench, to assess LLM knowledge of current UK Government public health guidance. We evaluate SOTA LLMs across three versions of the benchmark: full, verified, and free form. By testing LLMs across 10 guidance topic areas and 3 intended audiences in the MCQA and free form response setups, we provide an initial assessment of the",
+      "extractCut": true
+    },
+    {
+      "id": "sec-024-ethics-statement",
+      "number": null,
+      "title": "Ethics Statement",
+      "level": 1,
+      "pageStart": 10,
+      "pageEnd": 10,
+      "labelStart": "10",
+      "labelEnd": "10",
+      "words": 63,
+      "summary": {
+        "text": "Ethics statement: annotators were full-time employees paid at least the minimum wage; all data came from gov.uk under the Open Government Licence 3.0 and GOV.UK reuse terms; LLMs helped generate some diagrams and figures.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "gov",
+          "heading": false
+        },
+        {
+          "term": "licence",
+          "heading": false
+        },
+        {
+          "term": "assuring",
+          "heading": false
+        }
+      ],
+      "extract": "All human annotators involved in quality assuring the benchmark were full time employees and paid at least the minimum wage. All data was sourced from the .gov.uk website with permissive licences (Open Government Licence 3.0) and also used in-line with the reuse GOV.UK content terms of service. Large Language Models were used to help generate some diagrams and figures in this paper. 10",
+      "extractCut": false
+    },
+    {
+      "id": "sec-025-reproducibility-statement",
+      "number": null,
+      "title": "Reproducibility Statement",
+      "level": 1,
+      "pageStart": 10,
+      "pageEnd": 14,
+      "labelStart": "10",
+      "labelEnd": "14",
+      "words": 2611,
+      "summary": {
+        "text": "Reproducibility statement and references: the full dataset and example evaluation code are supplementary material, with generation details in the paper and Appendix A.6, and the retrieved chunks given to the free-form judge are included in the dataset. The rest of the block is the reference list (Phi-4, Claude 3.7 Sonnet, HealthBench, MMLU-Pro, SuperGPQA, LLM-as-a-judge and others).",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "hao zhang",
+          "heading": false
+        },
+        {
+          "term": "url abs",
+          "heading": false
+        },
+        {
+          "term": "yubo wang",
+          "heading": false
+        },
+        {
+          "term": "jie wang",
+          "heading": false
+        },
+        {
+          "term": "url https",
+          "heading": false
+        },
+        {
+          "term": "org abs",
+          "heading": false
+        },
+        {
+          "term": "karan singhal",
+          "heading": false
+        },
+        {
+          "term": "ying sheng",
+          "heading": false
+        }
+      ],
+      "extract": "To ensure reproducibility we provide the full benchmark dataset and example evaluation code as part of the supplementary materials and provide full details of the generation steps in Section 2.3 and Appendix A.6. To enable reproducibility of the free form LLM-as-a-Judge results we also include in the dataset the relevant chunks retrieved from the corpus and provided to the judge. REFERENCES Marah Abdin, Jyoti Aneja,",
+      "extractCut": true
+    },
+    {
+      "id": "sec-026-appendix",
+      "number": null,
+      "title": "Appendix",
+      "level": 1,
+      "pageStart": 14,
+      "pageEnd": 14,
+      "labelStart": "14",
+      "labelEnd": "14",
+      "words": 1,
+      "summary": {
+        "text": "Heading-only block: 'Appendix' with the subsection number A.1 and no body text.",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "A.1",
+      "extractCut": false
+    },
+    {
+      "id": "sec-027-automated-mcqa-error-detection",
+      "number": null,
+      "title": "Automated MCQA error detection",
+      "level": 2,
+      "pageStart": 14,
+      "pageEnd": 16,
+      "labelStart": "14",
+      "labelEnd": "16",
+      "words": 609,
+      "summary": {
+        "text": "Appendix A.1, automated MCQA error detection: synthetic generation allows a high-recall, low-precision LLM filter. An evaluation set from an early, error-prone pipeline version was hand-annotated with five categories adapted from Gema et al. (valid; ambiguous question; ambiguous options; and others). With Llama-3-70B the binary filter would have cut the error rate from about 16% to about 8% on that set, but in the final pipeline better prompting and Llama-3.3 made the filter less critical: only about 8% of generated questions were flagged, against 44% in the early test set.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "error detection",
+          "heading": true
+        },
+        {
+          "term": "valid question",
+          "heading": false
+        },
+        {
+          "term": "mcqa",
+          "heading": true
+        },
+        {
+          "term": "question refers",
+          "heading": false
+        },
+        {
+          "term": "mcqa samples",
+          "heading": false
+        },
+        {
+          "term": "generated mcqa",
+          "heading": false
+        },
+        {
+          "term": "correct answer",
+          "heading": false
+        },
+        {
+          "term": "final pipeline",
+          "heading": false
+        }
+      ],
+      "extract": "Our approach to automated filtering of candidate questions leverages the fact that synthetic MCQA generation allows us to create an essentially arbitrary number of potential questions but with the risk of material question errors. An advantage of this is that we can utilise an LLM classier with high recall (accurately identifying incorrect questions) even if this comes at the expense of low precision (large numbers",
+      "extractCut": true
+    },
+    {
+      "id": "sec-028-additional-benchmark-statistics",
+      "number": null,
+      "title": "Additional benchmark statistics",
+      "level": 2,
+      "pageStart": 16,
+      "pageEnd": 17,
+      "labelStart": "16",
+      "labelEnd": "17",
+      "words": 57,
+      "summary": {
+        "text": "Appendix A.2, additional statistics: captions only, for Figure 8 (questions by the source document's last revision date, noting a revision may be minor) and Figure 9 (questions by source document type, and the human quality annotations, where 'Good' and 'Acceptable' count as valid).",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "pubhealthbench-full",
+          "heading": false
+        },
+        {
+          "term": "mcqa",
+          "heading": false
+        },
+        {
+          "term": "revision",
+          "heading": false
+        }
+      ],
+      "extract": "Figure 8: PubHealthBench-Full MCQA by source guidance document last revision date. Note - the last revision to a document may only entail minor changes from the original text. Figure 9: (left) PubHealthBench-Full samples by source text document type, (right) MCQA quality human annotations - ”Good” and ”Acceptable” categories are treated as valid question samples. 16 Preprint. A.3",
+      "extractCut": false
+    },
+    {
+      "id": "sec-029-mcqa-generation-prompts",
+      "number": null,
+      "title": "MCQA generation prompts",
+      "level": 2,
+      "pageStart": 17,
+      "pageEnd": 18,
+      "labelStart": "17",
+      "labelEnd": "18",
+      "words": 762,
+      "summary": {
+        "text": "Appendix A.3, the question-generation prompt (Table 6): the model plays a public health expert writing a test on UK guidance, focusing on material public health information and not trivia such as phone numbers. Given guidance with a highlighted passage, it lists the passage's key points, lists the context any question must carry, writes self-contained questions answerable from that passage alone with one correct answer and plausible distractors, and outputs JSON following a one-shot example.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "insert incorrect",
+          "heading": false
+        },
+        {
+          "term": "insert question",
+          "heading": false
+        },
+        {
+          "term": "highlighted passage",
+          "heading": false
+        },
+        {
+          "term": "incorrect answer",
+          "heading": false
+        },
+        {
+          "term": "insert correct",
+          "heading": false
+        },
+        {
+          "term": "answer options",
+          "heading": false
+        },
+        {
+          "term": "mcqa generation",
+          "heading": true
+        },
+        {
+          "term": "generate question",
+          "heading": false
+        }
+      ],
+      "extract": "Table 6: MCQA generation system prompt (see Table 7 for user prompt). System Prompt You are a top public health expert, creating a multiple choice test to assess individuals’ knowledge of UK Public Health Guidance - you should select questions relating to important parts of the infor- mation in the guidance text provided that have material public health implications. The questions should not relate to minor details",
+      "extractCut": true
+    },
+    {
+      "id": "sec-030-human-manual-annotation",
+      "number": null,
+      "title": "Human manual annotation",
+      "level": 2,
+      "pageStart": 18,
+      "pageEnd": 18,
+      "labelStart": "18",
+      "labelEnd": "18",
+      "words": 50,
+      "summary": {
+        "text": "Appendix A.4, human annotation: two annotation exercises, one estimating the rate of invalid or ambiguous questions and one setting the human baseline; all annotators were full-time staff with data science or public health experience.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "human",
+          "heading": true
+        },
+        {
+          "term": "annotation",
+          "heading": true
+        },
+        {
+          "term": "organisation",
+          "heading": false
+        }
+      ],
+      "extract": "In this work we perform two sets of human annotation, the first to estimate the rate of invalid or ambiguous questions, and the second to set a human baseline. In both cases, all annotators were full time employees within the organisation with relevant data science or public health experience. A.4.1",
+      "extractCut": false
+    },
+    {
+      "id": "sec-031-estimating-the-benchmark-error-rate",
+      "number": null,
+      "title": "Estimating the benchmark error rate",
+      "level": 3,
+      "pageStart": 18,
+      "pageEnd": 20,
+      "labelStart": "18",
+      "labelEnd": "20",
+      "words": 651,
+      "summary": {
+        "text": "Appendix A.4.1, estimating the error rate: judging question validity and when a distractor becomes an equally valid answer is subjective, so annotation ran in two rounds: 150 questions double-reviewed by pairs with disagreements resolved together, then 650 reviewed singly by the same people. Gives the reviewers' protocol, which classes questions as Good (answerable, clear best answer, non-trivial distractors), Acceptable (including easy questions or ones drawing on neighbouring text) or Invalid (unanswerable, misleading options or construction errors), with Wilson 95% intervals reported.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "answer options",
+          "heading": false
+        },
+        {
+          "term": "incorrect options",
+          "heading": false
+        },
+        {
+          "term": "correct answer",
+          "heading": false
+        },
+        {
+          "term": "valid answer",
+          "heading": false
+        },
+        {
+          "term": "question valid",
+          "heading": false
+        },
+        {
+          "term": "standard answer",
+          "heading": false
+        },
+        {
+          "term": "mcqa samples",
+          "heading": false
+        },
+        {
+          "term": "some relevance",
+          "heading": false
+        }
+      ],
+      "extract": "Assessing MCQA sample validity is a challenging annotation task. For a question to be valid, judging the level of context (e.g subpopulation, geography, time period etc.) that is required for the question to be answerable can involve a significant degree of subjectivity. For the options to be valid, the boundary between when a challenging distractor option crosses over into being a potentially equally valid answer",
+      "extractCut": true
+    },
+    {
+      "id": "sec-032-human-baseline",
+      "number": null,
+      "title": "Human baseline",
+      "level": 3,
+      "pageStart": 20,
+      "pageEnd": 20,
+      "labelStart": "20",
+      "labelEnd": "20",
+      "words": 309,
+      "summary": {
+        "text": "Appendix A.4.2, human baseline: 600 of the 800 reviewed questions, including ones judged invalid, were split among 5 test takers who had not reviewed them. Their instructions: one correct option per question, choose the answer best reflecting UKHSA guidance, guess when unsure, aim for about 2 minutes per question, use any public online resources but no LLM tools.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "human baseline",
+          "heading": true
+        },
+        {
+          "term": "test takers",
+          "heading": false
+        },
+        {
+          "term": "questions",
+          "heading": false
+        },
+        {
+          "term": "answer",
+          "heading": false
+        },
+        {
+          "term": "public health",
+          "heading": false
+        },
+        {
+          "term": "multiple choice",
+          "heading": false
+        },
+        {
+          "term": "ukhsa",
+          "heading": false
+        },
+        {
+          "term": "reviewed",
+          "heading": false
+        }
+      ],
+      "extract": "To set the human baseline 600 questions were randomly sampled from the manually reviewed subset of 800 questions. To make the human baseline comparable to the full benchmark scores these samples included MCQA examples that human annotators had classified as invalid. The 600 questions were then randomly allocated among 5 human test takers who had not manually reviewed the questions previously. Results were then",
+      "extractCut": true
+    },
+    {
+      "id": "sec-033-experimental-setup-and-compute-resources",
+      "number": null,
+      "title": "Experimental setup and compute resources",
+      "level": 2,
+      "pageStart": 20,
+      "pageEnd": 21,
+      "labelStart": "20",
+      "labelEnd": "21",
+      "words": 101,
+      "summary": {
+        "text": "Appendix A.5, setup and compute: greedy decoding (temperature 0) where possible; OpenAI reasoning models at low reasoning effort; proprietary models through APIs and open-weight models served with vLLM on up to two A100 80GB GPUs each, with the same hardware for the generation pipeline; a $400 budget for proprietary evaluations including the judge.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "proprietary",
+          "heading": false
+        },
+        {
+          "term": "compute",
+          "heading": true
+        },
+        {
+          "term": "addi",
+          "heading": false
+        }
+      ],
+      "extract": "For all experiments and models where it can be specified we use greedy decoding (temperature 0). For all OpenAI reasoning models we use ”reasoning effort=low” for cost reasons and due to the knowledge based nature of the task. Proprietary models are accessed via provider APIs, open-weight models are hosted internally on HPC resources using vLLM (Kwon et al., 2023), with up to 2 x A100 80GB used per model. Addi-",
+      "extractCut": true
+    },
+    {
+      "id": "sec-034-pubhealthbench-prompts",
+      "number": null,
+      "title": "PubHealthBench prompts",
+      "level": 2,
+      "pageStart": 21,
+      "pageEnd": 21,
+      "labelStart": "21",
+      "labelEnd": "21",
+      "words": 175,
+      "summary": {
+        "text": "Appendix A.6, evaluation prompts: Table 8, the zero-shot MCQA prompt, frames the model as a public health agency expert and asks for the letter of the correct answer among seven options in the form 'The answer is (X)' for UKHSA guidance on gov.uk as of 08/01/2025. Table 9, the free-form prompt, asks the same question with no options.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "health agency",
+          "heading": false
+        },
+        {
+          "term": "question relates",
+          "heading": false
+        },
+        {
+          "term": "health guidance",
+          "heading": false
+        },
+        {
+          "term": "public health",
+          "heading": false
+        },
+        {
+          "term": "health security",
+          "heading": false
+        }
+      ],
+      "extract": "Table 8: MCQA zero-shot evaluation prompt. System Prompt You are an expert working for a Public Health agency. Prompt Content The following are multiple choice questions (with answers) about UK Government public health guidance. Question: This question relates to UK Health Security Agency (UKHSA) guidance that could be found on the gov.uk website as of 08/01/2025. {question} Options: {answer options} Provide the",
+      "extractCut": true
+    },
+    {
+      "id": "sec-035-free-form-evaluation---llm-as-a-judge-setup",
+      "number": null,
+      "title": "Free form evaluation - LLM as a Judge setup",
+      "level": 2,
+      "pageStart": 21,
+      "pageEnd": 22,
+      "labelStart": "21",
+      "labelEnd": "22",
+      "words": 293,
+      "summary": {
+        "text": "Appendix A.7, the free-form LLM judge: framed as binary classification of whether a response agrees with the correct answer and source text. The judge gets the source chunk, 5 more chunks retrieved by a hybrid of embedding (text-3-embedding-large) and TF-IDF similarity, and the correct MCQA option (prompt in Table 10). It was validated by inserting known correct and incorrect options into simulated chat responses; gpt-4o-mini-2024-07-18 with greedy decoding scored over 99% on 10,517 such samples.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "llm judge",
+          "heading": true
+        },
+        {
+          "term": "judge evaluation",
+          "heading": true
+        },
+        {
+          "term": "free form",
+          "heading": true
+        },
+        {
+          "term": "correct answer",
+          "heading": false
+        },
+        {
+          "term": "answer option",
+          "heading": false
+        },
+        {
+          "term": "source text",
+          "heading": false
+        },
+        {
+          "term": "form responses",
+          "heading": false
+        },
+        {
+          "term": "chunks",
+          "heading": false
+        }
+      ],
+      "extract": "To provide an accurate but cost effective LLM judge to assess unstructured free form LLM re- sponses, we frame it as a binary classification task for whether the free form responses align with the correct answer and source text. We provide the judge with the guidance source text that was used to generate the question. This ensures the judge always has access to the ground truth information. To allow the judge to",
+      "extractCut": true
+    },
+    {
+      "id": "sec-036-judge-model-comparisons",
+      "number": null,
+      "title": "Judge model comparisons",
+      "level": 3,
+      "pageStart": 22,
+      "pageEnd": 22,
+      "labelStart": "22",
+      "labelEnd": "22",
+      "words": 84,
+      "summary": {
+        "text": "Appendix A.7.1, judge comparison: the free-form evaluation was rerun with Llama-3.3-70B, MedGemma-27B and Phi-4-14B as judges besides GPT-4o-Mini; the four agree substantially (Fleiss's kappa 0.64), as Figure 10 shows.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "judge",
+          "heading": true
+        },
+        {
+          "term": "judge models",
+          "heading": false
+        },
+        {
+          "term": "re-run",
+          "heading": false
+        }
+      ],
+      "extract": "To compare judge models and assess the sensitivity of LLM performance to the judge model used we also re-run the free form evaluation using three additional judge models with range of model sizes. In addition to GPT-4o-Mini, we use Llama-3.3-70bn, MedGemma-27bn, and Phi-4-14bn. Overall we find a high degree of agreement across the four judge models, with a Fleiss’s kappa of 0.64, see Figure 10 for full results.",
+      "extractCut": true
+    },
+    {
+      "id": "sec-037-error-analysis",
+      "number": null,
+      "title": "Error analysis",
+      "level": 3,
+      "pageStart": 22,
+      "pageEnd": 24,
+      "labelStart": "22",
+      "labelEnd": "24",
+      "words": 263,
+      "summary": {
+        "text": "Appendix A.7.2, error analysis: Llama-3.3-70B labels incorrect free-form answers as adding extraneous information, omitting required points, or contradicting the guidance (Figure 11). Also reproduces the judge prompt (Table 10), which requires the answer to match the ground truth without omitting key details and any extra detail to appear in the context, with a JSON verdict and reasoning.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "truth answer",
+          "heading": false
+        },
+        {
+          "term": "ground truth",
+          "heading": false
+        },
+        {
+          "term": "official guidance",
+          "heading": false
+        },
+        {
+          "term": "correct based",
+          "heading": false
+        },
+        {
+          "term": "public health",
+          "heading": false
+        },
+        {
+          "term": "incorrect",
+          "heading": false
+        },
+        {
+          "term": "question",
+          "heading": false
+        },
+        {
+          "term": "preprint",
+          "heading": false
+        }
+      ],
+      "extract": "To understand the categories of errors commonly found in found in free form responses we label the errors in the incorrect LLM responses using Llama-3.3-70bn into the following three types (Figure 11): 1. The answer adds extraneous information not in the official guidance, without contradicting it. 2. The answer omits required points from the official guidance (i.e., is missing information). 3. The answer",
+      "extractCut": true
+    },
+    {
+      "id": "sec-038-problematic-response-examples",
+      "number": null,
+      "title": "Problematic response examples",
+      "level": 3,
+      "pageStart": 24,
+      "pageEnd": 26,
+      "labelStart": "24",
+      "labelEnd": "26",
+      "words": 151,
+      "summary": {
+        "text": "Appendix A.7.3, problematic responses: a manual review of o1's contradicting answers found deviations that mostly recommend clinical or public health interventions too early, too late, or not at all in the guidance. Figures 12–15 show four examples beside the official passages.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "problematic",
+          "heading": true
+        },
+        {
+          "term": "problematic responses",
+          "heading": false
+        },
+        {
+          "term": "pubhealthbench-freeform",
+          "heading": false
+        },
+        {
+          "term": "preprint",
+          "heading": false
+        },
+        {
+          "term": "official",
+          "heading": false
+        }
+      ],
+      "extract": "To better understand how even the highest performing LLM responses deviate from the official guidance and the potential types of problem this could cause we also manually reviewed a subset of the errors labeled as category 3. (Section A.7.2) for the top performing model o1. We identified a number of examples of potentially problematic deviations, which primarily involved suggesting interventions (clinical and public",
+      "extractCut": true
+    },
+    {
+      "id": "sec-039-confidence-intervals",
+      "number": null,
+      "title": "Confidence intervals",
+      "level": 2,
+      "pageStart": 26,
+      "pageEnd": 27,
+      "labelStart": "26",
+      "labelEnd": "27",
+      "words": 868,
+      "summary": {
+        "text": "Appendix A.8, confidence intervals: tables of 95% Wilson score intervals for the accuracies reported in the main results, by topic area for PubHealthBench-Full (7,929 questions, refusals counted as wrong) and for the other result tables, down to the free-form scores of the smallest models.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "confidence intervals",
+          "heading": true
+        },
+        {
+          "term": "wilson score",
+          "heading": false
+        },
+        {
+          "term": "accu racy",
+          "heading": false
+        },
+        {
+          "term": "pubhealthbench-full zero-shot",
+          "heading": false
+        },
+        {
+          "term": "accuracy wilson",
+          "heading": false
+        },
+        {
+          "term": "claude-haiku",
+          "heading": false
+        },
+        {
+          "term": "command-r-32b",
+          "heading": false
+        },
+        {
+          "term": "command-r-7b",
+          "heading": false
+        }
+      ],
+      "extract": "Table 11: PubHealthBench-Full - zero-shot accuracy Wilson score 95% confidence inter- vals (Bowyer et al., 2025) for test set of 7929 questions, refusals included as incorrect responses, and bold indicates the highest score. *LLM used to generate benchmark. Blood Safety, Hepatitis, STIs and HIV Chemicals and Toxicology Climate and Health Gastro and Food Safety HCAI, Fungal, AMR, Antimicrobial Use and Sepsis Health",
+      "extractCut": true
+    }
+  ],
+  "checks": {
+    "figureSequenceGaps": [],
+    "pageLabelConflicts": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "withheld": false,
+  "keywords": [
+    {
+      "term": "health guidance",
+      "heading": false
+    },
+    {
+      "term": "mcqa questions",
+      "heading": true
+    },
+    {
+      "term": "mcqa answer",
+      "heading": true
+    },
+    {
+      "term": "public health",
+      "heading": true
+    },
+    {
+      "term": "mcqa benchmark",
+      "heading": true
+    },
+    {
+      "term": "government guidance",
+      "heading": false
+    },
+    {
+      "term": "invalid mcqa",
+      "heading": false
+    },
+    {
+      "term": "guidance text",
+      "heading": true
+    },
+    {
+      "term": "ukhsa guidance",
+      "heading": false
+    },
+    {
+      "term": "mcqa samples",
+      "heading": true
+    },
+    {
+      "term": "llm benchmark",
+      "heading": true
+    },
+    {
+      "term": "guidance source",
+      "heading": true
+    }
+  ],
+  "pageLabels": [
+    {
+      "physical": 1,
+      "label": "1",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 2,
+      "label": "2",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 3,
+      "label": "3",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 4,
+      "label": "4",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 5,
+      "label": "5",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 6,
+      "label": "6",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 7,
+      "label": "7",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 8,
+      "label": "8",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 9,
+      "label": "9",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 10,
+      "label": "10",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 11,
+      "label": "11",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 12,
+      "label": "12",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 13,
+      "label": "13",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 14,
+      "label": "14",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 15,
+      "label": "15",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 16,
+      "label": "16",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 17,
+      "label": "17",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 18,
+      "label": "18",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 19,
+      "label": "19",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 20,
+      "label": "20",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 21,
+      "label": "21",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 22,
+      "label": "22",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 23,
+      "label": "23",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 24,
+      "label": "24",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 25,
+      "label": "25",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 26,
+      "label": "26",
+      "source": "printed",
+      "confidence": 0.7
+    },
+    {
+      "physical": 27,
+      "label": "27",
+      "source": "printed",
+      "confidence": 0.7
+    }
+  ],
+  "figures": [
+    {
+      "kind": "figure",
+      "number": "1",
+      "title": "(left) PubHealthBench Full and Reviewed model accuracy, (right) PubHealthBench- FreeForm model accuracy. 95% Wilson CI. *LLM used to generate benchmark, **Judge LLM",
+      "page": 1,
+      "pageLabel": "1",
+      "confidence": 0.7,
+      "evidence": [
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "2",
+      "title": "Example PubHealthBench MCQA benchmark questions",
+      "page": 3,
+      "pageLabel": "3",
+      "confidence": 0.9,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "3",
+      "title": "Overview of MCQA generation pipeline",
+      "page": 3,
+      "pageLabel": "3",
+      "confidence": 0.9,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "4",
+      "title": "PubHealthBench questions by guidance topic area and guidance audience",
+      "page": 5,
+      "pageLabel": "5",
+      "confidence": 0.9,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "5",
+      "title": "Overview of benchmark review steps",
+      "page": 5,
+      "pageLabel": "5",
+      "confidence": 0.9,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "table",
+      "number": "1",
+      "title": "PubHealthBench-Full - zero-shot accuracy for test set of 7929 questions, refusals included as incorrect responses, and bold indicates the highest score. *LLM used to generate benchmark",
+      "page": 7,
+      "pageLabel": "7",
+      "confidence": 0.8,
+      "evidence": [
+        "referenced",
+        "in-sequence"
+      ]
+    },
+    {
+      "kind": "table",
+      "number": "2",
+      "title": "PubHealthBench-Full zero-shot accuracy by guidance type. *LLM used to generate benchmark",
+      "page": 7,
+      "pageLabel": "7",
+      "confidence": 0.8,
+      "evidence": [
+        "referenced",
+        "in-sequence"
+      ]
+    },
+    {
+      "kind": "table",
+      "number": "3",
+      "title": "PubHealthBench-Reviewed zero-shot accuracy by question and response type. *LLM used to generate benchmark, **Headline result",
+      "page": 7,
+      "pageLabel": "7",
+      "confidence": 0.8,
+      "evidence": [
+        "referenced",
+        "in-sequence"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "6",
+      "title": "Average deviation from overall model performance on PubHealthBench-Full by guidance topic (left) and guidance audience (right)",
+      "page": 8,
+      "pageLabel": "8",
+      "confidence": 0.9,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "table",
+      "number": "4",
+      "title": "PubHealthBench-FreeForm accuracy by guidance audience. *LLM used to generate benchmark, **Judge LLM",
+      "page": 9,
+      "pageLabel": "9",
+      "confidence": 0.8,
+      "evidence": [
+        "referenced",
+        "in-sequence"
+      ]
+    },
+    {
+      "kind": "table",
+      "number": "5",
+      "title": "Difference in accuracy between MCQA and Free Form settings. *LLM used to generate benchmark, **Judge LLM",
+      "page": 9,
+      "pageLabel": "9",
+      "confidence": 0.8,
+      "evidence": [
+        "referenced",
+        "in-sequence"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "7",
+      "title": "Confusion matrix for LLM MCQA error detection",
+      "page": 15,
+      "pageLabel": "15",
+      "confidence": 0.9,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "8",
+      "title": "PubHealthBench-Full MCQA by source guidance document last revision date. Note - the last revision to a document may only entail minor changes from the original text",
+      "page": 16,
+      "pageLabel": "16",
+      "confidence": 0.7,
+      "evidence": [
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "9",
+      "title": "(left) PubHealthBench-Full samples by source text document type, (right) MCQA quality human annotations - ”Good” and ”Acceptable” categories are treated as valid question samples",
+      "page": 16,
+      "pageLabel": "16",
+      "confidence": 0.7,
+      "evidence": [
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "table",
+      "number": "6",
+      "title": "MCQA generation system prompt (see Table 7 for user prompt)",
+      "page": 17,
+      "pageLabel": "17",
+      "confidence": 0.8,
+      "evidence": [
+        "referenced",
+        "in-sequence"
+      ]
+    },
+    {
+      "kind": "table",
+      "number": "7",
+      "title": "MCQA generation user prompt (see Table 6 for system prompt)",
+      "page": 18,
+      "pageLabel": "18",
+      "confidence": 0.8,
+      "evidence": [
+        "referenced",
+        "in-sequence"
+      ]
+    },
+    {
+      "kind": "table",
+      "number": "8",
+      "title": "MCQA zero-shot evaluation prompt",
+      "page": 21,
+      "pageLabel": "21",
+      "confidence": 0.6,
+      "evidence": [
+        "in-sequence"
+      ]
+    },
+    {
+      "kind": "table",
+      "number": "9",
+      "title": "Free form evaluation prompt",
+      "page": 21,
+      "pageLabel": "21",
+      "confidence": 0.6,
+      "evidence": [
+        "in-sequence"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "10",
+      "title": "Comparison of PubHealthBench-FreeForm performance using different LLM judges. *LLM used to generate benchmark",
+      "page": 22,
+      "pageLabel": "22",
+      "confidence": 0.9,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "table",
+      "number": "10",
+      "title": "To create a judge evaluation dataset and assess the performance of the LLM judge, we utilise the already generated correct and incorrect MCQA answer options. We insert the known correct or incorrect answer option into a variety of free form chat response templates designed to simulate the structure",
+      "page": 22,
+      "pageLabel": "22",
+      "confidence": 0.8,
+      "evidence": [
+        "referenced",
+        "in-sequence"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "11",
+      "title": "Comparison of PubHealthBench-FreeForm error types classified using Llama-3.3-70bn",
+      "page": 24,
+      "pageLabel": "24",
+      "confidence": 0.7,
+      "evidence": [
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "12",
+      "title": "Example of o1 potentially problematic responses to PubHealthBench-FreeForm",
+      "page": 24,
+      "pageLabel": "24",
+      "confidence": 0.7,
+      "evidence": [
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "13",
+      "title": "Example of o1 potentially problematic responses to PubHealthBench-FreeForm",
+      "page": 25,
+      "pageLabel": "25",
+      "confidence": 0.7,
+      "evidence": [
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "14",
+      "title": "Example of o1 potentially problematic responses to PubHealthBench-FreeForm",
+      "page": 25,
+      "pageLabel": "25",
+      "confidence": 0.7,
+      "evidence": [
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "15",
+      "title": "Example of o1 potentially problematic responses to PubHealthBench-FreeForm",
+      "page": 25,
+      "pageLabel": "25",
+      "confidence": 0.7,
+      "evidence": [
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "table",
+      "number": "11",
+      "title": "PubHealthBench-Full - zero-shot accuracy Wilson score 95% confidence intervals (Bowyer et al., 2025) for test set of 7929 questions, refusals included as incorrect responses, and bold indicates the highest score. *LLM used to generate benchmark",
+      "page": 26,
+      "pageLabel": "26",
+      "confidence": 0.6,
+      "evidence": [
+        "in-sequence"
+      ]
+    },
+    {
+      "kind": "table",
+      "number": "12",
+      "title": "PubHealthBench-Full zero-shot accuracy Wilson score 95% confidence intervals by guidance type. *LLM used to generate benchmark",
+      "page": 26,
+      "pageLabel": "26",
+      "confidence": 0.6,
+      "evidence": [
+        "in-sequence"
+      ]
+    },
+    {
+      "kind": "table",
+      "number": "13",
+      "title": "PubHealthBench-Reviewed Wilson score 95% confidence intervals zero-shot accuracy by question and response type. *LLM used to generate benchmark, **Headline result",
+      "page": 26,
+      "pageLabel": "26",
+      "confidence": 0.6,
+      "evidence": [
+        "in-sequence"
+      ]
+    },
+    {
+      "kind": "table",
+      "number": "14",
+      "title": "PubHealthBench-FreeForm model accuracy Wilson score 95% confidence intervals by guidance audience. *LLM used to generate benchmark, **Judge LLM",
+      "page": 27,
+      "pageLabel": "27",
+      "confidence": 0.6,
+      "evidence": [
+        "in-sequence"
+      ]
+    }
+  ],
+  "images": [
+    {
+      "id": "img-p001-1",
+      "file": "images/img-p001-1.png",
+      "page": 1,
+      "narratives": {
+        "en": "Figure 1 (left): PubHealthBench Full and Reviewed model accuracy across 24 LLMs. Proprietary models (GPT-4.5, GPT-4.1, o1) exceed 90% accuracy, outperforming human search baselines (88%), while open-weight models range from 45% to 85%.",
+        "fr": "Figure 1 (gauche) : exactitude des modèles sur PubHealthBench Full et Reviewed pour 24 LLM. Les modèles propriétaires (GPT-4.5, GPT-4.1, o1) dépassent 90 % d'exactitude et font mieux que les références de recherche humaine (88 %), tandis que les modèles à poids ouverts vont de 45 % à 85 %.",
+        "es": "Figura 1 (izquierda): exactitud de los modelos en PubHealthBench Full y Reviewed para 24 LLM. Los modelos propietarios (GPT-4.5, GPT-4.1, o1) superan el 90 % de exactitud y mejoran las referencias de búsqueda humana (88 %), mientras que los modelos de pesos abiertos van del 45 % al 85 %.",
+        "ar": "الشكل 1 (يسار): دقة النماذج على PubHealthBench Full وReviewed لـ24 نموذجًا لغويًا كبيرًا. تتجاوز النماذج المملوكة (GPT-4.5 وGPT-4.1 وo1) دقة 90% وتتفوق على خطوط الأساس للبحث البشري (88%)، بينما تتراوح النماذج ذات الأوزان المفتوحة بين 45% و85%.",
+        "ru": "Рисунок 1 (слева): точность моделей на PubHealthBench Full и Reviewed для 24 LLM. Проприетарные модели (GPT-4.5, GPT-4.1, o1) превышают 90 % точности и опережают базовый уровень поиска человеком (88 %), а модели с открытыми весами показывают от 45 % до 85 %.",
+        "zh": "图 1（左）：24 个大语言模型在 PubHealthBench Full 和 Reviewed 上的准确率。专有模型（GPT-4.5、GPT-4.1、o1）准确率超过 90%，高于人工检索基线（88%），而开放权重模型在 45% 到 85% 之间。"
+      },
+      "state": "draft"
+    },
+    {
+      "id": "img-p001-2",
+      "file": "images/img-p001-2.png",
+      "page": 1,
+      "narratives": {
+        "en": "Figure 1 (right): PubHealthBench-FreeForm model accuracy with 95% Wilson confidence intervals. Performance drops dramatically compared to MCQA, with top model o1 scoring 74% and all other models scoring below 72% (clinical guidance dropping to 57-71%).",
+        "fr": "Figure 1 (droite) : exactitude des modèles sur PubHealthBench-FreeForm avec intervalles de confiance de Wilson à 95 %. Les performances chutent fortement par rapport au QCM : le meilleur modèle, o1, obtient 74 % et tous les autres restent sous 72 % (les recommandations cliniques tombant à 57-71 %).",
+        "es": "Figura 1 (derecha): exactitud de los modelos en PubHealthBench-FreeForm con intervalos de confianza de Wilson del 95 %. El rendimiento cae drásticamente respecto a las preguntas de opción múltiple: el mejor modelo, o1, obtiene un 74 % y todos los demás quedan por debajo del 72 % (la guía clínica cae al 57-71 %).",
+        "ar": "الشكل 1 (يمين): دقة النماذج على PubHealthBench-FreeForm مع فترات ثقة ويلسون بنسبة 95%. ينخفض الأداء انخفاضًا كبيرًا مقارنةً بأسئلة الاختيار من متعدد: يحصل أفضل نموذج، o1، على 74% وتبقى جميع النماذج الأخرى دون 72% (وتنخفض الإرشادات السريرية إلى 57-71%).",
+        "ru": "Рисунок 1 (справа): точность моделей на PubHealthBench-FreeForm с 95-процентными доверительными интервалами Уилсона. По сравнению с вопросами с выбором ответа результаты резко падают: лучшая модель, o1, набирает 74 %, все остальные — ниже 72 % (по клиническим рекомендациям — 57-71 %).",
+        "zh": "图 1（右）：模型在 PubHealthBench-FreeForm 上的准确率及 95% Wilson 置信区间。与多项选择题相比表现大幅下降：最佳模型 o1 得分 74%，其余所有模型都低于 72%（临床指南降至 57–71%）。"
+      },
+      "state": "draft"
+    },
+    {
+      "id": "img-p003-1",
+      "file": "images/img-p003-1.png",
+      "page": 3,
+      "narratives": {
+        "en": "Figure 2: Example PubHealthBench MCQA benchmark questions. Cards showing question text, four candidate answer options, ground truth guidance citation, and distractor rationale derived from UK government guidance documents.",
+        "fr": "Figure 2 : exemples de questions du banc d'essai QCM PubHealthBench. Des fiches présentent le texte de la question, quatre options de réponse, la citation de la recommandation servant de vérité de référence et la justification des distracteurs, tirées de documents de recommandations du gouvernement britannique.",
+        "es": "Figura 2: ejemplos de preguntas del banco de pruebas de opción múltiple PubHealthBench. Fichas que muestran el texto de la pregunta, cuatro opciones de respuesta, la cita de la guía que sirve de verdad de referencia y la justificación de los distractores, derivadas de documentos de orientación del gobierno del Reino Unido.",
+        "ar": "الشكل 2: أمثلة على أسئلة معيار الاختيار من متعدد في PubHealthBench. بطاقات تعرض نص السؤال وأربعة خيارات للإجابة واستشهادًا بالإرشاد بوصفه الحقيقة المرجعية وتعليل الخيارات المضلِّلة، مستمدة من وثائق إرشادات حكومة المملكة المتحدة.",
+        "ru": "Рисунок 2: примеры вопросов бенчмарка PubHealthBench с выбором ответа. Карточки показывают текст вопроса, четыре варианта ответа, цитату из рекомендации как эталон и обоснование отвлекающих вариантов, взятые из документов с рекомендациями правительства Великобритании.",
+        "zh": "图 2：PubHealthBench 多项选择基准的示例题目。卡片展示题干、四个候选答案、作为标准答案依据的指南引文以及干扰项的理由，均取自英国政府的指南文件。"
+      },
+      "state": "draft"
+    },
+    {
+      "id": "img-p003-2",
+      "file": "images/img-p003-2.png",
+      "page": 3,
+      "narratives": {
+        "en": "Figure 3: Overview of MCQA generation pipeline. Flowchart showing extraction of text from 687 UK guidance documents, filtering for chunks with actionable recommendations via Llama-3.3-70B, question and distractor generation, and automated validation.",
+        "fr": "Figure 3 : vue d'ensemble de la chaîne de génération des QCM. Un organigramme montre l'extraction du texte de 687 documents de recommandations britanniques, le filtrage par Llama-3.3-70B des passages contenant des recommandations applicables, la génération des questions et des distracteurs, et la validation automatique.",
+        "es": "Figura 3: visión general de la cadena de generación de preguntas de opción múltiple. Un diagrama de flujo muestra la extracción de texto de 687 documentos de orientación del Reino Unido, el filtrado con Llama-3.3-70B de los fragmentos con recomendaciones aplicables, la generación de preguntas y distractores, y la validación automática.",
+        "ar": "الشكل 3: نظرة عامة على مسار توليد أسئلة الاختيار من متعدد. مخطط انسيابي يُظهر استخراج النص من 687 وثيقة إرشادات بريطانية، وتصفية المقاطع التي تتضمن توصيات قابلة للتنفيذ عبر Llama-3.3-70B، وتوليد الأسئلة والخيارات المضلِّلة، والتحقق الآلي.",
+        "ru": "Рисунок 3: обзор конвейера генерации вопросов с выбором ответа. Блок-схема показывает извлечение текста из 687 британских документов с рекомендациями, отбор с помощью Llama-3.3-70B фрагментов с практическими рекомендациями, генерацию вопросов и отвлекающих вариантов и автоматическую проверку.",
+        "zh": "图 3：多项选择题生成流程概览。流程图展示从 687 份英国指南文件中提取文本、用 Llama-3.3-70B 筛选含可执行建议的文本块、生成题目和干扰项，以及自动验证。"
+      },
+      "state": "draft"
+    },
+    {
+      "id": "img-p005-1",
+      "file": "images/img-p005-1.png",
+      "page": 5,
+      "narratives": {
+        "en": "Figure 4: PubHealthBench questions by guidance topic area (VPDs, immunisation, TB, AMR, environmental) and target audience (clinical guidance, public guidance, professional guidance).",
+        "fr": "Figure 4 : questions de PubHealthBench par domaine de recommandation (VPDs, vaccination, tuberculose, AMR, environnement) et par public cible (recommandations cliniques, recommandations au public, recommandations professionnelles).",
+        "es": "Figura 4: preguntas de PubHealthBench por área temática de la guía (VPDs, inmunización, tuberculosis, AMR, medio ambiente) y por público destinatario (guía clínica, guía para el público, guía profesional).",
+        "ar": "الشكل 4: أسئلة PubHealthBench بحسب مجال الإرشاد (VPDs والتحصين والسل وAMR والبيئة) وبحسب الجمهور المستهدف (إرشادات سريرية وإرشادات للجمهور وإرشادات مهنية).",
+        "ru": "Рисунок 4: вопросы PubHealthBench по тематике рекомендаций (VPDs, иммунизация, туберкулёз, AMR, окружающая среда) и по целевой аудитории (клинические рекомендации, рекомендации для населения, профессиональные рекомендации).",
+        "zh": "图 4：按指南主题领域（VPDs、免疫接种、结核病、AMR、环境）和目标受众（临床指南、公众指南、专业指南）划分的 PubHealthBench 题目。"
+      },
+      "state": "draft"
+    },
+    {
+      "id": "img-p005-2",
+      "file": "images/img-p005-2.png",
+      "page": 5,
+      "narratives": {
+        "en": "Figure 5: Overview of benchmark review steps. Process diagram showing automated consistency filtering followed by human SME verification of question clarity, clinical validity, and reference alignment.",
+        "fr": "Figure 5 : vue d'ensemble des étapes de revue du banc d'essai. Un schéma de processus montre un filtrage automatique de cohérence, suivi d'une vérification humaine par des experts du domaine portant sur la clarté des questions, leur validité clinique et leur concordance avec la référence.",
+        "es": "Figura 5: visión general de los pasos de revisión del banco de pruebas. Un diagrama de proceso muestra un filtrado automático de coherencia seguido de una verificación humana por expertos en la materia de la claridad de las preguntas, su validez clínica y su alineación con la referencia.",
+        "ar": "الشكل 5: نظرة عامة على خطوات مراجعة المعيار. مخطط عملية يُظهر تصفية آلية للاتساق، تليها مراجعة بشرية من خبراء المجال لوضوح الأسئلة وصلاحيتها السريرية ومطابقتها للمرجع.",
+        "ru": "Рисунок 5: обзор этапов проверки бенчмарка. Схема процесса показывает автоматическую фильтрацию на согласованность, за которой следует проверка людьми — экспертами предметной области — ясности вопросов, клинической обоснованности и соответствия источнику.",
+        "zh": "图 5：基准审查步骤概览。流程图展示先进行自动一致性筛选，再由领域专家人工核查题目的清晰度、临床有效性以及与参考来源的一致性。"
+      },
+      "state": "draft"
+    },
+    {
+      "id": "img-p005-3",
+      "file": "images/img-p005-3.png",
+      "page": 5,
+      "narratives": {
+        "en": "Figure 6: Average deviation from overall model performance on PubHealthBench-Full by guidance topic (left) and guidance audience (right). Highlights relative difficulty of clinical guidance compared to general public health messaging.",
+        "fr": "Figure 6 : écart moyen par rapport à la performance globale des modèles sur PubHealthBench-Full, par thème de recommandation (gauche) et par public de la recommandation (droite). Elle met en évidence la difficulté relative des recommandations cliniques par rapport aux messages généraux de santé publique.",
+        "es": "Figura 6: desviación media respecto al rendimiento global de los modelos en PubHealthBench-Full, por tema de la guía (izquierda) y por público de la guía (derecha). Destaca la dificultad relativa de la guía clínica frente a los mensajes generales de salud pública.",
+        "ar": "الشكل 6: متوسط الانحراف عن الأداء الكلي للنماذج على PubHealthBench-Full بحسب موضوع الإرشاد (يسار) وجمهور الإرشاد (يمين). يُبرز الصعوبة النسبية للإرشادات السريرية مقارنةً برسائل الصحة العامة العامة.",
+        "ru": "Рисунок 6: среднее отклонение от общей результативности моделей на PubHealthBench-Full по теме рекомендаций (слева) и по их аудитории (справа). Подчёркивает относительную сложность клинических рекомендаций по сравнению с общими сообщениями в области общественного здравоохранения.",
+        "zh": "图 6：按指南主题（左）和指南受众（右）划分的、相对 PubHealthBench-Full 上模型整体表现的平均偏差。突出显示临床指南相对一般公共卫生信息的难度。"
+      },
+      "state": "draft"
+    },
+    {
+      "id": "img-p008-1",
+      "file": "images/img-p008-1.png",
+      "page": 8,
+      "narratives": {
+        "en": "Figure 7: Confusion matrix for LLM MCQA error detection, quantifying false positive and false negative rates during automated quality control.",
+        "fr": "Figure 7 : matrice de confusion de la détection d'erreurs des QCM par LLM, quantifiant les taux de faux positifs et de faux négatifs lors du contrôle qualité automatique.",
+        "es": "Figura 7: matriz de confusión de la detección de errores en preguntas de opción múltiple mediante LLM, que cuantifica las tasas de falsos positivos y falsos negativos durante el control de calidad automático.",
+        "ar": "الشكل 7: مصفوفة الالتباس لاكتشاف أخطاء أسئلة الاختيار من متعدد بواسطة نموذج لغوي كبير، تقيس معدلات الإيجابيات الكاذبة والسلبيات الكاذبة أثناء ضبط الجودة الآلي.",
+        "ru": "Рисунок 7: матрица ошибок для обнаружения ошибок в вопросах с выбором ответа с помощью LLM, количественно показывающая доли ложноположительных и ложноотрицательных результатов при автоматическом контроле качества.",
+        "zh": "图 7：用大语言模型检测多项选择题错误的混淆矩阵，量化自动质量控制中的假阳性率和假阴性率。"
+      },
+      "state": "draft"
+    },
+    {
+      "id": "img-p008-2",
+      "file": "images/img-p008-2.png",
+      "page": 8,
+      "narratives": {
+        "en": "Figure 8: PubHealthBench-Full MCQA accuracy by source guidance document last revision date (pre-2023 vs 2024 updates). Evaluates temporal degradation and training cutoff effects when guidance is updated after model release.",
+        "fr": "Figure 8 : exactitude QCM sur PubHealthBench-Full selon la date de dernière révision du document de recommandation source (avant 2023 contre mises à jour de 2024). Elle évalue la dégradation dans le temps et les effets de la date limite d'entraînement lorsque la recommandation est mise à jour après la sortie du modèle.",
+        "es": "Figura 8: exactitud en las preguntas de opción múltiple de PubHealthBench-Full según la fecha de última revisión del documento de orientación de origen (antes de 2023 frente a actualizaciones de 2024). Evalúa la degradación temporal y los efectos del corte de entrenamiento cuando la guía se actualiza después del lanzamiento del modelo.",
+        "ar": "الشكل 8: دقة أسئلة الاختيار من متعدد على PubHealthBench-Full بحسب تاريخ آخر مراجعة لوثيقة الإرشاد المصدر (قبل 2023 مقابل تحديثات 2024). يقيّم التدهور الزمني وآثار تاريخ انتهاء بيانات التدريب حين يُحدَّث الإرشاد بعد إصدار النموذج.",
+        "ru": "Рисунок 8: точность на вопросах с выбором ответа PubHealthBench-Full в зависимости от даты последнего пересмотра исходного документа с рекомендациями (до 2023 года против обновлений 2024 года). Оценивает деградацию со временем и влияние даты отсечения обучающих данных, когда рекомендация обновлена после выпуска модели.",
+        "zh": "图 8：按来源指南文件最近修订日期（2023 年之前与 2024 年更新）划分的 PubHealthBench-Full 多项选择题准确率。评估当指南在模型发布后更新时的时间性退化和训练截止日期效应。"
+      },
+      "state": "draft"
+    },
+    {
+      "id": "img-p015-1",
+      "file": "images/img-p015-1.png",
+      "page": 15,
+      "narratives": {
+        "en": "Figure 9: (left) PubHealthBench-Full samples by source text document type; (right) human quality annotations categorizing generated questions into 'Good' (82%), 'Acceptable' (15%), and 'Poor' (3%).",
+        "fr": "Figure 9 : (gauche) échantillons de PubHealthBench-Full par type de document source ; (droite) annotations humaines de qualité classant les questions générées en « Good » (82 %), « Acceptable » (15 %) et « Poor » (3 %).",
+        "es": "Figura 9: (izquierda) muestras de PubHealthBench-Full por tipo de documento de origen; (derecha) anotaciones humanas de calidad que clasifican las preguntas generadas en «Good» (82 %), «Acceptable» (15 %) y «Poor» (3 %).",
+        "ar": "الشكل 9: (يسار) عينات PubHealthBench-Full بحسب نوع الوثيقة المصدر؛ (يمين) تعليقات الجودة البشرية التي تصنّف الأسئلة المولَّدة إلى «Good» (82%) و«Acceptable» (15%) و«Poor» (3%).",
+        "ru": "Рисунок 9: (слева) примеры PubHealthBench-Full по типу исходного документа; (справа) оценки качества людьми, относящие сгенерированные вопросы к категориям «Good» (82 %), «Acceptable» (15 %) и «Poor» (3 %).",
+        "zh": "图 9：（左）按来源文档类型划分的 PubHealthBench-Full 样本；（右）人工质量标注，将生成的题目分为“Good”（82%）、“Acceptable”（15%）和“Poor”（3%）。"
+      },
+      "state": "draft"
+    },
+    {
+      "id": "img-p016-1",
+      "file": "images/img-p016-1.png",
+      "page": 16,
+      "narratives": {
+        "en": "Figure 10: Comparison of PubHealthBench-FreeForm performance using different LLM judges (GPT-4o-Mini, Llama-3.3-70B, MedGemma-27B, Phi-4-14B). Inter-rater reliability demonstrates strong agreement with Fleiss's kappa of 0.64.",
+        "fr": "Figure 10 : comparaison des performances sur PubHealthBench-FreeForm avec différents juges LLM (GPT-4o-Mini, Llama-3.3-70B, MedGemma-27B, Phi-4-14B). La fiabilité inter-évaluateurs montre un fort accord, avec un kappa de Fleiss de 0,64.",
+        "es": "Figura 10: comparación del rendimiento en PubHealthBench-FreeForm con distintos jueces LLM (GPT-4o-Mini, Llama-3.3-70B, MedGemma-27B, Phi-4-14B). La fiabilidad entre evaluadores muestra un fuerte acuerdo, con un kappa de Fleiss de 0,64.",
+        "ar": "الشكل 10: مقارنة الأداء على PubHealthBench-FreeForm باستخدام محكّمين مختلفين من النماذج اللغوية الكبيرة (GPT-4o-Mini وLlama-3.3-70B وMedGemma-27B وPhi-4-14B). تُظهر موثوقية التوافق بين المقيّمين اتفاقًا قويًا، بمعامل كابا فلايس 0.64.",
+        "ru": "Рисунок 10: сравнение результатов на PubHealthBench-FreeForm при разных LLM-судьях (GPT-4o-Mini, Llama-3.3-70B, MedGemma-27B, Phi-4-14B). Межэкспертная надёжность показывает сильное согласие, каппа Флейса 0,64.",
+        "zh": "图 10：使用不同大语言模型评审（GPT-4o-Mini、Llama-3.3-70B、MedGemma-27B、Phi-4-14B）时 PubHealthBench-FreeForm 表现的比较。评审间信度显示一致性强，Fleiss kappa 为 0.64。"
+      },
+      "state": "draft"
+    },
+    {
+      "id": "img-p016-2",
+      "file": "images/img-p016-2.png",
+      "page": 16,
+      "narratives": {
+        "en": "Figure 11: Comparison of PubHealthBench-FreeForm error types classified using Llama-3.3-70B: (1) extraneous non-contradictory information, (2) omission of required points/criteria, and (3) contradiction or misstatement of official guidance.",
+        "fr": "Figure 11 : comparaison des types d'erreurs sur PubHealthBench-FreeForm classés avec Llama-3.3-70B : (1) informations superflues non contradictoires, (2) omission de points ou de critères requis, et (3) contradiction ou énoncé erroné de la recommandation officielle.",
+        "es": "Figura 11: comparación de los tipos de error en PubHealthBench-FreeForm clasificados con Llama-3.3-70B: (1) información superflua no contradictoria, (2) omisión de puntos o criterios requeridos y (3) contradicción o enunciado erróneo de la guía oficial.",
+        "ar": "الشكل 11: مقارنة أنواع الأخطاء في PubHealthBench-FreeForm المصنَّفة باستخدام Llama-3.3-70B: (1) معلومات زائدة غير متناقضة، (2) إغفال نقاط أو معايير مطلوبة، (3) تناقض مع الإرشاد الرسمي أو صياغة خاطئة له.",
+        "ru": "Рисунок 11: сравнение типов ошибок на PubHealthBench-FreeForm, классифицированных с помощью Llama-3.3-70B: (1) лишняя непротиворечащая информация, (2) пропуск обязательных пунктов или критериев, (3) противоречие официальной рекомендации или её неверное изложение.",
+        "zh": "图 11：用 Llama-3.3-70B 分类的 PubHealthBench-FreeForm 错误类型比较：(1) 多余但不矛盾的信息，(2) 遗漏必需的要点或标准，(3) 与官方指南相矛盾或误述官方指南。"
+      },
+      "state": "draft"
+    },
+    {
+      "id": "img-p016-3",
+      "file": "images/img-p016-3.png",
+      "page": 16,
+      "narratives": {
+        "en": "Figure 11b: Detailed breakdown of contradiction vs omission error proportions across model tiers (reasoning models vs instruction-tuned models).",
+        "fr": "Figure 11b : ventilation détaillée des proportions d'erreurs de contradiction et d'omission selon les catégories de modèles (modèles de raisonnement contre modèles ajustés aux instructions).",
+        "es": "Figura 11b: desglose detallado de las proporciones de errores de contradicción frente a omisión según la categoría de modelo (modelos de razonamiento frente a modelos ajustados por instrucciones).",
+        "ar": "الشكل 11b: تفصيل دقيق لنسب أخطاء التناقض مقابل الإغفال عبر فئات النماذج (نماذج الاستدلال مقابل النماذج المضبوطة على التعليمات).",
+        "ru": "Рисунок 11b: подробная разбивка долей ошибок противоречия и пропуска по категориям моделей (модели рассуждения против моделей, настроенных на инструкции).",
+        "zh": "图 11b：按模型类别（推理模型与指令微调模型）细分的矛盾类与遗漏类错误比例。"
+      },
+      "state": "draft"
+    },
+    {
+      "id": "img-p022-1",
+      "file": "images/img-p022-1.png",
+      "page": 22,
+      "narratives": {
+        "en": "Figure/Table 10: Judge prompt specification. Demonstrates system instructions, source guidance context injection, ground truth answer anchoring, and chain-of-thought evaluation schema for free-form responses.",
+        "fr": "Figure/Table 10 : spécification du prompt du juge. Elle montre les instructions système, l'injection du contexte de la recommandation source, l'ancrage sur la réponse de référence et le schéma d'évaluation par chaîne de raisonnement pour les réponses libres.",
+        "es": "Figura/Tabla 10: especificación del prompt del juez. Muestra las instrucciones del sistema, la inyección del contexto de la guía de origen, el anclaje en la respuesta de referencia y el esquema de evaluación por cadena de razonamiento para las respuestas libres.",
+        "ar": "الشكل/الجدول 10: مواصفة موجّه المحكّم. يعرض تعليمات النظام، وإدراج سياق الإرشاد المصدر، والارتكاز على الإجابة المرجعية، ومخطط التقييم بسلسلة التفكير للإجابات الحرة.",
+        "ru": "Рисунок/Таблица 10: спецификация промпта судьи. Показывает системные инструкции, подстановку контекста исходной рекомендации, привязку к эталонному ответу и схему оценки свободных ответов через цепочку рассуждений.",
+        "zh": "图/表 10：评审提示词规范。展示系统指令、来源指南上下文的注入、以标准答案为锚点，以及针对自由作答的思维链评估模式。"
+      },
+      "state": "draft"
+    },
+    {
+      "id": "img-p024-1",
+      "file": "images/img-p024-1.png",
+      "page": 24,
+      "narratives": {
+        "en": "Figure 12: Example of o1 potentially problematic response on intervention timing. Compares o1's premature clinical intervention recommendation against official UK guidance requiring specific symptom thresholds.",
+        "fr": "Figure 12 : exemple de réponse potentiellement problématique de o1 sur le moment d'une intervention. Elle compare la recommandation d'intervention clinique prématurée de o1 à la recommandation officielle britannique, qui exige des seuils de symptômes précis.",
+        "es": "Figura 12: ejemplo de respuesta potencialmente problemática de o1 sobre el momento de una intervención. Compara la recomendación de intervención clínica prematura de o1 con la guía oficial del Reino Unido, que exige umbrales de síntomas específicos.",
+        "ar": "الشكل 12: مثال على إجابة قد تكون إشكالية من o1 بشأن توقيت التدخل. يقارن توصية o1 بتدخل سريري مبكر بالإرشاد البريطاني الرسمي الذي يشترط عتبات محددة للأعراض.",
+        "ru": "Рисунок 12: пример потенциально проблемного ответа o1 о сроках вмешательства. Сравнивает рекомендацию o1 о преждевременном клиническом вмешательстве с официальной британской рекомендацией, требующей определённых пороговых симптомов.",
+        "zh": "图 12：o1 在干预时机上可能存在问题的回答示例。将 o1 过早进行临床干预的建议与要求特定症状阈值的英国官方指南进行对比。"
+      },
+      "state": "draft"
+    },
+    {
+      "id": "img-p024-2",
+      "file": "images/img-p024-2.png",
+      "page": 24,
+      "narratives": {
+        "en": "Figure 13: Example of o1 delayed intervention recommendation. Illustrates failure mode where model recommends waiting, contradicting urgent statutory notification guidance.",
+        "fr": "Figure 13 : exemple de recommandation d'intervention tardive de o1. Elle illustre un mode de défaillance où le modèle conseille d'attendre, en contradiction avec une recommandation de notification obligatoire urgente.",
+        "es": "Figura 13: ejemplo de recomendación de intervención tardía de o1. Ilustra un modo de fallo en el que el modelo recomienda esperar, en contradicción con una guía de notificación obligatoria urgente.",
+        "ar": "الشكل 13: مثال على توصية o1 بتدخل متأخر. يوضح نمط إخفاق يوصي فيه النموذج بالانتظار، خلافًا لإرشاد يقضي بإخطار قانوني عاجل.",
+        "ru": "Рисунок 13: пример рекомендации o1 об отложенном вмешательстве. Иллюстрирует режим сбоя, при котором модель советует подождать, вопреки рекомендации о срочном обязательном уведомлении.",
+        "zh": "图 13：o1 建议延迟干预的示例。说明一种失败模式：模型建议等待，与要求紧急法定报告的指南相矛盾。"
+      },
+      "state": "draft"
+    },
+    {
+      "id": "img-p025-1",
+      "file": "images/img-p025-1.png",
+      "page": 25,
+      "narratives": {
+        "en": "Figure 14: Example of o1 omitted contraindication. Compares model advice recommending a vaccine without stating the crucial pregnancy/immunosuppression contraindication present in the source text.",
+        "fr": "Figure 14 : exemple de contre-indication omise par o1. Elle compare un conseil du modèle recommandant un vaccin sans mentionner la contre-indication essentielle liée à la grossesse ou à l'immunosuppression présente dans le texte source.",
+        "es": "Figura 14: ejemplo de contraindicación omitida por o1. Compara un consejo del modelo que recomienda una vacuna sin indicar la contraindicación crucial por embarazo o inmunosupresión presente en el texto de origen.",
+        "ar": "الشكل 14: مثال على موانع استعمال أغفلها o1. يقارن نصيحة النموذج التي توصي بلقاح من دون ذكر مانع الاستعمال الحاسم المتعلق بالحمل أو كبت المناعة الوارد في النص المصدر.",
+        "ru": "Рисунок 14: пример противопоказания, пропущенного o1. Сравнивает совет модели, рекомендующий вакцину без указания важнейшего противопоказания при беременности или иммуносупрессии, приведённого в исходном тексте.",
+        "zh": "图 14：o1 遗漏禁忌证的示例。对比模型推荐某疫苗却未说明来源文本中关键的妊娠/免疫抑制禁忌证。"
+      },
+      "state": "draft"
+    },
+    {
+      "id": "img-p025-2",
+      "file": "images/img-p025-2.png",
+      "page": 25,
+      "narratives": {
+        "en": "Figure 15: Example of o1 extraneous intervention advice. Illustrates model suggesting unapproved prophylactic treatments not recognized by official UK public health guidance.",
+        "fr": "Figure 15 : exemple de conseil d'intervention superflu de o1. Elle illustre le modèle suggérant des traitements prophylactiques non approuvés, non reconnus par les recommandations officielles britanniques de santé publique.",
+        "es": "Figura 15: ejemplo de consejo de intervención superfluo de o1. Ilustra al modelo sugiriendo tratamientos profilácticos no aprobados que la guía oficial de salud pública del Reino Unido no reconoce.",
+        "ar": "الشكل 15: مثال على نصيحة تدخل زائدة من o1. يوضح اقتراح النموذج علاجات وقائية غير معتمدة لا تعترف بها إرشادات الصحة العامة البريطانية الرسمية.",
+        "ru": "Рисунок 15: пример лишнего совета о вмешательстве от o1. Иллюстрирует, как модель предлагает неодобренные профилактические средства, не признанные официальными британскими рекомендациями в области общественного здравоохранения.",
+        "zh": "图 15：o1 给出多余干预建议的示例。说明模型建议了英国官方公共卫生指南不认可的未经批准的预防性治疗。"
+      },
+      "state": "draft"
+    },
+    {
+      "id": "img-p025-3",
+      "file": "images/img-p025-3.png",
+      "page": 25,
+      "narratives": {
+        "en": "Figure 16: Supplementary case comparison of model deviations across infection control and post-exposure prophylaxis guidance.",
+        "fr": "Figure 16 : comparaison de cas complémentaire des écarts des modèles sur les recommandations de contrôle des infections et de prophylaxie post-exposition.",
+        "es": "Figura 16: comparación de casos complementaria de las desviaciones de los modelos en la guía de control de infecciones y de profilaxis posexposición.",
+        "ar": "الشكل 16: مقارنة حالات تكميلية لانحرافات النماذج في إرشادات مكافحة العدوى والوقاية بعد التعرض.",
+        "ru": "Рисунок 16: дополнительное сравнение случаев отклонений моделей в рекомендациях по инфекционному контролю и постконтактной профилактике.",
+        "zh": "图 16：模型在感染控制和暴露后预防指南上的偏差的补充案例对比。"
+      },
+      "state": "draft"
+    }
+  ],
+  "coverage": [
+    {
+      "kind": "contents",
+      "state": "found",
+      "count": 40,
+      "note": "outline"
+    },
+    {
+      "kind": "sections",
+      "state": "found",
+      "count": 41,
+      "note": "3 levels"
+    },
+    {
+      "kind": "figures",
+      "state": "found",
+      "count": 19
+    },
+    {
+      "kind": "tables",
+      "state": "not-extracted",
+      "note": "14 captioned in the text"
+    },
+    {
+      "kind": "references",
+      "state": "not-extracted",
+      "note": "a references section is in the text (p10); its entries are not extracted"
+    },
+    {
+      "kind": "glossary",
+      "state": "none",
+      "note": "no such heading in the text"
+    },
+    {
+      "kind": "footnotes",
+      "state": "not-extracted"
+    },
+    {
+      "kind": "summaries",
+      "state": "partial",
+      "count": 40,
+      "note": "40 of 41 sections"
+    }
+  ],
+  "links": {
+    "repo": "litlfred/cat-harness",
+    "branch": "main",
+    "dir": "library/corpus/content/arxiv-2505.06046v4"
+  }
+}

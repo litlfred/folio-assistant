@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/directory/collab.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/directory/collab.jsonld",
+  "staging": {
+    "branch": "claude/repin-train-0550",
+    "sha": "211176b48990d1a2382a2913a91794b72853a53c",
+    "pr": "3124/merge",
+    "run": "43611082734"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/directory/collab",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "collab",
+      "path": "collab/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/cat-harness"
+      ],
+      "description": "The collaborative-development sub-graph — a NAMED SUB-GRAPH of this layer, OPT-IN: off in every layer, this one included, unless that layer lists `smart-base.collab` in its own `enableSubgraphs` (owner, 2026-11-13, check:optin-refs follow-up). It holds the processes that run on cat-harness's work plan and delivery process — they claim and close a bean, keep the work plan, or stage, preview and release a change: `smart-guideline-end-to-end`, `SGAuthoring.DAKLifecycle`, and DIIG's `diig-investment-path`. The L2 and L3 processes of the same kind are in each level's own opt-in collab group, `L2/collab/` and `L3/collab/` (`smart-base.L2-collab`, `smart-base.L3-collab`; owner, 2026-11-13: L2/L3 own collab). It `requires` `cat-harness.sdlc`, which requires `cat-harness.work-plan`, and the four knowledge-graph levels `smart-base-L1`..`smart-base-L4` whose skills its end-to-end process calls (owner, 2026-11-13), so switching it on switches all of them on. The graph inside it is declared FROM WITHIN, in `collab/graph.json`.",
+      "readmePath": "collab/README.md",
+      "fileCount": 0,
+      "inSubgraph": "http://smart.who.int/base/directory/collab"
+    }
+  ]
+}

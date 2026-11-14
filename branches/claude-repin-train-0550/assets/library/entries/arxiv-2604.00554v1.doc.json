@@ -1,0 +1,2026 @@
+{
+  "$schema": "folio-library-document/v1",
+  "id": "arxiv-2604.00554v1",
+  "title": "LLM-supported document separation for printed reviews from zbMATH Open",
+  "variant": "pdf",
+  "pages": 10,
+  "tocSource": "outline",
+  "tocMethod": null,
+  "toc": [
+    {
+      "level": 1,
+      "title": "Abstract",
+      "number": null,
+      "page": 1,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-000-abstract"
+    },
+    {
+      "level": 1,
+      "title": "Introduction",
+      "number": "1",
+      "page": 1,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-001-1-introduction"
+    },
+    {
+      "level": 1,
+      "title": "Related Work",
+      "number": "2",
+      "page": 2,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-004-2-related-work"
+    },
+    {
+      "level": 1,
+      "title": "Datasets and metrics",
+      "number": "3",
+      "page": 3,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-006-3-datasets-and-metrics"
+    },
+    {
+      "level": 2,
+      "title": "zbMATH Open dataset",
+      "number": "3.1",
+      "page": 3,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-007-31-zbmath-open-dataset"
+    },
+    {
+      "level": 2,
+      "title": "OCR evaluation dataset",
+      "number": "3.2",
+      "page": 3,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-008-32-ocr-evaluation-dataset"
+    },
+    {
+      "level": 2,
+      "title": "Metrics",
+      "number": "3.3",
+      "page": 3,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-003-33-metrics"
+    },
+    {
+      "level": 1,
+      "title": "Document Splitting",
+      "number": "4",
+      "page": 3,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-002-4-document-splitting"
+    },
+    {
+      "level": 2,
+      "title": "OCR comparison",
+      "number": "4.1",
+      "page": 3,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-010-41-ocr-comparison"
+    },
+    {
+      "level": 2,
+      "title": "Conversion and challenges",
+      "number": "4.2",
+      "page": 4,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-011-42-conversion-and-challenges"
+    },
+    {
+      "level": 2,
+      "title": "OCR errors",
+      "number": "4.3",
+      "page": 4,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-005-43-ocr-errors"
+    },
+    {
+      "level": 1,
+      "title": "Regular expressions approach",
+      "number": "5",
+      "page": 4,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-012-5-regular-expressions-approach"
+    },
+    {
+      "level": 2,
+      "title": "Methodology",
+      "number": "5.1",
+      "page": 4,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-013-51-methodology"
+    },
+    {
+      "level": 2,
+      "title": "Exclusion of documents from consideration",
+      "number": "5.2",
+      "page": 4,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-015-52-exclusion-of-documents-from-consideration"
+    },
+    {
+      "level": 2,
+      "title": "Challenges",
+      "number": "5.3",
+      "page": 4,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-009-53-challenges"
+    },
+    {
+      "level": 2,
+      "title": "Results",
+      "number": "5.4",
+      "page": 5,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-014-54-results"
+    },
+    {
+      "level": 1,
+      "title": "LLM-voting based document splitting",
+      "number": "6",
+      "page": 5,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-016-6-llm-voting-based-document-splitting"
+    },
+    {
+      "level": 2,
+      "title": "Methodology",
+      "number": "6.1",
+      "page": 5,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-013-51-methodology"
+    },
+    {
+      "level": 2,
+      "title": "Base models",
+      "number": "6.2",
+      "page": 5,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-017-62-base-models"
+    },
+    {
+      "level": 2,
+      "title": "Fine-tuning",
+      "number": "6.3",
+      "page": 6,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-018-63-fine-tuning"
+    },
+    {
+      "level": 2,
+      "title": "Majority Voting approach",
+      "number": "6.4",
+      "page": 6,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-019-64-majority-voting-approach"
+    },
+    {
+      "level": 2,
+      "title": "LLM baseline",
+      "number": "6.5",
+      "page": 7,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-020-65-llm-baseline"
+    },
+    {
+      "level": 1,
+      "title": "Computer vision-based baseline",
+      "number": "7",
+      "page": 7,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-021-7-computer-vision-based-baseline"
+    },
+    {
+      "level": 1,
+      "title": "Evaluation and all data processing.",
+      "number": "8",
+      "page": 7,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-022-8-evaluation-and-all-data-processing"
+    },
+    {
+      "level": 2,
+      "title": "Evaluation of \"base\" models",
+      "number": "8.1",
+      "page": 7,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-023-81-evaluation-of-base-models"
+    },
+    {
+      "level": 2,
+      "title": "Evaluation results",
+      "number": "8.2",
+      "page": 7,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-024-82-evaluation-results"
+    },
+    {
+      "level": 2,
+      "title": "Errors analysis",
+      "number": "8.3",
+      "page": 8,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-025-83-errors-analysis"
+    },
+    {
+      "level": 2,
+      "title": "Error detection hypotheses",
+      "number": "8.4",
+      "page": 8,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-026-84-error-detection-hypotheses"
+    },
+    {
+      "level": 2,
+      "title": "Obtaining start and end indexes of documents.",
+      "number": "8.5",
+      "page": 9,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 2,
+      "title": "All data processing",
+      "number": "8.6",
+      "page": 9,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-027-86-all-data-processing"
+    },
+    {
+      "level": 1,
+      "title": "Conclusion",
+      "number": "9",
+      "page": 9,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-028-9-conclusion"
+    },
+    {
+      "level": 1,
+      "title": "References",
+      "number": null,
+      "page": 9,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-029-references"
+    }
+  ],
+  "sections": [
+    {
+      "id": "sec-front-matter",
+      "number": null,
+      "title": "Front matter",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 1,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 64,
+      "summary": {
+        "text": "Presents the paper title (\"LLM-supported document separation for printed reviews from zbMATH Open\") and author affiliations for Ivan Pluzhnikov and Bela Gipp (University of Göttingen) and Ankit Satpute, Moritz Schubotz, and Olaf Teschke (FIZ Karlsruhe).",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "george august",
+          "heading": false
+        },
+        {
+          "term": "information infrastructure",
+          "heading": false
+        },
+        {
+          "term": "august university",
+          "heading": false
+        },
+        {
+          "term": "germany",
+          "heading": false
+        }
+      ],
+      "extract": "LLM-supported document separation for printed reviews from zbMATH Open Ivan Pluzhnikov George August University of Göttingen Göttingen, Germany Ankit Satpute Ankit.Satpute@fiz-karlsruhe.de FIZ Karlsruhe Leibniz Institute for Information Infrastructure Berlin, Germany Moritz Schubotz Moritz.Schubotz@fiz-karlsruhe.de FIZ Karlsruhe Leibniz Institute for Information Infrastructure Berlin, Germany Olaf Teschke",
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-2604.00554v1/blocks/prose-sec-front-matter"
+      ]
+    },
+    {
+      "id": "sec-000-abstract",
+      "number": null,
+      "title": "Abstract",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 1,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 234,
+      "summary": {
+        "text": "Summarizes a pipeline for digitizing and segmenting ~831,000 scanned mathematical documents in zbMATH Open using Mathpix for LaTeX OCR and fine-tuned generative LLMs in a Majority Voting framework for document separation, achieving 97.5% text extraction accuracy (89.1% boundary index accuracy overall) and processing 810,977 documents into machine-readable text (721,288 with LaTeX boundary indexes).",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "mathematical documents",
+          "heading": false
+        },
+        {
+          "term": "identifies",
+          "heading": false
+        },
+        {
+          "term": "techniques",
+          "heading": false
+        },
+        {
+          "term": "processing",
+          "heading": false
+        },
+        {
+          "term": "accuracy",
+          "heading": false
+        },
+        {
+          "term": "pages",
+          "heading": false
+        },
+        {
+          "term": "ocr",
+          "heading": false
+        },
+        {
+          "term": "text",
+          "heading": false
+        }
+      ],
+      "extract": "This paper presents a specialized methodology for digitizing and segmenting mathematical documents from zbMATH Open, a com- prehensive database of mathematical literature, to enhance ma- chine processing capabilities. Currently, approximately 831,000 documents exist only in scanned volumes, which makes them not machine-processable. Furthermore, these scans often span multi- ple pages or share pages with other",
+      "extractCut": true
+    },
+    {
+      "id": "sec-001-1-introduction",
+      "number": "1",
+      "title": "Introduction",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 2,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 537,
+      "summary": {
+        "text": "Introduces the problem of converting ~831,000 historical scanned review entries in zbMATH Open (out of over 4.8 million total entries) into machine-readable LaTeX for mathematical information retrieval, noting the challenges of varying historical typesetting and multi-document or multi-page scan layouts illustrated in Figure 1.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "scanned volumes",
+          "heading": false
+        },
+        {
+          "term": "scanned documents",
+          "heading": false
+        },
+        {
+          "term": "scanned zbmath",
+          "heading": false
+        },
+        {
+          "term": "scanned page",
+          "heading": false
+        },
+        {
+          "term": "open volumes",
+          "heading": false
+        },
+        {
+          "term": "converting scanned",
+          "heading": false
+        },
+        {
+          "term": "mathematical research",
+          "heading": false
+        },
+        {
+          "term": "introduction",
+          "heading": true
+        }
+      ],
+      "extract": "Introduction Printed mathematical literature has a long history, with records dating back several centuries. Among the most comprehensive re- sources in the field, zbMATH Open (1868 – present) serves as a critical abstracting and reviewing service in pure and applied math- ematics [21]. It offers a vast collection of abstracts, reviews, and summaries of mathematical research articles, making it an indis- pensable",
+      "extractCut": true
+    },
+    {
+      "id": "sec-002-4-document-splitting",
+      "number": "4",
+      "title": "Document Splitting",
+      "level": 1,
+      "pageStart": 2,
+      "pageEnd": 2,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 36,
+      "summary": {
+        "text": "Outlines the paper's first contribution: adapting modern generative LLMs to separate mathematical text from OCR output with high accuracy.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "processing",
+          "heading": false
+        },
+        {
+          "term": "adapted",
+          "heading": false
+        },
+        {
+          "term": "evaluates",
+          "heading": false
+        }
+      ],
+      "extract": "by leveraging modern generative LLMs. These models, which have shown significant success in natural language processing tasks, are adapted for mathematical text separation, achieving high accuracy in data processing. The research evaluates OCR tools and docu-",
+      "extractCut": false
+    },
+    {
+      "id": "sec-003-33-metrics",
+      "number": "3.3",
+      "title": "Metrics",
+      "level": 2,
+      "pageStart": 2,
+      "pageEnd": 2,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 90,
+      "summary": {
+        "text": "Outlines the evaluation metrics (BLEU and Edit Distance for OCR engines; accuracy for document splitting) and the practical outcome of converting 810,977 zbMATH Open documents into machine-readable text and 721,288 into LaTeX representations with start and end indexes, outperforming ChatGPT-4o, computer vision, and regex baselines.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "metrics",
+          "heading": true
+        },
+        {
+          "term": "indicators",
+          "heading": false
+        },
+        {
+          "term": "methods",
+          "heading": false
+        }
+      ],
+      "extract": "and Edit Distance for OCR engines, and accuracy for document splitting. These metrics offer a quantitative assessment of the pro- posed methods’ performance. Comparative analysis demonstrates that the proposed approach outperforms existing methods, includ- ing ChatGPT-4o, computer vision-based approaches, and regular expression-based methods, in terms of key performance indicators, thus highlighting its potential",
+      "extractCut": true
+    },
+    {
+      "id": "sec-004-2-related-work",
+      "number": "2",
+      "title": "Related Work",
+      "level": 1,
+      "pageStart": 2,
+      "pageEnd": 3,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 507,
+      "summary": {
+        "text": "Reviews prior work on post-OCR document extraction and layout segmentation using regular expressions (Pitou et al., Pandey et al.), computer vision models including Faster-RCNN, U-Net, Segmentation Transformer, and Document Image Transformer (DiT), and NLP/LLM approaches using LSTM, BERT, and GPT-3.5.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "ocr-processed documents",
+          "heading": false
+        },
+        {
+          "term": "extract content",
+          "heading": false
+        },
+        {
+          "term": "document types",
+          "heading": false
+        },
+        {
+          "term": "regular expressions",
+          "heading": false
+        },
+        {
+          "term": "related",
+          "heading": true
+        },
+        {
+          "term": "dit",
+          "heading": false
+        },
+        {
+          "term": "ocr",
+          "heading": false
+        },
+        {
+          "term": "score",
+          "heading": false
+        }
+      ],
+      "extract": "Related Work Several studies have explored the use of regular expressions to extract content from OCR-processed documents. For instance, Pitou et al. [27] utilize regular expressions to categorize elements within scanned invoices processed via OCR, identifying details such as account numbers, dates, and amounts. They report a recall of 35.88% and a precision of 50.46%. Similarly, Pandey et al. [24] employ regular",
+      "extractCut": true
+    },
+    {
+      "id": "sec-005-43-ocr-errors",
+      "number": "4.3",
+      "title": "OCR errors",
+      "level": 2,
+      "pageStart": 3,
+      "pageEnd": 3,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 8,
+      "summary": {
+        "text": "Notes that generative models can simultaneously correct OCR errors and strip extraneous metadata such as page numbers, making extracted outputs more user-friendly than token-labeling approaches.",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "(e.g., page numbers), making the results more user-friendly.",
+      "extractCut": false
+    },
+    {
+      "id": "sec-006-3-datasets-and-metrics",
+      "number": "3",
+      "title": "Datasets and metrics",
+      "level": 1,
+      "pageStart": 3,
+      "pageEnd": 3,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 27,
+      "summary": {
+        "text": "Introduces Section 3 on the datasets collected from scanned mathematical literature volumes and the evaluation metrics used in the study.",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "Datasets and metrics In this study, we utilized a dataset derived from scanned volumes of mathematical literature. The dataset collection and preprocessing process is detailed as follows:",
+      "extractCut": false
+    },
+    {
+      "id": "sec-007-31-zbmath-open-dataset",
+      "number": "3.1",
+      "title": "zbMATH Open dataset",
+      "level": 2,
+      "pageStart": 3,
+      "pageEnd": 3,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 231,
+      "summary": {
+        "text": "Describes the primary zbMATH Open dataset of 478 scanned books (254,444 pages, 813,005 documents in English, German, French, and Italian) with metadata fields (Scan_document_id, zbMATH_internal_id, Title, Original_title, Source, illustrated in Table 1), along with the 1,000-sample training set and 478-document test set (one per volume).",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "zbmath open",
+          "heading": true
+        },
+        {
+          "term": "original title",
+          "heading": false
+        },
+        {
+          "term": "zbmath internal",
+          "heading": false
+        },
+        {
+          "term": "unique identifier",
+          "heading": false
+        },
+        {
+          "term": "der",
+          "heading": false
+        },
+        {
+          "term": "scan document",
+          "heading": false
+        },
+        {
+          "term": "books",
+          "heading": false
+        }
+      ],
+      "extract": "zbMATH Open dataset The primary dataset consists of 478 distinct scanned books, encom- passing texts in English, German, French, and Italian. The books are divided into pages, each in a separate file, in total 254,444 pages. We also used the following information about 813,005 documents from these books (e.g., Table 1): • Scan Document ID: A unique identifier linking each entry to a specific page. • zbMATH Internal",
+      "extractCut": true
+    },
+    {
+      "id": "sec-008-32-ocr-evaluation-dataset",
+      "number": "3.2",
+      "title": "OCR evaluation dataset",
+      "level": 2,
+      "pageStart": 3,
+      "pageEnd": 3,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 14,
+      "summary": {
+        "text": "Introduces Subsection 3.2 on the requirement for a ground-truth dataset to evaluate OCR tools on mathematical literature.",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "OCR evaluation dataset An evaluation of the different OCR tools requires a suitable dataset",
+      "extractCut": false
+    },
+    {
+      "id": "sec-009-53-challenges",
+      "number": "5.3",
+      "title": "Challenges",
+      "level": 2,
+      "pageStart": 3,
+      "pageEnd": 3,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 337,
+      "summary": {
+        "text": "Describes the 25-page ground-truth OCR evaluation dataset (22 with mathematical formulas) manually extracted from arXiv STEM articles, and defines the evaluation metrics in Subsection 3.3: BLEU and Edit Distance for LaTeX OCR evaluation, and exact boundary/text accuracy (or \"not reviewed.\" when absent) for document splitting.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "ground truth",
+          "heading": false
+        },
+        {
+          "term": "document splitting",
+          "heading": false
+        },
+        {
+          "term": "document text",
+          "heading": false
+        },
+        {
+          "term": "splitting task",
+          "heading": false
+        },
+        {
+          "term": "latex code",
+          "heading": false
+        },
+        {
+          "term": "page",
+          "heading": false
+        },
+        {
+          "term": "metric",
+          "heading": false
+        },
+        {
+          "term": "articles",
+          "heading": false
+        }
+      ],
+      "extract": "cal literature. Also, it should consist of \"Page\" - \"LaTeX represen- tation\" (as ground truth) pairs. To the best of our knowledge (as of 07.2024), there is no dataset already collected that meets the specific needs of this research [3]. Consequently, we collected our own dataset comprising 25 pages sourced from a variety of STEM articles within the Arxiv dataset [6], which offers a rich collection of scientific",
+      "extractCut": true
+    },
+    {
+      "id": "sec-010-41-ocr-comparison",
+      "number": "4.1",
+      "title": "OCR comparison",
+      "level": 2,
+      "pageStart": 3,
+      "pageEnd": 4,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 130,
+      "summary": {
+        "text": "Compares four OCR systems (Mathpix, InftyReader, Nougat, and Marker) on the 25-page benchmark in Table 2, showing that Mathpix achieves the highest Average BLEU (0.7237) and lowest Average Edit Distance (0.1733), motivating its selection for full-corpus conversion.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "edit distance",
+          "heading": false
+        },
+        {
+          "term": "ocr",
+          "heading": true
+        },
+        {
+          "term": "nougat",
+          "heading": false
+        },
+        {
+          "term": "mathpix",
+          "heading": false
+        }
+      ],
+      "extract": "OCR comparison In this section, we provide the evaluation results for the OCR tools (Table 2). The results indicated that Mathpix outperforms In- ftyReader, Marker, and Nougat in BLEU and Edit Distance. Marker shows the second-best result in terms of BLEU and Nougat in terms of Edit Distance. InftyReader consistently lagged behind the other three tools. Based on the evaluations performed, Mathpix was selected to",
+      "extractCut": true
+    },
+    {
+      "id": "sec-011-42-conversion-and-challenges",
+      "number": "4.2",
+      "title": "Conversion and challenges",
+      "level": 2,
+      "pageStart": 4,
+      "pageEnd": 4,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 340,
+      "summary": {
+        "text": "Reports converting 254,444 scanned zbMATH Open .tiff pages via the Mathpix API into 252,209 JSON LaTeX files (with 2,235 API failures, including 1,408 blank pages and 827 recognition failures), and catalogs common OCR errors in Subsection 4.3 including character confusions, inconsistent line breaks/spacing, spurious LaTeX tags, and omitted characters or words.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "ocr systems",
+          "heading": false
+        },
+        {
+          "term": "ocr output",
+          "heading": false
+        },
+        {
+          "term": "errors",
+          "heading": false
+        },
+        {
+          "term": "conversion",
+          "heading": true
+        },
+        {
+          "term": "latex code",
+          "heading": false
+        },
+        {
+          "term": "characters",
+          "heading": false
+        },
+        {
+          "term": "api",
+          "heading": false
+        },
+        {
+          "term": "images",
+          "heading": false
+        }
+      ],
+      "extract": "Conversion and challenges To facilitate the conversion process, we utilized the Mathpix API, an interface that allows the submission of images and the retrieval of the corresponding LaTeX code. Our dataset comprised 254,444 images in .tiff format, representing scanned pages from zbMATH Open volumes. Approximately 0.88% (2,235 images) of the total submissions resulted in API errors. These errors were primarily due to",
+      "extractCut": true
+    },
+    {
+      "id": "sec-012-5-regular-expressions-approach",
+      "number": "5",
+      "title": "Regular expressions approach",
+      "level": 1,
+      "pageStart": 4,
+      "pageEnd": 4,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 33,
+      "summary": {
+        "text": "Introduces Section 5 on using a regular-expression-based extraction pipeline as a baseline for splitting OCR-processed zbMATH Open documents.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "regular expressions",
+          "heading": true
+        },
+        {
+          "term": "baselines",
+          "heading": false
+        },
+        {
+          "term": "approach",
+          "heading": true
+        }
+      ],
+      "extract": "Regular expressions approach Several approaches based on the regular expressions (regex) have demonstrated success in extracting data from outputs of the OCR systems. Therefore, we consider regex as one of the baselines for",
+      "extractCut": false
+    },
+    {
+      "id": "sec-013-51-methodology",
+      "number": "5.1",
+      "title": "Methodology",
+      "level": 2,
+      "pageStart": 4,
+      "pageEnd": 4,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 0,
+      "summary": null,
+      "keywords": [],
+      "extract": null,
+      "extractCut": false
+    },
+    {
+      "id": "sec-014-54-results",
+      "number": "5.4",
+      "title": "Results",
+      "level": 2,
+      "pageStart": 4,
+      "pageEnd": 4,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 271,
+      "summary": {
+        "text": "Details the 8-step regular-expression methodology (Subsection 5.1) that concatenates LaTeX page files between consecutive rows' Scan_document_id values, matches the current and next document titles (or original titles) to bracket the text, and strips extraneous metadata such as page numbers and author headers.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "𝑛𝑒𝑥𝑡 𝑟𝑜𝑤",
+          "heading": false
+        },
+        {
+          "term": "original title",
+          "heading": false
+        },
+        {
+          "term": "scan document",
+          "heading": false
+        },
+        {
+          "term": "extracted text",
+          "heading": false
+        },
+        {
+          "term": "row",
+          "heading": false
+        },
+        {
+          "term": "regular expressions",
+          "heading": false
+        },
+        {
+          "term": "index",
+          "heading": false
+        },
+        {
+          "term": "𝐿𝑎𝑇𝑒𝑋𝑐𝑜𝑛𝑡𝑒𝑛𝑡",
+          "heading": false
+        }
+      ],
+      "extract": "5.1 Methodology The objective was to automate the extraction of individual docu- ments from OCR-processed files in LaTeX. Steps involved: (1) For each 𝑟𝑜𝑤in the zbMATH Open table 1: (2) Reading next row: Read the next row from the zbMATH Open table as the 𝑛𝑒𝑥𝑡_𝑟𝑜𝑤. (3) Reading LaTeX files: Read the 𝐿𝑎𝑇𝑒𝑋𝑐𝑜𝑛𝑡𝑒𝑛𝑡of the files from 𝑟𝑜𝑤[Scan document id] to 𝑛𝑒𝑥𝑡_𝑟𝑜𝑤[Scan document id]",
+      "extractCut": true
+    },
+    {
+      "id": "sec-015-52-exclusion-of-documents-from-consideration",
+      "number": "5.2",
+      "title": "Exclusion of documents from consideration",
+      "level": 2,
+      "pageStart": 4,
+      "pageEnd": 5,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 372,
+      "summary": {
+        "text": "Describes excluding 2,028 documents with missing page OCR to leave 810,977 documents (Subsection 5.2), handling OCR and formatting variations via regex normalization (85.5% matched) and a Levenshtein distance threshold of 0.3 times title length (Subsection 5.3, Figure 2), and extracting text for 786,314 entries (97%) though with boundary inaccuracies (Subsection 5.4).",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "documents",
+          "heading": true
+        },
+        {
+          "term": "algorithm",
+          "heading": false
+        },
+        {
+          "term": "scan document",
+          "heading": false
+        },
+        {
+          "term": "ocr errors",
+          "heading": false
+        },
+        {
+          "term": "exclusion",
+          "heading": true
+        },
+        {
+          "term": "regular expressions",
+          "heading": false
+        },
+        {
+          "term": "eliminate",
+          "heading": false
+        },
+        {
+          "term": "excluded",
+          "heading": false
+        }
+      ],
+      "extract": "Exclusion of documents from consideration Taking into account the proposed algorithm, we took the following step to clean the dataset before applying it. We excluded those documents on which it would not have worked due to the absence of certain data. If for any page between𝑟𝑜𝑤[Scan document id] and𝑛𝑒𝑥𝑡_𝑟𝑜𝑤[Scan document id] inclusive LaTeX representation is missing, the docu- ment was excluded from",
+      "extractCut": true
+    },
+    {
+      "id": "sec-016-6-llm-voting-based-document-splitting",
+      "number": "6",
+      "title": "LLM-voting based document splitting",
+      "level": 1,
+      "pageStart": 5,
+      "pageEnd": 5,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 179,
+      "summary": {
+        "text": "Introduces Section 6 on generative LLM-based document splitting and outlines the 6-step prompting methodology (Subsection 6.1, illustrated in Figure 3) that supplies the current and next row's title/original title, source, and concatenated LaTeX page content to an LLM.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "𝑛𝑒𝑥𝑡 𝑟𝑜𝑤",
+          "heading": false
+        },
+        {
+          "term": "document splitting",
+          "heading": true
+        },
+        {
+          "term": "original title",
+          "heading": false
+        },
+        {
+          "term": "zbmath open",
+          "heading": false
+        },
+        {
+          "term": "prompt",
+          "heading": false
+        },
+        {
+          "term": "open table",
+          "heading": false
+        }
+      ],
+      "extract": "LLM-voting based document splitting Several approaches based on the generative LLMs have shown success in document splitting tasks. Hence, we used generative LLMs as possible candidates for the solution. 6.1 Methodology The idea of the approach is as follows: (1) For each 𝑟𝑜𝑤in the zbMATH Open table (2) Read the next row from the zbMATH Open table as the 𝑛𝑒𝑥𝑡_𝑟𝑜𝑤. (3) Add to the prompt instructions for",
+      "extractCut": true
+    },
+    {
+      "id": "sec-017-62-base-models",
+      "number": "6.2",
+      "title": "Base models",
+      "level": 2,
+      "pageStart": 5,
+      "pageEnd": 6,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 247,
+      "summary": {
+        "text": "Explains the selection criteria for open-source instruction-tuned base LLMs fitting within 16 GB VRAM with context windows exceeding 4,000 tokens (32k), summarizing the three selected models in Table 3: CalmExperiment-7B-slerp (7B), Maxine-7B-0401-Stock (7B), and Mistral-Passthrough-8L-10B (10B).",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "highest score",
+          "heading": false
+        },
+        {
+          "term": "models",
+          "heading": true
+        },
+        {
+          "term": "language models",
+          "heading": false
+        },
+        {
+          "term": "base",
+          "heading": true
+        },
+        {
+          "term": "website",
+          "heading": false
+        },
+        {
+          "term": "face",
+          "heading": false
+        },
+        {
+          "term": "size",
+          "heading": false
+        }
+      ],
+      "extract": "Base models The next step was to choose a model. Due to the technical limita- tions of the GPU, we opted for models that require less than 16GB of VRAM. The size of the context window was also critical. To avoid the situation where the model may not be able to handle the text of the document due to its size, it had to be more than 4 thousand tokens (which corresponds to approximately 8 pages of plain text). To",
+      "extractCut": true
+    },
+    {
+      "id": "sec-018-63-fine-tuning",
+      "number": "6.3",
+      "title": "Fine-tuning",
+      "level": 2,
+      "pageStart": 6,
+      "pageEnd": 6,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 278,
+      "summary": {
+        "text": "Describes fine-tuning the three pre-trained LLMs using LoRA in LLaMA-Factory, selecting a learning rate of 0.0005 and 5 epochs via an 80/20 train/validation split of the 1,000-sample training dataset (with CalmExperiment-7B-slerp achieving the lowest validation loss), and then fine-tuning on all 1,000 training samples.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "fine-tuning",
+          "heading": true
+        },
+        {
+          "term": "learning rate",
+          "heading": false
+        },
+        {
+          "term": "train dataset",
+          "heading": false
+        },
+        {
+          "term": "epochs",
+          "heading": false
+        },
+        {
+          "term": "loss",
+          "heading": false
+        },
+        {
+          "term": "hyperparameters",
+          "heading": false
+        },
+        {
+          "term": "resources",
+          "heading": false
+        },
+        {
+          "term": "technique",
+          "heading": false
+        }
+      ],
+      "extract": "Fine-tuning To significantly reduce the resources spent adapting the Large Lan- guage Models to specific the task, we used the fine-tuning technique [15]. Instead of training neural networks from scratch, we took pre- trained ones. Since the models learned to solve NLP problems, they were already able to work with the basic concepts of the language. In this case, we needed much less time, computing resources, and",
+      "extractCut": true
+    },
+    {
+      "id": "sec-019-64-majority-voting-approach",
+      "number": "6.4",
+      "title": "Majority Voting approach",
+      "level": 2,
+      "pageStart": 6,
+      "pageEnd": 7,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 243,
+      "summary": {
+        "text": "Presents the Majority Voting ensemble over the three fine-tuned LLMs (along with validation and training loss curves in Figures 4 and 5), returning any two-model consensus and defaulting to the best validation model (CalmExperiment-7B-slerp) when all three outputs differ.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "majority voting",
+          "heading": true
+        },
+        {
+          "term": "validation loss",
+          "heading": false
+        },
+        {
+          "term": "language models",
+          "heading": false
+        },
+        {
+          "term": "losses",
+          "heading": false
+        },
+        {
+          "term": "just",
+          "heading": false
+        },
+        {
+          "term": "calmexperiment-7b-slerp",
+          "heading": false
+        },
+        {
+          "term": "approach",
+          "heading": true
+        }
+      ],
+      "extract": "Majority Voting approach In addition to using each model individually, we have implemented an approach that allows them to be used simultaneously - to reduce the probability of mistakes by accounting for multiple predictions. The popular technique of model assembly was used, Majority Voting [28]. The essence of this method is as follows: (1) For every document, each of the models proposes its output. (2) If the",
+      "extractCut": true
+    },
+    {
+      "id": "sec-020-65-llm-baseline",
+      "number": "6.5",
+      "title": "LLM baseline",
+      "level": 2,
+      "pageStart": 7,
+      "pageEnd": 7,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 157,
+      "summary": {
+        "text": "Describes the ChatGPT-4o baseline (August 2024 version) tested both zero-shot and with two-shot prompting, using an explicit prompt instruction to return \"Not reviewed\" when review content is absent, as well as testing the un-fine-tuned base models on the modified prompt.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "few-shot learning",
+          "heading": false
+        },
+        {
+          "term": "labeled",
+          "heading": false
+        },
+        {
+          "term": "prompt",
+          "heading": false
+        },
+        {
+          "term": "baseline",
+          "heading": true
+        }
+      ],
+      "extract": "LLM baseline We used the latest version of ChatGPT-4o (as of 08.2024) as a base- line, as it has shown success in similar tasks performed by Zhiwei et al. in the work [20] and Perot et al. in the work [26]. To do this, we had to modify the prompt by explicitly specifying the expected behavior in the absence of the document content by adding the text \"If the review is empty, return ‘Not reviewed’\" (fine-tuned models",
+      "extractCut": true
+    },
+    {
+      "id": "sec-021-7-computer-vision-based-baseline",
+      "number": "7",
+      "title": "Computer vision-based baseline",
+      "level": 1,
+      "pageStart": 7,
+      "pageEnd": 7,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 189,
+      "summary": {
+        "text": "Describes the computer-vision baseline using the Document Image Transformer (DiT) trained on PubLayNet and restricted to the \"title\" class to bound document splitting accuracy by title detection recall on scanned pages (illustrated in Figure 6).",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "computer",
+          "heading": true
+        },
+        {
+          "term": "titles",
+          "heading": false
+        },
+        {
+          "term": "baseline",
+          "heading": true
+        },
+        {
+          "term": "vision-based",
+          "heading": true
+        },
+        {
+          "term": "cv-based",
+          "heading": false
+        },
+        {
+          "term": "model output",
+          "heading": false
+        }
+      ],
+      "extract": "Computer vision-based baseline Given the success of computer vision models in document splitting tasks, we selected a CV-based approach as a baseline. When using such approaches, an important aspect is the ability of the model to distinguish different parts of the document. More precisely, the model should be able to determine a title from plain text. The pro- portion of correctly identified titles among all actual",
+      "extractCut": true
+    },
+    {
+      "id": "sec-022-8-evaluation-and-all-data-processing",
+      "number": "8",
+      "title": "Evaluation and all data processing.",
+      "level": 1,
+      "pageStart": 7,
+      "pageEnd": 7,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 5,
+      "summary": {
+        "text": "Section 8 heading introducing the evaluation of all document splitting methods on the test set and full-corpus data processing.",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "Evaluation and all data processing.",
+      "extractCut": false
+    },
+    {
+      "id": "sec-023-81-evaluation-of-base-models",
+      "number": "8.1",
+      "title": "Evaluation of \"base\" models",
+      "level": 2,
+      "pageStart": 7,
+      "pageEnd": 7,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 129,
+      "summary": {
+        "text": "Reports that prior to fine-tuning, all three open-source base models achieved 0% accuracy on the test dataset because they generated extraneous text, retained metadata, or omitted the target document.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "models returned",
+          "heading": false
+        },
+        {
+          "term": "base",
+          "heading": true
+        },
+        {
+          "term": "fine-tuning",
+          "heading": false
+        },
+        {
+          "term": "evaluation",
+          "heading": true
+        }
+      ],
+      "extract": "Evaluation of \"base\" models To assess the performance of the \"base\" models prior to fine-tuning, we evaluated their initial versions on the document splitting task. This allowed us to quantify the improvements achieved through fine-tuning by comparing the resulting accuracy. For this, we used the test dataset. Our results showed that none of the models returned outputs that met the accuracy criteria. The models",
+      "extractCut": true
+    },
+    {
+      "id": "sec-024-82-evaluation-results",
+      "number": "8.2",
+      "title": "Evaluation results",
+      "level": 2,
+      "pageStart": 7,
+      "pageEnd": 8,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 145,
+      "summary": {
+        "text": "Compares test-set document splitting accuracy in Table 4 across baselines—DiT (48.5% upper bound), ChatGPT-4o (51%), ChatGPT-4o two-shot (52.1%), and Regular Expressions (68.8%)—against the fine-tuned LLMs (Maxine-7B-0401-Stock 93.1%, Mistral-Passthrough-8L-10B 93.7%, CalmExperiment-7B-slerp 96.2%) and Majority Voting (97.5%).",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "evaluation",
+          "heading": true
+        },
+        {
+          "term": "majority voting",
+          "heading": false
+        },
+        {
+          "term": "regular expressions",
+          "heading": false
+        },
+        {
+          "term": "chatgpt-4o",
+          "heading": false
+        },
+        {
+          "term": "calmexperiment-7b-slerp",
+          "heading": false
+        }
+      ],
+      "extract": "Evaluation results This section presents a comprehensive evaluation on the test dataset of the approaches developed by us, as well as ChatGPT-based and CV-based. The results are shown in Table 4 Based on the results obtained, we conclude that our proposed approaches leveraging Large Language Models significantly outper- form alternative methods, which are based on regular expressions, Pluzhnikov et al. Approach",
+      "extractCut": true
+    },
+    {
+      "id": "sec-025-83-errors-analysis",
+      "number": "8.3",
+      "title": "Errors analysis",
+      "level": 2,
+      "pageStart": 8,
+      "pageEnd": 8,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 325,
+      "summary": {
+        "text": "Categorizes the 12 test-set errors made by the Majority Voting method into four causes: OCR formatting errors (2 cases), ambiguity between nearly identical neighboring titles (2 cases), LLM hallucinations on longer documents (4 cases), and metadata inclusion/omission errors (4 cases).",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "document text",
+          "heading": false
+        },
+        {
+          "term": "errors",
+          "heading": true
+        },
+        {
+          "term": "test data",
+          "heading": false
+        },
+        {
+          "term": "titles",
+          "heading": false
+        },
+        {
+          "term": "cases",
+          "heading": false
+        },
+        {
+          "term": "mistake",
+          "heading": false
+        },
+        {
+          "term": "tokens",
+          "heading": false
+        },
+        {
+          "term": "author",
+          "heading": false
+        }
+      ],
+      "extract": "Errors analysis This section reviews the main sources of errors that occur when using the Majority Voting method and analyzes each type. By do- ing this, we can better understand the limitations of the current approach and guide further optimization efforts to improve the accuracy and reliability of document-splitting methods. • OCR formatting errors: an OCR error may cause the document to be processed incorrectly",
+      "extractCut": true
+    },
+    {
+      "id": "sec-026-84-error-detection-hypotheses",
+      "number": "8.4",
+      "title": "Error detection hypotheses",
+      "level": 2,
+      "pageStart": 8,
+      "pageEnd": 9,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 778,
+      "summary": {
+        "text": "Tests and refutes two standalone error-detection hypotheses on the 18 test errors of fine-tuned CalmExperiment-7B-slerp—showing neither Mathpix page confidence scores (Hypothesis 1) nor output token probabilities from LLaMA-Factory (Hypothesis 2) reliably predict segmentation errors—and describes Subsection 8.5's whitespace-normalized exact-matching method for recovering start and end character indexes in the raw LaTeX OCR output (succeeding on 90.6% of the test set with 98.4% accuracy, or 89.1% overall while filtering out hallucinations).",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "error detection",
+          "heading": true
+        },
+        {
+          "term": "ocr confidence",
+          "heading": false
+        },
+        {
+          "term": "confidence rate",
+          "heading": false
+        },
+        {
+          "term": "lower confidence",
+          "heading": false
+        },
+        {
+          "term": "confidence scores",
+          "heading": false
+        },
+        {
+          "term": "hypotheses",
+          "heading": true
+        },
+        {
+          "term": "average probability",
+          "heading": false
+        },
+        {
+          "term": "documents processed",
+          "heading": false
+        }
+      ],
+      "extract": "Error detection hypotheses In addition to analyzing specific types of errors, we tested two hypotheses to identify potential indicators of errors in the document splitting process. These hypotheses focus on aspects of OCR quality and the probabilistic nature of Transformers-based Large Language Models, aiming to establish methods for error detection. The fine- tuned CalmExperiment-7B-slerp model, as the best of the",
+      "extractCut": true
+    },
+    {
+      "id": "sec-027-86-all-data-processing",
+      "number": "8.6",
+      "title": "All data processing",
+      "level": 2,
+      "pageStart": 9,
+      "pageEnd": 9,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 123,
+      "summary": {
+        "text": "Reports applying the Majority Voting pipeline to all 810,977 eligible zbMATH Open documents (differing from CalmExperiment-7B-slerp alone in 3.4% of cases) and recovering exact start and end character indexes in the LaTeX scans for 721,288 documents (88.9%).",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "majority voting",
+          "heading": false
+        },
+        {
+          "term": "texts",
+          "heading": false
+        },
+        {
+          "term": "processing",
+          "heading": true
+        },
+        {
+          "term": "documents",
+          "heading": false
+        }
+      ],
+      "extract": "All data processing After achieving a high accuracy score on the test dataset, the next step was to use the best approach we had created on the entire dataset. Thus, we applied the Majority Voting approach to 810,977 elements in the zbMATH Open table, finishing the transformation of these mathematical documents into machine-readable and search- able formats as a practical outcome of this research. The result of",
+      "extractCut": true
+    },
+    {
+      "id": "sec-028-9-conclusion",
+      "number": "9",
+      "title": "Conclusion",
+      "level": 1,
+      "pageStart": 9,
+      "pageEnd": 9,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 289,
+      "summary": {
+        "text": "Concludes by summarizing the Mathpix LaTeX OCR conversion of 252,624 zbMATH Open pages, the 97.5% test accuracy of the three-LLM Majority Voting splitter (and 89.1% overall index accuracy), the public release of code, models, and datasets on GitHub, Zenodo, and Hugging Face, and DFG funding acknowledgments.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "end indexes",
+          "heading": false
+        },
+        {
+          "term": "document splitting",
+          "heading": false
+        },
+        {
+          "term": "conclusion",
+          "heading": true
+        },
+        {
+          "term": "scanned pages",
+          "heading": false
+        },
+        {
+          "term": "test dataset",
+          "heading": false
+        },
+        {
+          "term": "zbmath open",
+          "heading": false
+        },
+        {
+          "term": "scans",
+          "heading": false
+        },
+        {
+          "term": "identified",
+          "heading": false
+        }
+      ],
+      "extract": "Conclusion This project successfully identified the optimal OCR tool, Mathpix, for converting scanned pages to LaTeX format, using the BLEU Score and Edit Distance metrics. As the next step, 252,624 scanned pages from zbMATH Open were converted into LaTeX. Building on this, we developed a problem-specific method for automatic document splitting using Large Language Models. By employing a Majority Voting mechanism",
+      "extractCut": true
+    },
+    {
+      "id": "sec-029-references",
+      "number": null,
+      "title": "References",
+      "level": 1,
+      "pageStart": 9,
+      "pageEnd": 10,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 1380,
+      "summary": {
+        "text": "Lists the 44 bibliographic references cited in the paper, covering document layout analysis, mathematical OCR, information retrieval, zbMATH digitization, and LLM fine-tuning.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "arxiv preprint",
+          "heading": false
+        },
+        {
+          "term": "international conference",
+          "heading": false
+        },
+        {
+          "term": "neural networks",
+          "heading": false
+        },
+        {
+          "term": "acm international",
+          "heading": false
+        },
+        {
+          "term": "pattern recognition",
+          "heading": false
+        },
+        {
+          "term": "deep neural",
+          "heading": false
+        },
+        {
+          "term": "character recognition",
+          "heading": false
+        },
+        {
+          "term": "neural information",
+          "heading": false
+        }
+      ],
+      "extract": "[1] J. Barrow, R. Jain, V. Morariu, V. Manjunatha, D.W. Oard, and P. Resnik. 2020. A joint model for document segmentation and segment labeling. In Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics. 313–322. [2] Marco Beck, Isabel Beckenbach, Thomas Hartmann, Moritz Schubotz, and Olaf Teschke. 2020. Transforming Scanned zbMATH Volumes to LaTeX: Planning the Next Level",
+      "extractCut": true
+    }
+  ],
+  "checks": {
+    "figureSequenceGaps": [],
+    "pageLabelConflicts": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "withheld": false,
+  "keywords": [
+    {
+      "term": "document text",
+      "heading": false
+    },
+    {
+      "term": "document splitting",
+      "heading": true
+    },
+    {
+      "term": "document images",
+      "heading": false
+    },
+    {
+      "term": "document separation",
+      "heading": false
+    },
+    {
+      "term": "scan document",
+      "heading": false
+    },
+    {
+      "term": "document analysis",
+      "heading": false
+    },
+    {
+      "term": "scanned documents",
+      "heading": true
+    },
+    {
+      "term": "document segmentation",
+      "heading": false
+    },
+    {
+      "term": "llm-supported document",
+      "heading": false
+    },
+    {
+      "term": "open documents",
+      "heading": true
+    },
+    {
+      "term": "document layout",
+      "heading": false
+    },
+    {
+      "term": "different document",
+      "heading": false
+    }
+  ],
+  "pageLabels": [
+    {
+      "physical": 1,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 2,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 3,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 4,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 5,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 6,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 7,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 8,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 9,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 10,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    }
+  ],
+  "figures": [
+    {
+      "kind": "figure",
+      "number": "1",
+      "title": "Illustration of two scanned pages from zbMATH Open, showcasing the end of one document (blue), four complete documents (red), and the start of another (green)",
+      "page": 2,
+      "pageLabel": null,
+      "confidence": 0.9,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "table",
+      "number": "1",
+      "title": "Sample of the data from the zbMATH Open",
+      "page": 3,
+      "pageLabel": null,
+      "confidence": 0.8,
+      "evidence": [
+        "referenced",
+        "in-sequence"
+      ]
+    },
+    {
+      "kind": "table",
+      "number": "2",
+      "title": "Performance metrics of the OCR systems",
+      "page": 4,
+      "pageLabel": null,
+      "confidence": 0.8,
+      "evidence": [
+        "referenced",
+        "in-sequence"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "2",
+      "title": "RE-based extraction approach. Red - titles and sources matches. Blue - text to be extracted",
+      "page": 5,
+      "pageLabel": null,
+      "confidence": 0.9,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "3",
+      "title": "Example of the prompt and correct generative Large Language Model output for the document https://zbmath.org/0005.34202",
+      "page": 5,
+      "pageLabel": null,
+      "confidence": 0.9,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "4",
+      "title": "Validation losses of the Large Language Models",
+      "page": 6,
+      "pageLabel": null,
+      "confidence": 0.9,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "5",
+      "title": "",
+      "page": 6,
+      "pageLabel": null,
+      "confidence": 0.9,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "table",
+      "number": "3",
+      "title": "Large Language Models overview",
+      "page": 6,
+      "pageLabel": null,
+      "confidence": 0.8,
+      "evidence": [
+        "referenced",
+        "in-sequence"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "6",
+      "title": "CV model output on a page with 3 titles, of which 1 was recognized",
+      "page": 7,
+      "pageLabel": null,
+      "confidence": 0.9,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "table",
+      "number": "4",
+      "title": "Evaluation results of the document splitting approaches",
+      "page": 8,
+      "pageLabel": null,
+      "confidence": 0.8,
+      "evidence": [
+        "referenced",
+        "in-sequence"
+      ]
+    }
+  ],
+  "images": [
+    {
+      "id": "img-p002-1",
+      "file": "images/img-p002-1.png",
+      "page": 2,
+      "narratives": {
+        "en": "Figure 1 (left): scan of zbMATH review page 120 (German), with a blue box around the end of a preceding review and red boxes around complete reviews (Mordell, Oppenheim, Wenkow). Illustrates where documents start and end on a page.",
+        "fr": "Figure 1 (gauche) : numérisation de la page 120 de recensions zbMATH (en allemand), avec un cadre bleu autour de la fin d'une recension précédente et des cadres rouges autour de recensions complètes (Mordell, Oppenheim, Wenkow). Illustre l'endroit où les documents commencent et se terminent sur une page.",
+        "es": "Figura 1 (izquierda): escaneo de la página 120 de reseñas de zbMATH (en alemán), con un recuadro azul alrededor del final de una reseña anterior y recuadros rojos alrededor de reseñas completas (Mordell, Oppenheim, Wenkow). Ilustra dónde comienzan y terminan los documentos en una página.",
+        "ar": "الشكل 1 (يسار): مسح ضوئي للصفحة 120 من مراجعات zbMATH (بالألمانية)، مع مربع أزرق يحيط بنهاية مراجعة سابقة ومربعات حمراء تحيط بمراجعات كاملة (Mordell وOppenheim وWenkow). يوضّح مواضع بداية الوثائق ونهايتها داخل الصفحة.",
+        "ru": "Рисунок 1 (слева): скан страницы 120 реферативного журнала zbMATH (на немецком языке) с синей рамкой вокруг окончания предыдущего реферата и красными рамками вокруг полных рефератов (Mordell, Oppenheim, Wenkow). Иллюстрирует границы начала и окончания документов на странице.",
+        "zh": "图 1（左）：zbMATH 评论第 120 页扫描件（德文），蓝框标出前一条评论的结尾，红框标出完整评论（Mordell、Oppenheim、Wenkow），用于说明页面上文档的起止位置。"
+      },
+      "state": "draft"
+    },
+    {
+      "id": "img-p002-2",
+      "file": "images/img-p002-2.png",
+      "page": 2,
+      "narratives": {
+        "en": "Figure 1 (right): scan of zbMATH review page 121, with a red box around the end of a review and the review of Jones (genus of ternary quadratic forms), and a green box around the start of the Uspensky review that continues past the page.",
+        "fr": "Figure 1 (droite) : numérisation de la page 121 de recensions zbMATH, avec un cadre rouge autour de la fin d'une recension et de la recension de Jones (genre des formes quadratiques ternaires), et un cadre vert autour du début de la recension d'Uspensky qui se poursuit au-delà de la page.",
+        "es": "Figura 1 (derecha): escaneo de la página 121 de reseñas de zbMATH, con un recuadro rojo alrededor del final de una reseña y de la reseña de Jones (género de formas cuadráticas ternarias), y un recuadro verde alrededor del inicio de la reseña de Uspensky que continúa más allá de la página.",
+        "ar": "الشكل 1 (يمين): مسح ضوئي للصفحة 121 من مراجعات zbMATH، مع مربع أحمر حول نهاية مراجعة ومراجعة Jones (جنس الأشكال التربيعية الثلاثية)، ومربع أخضر حول بداية مراجعة Uspensky التي تمتد إلى ما بعد الصفحة.",
+        "ru": "Рисунок 1 (справа): скан страницы 121 реферативного журнала zbMATH с красной рамкой вокруг окончания реферата и реферата работы Jones (род тернарных квадратичных форм) и зелёной рамкой вокруг начала реферата работы Uspensky, продолжающегося на следующей странице.",
+        "zh": "图 1（右）：zbMATH 评论第 121 页扫描件，红框标出一条评论的结尾及 Jones（三元二次型的属）的评论，绿框标出跨页延续的 Uspensky 评论的开头。"
+      },
+      "state": "draft"
+    },
+    {
+      "id": "img-p005-1",
+      "file": "images/img-p005-1.png",
+      "page": 5,
+      "narratives": {
+        "en": "Figure 2: scan of review page 8 with red boxes around the title/source lines of the Artin and Herbrand entries and a blue box around the Artin review body, illustrating the regular-expression extraction approach.",
+        "fr": "Figure 2 : numérisation de la page 8 de recensions avec des cadres rouges autour des lignes de titre/source des entrées d'Artin et de Herbrand et un cadre bleu autour du corps de la recension d'Artin, illustrant l'approche d'extraction par expressions régulières.",
+        "es": "Figura 2: escaneo de la página 8 de reseñas con recuadros rojos alrededor de las líneas de título/fuente de las entradas de Artin y Herbrand y un recuadro azul alrededor del cuerpo de la reseña de Artin, que ilustra el enfoque de extracción mediante expresiones regulares.",
+        "ar": "الشكل 2: مسح ضوئي للصفحة 8 من المراجعات مع مربعات حمراء حول أسطر العنوان/المصدر لمدخلَي Artin وHerbrand ومربع أزرق حول متن مراجعة Artin، لتوضيح نهج الاستخراج باستخدام التعابير النمطية (regular expressions).",
+        "ru": "Рисунок 2: скан страницы 8 с рефератами, где красными рамками выделены строки заголовков и библиографических источников для записей Artin и Herbrand, а синей рамкой — основной текст реферата Artin, что иллюстрирует подход к извлечению на основе регулярных выражений.",
+        "zh": "图 2：第 8 页评论扫描件，红框标出 Artin 与 Herbrand 条目的标题/来源行，蓝框标出 Artin 评论正文，用于说明基于正则表达式的提取方法。"
+      },
+      "state": "draft"
+    },
+    {
+      "id": "img-p005-2",
+      "file": "images/img-p005-2.png",
+      "page": 5,
+      "narratives": {
+        "en": "Figure 3: two monospaced text boxes. The upper shows the prompt asking the model to extract the review between a given title and the following title from a LaTeX text chunk; the lower shows the model output, a German review text containing LaTeX-escaped mathematics.",
+        "fr": "Figure 3 : deux zones de texte à chasse fixe. Celle du haut montre l'invite (prompt) demandant au modèle d'extraire la recension située entre un titre donné et le titre suivant à partir d'un fragment de texte LaTeX ; celle du bas montre la sortie du modèle, un texte de recension en allemand contenant des formules mathématiques échappées en LaTeX.",
+        "es": "Figura 3: dos cuadros de texto monoespaciado. El superior muestra la instrucción (prompt) que pide al modelo extraer la reseña comprendida entre un título dado y el título siguiente a partir de un fragmento de texto LaTeX; el inferior muestra la salida del modelo, un texto de reseña en alemán con expresiones matemáticas escapadas en LaTeX.",
+        "ar": "الشكل 3: مربعا نص بخط أحادي العرض. يعرض العلوي المطالبة (prompt) التي تطلب من النموذج استخراج المراجعة الواقعة بين عنوان معيّن والعنوان التالي من مقطع نصي بصيغة LaTeX؛ ويعرض السفلي مخرجات النموذج، وهي نص مراجعة بالألمانية يحتوي على تعابير رياضية بترميز LaTeX.",
+        "ru": "Рисунок 3: два текстовых блока с моноширинным шрифтом. В верхнем показан промпт с инструкцией модели извлечь реферат между заданным заголовком и следующим заголовком из фрагмента LaTeX-текста; в нижнем показан ответ модели — немецкий текст реферата с математическими выражениями в LaTeX-разметке.",
+        "zh": "图 3：两个等宽字体文本框。上方展示提示词（prompt），要求模型从 LaTeX 文本片段中提取指定标题与下一标题之间的评论；下方展示模型输出的包含 LaTeX 转义数学公式的德文评论文本。"
+      },
+      "state": "draft"
+    },
+    {
+      "id": "img-p006-1",
+      "file": "images/img-p006-1.png",
+      "page": 6,
+      "narratives": {
+        "en": "Figure 4 panel 'CalmExperiment 7B slerp': validation loss (log scale, ~10^-2 to 10^1) against epoch (0-10) for lr = 0.00005 (blue), 0.005 (green), 0.0005 (red). Green stays near 10; blue decreases from about 0.45 to about 0.019; red decreases from about 0.09 to about 0.01.",
+        "fr": "Figure 4, panneau « CalmExperiment 7B slerp » : perte de validation (échelle logarithmique, ~10^-2 à 10^1) en fonction de l'époque (0–10) pour lr = 0,00005 (bleu), 0,005 (vert), 0,0005 (rouge). La courbe verte reste proche de 10 ; la bleue diminue d'environ 0,45 à environ 0,019 ; la rouge diminue d'environ 0,09 à environ 0,01.",
+        "es": "Figura 4, panel «CalmExperiment 7B slerp»: pérdida de validación (escala logarítmica, ~10^-2 a 10^1) frente a la época (0–10) para lr = 0.00005 (azul), 0.005 (verde), 0.0005 (rojo). La curva verde se mantiene cerca de 10; la azul desciende de unos 0.45 a unos 0.019; la roja desciende de unos 0.09 a unos 0.01.",
+        "ar": "الشكل 4، اللوحة 'CalmExperiment 7B slerp': خسارة التحقق (بمقياس لوغاريتمي، من نحو 10^-2 إلى 10^1) مقابل الحقب التدريبية (0–10) لقيم معدل التعلم lr = 0.00005 (أزرق) و0.005 (أخضر) و0.0005 (أحمر). يبقى المنحنى الأخضر قريباً من 10؛ وينخفض الأزرق من نحو 0.45 إلى نحو 0.019؛ وينخفض الأحمر من نحو 0.09 إلى نحو 0.01.",
+        "ru": "Рисунок 4, панель «CalmExperiment 7B slerp»: потери на валидации (логарифмическая шкала, от ~10^-2 до 10^1) в зависимости от эпохи (0–10) при скорости обучения lr = 0,00005 (синий), 0,005 (зелёный) и 0,0005 (красный). Зелёная кривая остаётся около 10; синяя снижается примерно с 0,45 до 0,019; красная снижается примерно с 0,09 до 0,01.",
+        "zh": "图 4 面板“CalmExperiment 7B slerp”：不同学习率 lr = 0.00005（蓝）、0.005（绿）、0.0005（红）下验证损失（对数刻度，约 10^-2 至 10^1）随训练轮次（0–10）的变化。绿线维持在 10 附近；蓝线从约 0.45 降至约 0.019；红线从约 0.09 降至约 0.01。"
+      },
+      "state": "draft"
+    },
+    {
+      "id": "img-p006-2",
+      "file": "images/img-p006-2.png",
+      "page": 6,
+      "narratives": {
+        "en": "Figure 4 panel 'Maxine 7B 0401 stock': validation loss (log scale) against epoch (0-10) for three learning rates. lr = 0.005 stays near 8-10; lr = 0.00005 decreases from about 0.45 to about 0.018; lr = 0.0005 decreases from about 0.09 to about 0.011.",
+        "fr": "Figure 4, panneau « Maxine 7B 0401 stock » : perte de validation (échelle logarithmique) en fonction de l'époque (0–10) pour trois taux d'apprentissage. lr = 0,005 reste proche de 8–10 ; lr = 0,00005 diminue d'environ 0,45 à environ 0,018 ; lr = 0,0005 diminue d'environ 0,09 à environ 0,011.",
+        "es": "Figura 4, panel «Maxine 7B 0401 stock»: pérdida de validación (escala logarítmica) frente a la época (0–10) para tres tasas de aprendizaje. lr = 0.005 se mantiene cerca de 8–10; lr = 0.00005 desciende de unos 0.45 a unos 0.018; lr = 0.0005 desciende de unos 0.09 a unos 0.011.",
+        "ar": "الشكل 4، اللوحة 'Maxine 7B 0401 stock': خسارة التحقق (بمقياس لوغاريتمي) مقابل الحقب التدريبية (0–10) لثلاث قيم لمعدل التعلم. تبقى lr = 0.005 قرب 8–10؛ وتنخفض lr = 0.00005 من نحو 0.45 إلى نحو 0.018؛ وتنخفض lr = 0.0005 من نحو 0.09 إلى نحو 0.011.",
+        "ru": "Рисунок 4, панель «Maxine 7B 0401 stock»: потери на валидации (логарифмическая шкала) в зависимости от эпохи (0–10) для трёх значений скорости обучения. При lr = 0,005 значения остаются в районе 8–10; при lr = 0,00005 снижаются примерно с 0,45 до 0,018; при lr = 0,0005 снижаются примерно с 0,09 до 0,011.",
+        "zh": "图 4 面板“Maxine 7B 0401 stock”：三种学习率下验证损失（对数刻度）随训练轮次（0–10）的变化。lr = 0.005 维持在 8–10 附近；lr = 0.00005 从约 0.45 降至约 0.018；lr = 0.0005 从约 0.09 降至约 0.011。"
+      },
+      "state": "draft"
+    },
+    {
+      "id": "img-p006-3",
+      "file": "images/img-p006-3.png",
+      "page": 6,
+      "narratives": {
+        "en": "Figure 4 panel 'Mistral Passthrough 8L 10B': validation loss (log scale) against epoch (0-10). lr = 0.005 stays near 8-10; lr = 0.00005 decreases from about 0.19 to about 0.014; lr = 0.0005 decreases from about 0.065 to about 0.0098.",
+        "fr": "Figure 4, panneau « Mistral Passthrough 8L 10B » : perte de validation (échelle logarithmique) en fonction de l'époque (0–10). lr = 0,005 reste proche de 8–10 ; lr = 0,00005 diminue d'environ 0,19 à environ 0,014 ; lr = 0,0005 diminue d'environ 0,065 à environ 0,0098.",
+        "es": "Figura 4, panel «Mistral Passthrough 8L 10B»: pérdida de validación (escala logarítmica) frente a la época (0–10). lr = 0.005 se mantiene cerca de 8–10; lr = 0.00005 desciende de unos 0.19 a unos 0.014; lr = 0.0005 desciende de unos 0.065 a unos 0.0098.",
+        "ar": "الشكل 4، اللوحة 'Mistral Passthrough 8L 10B': خسارة التحقق (بمقياس لوغاريتمي) مقابل الحقب التدريبية (0–10). تبقى lr = 0.005 قرب 8–10؛ وتنخفض lr = 0.00005 من نحو 0.19 إلى نحو 0.014؛ وتنخفض lr = 0.0005 من نحو 0.065 إلى نحو 0.0098.",
+        "ru": "Рисунок 4, панель «Mistral Passthrough 8L 10B»: потери на валидации (логарифмическая шкала) в зависимости от эпохи (0–10). При lr = 0,005 значения остаются около 8–10; при lr = 0,00005 снижаются примерно с 0,19 до 0,014; при lr = 0,0005 снижаются примерно с 0,065 до 0,0098.",
+        "zh": "图 4 面板“Mistral Passthrough 8L 10B”：验证损失（对数刻度）随训练轮次（0–10）的变化。lr = 0.005 维持在 8–10 附近；lr = 0.00005 从约 0.19 降至约 0.014；lr = 0.0005 从约 0.065 降至约 0.0098。"
+      },
+      "state": "draft"
+    },
+    {
+      "id": "img-p007-1",
+      "file": "images/img-p007-1.png",
+      "page": 7,
+      "narratives": {
+        "en": "Figure 5, 'Logarithmic Plot of Training Losses over Time': training loss (log scale, ~5e-4 to 0.2) against epoch (0-5) for CalmExperiment-7B-slerp (red), Maxine-7B-0401-stock (blue), Mistral-Passthrough-8L-10B (green). All three are noisy and trend downward from about 0.17 (green near 0.04) to about 10^-3.",
+        "fr": "Figure 5, « Logarithmic Plot of Training Losses over Time » : perte d'entraînement (échelle logarithmique, ~5e-4 à 0,2) en fonction de l'époque (0–5) pour CalmExperiment-7B-slerp (rouge), Maxine-7B-0401-stock (bleu) et Mistral-Passthrough-8L-10B (vert). Les trois courbes sont bruitées et suivent une tendance baissière d'environ 0,17 (vert près de 0,04) jusqu'à environ 10^-3.",
+        "es": "Figura 5, «Logarithmic Plot of Training Losses over Time»: pérdida de entrenamiento (escala logarítmica, ~5e-4 a 0.2) frente a la época (0–5) para CalmExperiment-7B-slerp (rojo), Maxine-7B-0401-stock (azul) y Mistral-Passthrough-8L-10B (verde). Las tres curvas presentan ruido y muestran una tendencia descendente desde aproximadamente 0.17 (la verde cerca de 0.04) hasta aproximadamente 10^-3.",
+        "ar": "الشكل 5، 'Logarithmic Plot of Training Losses over Time': خسارة التدريب (بمقياس لوغاريتمي، من نحو 5e-4 إلى 0.2) مقابل الحقب التدريبية (0–5) لنماذج CalmExperiment-7B-slerp (أحمر) وMaxine-7B-0401-stock (أزرق) وMistral-Passthrough-8L-10B (أخضر). تتسم المنحنيات الثلاثة بالتذبذب وتتجه هبوطاً من نحو 0.17 (والأخضر قرب 0.04) إلى نحو 10^-3.",
+        "ru": "Рисунок 5, «Logarithmic Plot of Training Losses over Time»: потери при обучении (логарифмическая шкала, от ~5e-4 до 0,2) в зависимости от эпохи (0–5) для моделей CalmExperiment-7B-slerp (красный), Maxine-7B-0401-stock (синий) и Mistral-Passthrough-8L-10B (зелёный). Все три кривые зашумлены и демонстрируют нисходящий тренд примерно от 0,17 (зелёная — около 0,04) до ~10^-3.",
+        "zh": "图 5“Logarithmic Plot of Training Losses over Time”：CalmExperiment-7B-slerp（红）、Maxine-7B-0401-stock（蓝）与 Mistral-Passthrough-8L-10B（绿）的训练损失（对数刻度，约 5e-4 至 0.2）随训练轮次（0–5）的变化。三条曲线均存在波动，整体从约 0.17（绿线约为 0.04）呈下降趋势至约 10^-3。"
+      },
+      "state": "draft"
+    },
+    {
+      "id": "img-p007-2",
+      "file": "images/img-p007-2.png",
+      "page": 7,
+      "narratives": {
+        "en": "Figure 6: scan of review page 35 where the computer-vision model has drawn one red box (labelled 'title') around the Fröhlich and Shepherdson title line; the other two titles on the page (Yoshida, Auslander and Buchsbaum) are not boxed.",
+        "fr": "Figure 6 : numérisation de la page 35 de recensions où le modèle de vision par ordinateur a tracé un seul cadre rouge (étiqueté « title ») autour de la ligne de titre de Fröhlich et Shepherdson ; les deux autres titres de la page (Yoshida, Auslander et Buchsbaum) ne sont pas encadrés.",
+        "es": "Figura 6: escaneo de la página 35 de reseñas donde el modelo de visión por computador ha trazado un único recuadro rojo (etiquetado como «title») alrededor de la línea de título de Fröhlich y Shepherdson; los otros dos títulos de la página (Yoshida, Auslander y Buchsbaum) no están enmarcados.",
+        "ar": "الشكل 6: مسح ضوئي للصفحة 35 من المراجعات حيث رسم نموذج الرؤية الحاسوبية مربعاً أحمر واحداً (موسوماً بـ 'title') حول سطر عنوان Fröhlich وShepherdson؛ في حين لم يُحَط العنوانان الآخران في الصفحة (Yoshida، وAuslander وBuchsbaum) بأي مربع.",
+        "ru": "Рисунок 6: скан страницы 35 с рефератами, на котором модель компьютерного зрения выделила одной красной рамкой (с меткой «title») строку заголовка статьи Fröhlich и Shepherdson, тогда как два других заголовка на странице (Yoshida, а также Auslander и Buchsbaum) остались невыделенными.",
+        "zh": "图 6：第 35 页评论扫描件，计算机视觉模型仅在 Fröhlich 与 Shepherdson 的标题行周围绘制了一个标有“title”的红框，而页面上的另外两个标题（Yoshida，以及 Auslander 与 Buchsbaum）未被框出。"
+      },
+      "state": "draft"
+    }
+  ],
+  "coverage": [
+    {
+      "kind": "contents",
+      "state": "found",
+      "count": 32,
+      "note": "outline"
+    },
+    {
+      "kind": "sections",
+      "state": "found",
+      "count": 31,
+      "note": "2 levels"
+    },
+    {
+      "kind": "figures",
+      "state": "found",
+      "count": 9
+    },
+    {
+      "kind": "tables",
+      "state": "not-extracted",
+      "note": "4 captioned in the text"
+    },
+    {
+      "kind": "references",
+      "state": "not-extracted",
+      "note": "a references section is in the text (p9); its entries are not extracted"
+    },
+    {
+      "kind": "glossary",
+      "state": "none",
+      "note": "no such heading in the text"
+    },
+    {
+      "kind": "footnotes",
+      "state": "not-extracted"
+    },
+    {
+      "kind": "summaries",
+      "state": "partial",
+      "count": 30,
+      "note": "30 of 31 sections"
+    }
+  ],
+  "links": {
+    "repo": "litlfred/folio-assistant-sci",
+    "branch": "main",
+    "dir": "library/arxiv-2604.00554v1"
+  }
+}

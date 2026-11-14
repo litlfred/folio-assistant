@@ -1,0 +1,904 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L1/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "http://smart.who.int/base/directory/smart-base-L1",
+      "@type": "bootstrap:Subgraph",
+      "contentSource": {
+        "declaredIn": "default",
+        "kind": "directory"
+      },
+      "description": "Knowledge-graph layer L1 as a NAMED SUBGRAPH of this layer (owner, 2026-11-13: 'L1..L3 as named subgraphs', after smart-kg's deprecation, issue #359). OPT-IN like cat-harness's `sdlc/`, so that each layer's `tools/` is a tools graph of its own: off in a downstream layer unless it lists `smart-base.smart-base-L1` in its `enableSubgraphs`; this layer enables all six. `L1/graph.json` names what it holds FROM WITHIN: `schemas/` (L1 3.0 and the `l1-library` extension as Zod, the engine every layer uses, and their generated JSON and contexts), and the L1 `skills/`, `processes/`, `tools/` and the `scripts/` those tools run. The layers above, `L2/`, `L2-bpmn/`, `L2-dmn/`, `L3/` and `L4/`, are its siblings and import from it; nothing in L1 imports from them.",
+      "fileCount": 0,
+      "holdsGraph": [
+        "cat-harness:graphTypology/cat-harness"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+      "name": "smart-base-L1",
+      "path": "L1/",
+      "readmePath": "L1/README.md",
+      "title": "L1 — what a WHO publication says"
+    }
+  ],
+  "hasSubgraph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L1/processes/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+          "@type": "bootstrap:Process",
+          "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/classify-and-code-content.svg",
+          "description": "Classifies and codes L1 extracted statements (recommendations, implementation practices, remarks, proposed coverage exclusions) and L2 DAK slots (personas, business processes, guideline domains, conditions, interventions, medicines, GRADE ratings), following the terminology-coding methodology and the classify-and-code-content skill. The authoring agent runs terminology-lookup down the four-rung reuse-first ladder, records provenance (declared, context, inferred) and candidate status, and stages the result. A person in the l1-extraction-reviewer lane signs or rejects each exclusion proposed in exclusions.proposed.json against the printed page (sections/page-NNN.md). A person in the terminologist / ontologist lane then adjudicates the candidate codings, SKOS match precision (exactMatch vs closeMatch) and any Rung 4 local glossary candidates.",
+          "enforcement": "advisory",
+          "flowCount": 13,
+          "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+          "name": "Classify and code content",
+          "nodeCount": 11,
+          "sourcePath": "L1/processes/classify-and-code-content.bpmn",
+          "sourceUrl": "https://github.com/litlfred/smart-base/blob/main/smart-base/L1/processes/classify-and-code-content.bpmn",
+          "startNode": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Start_ContentReady",
+          "summary": "Classifies and codes L1 extracted statements (recommendations, implementation practices, remarks, proposed coverage exclusions) and L2 DAK slots (personas, business processes, guideline domains, conditions, interventions, medicines, GRADE ratings), following…"
+        },
+        {
+          "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C01",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Start_ContentReady",
+          "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+          "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+          "to": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_Rework"
+        },
+        {
+          "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C02",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_Rework",
+          "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+          "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+          "to": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_IdentifySlots"
+        },
+        {
+          "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C03",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_IdentifySlots",
+          "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+          "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+          "to": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_LookupAndCode"
+        },
+        {
+          "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C04",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_LookupAndCode",
+          "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+          "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+          "to": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_StageForReview"
+        },
+        {
+          "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C05",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_StageForReview",
+          "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+          "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+          "to": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_HasExclusions"
+        },
+        {
+          "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C06",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_HasExclusions",
+          "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+          "name": "yes",
+          "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+          "to": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_ReviewExclusions"
+        },
+        {
+          "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C07",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_HasExclusions",
+          "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+          "name": "no",
+          "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+          "to": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_ReviewCodings"
+        },
+        {
+          "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C08",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_ReviewExclusions",
+          "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+          "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+          "to": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_ExclusionVerdict"
+        },
+        {
+          "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C09",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_ExclusionVerdict",
+          "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+          "name": "reject-exclusion",
+          "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+          "to": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_Rework"
+        },
+        {
+          "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C10",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_ExclusionVerdict",
+          "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+          "name": "signed",
+          "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+          "to": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_ReviewCodings"
+        },
+        {
+          "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C11",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_ReviewCodings",
+          "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+          "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+          "to": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_TerminologistVerdict"
+        },
+        {
+          "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C12",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_TerminologistVerdict",
+          "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+          "name": "request-changes",
+          "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+          "to": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_Rework"
+        },
+        {
+          "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C13",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_TerminologistVerdict",
+          "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+          "name": "approve",
+          "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+          "to": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/End_ClassifiedAndCoded"
+        },
+        {
+          "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_Agent",
+          "@type": "cat-harness:Lane",
+          "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+          "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+          "name": "Authoring agent",
+          "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent"
+        },
+        {
+          "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_ExtractionReviewer",
+          "@type": "cat-harness:Lane",
+          "bindsRole": "http://smart.who.int/base/role/l1-extraction-reviewer",
+          "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+          "name": "L1 extraction reviewer (person)",
+          "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent"
+        },
+        {
+          "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_Terminologist",
+          "@type": "cat-harness:Lane",
+          "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/terminologist",
+          "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+          "name": "Terminologist / ontologist reviewer (person)",
+          "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent"
+        },
+        {
+          "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/End_ClassifiedAndCoded",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:EndEvent",
+          "inLane": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_Terminologist",
+          "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+          "incoming": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C13",
+          "name": "Content classified, coded and signed off",
+          "nodeKind": "end",
+          "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/terminologist",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_ExclusionVerdict",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:ExclusiveGateway",
+          "inLane": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_ExtractionReviewer",
+          "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+          "incoming": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C08",
+          "name": "Exclusions signed?",
+          "nodeKind": "exclusive",
+          "outgoing": [
+            "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C09",
+            "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C10"
+          ],
+          "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+          "performedBy": "http://smart.who.int/base/role/l1-extraction-reviewer",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_HasExclusions",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:ExclusiveGateway",
+          "inLane": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_Agent",
+          "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+          "incoming": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C05",
+          "name": "Proposed exclusions?",
+          "nodeKind": "exclusive",
+          "outgoing": [
+            "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C06",
+            "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C07"
+          ],
+          "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_Rework",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:ExclusiveGateway",
+          "inLane": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_Agent",
+          "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+          "incoming": [
+            "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C01",
+            "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C09",
+            "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C12"
+          ],
+          "name": "Gateway_Rework",
+          "nodeKind": "exclusive",
+          "outgoing": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C02",
+          "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_TerminologistVerdict",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:ExclusiveGateway",
+          "inLane": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_Terminologist",
+          "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+          "incoming": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C11",
+          "name": "Coding verdict?",
+          "nodeKind": "exclusive",
+          "outgoing": [
+            "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C12",
+            "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C13"
+          ],
+          "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/terminologist",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Start_ContentReady",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:StartEvent",
+          "inLane": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_Agent",
+          "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+          "name": "L1 extraction or L2 component ready to classify and code",
+          "nodeKind": "start",
+          "outgoing": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C01",
+          "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_IdentifySlots",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:Task",
+          "inLane": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_Agent",
+          "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+          "incoming": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C02",
+          "name": "Identify slots and proposed exclusions",
+          "nodeKind": "activity",
+          "outgoing": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C03",
+          "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+          "relaxable": true,
+          "requires": [
+            "http://smart.who.int/base/skill/classify-and-code-content",
+            "http://smart.who.int/base/skill/recommendation-extraction"
+          ],
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_LookupAndCode",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:Task",
+          "inLane": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_Agent",
+          "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+          "incoming": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C03",
+          "name": "Run reuse-first lookup and record candidates",
+          "nodeKind": "activity",
+          "outgoing": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C04",
+          "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+          "relaxable": true,
+          "requires": [
+            "http://smart.who.int/base/skill/classify-and-code-content",
+            "http://smart.who.int/base/skill/recommendation-scenarios",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/glossary-terms"
+          ],
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_ReviewCodings",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:UserTask",
+          "inLane": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_Terminologist",
+          "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+          "incoming": [
+            "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C07",
+            "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C10"
+          ],
+          "name": "Adjudicate slot codings and glossary candidates",
+          "nodeKind": "activity",
+          "outgoing": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C11",
+          "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/terminologist",
+          "relaxable": true,
+          "requires": [
+            "http://smart.who.int/base/skill/classify-and-code-content",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/ontologist",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/glossary-terms",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/terminology-management",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-review"
+          ],
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_ReviewExclusions",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:UserTask",
+          "inLane": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_ExtractionReviewer",
+          "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+          "incoming": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C06",
+          "name": "Check exclusions against page and sign",
+          "nodeKind": "activity",
+          "outgoing": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C08",
+          "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+          "performedBy": "http://smart.who.int/base/role/l1-extraction-reviewer",
+          "relaxable": true,
+          "requires": [
+            "http://smart.who.int/base/skill/classify-and-code-content",
+            "http://smart.who.int/base/skill/recommendation-extraction",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-review"
+          ],
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_StageForReview",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:Task",
+          "inLane": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_Agent",
+          "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+          "incoming": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C04",
+          "name": "Stage codings, warnings and exclusions for review",
+          "nodeKind": "activity",
+          "outgoing": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C05",
+          "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+          "relaxable": true,
+          "requires": [
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/staging-review",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/interaction-modality"
+          ],
+          "touchesWorkPlan": false
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/processes"
+      ],
+      "name": "L1/processes",
+      "path": "L1/processes/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L1/schemas/",
+      "@type": "bootstrap:Subgraph",
+      "hasSubgraph": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L1/schemas/docs/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "cat-harness:graphTypology/cat-harness"
+          ],
+          "name": "L1/schemas/docs",
+          "path": "L1/schemas/docs/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L1/schemas/generated/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "cat-harness:graphTypology/cat-harness"
+          ],
+          "name": "L1/schemas/generated",
+          "path": "L1/schemas/generated/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L1/schemas/skills/",
+          "@type": "bootstrap:Subgraph",
+          "hasSubgraph": [
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L1/schemas/skills/classify-and-code-content/",
+              "@type": "bootstrap:Subgraph",
+              "holdsGraph": [
+                "cat-harness:graphTypology/cat-harness"
+              ],
+              "name": "L1/schemas/skills/classify-and-code-content",
+              "path": "L1/schemas/skills/classify-and-code-content/"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L1/schemas/skills/dak-l1-library/",
+              "@type": "bootstrap:Subgraph",
+              "holdsGraph": [
+                "cat-harness:graphTypology/cat-harness"
+              ],
+              "name": "L1/schemas/skills/dak-l1-library",
+              "path": "L1/schemas/skills/dak-l1-library/"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L1/schemas/skills/indicator-extraction/",
+              "@type": "bootstrap:Subgraph",
+              "holdsGraph": [
+                "cat-harness:graphTypology/cat-harness"
+              ],
+              "name": "L1/schemas/skills/indicator-extraction",
+              "path": "L1/schemas/skills/indicator-extraction/"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L1/schemas/skills/recommendation-candidates/",
+              "@type": "bootstrap:Subgraph",
+              "holdsGraph": [
+                "cat-harness:graphTypology/cat-harness"
+              ],
+              "name": "L1/schemas/skills/recommendation-candidates",
+              "path": "L1/schemas/skills/recommendation-candidates/"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L1/schemas/skills/recommendation-extraction/",
+              "@type": "bootstrap:Subgraph",
+              "holdsGraph": [
+                "cat-harness:graphTypology/cat-harness"
+              ],
+              "name": "L1/schemas/skills/recommendation-extraction",
+              "path": "L1/schemas/skills/recommendation-extraction/"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L1/schemas/skills/recommendation-scenarios/",
+              "@type": "bootstrap:Subgraph",
+              "holdsGraph": [
+                "cat-harness:graphTypology/cat-harness"
+              ],
+              "name": "L1/schemas/skills/recommendation-scenarios",
+              "path": "L1/schemas/skills/recommendation-scenarios/"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L1/schemas/skills/transcription-verbatim/",
+              "@type": "bootstrap:Subgraph",
+              "holdsGraph": [
+                "cat-harness:graphTypology/cat-harness"
+              ],
+              "name": "L1/schemas/skills/transcription-verbatim",
+              "path": "L1/schemas/skills/transcription-verbatim/"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/cat-harness"
+          ],
+          "name": "L1/schemas/skills",
+          "path": "L1/schemas/skills/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L1/schemas/test/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "cat-harness:graphTypology/cat-harness"
+          ],
+          "name": "L1/schemas/test",
+          "path": "L1/schemas/test/"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/cat-harness"
+      ],
+      "name": "L1/schemas",
+      "path": "L1/schemas/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L1/scripts/",
+      "@type": "bootstrap:Subgraph",
+      "holdsGraph": [
+        "cat-harness:graphTypology/cat-harness"
+      ],
+      "name": "L1/scripts",
+      "path": "L1/scripts/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L1/skills/",
+      "@type": "bootstrap:Subgraph",
+      "hasSubgraph": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L1/skills/smart-l1/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "http://smart.who.int/base/skill/classify-and-code-content",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "Classify and code L1 narrative content (recommendations, implementation practices, remarks, and proposed coverage exclusions) and L2 DAK slots (personas, business processes, guideline domains, conditions, interventions, medicines, and GRADE ratings) using the `terminology-coding` methodology and the `terminology-lookup` Tool. Covers the authoring-agent's four-rung reuse-first lookup, the `l1-extraction-reviewer` lane that reads and signs proposed L1 coverage exclusions against the printed page, and the `terminologist` / ontologist lane that adjudicates candidate codings and local glossary candidates.",
+              "hasIOContract": true,
+              "hasInstructions": true,
+              "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+              "inputSchema": "http://smart.who.int/base/schema/skills/classify-and-code-content/input.schema.json",
+              "instructionLines": 137,
+              "instructionsPath": "L1/skills/smart-l1/classify-and-code-content.md",
+              "name": "classify-and-code-content",
+              "outputSchema": "http://smart.who.int/base/schema/skills/classify-and-code-content/output.schema.json",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b152f69c327c8fdc80a8182554be27aa9e6434fb765a4c9fa974e0eb838107d3",
+                "bytes": 7142,
+                "sha256": "b152f69c327c8fdc80a8182554be27aa9e6434fb765a4c9fa974e0eb838107d3"
+              },
+              "title": "classify-and-code-content"
+            },
+            {
+              "@id": "http://smart.who.int/base/skill/dak-l1-library",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "Build a DAK's library from the L1 sources its Component 1 cites, and the L1 knowledge graph that records them. Read when starting or extending a DAK library, when a DAK's guidance changes, and before writing any L1 graph for a DAK. Covers fetching a cited WHO IRIS item, ingesting it, deciding whether it is L1 (declared > context > inferred), extracting the Component 1 graph, the L1 graph of each L1 source as a specialisation of its library entry, and the layering rule: the library is upstream of L1.",
+              "hasIOContract": true,
+              "hasInstructions": true,
+              "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+              "inputSchema": "http://smart.who.int/base/schema/skills/dak-l1-library/input.schema.json",
+              "instructionLines": 177,
+              "instructionsPath": "L1/skills/smart-l1/dak-l1-library.md",
+              "name": "dak-l1-library",
+              "outputSchema": "http://smart.who.int/base/schema/skills/dak-l1-library/output.schema.json",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2461c27f0e9062615decde6092eb84ea0251b65eb4bc875a6b1262900958568e",
+                "bytes": 10480,
+                "sha256": "2461c27f0e9062615decde6092eb84ea0251b65eb4bc875a6b1262900958568e"
+              },
+              "title": "dak-l1-library"
+            },
+            {
+              "@id": "http://smart.who.int/base/skill/grade",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "GRADE — the grading system a WHO guideline folio declares for certainty of evidence, and the Evidence-to-Decision judgement a recommendation rests on. Read when a folio's `Task_AppraiseGrade` runs under GRADE, before recording a certainty, an EtD judgement or a recommendation's direction and strength.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+              "instructionLines": 94,
+              "instructionsPath": "L1/skills/smart-l1/grade.md",
+              "name": "grade",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/22daf20d31a9b1dc7b1595dc9b7ecd3afdd51c33352afad5c587ce6373f217a0",
+                "bytes": 4787,
+                "sha256": "22daf20d31a9b1dc7b1595dc9b7ecd3afdd51c33352afad5c587ce6373f217a0"
+              },
+              "title": "grade"
+            },
+            {
+              "@id": "http://smart.who.int/base/skill/indicator-extraction",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "Extract the indicators an L1 source prints (indicator reference or metadata sheets: name, numerator, denominator, disaggregation, definition, data sources) as L1 `indicator` nodes with every printed field, then draft one L2 program indicator per indicator, derived from its L1 node. Read before adding a WHO handbook's or guideline's indicators to a DAK or a DTH, and whenever an L2 indicator has to trace to its source. Part of L1 → L2 extraction for every DAK and DTH, beside recommendation-extraction.",
+              "hasIOContract": true,
+              "hasInstructions": true,
+              "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+              "inputSchema": "http://smart.who.int/base/schema/skills/indicator-extraction/input.schema.json",
+              "instructionLines": 107,
+              "instructionsPath": "L1/skills/smart-l1/indicator-extraction.md",
+              "name": "indicator-extraction",
+              "outputSchema": "http://smart.who.int/base/schema/skills/indicator-extraction/output.schema.json",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/19181ada1f7dfb32e38704bf74b34799e191adf7bff336bb508cacff9c077d71",
+                "bytes": 5673,
+                "sha256": "19181ada1f7dfb32e38704bf74b34799e191adf7bff336bb508cacff9c077d71"
+              },
+              "title": "indicator-extraction"
+            },
+            {
+              "@id": "http://smart.who.int/base/skill/recommendation-candidates",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "Turn one ingested L1 source into L1 3.0 recommendation nodes: list every normative sentence as a candidate, let the agent decide each in a curation file, then refuse a non-verbatim statement or unknown location and write the graph, coverage and proposed exclusions. Step 1 of recommendation-extraction, run once per included source; the `l1-recommendation-candidates` Tool satisfies it.",
+              "hasIOContract": true,
+              "hasInstructions": true,
+              "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+              "inputSchema": "http://smart.who.int/base/schema/skills/recommendation-candidates/input.schema.json",
+              "instructionLines": 48,
+              "instructionsPath": "L1/skills/smart-l1/recommendation-candidates.md",
+              "name": "recommendation-candidates",
+              "outputSchema": "http://smart.who.int/base/schema/skills/recommendation-candidates/output.schema.json",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/cde2b53da1a1713c0415b84dee539d5997720297ae3543d5c4cf764b8e3458ab",
+                "bytes": 2046,
+                "sha256": "cde2b53da1a1713c0415b84dee539d5997720297ae3543d5c4cf764b8e3458ab"
+              },
+              "title": "recommendation-candidates"
+            },
+            {
+              "@id": "http://smart.who.int/base/skill/recommendation-extraction",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "Extract the recommendations of an L1 source as L1 3.0 recommendation and remark nodes, then describe each one's scenario: the persona (role) who acts on it, the business process they act in, and the user story, as smart-kg L2 user-scenario candidates that reuse the target guide's own vocabulary. Read before extracting recommendations from a WHO guideline or position paper with no printed \"Recommendation N\" labels, before linking a recommendation to a DAK persona or process, and whenever a recommendation has to say who does it and where. Covers the hybrid extraction (mechanical candidates, agent structuring, verbatim and 100 % coverage gates), the reuse-first precedence for personas and processes, the WARNING format, and sign-off.",
+              "hasIOContract": true,
+              "hasInstructions": true,
+              "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+              "inputSchema": "http://smart.who.int/base/schema/skills/recommendation-extraction/input.schema.json",
+              "instructionLines": 387,
+              "instructionsPath": "L1/skills/smart-l1/recommendation-extraction.md",
+              "name": "recommendation-extraction",
+              "outputSchema": "http://smart.who.int/base/schema/skills/recommendation-extraction/output.schema.json",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2f4481e7dedf7b14c2e4cac7b023d1a7353735b6078dd08e655e86021281b08f",
+                "bytes": 21001,
+                "sha256": "2f4481e7dedf7b14c2e4cac7b023d1a7353735b6078dd08e655e86021281b08f"
+              },
+              "title": "recommendation-extraction"
+            },
+            {
+              "@id": "http://smart.who.int/base/skill/recommendation-scenarios",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "Join each L1 recommendation to who acts on it and during which business process: one smart-kg L2 user-scenario candidate per recommendation, from the agent's mapping, reusing the target guide's personas and processes first, then smart-base's generic personas, and never inventing a process. Step 2 of recommendation-extraction; the `l1-recommendation-scenarios` Tool satisfies it.",
+              "hasIOContract": true,
+              "hasInstructions": true,
+              "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+              "inputSchema": "http://smart.who.int/base/schema/skills/recommendation-scenarios/input.schema.json",
+              "instructionLines": 43,
+              "instructionsPath": "L1/skills/smart-l1/recommendation-scenarios.md",
+              "name": "recommendation-scenarios",
+              "outputSchema": "http://smart.who.int/base/schema/skills/recommendation-scenarios/output.schema.json",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9ddc006168cc35812dd122d2c1e6694bbed476e64faf3f82b668f04fc5452002",
+                "bytes": 2175,
+                "sha256": "9ddc006168cc35812dd122d2c1e6694bbed476e64faf3f82b668f04fc5452002"
+              },
+              "title": "recommendation-scenarios"
+            },
+            {
+              "@id": "http://smart.who.int/base/skill/transcription-verbatim",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "Check L1 authored from pictures (a schedule poster, a slide deck: a source with no usable text layer) against the image narratives and transcriptions it names: every statement verbatim in one of them, every transcription word corroborated by the entry's text layer unless listed under inspectionOnly, and unique keys. A step of recommendation-extraction, in place of recommendation-candidates when that step found no normative sentence; the `l1-transcription-verbatim` Tool satisfies it.",
+              "hasIOContract": true,
+              "hasInstructions": true,
+              "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+              "inputSchema": "http://smart.who.int/base/schema/skills/transcription-verbatim/input.schema.json",
+              "instructionLines": 57,
+              "instructionsPath": "L1/skills/smart-l1/transcription-verbatim.md",
+              "name": "transcription-verbatim",
+              "outputSchema": "http://smart.who.int/base/schema/skills/transcription-verbatim/output.schema.json",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7a627edf0f00784fc9bba90bd983795b35e272f6f346755a7ef5cade154858c1",
+                "bytes": 2626,
+                "sha256": "7a627edf0f00784fc9bba90bd983795b35e272f6f346755a7ef5cade154858c1"
+              },
+              "title": "transcription-verbatim"
+            }
+          ],
+          "holdsGraph": [
+            "bootstrap:graphTypology/skills"
+          ],
+          "name": "L1/skills/smart-l1",
+          "path": "L1/skills/smart-l1/"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "L1/skills",
+      "path": "L1/skills/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L1/tools/",
+      "@type": "bootstrap:Subgraph",
+      "hasSubgraph": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L1/tools/l1-recommendation-candidates/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "http://smart.who.int/base/tools/l1-recommendation-candidates.jsonld",
+              "@type": "cat-harness:Tool",
+              "description": "Find every normative sentence of an ingested `library/` entry (folio-assistant-core's `l1-coverage` markers), flag uncertain readings, and propose the publication's identity. Given an agent's `l1-recommendation-curation/v1`, refuse a non-verbatim statement or an unknown location, and write the recommendations and remarks as an L1 3.0 graph (checked with `L1/schemas/validate.ts`) with coverage and proposed, unsigned exclusions.",
+              "install": {
+                "none": true
+              },
+              "invoke": {
+                "shell": "bun run smart-base/L1/scripts/l1-recommendation-candidates.ts --entry <library entry> [--curation <curation.yaml>] --out <dir> [--check]"
+              },
+              "io": {
+                "inputs": [
+                  {
+                    "description": "An ingested `library/<id>/` with page-tagged `sections/*.md` and `structure.json`.",
+                    "name": "entry",
+                    "required": true,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+                  },
+                  {
+                    "description": "The agent's decisions per candidate location (`l1-recommendation-curation/v1`). Absent: only the work list is written.",
+                    "name": "curation",
+                    "required": false,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+                  }
+                ],
+                "outputs": [
+                  {
+                    "description": "`recommendation-candidates.json` — every normative sentence, its hints and its decision; cites the run context.",
+                    "name": "candidates",
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+                  },
+                  {
+                    "description": "`l1.json` — L1 3.0 publication, recommendation and remark nodes, every one `inferred`.",
+                    "name": "graph",
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+                  },
+                  {
+                    "description": "`exclusions.proposed.json`, in `l1-coverage`'s shape; none counts until a person signs it.",
+                    "name": "exclusions",
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+                  },
+                  {
+                    "description": "`extraction-warnings.md` — undecided candidates, unsigned exclusions, statements taken from a layout fragment.",
+                    "name": "warnings",
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+                  },
+                  {
+                    "description": "`run-context.json`, cat-harness `folio-run-context/v1`.",
+                    "name": "runContext",
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+                  }
+                ]
+              },
+              "name": "l1-recommendation-candidates",
+              "requirements": {
+                "network": false,
+                "runtime": [
+                  "bun"
+                ]
+              },
+              "satisfies": "http://smart.who.int/base/skill/recommendation-candidates",
+              "title": "L1 guideline → recommendation candidates (L1 3.0)"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/tools"
+          ],
+          "name": "L1/tools/l1-recommendation-candidates",
+          "path": "L1/tools/l1-recommendation-candidates/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L1/tools/l1-statement-lists/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "http://smart.who.int/base/tools/l1-statement-lists.jsonld",
+              "@type": "cat-harness:Tool",
+              "description": "The smart-base collector for core's `publish-extracted-statements` step: an `l1-extraction` directory's authored L1 sources (`recommendations:` rows) and scenario-candidate graphs (`user-scenario` nodes whose `evidence.location` names a row), written as `folio-extracted-statements/v1` lists, each statement with the library entry its L1 source names and the page it was read from. Core's `statements:pages` then renders them with links to the entry and section.",
+              "install": {
+                "none": true
+              },
+              "invoke": {
+                "shell": "bun run smart-base/scripts/l1-statement-lists.ts"
+              },
+              "io": {
+                "inputs": [
+                  {
+                    "arg": {
+                      "flag": "--dir"
+                    },
+                    "description": "An `l1-extraction` directory.",
+                    "name": "dir",
+                    "required": true,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+                  },
+                  {
+                    "arg": {
+                      "flag": "--out"
+                    },
+                    "description": "Where the lists go.",
+                    "name": "out",
+                    "required": true,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+                  },
+                  {
+                    "arg": {
+                      "flag": "--instance-root"
+                    },
+                    "description": "The instance the evidence locations are relative to; the working directory when absent.",
+                    "name": "instance-root",
+                    "required": false,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+                  },
+                  {
+                    "arg": {
+                      "flag": "--check"
+                    },
+                    "description": "Compare instead of writing: exit 1 when a list is stale.",
+                    "name": "check",
+                    "required": false,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+                  }
+                ],
+                "outputs": [
+                  {
+                    "description": "`<stem>.recommendations.json` per L1 source and `<stem>.scenarios.json` per scenario graph.",
+                    "name": "lists",
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+                  }
+                ]
+              },
+              "name": "l1-statement-lists",
+              "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/publish-extracted-statements",
+              "title": "L1 extraction → statement lists"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/tools"
+          ],
+          "name": "L1/tools/l1-statement-lists",
+          "path": "L1/tools/l1-statement-lists/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L1/tools/l1-transcription-verbatim/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "http://smart.who.int/base/tools/l1-transcription-verbatim.jsonld",
+              "@type": "cat-harness:Tool",
+              "description": "Check authored L1 (`*.l1.yaml`, the measles pattern) for a source with no usable text layer: each statement must be verbatim in the image narrative (`images.json`) or the `transcription` block it names; every transcription word (digits aside) must be corroborated by the entry's text layer unless listed under `inspectionOnly`; keys must be unique.",
+              "install": {
+                "none": true
+              },
+              "invoke": {
+                "shell": "bun run smart-base/L1/scripts/l1-transcription-verbatim.ts --dir <dir of *.l1.yaml> [--root <repo>]"
+              },
+              "io": {
+                "inputs": [
+                  {
+                    "description": "The directory of authored `*.l1.yaml`; each names its library entry in `graph.source.entry`.",
+                    "name": "dir",
+                    "required": true,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+                  }
+                ],
+                "outputs": [
+                  {
+                    "description": "One summary line per file and one `FINDING` line per failure. Exit 0 clean, 1 findings, 2 nothing to check (not a pass).",
+                    "name": "report",
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+                  }
+                ]
+              },
+              "name": "l1-transcription-verbatim",
+              "requirements": {
+                "network": false,
+                "runtime": [
+                  "bun"
+                ]
+              },
+              "satisfies": "http://smart.who.int/base/skill/transcription-verbatim",
+              "title": "Authored L1 → verbatim against transcriptions and image narratives"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/tools"
+          ],
+          "name": "L1/tools/l1-transcription-verbatim",
+          "path": "L1/tools/l1-transcription-verbatim/"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "L1/tools",
+      "path": "L1/tools/"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/cat-harness"
+  ],
+  "name": "L1",
+  "path": "L1/",
+  "title": "L1 — what a WHO publication says"
+}

@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/cat-harness/process/Process_Ingestion/node/Task_Place.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-train-0550",
+    "sha": "211176b48990d1a2382a2913a91794b72853a53c",
+    "pr": "3124/merge",
+    "run": "43611082734"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/cat-harness/process/Process_Ingestion/node/Task_Place",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Place it in uploads/ by a declared route",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/cat-harness/process/Process_Ingestion",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/cat-harness/role/user",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/cat-harness/process/Process_Ingestion/lane/Lane_0",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/cat-harness/skill/upload-routes"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/cat-harness/process/Process_Ingestion#flow/Flow_i1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/cat-harness/process/Process_Ingestion#flow/Flow_i2"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/cat-harness/directory/library-graph",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Ingestion/node/Task_Place"
+    }
+  ]
+}

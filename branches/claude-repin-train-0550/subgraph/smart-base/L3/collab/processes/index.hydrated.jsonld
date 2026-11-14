@@ -1,0 +1,123 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L3/collab/processes/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "http://smart.who.int/base/process/Process_DakL3Ig",
+      "@type": "bootstrap:Process",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/dak-l3-ig.svg",
+      "description": "How a WHO SMART Guidelines L2 Digital Adaptation Kit becomes a published L3 FHIR Implementation Guide: map the DAK's L2 content to the FHIR artefacts it calls for, then run fhir-harness's generic L3 pipeline (Process_L3Fhir) with that mapping as its source model. The WHO L2 → L3 ordering lives here because fhir-harness's pipeline does not know about DAKs; that pipeline is called, not copied.",
+      "enforcement": "advisory",
+      "flowCount": 3,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L3",
+      "name": "L2 DAK to L3 FHIR IG",
+      "nodeCount": 4,
+      "sourcePath": "L3/collab/processes/dak-l3-ig.bpmn",
+      "sourceUrl": "https://github.com/litlfred/smart-base/blob/main/smart-base/L3/collab/processes/dak-l3-ig.bpmn",
+      "startNode": "http://smart.who.int/base/process/Process_DakL3Ig/node/StartEvent_L2Ready",
+      "summary": "How a WHO SMART Guidelines L2 Digital Adaptation Kit becomes a published L3 FHIR Implementation Guide: map the DAK's L2 content to the FHIR artefacts it calls for, then run fhir-harness's generic L3 pipeline (Process_L3Fhir) with that mapping as its source mo…"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DakL3Ig#flow/D01",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_DakL3Ig/node/StartEvent_L2Ready",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L3",
+      "partOf": "http://smart.who.int/base/process/Process_DakL3Ig",
+      "to": "http://smart.who.int/base/process/Process_DakL3Ig/node/Task_MapL2"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DakL3Ig#flow/D02",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_DakL3Ig/node/Task_MapL2",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L3",
+      "partOf": "http://smart.who.int/base/process/Process_DakL3Ig",
+      "to": "http://smart.who.int/base/process/Process_DakL3Ig/node/CallActivity_L3Fhir"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DakL3Ig#flow/D03",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_DakL3Ig/node/CallActivity_L3Fhir",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L3",
+      "partOf": "http://smart.who.int/base/process/Process_DakL3Ig",
+      "to": "http://smart.who.int/base/process/Process_DakL3Ig/node/EndEvent_IgPublished"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DakL3Ig/lane/Lane_Modeller",
+      "@type": "cat-harness:Lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/fhir-modeller",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L3",
+      "name": "FHIR modeller",
+      "partOf": "http://smart.who.int/base/process/Process_DakL3Ig"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DakL3Ig/node/CallActivity_L3Fhir",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:CallActivity",
+      "inLane": "http://smart.who.int/base/process/Process_DakL3Ig/lane/Lane_Modeller",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L3",
+      "incoming": "http://smart.who.int/base/process/Process_DakL3Ig#flow/D02",
+      "name": "L3 FHIR IG pipeline (fhir-harness)",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/process/Process_DakL3Ig#flow/D03",
+      "partOf": "http://smart.who.int/base/process/Process_DakL3Ig",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/fhir-modeller",
+      "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/l3-fhir-authoring",
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DakL3Ig/node/EndEvent_IgPublished",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:EndEvent",
+      "inLane": "http://smart.who.int/base/process/Process_DakL3Ig/lane/Lane_Modeller",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L3",
+      "incoming": "http://smart.who.int/base/process/Process_DakL3Ig#flow/D03",
+      "name": "FHIR IG published",
+      "nodeKind": "end",
+      "partOf": "http://smart.who.int/base/process/Process_DakL3Ig",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/fhir-modeller",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DakL3Ig/node/StartEvent_L2Ready",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:StartEvent",
+      "inLane": "http://smart.who.int/base/process/Process_DakL3Ig/lane/Lane_Modeller",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L3",
+      "name": "L2 DAK ready",
+      "nodeKind": "start",
+      "outgoing": "http://smart.who.int/base/process/Process_DakL3Ig#flow/D01",
+      "partOf": "http://smart.who.int/base/process/Process_DakL3Ig",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/fhir-modeller",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DakL3Ig/node/Task_MapL2",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:UserTask",
+      "inLane": "http://smart.who.int/base/process/Process_DakL3Ig/lane/Lane_Modeller",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L3",
+      "incoming": "http://smart.who.int/base/process/Process_DakL3Ig#flow/D01",
+      "name": "Map L2 → L3",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/process/Process_DakL3Ig#flow/D02",
+      "partOf": "http://smart.who.int/base/process/Process_DakL3Ig",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/fhir-modeller",
+      "relaxable": true,
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/l3-fhir-authoring",
+        "http://smart.who.int/base/skill/l2-dak-authoring"
+      ],
+      "touchesWorkPlan": false
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/processes"
+  ],
+  "name": "L3/collab/processes",
+  "path": "L3/collab/processes/"
+}

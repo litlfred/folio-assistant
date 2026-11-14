@@ -1,0 +1,19 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L2-bpmn/tools/bpmn-graphviz-layout/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "http://smart.who.int/base/tools/bpmn-graphviz-layout.jsonld",
+      "@type": "cat-harness:Tool",
+      "name": "bpmn-graphviz-layout",
+      "title": "BPMN → Diagram Interchange, laid out by Graphviz"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "L2-bpmn/tools/bpmn-graphviz-layout",
+  "path": "L2-bpmn/tools/bpmn-graphviz-layout/"
+}

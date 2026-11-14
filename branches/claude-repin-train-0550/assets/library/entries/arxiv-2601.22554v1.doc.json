@@ -1,0 +1,1092 @@
+{
+  "$schema": "folio-library-document/v1",
+  "id": "arxiv-2601.22554v1",
+  "title": "LeanArchitect: Automating Blueprint Generation for Humans and AI",
+  "variant": "pdf",
+  "pages": 15,
+  "tocSource": "outline",
+  "tocMethod": null,
+  "toc": [
+    {
+      "level": 1,
+      "title": "Introduction",
+      "number": null,
+      "page": 2,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-000-introduction"
+    },
+    {
+      "level": 1,
+      "title": "Related Work",
+      "number": null,
+      "page": 2,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-001-related-work"
+    },
+    {
+      "level": 1,
+      "title": "Methods",
+      "number": null,
+      "page": 3,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-002-methods"
+    },
+    {
+      "level": 2,
+      "title": "Overview",
+      "number": null,
+      "page": 3,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-003-overview"
+    },
+    {
+      "level": 2,
+      "title": "Blueprint Attribute",
+      "number": null,
+      "page": 3,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-005-blueprint-attribute"
+    },
+    {
+      "level": 2,
+      "title": "Environment Extension",
+      "number": null,
+      "page": 4,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-004-environment-extension"
+    },
+    {
+      "level": 2,
+      "title": "LaTeX Export",
+      "number": null,
+      "page": 5,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-006-latex-export"
+    },
+    {
+      "level": 2,
+      "title": "Project Management Using LeanArchitect",
+      "number": null,
+      "page": 5,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-007-project-management-using-leanarchitect"
+    },
+    {
+      "level": 1,
+      "title": "Case Studies",
+      "number": null,
+      "page": 5,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-008-case-studies"
+    },
+    {
+      "level": 2,
+      "title": "PrimeNumberTheoremAnd",
+      "number": null,
+      "page": 5,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-009-primenumbertheoremand"
+    },
+    {
+      "level": 2,
+      "title": "Converting Existing Projects to LeanArchitect Format",
+      "number": null,
+      "page": 6,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-010-converting-existing-projects-to-leanarchitect-fo"
+    },
+    {
+      "level": 2,
+      "title": "Blueprint-Based Autoformalization",
+      "number": null,
+      "page": 7,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-011-blueprint-based-autoformalization"
+    },
+    {
+      "level": 1,
+      "title": "Limitations",
+      "number": null,
+      "page": 9,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-012-limitations"
+    },
+    {
+      "level": 1,
+      "title": "Technical Details",
+      "number": null,
+      "page": 11,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-013-technical-details"
+    },
+    {
+      "level": 2,
+      "title": "Example",
+      "number": null,
+      "page": 11,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-014-example"
+    },
+    {
+      "level": 2,
+      "title": "Implementation",
+      "number": null,
+      "page": 12,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-015-implementation"
+    }
+  ],
+  "sections": [
+    {
+      "id": "sec-front-matter",
+      "number": null,
+      "title": "Front matter",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 2,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 202,
+      "summary": {
+        "text": "Presents the title, authors (Thomas Zhu, Pietro Monticone, Jeremy Avigad, and Sean Welleck), and abstract for LeanArchitect, a Lean 4 package that attaches declarative @[blueprint] metadata directly to formal declarations, automatically infers dependencies and proof completion status, and exports synchronized LaTeX blueprint fragments to eliminate manual duplication and support human–AI collaborative formalization.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "formal declarations",
+          "heading": false
+        },
+        {
+          "term": "blueprints",
+          "heading": false
+        },
+        {
+          "term": "leanarchitect",
+          "heading": false
+        },
+        {
+          "term": "collaboration",
+          "heading": false
+        },
+        {
+          "term": "university",
+          "heading": false
+        },
+        {
+          "term": "projects",
+          "heading": false
+        },
+        {
+          "term": "human",
+          "heading": false
+        },
+        {
+          "term": "informal",
+          "heading": false
+        }
+      ],
+      "extract": "LeanArchitect 1 LeanArchitect Automating Blueprint Generation for Humans and AI Thomas Zhu1 Pietro Monticone2 Jeremy Avigad1 Sean Welleck1 1Carnegie Mellon University 2University of Trento Abstract Large-scale formalization projects in Lean rely on blueprints: structured dependency graphs linking informal mathematical exposition to formal declarations. While blueprints are central to human collaboration, existing",
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-2601.22554v1/blocks/prose-sec-front-matter"
+      ]
+    },
+    {
+      "id": "sec-000-introduction",
+      "number": null,
+      "title": "Introduction",
+      "level": 1,
+      "pageStart": 2,
+      "pageEnd": 2,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 385,
+      "summary": {
+        "text": "Introduces the role of dependency-graph blueprints in scaling collaborative Lean formalizations and identifies two core limitations of existing workflows: manual duplication between LaTeX documents and Lean source files, and the lack of a Lean-native interface for AI theorem provers. Summarizes LeanArchitect's contributions in unifying formal declarations with blueprint metadata, automatically inferring dependencies and sorry-free status, integrating with leanblueprint, and validating the workflow on existing projects and a human–AI formalization study.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "blueprint workflows",
+          "heading": false
+        },
+        {
+          "term": "latex blueprint",
+          "heading": false
+        },
+        {
+          "term": "projects",
+          "heading": false
+        },
+        {
+          "term": "managing",
+          "heading": false
+        },
+        {
+          "term": "leanarchitect",
+          "heading": false
+        },
+        {
+          "term": "lean code",
+          "heading": false
+        },
+        {
+          "term": "duplication",
+          "heading": false
+        },
+        {
+          "term": "limitations",
+          "heading": false
+        }
+      ],
+      "extract": "A long-term goal of formal mathematics is to represent mathematical knowledge in a precise, machine-checked language that supports both verification and large-scale collaboration. Proof assistants such as Lean [7, 8] have made substantial progress toward this goal, with libraries like Mathlib [20] formalizing much of undergraduate mathematics and an increasing body of research-level material. As formalization",
+      "extractCut": true
+    },
+    {
+      "id": "sec-001-related-work",
+      "number": null,
+      "title": "Related Work",
+      "level": 1,
+      "pageStart": 2,
+      "pageEnd": 3,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 363,
+      "summary": {
+        "text": "Reviews related work across three areas: Lean blueprint tooling (Massot's plasTeX-based leanblueprint and Jauslin and Kontorovich's comment-based leanblueprint-extract), Lean data extraction tools (doc-gen4 and ntp-toolkit), and neural theorem provers and benchmarks (miniF2F, miniCTX, formal-conjectures, RLMEval), positioning LeanArchitect as the bridge that exposes dependency-rich blueprint structure directly inside Lean.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "blueprint structure",
+          "heading": false
+        },
+        {
+          "term": "leanblueprint",
+          "heading": false
+        },
+        {
+          "term": "lean code",
+          "heading": false
+        },
+        {
+          "term": "leanblueprint-extract",
+          "heading": false
+        },
+        {
+          "term": "problems",
+          "heading": false
+        },
+        {
+          "term": "leanarchitect",
+          "heading": false
+        },
+        {
+          "term": "projects",
+          "heading": false
+        },
+        {
+          "term": "doc-gen",
+          "heading": false
+        }
+      ],
+      "extract": "Blueprints in Lean. The term blueprint originates from Patrick Massot’s leanblueprint project [16], a plasTEX-based system that generates dependency graphs from LATEX documents using macros such as \\uses and \\leanok. Leanblueprint has been widely adopted in non-Mathlib projects due to its effectiveness in organizing large formalization efforts (such as [2–4, 9, 13, 19]). Although leanblueprint already has a",
+      "extractCut": true
+    },
+    {
+      "id": "sec-002-methods",
+      "number": null,
+      "title": "Methods",
+      "level": 1,
+      "pageStart": 3,
+      "pageEnd": 3,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 1,
+      "summary": {
+        "text": "Section header stub introducing Section 3.1 of the Methods chapter.",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "3.1",
+      "extractCut": false
+    },
+    {
+      "id": "sec-003-overview",
+      "number": null,
+      "title": "Overview",
+      "level": 2,
+      "pageStart": 3,
+      "pageEnd": 3,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 97,
+      "summary": {
+        "text": "Provides an architectural overview of LeanArchitect, which treats Lean source code as the authoritative source for formalized blueprint nodes via the @[blueprint] attribute while automatically inferring inter-declaration dependencies and sorry-free formalization status.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "attribute",
+          "heading": false
+        },
+        {
+          "term": "blueprint",
+          "heading": false
+        },
+        {
+          "term": "node",
+          "heading": false
+        }
+      ],
+      "extract": "LeanArchitect is a tool for extracting blueprint information directly from Lean code. Its core design principle is to minimize duplication between LATEX and Lean, by treating Lean as the authoritative source of information for any formalized blueprint node. The system introduces a new attribute, @[blueprint], which can be attached to Lean definitions and theorems. This attribute records metadata such as a LATEX",
+      "extractCut": true
+    },
+    {
+      "id": "sec-004-environment-extension",
+      "number": null,
+      "title": "Environment Extension",
+      "level": 2,
+      "pageStart": 3,
+      "pageEnd": 3,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 50,
+      "summary": {
+        "text": "Explains that LeanArchitect exports LaTeX fragments imported into leanblueprint documents via macros such as \\inputleannode, allowing informal exposition and formal proofs to evolve together without manual synchronization.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "evolve",
+          "heading": false
+        },
+        {
+          "term": "macros",
+          "heading": false
+        },
+        {
+          "term": "fragments",
+          "heading": false
+        }
+      ],
+      "extract": "exported artifacts consist of LATEX fragments, which integrate seamlessly with existing leanblueprint documents through macros such as \\inputleannode. See Figure 1 for a diagram. This design supports a workflow in which informal exposition and formal proofs evolve together, while minimizing manual duplication and enabling structured interaction with AI automation. 3.2",
+      "extractCut": false
+    },
+    {
+      "id": "sec-005-blueprint-attribute",
+      "number": null,
+      "title": "Blueprint Attribute",
+      "level": 2,
+      "pageStart": 3,
+      "pageEnd": 5,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 370,
+      "summary": {
+        "text": "Illustrates the @[blueprint] attribute syntax and workflow diagram (Figure 1) contrasting manual LaTeX-Lean synchronization with LeanArchitect's automated extraction, and describes how Section 3.3's blueprintExt environment extension recursively traverses constants in declaration types and values to construct internal Node records with inferred uses and leanOk flags.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "cref lem",
+          "heading": false
+        },
+        {
+          "term": "blueprint",
+          "heading": true
+        },
+        {
+          "term": "web blueprint",
+          "heading": false
+        },
+        {
+          "term": "latex blueprint",
+          "heading": false
+        },
+        {
+          "term": "add comm",
+          "heading": false
+        },
+        {
+          "term": "blueprint generation",
+          "heading": false
+        },
+        {
+          "term": "formalization status",
+          "heading": false
+        },
+        {
+          "term": "proof status",
+          "heading": false
+        }
+      ],
+      "extract": "LeanArchitect provides a new Lean attribute @[blueprint] that can be attached to definitions and theorems. Users can optionally supply metadata such as a LATEX label, natural language statement and proof, and other project-management annotations. The attribute serves as the user interface between Lean code and the blueprint system. A typical example is: 1See the GitHub repository. 2See the GitHub repository.",
+      "extractCut": true
+    },
+    {
+      "id": "sec-006-latex-export",
+      "number": null,
+      "title": "LaTeX Export",
+      "level": 2,
+      "pageStart": 5,
+      "pageEnd": 5,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 146,
+      "summary": {
+        "text": "Describes LeanArchitect's deterministic, incremental Lake build-time export mechanism, showing how \\inputleannode{thm:add-comm} expands into LaTeX theorem and proof environments populated with \\label, \\lean, \\leanok, and \\uses macros ready for leanblueprint rendering.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "latex blueprint",
+          "heading": false
+        },
+        {
+          "term": "lem",
+          "heading": false
+        },
+        {
+          "term": "succ-add",
+          "heading": false
+        },
+        {
+          "term": "zero-add",
+          "heading": false
+        },
+        {
+          "term": "begin",
+          "heading": false
+        },
+        {
+          "term": "add-comm",
+          "heading": false
+        }
+      ],
+      "extract": "To build the LATEX blueprint from such data, LeanArchitect provides a build-time export mechanism integrated with Lean’s Lake build system, inspired by doc-gen4. For each module, blueprint data is ex- tracted and rendered into LATEX fragments that can be imported into an existing blueprint document using the macro \\inputleannode{label}. Multiple Lean declarations are allowed to correspond to a single blueprint node.",
+      "extractCut": true
+    },
+    {
+      "id": "sec-007-project-management-using-leanarchitect",
+      "number": null,
+      "title": "Project Management Using LeanArchitect",
+      "level": 2,
+      "pageStart": 5,
+      "pageEnd": 5,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 165,
+      "summary": {
+        "text": "Outlines a five-step project management workflow for large Lean formalizations using LeanArchitect—from drafting an Overleaf LaTeX blueprint to tagging sorry-stubbed Lean translations with @[blueprint] and replacing LaTeX nodes with \\inputleannode—and introduces the blueprintConvert script for automating migration.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "latex blueprint",
+          "heading": false
+        },
+        {
+          "term": "leanarchitect",
+          "heading": true
+        },
+        {
+          "term": "project",
+          "heading": true
+        },
+        {
+          "term": "lean experts",
+          "heading": false
+        },
+        {
+          "term": "script",
+          "heading": false
+        }
+      ],
+      "extract": "We envision the workflow of a large Lean project using LeanArchitect to be as follows. 1. Mathematicians write a detailed exposition of the formalization target in a LATEX document (e.g. on Overleaf), following some source material. 2. A new formalization project is set up (e.g. on GitHub) with the document as a blueprint. 3. Lean experts translate each theorem or definition into Lean, tagging each one with",
+      "extractCut": true
+    },
+    {
+      "id": "sec-008-case-studies",
+      "number": null,
+      "title": "Case Studies",
+      "level": 1,
+      "pageStart": 5,
+      "pageEnd": 6,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 3,
+      "summary": {
+        "text": "Running header and section number stub introducing Section 4.1 of the Case Studies chapter.",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "LeanArchitect 6 4.1",
+      "extractCut": false
+    },
+    {
+      "id": "sec-009-primenumbertheoremand",
+      "number": null,
+      "title": "PrimeNumberTheoremAnd",
+      "level": 2,
+      "pageStart": 6,
+      "pageEnd": 6,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 337,
+      "summary": {
+        "text": "Presents a case study on migrating Kontorovich and Tao's PrimeNumberTheoremAnd project from leanblueprint-extract comments to LeanArchitect in January 2026 in roughly one day of work, highlighting automatic inference of \\lean, \\leanok, \\uses, and \\mathlibok tags and noting how inferred dependency visualization exposed a semantically flawed AI-generated lemma statement (Erdős 392) that failed to use surrounding lemmas.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "leanok tags",
+          "heading": false
+        },
+        {
+          "term": "primenumbertheoremand",
+          "heading": true
+        },
+        {
+          "term": "blueprint metadata",
+          "heading": false
+        },
+        {
+          "term": "project",
+          "heading": false
+        },
+        {
+          "term": "leanarchitect",
+          "heading": false
+        },
+        {
+          "term": "custom",
+          "heading": false
+        },
+        {
+          "term": "maintenance",
+          "heading": false
+        },
+        {
+          "term": "tao",
+          "heading": false
+        }
+      ],
+      "extract": "PrimeNumberTheoremAnd [13] is a large community-driven project aiming to formalize the prime number theorem and related results in analytic number theory in Lean. It is the first external project to adopt LeanArchitect as its primary blueprint infrastructure. The project began in 2023 and was migrated to LeanArchitect in January 2026. Prior to migration, PrimeNumberTheoremAnd used a custom tool",
+      "extractCut": true
+    },
+    {
+      "id": "sec-010-converting-existing-projects-to-leanarchitect-fo",
+      "number": null,
+      "title": "Converting Existing Projects to LeanArchitect Format",
+      "level": 2,
+      "pageStart": 6,
+      "pageEnd": 7,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 219,
+      "summary": {
+        "text": "Reports results of running blueprintConvert across five major Lean 4.25.0 blueprint projects (Carleson, Brownian Motion, Infinity Cosmos, Fermat's Last Theorem, and PrimeNumberTheoremAnd), detailing latent discrepancies uncovered in the original hand-written blueprints such as unused isolated nodes, missing dependency edges, unannotated Mathlib theorems, and statement-only dependency tracking.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "conversion script",
+          "heading": false
+        },
+        {
+          "term": "leanarchitect",
+          "heading": true
+        },
+        {
+          "term": "brownian motion",
+          "heading": false
+        },
+        {
+          "term": "infinity cosmos",
+          "heading": false
+        },
+        {
+          "term": "projects",
+          "heading": true
+        },
+        {
+          "term": "carleson",
+          "heading": false
+        },
+        {
+          "term": "distribution",
+          "heading": false
+        }
+      ],
+      "extract": "We tested the conversion script on the following projects into LeanArchitect, at Lean version v4.25.0: 1. Carleson [2] 2. Brownian Motion [9] 3. Infinity Cosmos [19] 4. Fermat’s Last Theorem [4] 5. Prime Number Theorem And [13] For each project, we first added LeanArchitect to the lakefile, and then ran the conversion script. For the most part, the script is able to automatically convert blueprint nodes into Lean",
+      "extractCut": true
+    },
+    {
+      "id": "sec-011-blueprint-based-autoformalization",
+      "number": null,
+      "title": "Blueprint-Based Autoformalization",
+      "level": 2,
+      "pageStart": 7,
+      "pageEnd": 9,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 707,
+      "summary": {
+        "text": "Evaluates LeanArchitect in a human–AI collaborative autoformalization of the multivariate Taylor theorem in integral form for Fréchet derivatives over normed spaces (frechet_taylor_integral), combining GPT-5 Pro for blueprint drafting and refinement with Aristotle in sorry-filling mode and targeted human fixes (replacing deriv with derivWithin on [a, b]) to localize failures and track compositional progress.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "remaining failures",
+          "heading": false
+        },
+        {
+          "term": "multivariate taylor",
+          "heading": false
+        },
+        {
+          "term": "gpt pro",
+          "heading": false
+        },
+        {
+          "term": "refined blueprint",
+          "heading": false
+        },
+        {
+          "term": "initial blueprint",
+          "heading": false
+        },
+        {
+          "term": "intermediate lemmas",
+          "heading": false
+        },
+        {
+          "term": "taylor theorem",
+          "heading": false
+        },
+        {
+          "term": "aristotle",
+          "heading": false
+        }
+      ],
+      "extract": "We evaluate LeanArchitect as an interface for human–AI collaboration by semi-automatically formalizing a theorem that is both technically nontrivial and naturally decomposable: multivariate Taylor’s theorem in integral form. At the time of writing, Mathlib contains Taylor’s theorem only in one-dimensional settings and does not have the multivariate Fréchet-derivative formulation in integral form. Target theorem. Let",
+      "extractCut": true
+    },
+    {
+      "id": "sec-012-limitations",
+      "number": null,
+      "title": "Limitations",
+      "level": 1,
+      "pageStart": 9,
+      "pageEnd": 11,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 1083,
+      "summary": {
+        "text": "Discusses current limitations of LeanArchitect—unergonomic LaTeX editing inside .lean files, many-to-one rather than many-to-many mapping from Lean declarations to blueprint nodes, deeper Lake build pipelines, and manual management of purely informal nodes—followed by acknowledgements and the paper's 26 bibliographic references.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "arxiv preprint",
+          "heading": false
+        },
+        {
+          "term": "url https",
+          "heading": false
+        },
+        {
+          "term": "floris van",
+          "heading": false
+        },
+        {
+          "term": "van doorn",
+          "heading": false
+        },
+        {
+          "term": "doi",
+          "heading": false
+        },
+        {
+          "term": "reinforcement learning",
+          "heading": false
+        },
+        {
+          "term": "huajian xin",
+          "heading": false
+        },
+        {
+          "term": "thomas zhu",
+          "heading": false
+        }
+      ],
+      "extract": "LeanArchitect introduces a new integration point between Lean and blueprint workflows and has several limitations. First, authoring LATEX inside Lean files is currently unergonomic: mainstream Lean IDE support provides neither syntax highlighting nor interactive feedback for embedded LATEX in .lean files, and existing keybindings interfere with natural LATEX input. Second, LeanArchitect supports a many-to-one",
+      "extractCut": true
+    },
+    {
+      "id": "sec-013-technical-details",
+      "number": null,
+      "title": "Technical Details",
+      "level": 1,
+      "pageStart": 11,
+      "pageEnd": 11,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 1,
+      "summary": {
+        "text": "Appendix section header stub introducing Section A.1 of the Technical Details appendix.",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "A.1",
+      "extractCut": false
+    },
+    {
+      "id": "sec-014-example",
+      "number": null,
+      "title": "Example",
+      "level": 2,
+      "pageStart": 11,
+      "pageEnd": 13,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 286,
+      "summary": {
+        "text": "Provides a complete illustrative Lean 4 example defining a custom MyNat inductive type with addition (add) and @[blueprint]-annotated lemmas zero_add, succ_add (with sorry), and add_comm (using tactic docstrings and sorry_using), together with the resulting blueprint document and dependency graph in Figure 3.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "succ add",
+          "heading": false
+        },
+        {
+          "term": "cref mynat",
+          "heading": false
+        },
+        {
+          "term": "zero add",
+          "heading": false
+        },
+        {
+          "term": "simp",
+          "heading": false
+        },
+        {
+          "term": "dependency graph",
+          "heading": false
+        },
+        {
+          "term": "blueprint",
+          "heading": false
+        },
+        {
+          "term": "natural numbers",
+          "heading": false
+        }
+      ],
+      "extract": "We begin with an illustrative example of LeanArchitect. import Architect @[blueprint] inductive MyNat : Type where | zero : MyNat | succ : MyNat →MyNat namespace MyNat @[blueprint \"def:nat-add\" (statement := /-- Natural number addition. -/)] def add (a b : MyNat) : MyNat := match b with | zero => a | succ b => succ (add a b) LeanArchitect 12 @[simp, blueprint (statement := /-- For any natural number $a$, $0 + a =",
+      "extractCut": true
+    },
+    {
+      "id": "sec-015-implementation",
+      "number": null,
+      "title": "Implementation",
+      "level": 2,
+      "pageStart": 13,
+      "pageEnd": 15,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 1401,
+      "summary": {
+        "text": "Details the internal Lean 4 implementation of LeanArchitect: the NodePart and Node structures, the blueprintExt environment extension and multi-declaration label merging (e.g., for @[to_additive]), all @[blueprint] attribute options, tactic docstring concatenation and sorry_using, the exact LaTeX conversion rules for \\uses, \\leanok, and \\mathlibok, the \\inputleannode and \\inputleanmodule macros, Lake module/library/package facets via extract_blueprint, and the Python/Lean blueprintConvert migration script.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "node depends",
+          "heading": false
+        },
+        {
+          "term": "lake script",
+          "heading": false
+        },
+        {
+          "term": "lake build",
+          "heading": false
+        },
+        {
+          "term": "build blueprint",
+          "heading": false
+        },
+        {
+          "term": "array name",
+          "heading": false
+        },
+        {
+          "term": "latex blueprint",
+          "heading": false
+        },
+        {
+          "term": "add comm",
+          "heading": false
+        },
+        {
+          "term": "latex label",
+          "heading": false
+        }
+      ],
+      "extract": "We briefly introduce the implementation of LeanArchitect. However, note that since writing this section, the LeanArchitect implementation has changed and will continue to change for new features, performance, and bug fixes. At its foundation, LeanArchitect is built upon the following Node datatype, which represents a @[blueprint]- tagged Lean declaration with relevant metadata. /-- The statement or proof of a node.",
+      "extractCut": true
+    }
+  ],
+  "checks": {},
+  "withheld": false,
+  "keywords": [
+    {
+      "term": "blueprint nodes",
+      "heading": false
+    },
+    {
+      "term": "latex blueprint",
+      "heading": false
+    },
+    {
+      "term": "blueprint metadata",
+      "heading": false
+    },
+    {
+      "term": "build blueprint",
+      "heading": false
+    },
+    {
+      "term": "existing blueprint",
+      "heading": false
+    },
+    {
+      "term": "blueprint information",
+      "heading": false
+    },
+    {
+      "term": "blueprint workflows",
+      "heading": false
+    },
+    {
+      "term": "blueprint structure",
+      "heading": false
+    },
+    {
+      "term": "blueprint content",
+      "heading": false
+    },
+    {
+      "term": "blueprint comment",
+      "heading": false
+    },
+    {
+      "term": "blueprint data",
+      "heading": false
+    },
+    {
+      "term": "web blueprint",
+      "heading": false
+    }
+  ],
+  "images": [
+    {
+      "id": "img-p008-1",
+      "file": "images/img-p008-1.png",
+      "page": 8,
+      "narratives": {
+        "en": "Figure 2(a): the first blueprint produced for multivariate Taylor's theorem in integral form, before any automated proving. Rectangles are definitions and ellipses are theorems; dashed arrows mark a statement-level use and solid arrows a proof-level use. Definition nodes taylorKernel, taylorRemainderKernel, taylorPoly, lineMap and lineCurve sit at the top; the target frechet_taylor_integral is the sink at the bottom. Most theorem nodes are light blue (unproved); only taylor_integral_one_shot, integrationByParts_smul and ftoc_bochner_wrapper are dark green.",
+        "fr": "Figure 2(a) : le premier plan directeur (blueprint) produit pour le théorème de Taylor multivarié sous forme intégrale, avant toute démonstration automatisée. Les rectangles représentent des définitions et les ellipses des théorèmes ; les flèches en pointillés indiquent une utilisation au niveau de l'énoncé et les flèches pleines une utilisation au niveau de la preuve. Les nœuds de définition taylorKernel, taylorRemainderKernel, taylorPoly, lineMap et lineCurve se trouvent en haut ; la cible frechet_taylor_integral est le puits en bas. La plupart des nœuds de théorèmes sont bleu clair (non démontrés) ; seuls taylor_integral_one_shot, integrationByParts_smul et ftoc_bochner_wrapper sont vert foncé.",
+        "es": "Figura 2(a): el primer plano (blueprint) generado para el teorema de Taylor multivariable en forma integral, antes de cualquier demostración automatizada. Los rectángulos son definiciones y las elipses son teoremas; las flechas discontinuas indican un uso a nivel de enunciado y las flechas continuas un uso a nivel de demostración. Los nodos de definición taylorKernel, taylorRemainderKernel, taylorPoly, lineMap y lineCurve se sitúan en la parte superior; el objetivo frechet_taylor_integral es el sumidero en la parte inferior. La mayoría de los nodos de teorema son de color azul claro (sin demostrar); solo taylor_integral_one_shot, integrationByParts_smul y ftoc_bochner_wrapper están en verde oscuro.",
+        "ar": "الشكل 2(a): المخطط الأولي (blueprint) المُنتج لمبرهنة تايلور متعددة المتغيرات بالصيغة التكاملية قبل أي إثبات آلي. تُمثّل المستطيلات تعريفات وتُمثّل القطوع الناقصة مبرهنات؛ وتشير الأسهم المتقطعة إلى استخدام على مستوى النص بينما تشير الأسهم المتصلة إلى استخدام على مستوى البرهان. تقع عقد التعريفات taylorKernel وtaylorRemainderKernel وtaylorPoly وlineMap وlineCurve في الأعلى؛ وتقع العقدة الهدف frechet_taylor_integral في الأسفل. معظم عقد المبرهنات ملونة بالأزرق الفاتح (غير مبرهنة)؛ وفقط taylor_integral_one_shot وintegrationByParts_smul وftoc_bochner_wrapper ملونة بالأخضر الداكن.",
+        "ru": "Рисунок 2(a): первый граф-план (blueprint), построенный для многомерной теоремы Тейлора в интегральной форме до запуска автоматического доказательства. Прямоугольники обозначают определения, а эллипсы — теоремы; пунктирные стрелки указывают на использование в формулировке, а сплошные — в доказательстве. Узлы определений taylorKernel, taylorRemainderKernel, taylorPoly, lineMap и lineCurve расположены вверху; целевая теорема frechet_taylor_integral является стоком внизу. Большинство узлов теорем окрашены в светло-голубой цвет (не доказаны); лишь taylor_integral_one_shot, integrationByParts_smul и ftoc_bochner_wrapper окрашены в тёмно-зелёный.",
+        "zh": "图 2(a)：在任何自动证明之前为积分形式的多元泰勒定理生成的初始蓝图（blueprint）。矩形表示定义，椭圆表示定理；虚线箭头表示陈述层面的引用，实线箭头表示证明层面的引用。定义节点 taylorKernel、taylorRemainderKernel、taylorPoly、lineMap 和 lineCurve 位于顶部；目标节点 frechet_taylor_integral 作为汇点位于底部。大多数定理节点为浅蓝色（未证明）；仅有 taylor_integral_one_shot、integrationByParts_smul 和 ftoc_bochner_wrapper 为深绿色。"
+      },
+      "state": "draft"
+    },
+    {
+      "id": "img-p008-2",
+      "file": "images/img-p008-2.png",
+      "page": 8,
+      "narratives": {
+        "en": "Figure 2(b): the same initial blueprint after the automated prover's sorry-filling pass. Rectangles are definitions and ellipses are theorems; dashed arrows mark a statement-level use and solid arrows a proof-level use. Definition nodes taylorKernel, taylorRemainderKernel, taylorPoly, lineMap and lineCurve sit at the top; the target frechet_taylor_integral is the sink at the bottom. The leaf lemmas taylorKernel_deriv_t, taylorKernel_at_right and taylorRemainder_eq_explicit have turned dark green; taylor_integral_kernel and lineCurve_iteratedDeriv remain light blue, and taylor_integral_explicit and frechet_taylor_integral are filled a lighter green; the caption distinguishes only blue (unproved) from green (proved), so what the two shades of green separate is not stated in the paper.",
+        "fr": "Figure 2(b) : le même plan directeur initial après la passe de comblement des sorry par le démonstrateur automatique. Les rectangles représentent des définitions et les ellipses des théorèmes ; les flèches en pointillés indiquent une utilisation au niveau de l'énoncé et les flèches pleines une utilisation au niveau de la preuve. Les nœuds de définition taylorKernel, taylorRemainderKernel, taylorPoly, lineMap et lineCurve se trouvent en haut ; la cible frechet_taylor_integral est le puits en bas. Les lemmes feuilles taylorKernel_deriv_t, taylorKernel_at_right et taylorRemainder_eq_explicit sont passés au vert foncé ; taylor_integral_kernel et lineCurve_iteratedDeriv restent bleu clair, tandis que taylor_integral_explicit et frechet_taylor_integral sont remplis d'un vert plus clair ; la légende ne distingue que le bleu (non démontré) du vert (démontré), de sorte que ce que séparent les deux nuances de vert n'est pas précisé dans l'article.",
+        "es": "Figura 2(b): el mismo plano inicial tras la pasada del demostrador automático para completar los sorry. Los rectángulos son definiciones y las elipses son teoremas; las flechas discontinuas indican un uso a nivel de enunciado y las flechas continuas un uso a nivel de demostración. Los nodos de definición taylorKernel, taylorRemainderKernel, taylorPoly, lineMap y lineCurve se sitúan arriba; el objetivo frechet_taylor_integral es el sumidero abajo. Los lemas hoja taylorKernel_deriv_t, taylorKernel_at_right y taylorRemainder_eq_explicit han pasado a verde oscuro; taylor_integral_kernel y lineCurve_iteratedDeriv permanecen en azul claro, y taylor_integral_explicit y frechet_taylor_integral están rellenos de un verde más claro; el pie de figura solo distingue el azul (sin demostrar) del verde (demostrado), por lo que el artículo no especifica qué diferencian los dos tonos de verde.",
+        "ar": "الشكل 2(b): المخطط الأولي نفسه بعد جولة المبرهن الآلي لملء مواضع sorry. تُمثّل المستطيلات تعريفات وتُمثّل القطوع الناقصة مبرهنات؛ وتشير الأسهم المتقطعة إلى استخدام على مستوى النص والأسهم المتصلة إلى استخدام على مستوى البرهان. تقع عقد التعريفات taylorKernel وtaylorRemainderKernel وtaylorPoly وlineMap وlineCurve في الأعلى؛ وتقع العقدة الهدف frechet_taylor_integral في الأسفل. تحولت التوطئات الطرفية taylorKernel_deriv_t وtaylorKernel_at_right وtaylorRemainder_eq_explicit إلى الأخضر الداكن؛ بينما بقيت taylor_integral_kernel وlineCurve_iteratedDeriv بالأزرق الفاتح، ولُوّنت taylor_integral_explicit وfrechet_taylor_integral بأخضر أفتح؛ ولا يميز شرح الشكل إلا بين الأزرق (غير مبرهن) والأخضر (مبرهن)، لذا لا تذكر الورقة الفرق بين درجتي الأخضر.",
+        "ru": "Рисунок 2(b): тот же начальный граф-план после первого прохода автоматического прувера по закрытию sorry. Прямоугольники обозначают определения, эллипсы — теоремы; пунктирные стрелки соответствуют использованию в формулировке, сплошные — в доказательстве. Узлы определений taylorKernel, taylorRemainderKernel, taylorPoly, lineMap и lineCurve находятся вверху, а целевой узел frechet_taylor_integral — внизу. Листовые леммы taylorKernel_deriv_t, taylorKernel_at_right и taylorRemainder_eq_explicit стали тёмно-зелёными; taylor_integral_kernel и lineCurve_iteratedDeriv остались светло-голубыми, а taylor_integral_explicit и frechet_taylor_integral закрашены более светлым оттенком зелёного; в подписи различаются только синий (не доказано) и зелёный (доказано) цвета, поэтому различие между двумя оттенками зелёного в статье не поясняется.",
+        "zh": "图 2(b)：经自动证明器第一轮填充 sorry 后的同一初始蓝图。矩形表示定义，椭圆表示定理；虚线箭头表示陈述层面的引用，实线箭头表示证明层面的引用。定义节点 taylorKernel、taylorRemainderKernel、taylorPoly、lineMap 和 lineCurve 位于顶部；目标节点 frechet_taylor_integral 作为汇点位于底部。叶引理 taylorKernel_deriv_t、taylorKernel_at_right 和 taylorRemainder_eq_explicit 已变为深绿色；taylor_integral_kernel 和 lineCurve_iteratedDeriv 仍为浅蓝色，而 taylor_integral_explicit 和 frechet_taylor_integral 填充为浅绿色；图注仅区分了蓝色（未证明）与绿色（已证明），文中未说明两种深浅绿色之间的具体区别。"
+      },
+      "state": "draft"
+    },
+    {
+      "id": "img-p008-3",
+      "file": "images/img-p008-3.png",
+      "page": 8,
+      "narratives": {
+        "en": "Figure 2(c): the refined blueprint after the planner model decomposed the stuck nodes further. Rectangles are definitions and ellipses are theorems; dashed arrows mark a statement-level use and solid arrows a proof-level use. Definition nodes taylorKernel, taylorRemainderKernel, taylorPoly, lineMap and lineCurve sit at the top; the target frechet_taylor_integral is the sink at the bottom. New intermediate nodes appear -- taylor_remainder_by_parts, taylor_integral_kernel_base, taylorPoly_succ, ftoc_bochner_on_uIcc and lineCurve_contDiffOn_onSeg -- and every theorem node is light blue, i.e. nothing is yet proved in this version.",
+        "fr": "Figure 2(c) : le plan directeur affiné après que le modèle planificateur a décomposé davantage les nœuds bloqués. Les rectangles représentent des définitions et les ellipses des théorèmes ; les flèches en pointillés indiquent une utilisation au niveau de l'énoncé et les flèches pleines une utilisation au niveau de la preuve. Les nœuds de définition taylorKernel, taylorRemainderKernel, taylorPoly, lineMap et lineCurve se trouvent en haut ; la cible frechet_taylor_integral est le puits en bas. De nouveaux nœuds intermédiaires apparaissent — taylor_remainder_by_parts, taylor_integral_kernel_base, taylorPoly_succ, ftoc_bochner_on_uIcc et lineCurve_contDiffOn_onSeg — et chaque nœud de théorème est bleu clair, c'est-à-dire que rien n'est encore démontré dans cette version.",
+        "es": "Figura 2(c): el plano refinado después de que el modelo planificador descompusiera aún más los nodos bloqueados. Los rectángulos son definiciones y las elipses son teoremas; las flechas discontinuas indican un uso a nivel de enunciado y las flechas continuas un uso a nivel de demostración. Los nodos de definición taylorKernel, taylorRemainderKernel, taylorPoly, lineMap y lineCurve se sitúan arriba; el objetivo frechet_taylor_integral es el sumidero abajo. Aparecen nuevos nodos intermedios —taylor_remainder_by_parts, taylor_integral_kernel_base, taylorPoly_succ, ftoc_bochner_on_uIcc y lineCurve_contDiffOn_onSeg— y todos los nodos de teorema están en azul claro, es decir, aún no se ha demostrado nada en esta versión.",
+        "ar": "الشكل 2(c): المخطط المنقّح بعد أن قام نموذج التخطيط بتفكيك العقد المتعثرة إلى خطوات أدق. تُمثّل المستطيلات تعريفات وتُمثّل القطوع الناقصة مبرهنات؛ وتشير الأسهم المتقطعة إلى استخدام على مستوى النص والأسهم المتصلة إلى استخدام على مستوى البرهان. تقع عقد التعريفات taylorKernel وtaylorRemainderKernel وtaylorPoly وlineMap وlineCurve في الأعلى؛ وتقع العقدة الهدف frechet_taylor_integral في الأسفل. تظهر عقد وسيطة جديدة — هي taylor_remainder_by_parts وtaylor_integral_kernel_base وtaylorPoly_succ وftoc_bochner_on_uIcc وlineCurve_contDiffOn_onSeg — وجميع عقد المبرهنات ملونة بالأزرق الفاتح، أي أنه لم يُبرهن أي منها بعد في هذه النسخة.",
+        "ru": "Рисунок 2(c): уточнённый граф-план после того, как модель-планировщик дополнительно декомпозировала застрявшие узлы. Прямоугольники обозначают определения, эллипсы — теоремы; пунктирные стрелки указывают на использование в формулировке, сплошные — в доказательстве. Узлы определений taylorKernel, taylorRemainderKernel, taylorPoly, lineMap и lineCurve расположены вверху, целевой узел frechet_taylor_integral — внизу. Появились новые промежуточные узлы — taylor_remainder_by_parts, taylor_integral_kernel_base, taylorPoly_succ, ftoc_bochner_on_uIcc и lineCurve_contDiffOn_onSeg, — причём все узлы теорем окрашены в светло-голубой цвет, то есть в этой версии ещё ни одно утверждение не доказано.",
+        "zh": "图 2(c)：规划模型对受阻节点作进一步分解后的细化蓝图。矩形表示定义，椭圆表示定理；虚线箭头表示陈述层面的引用，实线箭头表示证明层面的引用。定义节点 taylorKernel、taylorRemainderKernel、taylorPoly、lineMap 和 lineCurve 位于顶部；目标节点 frechet_taylor_integral 作为汇点位于底部。图中出现了新的中间节点——taylor_remainder_by_parts、taylor_integral_kernel_base、taylorPoly_succ、ftoc_bochner_on_uIcc 和 lineCurve_contDiffOn_onSeg——且所有定理节点均为浅蓝色，即该版本尚未完成任何证明。"
+      },
+      "state": "draft"
+    },
+    {
+      "id": "img-p008-4",
+      "file": "images/img-p008-4.png",
+      "page": 8,
+      "narratives": {
+        "en": "Figure 2(d): the refined blueprint after the prover's second pass. Rectangles are definitions and ellipses are theorems; dashed arrows mark a statement-level use and solid arrows a proof-level use. Definition nodes taylorKernel, taylorRemainderKernel, taylorPoly, lineMap and lineCurve sit at the top; the target frechet_taylor_integral is the sink at the bottom. Nearly every lemma is dark green; three remain light blue -- taylor_remainder_by_parts, lineCurve_iteratedDeriv and frechet_taylor_integral -- which are the nodes the text says were left for a human. taylor_integral_kernel, taylor_integral_explicit and taylor_integral_one_shot are a lighter green.",
+        "fr": "Figure 2(d) : le plan directeur affiné après la seconde passe du démonstrateur. Les rectangles représentent des définitions et les ellipses des théorèmes ; les flèches en pointillés indiquent une utilisation au niveau de l'énoncé et les flèches pleines une utilisation au niveau de la preuve. Les nœuds de définition taylorKernel, taylorRemainderKernel, taylorPoly, lineMap et lineCurve se trouvent en haut ; la cible frechet_taylor_integral est le puits en bas. Presque tous les lemmes sont vert foncé ; trois restent bleu clair — taylor_remainder_by_parts, lineCurve_iteratedDeriv et frechet_taylor_integral — qui sont les nœuds que le texte indique avoir été laissés à un humain. taylor_integral_kernel, taylor_integral_explicit et taylor_integral_one_shot sont d'un vert plus clair.",
+        "es": "Figura 2(d): el plano refinado tras la segunda pasada del demostrador. Los rectángulos son definiciones y las elipses son teoremas; las flechas discontinuas indican un uso a nivel de enunciado y las flechas continuas un uso a nivel de demostración. Los nodos de definición taylorKernel, taylorRemainderKernel, taylorPoly, lineMap y lineCurve se sitúan arriba; el objetivo frechet_taylor_integral es el sumidero abajo. Casi todos los lemas están en verde oscuro; tres permanecen en azul claro —taylor_remainder_by_parts, lineCurve_iteratedDeriv y frechet_taylor_integral—, que según el texto son los nodos dejados para un humano. taylor_integral_kernel, taylor_integral_explicit y taylor_integral_one_shot presentan un verde más claro.",
+        "ar": "الشكل 2(d): المخطط المنقّح بعد الجولة الثانية للمبرهن الآلي. تُمثّل المستطيلات تعريفات وتُمثّل القطوع الناقصة مبرهنات؛ وتشير الأسهم المتقطعة إلى استخدام على مستوى النص والأسهم المتصلة إلى استخدام على مستوى البرهان. تقع عقد التعريفات taylorKernel وtaylorRemainderKernel وtaylorPoly وlineMap وlineCurve في الأعلى؛ وتقع العقدة الهدف frechet_taylor_integral في الأسفل. أصبحت معظم التوطئات باللون الأخضر الداكن؛ وبقيت ثلاث عقد باللون الأزرق الفاتح — وهي taylor_remainder_by_parts وlineCurve_iteratedDeriv وfrechet_taylor_integral — وهي العقد التي يذكر النص أنها تُركت لإثبات بشري. أما taylor_integral_kernel وtaylor_integral_explicit وtaylor_integral_one_shot فهي بلون أخضر أفتح.",
+        "ru": "Рисунок 2(d): уточнённый граф-план после второго прохода прувера. Прямоугольники обозначают определения, эллипсы — теоремы; пунктирные стрелки указывают на использование в формулировке, сплошные — в доказательстве. Узлы определений taylorKernel, taylorRemainderKernel, taylorPoly, lineMap и lineCurve расположены вверху, целевой узел frechet_taylor_integral — внизу. Почти все леммы окрашены в тёмно-зелёный цвет; три узла остаются светло-голубыми — taylor_remainder_by_parts, lineCurve_iteratedDeriv и frechet_taylor_integral, — которые, согласно тексту статьи, были оставлены для доказательства человеку. Узлы taylor_integral_kernel, taylor_integral_explicit и taylor_integral_one_shot закрашены более светлым зелёным цветом.",
+        "zh": "图 2(d)：经证明器第二轮运行后的细化蓝图。矩形表示定义，椭圆表示定理；虚线箭头表示陈述层面的引用，实线箭头表示证明层面的引用。定义节点 taylorKernel、taylorRemainderKernel、taylorPoly、lineMap 和 lineCurve 位于顶部；目标节点 frechet_taylor_integral 作为汇点位于底部。几乎所有引理均已变为深绿色；仍有三个节点保持浅蓝色——taylor_remainder_by_parts、lineCurve_iteratedDeriv 和 frechet_taylor_integral——即正文中所述留给人工证明的节点。taylor_integral_kernel、taylor_integral_explicit 和 taylor_integral_one_shot 为浅绿色。"
+      },
+      "state": "draft"
+    },
+    {
+      "id": "img-p008-5",
+      "file": "images/img-p008-5.png",
+      "page": 8,
+      "narratives": {
+        "en": "Figure 2(e): the completed formalization after a human proved the remaining nodes. Rectangles are definitions and ellipses are theorems; dashed arrows mark a statement-level use and solid arrows a proof-level use. Definition nodes taylorKernel, taylorRemainderKernel, taylorPoly, lineMap and lineCurve sit at the top; the target frechet_taylor_integral is the sink at the bottom. Every theorem node is dark green, meaning the whole graph, including the target frechet_taylor_integral, is proved without sorry.",
+        "fr": "Figure 2(e) : la formalisation achevée après qu'un humain a démontré les nœuds restants. Les rectangles représentent des définitions et les ellipses des théorèmes ; les flèches en pointillés indiquent une utilisation au niveau de l'énoncé et les flèches pleines une utilisation au niveau de la preuve. Les nœuds de définition taylorKernel, taylorRemainderKernel, taylorPoly, lineMap et lineCurve se trouvent en haut ; la cible frechet_taylor_integral est le puits en bas. Chaque nœud de théorème est vert foncé, ce qui signifie que l'ensemble du graphe, y compris la cible frechet_taylor_integral, est démontré sans sorry.",
+        "es": "Figura 2(e): la formalización completada después de que un humano demostrara los nodos restantes. Los rectángulos son definiciones y las elipses son teoremas; las flechas discontinuas indican un uso a nivel de enunciado y las flechas continuas un uso a nivel de demostración. Los nodos de definición taylorKernel, taylorRemainderKernel, taylorPoly, lineMap y lineCurve se sitúan arriba; el objetivo frechet_taylor_integral es el sumidero abajo. Todos los nodos de teorema están en verde oscuro, lo que significa que todo el grafo, incluido el objetivo frechet_taylor_integral, está demostrado sin sorry.",
+        "ar": "الشكل 2(e): الصياغة الصورية المكتملة بعد أن أثبت باحث بشري العقد المتبقية. تُمثّل المستطيلات تعريفات وتُمثّل القطوع الناقصة مبرهنات؛ وتشير الأسهم المتقطعة إلى استخدام على مستوى النص والأسهم المتصلة إلى استخدام على مستوى البرهان. تقع عقد التعريفات taylorKernel وtaylorRemainderKernel وtaylorPoly وlineMap وlineCurve في الأعلى؛ وتقع العقدة الهدف frechet_taylor_integral في الأسفل. جميع عقد المبرهنات ملونة بالأخضر الداكن، ما يعني أن المخطط بأكمله، بما في ذلك الهدف frechet_taylor_integral، مبرهن بالكامل دون أي sorry.",
+        "ru": "Рисунок 2(e): завершённая формализация после того, как человек доказал оставшиеся узлы. Прямоугольники обозначают определения, эллипсы — теоремы; пунктирные стрелки указывают на использование в формулировке, сплошные — в доказательстве. Узлы определений taylorKernel, taylorRemainderKernel, taylorPoly, lineMap и lineCurve расположены вверху, целевой узел frechet_taylor_integral — внизу. Все узлы теорем окрашены в тёмно-зелёный цвет, что означает полное доказательство всего графа, включая целевую теорему frechet_taylor_integral, без единого sorry.",
+        "zh": "图 2(e)：人工完成剩余节点证明后的最终形式化蓝图。矩形表示定义，椭圆表示定理；虚线箭头表示陈述层面的引用，实线箭头表示证明层面的引用。定义节点 taylorKernel、taylorRemainderKernel、taylorPoly、lineMap 和 lineCurve 位于顶部；目标节点 frechet_taylor_integral 作为汇点位于底部。所有定理节点均为深绿色，表示包括目标 frechet_taylor_integral 在内的整个依赖图均已彻底证明，不含任何 sorry。"
+      },
+      "state": "draft"
+    },
+    {
+      "id": "img-p012-1",
+      "file": "images/img-p012-1.png",
+      "page": 12,
+      "narratives": {
+        "en": "Figure 3(a): the web blueprint generated from the appendix's MyNat example. It lists Definition 1 (Natural numbers) and Definition 2 (Natural number addition), each with a check mark; Theorem 3, for any natural number a, 0 + a = a, where + is definition 2, with a check mark and a collapsed proof; Theorem 4, (a + 1) + b = (a + b) + 1, with no check mark and the proof text 'Proof by induction on b'; and Theorem 5, a + b = b + a, with no check mark and a proof reading 'The base case follows from theorem 3. The inductive case follows from theorem 4.', both references rendered as links.",
+        "fr": "Figure 3(a) : le plan directeur web généré à partir de l'exemple MyNat de l'annexe. Il énumère la Définition 1 (Natural numbers) et la Définition 2 (Natural number addition), chacune accompagnée d'une coche ; le Théorème 3, pour tout entier naturel a, 0 + a = a, où + est la définition 2, avec une coche et une preuve repliée ; le Théorème 4, (a + 1) + b = (a + b) + 1, sans coche et avec le texte de preuve « Proof by induction on b » ; et le Théorème 5, a + b = b + a, sans coche et avec une preuve indiquant « The base case follows from theorem 3. The inductive case follows from theorem 4. », les deux références étant rendues sous forme de liens.",
+        "es": "Figura 3(a): el plano web generado a partir del ejemplo MyNat del apéndice. Enumera la Definición 1 (Natural numbers) y la Definición 2 (Natural number addition), cada una con una marca de verificación; el Teorema 3, para todo número natural a, 0 + a = a, donde + es la definición 2, con una marca de verificación y una demostración contraída; el Teorema 4, (a + 1) + b = (a + b) + 1, sin marca de verificación y con el texto de demostración «Proof by induction on b»; y el Teorema 5, a + b = b + a, sin marca de verificación y con una demostración que dice «The base case follows from theorem 3. The inductive case follows from theorem 4.», con ambas referencias representadas como enlaces.",
+        "ar": "الشكل 3(a): وثيقة المخطط التفاعلي على الويب المُولَّدة من مثال MyNat في الملحق. تعرض التعريف 1 (Natural numbers) والتعريف 2 (Natural number addition)، ومع كل منهما علامة تحقق؛ والمبرهنة 3، لكل عدد طبيعي a فإن 0 + a = a حيث + هو التعريف 2، مع علامة تحقق وبرهان مطوي؛ والمبرهنة 4، ‏(a + 1) + b = (a + b) + 1، دون علامة تحقق ومع نص البرهان 'Proof by induction on b'؛ والمبرهنة 5، ‏a + b = b + a، دون علامة تحقق ومع برهان ينص على 'The base case follows from theorem 3. The inductive case follows from theorem 4.' حيث يظهر كلا المرجعين كرابطين تشعبيين.",
+        "ru": "Рисунок 3(a): веб-документ плана (blueprint), сгенерированный для примера MyNat из приложения. В нём перечислены Определение 1 (Natural numbers) и Определение 2 (Natural number addition), каждое с галочкой; Теорема 3: для любого натурального числа a выполняется 0 + a = a, где + соответствует определению 2, с галочкой и свёрнутым доказательством; Теорема 4: (a + 1) + b = (a + b) + 1, без галочки и с текстом доказательства «Proof by induction on b»; и Теорема 5: a + b = b + a, без галочки и с доказательством «The base case follows from theorem 3. The inductive case follows from theorem 4.», где обе ссылки на теоремы оформлены как гиперссылки.",
+        "zh": "图 3(a)：由附录 MyNat 示例生成的网页蓝图文档。其中列出了均带勾选标记的定义 1（Natural numbers）和定义 2（Natural number addition）；带勾选标记且证明折叠的定理 3：对任意自然数 a，0 + a = a（其中 + 为定义 2）；无勾选标记、证明文本为“Proof by induction on b”的定理 4：(a + 1) + b = (a + b) + 1；以及无勾选标记、证明文本为“The base case follows from theorem 3. The inductive case follows from theorem 4.”的定理 5：a + b = b + a，其中两处定理引用均渲染为超链接。"
+      },
+      "state": "draft"
+    },
+    {
+      "id": "img-p012-2",
+      "file": "images/img-p012-2.png",
+      "page": 12,
+      "narratives": {
+        "en": "Figure 3(b): the dependency graph of the MyNat example. Green rectangles MyNat and nat-add at the top, with dashed arrows from nat-add to a blue-bordered rectangle MyNat.mul and to the ellipses MyNat.succ_add (light blue) and MyNat.zero_add (dark green); solid arrows run from both of those into MyNat.add_comm (light blue), and a dashed arrow from MyNat.mul to a white ellipse MyNat.mul_comm, whose outgoing edge is cut off at the bottom of the image.",
+        "fr": "Figure 3(b) : le graphe de dépendances de l'exemple MyNat. Des rectangles verts MyNat et nat-add figurent en haut, avec des flèches en pointillés allant de nat-add vers un rectangle à bordure bleue MyNat.mul et vers les ellipses MyNat.succ_add (bleu clair) et MyNat.zero_add (vert foncé) ; des flèches pleines vont de ces deux dernières vers MyNat.add_comm (bleu clair), et une flèche en pointillés va de MyNat.mul vers une ellipse blanche MyNat.mul_comm, dont l'arête sortante est coupée au bas de l'image.",
+        "es": "Figura 3(b): el grafo de dependencias del ejemplo MyNat. En la parte superior aparecen los rectángulos verdes MyNat y nat-add, con flechas discontinuas desde nat-add hacia un rectángulo de borde azul MyNat.mul y hacia las elipses MyNat.succ_add (azul claro) y MyNat.zero_add (verde oscuro); desde ambas salen flechas continuas hacia MyNat.add_comm (azul claro), y una flecha discontinua va desde MyNat.mul hacia una elipse blanca MyNat.mul_comm, cuya arista saliente queda cortada en el borde inferior de la imagen.",
+        "ar": "الشكل 3(b): مخطط الاعتماديات لمثال MyNat. يظهر في الأعلى مستطيلان أخضران هما MyNat وnat-add، مع أسهم متقطعة تمتد من nat-add إلى مستطيل ذي إطار أزرق هو MyNat.mul وإلى القطعين الناقصين MyNat.succ_add (أزرق فاتح) وMyNat.zero_add (أخضر داكن)؛ وتمتد أسهم متصلة من كليهما إلى MyNat.add_comm (أزرق فاتح)، كما يمتد سهم متقطع من MyNat.mul إلى قطع ناقص أبيض هو MyNat.mul_comm تَنقطع حافته الخارجة عند أسفل الصورة.",
+        "ru": "Рисунок 3(b): граф зависимостей для примера MyNat. Вверху расположены зелёные прямоугольники MyNat и nat-add; от nat-add идут пунктирные стрелки к прямоугольнику с синей рамкой MyNat.mul и к эллипсам MyNat.succ_add (светло-голубой) и MyNat.zero_add (тёмно-зелёный); от обоих эллипсов сплошные стрелки ведут к MyNat.add_comm (светло-голубой), а от MyNat.mul пунктирная стрелка идёт к белому эллипсу MyNat.mul_comm, исходящее ребро которого обрезано у нижнего края изображения.",
+        "zh": "图 3(b)：MyNat 示例的依赖图。顶部为绿色矩形 MyNat 和 nat-add，从 nat-add 出发的虚线箭头指向蓝框矩形 MyNat.mul 以及椭圆 MyNat.succ_add（浅蓝色）和 MyNat.zero_add（深绿色）；从这两个椭圆出发的实线箭头指向 MyNat.add_comm（浅蓝色），另有虚线箭头从 MyNat.mul 指向白色椭圆 MyNat.mul_comm，后者的出边在图像底部被截断。"
+      },
+      "state": "draft"
+    }
+  ],
+  "coverage": [
+    {
+      "kind": "contents",
+      "state": "found",
+      "count": 16,
+      "note": "outline"
+    },
+    {
+      "kind": "sections",
+      "state": "found",
+      "count": 17,
+      "note": "2 levels"
+    },
+    {
+      "kind": "figures",
+      "state": "found",
+      "count": 7
+    },
+    {
+      "kind": "tables",
+      "state": "not-extracted"
+    },
+    {
+      "kind": "references",
+      "state": "not-extracted",
+      "note": "a references section is in the text (p9); its entries are not extracted"
+    },
+    {
+      "kind": "glossary",
+      "state": "not-extracted",
+      "note": "a glossary section is in the text (p3); its entries are not extracted"
+    },
+    {
+      "kind": "footnotes",
+      "state": "not-extracted"
+    },
+    {
+      "kind": "summaries",
+      "state": "found",
+      "count": 17,
+      "note": "17 of 17 sections"
+    }
+  ],
+  "links": {
+    "repo": "litlfred/folio-assistant-sci",
+    "branch": "main",
+    "dir": "library/arxiv-2601.22554v1"
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L3/collab/processes/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "http://smart.who.int/base/process/Process_DakL3Ig",
+      "@type": "bootstrap:Process",
+      "name": "L2 DAK to L3 FHIR IG"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DakL3Ig#flow/D01",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DakL3Ig#flow/D02",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DakL3Ig#flow/D03",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DakL3Ig/lane/Lane_Modeller",
+      "@type": "cat-harness:Lane",
+      "name": "FHIR modeller"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DakL3Ig/node/CallActivity_L3Fhir",
+      "@type": "bootstrap:ProcessNode",
+      "name": "L3 FHIR IG pipeline (fhir-harness)"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DakL3Ig/node/EndEvent_IgPublished",
+      "@type": "bootstrap:ProcessNode",
+      "name": "FHIR IG published"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DakL3Ig/node/StartEvent_L2Ready",
+      "@type": "bootstrap:ProcessNode",
+      "name": "L2 DAK ready"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DakL3Ig/node/Task_MapL2",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Map L2 → L3"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/processes"
+  ],
+  "name": "L3/collab/processes",
+  "path": "L3/collab/processes/"
+}

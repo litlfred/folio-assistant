@@ -1,0 +1,26 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L3/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "http://smart.who.int/base/directory/smart-base-L3",
+      "@type": "bootstrap:Subgraph",
+      "name": "smart-base-L3",
+      "title": "L3 — the FHIR artefacts"
+    }
+  ],
+  "hasSubgraph": [
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L3/collab/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L3/schemas/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L3/skills/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L3/tools/"
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/cat-harness"
+  ],
+  "name": "L3",
+  "path": "L3/",
+  "title": "L3 — the FHIR artefacts"
+}

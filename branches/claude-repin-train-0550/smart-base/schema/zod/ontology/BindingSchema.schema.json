@@ -1,0 +1,40 @@
+{
+  "$ref": "#/definitions/Binding",
+  "definitions": {
+    "Binding": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "set": {
+              "type": "string"
+            },
+            "severity": {
+              "type": "string",
+              "enum": [
+                "error",
+                "warning"
+              ]
+            }
+          },
+          "required": [
+            "set"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    }
+  },
+  "$id": "http://smart.who.int/base/schema/zod/ontology/BindingSchema.schema.json",
+  "title": "BindingSchema",
+  "description": "Generated from `BindingSchema` in L1/schemas/ontology.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-train-0550",
+    "sha": "211176b48990d1a2382a2913a91794b72853a53c",
+    "pr": "3124/merge",
+    "run": "43611082734"
+  }
+}

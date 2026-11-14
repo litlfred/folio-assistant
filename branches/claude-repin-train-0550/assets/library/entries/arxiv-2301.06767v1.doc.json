@@ -1,0 +1,1648 @@
+{
+  "$schema": "folio-library-document/v1",
+  "id": "arxiv-2301.06767v1",
+  "title": "The Recent Advances in Automatic Term Extraction: A survey",
+  "variant": "pdf",
+  "pages": 25,
+  "tocSource": "outline",
+  "tocMethod": null,
+  "toc": [
+    {
+      "level": 1,
+      "title": "Abstract",
+      "number": null,
+      "page": 1,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": null
+    },
+    {
+      "level": 1,
+      "title": "Introduction",
+      "number": "1",
+      "page": 1,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-000-1-introduction"
+    },
+    {
+      "level": 1,
+      "title": "Previous surveys and comparative studies",
+      "number": "2",
+      "page": 3,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-001-2-previous-surveys-and-comparative-studies"
+    },
+    {
+      "level": 1,
+      "title": "Methodology",
+      "number": "3",
+      "page": 4,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-002-3-methodology"
+    },
+    {
+      "level": 1,
+      "title": "ATE datasets",
+      "number": "4",
+      "page": 5,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-003-4-ate-datasets"
+    },
+    {
+      "level": 2,
+      "title": "Monolingual corpora",
+      "number": "4.1",
+      "page": 5,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-004-41-monolingual-corpora"
+    },
+    {
+      "level": 2,
+      "title": "Multilingual corpora",
+      "number": "4.2",
+      "page": 7,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-005-42-multilingual-corpora"
+    },
+    {
+      "level": 1,
+      "title": "Supervised ATE systems",
+      "number": "5",
+      "page": 9,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-006-5-supervised-ate-systems"
+    },
+    {
+      "level": 2,
+      "title": "Machine learning approaches",
+      "number": "5.1",
+      "page": 9,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-007-51-machine-learning-approaches"
+    },
+    {
+      "level": 2,
+      "title": "Deep learning approaches",
+      "number": "5.2",
+      "page": 11,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-008-52-deep-learning-approaches"
+    },
+    {
+      "level": 2,
+      "title": "Multilingual learning",
+      "number": "5.3",
+      "page": 13,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-009-53-multilingual-learning"
+    },
+    {
+      "level": 2,
+      "title": "Cross-domain and cross-lingual transfer learning",
+      "number": "5.4",
+      "page": 14,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-010-54-cross-domain-and-cross-lingual-transfer-learn"
+    },
+    {
+      "level": 1,
+      "title": "ATE evaluation metrics",
+      "number": "6",
+      "page": 15,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-011-6-ate-evaluation-metrics"
+    },
+    {
+      "level": 1,
+      "title": "Comparative results",
+      "number": "7",
+      "page": 17,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-012-7-comparative-results"
+    },
+    {
+      "level": 1,
+      "title": "Challenges and Future directions",
+      "number": "8",
+      "page": 19,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-013-8-challenges-and-future-directions"
+    },
+    {
+      "level": 2,
+      "title": "Nested terms",
+      "number": "8.1",
+      "page": 19,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-014-81-nested-terms"
+    },
+    {
+      "level": 2,
+      "title": "Generalisability",
+      "number": "8.2",
+      "page": 19,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-015-82-generalisability"
+    },
+    {
+      "level": 2,
+      "title": "Ensembling",
+      "number": "8.3",
+      "page": 20,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-016-83-ensembling"
+    },
+    {
+      "level": 2,
+      "title": "Scalability",
+      "number": "8.4",
+      "page": 20,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-017-84-scalability"
+    },
+    {
+      "level": 2,
+      "title": "Prompting",
+      "number": "8.5",
+      "page": 20,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-018-85-prompting"
+    },
+    {
+      "level": 1,
+      "title": "Conclusion",
+      "number": "9",
+      "page": 20,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-019-9-conclusion"
+    },
+    {
+      "level": 1,
+      "title": "Acknowledgments",
+      "number": null,
+      "page": 21,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-020-acknowledgments"
+    },
+    {
+      "level": 1,
+      "title": "References",
+      "number": null,
+      "page": 21,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-021-references"
+    }
+  ],
+  "sections": [
+    {
+      "id": "sec-front-matter",
+      "number": null,
+      "title": "Front matter",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 1,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 281,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "stefan institute",
+          "heading": false
+        },
+        {
+          "term": "matej martinc",
+          "heading": false
+        },
+        {
+          "term": "senja pollak",
+          "heading": false
+        },
+        {
+          "term": "hanh thi",
+          "heading": false
+        },
+        {
+          "term": "slovenia",
+          "heading": false
+        },
+        {
+          "term": "antoine doucet",
+          "heading": false
+        },
+        {
+          "term": "term extraction",
+          "heading": false
+        },
+        {
+          "term": "thi hong",
+          "heading": false
+        }
+      ],
+      "extract": "The Recent Advances in Automatic Term Extraction: A survey HANH THI HONG TRAN, Jozef Stefan Institute, Slovenia; University of La Rochelle, France, Slovenia MATEJ MARTINC, Jozef Stefan Institute, Slovenia, Slovenia JAYA CAPORUSSO, Jozef Stefan Institute, Slovenia, Slovenia ANTOINE DOUCET, University of La Rochelle, France, France SENJA POLLAK, Jozef Stefan Institute, Slovenia, Slovenia Automatic term extraction",
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-2301.06767v1/blocks/prose-sec-front-matter"
+      ]
+    },
+    {
+      "id": "sec-000-1-introduction",
+      "number": "1",
+      "title": "Introduction",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 3,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 888,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "term extraction",
+          "heading": false
+        },
+        {
+          "term": "ate systems",
+          "heading": false
+        },
+        {
+          "term": "supervised term",
+          "heading": false
+        },
+        {
+          "term": "extraction task",
+          "heading": false
+        },
+        {
+          "term": "deep learning",
+          "heading": false
+        },
+        {
+          "term": "neural architectures",
+          "heading": false
+        },
+        {
+          "term": "computing surveys",
+          "heading": false
+        },
+        {
+          "term": "neural networks",
+          "heading": false
+        }
+      ],
+      "extract": "INTRODUCTION Terms are textual expressions that denote concepts in a specific field of expertise. They are beneficial for several terminographical tasks performed by linguists, e.g., construction of term dictionaries [60]. Moreover, terms can also improve several complex downstream natural language processing (NLP) tasks, e.g., information retrieval [62] and machine translation [106]. Manual term extraction is",
+      "extractCut": true
+    },
+    {
+      "id": "sec-001-2-previous-surveys-and-comparative-studies",
+      "number": "2",
+      "title": "Previous surveys and comparative studies",
+      "level": 1,
+      "pageStart": 3,
+      "pageEnd": 4,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 558,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "term extraction",
+          "heading": false
+        },
+        {
+          "term": "automatic term",
+          "heading": false
+        },
+        {
+          "term": "ate systems",
+          "heading": false
+        },
+        {
+          "term": "term candidate",
+          "heading": false
+        },
+        {
+          "term": "term recognition",
+          "heading": false
+        },
+        {
+          "term": "participating systems",
+          "heading": false
+        },
+        {
+          "term": "presented survey",
+          "heading": false
+        },
+        {
+          "term": "comprehensive survey",
+          "heading": false
+        }
+      ],
+      "extract": "PREVIOUS SURVEYS AND COMPARATIVE STUDIES The first comprehensive survey of approaches to solving ATE was written by [51]. It provided a systematic overview of the two major trends in the principles and methods of automatic term recognition and introduced a distinction between linguistic and statistical approaches. [80] argued that all contemporary algorithms employed linguistic methods as a filtering step. A decade",
+      "extractCut": true
+    },
+    {
+      "id": "sec-002-3-methodology",
+      "number": "3",
+      "title": "Methodology",
+      "level": 1,
+      "pageStart": 4,
+      "pageEnd": 5,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 397,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "automatic terminology",
+          "heading": false
+        },
+        {
+          "term": "terminology extraction",
+          "heading": false
+        },
+        {
+          "term": "terminology recognition",
+          "heading": false
+        },
+        {
+          "term": "automatic term",
+          "heading": false
+        },
+        {
+          "term": "automated terminology",
+          "heading": false
+        },
+        {
+          "term": "terminology detection",
+          "heading": false
+        },
+        {
+          "term": "terminology retrieval",
+          "heading": false
+        },
+        {
+          "term": "neural architecture",
+          "heading": false
+        }
+      ],
+      "extract": "METHODOLOGY We searched mainly on the five websites, including Google1, Google Scholar2, Semantic Scholar3, ACL Anthology4, and Terminology5 journals to identify suitable articles for this survey. The search progress was taken from October to December 2022. Our query terms covered two distinct ATE resources: available corpora and neural systems. Therefore, we used 80 different queries to collect the papers that",
+      "extractCut": true
+    },
+    {
+      "id": "sec-003-4-ate-datasets",
+      "number": "4",
+      "title": "ATE datasets",
+      "level": 1,
+      "pageStart": 5,
+      "pageEnd": 5,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 64,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "ate",
+          "heading": true
+        },
+        {
+          "term": "datasets",
+          "heading": true
+        },
+        {
+          "term": "decades",
+          "heading": false
+        }
+      ],
+      "extract": "ATE DATASETS In this section, we cover linguistic resources for term extraction developed in the past three decades. More specifically, we present and analyze monolingual and multilingual domain-specific gold standard corpora that can be used for the training and evaluation phase of ATE systems. We only consider resources that are publicly available and for which a description paper explaining their construction has",
+      "extractCut": true
+    },
+    {
+      "id": "sec-004-41-monolingual-corpora",
+      "number": "4.1",
+      "title": "Monolingual corpora",
+      "level": 2,
+      "pageStart": 5,
+      "pageEnd": 7,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 1160,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "monolingual corpora",
+          "heading": true
+        },
+        {
+          "term": "acl rd-tec",
+          "heading": false
+        },
+        {
+          "term": "brazilian portuguese",
+          "heading": false
+        },
+        {
+          "term": "gene ontology",
+          "heading": false
+        },
+        {
+          "term": "annotated terms",
+          "heading": false
+        },
+        {
+          "term": "term extraction",
+          "heading": false
+        },
+        {
+          "term": "reference corpus",
+          "heading": false
+        },
+        {
+          "term": "available corpus",
+          "heading": false
+        }
+      ],
+      "extract": "Monolingual corpora Table 1 lists manually annotated monolingual corpora that: (1) have been used for monolingual ATE evaluation, (2) contain more than 100 terms, (3) have annotation or gold standards, and (4) are publicly available at a specific URL or easily to reconstruct based on the data description. Note that the years on the Table refer to when the corpora were released and that the statistics are up-to-date",
+      "extractCut": true
+    },
+    {
+      "id": "sec-005-42-multilingual-corpora",
+      "number": "4.2",
+      "title": "Multilingual corpora",
+      "level": 2,
+      "pageStart": 7,
+      "pageEnd": 9,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 768,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "corpora",
+          "heading": true
+        },
+        {
+          "term": "wind energy",
+          "heading": false
+        },
+        {
+          "term": "multilingual",
+          "heading": true
+        },
+        {
+          "term": "annotated corpora",
+          "heading": false
+        },
+        {
+          "term": "multilingual term",
+          "heading": false
+        },
+        {
+          "term": "multilingual ate",
+          "heading": false
+        },
+        {
+          "term": "slovene",
+          "heading": false
+        },
+        {
+          "term": "term extraction",
+          "heading": false
+        }
+      ],
+      "extract": "Multilingual corpora With the development of multilingual tasks [25, 58], datasets that cover multiple languages and domains are becoming increasingly important for the training and evaluation of multilingual and cross-lingual models. Table 2 presents the available manually annotated corpora used in multilingual ATE training and/or evaluation that cover more than one language. The Terminology Extraction, Translation",
+      "extractCut": true
+    },
+    {
+      "id": "sec-006-5-supervised-ate-systems",
+      "number": "5",
+      "title": "Supervised ATE systems",
+      "level": 1,
+      "pageStart": 9,
+      "pageEnd": 9,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 117,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "ate systems",
+          "heading": true
+        },
+        {
+          "term": "machine learning",
+          "heading": false
+        },
+        {
+          "term": "traditional approaches",
+          "heading": false
+        },
+        {
+          "term": "supervised",
+          "heading": true
+        }
+      ],
+      "extract": "SUPERVISED ATE SYSTEMS In this section, we offer an extensive overview of recent ATE systems, which tend to rely either on shallow machine learning techniques or deep neural networks. In most cases, traditional approaches to term extraction do not rely on machine learning. Instead, they tend to extract candidate terms above a certain threshold, derived from several linguistic and statistical features. Traditional",
+      "extractCut": true
+    },
+    {
+      "id": "sec-007-51-machine-learning-approaches",
+      "number": "5.1",
+      "title": "Machine learning approaches",
+      "level": 2,
+      "pageStart": 9,
+      "pageEnd": 11,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 601,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "machine learning",
+          "heading": true
+        },
+        {
+          "term": "learning approaches",
+          "heading": true
+        },
+        {
+          "term": "learning classifiers",
+          "heading": false
+        },
+        {
+          "term": "different nmf",
+          "heading": false
+        },
+        {
+          "term": "random forest",
+          "heading": false
+        },
+        {
+          "term": "supervised machine",
+          "heading": false
+        },
+        {
+          "term": "logistic regression",
+          "heading": false
+        },
+        {
+          "term": "pos tagging",
+          "heading": false
+        }
+      ],
+      "extract": "Machine learning approaches Despite several variations in features and models, most supervised machine learning approaches to ATE comply with the traditional approach, following three principal steps: (1) preprocessing, (2) feature engineering, and (3) term extracting classifier. In the preprocessing step, some operations are performed on input texts (e.g., sentence segmentation, word segmentation, and POS tagging)",
+      "extractCut": true
+    },
+    {
+      "id": "sec-008-52-deep-learning-approaches",
+      "number": "5.2",
+      "title": "Deep learning approaches",
+      "level": 2,
+      "pageStart": 11,
+      "pageEnd": 13,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 1244,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "ate classifiers",
+          "heading": false
+        },
+        {
+          "term": "bert embeddings",
+          "heading": false
+        },
+        {
+          "term": "deep learning",
+          "heading": true
+        },
+        {
+          "term": "word2vec embeddings",
+          "heading": false
+        },
+        {
+          "term": "word embeddings",
+          "heading": false
+        },
+        {
+          "term": "token classifiers",
+          "heading": false
+        },
+        {
+          "term": "deep neural",
+          "heading": false
+        },
+        {
+          "term": "ate task",
+          "heading": false
+        }
+      ],
+      "extract": "Deep learning approaches The use of neural networks, especially language models, to solve ATE, has been gaining a lot of traction recently. Their application is performed either to just represent the information in the text with word embeddings or to apply a deep architecture as an end-to-end classifier. In this section, we describe studies that employed any of these two approaches. 5.2.1 Embeddings. The embeddings",
+      "extractCut": true
+    },
+    {
+      "id": "sec-009-53-multilingual-learning",
+      "number": "5.3",
+      "title": "Multilingual learning",
+      "level": 2,
+      "pageStart": 13,
+      "pageEnd": 14,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 451,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "multilingual corpora",
+          "heading": false
+        },
+        {
+          "term": "parallel corpora",
+          "heading": false
+        },
+        {
+          "term": "comparable corpora",
+          "heading": false
+        },
+        {
+          "term": "term extraction",
+          "heading": false
+        },
+        {
+          "term": "texsis tool",
+          "heading": false
+        },
+        {
+          "term": "different languages",
+          "heading": false
+        },
+        {
+          "term": "candidate terms",
+          "heading": false
+        },
+        {
+          "term": "alignment",
+          "heading": false
+        }
+      ],
+      "extract": "Multilingual learning Recently, a new research direction in ATE aims to conduct term extraction in a multilingual setting, testing the hypothesis that multilingual information can help during the monolingual extraction phase. Multilingual term extraction can be performed on parallel or comparable corpora. According to [74]’s definition, a comparable corpus is composed of monolingual data collected from different",
+      "extractCut": true
+    },
+    {
+      "id": "sec-010-54-cross-domain-and-cross-lingual-transfer-learn",
+      "number": "5.4",
+      "title": "Cross-domain and cross-lingual transfer learning",
+      "level": 2,
+      "pageStart": 14,
+      "pageEnd": 15,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 627,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "cross-domain transfer",
+          "heading": true
+        },
+        {
+          "term": "cross-domain learning",
+          "heading": true
+        },
+        {
+          "term": "cross-lingual learning",
+          "heading": true
+        },
+        {
+          "term": "cross-domain setting",
+          "heading": false
+        },
+        {
+          "term": "same cross-domain",
+          "heading": false
+        },
+        {
+          "term": "less-resourced language",
+          "heading": false
+        },
+        {
+          "term": "transferring knowledge",
+          "heading": false
+        },
+        {
+          "term": "domain language",
+          "heading": false
+        }
+      ],
+      "extract": "Cross-domain and cross-lingual transfer learning Current research on term extraction deals with two major issues: (1) the data collection for a specific field of expertise or domain is often non-existent or small, and (2) the available well-annotated corpora are scarce, especially for lesser- known languages (e.g., Slavic languages). To address the former issue, [63] proposed to combine specialized and general",
+      "extractCut": true
+    },
+    {
+      "id": "sec-011-6-ate-evaluation-metrics",
+      "number": "6",
+      "title": "ATE evaluation metrics",
+      "level": 1,
+      "pageStart": 15,
+      "pageEnd": 17,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 977,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "ate evaluation",
+          "heading": true
+        },
+        {
+          "term": "evaluation metrics",
+          "heading": true
+        },
+        {
+          "term": "candidate terms",
+          "heading": false
+        },
+        {
+          "term": "seed terms",
+          "heading": false
+        },
+        {
+          "term": "so-called gold",
+          "heading": false
+        },
+        {
+          "term": "gold standard",
+          "heading": false
+        },
+        {
+          "term": "top candidate",
+          "heading": false
+        },
+        {
+          "term": "term extraction",
+          "heading": false
+        }
+      ],
+      "extract": "ATE EVALUATION METRICS ATE models usually provide a list of candidate terms from the given domain-specific corpus as the final output, and it is important to define the correct methods and metrics to evaluate the quality of this output. There are several variations among the evaluation methods, including both intrinsic and extrinsic mechanisms. The extrinsic methods assess the quality of the extracting system by",
+      "extractCut": true
+    },
+    {
+      "id": "sec-012-7-comparative-results",
+      "number": "7",
+      "title": "Comparative results",
+      "level": 1,
+      "pageStart": 17,
+      "pageEnd": 19,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 1085,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "nlplab uqam",
+          "heading": false
+        },
+        {
+          "term": "acter corpus",
+          "heading": false
+        },
+        {
+          "term": "xlm-r sequence",
+          "heading": false
+        },
+        {
+          "term": "xlm-r token",
+          "heading": false
+        },
+        {
+          "term": "acter dataset",
+          "heading": false
+        },
+        {
+          "term": "sequence classifier",
+          "heading": false
+        },
+        {
+          "term": "monolingual deep",
+          "heading": false
+        },
+        {
+          "term": "multilingual deep",
+          "heading": false
+        }
+      ],
+      "extract": "COMPARATIVE RESULTS Since term extraction methods vary greatly in regard to definition, corpora, domains, languages, and evaluation metrics, a comparative evaluation of term extraction methods is hardly achievable. Nevertheless, in this section, we propose to measure the performance of several ATE systems by comparing the candidate term list extracted on the whole test set level with the manually annotated gold",
+      "extractCut": true
+    },
+    {
+      "id": "sec-013-8-challenges-and-future-directions",
+      "number": "8",
+      "title": "Challenges and Future directions",
+      "level": 1,
+      "pageStart": 19,
+      "pageEnd": 19,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 116,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "future directions",
+          "heading": true
+        },
+        {
+          "term": "challenges",
+          "heading": true
+        },
+        {
+          "term": "candidate terms",
+          "heading": false
+        },
+        {
+          "term": "re-examine",
+          "heading": false
+        }
+      ],
+      "extract": "CHALLENGES AND FUTURE DIRECTIONS With the development of deep neural networks and the advent of recent Transformer-based models, deep learning- based ATE benefited significantly from the advances of pretrained embeddings in language models. We now have the opportunity to re-examine the term extraction task, the relative challenges, and the potential future directions, without having to involve complicated feature",
+      "extractCut": true
+    },
+    {
+      "id": "sec-014-81-nested-terms",
+      "number": "8.1",
+      "title": "Nested terms",
+      "level": 2,
+      "pageStart": 19,
+      "pageEnd": 19,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 148,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "nested terms",
+          "heading": true
+        },
+        {
+          "term": "vice versa",
+          "heading": false
+        },
+        {
+          "term": "longer terms",
+          "heading": false
+        },
+        {
+          "term": "standard term",
+          "heading": false
+        },
+        {
+          "term": "gold standard",
+          "heading": false
+        }
+      ],
+      "extract": "Nested terms Nested terms refer to words or phrases that are both terms themselves and parts of longer terms. This means that a shorter term may appear within a larger term and vice versa. For example, in ACTER’s English Corruption dataset, the word “confiscation” is a standalone term that also appears as a part of other longer terms such as “confiscation of corruption proceeds”, “confiscation of criminal assets”,",
+      "extractCut": true
+    },
+    {
+      "id": "sec-015-82-generalisability",
+      "number": "8.2",
+      "title": "Generalisability",
+      "level": 2,
+      "pageStart": 19,
+      "pageEnd": 20,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 226,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "generalisability",
+          "heading": true
+        },
+        {
+          "term": "domain-specific",
+          "heading": false
+        },
+        {
+          "term": "languages",
+          "heading": false
+        },
+        {
+          "term": "domains",
+          "heading": false
+        },
+        {
+          "term": "annotated",
+          "heading": false
+        },
+        {
+          "term": "raw",
+          "heading": false
+        },
+        {
+          "term": "extract",
+          "heading": false
+        }
+      ],
+      "extract": "Generalisability In the past decade, we have witnessed a growing data production involving different forms of data, including raw documents. However, building domain-specific corpora with manually annotated terms from the available raw texts is often error-prone, labor-intensive, time-consuming, and subjective35. As a consequence, annotated datasets, on which the models can be trained, are often scarce, limited, and",
+      "extractCut": true
+    },
+    {
+      "id": "sec-016-83-ensembling",
+      "number": "8.3",
+      "title": "Ensembling",
+      "level": 2,
+      "pageStart": 20,
+      "pageEnd": 20,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 132,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "ensembling",
+          "heading": true
+        },
+        {
+          "term": "statistical measures",
+          "heading": false
+        },
+        {
+          "term": "language models",
+          "heading": false
+        },
+        {
+          "term": "classifiers",
+          "heading": false
+        }
+      ],
+      "extract": "Ensembling Deep neural networks based on pretrained language models have a strong predictive power on downstream tasks (e.g., term extraction), and can be fed raw data directly, without any feature engineering required. However, linguistic and statistical measures of termhoodness can still contribute to the research on ATE, by being added to neural models as additional features with the aim of boosting performance.",
+      "extractCut": true
+    },
+    {
+      "id": "sec-017-84-scalability",
+      "number": "8.4",
+      "title": "Scalability",
+      "level": 2,
+      "pageStart": 20,
+      "pageEnd": 20,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 125,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "scalability",
+          "heading": true
+        },
+        {
+          "term": "direction",
+          "heading": false
+        },
+        {
+          "term": "going",
+          "heading": false
+        },
+        {
+          "term": "expensive",
+          "heading": false
+        }
+      ],
+      "extract": "Scalability Despite showing competitive performance in extracting good candidate terms, large pretrained neural language models are computationally expensive. Furthermore, new research is going in the direction of exponentially increasing the parameters of the model and the training data size in order to improve performance. While this has been shown to be a promising research direction, these models are usually too",
+      "extractCut": true
+    },
+    {
+      "id": "sec-018-85-prompting",
+      "number": "8.5",
+      "title": "Prompting",
+      "level": 2,
+      "pageStart": 20,
+      "pageEnd": 20,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 140,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "prompt-based approaches",
+          "heading": false
+        },
+        {
+          "term": "model head",
+          "heading": false
+        },
+        {
+          "term": "language model",
+          "heading": false
+        },
+        {
+          "term": "learning tasks",
+          "heading": false
+        },
+        {
+          "term": "prompting",
+          "heading": true
+        }
+      ],
+      "extract": "Prompting Prompt-based methods have been successfully applied to sentence-level few-shot learning tasks such as in NER tasks [19]. Instead of replacing the language model head with the classifier head, prompt-based approaches induce the prediction from the language model by constructing a template. By re-using the masked language model objective, prompt-based approaches alleviate the problem of pre-training and",
+      "extractCut": true
+    },
+    {
+      "id": "sec-019-9-conclusion",
+      "number": "9",
+      "title": "Conclusion",
+      "level": 1,
+      "pageStart": 20,
+      "pageEnd": 21,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 318,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "term extraction",
+          "heading": false
+        },
+        {
+          "term": "multilingual ones",
+          "heading": false
+        },
+        {
+          "term": "automatic term",
+          "heading": false
+        },
+        {
+          "term": "learning models",
+          "heading": false
+        },
+        {
+          "term": "machine learning",
+          "heading": false
+        },
+        {
+          "term": "language models",
+          "heading": false
+        },
+        {
+          "term": "models based",
+          "heading": false
+        },
+        {
+          "term": "recent advances",
+          "heading": false
+        }
+      ],
+      "extract": "CONCLUSION Our survey summarizes the recent advances in the automatic term extraction task, covering both classic machine learning models based on feature engineering and novel neural network models that have yielded several important insights, especially with the advent of pretrained language models. We first surveyed different resources and presented a 20 The Recent Advances in Automatic Term Extraction: A survey",
+      "extractCut": true
+    },
+    {
+      "id": "sec-020-acknowledgments",
+      "number": null,
+      "title": "Acknowledgments",
+      "level": 1,
+      "pageStart": 21,
+      "pageEnd": 21,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 65,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "funded",
+          "heading": false
+        },
+        {
+          "term": "programme",
+          "heading": false
+        },
+        {
+          "term": "slovenia",
+          "heading": false
+        }
+      ],
+      "extract": "The work was partially supported by the Slovenian Research Agency (ARRS) core research programme Knowledge Technologies (P2-0103), as well as the Ministry of Culture of the Republic of Slovenia through the project Development of Slovene in Digital Environment (RSDO). The first author was partly funded by Région Nouvelle-Aquitaine. This work has also been supported by the TERMITRAD (2020-2019-8510010) project funded",
+      "extractCut": true
+    },
+    {
+      "id": "sec-021-references",
+      "number": null,
+      "title": "References",
+      "level": 1,
+      "pageStart": 21,
+      "pageEnd": 25,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 3406,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "terminology extraction",
+          "heading": false
+        },
+        {
+          "term": "bilingual terminology",
+          "heading": false
+        },
+        {
+          "term": "automatic terminology",
+          "heading": false
+        },
+        {
+          "term": "computational terminology",
+          "heading": false
+        },
+        {
+          "term": "international conference",
+          "heading": false
+        },
+        {
+          "term": "term extraction",
+          "heading": false
+        },
+        {
+          "term": "automatic recognition",
+          "heading": false
+        },
+        {
+          "term": "cross-domain automatic",
+          "heading": false
+        }
+      ],
+      "extract": "[1] Ehsan Amjadian, Diana Inkpen, T Sima Paribakht, and Farahnaz Faez. 2016. Local-Global Vectors to Improve Unigram Terminology Extraction. Computerm 2016 (2016), 2. [2] Ehsan Amjadian, Diana Inkpen, T Sima Paribakht, and Farahnaz Faez. 2018. Distributed specificity for automatic terminology extraction. Terminology. International Journal of Theoretical and Applied Issues in Specialized Communication 24, 1 (2018),",
+      "extractCut": true
+    }
+  ],
+  "checks": {
+    "figureSequenceGaps": [],
+    "pageLabelConflicts": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "withheld": false,
+  "keywords": [
+    {
+      "term": "term extraction",
+      "heading": false
+    },
+    {
+      "term": "automatic extraction",
+      "heading": false
+    },
+    {
+      "term": "ate approaches",
+      "heading": false
+    },
+    {
+      "term": "multilingual ate",
+      "heading": false
+    },
+    {
+      "term": "extraction models",
+      "heading": false
+    },
+    {
+      "term": "monolingual term",
+      "heading": true
+    },
+    {
+      "term": "terminology extraction",
+      "heading": false
+    },
+    {
+      "term": "recent ate",
+      "heading": false
+    },
+    {
+      "term": "ate evaluation",
+      "heading": true
+    },
+    {
+      "term": "extraction systems",
+      "heading": false
+    },
+    {
+      "term": "transformer-based ate",
+      "heading": false
+    },
+    {
+      "term": "monolingual corpora",
+      "heading": true
+    }
+  ],
+  "pageLabels": [
+    {
+      "physical": 1,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 2,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 3,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 4,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 5,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 6,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 7,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 8,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 9,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 10,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 11,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 12,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 13,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 14,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 15,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 16,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 17,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 18,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 19,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 20,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 21,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 22,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 23,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 24,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 25,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    }
+  ],
+  "figures": [
+    {
+      "kind": "figure",
+      "number": "1",
+      "title": "The combination of keywords to search for term datasets and systems",
+      "page": 4,
+      "pageLabel": null,
+      "confidence": 0.9,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "table",
+      "number": "1",
+      "title": "List of monolingual term datasets",
+      "page": 6,
+      "pageLabel": null,
+      "confidence": 0.8,
+      "evidence": [
+        "referenced",
+        "in-sequence"
+      ]
+    },
+    {
+      "kind": "table",
+      "number": "2",
+      "title": "A list of multilingual term datasets",
+      "page": 8,
+      "pageLabel": null,
+      "confidence": 0.8,
+      "evidence": [
+        "referenced",
+        "in-sequence"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "2",
+      "title": "Feature group and subgroup for machine learning models based on [88]’s work",
+      "page": 10,
+      "pageLabel": null,
+      "confidence": 0.9,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "3",
+      "title": "An example of how three types of neural ATE classifiers work (from left to right: Sequence classifier (e.g., XLMR); Token classifier (e.g., BERT); Seq-2-seq (e.g., mBART)",
+      "page": 12,
+      "pageLabel": null,
+      "confidence": 0.9,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "4",
+      "title": "The overview of different evaluation metrics in ATE task",
+      "page": 16,
+      "pageLabel": null,
+      "confidence": 0.9,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "table",
+      "number": "3",
+      "title": "The F1-score evaluation of benchmark approaches on the Heart Failure test set from the ACTER corpus in three languages (English (EN), French (FR), and Dutch (NL)) and two types of annotation, with named entities (NER) and without named entities (ANN). The best approach for each category is highlight",
+      "page": 18,
+      "pageLabel": null,
+      "confidence": 0.8,
+      "evidence": [
+        "referenced",
+        "in-sequence"
+      ]
+    }
+  ],
+  "images": [
+    {
+      "id": "img-p004-1",
+      "file": "images/img-p004-1.png",
+      "page": 4,
+      "narratives": {
+        "en": "Figure 1: the literature-search query as four groups of alternative words joined left to right — {Automatic, Automated, …} → {Term, Terminology, …} → {Extraction, Recognition, Detection, Retrieval, …} → {Data, Dataset, Corpus, Corpora, …}. A bracket under the first three groups is labelled 'Methods/Systems', and a longer bracket under all four is labelled 'Datasets': the first three groups found the systems surveyed, all four found the datasets.",
+        "fr": "Figure 1 : la requête de recherche bibliographique, en quatre groupes de mots alternatifs enchaînés de gauche à droite — {Automatic, Automated, …} → {Term, Terminology, …} → {Extraction, Recognition, Detection, Retrieval, …} → {Data, Dataset, Corpus, Corpora, …}. Une accolade sous les trois premiers groupes porte l'étiquette « Methods/Systems », et une accolade plus longue sous les quatre porte « Datasets » : les trois premiers groupes ont trouvé les systèmes recensés, les quatre ont trouvé les jeux de données.",
+        "es": "Figura 1: la consulta de búsqueda bibliográfica, en cuatro grupos de palabras alternativas encadenados de izquierda a derecha — {Automatic, Automated, …} → {Term, Terminology, …} → {Extraction, Recognition, Detection, Retrieval, …} → {Data, Dataset, Corpus, Corpora, …}. Una llave bajo los tres primeros grupos lleva la etiqueta «Methods/Systems» y una llave más larga bajo los cuatro lleva «Datasets»: los tres primeros grupos encontraron los sistemas revisados y los cuatro, los conjuntos de datos.",
+        "ar": "الشكل 1: استعلام البحث في الأدبيات على هيئة أربع مجموعات من الكلمات البديلة متصلة من اليسار إلى اليمين — {Automatic, Automated, …} ← {Term, Terminology, …} ← {Extraction, Recognition, Detection, Retrieval, …} ← {Data, Dataset, Corpus, Corpora, …}. يحمل قوس تحت المجموعات الثلاث الأولى التسمية «Methods/Systems»، ويحمل قوس أطول تحت المجموعات الأربع التسمية «Datasets»: وجدت المجموعات الثلاث الأولى الأنظمة التي شملها المسح، ووجدت المجموعات الأربع مجموعات البيانات.",
+        "ru": "Рисунок 1: поисковый запрос по литературе — четыре группы альтернативных слов, соединённые слева направо: {Automatic, Automated, …} → {Term, Terminology, …} → {Extraction, Recognition, Detection, Retrieval, …} → {Data, Dataset, Corpus, Corpora, …}. Скобка под первыми тремя группами подписана «Methods/Systems», а более длинная скобка под всеми четырьмя — «Datasets»: первые три группы находили рассмотренные системы, все четыре — наборы данных.",
+        "zh": "图 1：文献检索查询，由四组可互换的词从左到右串联而成——{Automatic, Automated, …} → {Term, Terminology, …} → {Extraction, Recognition, Detection, Retrieval, …} → {Data, Dataset, Corpus, Corpora, …}。前三组下方的括号标为“Methods/Systems”，四组下方更长的括号标为“Datasets”：前三组用于查找所综述的系统，四组合起来用于查找数据集。"
+      },
+      "state": "draft"
+    },
+    {
+      "id": "img-p010-1",
+      "file": "images/img-p010-1.png",
+      "page": 10,
+      "narratives": {
+        "en": "Figure 2: a tree of the features used by feature-engineering term extractors. 'Features' branches into six groups: shape (SHAP: length, alphanumeric, capitalisation), linguistic (LING: POS, NER, chunk, stopword), frequency (FREQ: relative frequency in the specialised corpus and in a referral corpus), statistical (STAT), contextual (CTXT: before/after parentheses) and variational (VARI: number of variations, variation statistics). Statistical features split into those computed without a reference corpus (C-Value, TF-IDF, lexicon cohesion) and those computed against one (domain pertinence, domain relevance, weirdness, relevance, termhood).",
+        "fr": "Figure 2 : un arbre des caractéristiques utilisées par les extracteurs de termes à base d'ingénierie de caractéristiques. « Features » se divise en six groupes : forme (SHAP : longueur, alphanumérique, majuscules), linguistique (LING : POS, NER, chunk, mot vide), fréquence (FREQ : fréquence relative dans le corpus spécialisé et dans un corpus de référence), statistique (STAT), contexte (CTXT : avant/après des parenthèses) et variation (VARI : nombre de variantes, statistiques de variation). Les caractéristiques statistiques se divisent entre celles calculées sans corpus de référence (C-Value, TF-IDF, cohésion lexicale) et celles calculées par comparaison avec un tel corpus (pertinence au domaine, domain relevance, weirdness, relevance, termhood).",
+        "es": "Figura 2: un árbol de las características que usan los extractores de términos basados en ingeniería de características. «Features» se ramifica en seis grupos: forma (SHAP: longitud, alfanumérico, mayúsculas), lingüísticas (LING: POS, NER, chunk, palabra vacía), frecuencia (FREQ: frecuencia relativa en el corpus especializado y en un corpus de referencia), estadísticas (STAT), contextuales (CTXT: antes/después de paréntesis) y de variación (VARI: número de variantes, estadísticas de variación). Las estadísticas se dividen entre las calculadas sin corpus de referencia (C-Value, TF-IDF, cohesión léxica) y las calculadas frente a uno (domain pertinence, domain relevance, weirdness, relevance, termhood).",
+        "ar": "الشكل 2: شجرة الخصائص التي تستخدمها أدوات استخراج المصطلحات القائمة على هندسة الخصائص. تتفرع «Features» إلى ست مجموعات: الشكل (SHAP: الطول، الأحرف والأرقام، الأحرف الكبيرة)، اللغوية (LING: POS، NER، chunk، كلمات التوقف)، التكرار (FREQ: التكرار النسبي في المدونة المتخصصة وفي مدونة مرجعية)، الإحصائية (STAT)، السياقية (CTXT: قبل الأقواس وبعدها)، والتنوّع (VARI: عدد الصيغ، إحصاءات الصيغ). تنقسم الخصائص الإحصائية إلى ما يُحسب دون مدونة مرجعية (C-Value، TF-IDF، التماسك المعجمي) وما يُحسب بالمقارنة معها (domain pertinence، domain relevance، weirdness، relevance، termhood).",
+        "ru": "Рисунок 2: дерево признаков, которые используют экстракторы терминов на основе ручного конструирования признаков. «Features» делится на шесть групп: форма (SHAP: длина, буквенно-цифровые символы, заглавные буквы), лингвистические (LING: POS, NER, chunk, стоп-слова), частотные (FREQ: относительная частота в специальном корпусе и в референтном корпусе), статистические (STAT), контекстные (CTXT: до/после скобок) и вариативные (VARI: число вариантов, статистика вариантов). Статистические признаки делятся на вычисляемые без референтного корпуса (C-Value, TF-IDF, лексическая связность) и вычисляемые в сравнении с ним (domain pertinence, domain relevance, weirdness, relevance, termhood).",
+        "zh": "图 2：基于特征工程的术语抽取器所用特征的树状图。“Features”分为六组：形态（SHAP：长度、字母数字、大小写）、语言（LING：POS、NER、组块、停用词）、频率（FREQ：在专业语料和参照语料中的相对频率）、统计（STAT）、上下文（CTXT：括号前后）和变体（VARI：变体数量、变体统计）。统计特征又分为不借助参照语料计算的（C-Value、TF-IDF、词汇内聚度）和与参照语料比较计算的（domain pertinence、domain relevance、weirdness、relevance、termhood）。"
+      },
+      "state": "draft"
+    },
+    {
+      "id": "img-p012-1",
+      "file": "images/img-p012-1.png",
+      "page": 12,
+      "narratives": {
+        "en": "Figure 3: three ways a neural model extracts terms, side by side, each fed the sentence 'We meta-analyzed mortality using random-effect models.' Left, a sequence classifier reads a candidate paired with its sentence ('random-effect models.' then the sentence) and a linear layer with softmax answers 'Term?'. Centre, a token classifier labels every token O (not a term), B (beginning of term) or I (inside a term) through a shared linear layer with softmax. Right, a sequence-to-sequence model writes out the list of terms directly: 'meta-analyzed ; mortality ; random-effect models'.",
+        "fr": "Figure 3 : trois manières dont un modèle neuronal extrait des termes, côte à côte, chacune recevant la phrase « We meta-analyzed mortality using random-effect models. ». À gauche, un classifieur de séquence lit un candidat accolé à sa phrase (« random-effect models. » puis la phrase) et une couche linéaire avec softmax répond « Term? ». Au centre, un classifieur de jetons étiquette chaque jeton O (pas un terme), B (début de terme) ou I (intérieur d'un terme) par une couche linéaire partagée avec softmax. À droite, un modèle séquence-à-séquence écrit directement la liste des termes : « meta-analyzed ; mortality ; random-effect models ».",
+        "es": "Figura 3: tres formas en que un modelo neuronal extrae términos, lado a lado, cada una alimentada con la oración «We meta-analyzed mortality using random-effect models.». A la izquierda, un clasificador de secuencias lee un candidato unido a su oración («random-effect models.» y luego la oración) y una capa lineal con softmax responde «Term?». En el centro, un clasificador de tokens etiqueta cada token como O (no es término), B (inicio de término) o I (dentro de un término) mediante una capa lineal compartida con softmax. A la derecha, un modelo secuencia a secuencia escribe directamente la lista de términos: «meta-analyzed ; mortality ; random-effect models».",
+        "ar": "الشكل 3: ثلاث طرق يستخرج بها نموذج عصبي المصطلحات، جنبًا إلى جنب، وتتلقى كل منها الجملة «We meta-analyzed mortality using random-effect models.». على اليسار، يقرأ مصنِّف التسلسل مرشحًا مقرونًا بجملته («random-effect models.» ثم الجملة) وتجيب طبقة خطية مع softmax عن السؤال «Term?». في الوسط، يوسم مصنِّف الرموز كل رمز بـ O (ليس مصطلحًا) أو B (بداية مصطلح) أو I (داخل مصطلح) عبر طبقة خطية مشتركة مع softmax. على اليمين، يكتب نموذج تسلسل إلى تسلسل قائمة المصطلحات مباشرة: «meta-analyzed ; mortality ; random-effect models».",
+        "ru": "Рисунок 3: три способа, которыми нейросетевая модель извлекает термины, рядом друг с другом; на вход каждому подаётся предложение «We meta-analyzed mortality using random-effect models.». Слева классификатор последовательностей читает кандидата вместе с его предложением («random-effect models.», затем предложение), и линейный слой с softmax отвечает на вопрос «Term?». В центре классификатор токенов помечает каждый токен как O (не термин), B (начало термина) или I (внутри термина) через общий линейный слой с softmax. Справа модель «последовательность в последовательность» сразу выписывает список терминов: «meta-analyzed ; mortality ; random-effect models».",
+        "zh": "图 3：神经模型抽取术语的三种方式并排展示，每种都输入句子“We meta-analyzed mortality using random-effect models.”。左侧，序列分类器读取与所在句子拼接的候选词（先是“random-effect models.”，再是句子），由线性层加 softmax 回答“Term?”。中间，词元分类器通过共享参数的线性层加 softmax，把每个词元标为 O（非术语）、B（术语开头）或 I（术语内部）。右侧，序列到序列模型直接写出术语列表：“meta-analyzed ; mortality ; random-effect models”。"
+      },
+      "state": "draft"
+    },
+    {
+      "id": "img-p016-1",
+      "file": "images/img-p016-1.png",
+      "page": 16,
+      "narratives": {
+        "en": "Figure 4: how term extraction is evaluated, on two axes. 'Evaluation levels' splits into evaluation methods (human judges, dictionary-based, gold standard-based) and scope of results (entire results, part of results, top-k results). Beneath both sit the three measures used throughout: precision, recall and F1-score.",
+        "fr": "Figure 4 : comment l'extraction de termes est évaluée, selon deux axes. « Evaluation levels » se divise en méthodes d'évaluation (juges humains, à base de dictionnaire, à base de référence de type gold standard) et en portée des résultats (résultats entiers, partie des résultats, top-k). En dessous figurent les trois mesures utilisées partout : précision, rappel et score F1.",
+        "es": "Figura 4: cómo se evalúa la extracción de términos, en dos ejes. «Evaluation levels» se divide en métodos de evaluación (jueces humanos, basada en diccionario, basada en un estándar de oro) y alcance de los resultados (resultados completos, parte de los resultados, los k mejores). Debajo de ambos están las tres medidas usadas en todo el trabajo: precisión, exhaustividad y puntuación F1.",
+        "ar": "الشكل 4: كيفية تقييم استخراج المصطلحات على محورين. تتفرع «Evaluation levels» إلى طرق التقييم (محكّمون بشريون، قائمة على القواميس، قائمة على معيار ذهبي) ونطاق النتائج (النتائج كاملة، جزء من النتائج، أعلى k نتيجة). وتحت كليهما المقاييس الثلاثة المستخدمة في كل مكان: الدقة، والاستدعاء، ودرجة F1.",
+        "ru": "Рисунок 4: как оценивается извлечение терминов, по двум осям. «Evaluation levels» делится на методы оценки (эксперты-люди, по словарю, по эталонной разметке) и охват результатов (все результаты, часть результатов, top-k). Под обеими осями — три меры, используемые повсюду: точность, полнота и F1-мера.",
+        "zh": "图 4：术语抽取的评估方式，分两个维度。“Evaluation levels”分为评估方法（人工评审、基于词典、基于金标准）和结果范围（全部结果、部分结果、前 k 个结果）。两者之下是通用的三项指标：精确率、召回率和 F1 值。"
+      },
+      "state": "draft"
+    }
+  ],
+  "coverage": [
+    {
+      "kind": "contents",
+      "state": "found",
+      "count": 23,
+      "note": "outline"
+    },
+    {
+      "kind": "sections",
+      "state": "found",
+      "count": 23,
+      "note": "2 levels"
+    },
+    {
+      "kind": "figures",
+      "state": "found",
+      "count": 4
+    },
+    {
+      "kind": "tables",
+      "state": "not-extracted",
+      "note": "3 captioned in the text"
+    },
+    {
+      "kind": "references",
+      "state": "not-extracted",
+      "note": "a references section is in the text (p21); its entries are not extracted"
+    },
+    {
+      "kind": "glossary",
+      "state": "none",
+      "note": "no such heading in the text"
+    },
+    {
+      "kind": "footnotes",
+      "state": "not-extracted"
+    },
+    {
+      "kind": "summaries",
+      "state": "not-extracted",
+      "count": 0,
+      "note": "0 of 23 sections"
+    }
+  ],
+  "links": {
+    "repo": "litlfred/cat-harness",
+    "branch": "main",
+    "dir": "library/corpus/kg/arxiv-2301.06767v1"
+  }
+}

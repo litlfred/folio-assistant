@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/bootstrap-tools/bootstrap-tools.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/bootstrap-tools/schema/discussion.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/bootstrap-tools/bootstrap-tools.jsonld",
+  "staging": {
+    "branch": "claude/repin-train-0550",
+    "sha": "211176b48990d1a2382a2913a91794b72853a53c",
+    "pr": "3124/merge",
+    "run": "43611082734"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/bootstrap-tools/schema/discussion",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "discussion",
+      "title": "discussion",
+      "summary": "The two documents the `discussion` process carries, as Zod.",
+      "module": "schemas/discussion.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/bootstrap-tools/directory/bootstrap-tools-schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/discussion",
+      "jsonSchema": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/bootstrap-tools/schema/zod/discussion/DiscussionInputSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/bootstrap-tools/schema/zod/discussion/DiscussionOutputObjectSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/bootstrap-tools/schema/zod/discussion/DiscussionOutputSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/bootstrap-tools/schema/zod/discussion/ExchangeEntrySchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/bootstrap-tools/schema/zod/discussion/ParticipantSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/bootstrap-tools/schema/zod/discussion/RepositoryRefSchema.schema.json"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/skill/recommendation-candidates.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/skill/recommendation-candidates.jsonld",
+  "staging": {
+    "branch": "claude/repin-train-0550",
+    "sha": "211176b48990d1a2382a2913a91794b72853a53c",
+    "pr": "3124/merge",
+    "run": "43611082734"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/skill/recommendation-candidates",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "recommendation-candidates",
+      "title": "recommendation-candidates",
+      "description": "Turn one ingested L1 source into L1 3.0 recommendation nodes: list every normative sentence as a candidate, let the agent decide each in a curation file, then refuse a non-verbatim statement or unknown location and write the graph, coverage and proposed exclusions. Step 1 of recommendation-extraction, run once per included source; the `l1-recommendation-candidates` Tool satisfies it.",
+      "instructionsPath": "L1/skills/smart-l1/recommendation-candidates.md",
+      "instructionLines": 48,
+      "inputSchema": "http://smart.who.int/base/schema/skills/recommendation-candidates/input.schema.json",
+      "outputSchema": "http://smart.who.int/base/schema/skills/recommendation-candidates/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1"
+    }
+  ]
+}

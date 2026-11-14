@@ -1,0 +1,53 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L2-dmn/tools/kg-extract-citations/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "http://smart.who.int/base/tools/kg-extract-citations.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Extract the L1 citations from a DMN decision table's reference column (`smart-base/L2-dmn/schemas/extract-citations.ts`, ported from WHO smart-kg `tools/extract-citations.mjs`): one `external-artifact` node for the table and one `citation` node per distinct reference string, each left `unresolved`, with `appearsIn` edges and a coverage report of how many rules cite an L1 source. A citation string is content-addressed in the DAK's namespace, so the same string is one node here and in the L2-DMN graph's `citesSource` edges. The output is an L2 document.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "npx --prefix smart-base/L1/schemas tsx smart-base/L2-dmn/schemas/extract-citations.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "description": "The .dmn file to read.",
+            "name": "dmn",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--out"
+            },
+            "description": "Where the graph document goes; also echoed to stdout when absent.",
+            "name": "out",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "The citation graph document (an L2 document: the table as an external artefact and its L1 citation nodes), plus a coverage report on stderr.",
+            "name": "graph",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ]
+      },
+      "name": "kg-extract-citations",
+      "satisfies": "http://smart.who.int/base/skill/smart-base-tools",
+      "title": "DMN reference column → L1 citations"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "L2-dmn/tools/kg-extract-citations",
+  "path": "L2-dmn/tools/kg-extract-citations/"
+}

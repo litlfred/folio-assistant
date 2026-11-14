@@ -1,0 +1,62 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L2-bpmn/tools/kg-extract-bpmn/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "http://smart.who.int/base/tools/kg-extract-bpmn.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Extract the interior of one BPMN file as the L2-BPMN subgraph (`smart-base/L2-bpmn/schemas/extract-bpmn.ts`, ported from WHO smart-kg `tools/extract-bpmn.mjs`): a `bpmn-definitions` node and its processes, participants, tasks, gateways, events, the `flowsTo`/`messageTo`/`contains` edges between them, and one `performedBy` edge from each pool to the persona its @name matches against the ActorDefinition titles under `--personas`. The output is a graph document whose `@context` is the l2-bpmn context and validates with the engine's `check()`.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "npx --prefix smart-base/L1/schemas tsx smart-base/L2-bpmn/schemas/extract-bpmn.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "description": "The .bpmn file to read.",
+            "name": "bpmn",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--personas"
+            },
+            "description": "A directory of ActorDefinition FSH; a pool's @name is matched against their titles. When absent, every pool -> persona join is recorded unresolved.",
+            "name": "personas",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--out"
+            },
+            "description": "Where the graph document goes; stdout when absent.",
+            "name": "out",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "The L2-BPMN graph document (nodes, edges, provenance).",
+            "name": "graph",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ]
+      },
+      "name": "kg-extract-bpmn",
+      "satisfies": "http://smart.who.int/base/skill/smart-base-tools",
+      "title": "BPMN → L2-BPMN knowledge graph"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "L2-bpmn/tools/kg-extract-bpmn",
+  "path": "L2-bpmn/tools/kg-extract-bpmn/"
+}

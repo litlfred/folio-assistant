@@ -1,0 +1,80 @@
+{
+  "$ref": "#/definitions/CoreDefinition",
+  "definitions": {
+    "CoreDefinition": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "format": "starts_with",
+          "pattern": "^http:\\/\\/hl7\\.org\\/fhir\\/StructureDefinition\\/.*"
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9\\-.]{1,64}$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "primitive-type",
+            "complex-type",
+            "resource"
+          ]
+        },
+        "type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "abstract": {
+          "type": "boolean"
+        },
+        "derivation": {
+          "type": "string",
+          "const": "specialization"
+        },
+        "baseDefinition": {
+          "type": "string",
+          "format": "starts_with",
+          "pattern": "^http:\\/\\/hl7\\.org\\/fhir\\/StructureDefinition\\/.*"
+        },
+        "file": {
+          "type": "string",
+          "pattern": "^StructureDefinition-[A-Za-z0-9\\-.]+\\.json$"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "url",
+        "id",
+        "name",
+        "version",
+        "kind",
+        "type",
+        "abstract",
+        "file",
+        "sha256"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/fhir-core/CoreDefinitionSchema.schema.json",
+  "title": "CoreDefinitionSchema",
+  "description": "Generated from `CoreDefinitionSchema` in schemas/fhir-core.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-train-0550",
+    "sha": "211176b48990d1a2382a2913a91794b72853a53c",
+    "pr": "3124/merge",
+    "run": "43611082734"
+  }
+}

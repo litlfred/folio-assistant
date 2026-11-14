@@ -1,0 +1,937 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/kg-ops/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+      "@type": "bootstrap:Subgraph",
+      "contentSource": {
+        "declaredIn": "default",
+        "kind": "directory"
+      },
+      "description": "The KG operations sub-graph — a NAMED SUB-GRAPH of the harness, OPT-IN like `sdlc`: off in every layer unless that layer lists `cat-harness.kg-ops` in its own `enableSubgraphs` (owner, 2026-11-10, card Q-SG-1 C, wave 2). It holds the `kg-ops` skill package (named SPARQL queries, edge kinds and blast radius, domain fencing; `nquads-distribution` is always-on in `graph-management`, owner 2026-11-13, since always-on processes name it), their two processes and `witness-parity`. KG separation, sub-KG life cycle, LSI and rendering stay in `graph-management`, because always-on skills, Tools and visualisers cite them. Declared FROM WITHIN in `kg-ops/graph.json`.",
+      "fileCount": 0,
+      "holdsGraph": [
+        "cat-harness:graphTypology/cat-harness"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+      "name": "kg-ops",
+      "path": "kg-ops/"
+    }
+  ],
+  "hasSubgraph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/kg-ops/processes/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution",
+          "@type": "bootstrap:Process",
+          "conformsTo": [
+            "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-bpmn-2.0",
+            "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-dd-1.0"
+          ],
+          "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/nquads-distribution.svg",
+          "description": "Extract, partition, package, and distribute knowledge graph datasets as W3C RDF 1.1 N-Quads with pre-compiled named SPARQL queries. Governed by skills `nquads-distribution` and `named-query-execution`, grounded in `schemas/kg/nquads-distribution.ts`.\n\nCRITICAL INVARIANTS:\n1. 2-TIER SUBGRAPH ARCHITECTURE: A lightweight Spine backbone partition is loaded on startup, while bulky subgraphs (communities, workflow domains) are lazily fetched on demand.\n2. UPSTREAM SKOLEMIZATION: Zero blank nodes across all partitions. Every node must carry a deterministic minted IRI.\n3. PARTITION BUDGET CEILING: Partitions must strictly stay under 5 MB gzipped / 50k quads to protect browser heap and memory allocations.\n4. GRAPH AVAILABILITY GUARD: Queries declare requiredSubgraphs; execution fails fast with MissingPartitionError rather than silently returning partial query results.\n5. NO COMMITTED BINARY PAYLOADS: `.nq.gz` distribution payloads are gitignored, generated on demand or in CI, and served to Pages via 'served: true'.",
+          "enforcement": "strict",
+          "flowCount": 12,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "name": "Package and distribute partitioned W3C N-Quads and named queries",
+          "nodeCount": 13,
+          "sourcePath": "kg-ops/processes/nquads-distribution.bpmn",
+          "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/kg-ops/processes/nquads-distribution.bpmn",
+          "startNode": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/Start_Dataset",
+          "summary": "Extract, partition, package, and distribute knowledge graph datasets as W3C RDF 1.1 N-Quads with pre-compiled named SPARQL queries."
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution#flow/Flow_1",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/Start_Dataset",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/A_ExtractSkolemize"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution#flow/Flow_2",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/A_ExtractSkolemize",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/A_PartitionQuads"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution#flow/Flow_3",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/A_PartitionQuads",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/GW_PartitionBudget"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution#flow/Flow_4",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/A_DeclareManifest",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/A_VerifyQueries"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution#flow/Flow_5",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/A_VerifyQueries",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/A_GateCheck"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution#flow/Flow_6",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/A_GateCheck",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/GW_CiGreen"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution#flow/Flow_7",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/A_DeployPages",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/End_Distributed"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution#flow/Flow_BudgetFail",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/GW_PartitionBudget",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "name": "Over budget",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/A_ReportBudgetExcess"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution#flow/Flow_BudgetPass",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/GW_PartitionBudget",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "name": "Under budget",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/A_DeclareManifest"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution#flow/Flow_CiFail",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/GW_CiGreen",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "name": "Red",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/End_CiFailed"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution#flow/Flow_CiPass",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/GW_CiGreen",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "name": "Green",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/A_DeployPages"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution#flow/Flow_StopBudget",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/A_ReportBudgetExcess",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/End_BudgetStopped"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/lane/Lane_Author",
+          "@type": "cat-harness:Lane",
+          "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/platform-authoring-agent",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "name": "Knowledge Graph Engineer",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/lane/Lane_Ci",
+          "@type": "cat-harness:Lane",
+          "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "name": "CI/CD Pipeline",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/A_DeclareManifest",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:Task",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/lane/Lane_Author",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution#flow/Flow_BudgetPass",
+          "name": "Declare Distribution Manifest & Named Queries",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution#flow/Flow_4",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/platform-authoring-agent",
+          "relaxable": true,
+          "requires": [
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/nquads-distribution",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/named-query-execution"
+          ],
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/A_DeployPages",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:ServiceTask",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/lane/Lane_Ci",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution#flow/Flow_CiPass",
+          "name": "Publish Distribution via 'served: true' to Pages",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution#flow/Flow_7",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/nquads-distribution",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/A_ExtractSkolemize",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:Task",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/lane/Lane_Author",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution#flow/Flow_1",
+          "name": "Extract & Skolemize RDF Dataset",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution#flow/Flow_2",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/platform-authoring-agent",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/nquads-distribution",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/A_GateCheck",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:ServiceTask",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/lane/Lane_Ci",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution#flow/Flow_5",
+          "name": "Audit the manifest and schemas",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution#flow/Flow_6",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/named-query-execution",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/A_PartitionQuads",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:Task",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/lane/Lane_Author",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution#flow/Flow_2",
+          "name": "Stream W3C N-Quads into Subgraph Partitions",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution#flow/Flow_3",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/platform-authoring-agent",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/nquads-distribution",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/A_ReportBudgetExcess",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:Task",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/lane/Lane_Author",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution#flow/Flow_BudgetFail",
+          "name": "Report Budget Finding; Refine Subgraph Splitting",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution#flow/Flow_StopBudget",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/platform-authoring-agent",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/nquads-distribution",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/A_VerifyQueries",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:Task",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/lane/Lane_Author",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution#flow/Flow_4",
+          "name": "Verify Queries via CLI & Test Graph Availability",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution#flow/Flow_5",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/platform-authoring-agent",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/named-query-execution",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/End_BudgetStopped",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:EndEvent",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/lane/Lane_Author",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution#flow/Flow_StopBudget",
+          "name": "Stopped on partition budget",
+          "nodeKind": "end",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/platform-authoring-agent",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/End_CiFailed",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:EndEvent",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/lane/Lane_Ci",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution#flow/Flow_CiFail",
+          "name": "CI Gate Failed",
+          "nodeKind": "end",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/End_Distributed",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:EndEvent",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/lane/Lane_Ci",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution#flow/Flow_7",
+          "name": "Dataset and queries served universally",
+          "nodeKind": "end",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/GW_CiGreen",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:ExclusiveGateway",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/lane/Lane_Ci",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution#flow/Flow_6",
+          "name": "Gate passes?",
+          "nodeKind": "exclusive",
+          "outgoing": [
+            "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution#flow/Flow_CiPass",
+            "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution#flow/Flow_CiFail"
+          ],
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/GW_PartitionBudget",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:ExclusiveGateway",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/lane/Lane_Author",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution#flow/Flow_3",
+          "name": "All partitions under 5 MB / 50k quads budget?",
+          "nodeKind": "exclusive",
+          "outgoing": [
+            "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution#flow/Flow_BudgetPass",
+            "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution#flow/Flow_BudgetFail"
+          ],
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/platform-authoring-agent",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/Start_Dataset",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:StartEvent",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/lane/Lane_Author",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "name": "Corpus or graph requires distribution",
+          "nodeKind": "start",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution#flow/Flow_1",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/platform-authoring-agent",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution",
+          "@type": "bootstrap:Process",
+          "conformsTo": [
+            "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-bpmn-2.0",
+            "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-dd-1.0"
+          ],
+          "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/named-query-execution.svg",
+          "description": "Universal execution of audited named SPARQL queries against W3C RDF 1.1 N-Quads distributions across CLI, MCP, and Web runtimes. Governed by skill `named-query-execution` and schema `schemas/kg/nquads-distribution.ts`.\n\nCRITICAL INVARIANTS:\n1. FAIL-CLOSED GRAPH AVAILABILITY GUARD: Execution verifies all declared requiredSubgraphs are present in the Oxigraph store before SPARQL evaluation; missing partitions raise MissingPartitionError rather than returning silently incomplete results.\n2. SPARQL INJECTION PREVENTION: Parameters are strictly validated against manifest NamedQueryDef parameter schemas; IRIs and literals are escaped and substituted into pre-audited templates.\n3. UNIFIED THREE-SURFACE PARITY: Identical query semantics and result envelopes across CLI (bun run cat nquads:query), MCP (nquads-query tool), and Web (oxigraph-query-client.js).\n4. SCOPED GRAPH MATCHING: Triple patterns match inside GRAPH ?g { ... } or GRAPH <iri> { ... } to conform to W3C N-Quads 4th-slot named graph semantics.",
+          "enforcement": "strict",
+          "flowCount": 14,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "name": "Execute audited named queries over partitioned W3C N-Quads distributions",
+          "nodeCount": 14,
+          "sourcePath": "kg-ops/processes/named-query-execution.bpmn",
+          "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/kg-ops/processes/named-query-execution.bpmn",
+          "startNode": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/node/Start_QueryRequest",
+          "summary": "Universal execution of audited named SPARQL queries against W3C RDF 1.1 N-Quads distributions across CLI, MCP, and Web runtimes."
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution#flow/Flow_AbortParams",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/node/A_RejectInvalidArgs",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/node/End_InvalidParams"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution#flow/Flow_AutoFetchNo",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/node/GW_AutoFetch",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "name": "Cannot fetch",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/node/A_RaiseMissingPartition"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution#flow/Flow_AutoFetchYes",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/node/GW_AutoFetch",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "name": "Can fetch",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/node/A_FetchPartitions"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution#flow/Flow_Executed",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/node/A_BindExecute",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/node/A_FormatResponse"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution#flow/Flow_FailGuard",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/node/A_RaiseMissingPartition",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/node/End_GuardFailed"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution#flow/Flow_Fetched",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/node/A_FetchPartitions",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/node/A_BindExecute"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution#flow/Flow_GuardCheck",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/node/A_CheckSubgraphs",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/node/GW_SubgraphsLoaded"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution#flow/Flow_GuardMissing",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/node/GW_SubgraphsLoaded",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "name": "Missing",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/node/GW_AutoFetch"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution#flow/Flow_GuardPass",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/node/GW_SubgraphsLoaded",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "name": "All loaded",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/node/A_BindExecute"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution#flow/Flow_ParamsFail",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/node/GW_ValidParams",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "name": "Invalid",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/node/A_RejectInvalidArgs"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution#flow/Flow_ParamsPass",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/node/GW_ValidParams",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "name": "Valid",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/node/A_CheckSubgraphs"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution#flow/Flow_Req1",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/node/Start_QueryRequest",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/node/A_ValidateParams"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution#flow/Flow_Req2",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/node/A_ValidateParams",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/node/GW_ValidParams"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution#flow/Flow_ToCaller",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/node/A_FormatResponse",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution",
+          "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/node/End_Success"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/lane/Lane_Caller",
+          "@type": "cat-harness:Lane",
+          "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "name": "Query Caller (CLI / MCP / Web)",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/lane/Lane_Engine",
+          "@type": "cat-harness:Lane",
+          "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "name": "Universal Query Engine Runtime",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/node/A_BindExecute",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:Task",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/lane/Lane_Engine",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "incoming": [
+            "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution#flow/Flow_GuardPass",
+            "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution#flow/Flow_Fetched"
+          ],
+          "name": "Bind Typed Parameters & Execute SPARQL",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution#flow/Flow_Executed",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/named-query-execution",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/node/A_CheckSubgraphs",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:Task",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/lane/Lane_Engine",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution#flow/Flow_ParamsPass",
+          "name": "Check Graph Availability Guard (requiredSubgraphs)",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution#flow/Flow_GuardCheck",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/named-query-execution",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/node/A_FetchPartitions",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:Task",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/lane/Lane_Engine",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution#flow/Flow_AutoFetchYes",
+          "name": "Fetch & Ingest Missing Subgraphs (.nq.gz)",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution#flow/Flow_Fetched",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/named-query-execution",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/node/A_FormatResponse",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:Task",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/lane/Lane_Engine",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution#flow/Flow_Executed",
+          "name": "Format Universal Result Response Envelope",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution#flow/Flow_ToCaller",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/named-query-execution",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/node/A_RaiseMissingPartition",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:Task",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/lane/Lane_Engine",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution#flow/Flow_AutoFetchNo",
+          "name": "Raise MissingPartitionError (Fail-Closed Guard)",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution#flow/Flow_FailGuard",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/named-query-execution",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/node/A_RejectInvalidArgs",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:Task",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/lane/Lane_Caller",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution#flow/Flow_ParamsFail",
+          "name": "Reject Request with ValidationError",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution#flow/Flow_AbortParams",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/named-query-execution",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/node/A_ValidateParams",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:Task",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/lane/Lane_Caller",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution#flow/Flow_Req1",
+          "name": "Validate Arguments against Parameter Schema",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution#flow/Flow_Req2",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/named-query-execution",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/node/End_GuardFailed",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:EndEvent",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/lane/Lane_Engine",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution#flow/Flow_FailGuard",
+          "name": "Query aborted on missing partition",
+          "nodeKind": "end",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/node/End_InvalidParams",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:EndEvent",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/lane/Lane_Caller",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution#flow/Flow_AbortParams",
+          "name": "Query rejected on invalid arguments",
+          "nodeKind": "end",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/node/End_Success",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:EndEvent",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/lane/Lane_Caller",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution#flow/Flow_ToCaller",
+          "name": "Query completed with verified result",
+          "nodeKind": "end",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/node/GW_AutoFetch",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:ExclusiveGateway",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/lane/Lane_Engine",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution#flow/Flow_GuardMissing",
+          "name": "Auto-fetch enabled & source reachable?",
+          "nodeKind": "exclusive",
+          "outgoing": [
+            "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution#flow/Flow_AutoFetchYes",
+            "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution#flow/Flow_AutoFetchNo"
+          ],
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/node/GW_SubgraphsLoaded",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:ExclusiveGateway",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/lane/Lane_Engine",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution#flow/Flow_GuardCheck",
+          "name": "All required subgraphs loaded in store?",
+          "nodeKind": "exclusive",
+          "outgoing": [
+            "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution#flow/Flow_GuardPass",
+            "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution#flow/Flow_GuardMissing"
+          ],
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/node/GW_ValidParams",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:ExclusiveGateway",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/lane/Lane_Caller",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution#flow/Flow_Req2",
+          "name": "Arguments valid?",
+          "nodeKind": "exclusive",
+          "outgoing": [
+            "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution#flow/Flow_ParamsPass",
+            "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution#flow/Flow_ParamsFail"
+          ],
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/node/Start_QueryRequest",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:StartEvent",
+          "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/lane/Lane_Caller",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+          "name": "Named query requested",
+          "nodeKind": "start",
+          "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution#flow/Flow_Req1",
+          "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution",
+          "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/processes"
+      ],
+      "name": "kg-ops/processes",
+      "path": "kg-ops/processes/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/kg-ops/skills/",
+      "@type": "bootstrap:Subgraph",
+      "hasSubgraph": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/kg-ops/skills/kg-ops/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness/package/kg-ops",
+              "@type": "cat-harness:SkillPackage",
+              "hasManifest": true,
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+              "name": "kg-ops",
+              "path": "kg-ops/skills/kg-ops"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/domain-fencing",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "How a domain-specific rule is kept out of the platform without being lost — the opt-in axis mechanism, why a profile is not a fence, and the test for whether a rule generalizes at all.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/kg-ops",
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+              "instructionLines": 118,
+              "instructionsPath": "kg-ops/skills/kg-ops/domain-fencing.md",
+              "name": "domain-fencing",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f326cc18fcd8e86907b2c1e22ce2906ac28637d8bf000ac9253229efec0643d1",
+                "bytes": 5717,
+                "sha256": "f326cc18fcd8e86907b2c1e22ce2906ac28637d8bf000ac9253229efec0643d1"
+              },
+              "title": "Domain fencing — keeping one folio's rules out of everybody's platform"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/edge-kinds-and-blast-radius",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "A graph has more than one kind of edge, and conflating them corrupts both the ordering and the impact answer. Interface edges versus implementation edges, the union rule for blast radius, and the split/merge signals — generalized out of the formal-math skills that first stated them.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/kg-ops",
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+              "instructionLines": 163,
+              "instructionsPath": "kg-ops/skills/kg-ops/edge-kinds-and-blast-radius.md",
+              "name": "edge-kinds-and-blast-radius",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c2c99adb63f046b279d1724ccd4e50d4dedabce2c0ffe08b7ec59b537ccbea91",
+                "bytes": 7109,
+                "sha256": "c2c99adb63f046b279d1724ccd4e50d4dedabce2c0ffe08b7ec59b537ccbea91"
+              },
+              "title": "consulted: reference material nobody performs — a PRINCIPLE about graph semantics. Zero imperative markers and every heading is a claim — \"Not every edge is a dependency\", \"Provenance is three-valued\", \"Taint propagates down the dependency graph\". It is read before deciding how to traverse a graph; nobody performs it as a task."
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/named-query-execution",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "How to execute audited SPARQL 1.1 named queries over partitioned W3C N-Quads dataset distributions across CLI, MCP tools, and WebAssembly browser clients. Enforces graph availability guards to prevent silent partial results, and typed parameter bindings to eliminate SPARQL injection.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/kg-ops",
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/kg-ops",
+              "instructionLines": 114,
+              "instructionsPath": "kg-ops/skills/kg-ops/named-query-execution.md",
+              "name": "named-query-execution",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1aa2fa14e09fc2edcecc52f14b65aae59ad7246458e9a14d2ef3ccd4470cf6ca",
+                "bytes": 5712,
+                "sha256": "1aa2fa14e09fc2edcecc52f14b65aae59ad7246458e9a14d2ef3ccd4470cf6ca"
+              },
+              "title": "Named Query Execution across CLI, MCP, and Web"
+            }
+          ],
+          "holdsGraph": [
+            "bootstrap:graphTypology/skills"
+          ],
+          "name": "kg-ops/skills/kg-ops",
+          "path": "kg-ops/skills/kg-ops/"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "kg-ops/skills",
+      "path": "kg-ops/skills/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/kg-ops/tools/",
+      "@type": "bootstrap:Subgraph",
+      "hasSubgraph": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/kg-ops/tools/witness-parity/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/witness-parity.jsonld",
+              "@type": "cat-harness:Tool",
+              "description": "Re-run a computation witness's producer and say whether it reproduces the committed witness. Reads the command from `invocation.reproduce` (else `python3 <scriptFile>`) and the recorded package versions from `environment`; on a version mismatch it stops at `unknown`, since a different environment is not a reproduction test. Otherwise it runs the COMMITTED producer in a scratch git worktree, so the folio's own checkout is never written, and compares the result with the committed witness with run-specific fields (commit, timing, environment) masked at every depth. `pass`, `fail` (with the differing JSON paths), or `unknown` (mismatch, non-zero exit, timeout, no witness written).",
+              "install": {
+                "none": true
+              },
+              "invoke": {
+                "shell": "bun run cat witness:parity"
+              },
+              "io": {
+                "inputs": [
+                  {
+                    "description": "One or more `*.witness.json` paths, committed at HEAD.",
+                    "name": "witness",
+                    "required": true,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+                  },
+                  {
+                    "arg": {
+                      "flag": "--timeout"
+                    },
+                    "description": "Seconds before a run counts as `unknown`. Default 300.",
+                    "name": "timeout",
+                    "required": false,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count"
+                  },
+                  {
+                    "arg": {
+                      "flag": "--force"
+                    },
+                    "description": "Run despite an environment mismatch; the verdict is then marked advisory.",
+                    "name": "force",
+                    "required": false,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+                  },
+                  {
+                    "arg": {
+                      "flag": "--json"
+                    },
+                    "description": "Machine-readable output.",
+                    "name": "json",
+                    "required": false,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+                  }
+                ],
+                "outputs": [
+                  {
+                    "description": "One line per witness: pass, fail or unknown, with the reason, any environment mismatch and the differing paths. Exit 1 when any witness fails; `unknown` alone exits 0.",
+                    "name": "verdicts",
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+                  }
+                ]
+              },
+              "name": "witness-parity",
+              "requirements": {
+                "network": false,
+                "runtime": [
+                  "bun",
+                  "git",
+                  "bash"
+                ]
+              },
+              "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/directory-conventions",
+              "title": "Witness reproduction check"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/tools"
+          ],
+          "name": "kg-ops/tools/witness-parity",
+          "path": "kg-ops/tools/witness-parity/"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "kg-ops/tools",
+      "path": "kg-ops/tools/"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/cat-harness"
+  ],
+  "name": "kg-ops",
+  "path": "kg-ops/"
+}

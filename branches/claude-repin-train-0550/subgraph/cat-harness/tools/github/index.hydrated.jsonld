@@ -1,0 +1,52 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/github/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/github.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "GitHub as a Tool: the forge that carries an adjudication as an issue, runs the workflow that records it on Actions, and holds the record as a pull request for a maintainer to merge. One forge among possible others; the process names the skill, never GitHub.",
+      "install": {
+        "cli": "gh (optional; the web interface needs nothing)",
+        "service": "github.com"
+      },
+      "invoke": {
+        "manual": true,
+        "shell": "gh"
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "flag": "-R"
+            },
+            "description": "The repository holding the catalogues. Default: the current one.",
+            "name": "repo",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoFullName"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "The issue, workflow run or pull request.",
+            "name": "url",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Url"
+          }
+        ]
+      },
+      "name": "github",
+      "requirements": {
+        "network": true
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/translation-adjudication",
+      "title": "GitHub (issues, Actions, pull requests)"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/github",
+  "path": "tools/github/"
+}

@@ -1,0 +1,914 @@
+{
+  "@context": {
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "prefLabel": "skos:prefLabel",
+    "definition": "skos:definition",
+    "changeNote": "skos:changeNote",
+    "notation": "skos:notation",
+    "source": "dcterms:source",
+    "title": "dcterms:title",
+    "deprecated": "owl:deprecated",
+    "inScheme": {
+      "@id": "skos:inScheme",
+      "@type": "@id"
+    },
+    "staging": {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/staging",
+      "@context": {
+        "branch": "https://litlfred.github.io/cat-harness/v0/ns/stagingBranch",
+        "sha": "https://litlfred.github.io/cat-harness/v0/ns/stagingSha",
+        "pr": "https://litlfred.github.io/cat-harness/v0/ns/stagingRef",
+        "run": "https://litlfred.github.io/cat-harness/v0/ns/stagingRun"
+      }
+    }
+  },
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld",
+  "title": "Code lists",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-certainty",
+      "@type": "skos:ConceptScheme",
+      "notation": "grade-certainty",
+      "prefLabel": "GRADE certainty of evidence",
+      "definition": "The four levels of certainty GRADE assigns to a BODY of evidence for one outcome — never to a single citation. Randomised trials start at high and observational studies at low, before rating down or up. Moved from smart-kg/methodologies/grade.md by bean wg7r, 2026-09-24 (owner: 'needs to be part of skill/SKOS'). Read with the `grade` skill.",
+      "source": {
+        "@id": "https://doi.org/10.1016/j.jclinepi.2010.07.015"
+      },
+      "changeNote": "Balshem H, et al. GRADE guidelines: 3. Rating the quality of evidence. J Clin Epidemiol 2011;64(4):401-406"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-certainty/high",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-certainty",
+      "notation": "high",
+      "prefLabel": "High",
+      "definition": "We are very confident that the true effect lies close to the estimate of the effect."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-certainty/moderate",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-certainty",
+      "notation": "moderate",
+      "prefLabel": "Moderate",
+      "definition": "We are moderately confident in the effect estimate: the true effect is likely to be close to it, but there is a possibility that it is substantially different."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-certainty/low",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-certainty",
+      "notation": "low",
+      "prefLabel": "Low",
+      "definition": "Our confidence in the effect estimate is limited: the true effect may be substantially different from it."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-certainty/very-low",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-certainty",
+      "notation": "very-low",
+      "prefLabel": "Very low",
+      "definition": "We have very little confidence in the effect estimate: the true effect is likely to be substantially different from it. Not the same finding as 'could not determine' — absent evidence is a gap, not a grade."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-etd-criterion",
+      "@type": "skos:ConceptScheme",
+      "notation": "grade-etd-criterion",
+      "prefLabel": "GRADE Evidence-to-Decision criteria",
+      "definition": "The criteria an Evidence-to-Decision framework judges, EACH EXPLICITLY, before a recommendation. They are judged and argued, never summed into a score. These are the criteria of the framework for clinical and public-health recommendations. Moved from smart-kg/methodologies/grade.md by bean wg7r, 2026-09-24 (owner: 'needs to be part of skill/SKOS'). Read with the `grade` skill.",
+      "source": {
+        "@id": "https://doi.org/10.1136/bmj.i2016"
+      },
+      "changeNote": "Alonso-Coello P, et al. GRADE Evidence to Decision (EtD) frameworks: a systematic and transparent approach to making well informed healthcare choices. 1: Introduction. BMJ 2016;353:i2016"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-etd-criterion/problem-priority",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-etd-criterion",
+      "notation": "problem-priority",
+      "prefLabel": "Priority of the problem",
+      "definition": "Whether the problem the recommendation addresses is a priority."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-etd-criterion/desirable-effects",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-etd-criterion",
+      "notation": "desirable-effects",
+      "prefLabel": "Desirable effects",
+      "definition": "How substantial the desirable anticipated effects of the option are."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-etd-criterion/undesirable-effects",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-etd-criterion",
+      "notation": "undesirable-effects",
+      "prefLabel": "Undesirable effects",
+      "definition": "How substantial the undesirable anticipated effects of the option are."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-etd-criterion/certainty-of-evidence",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-etd-criterion",
+      "notation": "certainty-of-evidence",
+      "prefLabel": "Certainty of evidence",
+      "definition": "The overall certainty of the evidence of effects, rated per the grade-certainty list."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-etd-criterion/values",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-etd-criterion",
+      "notation": "values",
+      "prefLabel": "Values",
+      "definition": "Whether there is important uncertainty about, or variability in, how much the people affected value the main outcomes."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-etd-criterion/balance-of-effects",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-etd-criterion",
+      "notation": "balance-of-effects",
+      "prefLabel": "Balance of effects",
+      "definition": "Whether the balance between desirable and undesirable effects favours the option or the comparison."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-etd-criterion/resources-required",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-etd-criterion",
+      "notation": "resources-required",
+      "prefLabel": "Resources required",
+      "definition": "How large the resource requirements, or costs, of the option are."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-etd-criterion/resource-evidence-certainty",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-etd-criterion",
+      "notation": "resource-evidence-certainty",
+      "prefLabel": "Certainty of evidence of required resources",
+      "definition": "The certainty of the evidence about the resources the option requires."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-etd-criterion/cost-effectiveness",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-etd-criterion",
+      "notation": "cost-effectiveness",
+      "prefLabel": "Cost-effectiveness",
+      "definition": "Whether the cost-effectiveness of the option favours the option or the comparison."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-etd-criterion/equity",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-etd-criterion",
+      "notation": "equity",
+      "prefLabel": "Equity",
+      "definition": "What the impact of the option on health equity would be."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-etd-criterion/acceptability",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-etd-criterion",
+      "notation": "acceptability",
+      "prefLabel": "Acceptability",
+      "definition": "Whether the option is acceptable to key stakeholders."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-etd-criterion/feasibility",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-etd-criterion",
+      "notation": "feasibility",
+      "prefLabel": "Feasibility",
+      "definition": "Whether the option is feasible to implement."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-rating-down",
+      "@type": "skos:ConceptScheme",
+      "notation": "grade-rating-down",
+      "prefLabel": "GRADE reasons to rate certainty down",
+      "definition": "The five domains for which GRADE lowers the certainty of a body of evidence. Each rating-down is recorded with the code that caused it, so the grade can be re-examined. Moved from smart-kg/methodologies/grade.md by bean wg7r, 2026-09-24 (owner: 'needs to be part of skill/SKOS'). Read with the `grade` skill.",
+      "source": {
+        "@id": "https://gdt.gradepro.org/app/handbook/handbook.html"
+      },
+      "changeNote": "GRADE Handbook (Schünemann H, Brożek J, Guyatt G, Oxman A, eds.), section 5.2: factors that can reduce the certainty of evidence; GRADE guidelines 4-8, J Clin Epidemiol 2011"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-rating-down/risk-of-bias",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-rating-down",
+      "notation": "risk-of-bias",
+      "prefLabel": "Risk of bias",
+      "definition": "Limitations in the design or execution of the included studies — such as lack of allocation concealment, lack of blinding, or loss to follow-up — that make the estimate likely to be biased."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-rating-down/inconsistency",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-rating-down",
+      "notation": "inconsistency",
+      "prefLabel": "Inconsistency",
+      "definition": "Unexplained heterogeneity: the studies' effect estimates differ widely, their confidence intervals overlap little, or statistical tests show heterogeneity that the analysis cannot explain."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-rating-down/indirectness",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-rating-down",
+      "notation": "indirectness",
+      "prefLabel": "Indirectness",
+      "definition": "The evidence does not answer the question directly: the population, intervention, comparator or outcome studied differs from the one the recommendation is about, or interventions were compared only indirectly."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-rating-down/imprecision",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-rating-down",
+      "notation": "imprecision",
+      "prefLabel": "Imprecision",
+      "definition": "The estimate is uncertain because the studies are small or events few, so the confidence interval includes effects that would lead to different decisions."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-rating-down/publication-bias",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-rating-down",
+      "notation": "publication-bias",
+      "prefLabel": "Publication bias",
+      "definition": "Studies are likely missing from the body of evidence because publication depended on the direction or size of their results."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-rating-up",
+      "@type": "skos:ConceptScheme",
+      "notation": "grade-rating-up",
+      "prefLabel": "GRADE reasons to rate certainty up",
+      "definition": "The three domains for which GRADE may raise the certainty of a body of evidence — applied mainly to observational studies with no reason to rate down. Moved from smart-kg/methodologies/grade.md by bean wg7r, 2026-09-24 (owner: 'needs to be part of skill/SKOS'). Read with the `grade` skill.",
+      "source": {
+        "@id": "https://doi.org/10.1016/j.jclinepi.2011.06.004"
+      },
+      "changeNote": "Guyatt GH, et al. GRADE guidelines: 9. Rating up the quality of evidence. J Clin Epidemiol 2011;64(12):1311-1316"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-rating-up/large-effect",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-rating-up",
+      "notation": "large-effect",
+      "prefLabel": "Large magnitude of effect",
+      "definition": "The effect is so large that bias alone is unlikely to explain it."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-rating-up/dose-response",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-rating-up",
+      "notation": "dose-response",
+      "prefLabel": "Dose-response gradient",
+      "definition": "The effect increases or decreases consistently with the level of exposure, which strengthens the inference that the relationship is causal."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-rating-up/plausible-confounding",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-rating-up",
+      "notation": "plausible-confounding",
+      "prefLabel": "Plausible confounding would reduce the effect",
+      "definition": "All plausible residual confounding or bias would reduce a demonstrated effect — or would suggest a spurious effect where none was observed — so the true effect is likely at least as large as estimated."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-recommendation-direction",
+      "@type": "skos:ConceptScheme",
+      "notation": "grade-recommendation-direction",
+      "prefLabel": "GRADE recommendation direction",
+      "definition": "Which way a recommendation points. Always recorded together with its strength: one without the other is not a GRADE recommendation. Moved from smart-kg/methodologies/grade.md by bean wg7r, 2026-09-24 (owner: 'needs to be part of skill/SKOS'). Read with the `grade` skill.",
+      "source": {
+        "@id": "https://doi.org/10.1016/j.jclinepi.2013.02.003"
+      },
+      "changeNote": "Andrews JC, et al. GRADE guidelines: 15. Going from evidence to recommendation — determinants of a recommendation's direction and strength. J Clin Epidemiol 2013;66(7):726-735; WHO Handbook for Guideline Development, 2nd ed. (2014), which uses 'conditional' for GRADE's 'weak'"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-recommendation-direction/for",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-recommendation-direction",
+      "notation": "for",
+      "prefLabel": "For the option",
+      "definition": "The recommendation is to use the option."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-recommendation-direction/against",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-recommendation-direction",
+      "notation": "against",
+      "prefLabel": "Against the option",
+      "definition": "The recommendation is not to use the option."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-recommendation-strength",
+      "@type": "skos:ConceptScheme",
+      "notation": "grade-recommendation-strength",
+      "prefLabel": "GRADE recommendation strength",
+      "definition": "How strongly a recommendation is made. Strength is NOT certainty: a strong recommendation can rest on low-certainty evidence and a conditional one on high certainty. Moved from smart-kg/methodologies/grade.md by bean wg7r, 2026-09-24 (owner: 'needs to be part of skill/SKOS'). Read with the `grade` skill.",
+      "source": {
+        "@id": "https://doi.org/10.1016/j.jclinepi.2013.02.003"
+      },
+      "changeNote": "Andrews JC, et al. GRADE guidelines: 15. Going from evidence to recommendation — determinants of a recommendation's direction and strength. J Clin Epidemiol 2013;66(7):726-735; WHO Handbook for Guideline Development, 2nd ed. (2014), which uses 'conditional' for GRADE's 'weak'"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-recommendation-strength/strong",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-recommendation-strength",
+      "notation": "strong",
+      "prefLabel": "Strong",
+      "definition": "The guideline panel is confident that the desirable effects of following the recommendation clearly outweigh the undesirable effects — or clearly do not, for a recommendation against — so most informed people would choose the recommended course."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-recommendation-strength/conditional",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/grade-recommendation-strength",
+      "notation": "conditional",
+      "prefLabel": "Conditional",
+      "definition": "The desirable effects probably outweigh the undesirable effects, but the panel is less confident: the balance is close, the evidence uncertain, or values and preferences vary, so different choices will suit different people or settings. GRADE's 'weak'; WHO uses 'conditional'."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l1-classes",
+      "@type": "skos:ConceptScheme",
+      "notation": "sgkg-l1-classes",
+      "prefLabel": "SMART Guidelines KG L1 classes",
+      "definition": "The classes a L1 knowledge-graph node can be. smart-base document kinds and extractions name them as `sgkg-l1#<code>`. GENERATED by smart-base/L1/schemas/emit.ts from smart-base/L1/schemas/l1.ts: do not hand-edit; change the layer source and run `npm run build` in smart-base/L1/schemas/.",
+      "source": {
+        "@id": "https://github.com/litlfred/smart-base/blob/main/smart-base/L1/schemas/l1.ts"
+      },
+      "changeNote": "smart-base/L1/schemas/l1.ts, the layer's `classes`: id, name, note and iri. Classes the layer no longer has stay, retired."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l1-classes/publication",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l1-classes",
+      "notation": "publication",
+      "prefLabel": "Publication",
+      "definition": "A WHO publication: a guideline of any of the handbook's types, a position paper, a summary table, a classification, implementation guidance, or a supplement. Metadata follows Dublin Core.",
+      "rdf:value": "http://smart.who.int/kg/publication"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l1-classes/publication-section",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l1-classes",
+      "notation": "publication-section",
+      "prefLabel": "Publication section",
+      "definition": "A chapter, annex or numbered section, at any depth.",
+      "rdf:value": "http://smart.who.int/kg/publication-section"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l1-classes/publication-element",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l1-classes",
+      "notation": "publication-element",
+      "prefLabel": "Publication element",
+      "definition": "One printed block: a table, a table row, a footnote, a figure, a chart, an image, a flowchart, a box or a list. It records where something is printed and exactly what is printed that no content node holds. It carries no meaning of its own; meaning lives in content nodes, joined by presentedIn.",
+      "rdf:value": "http://smart.who.int/kg/publication-element"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l1-classes/recommendation",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l1-classes",
+      "notation": "recommendation",
+      "prefLabel": "Recommendation",
+      "definition": "A normative statement from a WHO guideline. Kinds other than a graded recommendation (context-specific, research-only, good practice statement, no-recommendation) are the same node with a different kind.",
+      "rdf:value": "http://smart.who.int/kg/recommendation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l1-classes/remark",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l1-classes",
+      "notation": "remark",
+      "prefLabel": "Remark",
+      "definition": "A remark attached to a recommendation (handbook §10.6). May also be printed as a table footnote.",
+      "rdf:value": "http://smart.who.int/kg/remark"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l1-classes/key-question",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l1-classes",
+      "notation": "key-question",
+      "prefLabel": "Key question",
+      "definition": "A question in PICO format, framed before the evidence search (handbook §7.1–7.4). P and C are verbatim text with codes through crossReferences; I is also joined to a catalogued intervention; O is the outcome node.",
+      "rdf:value": "http://smart.who.int/kg/key-question"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l1-classes/outcome",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l1-classes",
+      "notation": "outcome",
+      "prefLabel": "Outcome",
+      "definition": "An outcome a guideline group chose to judge a key question by, with its importance in this guideline (handbook §7.6). A node because evidence attaches to it and one list is shared by several questions (ANC Web annex 1). Flat: one node per specific outcome.",
+      "rdf:value": "http://smart.who.int/kg/outcome"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l1-classes/evidence",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l1-classes",
+      "notation": "evidence",
+      "prefLabel": "Evidence",
+      "definition": "One row of an evidence profile: the evidence for one outcome of one key question, with its certainty (handbook §9.2).",
+      "rdf:value": "http://smart.who.int/kg/evidence"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l1-classes/health-intervention",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l1-classes",
+      "notation": "health-intervention",
+      "prefLabel": "Health intervention",
+      "definition": "An intervention identified in a WHO catalogue or classification (UHC Compendium, ICHI, CDHI), digital interventions included. A peer of recommendation, not a recommendation. A DAK may draw on both.",
+      "rdf:value": "http://smart.who.int/kg/health-intervention"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l1-classes/indicator",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l1-classes",
+      "notation": "indicator",
+      "prefLabel": "Indicator",
+      "definition": "A WHO indicator, identified by its published reference number. Printed in several places (HIV SI 2022: summary list, Table 2.3, reference sheet) and stored once.",
+      "rdf:value": "http://smart.who.int/kg/indicator"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l1-classes/citation",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l1-classes",
+      "notation": "citation",
+      "prefLabel": "Citation",
+      "definition": "One citation string exactly as written in a DAK artefact. A cell holding several citations yields several nodes. Content-addressed in the DAK's namespace, so one string is one node across artefacts.",
+      "rdf:value": "http://smart.who.int/kg/citation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l1-classes/reference-entry",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l1-classes",
+      "notation": "reference-entry",
+      "prefLabel": "Reference entry",
+      "definition": "One row of a DAK artefact's own reference list: '(1)' and the full bibliographic text and URL it stands for. Resolved once; every citation numbered to it shares the result.",
+      "rdf:value": "http://smart.who.int/kg/reference-entry"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l1-classes/terminology-code",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l1-classes",
+      "notation": "terminology-code",
+      "prefLabel": "Terminology code",
+      "definition": "A code in an external terminology — ICD-10, ICD-11, SNOMED CT, ATC, or a WHO classification such as CDHI. CROSS-REFERENCE ONLY. It records system, code and display, and asserts NOTHING about the terminology: no hierarchy, no subsumption, no synonyms, no post-coordination. The terminology has its own authority, its own release cycle and its own tooling, and a partial copy here would be wrong within one release. Resolve meaning against the terminology server, not against this graph.",
+      "rdf:value": "http://smart.who.int/kg/terminology-code"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l1-classes/population",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l1-classes",
+      "notation": "population",
+      "prefLabel": "Population",
+      "definition": "Retired in L1 3.0: the P of a PICO question is verbatim text on its key-question, coded through crossReferences.",
+      "deprecated": true
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l1-classes/intervention",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l1-classes",
+      "notation": "intervention",
+      "prefLabel": "Intervention",
+      "definition": "Retired in L1 3.0: the I of a PICO question is on its key-question, joined to a catalogued health-intervention.",
+      "deprecated": true
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l1-classes/comparator",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l1-classes",
+      "notation": "comparator",
+      "prefLabel": "Comparator",
+      "definition": "Retired in L1 3.0: the C of a PICO question is verbatim text on its key-question, coded through crossReferences.",
+      "deprecated": true
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l1-classes/schedule",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l1-classes",
+      "notation": "schedule",
+      "prefLabel": "Schedule",
+      "definition": "Retired in L1 3.0: timing is a slot on the recommendation; L2's scheduling-logic implements the recommendation.",
+      "deprecated": true
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l1-classes/schedule-entry",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l1-classes",
+      "notation": "schedule-entry",
+      "prefLabel": "Schedule entry",
+      "definition": "Retired in L1 3.0: timing is a slot on the recommendation; L2's scheduling-logic implements the recommendation.",
+      "deprecated": true
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l1-classes/external-artifact",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l1-classes",
+      "notation": "external-artifact",
+      "prefLabel": "External artefact",
+      "definition": "Moved to L2 in 3.0 unchanged: a DAK file is the DAK's material, not WHO content. Use sgkg-l2#external-artifact.",
+      "deprecated": true
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l2-bpmn-classes",
+      "@type": "skos:ConceptScheme",
+      "notation": "sgkg-l2-bpmn-classes",
+      "prefLabel": "SMART Guidelines KG L2-BPMN classes",
+      "definition": "The classes a L2-BPMN knowledge-graph node can be. smart-base document kinds and extractions name them as `sgkg-l2-bpmn#<code>`. GENERATED by smart-base/L1/schemas/emit.ts from smart-base/L2-bpmn/schemas/l2-bpmn.ts: do not hand-edit; change the layer source and run `npm run build` in smart-base/L1/schemas/.",
+      "source": {
+        "@id": "https://github.com/litlfred/smart-base/blob/main/smart-base/L2-bpmn/schemas/l2-bpmn.ts"
+      },
+      "changeNote": "smart-base/L2-bpmn/schemas/l2-bpmn.ts, the layer's `classes`: id, name, note and iri."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l2-bpmn-classes/bpmn-definitions",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l2-bpmn-classes",
+      "notation": "bpmn-definitions",
+      "prefLabel": "BPMN File",
+      "definition": "One BPMN file as a unit -- the `bpmn:definitions` root. Shares its IRI with the l1:external-artifact for the same file, so the component that points at it and the subgraph that opens it name one resource.",
+      "rdf:value": "http://smart.who.int/kg/bpmn-definitions"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l2-bpmn-classes/bpmn-process",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l2-bpmn-classes",
+      "notation": "bpmn-process",
+      "prefLabel": "BPMN Process",
+      "definition": "One `bpmn:process`. Present as a node because a participant references it by processRef, and without it the pool-to-element attribution has nothing to travel through.",
+      "rdf:value": "http://smart.who.int/kg/bpmn-process"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l2-bpmn-classes/bpmn-participant",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l2-bpmn-classes",
+      "notation": "bpmn-participant",
+      "prefLabel": "BPMN Participant",
+      "definition": "A pool: a role that owns part of the collaboration. The lifecycle BPMN has 8 and declares no laneSet at all, so the pool is the only unit of role assignment present and its @name is the sole link to a persona.",
+      "rdf:value": "http://smart.who.int/kg/bpmn-participant"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l2-bpmn-classes/bpmn-task",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l2-bpmn-classes",
+      "notation": "bpmn-task",
+      "prefLabel": "BPMN Task",
+      "definition": "A task or sub-process. It is what a DMN usingTask href points at, what sequence flows connect, and what a DAK-level task entry describes. Sub-processes carry isSubProcess rather than getting a class of their own -- the lifecycle BPMN has exactly one.",
+      "rdf:value": "http://smart.who.int/kg/bpmn-task"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l2-bpmn-classes/bpmn-gateway",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l2-bpmn-classes",
+      "notation": "bpmn-gateway",
+      "prefLabel": "BPMN Gateway",
+      "definition": "A branch or merge. Included for connectivity rather than for a cross-model edge: a flow through a gateway with no node would point at nothing, and every reachability question over the process would break at the first decision point.",
+      "rdf:value": "http://smart.who.int/kg/bpmn-gateway"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l2-bpmn-classes/bpmn-event",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l2-bpmn-classes",
+      "notation": "bpmn-event",
+      "prefLabel": "BPMN Event",
+      "definition": "A start or end event. Same connectivity argument as gateway, plus one of its own: entry and exit points are what make 'is this task reachable' and 'does this path terminate' answerable at all.",
+      "rdf:value": "http://smart.who.int/kg/bpmn-event"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l2-classes",
+      "@type": "skos:ConceptScheme",
+      "notation": "sgkg-l2-classes",
+      "prefLabel": "SMART Guidelines KG L2 classes",
+      "definition": "The classes a L2 knowledge-graph node can be. smart-base document kinds and extractions name them as `sgkg-l2#<code>`. GENERATED by smart-base/L1/schemas/emit.ts from smart-base/L2/schemas/l2.ts: do not hand-edit; change the layer source and run `npm run build` in smart-base/L1/schemas/.",
+      "source": {
+        "@id": "https://github.com/litlfred/smart-base/blob/main/smart-base/L2/schemas/l2.ts"
+      },
+      "changeNote": "smart-base/L2/schemas/l2.ts, the layer's `classes`: id, name, note and iri."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l2-classes/dak",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l2-classes",
+      "notation": "dak",
+      "prefLabel": "Digital Adaptation Kit",
+      "definition": "The kit itself. Properties are exactly the metadata fields DAK.fsh declares and dak.json carries -- no more, so that a dak node can be produced from a real file without anything being invented.",
+      "rdf:value": "http://smart.who.int/kg/dak"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l2-classes/persona",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l2-classes",
+      "notation": "persona",
+      "prefLabel": "Generic Persona",
+      "definition": "DAK component 2. Grounded in GenericPersona.fsh -- title, id, description, otherNames, iscoCode bound to ISCO08ValueSet -- and in the 22 committed ActorDefinition instances that carry name, title, type and description. The two disagree about where ISCO lives, which the properties record rather than smooth over.",
+      "rdf:value": "http://smart.who.int/kg/persona"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l2-classes/user-scenario",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l2-classes",
+      "notation": "user-scenario",
+      "prefLabel": "User Scenario",
+      "definition": "DAK component 3. A narrative describing how personas interact. Carries `personas 0..* id`, which is the only structured link between the narrative layer and the personas it names.",
+      "rdf:value": "http://smart.who.int/kg/user-scenario"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l2-classes/business-process",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l2-classes",
+      "notation": "business-process",
+      "prefLabel": "Business Process Workflow",
+      "definition": "DAK component 4. NOT the BPMN file -- the component that points at one. `source 1..1 uri` is that pointer, and the BPMN's interior is the l2-bpmn subgraph, reached through the external-artifact this sourcedFrom targets.",
+      "rdf:value": "http://smart.who.int/kg/business-process"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l2-classes/dak-task",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l2-classes",
+      "notation": "dak-task",
+      "prefLabel": "Task Entry",
+      "definition": "One entry of BusinessProcessWorkflow's `task 0..*` backbone: identifier, name, description. A node rather than a property because the same task is also drawn in the BPMN file, and the two lists have to be joinable to be checkable against each other.",
+      "rdf:value": "http://smart.who.int/kg/dak-task"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l2-classes/data-element",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l2-classes",
+      "notation": "data-element",
+      "prefLabel": "Core Data Element",
+      "definition": "DAK component 5. CoreDataElement.fsh calls itself \"the ONE EXCEPTION to allowing FHIR R4 models into the DAK LMs\": `type` is one of valueset | codesystem | conceptmap | logicalmodel and `canonical 1..1 uri` points at it. The canonical is recorded; nothing inside it is copied, because FHIR is its own query layer.",
+      "rdf:value": "http://smart.who.int/kg/data-element"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l2-classes/decision-support-logic",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l2-classes",
+      "notation": "decision-support-logic",
+      "prefLabel": "Decision-Support Logic",
+      "definition": "DAK component 6. The whole model is an id, an optional description and `source 1..1 uri` to a DMN file. Nothing about the decision itself -- which is the gap the l2-dmn subgraph fills.",
+      "rdf:value": "http://smart.who.int/kg/decision-support-logic"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l2-classes/scheduling-logic",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l2-classes",
+      "notation": "scheduling-logic",
+      "prefLabel": "Scheduling Logic",
+      "definition": "When an intervention is due, as a DAK component. NOT declared by DAK.fsh -- it is added here because the published SOP lists Scheduling Logic as an active L2 input (spreadsheets under input/scheduling-logic), WHO's ArchiMate model declares it a BusinessObject realised by PlanDefinition, and L1's schedules needed an L2 component to reach (since L1 3.0, a recommendation's timing slot). Note that the SOP's own L3 row for scheduling is present but HTML-commented-out and there is no l3_schedulinglogic.md page, so WHO has drafted the mapping and not activated it; the L3 edge is licensed here as a deliberate departure, recorded rather than hidden.",
+      "rdf:value": "http://smart.who.int/kg/scheduling-logic"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l2-classes/program-indicator",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l2-classes",
+      "notation": "program-indicator",
+      "prefLabel": "Program Indicator",
+      "definition": "DAK component 7. Named program-indicator and not `indicator` because L1 already declares an `indicator` -- one normatively defined in a publication. They are different things: this is the DAK's operational measure, and `derivedFrom` is how it points at the normative one. Collapsing them would silently merge a WHO definition with a country's implementation of it.",
+      "rdf:value": "http://smart.who.int/kg/program-indicator"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l2-classes/functional-requirement",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l2-classes",
+      "notation": "functional-requirement",
+      "prefLabel": "Functional Requirement",
+      "definition": "DAK component 8, first half. The as-a/I-want/so-that shape: `activity`, `capability[x]`, `benefit[x]`, and `actor 0..* Reference(SGActor)`. The 41 committed instances use the R5 SGRequirements profile rather than this logical model, so a real instance carries `statement` entries and a userstory extension; both shapes are accommodated and `profile` records which was read.",
+      "rdf:value": "http://smart.who.int/kg/functional-requirement"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l2-classes/non-functional-requirement",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l2-classes",
+      "notation": "non-functional-requirement",
+      "prefLabel": "Non-Functional Requirement",
+      "definition": "DAK component 8, second half. `requirement 1..1 markdown`, an optional category and classification codings. Kept separate from the functional half because the fields genuinely differ -- a non-functional requirement has no actor and no benefit.",
+      "rdf:value": "http://smart.who.int/kg/non-functional-requirement"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l2-classes/requirement-statement",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l2-classes",
+      "notation": "requirement-statement",
+      "prefLabel": "Requirement Statement",
+      "definition": "One numbered, labelled statement inside a requirement, with a conformance verb. A node rather than a property because conformance is queried across a whole DAK -- 'every SHALL in this kit, and what fulfils it' is the question requirements exist to answer. It also carries its own success criteria, so 'what would show this SHALL is met' is answerable per statement rather than per requirement.",
+      "rdf:value": "http://smart.who.int/kg/requirement-statement"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l2-classes/test-scenario",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l2-classes",
+      "notation": "test-scenario",
+      "prefLabel": "Test Scenario",
+      "definition": "DAK component 9. `feature 1..1 uri` to a Gherkin feature file, plus an optional description. The feature file's interior is not modelled: no DAK in this estate ships one yet, so a subgraph for it would have no instance to check it against.",
+      "rdf:value": "http://smart.who.int/kg/test-scenario"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l2-classes/external-artifact",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l2-classes",
+      "notation": "external-artifact",
+      "prefLabel": "External artefact",
+      "definition": "A DAK file addressed by canonical URL: a BPMN process, a DMN decision table, a FHIR resource, a workbook. Deliberately opaque: it carries an IRI and a kind, and nothing about its interior. The L2-BPMN, L2-DMN and L3 classes that describe a file's interior elaborate this class at the same IRI. Moved here from L1 in 3.0 unchanged: a DAK file is the DAK's material, not WHO content.",
+      "rdf:value": "http://smart.who.int/kg/external-artifact"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l2-dmn-classes",
+      "@type": "skos:ConceptScheme",
+      "notation": "sgkg-l2-dmn-classes",
+      "prefLabel": "SMART Guidelines KG L2-DMN classes",
+      "definition": "The classes a L2-DMN knowledge-graph node can be. smart-base document kinds and extractions name them as `sgkg-l2-dmn#<code>`. GENERATED by smart-base/L1/schemas/emit.ts from smart-base/L2-dmn/schemas/l2-dmn.ts: do not hand-edit; change the layer source and run `npm run build` in smart-base/L1/schemas/.",
+      "source": {
+        "@id": "https://github.com/litlfred/smart-base/blob/main/smart-base/L2-dmn/schemas/l2-dmn.ts"
+      },
+      "changeNote": "smart-base/L2-dmn/schemas/l2-dmn.ts, the layer's `classes`: id, name, note and iri."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l2-dmn-classes/dmn-definitions",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l2-dmn-classes",
+      "notation": "dmn-definitions",
+      "prefLabel": "DMN File",
+      "definition": "One DMN file as a unit -- the `dmn:definitions` root. Shares its IRI with the l1:external-artifact for the same file, so the l2:decision-support-logic component that points at it and this subgraph name one resource.",
+      "rdf:value": "http://smart.who.int/kg/dmn-definitions"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l2-dmn-classes/dmn-decision",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l2-dmn-classes",
+      "notation": "dmn-decision",
+      "prefLabel": "DMN Decision",
+      "definition": "A `dmn:decision` -- the question being answered, and the node that carries the link back to the BPMN task invoking it. A file may hold several; the BCG file holds one.",
+      "rdf:value": "http://smart.who.int/kg/dmn-decision"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l2-dmn-classes/dmn-decision-table",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l2-dmn-classes",
+      "notation": "dmn-decision-table",
+      "prefLabel": "DMN Decision Table",
+      "definition": "The table realising a decision. Separate from dmn-decision because DMN permits other expression kinds -- a literal expression, an invocation -- and collapsing the two would make the graph unable to say which was used.",
+      "rdf:value": "http://smart.who.int/kg/dmn-decision-table"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l2-dmn-classes/dmn-input-clause",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l2-dmn-classes",
+      "notation": "dmn-input-clause",
+      "prefLabel": "DMN Input Clause",
+      "definition": "An input column. Its expression text is where data element names are embedded, which is the only reason this is a node rather than a property of the table.",
+      "rdf:value": "http://smart.who.int/kg/dmn-input-clause"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l2-dmn-classes/dmn-output-clause",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l2-dmn-classes",
+      "notation": "dmn-output-clause",
+      "prefLabel": "DMN Output Clause",
+      "definition": "An output column. The BCG table's four are Care Plan, Guidance displayed to health worker, Annotations and Reference(s). These are column DEFINITIONS in a decision table, not clinical records: no edge from this class reaches an execution artefact, and none may.",
+      "rdf:value": "http://smart.who.int/kg/dmn-output-clause"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l2-dmn-classes/dmn-rule",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l2-dmn-classes",
+      "notation": "dmn-rule",
+      "prefLabel": "DMN Rule",
+      "definition": "One row. Its input and output cells are carried as properties, not nodes: 250 of them in the BCG table alone, none the target of a cross-model edge. What the rule needs a node for is its citation edge into L1.",
+      "rdf:value": "http://smart.who.int/kg/dmn-rule"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l3-classes",
+      "@type": "skos:ConceptScheme",
+      "notation": "sgkg-l3-classes",
+      "prefLabel": "SMART Guidelines KG L3 classes",
+      "definition": "The classes a L3 knowledge-graph node can be. smart-base document kinds and extractions name them as `sgkg-l3#<code>`. GENERATED by smart-base/L1/schemas/emit.ts from smart-base/L3/schemas/l3.ts: do not hand-edit; change the layer source and run `npm run build` in smart-base/L1/schemas/.",
+      "source": {
+        "@id": "https://github.com/litlfred/smart-base/blob/main/smart-base/L3/schemas/l3.ts"
+      },
+      "changeNote": "smart-base/L3/schemas/l3.ts, the layer's `classes`: id, name, note and iri."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l3-classes/plan-definition",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l3-classes",
+      "notation": "plan-definition",
+      "prefLabel": "Plan Definition",
+      "definition": "A FHIR PlanDefinition. The published mapping gives it two sources -- Processes and Decision Tables -- so a PlanDefinition alone does not say which it came from; the implementedBy edge does. 138 in the immunizations IG, all declaring cpg-recommendationdefinition, all decision tables. Shares its IRI with the l1:external-artifact for the same canonical.",
+      "rdf:value": "http://smart.who.int/kg/plan-definition"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l3-classes/activity-definition",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l3-classes",
+      "notation": "activity-definition",
+      "prefLabel": "Activity Definition",
+      "definition": "A FHIR ActivityDefinition -- the concrete act a plan's action invokes. Reached from a PlanDefinition action's `definitionCanonical`, which is a real reference rather than a convention. 3 in the immunizations IG: two cpg-immunizationactivity, one cpg-communicationactivity.",
+      "rdf:value": "http://smart.who.int/kg/activity-definition"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l3-classes/library",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l3-classes",
+      "notation": "library",
+      "prefLabel": "Library",
+      "definition": "A FHIR Library -- the resource that carries CQL. Indexed by canonical and status only. Its CONTENTS are deliberately out of scope: a future l3-cql subgraph will elaborate this same IRI, exactly as l2-bpmn elaborates a BPMN file. 279 in the immunizations IG, joined to their PlanDefinition by the `{id}Logic` suffix.",
+      "rdf:value": "http://smart.who.int/kg/library"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l3-classes/cql-library",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l3-classes",
+      "notation": "cql-library",
+      "prefLabel": "CQL File",
+      "definition": "A .cql file on disk, as opposed to the FHIR Library resource that wraps it. A node so that the mapping table's four CQL rows -- CQL Concepts and CQL Data Elements under Elements, CQL under Decision Tables, CQL IndicatorLogic under Indicators -- do not dead-end. It carries a name, a path and a hash and NOTHING about the logic: no expressions, no comment tags, no data requirements. 279 in the immunizations IG. The l3-cql subgraph is where that content belongs, and it is not built yet.",
+      "rdf:value": "http://smart.who.int/kg/cql-library"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l3-classes/measure",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l3-classes",
+      "notation": "measure",
+      "prefLabel": "Measure",
+      "definition": "A FHIR Measure -- an indicator made computable. 41 in the immunizations IG, all declaring proportion-measure-cqfm; the SOP makes the profile depend on scoring type, which is why the profile is read rather than assumed. Joined to its L2 indicator by id convention (IMMZ.IND.08 -> IMMZIND08).",
+      "rdf:value": "http://smart.who.int/kg/measure"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l3-classes/questionnaire",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l3-classes",
+      "notation": "questionnaire",
+      "prefLabel": "Questionnaire",
+      "definition": "A FHIR Questionnaire -- a data-collection form over a logical model. 10 in the immunizations IG. Its `sdc-questionnaire-targetStructureMap` extension names the StructureMap that extracts it, which is a real canonical reference. The SOP states no linkId convention and none exists in the estate, so no edge is licensed on linkId.",
+      "rdf:value": "http://smart.who.int/kg/questionnaire"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l3-classes/structure-map",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l3-classes",
+      "notation": "structure-map",
+      "prefLabel": "Structure Map",
+      "definition": "A FHIR StructureMap. The SOP requires them in threes -- QuestionnaireResponse to logical model, logical model to resource, and a grouping map -- so a count that is not a multiple of three is worth a look. 16 .fml files in the immunizations IG.",
+      "rdf:value": "http://smart.who.int/kg/structure-map"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l3-classes/structure-definition",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l3-classes",
+      "notation": "structure-definition",
+      "prefLabel": "Logical Model",
+      "definition": "A StructureDefinition with kind `logical` -- one data dictionary tab as a data structure. Distinct from `profile`, which constrains a FHIR resource: WHO's ArchiMate model has Logical Model realising Data Object while Profile realises Data Element, and the two are not interchangeable. 15 in the immunizations IG.",
+      "rdf:value": "http://smart.who.int/kg/structure-definition"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l3-classes/profile",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l3-classes",
+      "notation": "profile",
+      "prefLabel": "Profile",
+      "definition": "A StructureDefinition constraining a FHIR resource. Separate from structure-definition for the reason above. 5 in the immunizations IG. Its internals -- differentials, element definitions, bindings -- are the clearest case of what this layer refuses to re-represent.",
+      "rdf:value": "http://smart.who.int/kg/profile"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l3-classes/value-set",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l3-classes",
+      "notation": "value-set",
+      "prefLabel": "Value Set",
+      "definition": "A FHIR ValueSet. 192 in the immunizations IG -- the most numerous artefact of all. Indexed by canonical; its expansion, its compose rules and the codes it contains are terminology, which docs/SCOPE.md keeps at arm's length as firmly here as at L1.",
+      "rdf:value": "http://smart.who.int/kg/value-set"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l3-classes/code-system",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l3-classes",
+      "notation": "code-system",
+      "prefLabel": "Code System",
+      "definition": "A FHIR CodeSystem. The SOP says each guideline defines one guideline-level code system holding a concept for every data dictionary element -- which is what makes `code[WHO] = IMMZ.DE9` on a logical model element resolvable. 6 in the immunizations IG. The codes themselves are not copied here.",
+      "rdf:value": "http://smart.who.int/kg/code-system"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l3-classes/concept-map",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l3-classes",
+      "notation": "concept-map",
+      "prefLabel": "Concept Map",
+      "definition": "A FHIR ConceptMap -- one per target code system in the dictionary's terminology mappings. 8 in the immunizations IG. Records that a mapping exists; the mappings themselves belong to terminology.",
+      "rdf:value": "http://smart.who.int/kg/concept-map"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l3-classes/actor-definition",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l3-classes",
+      "notation": "actor-definition",
+      "prefLabel": "Actor Definition",
+      "definition": "A FHIR ActorDefinition -- an L2 persona made a FHIR resource. ZERO in the immunizations IG and 22 in smart-base, which is itself worth a coverage query. The SOP names no profile for it and says one is not currently possible because SUSHI cannot profile an R5 resource in an R4 IG, and it tells authors not to assign an identifier -- so expect a bare resource and do not infer more.",
+      "rdf:value": "http://smart.who.int/kg/actor-definition"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l3-classes/requirements",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base-code-lists.jsonld/sgkg-l3-classes",
+      "notation": "requirements",
+      "prefLabel": "Requirements",
+      "definition": "A FHIR Requirements resource. The ONE place the published SOP names an SG profile -- SGRequirements -- and the grain is one resource per business process holding many statements, not one per requirement. ZERO in the immunizations IG and 41 in smart-base.",
+      "rdf:value": "http://smart.who.int/kg/requirements"
+    }
+  ],
+  "staging": {
+    "branch": "claude/repin-train-0550",
+    "sha": "211176b48990d1a2382a2913a91794b72853a53c",
+    "pr": "3124/merge",
+    "run": "43611082734"
+  }
+}

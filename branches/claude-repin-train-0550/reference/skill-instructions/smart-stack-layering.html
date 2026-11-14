@@ -1,0 +1,197 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="../../assets/css/just-the-docs-default.css"><link rel="stylesheet" href="../../assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><script src="../../assets/js/vendor/lunr.min.js"></script><script src="../../assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>smart-stack-layering | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="smart-stack-layering" /><meta property="og:locale" content="en_US" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="smart-stack-layering" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "reference-skill-instructions-smart-stack-layering",
+    "src": "../../assets/qa/reference-skill-instructions-smart-stack-layering/page.translation.json",
+    "index": "../../assets/qa/reference-skill-instructions-smart-stack-layering/qa-index.json",
+    "list": "../../assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"../../assets/translation-status/index.json",
+  "reviewSrc":"../../assets/translation-status/review.json"
+}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"../../folio-assistant-core/","jsonld":"../../folio-assistant-core/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="../../assets/harness/site.json"><meta name="fa-todo-src" content="../../assets/todos/index.json"><meta name="fa-todo-graph" content="../../todos.jsonld"><meta name="fa-zoom-src" content="../../assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;]"><meta name="fa-baseurl" content="../.."><meta name="fa-staging" content="preview"><meta name="fa-search-index" content="published"><meta name="fa-beans-src" content="../../assets/beans/index.json"><meta name="fa-processes-src" content="../../subgraph/index.jsonld"><meta name="fa-build-src" content="../../build.json"><meta name="fa-fsh-guts-src" content="../../fsh-guts.json"><link rel="stylesheet" href="../../assets/css/navbar-row.css?v=7d7d00921e0f"><link rel="stylesheet" href="../../assets/css/docs-ui.css?v=48f434c0df5b"><link rel="stylesheet" href="../../assets/css/narrow-viewport.css?v=173ef819dbf2"><link rel="stylesheet" href="../../assets/css/themes.css?v=37c8ab192a5f"><link rel="stylesheet" href="../../assets/css/uml.css?v=e677f91cbf66"><link rel="stylesheet" href="../../assets/css/avatars.css?v=9c44b2be99db"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","scenarios","schemas","skills","software-library","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="../../assets/js/harness-data.js" defer></script><script src="../../assets/js/kg-render.js" defer></script><script src="../../assets/js/navbar-row.js?v=7fdc9b6882fa" defer></script><script src="../../assets/js/docs-ui.js?v=4a389697004c" defer></script><script src="../../assets/js/edit-links.js?v=7b072444cbb5" defer></script><script src="../../assets/js/translation-review.js?v=1902d883e072" defer></script><script src="../../assets/js/code-highlight.js?v=0f94772226c3" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><style id="fa-page-ground" data-instance="cat-harness">
+  /* Grumpy cyborg agents, the theme of cat-harness. */
+  :root { --fa-page-scrim: rgba(39, 38, 43, 0.85); --fa-text-scrim: rgba(39, 38, 43, 0.96); }
+  :root[data-fa-scheme="light"] { --fa-page-scrim: rgba(255, 255, 255, 0.85); --fa-text-scrim: rgba(255, 255, 255, 0.96); }
+  /* The root carries the art, so it covers the whole viewport however short
+     the page; the body is made see-through so the art is not painted over. */
+  html:root body { background-color: transparent; }
+  html body .main-content { background-color: var(--fa-text-scrim); border-radius: 6px; }
+  html:root {
+    background-image:
+      linear-gradient(var(--fa-page-scrim), var(--fa-page-scrim)),
+      url("../../assets/img/harness/landing-grumpy-cyborg-agents-laptop.webp");
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: cover;
+    background-attachment: fixed;
+  }
+  @media (max-width: 48rem) {
+    html:root {
+      background-image:
+        linear-gradient(var(--fa-page-scrim), var(--fa-page-scrim)),
+        url("../../assets/img/harness/landing-grumpy-cyborg-agents-card.webp");
+    }
+  }
+  @media (max-width: 30rem) {
+    html:root {
+      background-image:
+        linear-gradient(var(--fa-page-scrim), var(--fa-page-scrim)),
+        url("../../assets/img/harness/landing-grumpy-cyborg-agents-mobile.webp");
+    }
+  }
+  /* Print and forced colours get the plain page: art is decoration. */
+  @media print, (forced-colors: active) {
+    html:root { background-image: none; }
+  }
+</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-giobbw31pa.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-giobbw31pa","here":"/reference/skill-instructions/smart-stack-layering.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#the-stack","label":"The stack"},{"href":"#the-question-that-settles-placement","label":"The question that settles placement"},{"href":"#no-layer-between-smart-base-and-its-kinds","label":"No layer between smart-base and its kinds"},{"href":"#what-each-layer-may-hold-and-what-it-may-not","label":"What each layer may hold, and what it may not"},{"href":"#two-consequences","label":"Two consequences"},{"href":"#smart-base-becomes-a-conventional-ig","label":"smart-base becomes a conventional IG"},{"href":"#the-falsification-test","label":"The falsification test"},{"href":"#where-a-layer-says-which-layer-it-is","label":"Where a layer says which layer it is"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:var(--fa-font-sans,system-ui,sans-serif)">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+var b=document.querySelector('[data-fa-staging-banner]'),d=document.querySelector('[data-fa-staging-detail]');
+if(b)document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');
+var m=location.pathname.match(/^(.*\/(?:branches|STAGING)\/[^/]+\/)/);
+if(!m){if(d)d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+var s=document.createElement('script');s.src=m[1]+'staging-banner.js';
+s.onerror=function(){if(d)d.textContent='\u2014 build details unavailable';};
+(document.head||document.documentElement).appendChild(s);
+})();</script><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><nav aria-label="Breadcrumb" class="breadcrumb-nav"><ol class="breadcrumb-nav-list"><li class="breadcrumb-nav-list-item"><a href="../../reference/">Reference</a></li><li class="breadcrumb-nav-list-item"><a href="../../reference/skill-instructions/">Skill instructions</a></li><li class="breadcrumb-nav-list-item"><span>smart-stack-layering</span></li></ol></nav><div id="main-content" class="main-content"><main><blockquote class="note"><p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/skills/content/authoring-who-smart-guidelines/smart-stack-layering.md"><code class="language-plaintext highlighter-rouge">smart-base/skills/content/authoring-who-smart-guidelines/smart-stack-layering.md</code></a> — do not edit here.</p><p><a href="https://github.com/litlfred/folio-assistant/edit/main/smart-base/skills/content/authoring-who-smart-guidelines/smart-stack-layering.md" class="fa-edit-source" data-fa-link="edit" data-src="smart-base/skills/content/authoring-who-smart-guidelines/smart-stack-layering.md" data-repo="litlfred/folio-assistant">✎ Edit this page’s source</a></p></blockquote><h1 id="smart-stack-layering"><a href="#smart-stack-layering" class="anchor-heading" aria-labelledby="smart-stack-layering"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> smart-stack-layering
+  
+  
+</h1><blockquote><p>Skill id: <code class="language-plaintext highlighter-rouge">smart-stack-layering</code> · Package: <code class="language-plaintext highlighter-rouge">authoring-who-smart-guidelines</code></p></blockquote><h2 id="the-stack"><a href="#the-stack" class="anchor-heading" aria-labelledby="the-stack"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The stack
+  
+  
+</h2><div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>folio-assistant-core
+  └── fhir-harness              bare FHIR IG pipeline — no WHO anything
+        └── smart-base          WHO SMART harness rules + data models; instantiates smart.who.int.base
+              │                   ├─ L1  document kind — semi-fixed, computed from smart-base's library (+ PICO, Cochrane …)
+              │                   └─ DAK document kind — fixed: the ten components
+              └── smart-ig      L3 — the FHIR IG publication a DAK feeds
+</code></pre></div></div><p>There is no <code class="language-plaintext highlighter-rouge">smart-guidelines</code> layer. L1 and DAK are <strong>document kinds</strong>, not
+layers: things an author produces with the smart-base harness, with no code,
+tools or processes of their own. An IG is a layer, because it is published
+through the IG Publisher; every ingested IG (<code class="language-plaintext highlighter-rouge">smart-trust</code>,
+<code class="language-plaintext highlighter-rouge">smart-immunizations</code>) <code class="language-plaintext highlighter-rouge">needs: smart-ig</code>.</p><p><strong>L1, DAK and the IG are not a chain.</strong> An L1 document with no DAK behind it
+is real, and so is an IG with no L1; an IG does not depend on a narrative
+corpus it never reads.</p><h2 id="the-question-that-settles-placement"><a href="#the-question-that-settles-placement" class="anchor-heading" aria-labelledby="the-question-that-settles-placement"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The question that settles placement
+  
+  
+</h2><p>Ask in this order; the first match wins:</p><blockquote><p><strong>1. Would a non-WHO FHIR IG need this?</strong> → <code class="language-plaintext highlighter-rouge">fhir-harness</code>.
+<strong>2. Would every WHO SMART asset need it, L1, L2 and L3 alike?</strong> → <code class="language-plaintext highlighter-rouge">smart-base</code>.
+<strong>3. Is it about publishing one guideline’s FHIR IG?</strong> → <code class="language-plaintext highlighter-rouge">smart-ig</code>.
+<strong>4. Otherwise</strong> → <code class="language-plaintext highlighter-rouge">smart-base</code>, as part of the L1 or DAK document kind it serves.</p></blockquote><p>Question 1 is yes only if you can name one non-WHO IG that would want the
+thing.</p><h2 id="no-layer-between-smart-base-and-its-kinds"><a href="#no-layer-between-smart-base-and-its-kinds" class="anchor-heading" aria-labelledby="no-layer-between-smart-base-and-its-kinds"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> No layer between smart-base and its kinds
+  
+  
+</h2><p><code class="language-plaintext highlighter-rouge">smart-base</code> is the home of WHO SMART policy and also instantiates its own IG.
+Do not re-introduce a <code class="language-plaintext highlighter-rouge">smart-guidelines</code> layer under another name: a
+<code class="language-plaintext highlighter-rouge">smart-common</code>, a <code class="language-plaintext highlighter-rouge">smart-core</code>, a <code class="language-plaintext highlighter-rouge">shared/</code> skills package that only the WHO
+kinds import. A rule that L1, DAK and the IG all need is <code class="language-plaintext highlighter-rouge">smart-base</code>’s. A
+“layer” that holds no code of its own is a kind.</p><h2 id="what-each-layer-may-hold-and-what-it-may-not"><a href="#what-each-layer-may-hold-and-what-it-may-not" class="anchor-heading" aria-labelledby="what-each-layer-may-hold-and-what-it-may-not"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What each layer may hold, and what it may not
+  
+  
+</h2><div class="table-wrapper"><table><thead><tr><th>layer</th><th>holds</th><th>must NOT hold</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">fhir-harness</code></td><td>SUSHI, IG Publisher invocation, Jekyll assembly, publication to a pages branch, the artefact-index reconstruction</td><td>any WHO term, the DAK declaration (<code class="language-plaintext highlighter-rouge">index.config.json</code> <code class="language-plaintext highlighter-rouge">contentTypes.dak</code>), any DAK pre/post step, any <code class="language-plaintext highlighter-rouge">smart.who.int</code> canonical</td></tr><tr><td><code class="language-plaintext highlighter-rouge">smart-base</code></td><td>the SMART harness rules, the DAK logical model, the schema of the <code class="language-plaintext highlighter-rouge">contentTypes.dak</code> index section, WHO voices and methodologies, the <code class="language-plaintext highlighter-rouge">smart.who.int.base</code> IG — <strong>and the two document kinds:</strong> L1 (narrative assets, figure narratives, the corpus a DTH is written from) and DAK (the ten components, DMN/BPMN authoring, the DAK-shaped pre-processing)</td><td>subject matter for any one guideline; FHIR resources in an L1 document; FHIR profiles or publication in a DAK</td></tr><tr><td><code class="language-plaintext highlighter-rouge">smart-ig</code></td><td>L3 — FSH, profiles, terminology binding, the IG build for one guideline</td><td>L1 narrative; DAK authoring</td></tr></tbody></table></div><h2 id="two-consequences"><a href="#two-consequences" class="anchor-heading" aria-labelledby="two-consequences"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Two consequences
+  
+  
+</h2><p><strong>1. There is no per-IG harness.</strong> <code class="language-plaintext highlighter-rouge">smart-trust</code> and <code class="language-plaintext highlighter-rouge">smart-immunizations</code>
+are <strong>layers on <code class="language-plaintext highlighter-rouge">smart-ig</code></strong>, not harnesses: they add no new
+functionality.</p><p><strong>2. <code class="language-plaintext highlighter-rouge">fhir-harness</code> may not import the WHO package.</strong> A dependency on
+<code class="language-plaintext highlighter-rouge">authoring-who-smart-guidelines</code> would stop a non-WHO IG from instantiating it
+while still passing every gate. The upper layer may know the stack; the lower
+layer may not. This skill lives in the WHO package and describes
+<code class="language-plaintext highlighter-rouge">fhir-harness</code>, which is that direction.</p><h2 id="smart-base-becomes-a-conventional-ig"><a href="#smart-base-becomes-a-conventional-ig" class="anchor-heading" aria-labelledby="smart-base-becomes-a-conventional-ig"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> smart-base becomes a conventional IG
+  
+  
+</h2><p><code class="language-plaintext highlighter-rouge">WorldHealthOrganization/smart-base</code> does two jobs: it <strong>is</strong> an IG
+(<code class="language-plaintext highlighter-rouge">smart.who.int.base</code>, FHIR 4.0.1, its own profiles and logical models), and
+it <strong>hosts the toolchain every downstream SMART IG runs</strong> — <code class="language-plaintext highlighter-rouge">ghbuild.yml</code> is a
+reusable workflow, and a downstream build <code class="language-plaintext highlighter-rouge">curl</code>s its scripts from
+smart-base’s <code class="language-plaintext highlighter-rouge">main</code> at build time. The second job is to end, because:</p><ul><li><strong>A downstream IG’s build depends on a branch it does not control</strong>, so it
+can change without its repository changing.</li><li><strong>The IG and the toolchain version together.</strong> A fix to one is a release of
+the other.</li><li><strong>The tooling is invisible to the harness.</strong> Scripts in <code class="language-plaintext highlighter-rouge">input/</code> are not
+Tool nodes, so no process can bind them and no audit can reach them.</li></ul><p>The migration is <code class="language-plaintext highlighter-rouge">smart-base/tools/</code>: Tool nodes now, execution later.
+Declaring is not vendoring — see <a href="../../reference/skill-instructions/smart-base-tools.html"><code class="language-plaintext highlighter-rouge">smart-base-tools</code></a>.
+This is work in <code class="language-plaintext highlighter-rouge">litlfred/*</code> only; nothing at <code class="language-plaintext highlighter-rouge">WorldHealthOrganization/*</code>
+changes, and the DAK declaration in <code class="language-plaintext highlighter-rouge">index.config.json</code> is ours until
+upstream adopts it.</p><h2 id="the-falsification-test"><a href="#the-falsification-test" class="anchor-heading" aria-labelledby="the-falsification-test"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The falsification test
+  
+  
+</h2><blockquote><p><strong>Every step of the existing WHO build assigns to exactly one layer.</strong></p></blockquote><p>The build is the DAK pre- and post-processing around one Publisher run, plus
+the deploy, in <code class="language-plaintext highlighter-rouge">WorldHealthOrganization/smart-base</code>’s
+<code class="language-plaintext highlighter-rouge">.github/workflows/ghbuild.yml</code> (the <code class="language-plaintext highlighter-rouge">do_dak</code> input gates the pre and post
+phases). If a step cannot be placed, or two layers both claim it, <strong>the split
+is wrong</strong> and this skill changes. Do not resolve a conflict by adding a
+layer; report it. The per-step assignment is in
+<a href="https://github.com/litlfred/smart-base/blob/main/smart-base/L3/skills/smart-l3/dak-preprocessing.md"><code class="language-plaintext highlighter-rouge">dak-preprocessing</code></a> and
+<a href="https://github.com/litlfred/smart-base/blob/main/smart-base/L3/skills/smart-l3/dak-postprocessing.md"><code class="language-plaintext highlighter-rouge">dak-postprocessing</code></a>.</p><p><strong>Current result: all 26 steps place</strong> (6 pre-processing, 1 Publisher run, 9
+post-processing, 10 deploy), none needs a new layer and none has two owners.
+Three are placed against their labels:</p><div class="table-wrapper"><table><thead><tr><th>step</th><th>labelled</th><th>placed</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">strip_library_binaries.py</code></td><td>DAK Postprocessing</td><td><code class="language-plaintext highlighter-rouge">fhir-harness</code></td></tr><tr><td><code class="language-plaintext highlighter-rouge">strip_library_content.py</code></td><td>DAK Postprocessing</td><td><code class="language-plaintext highlighter-rouge">fhir-harness</code></td></tr><tr><td>comment on PR — deployment completed</td><td>(deploy)</td><td><code class="language-plaintext highlighter-rouge">cat-harness</code></td></tr></tbody></table></div><p>The deploy phase is entirely generic — see
+<a href="../../reference/skill-instructions/ig-build-pipeline.html"><code class="language-plaintext highlighter-rouge">ig-build-pipeline</code></a>
+§”The deploy phase”. Re-run the test when a step is added upstream.</p><h2 id="where-a-layer-says-which-layer-it-is"><a href="#where-a-layer-says-which-layer-it-is" class="anchor-heading" aria-labelledby="where-a-layer-says-which-layer-it-is"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where a layer says which layer it is
+  
+  
+</h2><p>In its declaration’s <code class="language-plaintext highlighter-rouge">needs</code>, and nowhere else: <code class="language-plaintext highlighter-rouge">needs: ["smart-ig"]</code> is a
+published WHO SMART IG, <code class="language-plaintext highlighter-rouge">needs: ["smart-base"]</code> a WHO SMART layer that
+publishes no IG, <code class="language-plaintext highlighter-rouge">needs: ["fhir-harness"]</code> a non-WHO IG. Which document kinds
+a layer authors (L1, DAK) is a property of its content. There is no
+<code class="language-plaintext highlighter-rouge">layer</code> field.</p><p>Conventions for the declaration:
+<a href="../../reference/skill-instructions/directory-conventions.html"><code class="language-plaintext highlighter-rouge">directory-conventions</code></a>.</p></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

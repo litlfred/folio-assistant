@@ -1,0 +1,326 @@
+{
+  "$ref": "#/definitions/OntologyLayer",
+  "definitions": {
+    "OntologyLayer": {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "type": "string"
+        },
+        "layer": {
+          "type": "string"
+        },
+        "namespace": {
+          "type": "string",
+          "format": "uri"
+        },
+        "instanceNamespace": {
+          "type": "string",
+          "format": "uri"
+        },
+        "source": {
+          "type": "string"
+        },
+        "note": {
+          "type": "string"
+        },
+        "profileNote": {
+          "type": "string"
+        },
+        "imports": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "groundedIn": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "what": {
+                "type": "string"
+              },
+              "where": {
+                "type": "string"
+              },
+              "detail": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "what",
+              "where",
+              "detail"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "valueSets": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+              },
+              "note": {
+                "type": "string",
+                "minLength": 1
+              },
+              "source": {
+                "type": "string",
+                "minLength": 1
+              },
+              "codes": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "definition": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "definition"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": [
+              "id",
+              "note",
+              "source",
+              "codes"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "predicates": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "predicate": {
+                "type": "string",
+                "pattern": "^[a-z][A-Za-z0-9]*$"
+              },
+              "iri": {
+                "type": "string",
+                "format": "uri"
+              },
+              "note": {
+                "type": "string",
+                "minLength": 1
+              },
+              "openQualifier": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "predicate",
+              "iri",
+              "note"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "classes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "Source",
+                  "Concept",
+                  "Reference",
+                  "Kit",
+                  "Component",
+                  "Element",
+                  "Artefact",
+                  "Structure",
+                  "Conformance",
+                  "Knowledge"
+                ]
+              },
+              "iri": {
+                "type": "string",
+                "format": "uri"
+              },
+              "note": {
+                "type": "string",
+                "minLength": 1
+              },
+              "properties": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "valueSets": {
+                "type": "object",
+                "propertyNames": {
+                  "type": "string"
+                },
+                "additionalProperties": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "set": {
+                          "type": "string"
+                        },
+                        "severity": {
+                          "type": "string",
+                          "enum": [
+                            "error",
+                            "warning"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "set"
+                      ],
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              },
+              "iriPattern": {
+                "type": "string"
+              },
+              "minDerivation": {
+                "type": "string",
+                "enum": [
+                  "derived",
+                  "inferred",
+                  "decided"
+                ]
+              },
+              "propertyNote": {
+                "type": "string"
+              },
+              "contentFields": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "elaborates": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "kind",
+              "iri",
+              "note",
+              "properties"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "edges": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "predicate": {
+                "type": "string"
+              },
+              "source": {
+                "type": "string"
+              },
+              "target": {
+                "type": "string"
+              },
+              "qualifier": {
+                "type": "string"
+              },
+              "minDerivation": {
+                "type": "string",
+                "enum": [
+                  "derived",
+                  "inferred",
+                  "decided"
+                ]
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "predicate",
+              "source",
+              "target"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "deliberatelyOmitted": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "what": {
+                "type": "string"
+              },
+              "why": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "what",
+              "why"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "layer",
+        "namespace",
+        "source",
+        "note",
+        "groundedIn",
+        "predicates",
+        "classes",
+        "edges"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "http://smart.who.int/base/schema/zod/ontology/OntologyLayerSchema.schema.json",
+  "title": "OntologyLayerSchema",
+  "description": "Generated from `OntologyLayerSchema` in L1/schemas/ontology.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-train-0550",
+    "sha": "211176b48990d1a2382a2913a91794b72853a53c",
+    "pr": "3124/merge",
+    "run": "43611082734"
+  }
+}

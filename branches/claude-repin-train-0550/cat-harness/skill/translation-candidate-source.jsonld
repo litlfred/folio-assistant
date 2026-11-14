@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/cat-harness/skill/translation-candidate-source.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-train-0550",
+    "sha": "211176b48990d1a2382a2913a91794b72853a53c",
+    "pr": "3124/merge",
+    "run": "43611082734"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/cat-harness/skill/translation-candidate-source",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "translation-candidate-source",
+      "title": "Translation candidate source — one interface, many engines",
+      "description": "The one interface every candidate-translation engine meets: for a layer's catalogues, append candidate translations per string to the `translation-candidates/v1` sidecar, each carrying its source, and seed an empty `msgstr` with the first candidate marked fuzzy. An agent model and the open machine-translation engines (OPUS-MT, LibreTranslate / Argos) are interchangeable behind it. Use when adding an engine, choosing one, or producing candidates for review.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/cat-harness/package/library-core"
+      ],
+      "instructionsPath": "library/skills/library-core/translation-candidate-source.md",
+      "instructionLines": 76,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/cat-harness/directory/library-graph",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/translation-candidate-source"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/fhir-harness/fhir-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/fhir-harness/directory/fhir-core-definitions.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/fhir-harness/fhir-harness.jsonld",
+  "sameAs": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-core-definitions.jsonld",
+  "staging": {
+    "branch": "claude/repin-train-0550",
+    "sha": "211176b48990d1a2382a2913a91794b72853a53c",
+    "pr": "3124/merge",
+    "run": "43611082734"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-core-definitions",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "fhir-core-definitions",
+      "path": "fhir-core/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/fhir-core-definitions"
+      ],
+      "title": "FHIR core definitions",
+      "description": "The FHIR core specification's StructureDefinitions for each STABLE release, one graph per release keyed by canonical URL (http://hl7.org/fhir/StructureDefinition/<id>): R4 from `hl7.fhir.r4.core#4.0.1`, R4B from `hl7.fhir.r4b.core#4.3.0`, R5 from `hl7.fhir.r5.core#5.0.0`, each pinned in `pins.json` by its packages.fhir.org URL, sha1 and sha512. `<release>/manifest.json` lists every resource, complex and primitive type and root type (Base in R5; Element, BackboneElement, DomainResource, Resource) with its kind, base and the sha256 of its bytes; constraint profiles, extension definitions and logical models are left out and counted. The bodies are the package's own files, written beside the manifest by `fhir-core.ts materialise` and not committed (12 MB); `fhir-core.ts check` holds them to the manifests and `resolve` answers which file a canonical is kept in. A release whose package could not be read is `unread` with the reason, never an empty graph (owner, 2026-11-14).",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-core-definitions"
+    }
+  ]
+}

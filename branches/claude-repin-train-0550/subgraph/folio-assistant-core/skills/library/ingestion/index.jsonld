@@ -1,0 +1,79 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/library/ingestion/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
+      "@type": "bootstrap:Skill",
+      "name": "document-intake",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/894467f6fe25f8baf017289dbb5f1518165cb508ed9c757555749c99ba910ad8",
+        "bytes": 25657,
+        "sha256": "894467f6fe25f8baf017289dbb5f1518165cb508ed9c757555749c99ba910ad8"
+      },
+      "title": "Document Intake"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/figure-rebuild",
+      "@type": "bootstrap:Skill",
+      "name": "figure-rebuild",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/85ed62899c9017b42c53f741eb119db9e6eac2a855752192490e851e27b5a9e7",
+        "bytes": 19830,
+        "sha256": "85ed62899c9017b42c53f741eb119db9e6eac2a855752192490e851e27b5a9e7"
+      },
+      "title": "Figure rebuild: a figure is data, not a picture"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/l1-coverage",
+      "@type": "bootstrap:Skill",
+      "name": "l1-coverage",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8caa26eb41321cd9910312d5f22a6b429e602416e838fdbea99100a16249c4cc",
+        "bytes": 4736,
+        "sha256": "8caa26eb41321cd9910312d5f22a6b429e602416e838fdbea99100a16249c4cc"
+      },
+      "title": "L1 coverage — nothing normative goes missing silently"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/l1-document-ingestion",
+      "@type": "bootstrap:Skill",
+      "name": "l1-document-ingestion",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ef9b626414dd37f20020f8ef6517a43801b98ec7c8143f84da46c108b5a7c87f",
+        "bytes": 67531,
+        "sha256": "ef9b626414dd37f20020f8ef6517a43801b98ec7c8143f84da46c108b5a7c87f"
+      },
+      "title": "L1 document ingestion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/publish-extracted-statements",
+      "@type": "bootstrap:Skill",
+      "name": "publish-extracted-statements",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fb4988690cc1284ef4bbf9d799ccd410dcfc8b547dcbd22a40b3af864b2eb1f0",
+        "bytes": 6813,
+        "sha256": "fb4988690cc1284ef4bbf9d799ccd410dcfc8b547dcbd22a40b3af864b2eb1f0"
+      },
+      "title": "Publish extracted statements with source links"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/tabular-metadata",
+      "@type": "bootstrap:Skill",
+      "name": "tabular-metadata",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/14f960dcc246b11ef675fdb764415982740549d0c07238666792121677b8063a",
+        "bytes": 8761,
+        "sha256": "14f960dcc246b11ef675fdb764415982740549d0c07238666792121677b8063a"
+      },
+      "title": "Tabular metadata — CSVW, annotated, and honest about what it could not read"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills/library/ingestion",
+  "path": "skills/library/ingestion/"
+}

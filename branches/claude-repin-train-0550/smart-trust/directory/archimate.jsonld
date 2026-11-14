@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-trust/smart-trust.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-trust/directory/archimate.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-trust/smart-trust.jsonld",
+  "staging": {
+    "branch": "claude/repin-train-0550",
+    "sha": "211176b48990d1a2382a2913a91794b72853a53c",
+    "pr": "3124/merge",
+    "run": "43611082734"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-trust/directory/archimate",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "archimate",
+      "path": "archimate/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/archimate"
+      ],
+      "description": "The GDHCN trust network as ArchiMate (cat-harness's archimate subgraph): this guide's actors (input/fsh/actors/actors.fsh), the public keys and the trust list, and the three steps onboard, distribute and verify, as the home page's figure (input/images/trust_network.png) in a view with every box where the figure draws it. Built by archimate/build.py (`check:archimate` fails when the committed model is stale); the archimate-pages visualiser draws the view as SVG, and archimate/pretty.py draws it again in the original figure's style (input/includes/trust-network-pretty.svg). The home page and the Concepts page toggle between the two (input/includes/trust-network-figure.html).",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-trust/directory/archimate",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/smart-trust/directory/archimate"
+    }
+  ]
+}

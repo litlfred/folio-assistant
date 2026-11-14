@@ -1,0 +1,416 @@
+{
+  "$schema": "folio-library-document/v1",
+  "id": "frantzi-ananiadou-1996-c-value",
+  "title": "Extracting Nested Collocations",
+  "variant": "pdf",
+  "pages": 6,
+  "tocSource": "none",
+  "tocMethod": null,
+  "toc": [],
+  "sections": [
+    {
+      "id": "page-001",
+      "number": null,
+      "title": "Page 1",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 1,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 557,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "nested collocations",
+          "heading": false
+        },
+        {
+          "term": "collocation extraction",
+          "heading": false
+        },
+        {
+          "term": "semi-automatic extraction",
+          "heading": false
+        },
+        {
+          "term": "approaches till",
+          "heading": false
+        },
+        {
+          "term": "till now",
+          "heading": false
+        },
+        {
+          "term": "colloca",
+          "heading": false
+        },
+        {
+          "term": "substrings",
+          "heading": false
+        },
+        {
+          "term": "smadja",
+          "heading": false
+        }
+      ],
+      "extract": "Extracting Nested Collocations Katerina T. Frantzi and Sophia Ananiadou Dept. of Computing Manchester Metropolitan University Manchester, ML 5GD, U.K. {Is Vrantzi,S. Ananiadou} @doc.mmu.ac.uk Abstract This paper provides an approach to the semi-automatic extraction of colloca- Lions from corpora using statistics. ‘The growing availability of large textual cor- pora, and the increasing nutuber of ap- plications of",
+      "extractCut": true,
+      "blocks": [
+        "library/frantzi-ananiadou-1996-c-value/blocks/prose-page-001"
+      ]
+    },
+    {
+      "id": "page-002",
+      "number": null,
+      "title": "Page 2",
+      "level": 1,
+      "pageStart": 2,
+      "pageEnd": 2,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 712,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "wall street",
+          "heading": false
+        },
+        {
+          "term": "journal wall",
+          "heading": false
+        },
+        {
+          "term": "york stock",
+          "heading": false
+        },
+        {
+          "term": "staff reporter",
+          "heading": false
+        },
+        {
+          "term": "collocation",
+          "heading": false
+        },
+        {
+          "term": "stock exchange",
+          "heading": false
+        },
+        {
+          "term": "put down",
+          "heading": false
+        },
+        {
+          "term": "sublanguages",
+          "heading": false
+        }
+      ],
+      "extract": "It is not the goal of this paper to provide yet another definition of collocation. We adopt as a working definition the one by (Sinclair, 1991) Collocation is the occurrence of two or more words within a short space of cach other in a text. Let us recall that collocations are domain- dependent. Sublanguages have remarkably high incidences of collocation (Ananiadou and Mc- Naught, 1995). (Frawley, 1988) neatly sums",
+      "extractCut": true,
+      "blocks": [
+        "library/frantzi-ananiadou-1996-c-value/blocks/prose-page-002"
+      ]
+    },
+    {
+      "id": "page-003",
+      "number": null,
+      "title": "Page 3",
+      "level": 1,
+      "pageStart": 3,
+      "pageEnd": 3,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 705,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "candidate collocations",
+          "heading": false
+        },
+        {
+          "term": "longer collocations",
+          "heading": false
+        },
+        {
+          "term": "substring appears",
+          "heading": false
+        },
+        {
+          "term": "date collocations",
+          "heading": false
+        },
+        {
+          "term": "candidate colloca",
+          "heading": false
+        },
+        {
+          "term": "substrings revise",
+          "heading": false
+        },
+        {
+          "term": "total frequency",
+          "heading": false
+        },
+        {
+          "term": "times appears",
+          "heading": false
+        }
+      ],
+      "extract": "3 Our approach ~ The Algorithm We call the extracted strings candidate celloca- tions rather than collocations, since what we ac- cept as collocations depends on the application. Tt is the human judge that, will give the final de- cision. This is the reason we consider the method as semi-automatic. Let. us consider the string “New York Stock Ex- change”. Within this string, that has already been extracted as a",
+      "extractCut": true,
+      "blocks": [
+        "library/frantzi-ananiadou-1996-c-value/blocks/prose-page-003"
+      ]
+    },
+    {
+      "id": "page-004",
+      "number": null,
+      "title": "Page 4",
+      "level": 1,
+      "pageStart": 4,
+      "pageEnd": 4,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 776,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "wall street",
+          "heading": false
+        },
+        {
+          "term": "wall strect",
+          "heading": false
+        },
+        {
+          "term": "street journal",
+          "heading": false
+        },
+        {
+          "term": "extracted n-grams",
+          "heading": false
+        },
+        {
+          "term": "candidate collocations",
+          "heading": false
+        },
+        {
+          "term": "longer n-grams",
+          "heading": false
+        },
+        {
+          "term": "staff reporter",
+          "heading": false
+        },
+        {
+          "term": "c-value",
+          "heading": false
+        }
+      ],
+      "extract": "n-gram a, the values é(6) and c(b) are revised: i(b) = t(b) + (n(a) — t(a)) o(b) = e(b) + 1. In the initial stage, (a) is set to the frequency of @ appearing on its own, and é(a) and c(a) are set to 0. Table 2: n-graims extracted by C-valuc containing “Wall Street” [CV TF ] Jandidate Collocations ] 4 19 | Staff Reporter of The Wall Street Journal 37.34 | 26 | Wall Street Journal 36 22 | The Wall Strect Journal 33 38",
+      "extractCut": true,
+      "blocks": [
+        "library/frantzi-ananiadou-1996-c-value/blocks/prose-page-004"
+      ]
+    },
+    {
+      "id": "page-005",
+      "number": null,
+      "title": "Page 5",
+      "level": 1,
+      "pageStart": 5,
+      "pageEnd": 5,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 637,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "wall street",
+          "heading": false
+        },
+        {
+          "term": "united states",
+          "heading": false
+        },
+        {
+          "term": "extracted n-grams",
+          "heading": false
+        },
+        {
+          "term": "selling days",
+          "heading": false
+        },
+        {
+          "term": "collocations",
+          "heading": false
+        },
+        {
+          "term": "word association",
+          "heading": false
+        },
+        {
+          "term": "said",
+          "heading": false
+        },
+        {
+          "term": "reporter",
+          "heading": false
+        }
+      ],
+      "extract": "Vable 3: Extracted candidate collocation with C- value in descending order. Cov Try. 184 | 114 87.6 79.6 53.2 49.5 A475 Ad ALAT 37.34 36 36 33 31.54 27,8 27 16 16 15 15 1S 15 15 15 19 93 dd 59 20, 25 AS AA 26 6 22 38 23 3 3 3 30 27 10 27 27 10 10 oO 23 23 21 k 5 [18 | 92 | WALL STREET JOURNAL Staff Reporter of The Wall Street, Journal United States the United States the United <mumber> to <money> from to <money>",
+      "extractCut": true,
+      "blocks": [
+        "library/frantzi-ananiadou-1996-c-value/blocks/prose-page-005"
+      ]
+    },
+    {
+      "id": "page-006",
+      "number": null,
+      "title": "Page 6",
+      "level": 1,
+      "pageStart": 6,
+      "pageEnd": 6,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 663,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "interrupted collocations",
+          "heading": false
+        },
+        {
+          "term": "nested collocations",
+          "heading": false
+        },
+        {
+          "term": "fre quency",
+          "heading": false
+        },
+        {
+          "term": "japanese corpora",
+          "heading": false
+        },
+        {
+          "term": "automatic extraction",
+          "heading": false
+        },
+        {
+          "term": "predicative relations",
+          "heading": false
+        },
+        {
+          "term": "col locations",
+          "heading": false
+        },
+        {
+          "term": "informa tion",
+          "heading": false
+        }
+      ],
+      "extract": "of compound words. They extend the measure for three words in a different way than that de- fined by (Fano, 1961), and no mention is given to how their formulas would be extended for word- sequences of length more that three. They do not consider nested collocations. (Smadja, 1993), extracts uninterrupted as well as interrupted collocations (predicative relations, rigid noun phrases and phrasal templates). The",
+      "extractCut": true,
+      "blocks": [
+        "library/frantzi-ananiadou-1996-c-value/blocks/prose-page-006"
+      ]
+    }
+  ],
+  "checks": {},
+  "withheld": false,
+  "keywords": [
+    {
+      "term": "street wall",
+      "heading": false
+    },
+    {
+      "term": "longer collocations",
+      "heading": false
+    },
+    {
+      "term": "candidate collocations",
+      "heading": false
+    },
+    {
+      "term": "interrupted collocations",
+      "heading": false
+    },
+    {
+      "term": "nested collocations",
+      "heading": false
+    },
+    {
+      "term": "date collocations",
+      "heading": false
+    },
+    {
+      "term": "journal wall",
+      "heading": false
+    },
+    {
+      "term": "wall strect",
+      "heading": false
+    },
+    {
+      "term": "collocation extraction",
+      "heading": false
+    },
+    {
+      "term": "extracted n-grams",
+      "heading": false
+    },
+    {
+      "term": "journal reporter",
+      "heading": false
+    },
+    {
+      "term": "candidate colloca",
+      "heading": false
+    }
+  ],
+  "coverage": [
+    {
+      "kind": "contents",
+      "state": "not-extracted",
+      "note": "split one section per page; no contents was trusted"
+    },
+    {
+      "kind": "sections",
+      "state": "partial",
+      "count": 6,
+      "note": "one per page, not by heading"
+    },
+    {
+      "kind": "figures",
+      "state": "none"
+    },
+    {
+      "kind": "tables",
+      "state": "not-extracted"
+    },
+    {
+      "kind": "references",
+      "state": "not-extracted",
+      "note": "a references section is in the text (p6); its entries are not extracted"
+    },
+    {
+      "kind": "glossary",
+      "state": "none",
+      "note": "no such heading in the text"
+    },
+    {
+      "kind": "footnotes",
+      "state": "not-extracted"
+    },
+    {
+      "kind": "summaries",
+      "state": "not-extracted",
+      "count": 0,
+      "note": "0 of 6 sections"
+    }
+  ],
+  "links": {
+    "repo": "litlfred/cat-harness",
+    "branch": "main",
+    "dir": "library/corpus/kg/frantzi-ananiadou-1996-c-value"
+  }
+}

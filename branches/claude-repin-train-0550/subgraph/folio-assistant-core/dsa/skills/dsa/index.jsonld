@@ -1,0 +1,46 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/dsa/skills/dsa/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/dsa-catalogue-status",
+      "@type": "bootstrap:Skill",
+      "name": "dsa-catalogue-status",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/dd9d4742df2113ab8a29cc9e554bc20e9cf2e98dbd343c49378c6ccfbd8fb598",
+        "bytes": 2281,
+        "sha256": "dd9d4742df2113ab8a29cc9e554bc20e9cf2e98dbd343c49378c6ccfbd8fb598"
+      },
+      "title": "`dsa-catalogue-status` — Set the catalogue status when an agreement changes or ends (P14.5)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/dsa-dcat-record",
+      "@type": "bootstrap:Skill",
+      "name": "dsa-dcat-record",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9dde821e43fd20a4cf5e4e51c7a2fe46c2608e752eaa5c2af48c501b64806f52",
+        "bytes": 3405,
+        "sha256": "9dde821e43fd20a4cf5e4e51c7a2fe46c2608e752eaa5c2af48c501b64806f52"
+      },
+      "title": "`dsa-dcat-record` — Write the DCAT 3 record and link versions (P2.4–5)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/dsa-odrl-source",
+      "@type": "bootstrap:Skill",
+      "name": "dsa-odrl-source",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e3f37c7fd2c6182ced7d3e07918d362d645267bf75c8b8a0d8f1ef5476deec2c",
+        "bytes": 3363,
+        "sha256": "e3f37c7fd2c6182ced7d3e07918d362d645267bf75c8b8a0d8f1ef5476deec2c"
+      },
+      "title": "`dsa-odrl-source` — Make the ODRL Agreement cite the legal text distribution (P2.3)"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "dsa/skills/dsa",
+  "path": "dsa/skills/dsa/"
+}

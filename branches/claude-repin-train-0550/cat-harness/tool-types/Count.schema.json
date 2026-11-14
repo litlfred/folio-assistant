@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/cat-harness/tool-types/Count.schema.json",
+  "title": "Count",
+  "type": "integer",
+  "minimum": 0,
+  "maximum": 1000000000,
+  "description": "A non-negative count — how many of something, or how many to show. Zero is a real answer.",
+  "staging": {
+    "branch": "claude/repin-train-0550",
+    "sha": "211176b48990d1a2382a2913a91794b72853a53c",
+    "pr": "3124/merge",
+    "run": "43611082734"
+  }
+}

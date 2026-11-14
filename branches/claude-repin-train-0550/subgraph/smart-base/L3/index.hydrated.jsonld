@@ -1,0 +1,587 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L3/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "http://smart.who.int/base/directory/smart-base-L3",
+      "@type": "bootstrap:Subgraph",
+      "contentSource": {
+        "declaredIn": "default",
+        "kind": "directory"
+      },
+      "description": "Knowledge-graph layer L3 as a NAMED SUBGRAPH of this layer, OPT-IN like `L1/` (a downstream layer lists `smart-base.smart-base-L3` in its `enableSubgraphs`), beside `L1/` (owner, 2026-11-13: 'L1..L3 as named subgraphs', issue #359). `L3/graph.json` names what it holds FROM WITHIN: its `schemas/` and, as they move in, its tools, skills and processes. It imports only from the layers below it.",
+      "fileCount": 0,
+      "holdsGraph": [
+        "cat-harness:graphTypology/cat-harness"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L3",
+      "name": "smart-base-L3",
+      "path": "L3/",
+      "readmePath": "L3/README.md",
+      "title": "L3 — the FHIR artefacts"
+    }
+  ],
+  "hasSubgraph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L3/collab/",
+      "@type": "bootstrap:Subgraph",
+      "hasSubgraph": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L3/collab/processes/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "http://smart.who.int/base/process/Process_DakL3Ig",
+              "@type": "bootstrap:Process",
+              "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/dak-l3-ig.svg",
+              "description": "How a WHO SMART Guidelines L2 Digital Adaptation Kit becomes a published L3 FHIR Implementation Guide: map the DAK's L2 content to the FHIR artefacts it calls for, then run fhir-harness's generic L3 pipeline (Process_L3Fhir) with that mapping as its source model. The WHO L2 → L3 ordering lives here because fhir-harness's pipeline does not know about DAKs; that pipeline is called, not copied.",
+              "enforcement": "advisory",
+              "flowCount": 3,
+              "inSubgraph": "http://smart.who.int/base/directory/smart-base-L3",
+              "name": "L2 DAK to L3 FHIR IG",
+              "nodeCount": 4,
+              "sourcePath": "L3/collab/processes/dak-l3-ig.bpmn",
+              "sourceUrl": "https://github.com/litlfred/smart-base/blob/main/smart-base/L3/collab/processes/dak-l3-ig.bpmn",
+              "startNode": "http://smart.who.int/base/process/Process_DakL3Ig/node/StartEvent_L2Ready",
+              "summary": "How a WHO SMART Guidelines L2 Digital Adaptation Kit becomes a published L3 FHIR Implementation Guide: map the DAK's L2 content to the FHIR artefacts it calls for, then run fhir-harness's generic L3 pipeline (Process_L3Fhir) with that mapping as its source mo…"
+            },
+            {
+              "@id": "http://smart.who.int/base/process/Process_DakL3Ig#flow/D01",
+              "@type": "bootstrap:SequenceFlow",
+              "from": "http://smart.who.int/base/process/Process_DakL3Ig/node/StartEvent_L2Ready",
+              "inSubgraph": "http://smart.who.int/base/directory/smart-base-L3",
+              "partOf": "http://smart.who.int/base/process/Process_DakL3Ig",
+              "to": "http://smart.who.int/base/process/Process_DakL3Ig/node/Task_MapL2"
+            },
+            {
+              "@id": "http://smart.who.int/base/process/Process_DakL3Ig#flow/D02",
+              "@type": "bootstrap:SequenceFlow",
+              "from": "http://smart.who.int/base/process/Process_DakL3Ig/node/Task_MapL2",
+              "inSubgraph": "http://smart.who.int/base/directory/smart-base-L3",
+              "partOf": "http://smart.who.int/base/process/Process_DakL3Ig",
+              "to": "http://smart.who.int/base/process/Process_DakL3Ig/node/CallActivity_L3Fhir"
+            },
+            {
+              "@id": "http://smart.who.int/base/process/Process_DakL3Ig#flow/D03",
+              "@type": "bootstrap:SequenceFlow",
+              "from": "http://smart.who.int/base/process/Process_DakL3Ig/node/CallActivity_L3Fhir",
+              "inSubgraph": "http://smart.who.int/base/directory/smart-base-L3",
+              "partOf": "http://smart.who.int/base/process/Process_DakL3Ig",
+              "to": "http://smart.who.int/base/process/Process_DakL3Ig/node/EndEvent_IgPublished"
+            },
+            {
+              "@id": "http://smart.who.int/base/process/Process_DakL3Ig/lane/Lane_Modeller",
+              "@type": "cat-harness:Lane",
+              "bindsRole": "https://litlfred.github.io/folio-assistant/cat-harness/role/fhir-modeller",
+              "inSubgraph": "http://smart.who.int/base/directory/smart-base-L3",
+              "name": "FHIR modeller",
+              "partOf": "http://smart.who.int/base/process/Process_DakL3Ig"
+            },
+            {
+              "@id": "http://smart.who.int/base/process/Process_DakL3Ig/node/CallActivity_L3Fhir",
+              "@type": "bootstrap:ProcessNode",
+              "bpmnType": "bpmn:CallActivity",
+              "inLane": "http://smart.who.int/base/process/Process_DakL3Ig/lane/Lane_Modeller",
+              "inSubgraph": "http://smart.who.int/base/directory/smart-base-L3",
+              "incoming": "http://smart.who.int/base/process/Process_DakL3Ig#flow/D02",
+              "name": "L3 FHIR IG pipeline (fhir-harness)",
+              "nodeKind": "activity",
+              "outgoing": "http://smart.who.int/base/process/Process_DakL3Ig#flow/D03",
+              "partOf": "http://smart.who.int/base/process/Process_DakL3Ig",
+              "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/fhir-modeller",
+              "relaxable": true,
+              "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/l3-fhir-authoring",
+              "touchesWorkPlan": false
+            },
+            {
+              "@id": "http://smart.who.int/base/process/Process_DakL3Ig/node/EndEvent_IgPublished",
+              "@type": "bootstrap:ProcessNode",
+              "bpmnType": "bpmn:EndEvent",
+              "inLane": "http://smart.who.int/base/process/Process_DakL3Ig/lane/Lane_Modeller",
+              "inSubgraph": "http://smart.who.int/base/directory/smart-base-L3",
+              "incoming": "http://smart.who.int/base/process/Process_DakL3Ig#flow/D03",
+              "name": "FHIR IG published",
+              "nodeKind": "end",
+              "partOf": "http://smart.who.int/base/process/Process_DakL3Ig",
+              "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/fhir-modeller",
+              "relaxable": true,
+              "touchesWorkPlan": false
+            },
+            {
+              "@id": "http://smart.who.int/base/process/Process_DakL3Ig/node/StartEvent_L2Ready",
+              "@type": "bootstrap:ProcessNode",
+              "bpmnType": "bpmn:StartEvent",
+              "inLane": "http://smart.who.int/base/process/Process_DakL3Ig/lane/Lane_Modeller",
+              "inSubgraph": "http://smart.who.int/base/directory/smart-base-L3",
+              "name": "L2 DAK ready",
+              "nodeKind": "start",
+              "outgoing": "http://smart.who.int/base/process/Process_DakL3Ig#flow/D01",
+              "partOf": "http://smart.who.int/base/process/Process_DakL3Ig",
+              "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/fhir-modeller",
+              "relaxable": true,
+              "touchesWorkPlan": false
+            },
+            {
+              "@id": "http://smart.who.int/base/process/Process_DakL3Ig/node/Task_MapL2",
+              "@type": "bootstrap:ProcessNode",
+              "bpmnType": "bpmn:UserTask",
+              "inLane": "http://smart.who.int/base/process/Process_DakL3Ig/lane/Lane_Modeller",
+              "inSubgraph": "http://smart.who.int/base/directory/smart-base-L3",
+              "incoming": "http://smart.who.int/base/process/Process_DakL3Ig#flow/D01",
+              "name": "Map L2 → L3",
+              "nodeKind": "activity",
+              "outgoing": "http://smart.who.int/base/process/Process_DakL3Ig#flow/D02",
+              "partOf": "http://smart.who.int/base/process/Process_DakL3Ig",
+              "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/fhir-modeller",
+              "relaxable": true,
+              "requires": [
+                "https://litlfred.github.io/folio-assistant/cat-harness/skill/l3-fhir-authoring",
+                "http://smart.who.int/base/skill/l2-dak-authoring"
+              ],
+              "touchesWorkPlan": false
+            }
+          ],
+          "holdsGraph": [
+            "bootstrap:graphTypology/processes"
+          ],
+          "name": "L3/collab/processes",
+          "path": "L3/collab/processes/"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/cat-harness"
+      ],
+      "name": "L3/collab",
+      "path": "L3/collab/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L3/schemas/",
+      "@type": "bootstrap:Subgraph",
+      "hasSubgraph": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L3/schemas/generated/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "cat-harness:graphTypology/cat-harness"
+          ],
+          "name": "L3/schemas/generated",
+          "path": "L3/schemas/generated/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L3/schemas/skills/",
+          "@type": "bootstrap:Subgraph",
+          "hasSubgraph": [
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L3/schemas/skills/l3-dependency-choice/",
+              "@type": "bootstrap:Subgraph",
+              "holdsGraph": [
+                "cat-harness:graphTypology/cat-harness"
+              ],
+              "name": "L3/schemas/skills/l3-dependency-choice",
+              "path": "L3/schemas/skills/l3-dependency-choice/"
+            },
+            {
+              "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L3/schemas/skills/l3-readiness/",
+              "@type": "bootstrap:Subgraph",
+              "holdsGraph": [
+                "cat-harness:graphTypology/cat-harness"
+              ],
+              "name": "L3/schemas/skills/l3-readiness",
+              "path": "L3/schemas/skills/l3-readiness/"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/cat-harness"
+          ],
+          "name": "L3/schemas/skills",
+          "path": "L3/schemas/skills/"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/cat-harness"
+      ],
+      "name": "L3/schemas",
+      "path": "L3/schemas/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L3/skills/",
+      "@type": "bootstrap:Subgraph",
+      "hasSubgraph": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L3/skills/smart-l3/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "http://smart.who.int/base/skill/dak-postprocessing",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "What the DAK post-processing phase produces after the IG Publisher runs — the JSON/JSON-LD surface, the DAK API hub, and the metadata-to-Liquid bridge — and how an IG repository's own site gets the same sidecars from the cached AST (`ig-site:sidecars`). Read before changing a post-processing step, and before assuming the Publisher produced something it did not.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inSubgraph": "http://smart.who.int/base/directory/smart-base-L3",
+              "instructionLines": 189,
+              "instructionsPath": "L3/skills/smart-l3/dak-postprocessing.md",
+              "name": "dak-postprocessing",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2bdaab65910911eb7c009ae252ee342f2bd91f3b4e2dd288311cbbe2cfdcdf74",
+                "bytes": 9896,
+                "sha256": "2bdaab65910911eb7c009ae252ee342f2bd91f3b4e2dd288311cbbe2cfdcdf74"
+              },
+              "title": "dak-postprocessing"
+            },
+            {
+              "@id": "http://smart.who.int/base/skill/dak-preprocessing",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "What each DAK pre-processing step does before the IG Publisher runs, which steps exist only to feed the Publisher's page index, and how the phase runs as the overlay on fhir-harness's AST cache refresh (`dak-pre-export.sh`). Also which files in a DAK repository are authored and which are generated, and the SEMVER rule for DAK and IG versions. Read before changing, assuming or moving a pre-processing step.",
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inSubgraph": "http://smart.who.int/base/directory/smart-base-L3",
+              "instructionLines": 224,
+              "instructionsPath": "L3/skills/smart-l3/dak-preprocessing.md",
+              "name": "dak-preprocessing",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f112310d7de864bd438d9363d6a264d75cbf68f52ec43c2c13364cd7093fdb7f",
+                "bytes": 16090,
+                "sha256": "f112310d7de864bd438d9363d6a264d75cbf68f52ec43c2c13364cd7093fdb7f"
+              },
+              "title": "dak-preprocessing"
+            },
+            {
+              "@id": "http://smart.who.int/base/skill/ig-artifact-ingestion",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "hasIOContract": false,
+              "hasInstructions": true,
+              "inSubgraph": "http://smart.who.int/base/directory/smart-base-L3",
+              "instructionLines": 177,
+              "instructionsPath": "L3/skills/smart-l3/ig-artifact-ingestion.md",
+              "name": "ig-artifact-ingestion",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7c4484f45b4544be6e0be7f03ac15e546f03926d4074dc63ab77dbdfb29f1fd5",
+                "bytes": 8726,
+                "sha256": "7c4484f45b4544be6e0be7f03ac15e546f03926d4074dc63ab77dbdfb29f1fd5"
+              },
+              "title": "ig-artifact-ingestion"
+            },
+            {
+              "@id": "http://smart.who.int/base/skill/l3-dependency-choice",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "Stage 5 of smart-guideline-end-to-end: choose which existing FHIR IGs (WHO's, or a jurisdiction's) the guideline's L3 builds on. Indexes each candidate IG with ig-artifact-ingestion, matches the L1 knowledge graph and the stage-4 L2 assets against the index, and returns one decision row per IG naming the profiles, value sets and libraries reused, derived from or not used. Read before choosing, or recording, an IG dependency.",
+              "hasIOContract": true,
+              "hasInstructions": true,
+              "inSubgraph": "http://smart.who.int/base/directory/smart-base-L3",
+              "inputSchema": "http://smart.who.int/base/schema/skills/l3-dependency-choice/input.schema.json",
+              "instructionLines": 49,
+              "instructionsPath": "L3/skills/smart-l3/l3-dependency-choice.md",
+              "name": "l3-dependency-choice",
+              "outputSchema": "http://smart.who.int/base/schema/skills/l3-dependency-choice/output.schema.json",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/824c638b3d295a69edccc3c8ac954fc21103c5e985ab2a937a9840b4f2753b82",
+                "bytes": 3195,
+                "sha256": "824c638b3d295a69edccc3c8ac954fc21103c5e985ab2a937a9840b4f2753b82"
+              },
+              "title": "l3-dependency-choice"
+            },
+            {
+              "@id": "http://smart.who.int/base/skill/l3-readiness",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "The check between stages 5 and 6 of smart-guideline-end-to-end (Gateway_L3Ready): may the agent write L3 assets yet? Yes only when every source of the use case has its L1 extraction, every L2 asset names the L1 node it rests on, every L3 artefact about to be written names the L2 asset it implements, and the review of each extraction and L2 asset has been requested. Returns the answer, every finding with the stage that fixes it, and what was checked. Read before writing any FSH, CQL or other L3 file for a guideline or an adaptation.",
+              "hasIOContract": true,
+              "hasInstructions": true,
+              "inSubgraph": "http://smart.who.int/base/directory/smart-base-L3",
+              "inputSchema": "http://smart.who.int/base/schema/skills/l3-readiness/input.schema.json",
+              "instructionLines": 58,
+              "instructionsPath": "L3/skills/smart-l3/l3-readiness.md",
+              "name": "l3-readiness",
+              "outputSchema": "http://smart.who.int/base/schema/skills/l3-readiness/output.schema.json",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/533402074879177096a4668faac3efc32284586479637e54cb79f3f01a64026b",
+                "bytes": 3277,
+                "sha256": "533402074879177096a4668faac3efc32284586479637e54cb79f3f01a64026b"
+              },
+              "title": "l3-readiness"
+            }
+          ],
+          "holdsGraph": [
+            "bootstrap:graphTypology/skills"
+          ],
+          "name": "L3/skills/smart-l3",
+          "path": "L3/skills/smart-l3/"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "L3/skills",
+      "path": "L3/skills/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L3/tools/",
+      "@type": "bootstrap:Subgraph",
+      "hasSubgraph": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L3/tools/dak-api-hub/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "http://smart.who.int/base/tools/dak-api-hub.jsonld",
+              "@type": "cat-harness:Tool",
+              "description": "Generate `dak-api.html`, the DAK API's entry page, and the per-artefact `.openapi.json` / `.displays.json` sidecars.",
+              "install": {
+                "none": true
+              },
+              "invoke": {
+                "shell": "python3 input/scripts/generate_dak_api_hub.py"
+              },
+              "io": {
+                "inputs": [
+                  {
+                    "name": "igOutput",
+                    "required": true,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+                  }
+                ],
+                "outputs": [
+                  {
+                    "description": "`dak-api.html`.",
+                    "name": "hub",
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+                  },
+                  {
+                    "description": "`.openapi.json` and `.displays.json` under `schemas/`.",
+                    "name": "sidecars",
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+                  }
+                ]
+              },
+              "name": "dak-api-hub",
+              "requirements": {
+                "network": false,
+                "runtime": [
+                  "python3"
+                ]
+              },
+              "satisfies": [
+                "http://smart.who.int/base/skill/dak-postprocessing",
+                "http://smart.who.int/base/skill/ig-artifact-ingestion"
+              ],
+              "title": "DAK API hub"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/tools"
+          ],
+          "name": "L3/tools/dak-api-hub",
+          "path": "L3/tools/dak-api-hub/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L3/tools/kg-extract-l3/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "http://smart.who.int/base/tools/kg-extract-l3.jsonld",
+              "@type": "cat-harness:Tool",
+              "description": "Extract the L3 index from a SMART Guidelines IG's source tree (`smart-base/L3/schemas/extract-l3.ts`, ported from WHO smart-kg `tools/extract-l3.mjs`): one thin node per FHIR artefact (PlanDefinition, ActivityDefinition, Library, Measure, Questionnaire, StructureMap/Definition, ValueSet, CodeSystem, ConceptMap, ActorDefinition, Requirements, CQL) read from FSH, FML and JSON with RuleSets expanded, the real `uses` and `citesSource` canonical references, and the `implementedBy` edges that tie each artefact to the L2 component its Title names by the SOP's id convention. Coverage is reported across every artefact type.",
+              "install": {
+                "none": true
+              },
+              "invoke": {
+                "shell": "npx --prefix smart-base/L1/schemas tsx smart-base/L3/schemas/extract-l3.ts"
+              },
+              "io": {
+                "inputs": [
+                  {
+                    "arg": {
+                      "flag": "--ig"
+                    },
+                    "description": "The IG root (holds `sushi-config.yaml` and `input/`).",
+                    "name": "ig",
+                    "required": true,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+                  },
+                  {
+                    "arg": {
+                      "flag": "--out"
+                    },
+                    "description": "Where the graph document goes; stdout when absent.",
+                    "name": "out",
+                    "required": false,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+                  }
+                ],
+                "outputs": [
+                  {
+                    "description": "The L3 graph document; each node carries the SHA-256 of the file it came from.",
+                    "name": "graph",
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+                  }
+                ]
+              },
+              "name": "kg-extract-l3",
+              "satisfies": "http://smart.who.int/base/skill/smart-base-tools",
+              "title": "FHIR IG → L3 knowledge graph"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/tools"
+          ],
+          "name": "L3/tools/kg-extract-l3",
+          "path": "L3/tools/kg-extract-l3/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L3/tools/smart-liquid-variables/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "http://smart.who.int/base/tools/smart-liquid-variables.jsonld",
+              "@type": "cat-harness:Tool",
+              "description": "Scan the Publisher's `output/` for `{ResourceType}-{id}.json` and emit a Liquid include assigning `smart__<ResourceType>__<id>__<category>__<key>` for each published resource.",
+              "install": {
+                "none": true
+              },
+              "invoke": {
+                "shell": "python3 input/scripts/generate_smart_liquid.py"
+              },
+              "io": {
+                "inputs": [
+                  {
+                    "description": "The Publisher's `output/`, the script's source of truth.",
+                    "name": "igOutput",
+                    "required": true,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+                  },
+                  {
+                    "description": "Repository root, where `input/` lives. Defaults to `.`.",
+                    "name": "igRoot",
+                    "required": false,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+                  }
+                ],
+                "outputs": [
+                  {
+                    "description": "`input/includes/smart.liquid`, copied to `output/smart.liquid`.",
+                    "name": "include",
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+                  },
+                  {
+                    "description": "`url__canonical`, `url__page`, `url__json`, `text__display`, `link__html`, `elements__<key>`.",
+                    "name": "categories",
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+                  }
+                ]
+              },
+              "name": "smart-liquid-variables",
+              "requirements": {
+                "network": false,
+                "runtime": [
+                  "python3"
+                ]
+              },
+              "satisfies": "http://smart.who.int/base/skill/dak-postprocessing",
+              "title": "IG metadata → Liquid variables"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/tools"
+          ],
+          "name": "L3/tools/smart-liquid-variables",
+          "path": "L3/tools/smart-liquid-variables/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L3/tools/terminology-lookup/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "http://smart.who.int/base/tools/terminology-lookup.jsonld",
+              "@type": "cat-harness:Tool",
+              "description": "Look up a concept or code token for a semantic slot across the four reuse-first rungs of the `terminology-coding` methodology: (1) the target guide's `l1-scenario-vocabulary/v1`; (2) smart-base's generic personas (`DAK.Persona.*`), GRADE `code-lists/*.json` and the `guideline-domain` SKOS glossary; (3) local WHO/ILO FSH CodeSystems (`ISCO08`, `CDHIv2`, `CDHIv1`, `CDSCv2`, `KGTerminologySystem`); (4) a proposed `glossary-terms` candidate (`status: \"candidate\"`), or `could-not-determine` for `business-process`.",
+              "install": {
+                "none": true
+              },
+              "invoke": {
+                "shell": "bun run smart-base/scripts/terminology-lookup.ts --slot <slot> --query <query> [--vocabulary <guide.json>] [--generic <generic.json>] [--scheme <scheme>] [--out <out.json>]"
+              },
+              "io": {
+                "inputs": [
+                  {
+                    "description": "The slot to code (`condition`, `intervention`, `persona`, `medicine`, `domain`, `business-process`, `recommendation-strength`, `recommendation-direction`, `evidence-certainty`).",
+                    "name": "slot",
+                    "required": true,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug"
+                  },
+                  {
+                    "description": "The term, identifier or code token to look up.",
+                    "name": "query",
+                    "required": true,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/DocId"
+                  },
+                  {
+                    "description": "The target guide's personas and business processes (`l1-scenario-vocabulary/v1`), rung 1.",
+                    "name": "vocabulary",
+                    "required": false,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+                  },
+                  {
+                    "description": "smart-base's generic personas (`l1-scenario-vocabulary/v1`), rung 2.",
+                    "name": "generic",
+                    "required": false,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+                  },
+                  {
+                    "description": "Restrict to one scheme (e.g. `guideline-domain`, `ISCO08`, `CDHIv2`, `grade-recommendation-strength`).",
+                    "name": "scheme",
+                    "required": false,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/DocId"
+                  },
+                  {
+                    "description": "Where to write the result JSON.",
+                    "name": "out",
+                    "required": false,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+                  }
+                ],
+                "outputs": [
+                  {
+                    "description": "Result JSON conforming to `L1/schemas/skills/classify-and-code-content/output.schema.json`.",
+                    "name": "result",
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+                  }
+                ]
+              },
+              "name": "terminology-lookup",
+              "requirements": {
+                "network": false,
+                "runtime": [
+                  "bun"
+                ]
+              },
+              "satisfies": "http://smart.who.int/base/skill/classify-and-code-content",
+              "title": "Reuse-first terminology and code-list lookup"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/tools"
+          ],
+          "name": "L3/tools/terminology-lookup",
+          "path": "L3/tools/terminology-lookup/"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "L3/tools",
+      "path": "L3/tools/"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/cat-harness"
+  ],
+  "name": "L3",
+  "path": "L3/",
+  "title": "L3 — the FHIR artefacts"
+}

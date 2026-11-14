@@ -1,0 +1,171 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L1/skills/smart-l1/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "http://smart.who.int/base/skill/classify-and-code-content",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Classify and code L1 narrative content (recommendations, implementation practices, remarks, and proposed coverage exclusions) and L2 DAK slots (personas, business processes, guideline domains, conditions, interventions, medicines, and GRADE ratings) using the `terminology-coding` methodology and the `terminology-lookup` Tool. Covers the authoring-agent's four-rung reuse-first lookup, the `l1-extraction-reviewer` lane that reads and signs proposed L1 coverage exclusions against the printed page, and the `terminologist` / ontologist lane that adjudicates candidate codings and local glossary candidates.",
+      "hasIOContract": true,
+      "hasInstructions": true,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+      "inputSchema": "http://smart.who.int/base/schema/skills/classify-and-code-content/input.schema.json",
+      "instructionLines": 137,
+      "instructionsPath": "L1/skills/smart-l1/classify-and-code-content.md",
+      "name": "classify-and-code-content",
+      "outputSchema": "http://smart.who.int/base/schema/skills/classify-and-code-content/output.schema.json",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b152f69c327c8fdc80a8182554be27aa9e6434fb765a4c9fa974e0eb838107d3",
+        "bytes": 7142,
+        "sha256": "b152f69c327c8fdc80a8182554be27aa9e6434fb765a4c9fa974e0eb838107d3"
+      },
+      "title": "classify-and-code-content"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/dak-l1-library",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Build a DAK's library from the L1 sources its Component 1 cites, and the L1 knowledge graph that records them. Read when starting or extending a DAK library, when a DAK's guidance changes, and before writing any L1 graph for a DAK. Covers fetching a cited WHO IRIS item, ingesting it, deciding whether it is L1 (declared > context > inferred), extracting the Component 1 graph, the L1 graph of each L1 source as a specialisation of its library entry, and the layering rule: the library is upstream of L1.",
+      "hasIOContract": true,
+      "hasInstructions": true,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+      "inputSchema": "http://smart.who.int/base/schema/skills/dak-l1-library/input.schema.json",
+      "instructionLines": 177,
+      "instructionsPath": "L1/skills/smart-l1/dak-l1-library.md",
+      "name": "dak-l1-library",
+      "outputSchema": "http://smart.who.int/base/schema/skills/dak-l1-library/output.schema.json",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2461c27f0e9062615decde6092eb84ea0251b65eb4bc875a6b1262900958568e",
+        "bytes": 10480,
+        "sha256": "2461c27f0e9062615decde6092eb84ea0251b65eb4bc875a6b1262900958568e"
+      },
+      "title": "dak-l1-library"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/grade",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "GRADE — the grading system a WHO guideline folio declares for certainty of evidence, and the Evidence-to-Decision judgement a recommendation rests on. Read when a folio's `Task_AppraiseGrade` runs under GRADE, before recording a certainty, an EtD judgement or a recommendation's direction and strength.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+      "instructionLines": 94,
+      "instructionsPath": "L1/skills/smart-l1/grade.md",
+      "name": "grade",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/22daf20d31a9b1dc7b1595dc9b7ecd3afdd51c33352afad5c587ce6373f217a0",
+        "bytes": 4787,
+        "sha256": "22daf20d31a9b1dc7b1595dc9b7ecd3afdd51c33352afad5c587ce6373f217a0"
+      },
+      "title": "grade"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/indicator-extraction",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Extract the indicators an L1 source prints (indicator reference or metadata sheets: name, numerator, denominator, disaggregation, definition, data sources) as L1 `indicator` nodes with every printed field, then draft one L2 program indicator per indicator, derived from its L1 node. Read before adding a WHO handbook's or guideline's indicators to a DAK or a DTH, and whenever an L2 indicator has to trace to its source. Part of L1 → L2 extraction for every DAK and DTH, beside recommendation-extraction.",
+      "hasIOContract": true,
+      "hasInstructions": true,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+      "inputSchema": "http://smart.who.int/base/schema/skills/indicator-extraction/input.schema.json",
+      "instructionLines": 107,
+      "instructionsPath": "L1/skills/smart-l1/indicator-extraction.md",
+      "name": "indicator-extraction",
+      "outputSchema": "http://smart.who.int/base/schema/skills/indicator-extraction/output.schema.json",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/19181ada1f7dfb32e38704bf74b34799e191adf7bff336bb508cacff9c077d71",
+        "bytes": 5673,
+        "sha256": "19181ada1f7dfb32e38704bf74b34799e191adf7bff336bb508cacff9c077d71"
+      },
+      "title": "indicator-extraction"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/recommendation-candidates",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Turn one ingested L1 source into L1 3.0 recommendation nodes: list every normative sentence as a candidate, let the agent decide each in a curation file, then refuse a non-verbatim statement or unknown location and write the graph, coverage and proposed exclusions. Step 1 of recommendation-extraction, run once per included source; the `l1-recommendation-candidates` Tool satisfies it.",
+      "hasIOContract": true,
+      "hasInstructions": true,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+      "inputSchema": "http://smart.who.int/base/schema/skills/recommendation-candidates/input.schema.json",
+      "instructionLines": 48,
+      "instructionsPath": "L1/skills/smart-l1/recommendation-candidates.md",
+      "name": "recommendation-candidates",
+      "outputSchema": "http://smart.who.int/base/schema/skills/recommendation-candidates/output.schema.json",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/cde2b53da1a1713c0415b84dee539d5997720297ae3543d5c4cf764b8e3458ab",
+        "bytes": 2046,
+        "sha256": "cde2b53da1a1713c0415b84dee539d5997720297ae3543d5c4cf764b8e3458ab"
+      },
+      "title": "recommendation-candidates"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/recommendation-extraction",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Extract the recommendations of an L1 source as L1 3.0 recommendation and remark nodes, then describe each one's scenario: the persona (role) who acts on it, the business process they act in, and the user story, as smart-kg L2 user-scenario candidates that reuse the target guide's own vocabulary. Read before extracting recommendations from a WHO guideline or position paper with no printed \"Recommendation N\" labels, before linking a recommendation to a DAK persona or process, and whenever a recommendation has to say who does it and where. Covers the hybrid extraction (mechanical candidates, agent structuring, verbatim and 100 % coverage gates), the reuse-first precedence for personas and processes, the WARNING format, and sign-off.",
+      "hasIOContract": true,
+      "hasInstructions": true,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+      "inputSchema": "http://smart.who.int/base/schema/skills/recommendation-extraction/input.schema.json",
+      "instructionLines": 387,
+      "instructionsPath": "L1/skills/smart-l1/recommendation-extraction.md",
+      "name": "recommendation-extraction",
+      "outputSchema": "http://smart.who.int/base/schema/skills/recommendation-extraction/output.schema.json",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2f4481e7dedf7b14c2e4cac7b023d1a7353735b6078dd08e655e86021281b08f",
+        "bytes": 21001,
+        "sha256": "2f4481e7dedf7b14c2e4cac7b023d1a7353735b6078dd08e655e86021281b08f"
+      },
+      "title": "recommendation-extraction"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/recommendation-scenarios",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Join each L1 recommendation to who acts on it and during which business process: one smart-kg L2 user-scenario candidate per recommendation, from the agent's mapping, reusing the target guide's personas and processes first, then smart-base's generic personas, and never inventing a process. Step 2 of recommendation-extraction; the `l1-recommendation-scenarios` Tool satisfies it.",
+      "hasIOContract": true,
+      "hasInstructions": true,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+      "inputSchema": "http://smart.who.int/base/schema/skills/recommendation-scenarios/input.schema.json",
+      "instructionLines": 43,
+      "instructionsPath": "L1/skills/smart-l1/recommendation-scenarios.md",
+      "name": "recommendation-scenarios",
+      "outputSchema": "http://smart.who.int/base/schema/skills/recommendation-scenarios/output.schema.json",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9ddc006168cc35812dd122d2c1e6694bbed476e64faf3f82b668f04fc5452002",
+        "bytes": 2175,
+        "sha256": "9ddc006168cc35812dd122d2c1e6694bbed476e64faf3f82b668f04fc5452002"
+      },
+      "title": "recommendation-scenarios"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/transcription-verbatim",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Check L1 authored from pictures (a schedule poster, a slide deck: a source with no usable text layer) against the image narratives and transcriptions it names: every statement verbatim in one of them, every transcription word corroborated by the entry's text layer unless listed under inspectionOnly, and unique keys. A step of recommendation-extraction, in place of recommendation-candidates when that step found no normative sentence; the `l1-transcription-verbatim` Tool satisfies it.",
+      "hasIOContract": true,
+      "hasInstructions": true,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L1",
+      "inputSchema": "http://smart.who.int/base/schema/skills/transcription-verbatim/input.schema.json",
+      "instructionLines": 57,
+      "instructionsPath": "L1/skills/smart-l1/transcription-verbatim.md",
+      "name": "transcription-verbatim",
+      "outputSchema": "http://smart.who.int/base/schema/skills/transcription-verbatim/output.schema.json",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7a627edf0f00784fc9bba90bd983795b35e272f6f346755a7ef5cade154858c1",
+        "bytes": 2626,
+        "sha256": "7a627edf0f00784fc9bba90bd983795b35e272f6f346755a7ef5cade154858c1"
+      },
+      "title": "transcription-verbatim"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "L1/skills/smart-l1",
+  "path": "L1/skills/smart-l1/"
+}

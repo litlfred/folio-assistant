@@ -1,0 +1,79 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/skills/content/authoring-who-smart-guidelines/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "http://smart.who.int/base/skill/guideline-use-case",
+      "@type": "bootstrap:Skill",
+      "name": "guideline-use-case",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8567237dd4e735a4b9f5c543206d2d7bd9de9b2dfdfd87587eae18aa7c90ad07",
+        "bytes": 2737,
+        "sha256": "8567237dd4e735a4b9f5c543206d2d7bd9de9b2dfdfd87587eae18aa7c90ad07"
+      },
+      "title": "guideline-use-case"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/smart-base-tools",
+      "@type": "bootstrap:Skill",
+      "name": "smart-base-tools",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1355a6f7ab2dce4066919ab77ef54fa0feb433b5f585006408cc10da429d74d7",
+        "bytes": 7195,
+        "sha256": "1355a6f7ab2dce4066919ab77ef54fa0feb433b5f585006408cc10da429d74d7"
+      },
+      "title": "smart-base Toolchain"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/smart-guideline-create",
+      "@type": "bootstrap:Skill",
+      "name": "smart-guideline-create",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7f88b7b97a126288bf3b1c577c030a1f533ac3eb5d107f9edb1189d90a48dc5b",
+        "bytes": 7975,
+        "sha256": "7f88b7b97a126288bf3b1c577c030a1f533ac3eb5d107f9edb1189d90a48dc5b"
+      },
+      "title": "smart-guideline-create"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/smart-guideline-end-to-end",
+      "@type": "bootstrap:Skill",
+      "name": "smart-guideline-end-to-end",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/6bfe00c1126a39dc36f5253bfb9dd4d385263b00f87de1ccdc76777aa7f45c5c",
+        "bytes": 19779,
+        "sha256": "6bfe00c1126a39dc36f5253bfb9dd4d385263b00f87de1ccdc76777aa7f45c5c"
+      },
+      "title": "smart-guideline-end-to-end"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/smart-stack-layering",
+      "@type": "bootstrap:Skill",
+      "name": "smart-stack-layering",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/87e1b6547621ddbc92bde3e1d1ed037731d571adc89044b323befb936a2ae2c6",
+        "bytes": 6918,
+        "sha256": "87e1b6547621ddbc92bde3e1d1ed037731d571adc89044b323befb936a2ae2c6"
+      },
+      "title": "smart-stack-layering"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/toolchain-ownership",
+      "@type": "bootstrap:Skill",
+      "name": "toolchain-ownership",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/0820952279a551b7a992b4ab5d423c35a0781216a7da89773e334841c568f548",
+        "bytes": 4153,
+        "sha256": "0820952279a551b7a992b4ab5d423c35a0781216a7da89773e334841c568f548"
+      },
+      "title": "toolchain-ownership"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills/content/authoring-who-smart-guidelines",
+  "path": "skills/content/authoring-who-smart-guidelines/"
+}

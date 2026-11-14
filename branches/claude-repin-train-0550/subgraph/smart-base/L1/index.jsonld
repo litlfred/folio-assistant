@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L1/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "http://smart.who.int/base/directory/smart-base-L1",
+      "@type": "bootstrap:Subgraph",
+      "name": "smart-base-L1",
+      "title": "L1 — what a WHO publication says"
+    }
+  ],
+  "hasSubgraph": [
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L1/processes/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L1/schemas/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L1/scripts/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L1/skills/",
+    "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L1/tools/"
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/cat-harness"
+  ],
+  "name": "L1",
+  "path": "L1/",
+  "title": "L1 — what a WHO publication says"
+}

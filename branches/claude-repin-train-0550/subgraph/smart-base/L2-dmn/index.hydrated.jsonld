@@ -1,0 +1,276 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L2-dmn/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "http://smart.who.int/base/directory/smart-base-L2-dmn",
+      "@type": "bootstrap:Subgraph",
+      "contentSource": {
+        "declaredIn": "default",
+        "kind": "directory"
+      },
+      "description": "Knowledge-graph layer L2-dmn as a NAMED SUBGRAPH of this layer, OPT-IN like `L1/` (a downstream layer lists `smart-base.smart-base-L2-dmn` in its `enableSubgraphs`), beside `L1/` (owner, 2026-11-13: 'L1..L3 as named subgraphs', issue #359). `L2-dmn/graph.json` names what it holds FROM WITHIN: its `schemas/` and, as they move in, its tools, skills and processes. It imports only from the layers below it.",
+      "fileCount": 0,
+      "holdsGraph": [
+        "cat-harness:graphTypology/cat-harness"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2-dmn",
+      "name": "smart-base-L2-dmn",
+      "path": "L2-dmn/",
+      "readmePath": "L2-dmn/README.md",
+      "title": "L2-DMN — inside a DMN file"
+    }
+  ],
+  "hasSubgraph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L2-dmn/schemas/",
+      "@type": "bootstrap:Subgraph",
+      "hasSubgraph": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L2-dmn/schemas/generated/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "cat-harness:graphTypology/cat-harness"
+          ],
+          "name": "L2-dmn/schemas/generated",
+          "path": "L2-dmn/schemas/generated/"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/cat-harness"
+      ],
+      "name": "L2-dmn/schemas",
+      "path": "L2-dmn/schemas/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L2-dmn/tools/",
+      "@type": "bootstrap:Subgraph",
+      "hasSubgraph": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L2-dmn/tools/dmn-to-html/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "http://smart.who.int/base/tools/dmn-to-html.jsonld",
+              "@type": "cat-harness:Tool",
+              "description": "Render each DMN decision table to an HTML fragment for a page, via `dmn2html.xslt` and `dmn.css`.",
+              "install": {
+                "none": true
+              },
+              "invoke": {
+                "shell": "python3 input/scripts/transform_dmn.py"
+              },
+              "io": {
+                "inputs": [
+                  {
+                    "name": "dmnDir",
+                    "required": true,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+                  }
+                ],
+                "outputs": [
+                  {
+                    "description": "One HTML fragment per decision table.",
+                    "name": "html",
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+                  }
+                ]
+              },
+              "name": "dmn-to-html",
+              "requirements": {
+                "network": false,
+                "runtime": [
+                  "python3"
+                ]
+              },
+              "satisfies": "http://smart.who.int/base/skill/dak-preprocessing",
+              "title": "DMN → HTML"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/tools"
+          ],
+          "name": "L2-dmn/tools/dmn-to-html",
+          "path": "L2-dmn/tools/dmn-to-html/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L2-dmn/tools/dmn-to-questionnaire/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "http://smart.who.int/base/tools/dmn-to-questionnaire.jsonld",
+              "@type": "cat-harness:Tool",
+              "description": "Generate FHIR `Questionnaire` resources from a DAK's DMN decision tables. Authoring, not rendering: the IG Publisher validates and indexes them like any other resource.",
+              "install": {
+                "none": true
+              },
+              "invoke": {
+                "shell": "python3 input/scripts/dmn_questionnaire_generator.py"
+              },
+              "io": {
+                "inputs": [
+                  {
+                    "description": "The DMN source directory, by convention `input/dmn/`.",
+                    "name": "dmnDir",
+                    "required": true,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+                  }
+                ],
+                "outputs": [
+                  {
+                    "description": "The generated `Questionnaire` resources, written beside SUSHI's output.",
+                    "name": "questionnaires",
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+                  },
+                  {
+                    "description": "How many were produced. Zero means none only when the DMN directory was found; a missing directory is reported as such.",
+                    "name": "generated",
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count"
+                  }
+                ]
+              },
+              "name": "dmn-to-questionnaire",
+              "requirements": {
+                "network": false,
+                "runtime": [
+                  "python3"
+                ]
+              },
+              "satisfies": "http://smart.who.int/base/skill/dak-preprocessing",
+              "title": "DMN → FHIR Questionnaire"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/tools"
+          ],
+          "name": "L2-dmn/tools/dmn-to-questionnaire",
+          "path": "L2-dmn/tools/dmn-to-questionnaire/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L2-dmn/tools/kg-extract-citations/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "http://smart.who.int/base/tools/kg-extract-citations.jsonld",
+              "@type": "cat-harness:Tool",
+              "description": "Extract the L1 citations from a DMN decision table's reference column (`smart-base/L2-dmn/schemas/extract-citations.ts`, ported from WHO smart-kg `tools/extract-citations.mjs`): one `external-artifact` node for the table and one `citation` node per distinct reference string, each left `unresolved`, with `appearsIn` edges and a coverage report of how many rules cite an L1 source. A citation string is content-addressed in the DAK's namespace, so the same string is one node here and in the L2-DMN graph's `citesSource` edges. The output is an L2 document.",
+              "install": {
+                "none": true
+              },
+              "invoke": {
+                "shell": "npx --prefix smart-base/L1/schemas tsx smart-base/L2-dmn/schemas/extract-citations.ts"
+              },
+              "io": {
+                "inputs": [
+                  {
+                    "description": "The .dmn file to read.",
+                    "name": "dmn",
+                    "required": true,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+                  },
+                  {
+                    "arg": {
+                      "flag": "--out"
+                    },
+                    "description": "Where the graph document goes; also echoed to stdout when absent.",
+                    "name": "out",
+                    "required": false,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+                  }
+                ],
+                "outputs": [
+                  {
+                    "description": "The citation graph document (an L2 document: the table as an external artefact and its L1 citation nodes), plus a coverage report on stderr.",
+                    "name": "graph",
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+                  }
+                ]
+              },
+              "name": "kg-extract-citations",
+              "satisfies": "http://smart.who.int/base/skill/smart-base-tools",
+              "title": "DMN reference column → L1 citations"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/tools"
+          ],
+          "name": "L2-dmn/tools/kg-extract-citations",
+          "path": "L2-dmn/tools/kg-extract-citations/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L2-dmn/tools/kg-extract-dmn/",
+          "@type": "bootstrap:Subgraph",
+          "hasMember": [
+            {
+              "@id": "http://smart.who.int/base/tools/kg-extract-dmn.jsonld",
+              "@type": "cat-harness:Tool",
+              "description": "Extract the interior of one DMN decision table as the L2-DMN subgraph (`smart-base/L2-dmn/schemas/extract-dmn.ts`, ported from WHO smart-kg `tools/extract-dmn.mjs`): a `dmn-definitions` node and its decisions, decision tables, input and output clauses and rules, the `reads` edges to the data elements recovered from input expressions, the `citesSource` edges to the L1 citations each rule's reference column names, and the `invokedBy` edge to the BPMN task the `usingTask` href names. Pass `--bpmn` to resolve that task by name instead of recording it unresolved.",
+              "install": {
+                "none": true
+              },
+              "invoke": {
+                "shell": "npx --prefix smart-base/L1/schemas tsx smart-base/L2-dmn/schemas/extract-dmn.ts"
+              },
+              "io": {
+                "inputs": [
+                  {
+                    "description": "The .dmn file to read.",
+                    "name": "dmn",
+                    "required": true,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+                  },
+                  {
+                    "arg": {
+                      "flag": "--bpmn"
+                    },
+                    "description": "A BPMN file; the `usingTask` href fragment is matched against its task @name to resolve `invokedBy`.",
+                    "name": "bpmn",
+                    "required": false,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+                  },
+                  {
+                    "arg": {
+                      "flag": "--out"
+                    },
+                    "description": "Where the graph document goes; stdout when absent.",
+                    "name": "out",
+                    "required": false,
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+                  }
+                ],
+                "outputs": [
+                  {
+                    "description": "The L2-DMN graph document. Its `citesSource` edges reach L1 citations minted by kg-extract-citations from the same strings.",
+                    "name": "graph",
+                    "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+                  }
+                ]
+              },
+              "name": "kg-extract-dmn",
+              "satisfies": "http://smart.who.int/base/skill/smart-base-tools",
+              "title": "DMN → L2-DMN knowledge graph"
+            }
+          ],
+          "holdsGraph": [
+            "cat-harness:graphTypology/tools"
+          ],
+          "name": "L2-dmn/tools/kg-extract-dmn",
+          "path": "L2-dmn/tools/kg-extract-dmn/"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "L2-dmn/tools",
+      "path": "L2-dmn/tools/"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/cat-harness"
+  ],
+  "name": "L2-dmn",
+  "path": "L2-dmn/",
+  "title": "L2-DMN — inside a DMN file"
+}

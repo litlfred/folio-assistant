@@ -1,0 +1,181 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Tools — who-iris",
+    "version": "0.1.0",
+    "description": "The call contracts of the harness's Tools, one operation per Tool, generated from the Tool nodes (`schemas/tools/tool.ts`) so standard API tooling can read them. **No HTTP server serves these paths**: each Tool is reached as its `x-invoke` says — a command line, an MCP tool, or an in-process call. Tags are the skills each Tool satisfies."
+  },
+  "servers": [],
+  "tags": [
+    {
+      "name": "graph-rendering"
+    },
+    {
+      "name": "translation-manager"
+    }
+  ],
+  "paths": {
+    "/tools/iris-pages": {
+      "post": {
+        "operationId": "iris-pages",
+        "summary": "who-iris catalogue and docs pages",
+        "description": "Render who-iris's docs pages, the catalogue visualiser at its declared route (what the catalogue knows, and what it records that it does not know), the library's withheld list, and the IRIS replica's home page.",
+        "tags": [
+          "graph-rendering"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "iris-pages/"
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "check": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Fail if a page is stale, instead of writing."
+                  },
+                  "site": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "A site being built (the tree `compose-docs --shell` wrote): write only the catalogue page into it, at its route in who-iris's own site, plus a forwarding page at the declared route. A site build passes it (`visualiser-writers.ts`)."
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "pages": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "The replica's home page at `site/index.html` (and its translations), the docs under `docs/`, and the catalogue page under the published site directory."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/who-iris/tools/iris-pages.jsonld",
+        "x-invoke": {
+          "shell": "bun run cat iris:pages"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "graph-rendering"
+        ]
+      }
+    },
+    "/tools/translation-qa-prune": {
+      "post": {
+        "operationId": "translation-qa-prune",
+        "summary": "Prune round-trip rulings of removed strings",
+        "description": "Drop the translation-semantic-roundtrip rulings of strings the catalogues no longer hold, and renumber the rest to catalogue order. Rulings are paired with strings by the hash of their msgid, so removing strings invalidates none and needs no agent re-run; this is the upkeep that follows. It only drops or renumbers: a verdict is never changed or invented, and a ruling for a string the ref's history never held (one recorded ahead of its PR) is kept.",
+        "tags": [
+          "translation-manager"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "translation-qa-prune/"
+        },
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "write": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Apply the change to test/attestations/translation-qa/. Absent, it is a dry run that prints each dropped ruling and the renumbered spans."
+                  },
+                  "ref": {
+                    "$ref": "#/components/schemas/Branch",
+                    "description": "Whose catalogues decide what was removed. Default origin/main: the state branch serves main and every branch, so a ruling goes only once main no longer holds its string."
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "attestations": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "With --write, the rewritten `test/attestations/translation-qa/<catalogue>.<locale>.attestations.json`, to be pushed to `cat/who-iris/attestations`."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/who-iris/tools/translation-qa-prune.jsonld",
+        "x-invoke": {
+          "shell": "bun run cat translation-qa:prune"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun",
+            "git"
+          ],
+          "network": false
+        },
+        "x-satisfies": [
+          "translation-manager"
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Branch": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._/-]*$",
+        "description": "A git branch name",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Branch"
+      },
+      "Flag": {
+        "type": "boolean",
+        "description": "A boolean switch — projects to a bare flag, with no value word",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+      },
+      "RepoPath": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^[A-Za-z0-9._][A-Za-z0-9._/-]*$",
+        "description": "A path relative to the repository root. No `..` segments.",
+        "x-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+      }
+    }
+  }
+}

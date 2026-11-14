@@ -1,0 +1,19 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L2-dmn/tools/kg-extract-citations/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "http://smart.who.int/base/tools/kg-extract-citations.jsonld",
+      "@type": "cat-harness:Tool",
+      "name": "kg-extract-citations",
+      "title": "DMN reference column → L1 citations"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "L2-dmn/tools/kg-extract-citations",
+  "path": "L2-dmn/tools/kg-extract-citations/"
+}

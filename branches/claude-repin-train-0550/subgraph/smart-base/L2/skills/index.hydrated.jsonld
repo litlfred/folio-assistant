@@ -1,0 +1,127 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L2/skills/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasSubgraph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L2/skills/skill-definitions/",
+      "@type": "bootstrap:Subgraph",
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "L2/skills/skill-definitions",
+      "path": "L2/skills/skill-definitions/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L2/skills/smart-l2/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "http://smart.who.int/base/skill/dth-authoring",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "How a WHO Digital Transformation Handbook (DTH) is produced, from sources to publication, in the seven stages and milestones of dth-authoring.bpmn — and the rules the diagram cannot carry: which review sheet each stage uses, the DAK kinds every DTH is written in, and how a term is deprecated. Read before starting a new DTH, before moving one to its next stage, and before setting up its feedback or public-comment sheet.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2",
+          "instructionLines": 87,
+          "instructionsPath": "L2/skills/smart-l2/dth-authoring.md",
+          "name": "dth-authoring",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b4e1cb3fcc9fd275f0080a544f2425770bbcb9e85916a08f0870e8e61eeef689",
+            "bytes": 4493,
+            "sha256": "b4e1cb3fcc9fd275f0080a544f2425770bbcb9e85916a08f0870e8e61eeef689"
+          },
+          "title": "dth-authoring"
+        },
+        {
+          "@id": "http://smart.who.int/base/skill/dth-l1-to-l2-ingest",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Turn a WHO Digital Transformation Handbook that exists only as an L1 publication (ingested in who-iris) into an L2 DTH in its own repository that depends on smart-ra: write the handbook's workplan first (what goes in its repo, what goes in smart-ra, which BPMN, roles and DMN to model), then scaffold and seed it. Read before starting work on any dth-* handbook repo.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2",
+          "instructionLines": 136,
+          "instructionsPath": "L2/skills/smart-l2/dth-l1-to-l2-ingest.md",
+          "name": "dth-l1-to-l2-ingest",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f695237bd9025d647173305d14e6d38930c8b69082891077ebe2c9b135941fcd",
+            "bytes": 7446,
+            "sha256": "f695237bd9025d647173305d14e6d38930c8b69082891077ebe2c9b135941fcd"
+          },
+          "title": "dth-l1-to-l2-ingest"
+        },
+        {
+          "@id": "http://smart.who.int/base/skill/l2-component-edit-review",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "How one L2 DAK component is edited by the agent and reviewed by a person: personas and user scenarios, BPMN business processes, DMN decision and scheduling logic, core data elements and glossary with their terminology bindings, indicators and requirements. One subprocess for all of them. The agent edits, checks, renders and stages with a before/after, then hands the component on, and review forks alongside it without blocking. Per component, it lists the authoring skill, checker, renderer and diff, reviewing role, and what the reviewer judges. Read before authoring or reviewing any L2 component, and when an L2 track asks what its reviewer needs to see.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2",
+          "instructionLines": 108,
+          "instructionsPath": "L2/skills/smart-l2/l2-component-edit-review.md",
+          "name": "l2-component-edit-review",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/bbe792cb1c82dc5c3d7581ae00a1d9ffb2ff7af3373f5ec0615aa2b11b0ceb0d",
+            "bytes": 8640,
+            "sha256": "bbe792cb1c82dc5c3d7581ae00a1d9ffb2ff7af3373f5ec0615aa2b11b0ceb0d"
+          },
+          "title": "l2-component-edit-review"
+        },
+        {
+          "@id": "http://smart.who.int/base/skill/l2-dak-authoring",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Author the L2 layer of a WHO SMART Guideline — the Digital Adaptation Kit between the narrative L1 guideline and the L3 FHIR artefacts — one DAK component per pass (personas, user scenarios, business processes, data dictionary, decision and scheduling logic, indicators, requirements), each edited and then reviewed alongside through l2-component-edit-review. Stage 4 of smart-guideline-end-to-end and the authoring steps of l2-dak-authoring.bpmn. Read before authoring or adapting any DAK component.",
+          "hasIOContract": true,
+          "hasInstructions": true,
+          "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2",
+          "inputSchema": "http://smart.who.int/base/schema/skills/l2-dak-authoring/input.schema.json",
+          "instructionLines": 98,
+          "instructionsPath": "L2/skills/smart-l2/l2-dak-authoring.md",
+          "name": "l2-dak-authoring",
+          "outputSchema": "http://smart.who.int/base/schema/skills/l2-dak-authoring/output.schema.json",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/18564d3300336fbcab94420426d4d0afa8d3f627be7ba8ba9ddac077886498dc",
+            "bytes": 5614,
+            "sha256": "18564d3300336fbcab94420426d4d0afa8d3f627be7ba8ba9ddac077886498dc"
+          },
+          "title": "l2-dak-authoring"
+        },
+        {
+          "@id": "http://smart.who.int/base/skill/l2-dependency-choice",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Stage 3 of smart-guideline-end-to-end: choose which existing DAKs (WHO's, or a jurisdiction's adaptation) the guideline builds on. From the L1 knowledge graph and any known candidates, one decision row per candidate DAK — reuse, adapt, extend or reject, with evidence and a reason — laid out as a decision-comparison table and put to the adjudicators as a DecisionRequest. Also defines the dependency decision row that stage 5 (l3-dependency-choice) uses at L3. Read before choosing, or recording, a DAK dependency.",
+          "hasIOContract": true,
+          "hasInstructions": true,
+          "inSubgraph": "http://smart.who.int/base/directory/smart-base-L2",
+          "inputSchema": "http://smart.who.int/base/schema/skills/l2-dependency-choice/input.schema.json",
+          "instructionLines": 69,
+          "instructionsPath": "L2/skills/smart-l2/l2-dependency-choice.md",
+          "name": "l2-dependency-choice",
+          "outputSchema": "http://smart.who.int/base/schema/skills/l2-dependency-choice/output.schema.json",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fa35d142b2df680d877429ba92189faf11240b0dd94f7170c8d25d3746d870db",
+            "bytes": 4975,
+            "sha256": "fa35d142b2df680d877429ba92189faf11240b0dd94f7170c8d25d3746d870db"
+          },
+          "title": "l2-dependency-choice"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "L2/skills/smart-l2",
+      "path": "L2/skills/smart-l2/"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "L2/skills",
+  "path": "L2/skills/"
+}

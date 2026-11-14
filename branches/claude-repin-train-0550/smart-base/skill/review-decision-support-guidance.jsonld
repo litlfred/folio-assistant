@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/skill/review-decision-support-guidance.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-train-0550/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/skill/review-decision-support-guidance.jsonld",
+  "staging": {
+    "branch": "claude/repin-train-0550",
+    "sha": "211176b48990d1a2382a2913a91794b72853a53c",
+    "pr": "3124/merge",
+    "run": "43611082734"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/skill/review-decision-support-guidance",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "review-decision-support-guidance",
+      "title": "Review decision-support guidance",
+      "description": "A health worker sees the decision-support guidance for one client on their device (the proposed actions of a RequestGroup or CDS Hooks cards) and accepts or declines each action; modifies one only where the device offers it. Input is the guidance as rendered; output is the decision per action. At most one tap per action; nothing else is asked.",
+      "instructionsPath": "L4/skills/smart-l4/review-decision-support-guidance.md",
+      "instructionLines": 56,
+      "inputSchema": "http://smart.who.int/base/schema/skills/review-decision-support-guidance/input.schema.json",
+      "outputSchema": "http://smart.who.int/base/schema/skills/review-decision-support-guidance/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-L4"
+    }
+  ]
+}

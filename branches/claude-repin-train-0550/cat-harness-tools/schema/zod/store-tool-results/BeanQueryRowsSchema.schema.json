@@ -1,0 +1,27 @@
+{
+  "$ref": "#/definitions/BeanQueryRows",
+  "definitions": {
+    "BeanQueryRows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "propertyNames": {
+          "type": "string"
+        },
+        "additionalProperties": {
+          "type": "string"
+        }
+      },
+      "description": "The rows a bean SPARQL query returned, each variable to its value; bean IRIs are shortened to bean ids."
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/store-tool-results/BeanQueryRowsSchema.schema.json",
+  "title": "BeanQueryRowsSchema",
+  "description": "Generated from `BeanQueryRowsSchema` in schemas/tools/store-tool-results.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-train-0550",
+    "sha": "211176b48990d1a2382a2913a91794b72853a53c",
+    "pr": "3124/merge",
+    "run": "43611082734"
+  }
+}

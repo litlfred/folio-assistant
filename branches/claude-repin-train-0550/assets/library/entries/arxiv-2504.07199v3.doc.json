@@ -1,0 +1,1267 @@
+{
+  "$schema": "folio-library-document/v1",
+  "id": "arxiv-2504.07199v3",
+  "title": "SemEval-2025 Task 5: LLMs4Subjects - LLM-based Automated Subject Tagging for a National Technical Library’s Open-Access Catalog",
+  "variant": "pdf",
+  "pages": 14,
+  "tocSource": "outline",
+  "tocMethod": null,
+  "toc": [
+    {
+      "level": 1,
+      "title": "Introduction",
+      "number": null,
+      "page": 1,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-000-introduction"
+    },
+    {
+      "level": 1,
+      "title": "Background",
+      "number": null,
+      "page": 2,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-001-background"
+    },
+    {
+      "level": 1,
+      "title": "Source Dataset",
+      "number": null,
+      "page": 2,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-002-source-dataset"
+    },
+    {
+      "level": 2,
+      "title": "How are subject annotations obtained?",
+      "number": null,
+      "page": 2,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-003-how-are-subject-annotations-obtained"
+    },
+    {
+      "level": 1,
+      "title": "Shared Task Description and Dataset",
+      "number": null,
+      "page": 3,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-004-shared-task-description-and-dataset"
+    },
+    {
+      "level": 2,
+      "title": "Dataset Collections",
+      "number": null,
+      "page": 3,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-005-dataset-collections"
+    },
+    {
+      "level": 2,
+      "title": "Dataset Format and Statistics",
+      "number": null,
+      "page": 3,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-006-dataset-format-and-statistics"
+    },
+    {
+      "level": 1,
+      "title": "Task Setup",
+      "number": null,
+      "page": 4,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-007-task-setup"
+    },
+    {
+      "level": 1,
+      "title": "Shared Task Participant Systems",
+      "number": null,
+      "page": 4,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-008-shared-task-participant-systems"
+    },
+    {
+      "level": 1,
+      "title": "Shared Task Leaderboard Results",
+      "number": null,
+      "page": 8,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-009-shared-task-leaderboard-results"
+    },
+    {
+      "level": 2,
+      "title": "Quantitative Evaluations",
+      "number": null,
+      "page": 8,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-010-quantitative-evaluations"
+    },
+    {
+      "level": 2,
+      "title": "Qualitative Evaluations",
+      "number": null,
+      "page": 8,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-011-qualitative-evaluations"
+    },
+    {
+      "level": 1,
+      "title": "Discussion",
+      "number": null,
+      "page": 10,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-012-discussion"
+    },
+    {
+      "level": 1,
+      "title": "Conclusion",
+      "number": null,
+      "page": 10,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-013-conclusion"
+    },
+    {
+      "level": 1,
+      "title": "TIBKAT media types",
+      "number": null,
+      "page": 13,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-014-tibkat-media-types"
+    },
+    {
+      "level": 1,
+      "title": "TIBKAT Language Distribution",
+      "number": null,
+      "page": 13,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-015-tibkat-language-distribution"
+    },
+    {
+      "level": 1,
+      "title": "Additional details about the GND",
+      "number": null,
+      "page": 13,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-016-additional-details-about-the-gnd"
+    },
+    {
+      "level": 1,
+      "title": "Pilot Task",
+      "number": null,
+      "page": 14,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-017-pilot-task"
+    }
+  ],
+  "sections": [
+    {
+      "id": "sec-front-matter",
+      "number": null,
+      "title": "Front matter",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 1,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 110,
+      "summary": {
+        "text": "Title, authors and abstract of \"SemEval-2025 Task 5: LLMs4Subjects - LLM-based Automated Subject Tagging for a National Technical Library's Open-Access Catalog\" by Jennifer D'Souza, Sameer Sadruddin, Holger Israel, Mathias Begoin and Diana Slawig (TIB Leibniz Information Centre for Science and Technology, Hannover). The shared task asked participants to build LLM-based systems that recommend the top-k subjects from the GND taxonomy for English and German scientific and technical records. Systems were scored with precision, recall and F1, and also assessed by subject specialists; the abstract names LLM ensembles, synthetic data generation and multilingual processing as what worked.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "semeval",
+          "heading": false
+        },
+        {
+          "term": "tib",
+          "heading": false
+        },
+        {
+          "term": "tagging",
+          "heading": false
+        },
+        {
+          "term": "llms4subjects",
+          "heading": false
+        },
+        {
+          "term": "llm-based",
+          "heading": false
+        }
+      ],
+      "extract": "SemEval-2025 Task 5: LLMs4Subjects - LLM-based Automated Subject Tagging for a National Technical Library’s Open-Access Catalog Jennifer D’Souza, Sameer Sadruddin, Holger Israel, Mathias Begoin, and Diana Slawig TIB Leibniz Information Centre for Science and Technology, Hannover, Germany {firstname.lastname}@tib.eu Abstract We present SemEval-2025 Task 5: LLMs4Subjects, a shared task on auto- mated subject tagging",
+      "extractCut": true,
+      "blocks": [
+        "library/arxiv-2504.07199v3/blocks/prose-sec-front-matter"
+      ]
+    },
+    {
+      "id": "sec-000-introduction",
+      "number": null,
+      "title": "Introduction",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 2,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 733,
+      "summary": {
+        "text": "Introduction. Automated subject classification of scientific texts is well established (the CSO classifier, citation metadata, topic modelling, embeddings, deep learning), and open toolkits such as ANNIF from the National Library of Finland are used by several European national libraries, but using LLMs for the task is largely unexplored. The authors therefore organised SemEval 2025 Task 5, LLMs4Subjects, on the open-access subset (about 100,000 records) of TIBKAT, the 5.7-million-record catalogue of Germany's national library for science and technology, where every record is annotated with GND subject terms whatever its language. Four research questions drove it: multilingual against monolingual models (RQ1), the size and diversity of training data (RQ2), retrieval-augmented generation against fine-tuning (RQ3), and small against large models (RQ4). The organisers report that whether LLMs beat traditional machine learning for subject indexing remains debatable, and announce a second edition focused on energy- and compute-efficient LLMs.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "subject tagging",
+          "heading": false
+        },
+        {
+          "term": "national library",
+          "heading": false
+        },
+        {
+          "term": "digital library",
+          "heading": false
+        },
+        {
+          "term": "subject classification",
+          "heading": false
+        },
+        {
+          "term": "automated subject",
+          "heading": false
+        },
+        {
+          "term": "subject indexing",
+          "heading": false
+        },
+        {
+          "term": "library systems",
+          "heading": false
+        },
+        {
+          "term": "classifi cation",
+          "heading": false
+        }
+      ],
+      "extract": "Subject classification within library systems in- volves organizing books and resources based on their content and subject matter to facilitate easy re- trieval and access. Automated methods for classify- ing scientific texts include Springer Nature’s CSO classifier (Salatino et al., 2019), which uses syn- tactic and semantic analysis to categorize papers based on the Computer Science Ontology (CSO) using abstracts,",
+      "extractCut": true
+    },
+    {
+      "id": "sec-001-background",
+      "number": null,
+      "title": "Background",
+      "level": 1,
+      "pageStart": 2,
+      "pageEnd": 2,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 238,
+      "summary": {
+        "text": "Background on the three resources. TIB is Germany's national library for science and technology and promotes open access to knowledge and data. A subset of its holdings (TIBKAT catalogue data, metadata of free electronic collections, and AV-Portal metadata) is released under CC0 1.0. The GND (Gemeinsame Normdatei, \"integrated authority file\") is an international authority file used mainly by German-speaking libraries, also downloadable under CC0; the task uses only its subject-heading (Sachbegriff) records, and the organisers wrote a how-to guide for downloading it.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "authority file",
+          "heading": false
+        },
+        {
+          "term": "gnd",
+          "heading": false
+        },
+        {
+          "term": "tib",
+          "heading": false
+        },
+        {
+          "term": "science",
+          "heading": false
+        },
+        {
+          "term": "tibkat",
+          "heading": false
+        },
+        {
+          "term": "library",
+          "heading": false
+        },
+        {
+          "term": "scientific",
+          "heading": false
+        },
+        {
+          "term": "technology",
+          "heading": false
+        }
+      ],
+      "extract": "About TIB. TIB – the Leibniz Information Cen- tre for Science and Technology and University Li- brary – promotes free access to knowledge, infor- mation sharing, and open scientific publications and data. As Germany’s national library for science and technology, including Architecture, Chemistry, Computer Science, Mathematics, and Physics, it maintains a globally unique collection, including audiovisual media and",
+      "extractCut": true
+    },
+    {
+      "id": "sec-002-source-dataset",
+      "number": null,
+      "title": "Source Dataset",
+      "level": 1,
+      "pageStart": 2,
+      "pageEnd": 2,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 141,
+      "summary": {
+        "text": "How the source dataset was built. A reproducible TIBKAT query for records with abstracts and GND subject indexing returned 189,665 records across nine media types, led by Book (136,434) and Thesis (31,859), and the langdetect library found 48 languages, led by German (108,637) and English (76,735). The official corpus keeps only German and English records and drops the four least represented media types, giving 123,589 records; the excluded data is released as supplementary data and the final dataset is on GitHub.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "media types",
+          "heading": false
+        },
+        {
+          "term": "dataset",
+          "heading": true
+        },
+        {
+          "term": "shared task",
+          "heading": false
+        },
+        {
+          "term": "records",
+          "heading": false
+        },
+        {
+          "term": "excluded",
+          "heading": false
+        }
+      ],
+      "extract": "We queried the TIBKAT service to restrict its metadata to records containing abstracts and GND subject indexing. The query is fully reproducible via this persistent search link. It returned 189,665 records at the time of dataset creation. The TIB open-access catalog spans nine media types: Book (136,434), Thesis (31,859), Conference (12,212), Report (6,711), Article (2,080), Collection (188), AudioVisualDocument",
+      "extractCut": true
+    },
+    {
+      "id": "sec-003-how-are-subject-annotations-obtained",
+      "number": null,
+      "title": "How are subject annotations obtained?",
+      "level": 2,
+      "pageStart": 2,
+      "pageEnd": 3,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 252,
+      "summary": {
+        "text": "How subject annotations are made. A team of 17 subject specialists covering 28 disciplines assigns GND keywords to each record from its title, abstract and full text, as part of subject cataloguing shared across German library networks. TIB adds about 15,000 new titles a month, so the work is labour-intensive, and the authors argue that LLM-based tools could partly automate it while keeping quality. Table 1, placed here, gives per-language record and subject counts for the training data of both collections.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "subject cataloging",
+          "heading": false
+        },
+        {
+          "term": "librarians",
+          "heading": false
+        },
+        {
+          "term": "gnd",
+          "heading": false
+        },
+        {
+          "term": "num",
+          "heading": false
+        },
+        {
+          "term": "annotations",
+          "heading": true
+        },
+        {
+          "term": "tib",
+          "heading": false
+        },
+        {
+          "term": "statistics",
+          "heading": false
+        },
+        {
+          "term": "libraries",
+          "heading": false
+        }
+      ],
+      "extract": "Subject annotations in the TIB catalog are continuously created by a dedicated team of 1https://www.dnb.de/EN/gnd 2The GND is available for download at https: //www.dnb.de/EN/Professionell/Metadatendienste/ Datenbezug/Gesamtabzuege/gesamtabzuege_node.html. 3https://pypi.org/project/langdetect/ 4Reflecting the real-world nature of the corpus, many records contain mixed-language content and are not reliably",
+      "extractCut": true
+    },
+    {
+      "id": "sec-004-shared-task-description-and-dataset",
+      "number": null,
+      "title": "Shared Task Description and Dataset",
+      "level": 1,
+      "pageStart": 3,
+      "pageEnd": 3,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 66,
+      "summary": {
+        "text": "Task description. Given a TIB technical record's title and abstract, a system had to return a ranked top-k list of relevant GND subjects, with k customisable. Because the records are in English and German, systems had to handle both languages.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "gnd",
+          "heading": false
+        },
+        {
+          "term": "customizable",
+          "heading": false
+        },
+        {
+          "term": "partic",
+          "heading": false
+        }
+      ],
+      "extract": "The LLMs4Subjects shared task challenged partic- ipants to develop LLM-based systems for recom- mending relevant subjects from the GND taxonomy to annotate TIB technical records. Given a record’s title and abstract as input, systems were expected to generate a customizable top-k ranked list of rel- evant GND subjects. Since the dataset included records in both English and German, systems were required to support",
+      "extractCut": true
+    },
+    {
+      "id": "sec-005-dataset-collections",
+      "number": null,
+      "title": "Dataset Collections",
+      "level": 2,
+      "pageStart": 3,
+      "pageEnd": 3,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 194,
+      "summary": {
+        "text": "The two dataset collections. all-subjects is the full TIBKAT open collection, split into 81,937 training and 13,666 development records, released with a GND taxonomy of 204,739 subjects. tib-core is a smaller subset of records carrying at least one subject from 14 TIB core domains (from Architecture to Traffic Engineering), with 41,902 training and 6,980 development records and a reduced taxonomy of 79,427 subjects. Teams could take either collection or both.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "gnd subject",
+          "heading": false
+        },
+        {
+          "term": "dataset",
+          "heading": true
+        },
+        {
+          "term": "tib core",
+          "heading": false
+        },
+        {
+          "term": "participants",
+          "heading": false
+        },
+        {
+          "term": "engineering",
+          "heading": false
+        },
+        {
+          "term": "tib-core",
+          "heading": false
+        },
+        {
+          "term": "all-subjects",
+          "heading": false
+        }
+      ],
+      "extract": "4.1 Dataset Collections all-subjects.5 This dataset comprises the full TIBKAT open-source collection, with predefined splits: 81,937 records for training and 13,666 for development. A detailed dataset overview is avail- 5https://github.com/jd-coderepos/ llms4subjects/tree/main/shared-task-datasets/ TIBKAT/all-subjects able in the shared task repository. Participants also received the accompanying GND subject taxon-",
+      "extractCut": true
+    },
+    {
+      "id": "sec-006-dataset-format-and-statistics",
+      "number": null,
+      "title": "Dataset Format and Statistics",
+      "level": 2,
+      "pageStart": 3,
+      "pageEnd": 4,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 90,
+      "summary": {
+        "text": "Dataset format. Both collections are JSON-LD with title, type, abstract and authors; the GND subjects assigned to each record are in dcterms:subject. Table 1 gives the breakdown: books are the most common record type in both languages, and records carry on average 3 to 7 subjects.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "main shared-task-datasets",
+          "heading": false
+        },
+        {
+          "term": "llms4subjects blob",
+          "heading": false
+        },
+        {
+          "term": "gnd dataset",
+          "heading": false
+        },
+        {
+          "term": "record",
+          "heading": false
+        }
+      ],
+      "extract": "Both datasets were released in JSON-LD for- mat and include metadata such as title, type, ab- stract, and authors. The key attribute for the task, dcterms:subject, holds the GND subject head- ings assigned to each record. Example records are available in English here and in German here. Ta- ble 1 provides a detailed dataset breakdown. Books were the most common record type in both lan- guage collections, with each",
+      "extractCut": true
+    },
+    {
+      "id": "sec-007-task-setup",
+      "number": null,
+      "title": "Task Setup",
+      "level": 1,
+      "pageStart": 4,
+      "pageEnd": 4,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 87,
+      "summary": {
+        "text": "Task setup. The organisers (two computer scientists and three TIB subject specialists) supported participants through a website, a Google Group and email over four months, October 2024 to January 2025. Of 33 teams that declared interest, 14 submitted system outputs and 12 also wrote system description papers.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "teams",
+          "heading": false
+        },
+        {
+          "term": "task",
+          "heading": true
+        },
+        {
+          "term": "dip",
+          "heading": false
+        }
+      ],
+      "extract": "The shared task offered multiple communica- tion channels: a dedicated website,9 a Google Group for FAQs, and direct email support (llms4subjects@gmail.com). The organizing team included two Computer Scientists and three TIB subject specialists who supported participants throughout. The task timeline spanned four months, from October 2024 to January 2025. A Declaration of Interest for Participation (DIP) survey",
+      "extractCut": true
+    },
+    {
+      "id": "sec-008-shared-task-participant-systems",
+      "number": null,
+      "title": "Shared Task Participant Systems",
+      "level": 1,
+      "pageStart": 4,
+      "pageEnd": 8,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 2215,
+      "summary": {
+        "text": "The participant systems, in alphabetical order, each described by its key steps, with Table 2 giving every team's method, models and rankings. Annif combined traditional extreme multi-label classifiers in ensembles with LLM translation and LLM-generated synthetic records; DNB-AI-Project used few-shot prompting of an ensemble of off-the-shelf LLMs, mapping free keywords to GND terms by embedding search and re-ranking with an LLM, without fine-tuning; DUTIR831 used Qwen2.5-72B-Instruct for synthetic data, GND knowledge distillation, LoRA fine-tuning with DPO, and re-ranking. The others (Homa, Jim, LA²I²F, last_minute, NBF, RUC Team, silp_nlp, TartuNLP, YNU-HPCC) are retrieval-based: embeddings, BERT ensembles, cross-encoder re-ranking or contrastive fine-tuning. The authors conclude that the leading teams relied on model ensembles, synthetic training data and multilingual models, and that only DUTIR831 and RUC Team used very large LLMs (72B and 130B) while the rest used 8B or fewer. Table 3, the quantitative leaderboard, and Figures 1 and 2 (recall and precision at 5 by record type and by language) are placed after this section.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "subject embeddings",
+          "heading": false
+        },
+        {
+          "term": "cross-encoder re-ranking",
+          "heading": false
+        },
+        {
+          "term": "ruc team",
+          "heading": false
+        },
+        {
+          "term": "gnd subject",
+          "heading": false
+        },
+        {
+          "term": "llm ensemble",
+          "heading": false
+        },
+        {
+          "term": "b-instruct llm",
+          "heading": false
+        },
+        {
+          "term": "shared task",
+          "heading": true
+        },
+        {
+          "term": "transformer embeddings",
+          "heading": false
+        }
+      ],
+      "extract": "The participant systems are described with a focus on their key methodological contributions. Teams are listed in alphabetical order of their names. An overview of the systems is provided in Table 2. 1. Annif (Suominen et al., 2025) The key ideas in this system’s subject tagging approach were: 1) Traditional extreme multi-label text clas- sification (XMTC) implemented in the Annif toolkit (2022) – Using Omikuji",
+      "extractCut": true
+    },
+    {
+      "id": "sec-009-shared-task-leaderboard-results",
+      "number": null,
+      "title": "Shared Task Leaderboard Results",
+      "level": 1,
+      "pageStart": 8,
+      "pageEnd": 8,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 249,
+      "summary": {
+        "text": "The two leaderboards. Quantitatively, systems were scored by average precision, recall and F1 at k = 5, 10, …, 50, treating subjects as a bag of words, and broken down by language, by record type and by both; the evaluation script is public. Qualitatively, over three weeks TIB subject specialists reviewed the top 20 GND codes each team gave for 122 test records shared by both collections, labelling each Y (correct), I (irrelevant but technically correct) or N/blank (incorrect). Case 1 counts Y and I as correct, case 2 counts only Y.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "shared task",
+          "heading": true
+        },
+        {
+          "term": "qualitative",
+          "heading": false
+        },
+        {
+          "term": "f1-score",
+          "heading": false
+        },
+        {
+          "term": "system performance",
+          "heading": false
+        },
+        {
+          "term": "released",
+          "heading": false
+        },
+        {
+          "term": "metrics",
+          "heading": false
+        },
+        {
+          "term": "records",
+          "heading": false
+        },
+        {
+          "term": "quantitative",
+          "heading": false
+        }
+      ],
+      "extract": "In this shared task, we provided two leaderboards: 1) quantitative results and 2) qualitative results. Quantitative Metrics. System performance was evaluated using average precision@k, recall@k, and F1-score@k at multiple cutoffs (k = 5, 10, 15, ..., 50). These metrics were chosen as sub- ject tagging was treated as a bag-of-words among applicable subjects, making precision, recall, and F1-score more suitable. Given",
+      "extractCut": true
+    },
+    {
+      "id": "sec-010-quantitative-evaluations",
+      "number": null,
+      "title": "Quantitative Evaluations",
+      "level": 2,
+      "pageStart": 8,
+      "pageEnd": 8,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 304,
+      "summary": {
+        "text": "Quantitative results (Table 3). The ranking is by recall averaged over k = 5 to 50, though for subject specialists useful predictions sit at k between 5 and 10, at most 20; the top teams recovered over half the gold subjects. Precision is reported but, as a footnote explains, cannot reach 1 at large k because records have about 5 true subjects. The top three were Annif, DUTIR831 and RUC Team on all-subjects, and RUC Team, Annif and LA²I²F on tib-core, LA²I²F's rise owing to its high precision on articles. By record type, articles scored best and theses worst; by language, there was no significant difference between German and English.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "ruc team",
+          "heading": false
+        },
+        {
+          "term": "top teams",
+          "heading": false
+        },
+        {
+          "term": "recall scores",
+          "heading": false
+        },
+        {
+          "term": "average recall",
+          "heading": false
+        },
+        {
+          "term": "both collections",
+          "heading": false
+        },
+        {
+          "term": "tib-core",
+          "heading": false
+        },
+        {
+          "term": "la2i2f",
+          "heading": false
+        },
+        {
+          "term": "dutir",
+          "heading": false
+        }
+      ],
+      "extract": "The primary evaluation metric was recall, with the overall leaderboard ranking based on average recall scores across k values from 5 to 50. For practical use by subject specialists, systems should predict relevant subjects at lower k values, ideally between 5 and 10, with a maximum of 20. Table 3 presents the results for both collections: all-subjects and tib-core. The top teams consistently predicted over half of",
+      "extractCut": true
+    },
+    {
+      "id": "sec-011-qualitative-evaluations",
+      "number": null,
+      "title": "Qualitative Evaluations",
+      "level": 2,
+      "pageStart": 8,
+      "pageEnd": 10,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 824,
+      "summary": {
+        "text": "Qualitative results (Table 4, Figures 3 and 4). The top four teams ranked the same in both cases; the authors focus on case 2 (only Y counts), since case 1 rewards predicting several near-identical subjects. DNB-AI-Project was the best system qualitatively, followed by the quantitative leaders DUTIR831, RUC Team and Annif, and the authors read its purely prompted LLM ensemble, with no fine-tuning, as support for the task's premise that LLMs can generalise against heavily fine-tuned traditional methods. Across the 14 domains, Computer Science had the highest recall, most teams struggled with Engineering and Traffic Engineering, and DNB-AI-Project and RUC Team were consistent across all domains; precision did not always follow recall.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "qualitative",
+          "heading": true
+        },
+        {
+          "term": "ruc team",
+          "heading": false
+        },
+        {
+          "term": "qualitative eval",
+          "heading": false
+        },
+        {
+          "term": "top teams",
+          "heading": false
+        },
+        {
+          "term": "precision among",
+          "heading": false
+        },
+        {
+          "term": "average recall",
+          "heading": false
+        },
+        {
+          "term": "precision scores",
+          "heading": false
+        },
+        {
+          "term": "case treating",
+          "heading": false
+        }
+      ],
+      "extract": "We now turn to the qualitative manual evaluations from the shared task’s evaluation phase. Table 4 shows results for both qualitative evalua- tion cases. Based on subject librarian assessments, both Y (correct) and I (irrelevant but technically correct) labels were counted as correct in case 1, while only Y was considered correct in case 2. The top 4 teams ranked consistently across both cases, with minor changes",
+      "extractCut": true
+    },
+    {
+      "id": "sec-012-discussion",
+      "number": null,
+      "title": "Discussion",
+      "level": 1,
+      "pageStart": 10,
+      "pageEnd": 10,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 259,
+      "summary": {
+        "text": "The organisers' baseline. They built a reference system with GPT-4o through OpenAI's Assistant API: two assistants, one per collection, each holding its GND taxonomy in a vector store, retrieve 50 subjects per record and are prompted to return exactly 50 valid subject tags as JSON. The API proved unreliable (output that broke the schema or malformed GND codes, needing repeated runs), and the baseline ranked below the participant systems. The authors conclude that a general-purpose LLM with retrieval and prompting is fine for quick prototypes, but effective subject tagging needs more specialised approaches.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "assistant api",
+          "heading": false
+        },
+        {
+          "term": "gnd",
+          "heading": false
+        },
+        {
+          "term": "subject",
+          "heading": false
+        },
+        {
+          "term": "vector",
+          "heading": false
+        },
+        {
+          "term": "prompt",
+          "heading": false
+        },
+        {
+          "term": "baseline",
+          "heading": false
+        },
+        {
+          "term": "openai",
+          "heading": false
+        },
+        {
+          "term": "title",
+          "heading": false
+        }
+      ],
+      "extract": "To establish a reference point for the LLMs4Subjects shared task, we developed a baseline system using OpenAI’s GPT-4o via the Assistant API.14 Two assistants were configured—one for all-subjects and another for 13The silp_nlp team output was not evaluated qualitatively as it was submitted after the deadline. 14https://platform.openai.com/docs/ api-reference/assistants tib-core—each equipped with the respective GND",
+      "extractCut": true
+    },
+    {
+      "id": "sec-013-conclusion",
+      "number": null,
+      "title": "Conclusion",
+      "level": 1,
+      "pageStart": 10,
+      "pageEnd": 13,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 1679,
+      "summary": {
+        "text": "Conclusion, acknowledgments and references. The task is presented as the first evaluation of LLMs for GND subject indexing of bilingual German/English technical records, combining metrics with expert assessment. Its takeaways: multilingual models and training data beat monolingual ones (RQ1, RQ2); synthetic data and retrieval-augmented pipelines improved results (RQ3); and smaller, well-engineered systems often rivalled large instruction-tuned LLMs (RQ4). All data, code and evaluation resources are on GitHub, and a second edition on energy- and compute-efficient systems is planned. Funding came from TIB, the BMBF SCINEXT project and the DFG NFDI4DataScience initiative. The references cover the participant system papers, prior subject-classification work (CSO classifier, topic models, Annif) and the models and methods used (Llama 3, Qwen2.5, BGE-M3, LoRA, DPO, Sentence-BERT, RAG).",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "semeval task",
+          "heading": false
+        },
+        {
+          "term": "arxiv preprint",
+          "heading": false
+        },
+        {
+          "term": "computational linguistics",
+          "heading": false
+        },
+        {
+          "term": "international conference",
+          "heading": false
+        },
+        {
+          "term": "international workshop",
+          "heading": false
+        },
+        {
+          "term": "tional linguistics",
+          "heading": false
+        },
+        {
+          "term": "vienna",
+          "heading": false
+        },
+        {
+          "term": "osma suominen",
+          "heading": false
+        }
+      ],
+      "extract": "SemEval-2025 Task 5: LLMs4Subjects presented the first evaluation of LLMs for GND-based sub- ject indexing in bilingual (German/English) techni- cal library records, combining quantitative metrics with expert assessments. The task revealed four key takeaways: multilingual models and training data outperformed monolingual ones (RQ1, RQ2); synthetic data and retrieval-augmented pipelines improved performance,",
+      "extractCut": true
+    },
+    {
+      "id": "sec-014-tibkat-media-types",
+      "number": null,
+      "title": "TIBKAT media types",
+      "level": 1,
+      "pageStart": 13,
+      "pageEnd": 13,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 148,
+      "summary": {
+        "text": "Appendix A: definitions of the nine TIBKAT media types (Book, Thesis, Conference, Report, Article, Collection, AudioVisualDocument, Periodical and Chapter).",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "media",
+          "heading": true
+        },
+        {
+          "term": "academic",
+          "heading": false
+        },
+        {
+          "term": "audiovisualdocument",
+          "heading": false
+        },
+        {
+          "term": "bines",
+          "heading": false
+        },
+        {
+          "term": "newspapers",
+          "heading": false
+        }
+      ],
+      "extract": "Book: A comprehensive written work published as a volume or a series of volumes. Thesis: A document submitted in support of can- didature for an academic degree or professional qualification, presenting the author’s research and findings. Conference: Proceedings or collections of papers presented at academic conferences or symposiums. Report: Detailed and systematic accounts of re- search findings, often prepared",
+      "extractCut": true
+    },
+    {
+      "id": "sec-015-tibkat-language-distribution",
+      "number": null,
+      "title": "TIBKAT Language Distribution",
+      "level": 1,
+      "pageStart": 13,
+      "pageEnd": 13,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 123,
+      "summary": {
+        "text": "Appendix B: the language distribution of TIBKAT records with abstracts, 48 languages in all, led by German (108,637) and English (76,735), then French (1,741), Indonesian (945) and Spanish (311), down to one record each in Korean and Russian.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "tibkat",
+          "heading": true
+        },
+        {
+          "term": "latvian",
+          "heading": false
+        },
+        {
+          "term": "swedish",
+          "heading": false
+        }
+      ],
+      "extract": "There are 48 different languages in the TIBKAT with abstracts. Their distributions are listed below. de (German): 108637; en (English): 76735; fr (French): 1741; id (Indonesian): 945; es (Spanish): 311; it (Italian): 294; nl (Dutch): 167; da (Danish): 129; sq (Albanian): 100; ro (Romanian): 93; ca (Catalan): 86; fi (Finnish): 80; so (Somali): 67; sv (Swedish): 65; no (Norwegian): 50; unknown (Unknown): 41; tl",
+      "extractCut": true
+    },
+    {
+      "id": "sec-016-additional-details-about-the-gnd",
+      "number": null,
+      "title": "Additional details about the GND",
+      "level": 1,
+      "pageStart": 13,
+      "pageEnd": 14,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 278,
+      "summary": {
+        "text": "Appendix C: how TIB uses the GND. Subject specialists search it through GND-Explorer or OGND, restricted to the topical-term class (saz) used for subject indexing; new terms join through a cooperative review process, and full dumps are published regularly. GND terms are usually German and describe every TIB record whatever its language, with English preferred names in some cases. Synonyms matter for indexing, though they are not always strict synonyms, because term meanings shift as the GND grows and large corrections are rare.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "gnd",
+          "heading": true
+        },
+        {
+          "term": "synonyms",
+          "heading": false
+        },
+        {
+          "term": "topical",
+          "heading": false
+        },
+        {
+          "term": "details",
+          "heading": true
+        },
+        {
+          "term": "terms",
+          "heading": false
+        },
+        {
+          "term": "tib",
+          "heading": false
+        },
+        {
+          "term": "naming",
+          "heading": false
+        },
+        {
+          "term": "llms4subjects",
+          "heading": false
+        }
+      ],
+      "extract": "At TIB, the GND is used as follows. The subject specialists are usually us- ing online services like GND-Explorer (https://explore.gnd.network/) or OGND (https://swb.bsz-bw.de/) for searching the GND. There you can also restrict to Sachbe- griff/Topical term (saz), which is the term class we are using for subject indexing (there are some additional term classes used, like geographical terms (swg), but to start",
+      "extractCut": true
+    },
+    {
+      "id": "sec-017-pilot-task",
+      "number": null,
+      "title": "Pilot Task",
+      "level": 1,
+      "pageStart": 14,
+      "pageEnd": 14,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 305,
+      "summary": {
+        "text": "Appendix D: the pilot task. Since early 2024 TIB has used ANNIF in production to assign records in its portal to one or more of its 28 subject facets, the machine-learning stage applying when nothing more salient is available; TIB moved to it from a commercial algorithm for customisation and community development. Trained on catalogue metadata using only titles and publishers, ANNIF reached an overall F1 of about 0.65 on the 14 subjects trained so far, with little difference between German and English. The authors see LLMs as a complementary next step.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "tib portal",
+          "heading": false
+        },
+        {
+          "term": "annif",
+          "heading": false
+        },
+        {
+          "term": "sciences",
+          "heading": false
+        },
+        {
+          "term": "ogy",
+          "heading": false
+        },
+        {
+          "term": "engineering",
+          "heading": false
+        },
+        {
+          "term": "subjects",
+          "heading": false
+        },
+        {
+          "term": "llms4subjects",
+          "heading": false
+        },
+        {
+          "term": "assign",
+          "heading": false
+        }
+      ],
+      "extract": "At TIB, ANNIF has been used in production code since the start of 2024 for the use case of assign- ing items from the TIB portal discovery system to one or several subject facets. The TIB portal em- ploys a multi-stage algorithm to attribute a record to one of the 28 TIB’s different subjects, viz. Ar- chitecture, Civil Engineering, Biochemistry, Biol- ogy, Chemistry, Chemical Engineering, Electrical Engineering,",
+      "extractCut": true
+    }
+  ],
+  "checks": {},
+  "withheld": false,
+  "keywords": [
+    {
+      "term": "gnd subject",
+      "heading": false
+    },
+    {
+      "term": "tib subject",
+      "heading": false
+    },
+    {
+      "term": "subject tagging",
+      "heading": false
+    },
+    {
+      "term": "subject classification",
+      "heading": false
+    },
+    {
+      "term": "subject indexing",
+      "heading": false
+    },
+    {
+      "term": "subject specialists",
+      "heading": false
+    },
+    {
+      "term": "llms4subjects shared",
+      "heading": false
+    },
+    {
+      "term": "subject taxonomy",
+      "heading": false
+    },
+    {
+      "term": "tibkat records",
+      "heading": false
+    },
+    {
+      "term": "subject embeddings",
+      "heading": false
+    },
+    {
+      "term": "gnd dataset",
+      "heading": false
+    },
+    {
+      "term": "task llms4subjects",
+      "heading": false
+    }
+  ],
+  "images": [
+    {
+      "id": "img-p007-1",
+      "file": "images/img-p007-1.png",
+      "page": 7,
+      "narratives": {
+        "en": "Figure 1(a): Recall@5 on the RECORD-TYPE ablation. Grouped bars for the fourteen teams — Annif, DNB-AI-Project, DUTIR831, Homa, icip, Jim, LA²I²F, last_minute, NBF, RUC Team, silp_nlp, TartuNLP, TSOTSALAB and YNU-HPCC — in alphabetical order on the x-axis. Ten bars per team: A (article), B (book), C (conference), R (report) and T (thesis), each once for the all-subjects dataset and once for tib-core. The y-axis runs 0 to 0.8 and no bar carries a printed value. The tallest group is RUC Team, whose A all-subjects bar reaches about 0.69; Annif, DUTIR831, Jim and LA²I²F sit around 0.6 for A all-subjects; last_minute and TSOTSALAB are near zero throughout, and Homa, DNB-AI-Project, Jim and NBF have bars missing for several record types. READ OFF THE PAGE, not a claim about the work: the sub-caption under this panel says \"based on the language ablation\", but the legend is the record types and Figure 2 is the language ablation.",
+        "fr": "Figure 1(a) : Recall@5 sur l'ablation par TYPE D'ENREGISTREMENT. Barres groupées pour les quatorze équipes — Annif, DNB-AI-Project, DUTIR831, Homa, icip, Jim, LA²I²F, last_minute, NBF, RUC Team, silp_nlp, TartuNLP, TSOTSALAB et YNU-HPCC — par ordre alphabétique sur l'axe des x. Dix barres par équipe : A (article), B (livre), C (conférence), R (rapport) et T (thèse), chacune une fois pour le jeu de données all-subjects et une fois pour tib-core. L'axe des y va de 0 à 0.8 et aucune barre ne porte de valeur imprimée. Le groupe le plus haut est RUC Team, dont la barre A all-subjects atteint environ 0.69 ; Annif, DUTIR831, Jim et LA²I²F sont autour de 0.6 pour A all-subjects ; last_minute et TSOTSALAB sont proches de zéro partout, et Homa, DNB-AI-Project, Jim et NBF n'ont pas de barres pour plusieurs types d'enregistrement. LU SUR LA PAGE, et non une affirmation sur le travail : la sous-légende sous ce panneau dit « based on the language ablation », mais la légende porte sur les types d'enregistrement et c'est la figure 2 qui est l'ablation par langue.",
+        "es": "Figura 1(a): Recall@5 en la ablación por TIPO DE REGISTRO. Barras agrupadas para los catorce equipos — Annif, DNB-AI-Project, DUTIR831, Homa, icip, Jim, LA²I²F, last_minute, NBF, RUC Team, silp_nlp, TartuNLP, TSOTSALAB y YNU-HPCC — en orden alfabético en el eje x. Diez barras por equipo: A (artículo), B (libro), C (congreso), R (informe) y T (tesis), cada una una vez para el conjunto all-subjects y otra para tib-core. El eje y va de 0 a 0.8 y ninguna barra lleva un valor impreso. El grupo más alto es RUC Team, cuya barra A all-subjects llega a unos 0.69; Annif, DUTIR831, Jim y LA²I²F rondan 0.6 en A all-subjects; last_minute y TSOTSALAB están cerca de cero en todo, y a Homa, DNB-AI-Project, Jim y NBF les faltan barras en varios tipos de registro. LEÍDO EN LA PÁGINA, no una afirmación sobre el trabajo: el subtítulo bajo este panel dice «based on the language ablation», pero la leyenda son los tipos de registro y la ablación por idioma es la figura 2.",
+        "ar": "الشكل 1(a): Recall@5 في دراسة الحذف حسب نوع السجل. أشرطة مجمّعة للفرق الأربعة عشر — Annif وDNB-AI-Project وDUTIR831 وHoma وicip وJim وLA²I²F وlast_minute وNBF وRUC Team وsilp_nlp وTartuNLP وTSOTSALAB وYNU-HPCC — بالترتيب الأبجدي على المحور السيني. عشرة أشرطة لكل فريق: A (مقالة) وB (كتاب) وC (مؤتمر) وR (تقرير) وT (أطروحة)، كل منها مرة لمجموعة بيانات all-subjects ومرة لـ tib-core. يمتد المحور الصادي من 0 إلى 0.8 ولا يحمل أي شريط قيمة مطبوعة. أعلى مجموعة هي RUC Team، إذ يبلغ شريط A all-subjects لديها نحو 0.69؛ وتقع Annif وDUTIR831 وJim وLA²I²F حول 0.6 في A all-subjects؛ أما last_minute وTSOTSALAB فقريبتان من الصفر في كل شيء، وتنقص أشرطة Homa وDNB-AI-Project وJim وNBF في عدة أنواع من السجلات. هذا ما يُقرأ على الصفحة، لا ادعاء بشأن العمل: فالتعليق الفرعي تحت هذه اللوحة يقول \"based on the language ablation\"، لكن مفتاح الشكل هو أنواع السجلات، والشكل 2 هو دراسة الحذف حسب اللغة.",
+        "ru": "Рисунок 1(a): Recall@5 в абляции по ТИПУ ЗАПИСИ. Сгруппированные столбцы для четырнадцати команд — Annif, DNB-AI-Project, DUTIR831, Homa, icip, Jim, LA²I²F, last_minute, NBF, RUC Team, silp_nlp, TartuNLP, TSOTSALAB и YNU-HPCC — в алфавитном порядке по оси x. Десять столбцов на команду: A (статья), B (книга), C (конференция), R (отчёт) и T (диссертация), каждый один раз для набора all-subjects и один раз для tib-core. Ось y идёт от 0 до 0.8, значения на столбцах не напечатаны. Самая высокая группа — RUC Team, у которой столбец A all-subjects достигает примерно 0.69; Annif, DUTIR831, Jim и LA²I²F находятся около 0.6 для A all-subjects; last_minute и TSOTSALAB везде близки к нулю, а у Homa, DNB-AI-Project, Jim и NBF для нескольких типов записей столбцов нет. ПРОЧИТАНО НА СТРАНИЦЕ, а не утверждение о работе: подподпись под этой панелью гласит «based on the language ablation», но легенда относится к типам записей, а абляция по языку — это рисунок 2.",
+        "zh": "图 1(a)：按记录类型消融的 Recall@5。十四支队伍的分组条形图——Annif、DNB-AI-Project、DUTIR831、Homa、icip、Jim、LA²I²F、last_minute、NBF、RUC Team、silp_nlp、TartuNLP、TSOTSALAB 和 YNU-HPCC——在 x 轴上按字母顺序排列。每支队伍十根条形：A（文章）、B（图书）、C（会议）、R（报告）和 T（学位论文），每类分别对应 all-subjects 数据集和 tib-core 各一次。y 轴范围 0 到 0.8，条形上没有印出数值。最高的一组是 RUC Team，其 A all-subjects 条形约达 0.69；Annif、DUTIR831、Jim 和 LA²I²F 的 A all-subjects 约为 0.6；last_minute 和 TSOTSALAB 各项均接近零，Homa、DNB-AI-Project、Jim 和 NBF 在若干记录类型上缺少条形。以下是从页面上读到的，并非对该工作的论断：此面板下的子图注写着“based on the language ablation”，但图例是记录类型，而按语言消融的是图 2。"
+      },
+      "state": "draft"
+    },
+    {
+      "id": "img-p007-2",
+      "file": "images/img-p007-2.png",
+      "page": 7,
+      "narratives": {
+        "en": "Figure 1(b): Precision@5 on the RECORD-TYPE ablation. The same fourteen teams and the same ten series as panel (a) — A/B/C/R/T × all-subjects/tib-core — with the y-axis running 0 to 0.5 and no printed values. Values are roughly half those of the recall panel: DUTIR831, Annif, Jim and RUC Team peak near 0.3, and RUC Team's A tib-core bar is the tallest at about 0.48. The same sub-caption mismatch as panel (a).",
+        "fr": "Figure 1(b) : Precision@5 sur l'ablation par TYPE D'ENREGISTREMENT. Les mêmes quatorze équipes et les mêmes dix séries que le panneau (a) — A/B/C/R/T × all-subjects/tib-core — avec un axe des y de 0 à 0.5 et aucune valeur imprimée. Les valeurs sont environ moitié moindres que celles du panneau de rappel : DUTIR831, Annif, Jim et RUC Team culminent vers 0.3, et la barre A tib-core de RUC Team est la plus haute, à environ 0.48. Même discordance de sous-légende que pour le panneau (a).",
+        "es": "Figura 1(b): Precision@5 en la ablación por TIPO DE REGISTRO. Los mismos catorce equipos y las mismas diez series que el panel (a) — A/B/C/R/T × all-subjects/tib-core — con el eje y de 0 a 0.5 y sin valores impresos. Los valores son aproximadamente la mitad que en el panel de exhaustividad: DUTIR831, Annif, Jim y RUC Team alcanzan su máximo cerca de 0.3, y la barra A tib-core de RUC Team es la más alta, en torno a 0.48. El mismo desajuste del subtítulo que en el panel (a).",
+        "ar": "الشكل 1(b): Precision@5 في دراسة الحذف حسب نوع السجل. الفرق الأربعة عشر نفسها والسلاسل العشر نفسها كما في اللوحة (a) — A/B/C/R/T × all-subjects/tib-core — مع محور صادي من 0 إلى 0.5 ومن دون قيم مطبوعة. القيم نحو نصف قيم لوحة الاستدعاء: تبلغ DUTIR831 وAnnif وJim وRUC Team ذروتها قرب 0.3، وشريط A tib-core لدى RUC Team هو الأعلى بنحو 0.48. والتعارض نفسه في التعليق الفرعي كما في اللوحة (a).",
+        "ru": "Рисунок 1(b): Precision@5 в абляции по ТИПУ ЗАПИСИ. Те же четырнадцать команд и те же десять рядов, что и на панели (a), — A/B/C/R/T × all-subjects/tib-core, — ось y от 0 до 0.5, значения не напечатаны. Значения примерно вдвое ниже, чем на панели полноты: DUTIR831, Annif, Jim и RUC Team достигают максимума около 0.3, а самый высокий столбец — A tib-core у RUC Team, около 0.48. То же несоответствие подподписи, что и на панели (a).",
+        "zh": "图 1(b)：按记录类型消融的 Precision@5。与面板 (a) 相同的十四支队伍和相同的十个系列——A/B/C/R/T × all-subjects/tib-core——y 轴范围 0 到 0.5，没有印出数值。数值大约是召回率面板的一半：DUTIR831、Annif、Jim 和 RUC Team 的峰值约为 0.3，RUC Team 的 A tib-core 条形最高，约 0.48。子图注与面板 (a) 存在同样的不一致。"
+      },
+      "state": "draft"
+    },
+    {
+      "id": "img-p007-3",
+      "file": "images/img-p007-3.png",
+      "page": 7,
+      "narratives": {
+        "en": "Figure 2(a): Recall@5 on the LANGUAGE ablation. Four bars per team — de all-subjects (blue), en all-subjects (red), de tib-core (yellow), en tib-core (green) — over the same fourteen teams in alphabetical order, y-axis 0 to 0.6, each bar labelled with its value. DUTIR831 is highest on en tib-core at 0.510 and Annif close behind at 0.502; RUC Team reads 0.447 / 0.421 / 0.494 / 0.461. Several teams submitted for only part of the grid: DNB-AI-Project and Jim have no tib-core bars, Homa and last_minute no all-subjects bars, NBF no tib-core bars. The lowest non-empty values are TSOTSALAB at 0.034 (en tib-core) and last_minute at 0.048. Some printed labels overlap their neighbours and are only partly legible; the ones quoted here are the ones that are not occluded.",
+        "fr": "Figure 2(a) : Recall@5 sur l'ablation par LANGUE. Quatre barres par équipe — de all-subjects (bleu), en all-subjects (rouge), de tib-core (jaune), en tib-core (vert) — pour les mêmes quatorze équipes par ordre alphabétique, axe des y de 0 à 0.6, chaque barre étiquetée de sa valeur. DUTIR831 est le plus haut sur en tib-core avec 0.510, et Annif suit de près avec 0.502 ; RUC Team affiche 0.447 / 0.421 / 0.494 / 0.461. Plusieurs équipes n'ont soumis que pour une partie de la grille : DNB-AI-Project et Jim n'ont pas de barres tib-core, Homa et last_minute pas de barres all-subjects, NBF pas de barres tib-core. Les plus basses valeurs non vides sont TSOTSALAB à 0.034 (en tib-core) et last_minute à 0.048. Certaines étiquettes imprimées chevauchent leurs voisines et ne sont que partiellement lisibles ; celles citées ici sont celles qui ne sont pas masquées.",
+        "es": "Figura 2(a): Recall@5 en la ablación por IDIOMA. Cuatro barras por equipo — de all-subjects (azul), en all-subjects (rojo), de tib-core (amarillo), en tib-core (verde) — para los mismos catorce equipos en orden alfabético, eje y de 0 a 0.6, cada barra rotulada con su valor. DUTIR831 es el más alto en en tib-core con 0.510 y Annif le sigue de cerca con 0.502; RUC Team marca 0.447 / 0.421 / 0.494 / 0.461. Varios equipos presentaron solo parte de la cuadrícula: DNB-AI-Project y Jim no tienen barras tib-core, Homa y last_minute no tienen barras all-subjects, NBF no tiene barras tib-core. Los valores no vacíos más bajos son TSOTSALAB con 0.034 (en tib-core) y last_minute con 0.048. Algunas etiquetas impresas se solapan con las vecinas y solo son legibles en parte; las citadas aquí son las que no están tapadas.",
+        "ar": "الشكل 2(a): Recall@5 في دراسة الحذف حسب اللغة. أربعة أشرطة لكل فريق — de all-subjects (أزرق) وen all-subjects (أحمر) وde tib-core (أصفر) وen tib-core (أخضر) — للفرق الأربعة عشر نفسها بالترتيب الأبجدي، والمحور الصادي من 0 إلى 0.6، وكل شريط عليه قيمته. أعلى قيمة لـ DUTIR831 في en tib-core بمقدار 0.510، تليها Annif عن قرب بمقدار 0.502؛ وتسجّل RUC Team القيم 0.447 / 0.421 / 0.494 / 0.461. وقدّمت عدة فرق نتائج لجزء من الشبكة فقط: ليس لدى DNB-AI-Project وJim أشرطة tib-core، ولا لدى Homa وlast_minute أشرطة all-subjects، ولا لدى NBF أشرطة tib-core. وأدنى القيم غير الفارغة هي TSOTSALAB عند 0.034 (en tib-core) وlast_minute عند 0.048. وبعض التسميات المطبوعة تتداخل مع جاراتها فلا يُقرأ منها إلا جزء؛ والمقتبس هنا هو ما لم يُحجب منها.",
+        "ru": "Рисунок 2(a): Recall@5 в абляции по ЯЗЫКУ. Четыре столбца на команду — de all-subjects (синий), en all-subjects (красный), de tib-core (жёлтый), en tib-core (зелёный) — для тех же четырнадцати команд в алфавитном порядке, ось y от 0 до 0.6, у каждого столбца подписано значение. Выше всех DUTIR831 на en tib-core с 0.510, совсем рядом Annif с 0.502; у RUC Team 0.447 / 0.421 / 0.494 / 0.461. Несколько команд прислали результаты лишь для части сетки: у DNB-AI-Project и Jim нет столбцов tib-core, у Homa и last_minute нет столбцов all-subjects, у NBF нет столбцов tib-core. Самые низкие непустые значения — TSOTSALAB с 0.034 (en tib-core) и last_minute с 0.048. Некоторые напечатанные подписи перекрываются с соседними и читаются лишь частично; здесь приведены только неперекрытые.",
+        "zh": "图 2(a)：按语言消融的 Recall@5。每支队伍四根条形——de all-subjects（蓝）、en all-subjects（红）、de tib-core（黄）、en tib-core（绿）——队伍与前图相同，共十四支，按字母顺序排列，y 轴范围 0 到 0.6，每根条形都标有数值。DUTIR831 在 en tib-core 上最高，为 0.510，Annif 以 0.502 紧随其后；RUC Team 为 0.447 / 0.421 / 0.494 / 0.461。有几支队伍只提交了部分组合：DNB-AI-Project 和 Jim 没有 tib-core 条形，Homa 和 last_minute 没有 all-subjects 条形，NBF 没有 tib-core 条形。最低的非空值是 TSOTSALAB 的 0.034（en tib-core）和 last_minute 的 0.048。部分印出的标签与相邻标签重叠，只能部分辨认；这里引用的是未被遮挡的那些。"
+      },
+      "state": "draft"
+    },
+    {
+      "id": "img-p007-4",
+      "file": "images/img-p007-4.png",
+      "page": 7,
+      "narratives": {
+        "en": "Figure 2(b): Precision@5 on the LANGUAGE ablation. Same four series and same fourteen teams as panel (a), y-axis 0 to 0.3, values printed. Annif leads on de all-subjects at 0.269, with DUTIR831 at 0.263 and DNB-AI-Project at 0.254; RUC Team's de tib-core bar is the single tallest at 0.278. icip reads 0.216 / 0.164 / 0.187 / 0.163 and TartuNLP 0.142 / 0.113 / 0.146 / 0.134. The same teams are missing the same parts of the grid as in panel (a). As with the recall panel, some labels overlap and only the legible ones are quoted.",
+        "fr": "Figure 2(b) : Precision@5 sur l'ablation par LANGUE. Mêmes quatre séries et mêmes quatorze équipes que le panneau (a), axe des y de 0 à 0.3, valeurs imprimées. Annif mène sur de all-subjects avec 0.269, devant DUTIR831 à 0.263 et DNB-AI-Project à 0.254 ; la barre de tib-core de RUC Team est la plus haute de toutes, à 0.278. icip affiche 0.216 / 0.164 / 0.187 / 0.163 et TartuNLP 0.142 / 0.113 / 0.146 / 0.134. Il manque aux mêmes équipes les mêmes parties de la grille que dans le panneau (a). Comme pour le panneau de rappel, certaines étiquettes se chevauchent et seules les lisibles sont citées.",
+        "es": "Figura 2(b): Precision@5 en la ablación por IDIOMA. Las mismas cuatro series y los mismos catorce equipos que el panel (a), eje y de 0 a 0.3, valores impresos. Annif encabeza de all-subjects con 0.269, con DUTIR831 en 0.263 y DNB-AI-Project en 0.254; la barra de tib-core de RUC Team es la más alta de todas, con 0.278. icip marca 0.216 / 0.164 / 0.187 / 0.163 y TartuNLP 0.142 / 0.113 / 0.146 / 0.134. A los mismos equipos les faltan las mismas partes de la cuadrícula que en el panel (a). Como en el panel de exhaustividad, algunas etiquetas se solapan y solo se citan las legibles.",
+        "ar": "الشكل 2(b): Precision@5 في دراسة الحذف حسب اللغة. السلاسل الأربع نفسها والفرق الأربعة عشر نفسها كما في اللوحة (a)، والمحور الصادي من 0 إلى 0.3، والقيم مطبوعة. تتصدّر Annif في de all-subjects بمقدار 0.269، ثم DUTIR831 بمقدار 0.263 وDNB-AI-Project بمقدار 0.254؛ وشريط de tib-core لدى RUC Team هو الأعلى منفردًا بمقدار 0.278. وتسجّل icip ‏0.216 / 0.164 / 0.187 / 0.163 وTartuNLP ‏0.142 / 0.113 / 0.146 / 0.134. وتنقص الفرقَ نفسها الأجزاءُ نفسها من الشبكة كما في اللوحة (a). وكما في لوحة الاستدعاء، تتداخل بعض التسميات ولا يُقتبس إلا المقروء منها.",
+        "ru": "Рисунок 2(b): Precision@5 в абляции по ЯЗЫКУ. Те же четыре ряда и те же четырнадцать команд, что и на панели (a), ось y от 0 до 0.3, значения напечатаны. Annif лидирует на de all-subjects с 0.269, затем DUTIR831 с 0.263 и DNB-AI-Project с 0.254; самый высокий отдельный столбец — de tib-core у RUC Team, 0.278. У icip 0.216 / 0.164 / 0.187 / 0.163, у TartuNLP 0.142 / 0.113 / 0.146 / 0.134. У тех же команд отсутствуют те же части сетки, что и на панели (a). Как и на панели полноты, некоторые подписи перекрываются, и приведены только читаемые.",
+        "zh": "图 2(b)：按语言消融的 Precision@5。与面板 (a) 相同的四个系列和十四支队伍，y 轴范围 0 到 0.3，印有数值。Annif 在 de all-subjects 上领先，为 0.269，DUTIR831 为 0.263，DNB-AI-Project 为 0.254；RUC Team 的 de tib-core 条形是单根最高的，为 0.278。icip 为 0.216 / 0.164 / 0.187 / 0.163，TartuNLP 为 0.142 / 0.113 / 0.146 / 0.134。缺失组合的队伍和缺失的部分与面板 (a) 相同。与召回率面板一样，部分标签相互重叠，这里只引用可辨认的。"
+      },
+      "state": "draft"
+    },
+    {
+      "id": "img-p009-1",
+      "file": "images/img-p009-1.png",
+      "page": 9,
+      "narratives": {
+        "en": "Figure 3: overall qualitative evaluation. Six bars per team — P@5, R@5, F1@5 and the averages over k = 5, 10, 15, 20 of precision, recall and F1 — for thirteen teams, ordered left to right by average recall@k rather than alphabetically: DNB-AI-Project, DUTIR831, RUC Team, Annif, Jim, icip, TartuNLP, LA²I²F, NBF, Homa, last_minute, YNU-HPCC, TSOTSALAB. The y-axis runs 0 to 0.6 and every bar is labelled. DNB-AI-Project leads with P@5 0.53 and Avg. R@k 0.51; DUTIR831 follows at 0.49 / 0.49 and RUC Team at 0.48 / 0.46. TSOTSALAB is last at about 0.04 across the board. Avg. R@k exceeds P@5 for the mid-table teams, which is what a recall measure over a larger k does. silp_nlp, present in Figures 1, 2 and 4, does not appear here.",
+        "fr": "Figure 3 : évaluation qualitative globale. Six barres par équipe — P@5, R@5, F1@5 et les moyennes sur k = 5, 10, 15, 20 de la précision, du rappel et du F1 — pour treize équipes, ordonnées de gauche à droite par rappel moyen @k plutôt qu'alphabétiquement : DNB-AI-Project, DUTIR831, RUC Team, Annif, Jim, icip, TartuNLP, LA²I²F, NBF, Homa, last_minute, YNU-HPCC, TSOTSALAB. L'axe des y va de 0 à 0.6 et chaque barre est étiquetée. DNB-AI-Project mène avec P@5 0.53 et Avg. R@k 0.51 ; DUTIR831 suit avec 0.49 / 0.49 et RUC Team avec 0.48 / 0.46. TSOTSALAB est dernier, à environ 0.04 partout. Avg. R@k dépasse P@5 pour les équipes du milieu de tableau, ce que fait une mesure de rappel sur un k plus grand. silp_nlp, présent dans les figures 1, 2 et 4, n'apparaît pas ici.",
+        "es": "Figura 3: evaluación cualitativa global. Seis barras por equipo — P@5, R@5, F1@5 y los promedios sobre k = 5, 10, 15, 20 de precisión, exhaustividad y F1 — para trece equipos, ordenados de izquierda a derecha por exhaustividad media @k y no alfabéticamente: DNB-AI-Project, DUTIR831, RUC Team, Annif, Jim, icip, TartuNLP, LA²I²F, NBF, Homa, last_minute, YNU-HPCC, TSOTSALAB. El eje y va de 0 a 0.6 y cada barra está rotulada. DNB-AI-Project encabeza con P@5 0.53 y Avg. R@k 0.51; le siguen DUTIR831 con 0.49 / 0.49 y RUC Team con 0.48 / 0.46. TSOTSALAB es el último, en torno a 0.04 en todo. Avg. R@k supera a P@5 en los equipos de mitad de tabla, que es lo que hace una medida de exhaustividad con un k mayor. silp_nlp, presente en las figuras 1, 2 y 4, no aparece aquí.",
+        "ar": "الشكل 3: التقييم النوعي الإجمالي. ستة أشرطة لكل فريق — P@5 وR@5 وF1@5 ومتوسطات الدقة والاستدعاء وF1 على k = 5 و10 و15 و20 — لثلاثة عشر فريقًا مرتبة من اليسار إلى اليمين حسب متوسط الاستدعاء عند k لا أبجديًا: DNB-AI-Project وDUTIR831 وRUC Team وAnnif وJim وicip وTartuNLP وLA²I²F وNBF وHoma وlast_minute وYNU-HPCC وTSOTSALAB. يمتد المحور الصادي من 0 إلى 0.6 وكل شريط عليه قيمته. تتصدّر DNB-AI-Project بقيمة P@5 تبلغ 0.53 وAvg. R@k تبلغ 0.51؛ تليها DUTIR831 بـ 0.49 / 0.49 وRUC Team بـ 0.48 / 0.46. وتأتي TSOTSALAB أخيرة بنحو 0.04 في كل المقاييس. ويتجاوز Avg. R@k قيمة P@5 لدى فرق وسط الترتيب، وهذا ما يفعله مقياس استدعاء على k أكبر. ولا يظهر هنا silp_nlp الموجود في الأشكال 1 و2 و4.",
+        "ru": "Рисунок 3: общая качественная оценка. Шесть столбцов на команду — P@5, R@5, F1@5 и средние по k = 5, 10, 15, 20 значения точности, полноты и F1 — для тринадцати команд, упорядоченных слева направо по средней полноте @k, а не по алфавиту: DNB-AI-Project, DUTIR831, RUC Team, Annif, Jim, icip, TartuNLP, LA²I²F, NBF, Homa, last_minute, YNU-HPCC, TSOTSALAB. Ось y от 0 до 0.6, у каждого столбца подписано значение. Лидирует DNB-AI-Project с P@5 0.53 и Avg. R@k 0.51; за ней DUTIR831 с 0.49 / 0.49 и RUC Team с 0.48 / 0.46. Последняя — TSOTSALAB, около 0.04 по всем показателям. У команд середины таблицы Avg. R@k выше P@5 — так ведёт себя мера полноты при большем k. silp_nlp, присутствующая на рисунках 1, 2 и 4, здесь отсутствует.",
+        "zh": "图 3：整体定性评估。每支队伍六根条形——P@5、R@5、F1@5，以及 k = 5、10、15、20 上精确率、召回率和 F1 的平均值——共十三支队伍，从左到右按平均召回率 @k 而非字母顺序排列：DNB-AI-Project、DUTIR831、RUC Team、Annif、Jim、icip、TartuNLP、LA²I²F、NBF、Homa、last_minute、YNU-HPCC、TSOTSALAB。y 轴范围 0 到 0.6，每根条形都标有数值。DNB-AI-Project 领先，P@5 为 0.53，Avg. R@k 为 0.51；DUTIR831 以 0.49 / 0.49 次之，RUC Team 为 0.48 / 0.46。TSOTSALAB 垫底，各项约为 0.04。中游队伍的 Avg. R@k 高于 P@5，这正是 k 更大时召回率指标的表现。图 1、2、4 中出现的 silp_nlp 没有出现在此图中。"
+      },
+      "state": "draft"
+    },
+    {
+      "id": "img-p009-2",
+      "file": "images/img-p009-2.png",
+      "page": 9,
+      "narratives": {
+        "en": "Figure 4(a): average recall@k per domain, over k = 5, 10, 15, 20. Fourteen bars per team, one for each subject domain — arc (architecture), che (chemistry), elt (electrical engineering), fer (material science), his (history), inf (computer science), lin (linguistics), lit (literature studies), mat (mathematics), oek (economics), phy (physics), sow (social sciences), tec (engineering), ver (traffic engineering) — for thirteen teams in alphabetical order. No printed values; the y-axis runs 0 to 0.8. Computer science (inf, teal) is the tallest bar in most teams' groups, reaching about 0.65 for DNB-AI-Project and icip and about 0.62 for RUC Team; mathematics (mat) is also consistently high. TSOTSALAB and YNU-HPCC are low across every domain, and Homa's bars are missing for several. Which domain is easiest is not uniform across teams, and the figure carries no aggregate.",
+        "fr": "Figure 4(a) : rappel moyen @k par domaine, sur k = 5, 10, 15, 20. Quatorze barres par équipe, une par domaine disciplinaire — arc (architecture), che (chimie), elt (génie électrique), fer (science des matériaux), his (histoire), inf (informatique), lin (linguistique), lit (études littéraires), mat (mathématiques), oek (économie), phy (physique), sow (sciences sociales), tec (ingénierie), ver (ingénierie du trafic) — pour treize équipes par ordre alphabétique. Aucune valeur imprimée ; l'axe des y va de 0 à 0.8. L'informatique (inf, bleu-vert) est la barre la plus haute dans le groupe de la plupart des équipes, atteignant environ 0.65 pour DNB-AI-Project et icip et environ 0.62 pour RUC Team ; les mathématiques (mat) sont aussi régulièrement élevées. TSOTSALAB et YNU-HPCC sont bas dans tous les domaines, et plusieurs barres de Homa manquent. Le domaine le plus facile n'est pas le même pour toutes les équipes, et la figure ne donne aucun agrégat.",
+        "es": "Figura 4(a): exhaustividad media @k por dominio, sobre k = 5, 10, 15, 20. Catorce barras por equipo, una por dominio temático — arc (arquitectura), che (química), elt (ingeniería eléctrica), fer (ciencia de materiales), his (historia), inf (informática), lin (lingüística), lit (estudios literarios), mat (matemáticas), oek (economía), phy (física), sow (ciencias sociales), tec (ingeniería), ver (ingeniería de tráfico) — para trece equipos en orden alfabético. Sin valores impresos; el eje y va de 0 a 0.8. La informática (inf, verde azulado) es la barra más alta en el grupo de la mayoría de los equipos, llegando a unos 0.65 en DNB-AI-Project e icip y a unos 0.62 en RUC Team; las matemáticas (mat) también son altas de forma constante. TSOTSALAB y YNU-HPCC son bajos en todos los dominios, y a Homa le faltan barras en varios. El dominio más fácil no es el mismo para todos los equipos, y la figura no ofrece ningún agregado.",
+        "ar": "الشكل 4(a): متوسط الاستدعاء عند k لكل مجال، على k = 5 و10 و15 و20. أربعة عشر شريطًا لكل فريق، واحد لكل مجال موضوعي — arc (العمارة) وche (الكيمياء) وelt (الهندسة الكهربائية) وfer (علم المواد) وhis (التاريخ) وinf (علوم الحاسوب) وlin (اللسانيات) وlit (الدراسات الأدبية) وmat (الرياضيات) وoek (الاقتصاد) وphy (الفيزياء) وsow (العلوم الاجتماعية) وtec (الهندسة) وver (هندسة المرور) — لثلاثة عشر فريقًا بالترتيب الأبجدي. لا توجد قيم مطبوعة؛ والمحور الصادي من 0 إلى 0.8. علوم الحاسوب (inf، أزرق مخضر) هي الشريط الأعلى في مجموعة معظم الفرق، إذ تبلغ نحو 0.65 لدى DNB-AI-Project وicip ونحو 0.62 لدى RUC Team؛ والرياضيات (mat) مرتفعة باستمرار أيضًا. أما TSOTSALAB وYNU-HPCC فمنخفضتان في كل المجالات، وتنقص أشرطة Homa في عدة مجالات. والمجال الأسهل ليس واحدًا لدى جميع الفرق، ولا يتضمن الشكل أي قيمة إجمالية.",
+        "ru": "Рисунок 4(a): средняя полнота @k по предметным областям, по k = 5, 10, 15, 20. Четырнадцать столбцов на команду, по одному на область — arc (архитектура), che (химия), elt (электротехника), fer (материаловедение), his (история), inf (информатика), lin (лингвистика), lit (литературоведение), mat (математика), oek (экономика), phy (физика), sow (социальные науки), tec (инженерия), ver (транспортная инженерия) — для тринадцати команд в алфавитном порядке. Значения не напечатаны; ось y от 0 до 0.8. Информатика (inf, сине-зелёный) — самый высокий столбец в группе большинства команд: около 0.65 у DNB-AI-Project и icip и около 0.62 у RUC Team; математика (mat) тоже стабильно высока. TSOTSALAB и YNU-HPCC низки во всех областях, у Homa нет столбцов для нескольких. Самая лёгкая область у разных команд разная, и рисунок не даёт никакого агрегата.",
+        "zh": "图 4(a)：各领域的平均召回率 @k，k = 5、10、15、20。每支队伍十四根条形，每个学科领域一根——arc（建筑学）、che（化学）、elt（电气工程）、fer（材料科学）、his（历史）、inf（计算机科学）、lin（语言学）、lit（文学研究）、mat（数学）、oek（经济学）、phy（物理学）、sow（社会科学）、tec（工程学）、ver（交通工程）——共十三支队伍，按字母顺序排列。没有印出数值；y 轴范围 0 到 0.8。在大多数队伍的组内，计算机科学（inf，青绿色）是最高的条形，DNB-AI-Project 和 icip 约达 0.65，RUC Team 约 0.62；数学（mat）也始终较高。TSOTSALAB 和 YNU-HPCC 在所有领域都偏低，Homa 在若干领域缺少条形。哪个领域最容易并非各队一致，该图也没有给出汇总值。"
+      },
+      "state": "draft"
+    },
+    {
+      "id": "img-p009-3",
+      "file": "images/img-p009-3.png",
+      "page": 9,
+      "narratives": {
+        "en": "Figure 4(b): average precision@k per domain, over k = 5, 10, 15, 20. The same fourteen domain series and the same thirteen teams as panel (a), on the same 0-to-0.8 axis, with no printed values. The bars are lower throughout — most teams peak between 0.4 and 0.6 rather than 0.6 and 0.7 — and the ordering within a team's group differs from the recall panel: architecture (arc, blue) is the tallest bar for most teams here, where computer science led on recall. RUC Team's social sciences (sow) bar is the tallest single bar at about 0.61, and DUTIR831's architecture bar reaches about 0.67.",
+        "fr": "Figure 4(b) : précision moyenne @k par domaine, sur k = 5, 10, 15, 20. Les mêmes quatorze séries de domaines et les mêmes treize équipes que le panneau (a), sur le même axe de 0 à 0.8, sans valeurs imprimées. Les barres sont partout plus basses — la plupart des équipes culminent entre 0.4 et 0.6 plutôt qu'entre 0.6 et 0.7 — et l'ordre au sein du groupe d'une équipe diffère du panneau de rappel : l'architecture (arc, bleu) est ici la barre la plus haute pour la plupart des équipes, alors que l'informatique menait en rappel. La barre sciences sociales (sow) de RUC Team est la plus haute barre isolée, à environ 0.61, et la barre architecture de DUTIR831 atteint environ 0.67.",
+        "es": "Figura 4(b): precisión media @k por dominio, sobre k = 5, 10, 15, 20. Las mismas catorce series de dominio y los mismos trece equipos que el panel (a), en el mismo eje de 0 a 0.8, sin valores impresos. Las barras son más bajas en todo — la mayoría de los equipos alcanzan su máximo entre 0.4 y 0.6 en lugar de entre 0.6 y 0.7 — y el orden dentro del grupo de cada equipo difiere del panel de exhaustividad: aquí la arquitectura (arc, azul) es la barra más alta para la mayoría de los equipos, mientras que en exhaustividad encabezaba la informática. La barra de ciencias sociales (sow) de RUC Team es la barra individual más alta, en torno a 0.61, y la barra de arquitectura de DUTIR831 llega a unos 0.67.",
+        "ar": "الشكل 4(b): متوسط الدقة عند k لكل مجال، على k = 5 و10 و15 و20. سلاسل المجالات الأربع عشرة نفسها والفرق الثلاثة عشر نفسها كما في اللوحة (a)، على المحور نفسه من 0 إلى 0.8، من دون قيم مطبوعة. الأشرطة أدنى في كل مكان — إذ تبلغ معظم الفرق ذروتها بين 0.4 و0.6 بدلًا من 0.6 و0.7 — والترتيب داخل مجموعة كل فريق يختلف عن لوحة الاستدعاء: فالعمارة (arc، أزرق) هي الشريط الأعلى لدى معظم الفرق هنا، بينما تصدّرت علوم الحاسوب في الاستدعاء. وشريط العلوم الاجتماعية (sow) لدى RUC Team هو أعلى شريط منفرد بنحو 0.61، ويبلغ شريط العمارة لدى DUTIR831 نحو 0.67.",
+        "ru": "Рисунок 4(b): средняя точность @k по предметным областям, по k = 5, 10, 15, 20. Те же четырнадцать рядов областей и те же тринадцать команд, что и на панели (a), на той же оси от 0 до 0.8, без напечатанных значений. Столбцы везде ниже — у большинства команд максимум между 0.4 и 0.6, а не между 0.6 и 0.7, — и порядок внутри группы команды отличается от панели полноты: здесь у большинства команд выше всех архитектура (arc, синий), тогда как по полноте лидировала информатика. Самый высокий отдельный столбец — социальные науки (sow) у RUC Team, около 0.61, а столбец архитектуры у DUTIR831 достигает примерно 0.67.",
+        "zh": "图 4(b)：各领域的平均精确率 @k，k = 5、10、15、20。与面板 (a) 相同的十四个领域系列和十三支队伍，坐标轴同为 0 到 0.8，没有印出数值。条形整体更低——大多数队伍的峰值在 0.4 到 0.6 之间，而不是 0.6 到 0.7——并且每支队伍组内的排序与召回率面板不同：这里大多数队伍最高的条形是建筑学（arc，蓝色），而在召回率上领先的是计算机科学。RUC Team 的社会科学（sow）条形是单根最高的，约 0.61；DUTIR831 的建筑学条形约达 0.67。"
+      },
+      "state": "draft"
+    }
+  ],
+  "coverage": [
+    {
+      "kind": "contents",
+      "state": "found",
+      "count": 18,
+      "note": "outline"
+    },
+    {
+      "kind": "sections",
+      "state": "found",
+      "count": 19,
+      "note": "2 levels"
+    },
+    {
+      "kind": "figures",
+      "state": "found",
+      "count": 7
+    },
+    {
+      "kind": "tables",
+      "state": "not-extracted"
+    },
+    {
+      "kind": "references",
+      "state": "not-extracted",
+      "note": "a references section is in the text (p10); its entries are not extracted"
+    },
+    {
+      "kind": "glossary",
+      "state": "none",
+      "note": "no such heading in the text"
+    },
+    {
+      "kind": "footnotes",
+      "state": "not-extracted"
+    },
+    {
+      "kind": "summaries",
+      "state": "found",
+      "count": 19,
+      "note": "19 of 19 sections"
+    }
+  ],
+  "links": {
+    "repo": "litlfred/cat-harness",
+    "branch": "main",
+    "dir": "library/corpus/library/arxiv-2504.07199v3"
+  }
+}

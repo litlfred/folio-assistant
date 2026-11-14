@@ -1,0 +1,124 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/skills/content/authoring-who-smart-guidelines/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "http://smart.who.int/base/skill/guideline-use-case",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Stage 0 of smart-guideline-end-to-end: turn a request for a SMART Guideline into a use case — population, setting, jurisdiction and interventions in scope, new or an adaptation — in the requester's own words. The agent asks numbered questions for what the request did not say, and never invents the answer. Read when a guideline request arrives, before any L1 source is looked for.",
+      "hasIOContract": true,
+      "hasInstructions": true,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills",
+      "inputSchema": "http://smart.who.int/base/schema/skills/guideline-use-case/input.schema.json",
+      "instructionLines": 55,
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/guideline-use-case.md",
+      "name": "guideline-use-case",
+      "outputSchema": "http://smart.who.int/base/schema/skills/guideline-use-case/output.schema.json",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8567237dd4e735a4b9f5c543206d2d7bd9de9b2dfdfd87587eae18aa7c90ad07",
+        "bytes": 2737,
+        "sha256": "8567237dd4e735a4b9f5c543206d2d7bd9de9b2dfdfd87587eae18aa7c90ad07"
+      },
+      "title": "guideline-use-case"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/smart-base-tools",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills",
+      "instructionLines": 134,
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/smart-base-tools.md",
+      "name": "smart-base-tools",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1355a6f7ab2dce4066919ab77ef54fa0feb433b5f585006408cc10da429d74d7",
+        "bytes": 7195,
+        "sha256": "1355a6f7ab2dce4066919ab77ef54fa0feb433b5f585006408cc10da429d74d7"
+      },
+      "title": "smart-base Toolchain"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/smart-guideline-create",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Somebody asked for a new WHO SMART Guideline (an IG built on smart-base, or a DAK that will feed one). Specialises fhir-ig-create: the same three facts, the same numbered question with the same default (stage it inside this repository first), and the same routes, plus the SMART rules: every guideline repository instantiates smart-base identically, forks under litlfred come before any WHO repository, the identity comes from the declaration and never from the directory, and the WHO template's theme and chrome come from smart-base by `needs`, never copied. Use whenever a user asks to create, start or set up a SMART Guideline, a SMART IG, a WHO IG or a DAK.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills",
+      "instructionLines": 133,
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/smart-guideline-create.md",
+      "name": "smart-guideline-create",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7f88b7b97a126288bf3b1c577c030a1f533ac3eb5d107f9edb1189d90a48dc5b",
+        "bytes": 7975,
+        "sha256": "7f88b7b97a126288bf3b1c577c030a1f533ac3eb5d107f9edb1189d90a48dc5b"
+      },
+      "title": "smart-guideline-create"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/smart-guideline-end-to-end",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "The whole road from a use case to a running application on WHO SMART Guidelines, for a new guideline or a jurisdiction's adaptation, as an orchestrator of ten named stage skills, each with its own input and output contract: guideline-use-case, dak-l1-library, recommendation-extraction, l2-dependency-choice, l2-dak-authoring, l3-dependency-choice, l3-fhir-authoring, l4-application-brief, wireframe-design-review and l4-application-build. Each stage's output is the next stage's input. Human adjudication follows every stage as QA, not as a gate, but the order of the stages is a rule: no L3 asset before the L1 extraction and L2 assets it derives from exist with their review requested. Read before starting any end-to-end authoring or adaptation, and to find which skill runs each stage. A request to adapt a WHO guideline, DAK or IG to a country or programme (\"adapt the immunization guidelines to Uganda using these schedules\") is this process, even when it reads like an IG or coding task.",
+      "hasIOContract": true,
+      "hasInstructions": true,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills",
+      "inputSchema": "http://smart.who.int/base/schema/skills/smart-guideline-end-to-end/input.schema.json",
+      "instructionLines": 257,
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/smart-guideline-end-to-end.md",
+      "name": "smart-guideline-end-to-end",
+      "outputSchema": "http://smart.who.int/base/schema/skills/smart-guideline-end-to-end/output.schema.json",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/6bfe00c1126a39dc36f5253bfb9dd4d385263b00f87de1ccdc76777aa7f45c5c",
+        "bytes": 19779,
+        "sha256": "6bfe00c1126a39dc36f5253bfb9dd4d385263b00f87de1ccdc76777aa7f45c5c"
+      },
+      "title": "smart-guideline-end-to-end"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/smart-stack-layering",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Which layer a WHO SMART asset, rule, script or page belongs to — fhir-harness, smart-base (with its L1 and DAK document kinds) or smart-ig — and the one question that settles it. Read before adding anything to fhir-harness, smart-base or smart-ig, before creating a per-IG harness, and before moving a pre/post-processing step.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills",
+      "instructionLines": 137,
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/smart-stack-layering.md",
+      "name": "smart-stack-layering",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/87e1b6547621ddbc92bde3e1d1ed037731d571adc89044b323befb936a2ae2c6",
+        "bytes": 6918,
+        "sha256": "87e1b6547621ddbc92bde3e1d1ed037731d571adc89044b323befb936a2ae2c6"
+      },
+      "title": "smart-stack-layering"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/toolchain-ownership",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Taking ownership of the WHO smart-base scripts in litlfred, rewriting them to the Skill I/O contract, and the one gate that governs when a script may actually move. Read before touching, copying or rewriting any upstream smart-base script.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills",
+      "instructionLines": 94,
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/toolchain-ownership.md",
+      "name": "toolchain-ownership",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/0820952279a551b7a992b4ab5d423c35a0781216a7da89773e334841c568f548",
+        "bytes": 4153,
+        "sha256": "0820952279a551b7a992b4ab5d423c35a0781216a7da89773e334841c568f548"
+      },
+      "title": "toolchain-ownership"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills/content/authoring-who-smart-guidelines",
+  "path": "skills/content/authoring-who-smart-guidelines/"
+}

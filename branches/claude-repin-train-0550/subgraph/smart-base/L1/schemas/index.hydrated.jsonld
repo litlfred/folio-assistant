@@ -1,0 +1,114 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L1/schemas/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasSubgraph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L1/schemas/docs/",
+      "@type": "bootstrap:Subgraph",
+      "holdsGraph": [
+        "cat-harness:graphTypology/cat-harness"
+      ],
+      "name": "L1/schemas/docs",
+      "path": "L1/schemas/docs/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L1/schemas/generated/",
+      "@type": "bootstrap:Subgraph",
+      "holdsGraph": [
+        "cat-harness:graphTypology/cat-harness"
+      ],
+      "name": "L1/schemas/generated",
+      "path": "L1/schemas/generated/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L1/schemas/skills/",
+      "@type": "bootstrap:Subgraph",
+      "hasSubgraph": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L1/schemas/skills/classify-and-code-content/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "cat-harness:graphTypology/cat-harness"
+          ],
+          "name": "L1/schemas/skills/classify-and-code-content",
+          "path": "L1/schemas/skills/classify-and-code-content/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L1/schemas/skills/dak-l1-library/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "cat-harness:graphTypology/cat-harness"
+          ],
+          "name": "L1/schemas/skills/dak-l1-library",
+          "path": "L1/schemas/skills/dak-l1-library/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L1/schemas/skills/indicator-extraction/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "cat-harness:graphTypology/cat-harness"
+          ],
+          "name": "L1/schemas/skills/indicator-extraction",
+          "path": "L1/schemas/skills/indicator-extraction/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L1/schemas/skills/recommendation-candidates/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "cat-harness:graphTypology/cat-harness"
+          ],
+          "name": "L1/schemas/skills/recommendation-candidates",
+          "path": "L1/schemas/skills/recommendation-candidates/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L1/schemas/skills/recommendation-extraction/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "cat-harness:graphTypology/cat-harness"
+          ],
+          "name": "L1/schemas/skills/recommendation-extraction",
+          "path": "L1/schemas/skills/recommendation-extraction/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L1/schemas/skills/recommendation-scenarios/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "cat-harness:graphTypology/cat-harness"
+          ],
+          "name": "L1/schemas/skills/recommendation-scenarios",
+          "path": "L1/schemas/skills/recommendation-scenarios/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L1/schemas/skills/transcription-verbatim/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "cat-harness:graphTypology/cat-harness"
+          ],
+          "name": "L1/schemas/skills/transcription-verbatim",
+          "path": "L1/schemas/skills/transcription-verbatim/"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/cat-harness"
+      ],
+      "name": "L1/schemas/skills",
+      "path": "L1/schemas/skills/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/L1/schemas/test/",
+      "@type": "bootstrap:Subgraph",
+      "holdsGraph": [
+        "cat-harness:graphTypology/cat-harness"
+      ],
+      "name": "L1/schemas/test",
+      "path": "L1/schemas/test/"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/cat-harness"
+  ],
+  "name": "L1/schemas",
+  "path": "L1/schemas/"
+}
