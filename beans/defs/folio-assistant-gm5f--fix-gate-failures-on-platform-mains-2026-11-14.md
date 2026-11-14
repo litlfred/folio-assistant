@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-14T17:50:00Z
-updated_at: 2026-11-14T19:05:00Z
+updated_at: 2026-11-14T22:02:14Z
 tags:
     - ci
     - red-main
@@ -32,3 +32,11 @@ _2026-11-14T17:50:00Z_ — Filed. All PRs draft; reproduced 3, 4, 5 locally and 
 _2026-11-14T18:35:00Z_ — Full-tier fixes pushed: tools#2195 root:lint (no require() in tests), tools#2197 check:reference-direction (comments named a content layer).
 
 _2026-11-14T19:05:00Z_ — Merge manager asked about post-merge test reds on core main 745c3541 (core#753) and who-iris main 95068f86. Not core's or who-iris's code: a layer's main-qa judges inside the folio-assistant tree at fa main's lock (44e3a88: tools c55f2f2b, sci 132a0fdf, fhir-harness 9d723f1a). Reproduced locally. Causes and where each is already fixed: docs-route, merge-base, viz-generators, gen-auto-docs LEVEL pages, compose-docs read built pages through the sm8r layer-output overlay on tools main (#2192, a75472987, 3de1c716a); concern groups (sci collab redeclared `content`) fixed by sci#207 (50d1030); standalone-fixture byte-equal is pin skew (tools main fixture equals fhir-harness and sci mains); gen-subgraph-jsonld payloads are built at publish (docs/payload/ gitignored). Re-pin train fa#3124 pins tools dccd8e20, sci 50d1030 and fhir-harness d7fbc294, which carry all of these. No new fix PR needed; check #3124's CI.
+
+_2026-11-14T22:02:14Z_ — Train fa#3124 (a54daba8, tools pin 5759d528) red, run 43629603452. Split by cause, reproduced at the train's pins with tools main c426b770:
+- Already fixed on tools main after the pin (needs a re-pin): ns:check QaAttestation (#2203), translation-drift overlay and viewer title (#2210), e2e overlay readers (#2209).
+- reference-direction, 3 NEW (comments naming a higher layer; plus 2 more on tools main from #2205/#2206): cat-harness#1342, bootstrap-tools#100, tools#2216. Verified 0 NEW.
+- workflow-tools, NEW no-tool for merge-guard.ts, translation-platforms.ts, translation-adjudicate.ts: cat-harness#1343 (Tool nodes; merge-guard satisfies ci-health since merge-to-main is opt-in only). node-view-coverage.ts is cat-harness#1336 (another session). Still open: fa/cat-harness-tools/scripts/.preview-qa-ci.ts unresolved (layer-pr-checks preview step, from tools#2184).
+- "no check script is unrun" (7 scripts) and audit:coverage fhir-core-definitions: fa#3127 (gate steps, base = train branch) + fhir-harness#435 (@covers). Verified: each exits 0, gates-workflows.test 19/0, audit 0 NEW.
+- Test-side reds (state-visualizer, compose-docs, viewer-declarations, library/todo pages not built in the mount): tools#2213/#2214, another session's.
+- Issue: tools#2215.
