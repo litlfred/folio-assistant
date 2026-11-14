@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-12T09:45:00Z
-updated_at: 2026-11-12T12:50:00Z
+updated_at: 2026-11-14T16:05:00Z
 parent: folio-assistant-v8bg
 tags:
     - handover-2026-11-12
@@ -20,3 +20,5 @@ Owner thread: https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?threa
 - [ ] smart-ra republishes with smart-ra#241 (blocked on lock/layers/pins)
 
 _2026-11-12T09:45:00Z_ — Filed by thread "Record handover in beans" (https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G9E8Y9ccXJsk3qvGEie1X5Pr), session https://claude.ai/code/session_01Qmmkt7NmLVnjA5oNtkbv3f.
+
+_2026-11-14T16:05:00Z_ — dth-hrh#121 was dirty (main re-pinned past core#764 since): merged main into it, taking main's workflows/index.config.json/index.lock.json; PR diff is the overlay change only again (470c365). Waiting on CI, then merge (owner OK 11-12 09:28Z). Thread session https://claude.ai/code/session_01Qmmkt4e1HartdemKADMACb.
