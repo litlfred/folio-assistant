@@ -1,0 +1,75 @@
+---
+doc_id: omg-2024-spdx-3-0
+doc_title: "System Package Data Exchange (SPDX)"
+section_id: sec-009-normative-references
+section_title: "Normative References"
+section_number: null
+pages: 13-14
+source_pdf: omg-2024-spdx-3-0.pdf
+source_sha256: 3041bc8676650ef6
+toc_source: outline
+---
+The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of
+this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced
+document (including any amendments) applies.
+Apache Maven, Apache Software Foundation, https://maven.apache.org/.
+Bower API, https://bower.io/docs/api/#install.
+Common Platform Enumeration (CPE) – Specification 2.2, The MITRE Corporation, https://cpe.mitre.org/files/cpe-specification
+_2.2.pdf.
+Common Platform Enumeration (CPE): Naming Specification Version 2.3, NIST IR 7695, NIST, https://csrc.nist.gov/pubs/ir/76
+95/final.
+Common Vulnerability Scoring System v3.0 (CVSS v3.0): Specification Document, Forum of Incident Response and Security
+Teams, Inc (FIRST), https://www.first.org/cvss/v3.0/specification-document.
+Common Vulnerability Scoring System v3.1 (CVSS v3.1): Specification Document, Forum of Incident Response and Security
+Teams, Inc (FIRST), https://www.first.org/cvss/v3.1/specification-document.
+Common Vulnerability Scoring System version 4.0 (CVSS v4.0): Specification Document, Forum of Incident Response and Security
+Teams, Inc (FIRST), https://www.first.org/cvss/v4.0/specification-document.
+CVSS 3.0 schema, Forum of Incident Response and Security Teams, Inc (FIRST), https://www.first.org/cvss/cvss-v3.0.json.
+CVSS 3.1 schema, Forum of Incident Response and Security Teams, Inc (FIRST), https://www.first.org/cvss/cvss-v3.1.json.
+CVSS 4.0 schema, Forum of Incident Response and Security Teams, Inc (FIRST), https://www.first.org/cvss/cvss-v4.0.json.
+EU general risk assessment methodology, European Commission, https://ec.europa.eu/docsroom/documents/17107.
+npm-package.json, npm Inc., https://docs.npmjs.com/files/package.json.
+NuGet documentation, Microsoft, https://docs.nuget.org/.
+POSIX.1-2017 The Open Group Base Specifications Issue 7, 2018 edition, IEEE/Open Group, https://pubs.opengroup.org/onlin
+epubs/9699919799/.
+Resource Description Framework (RDF), 2014-02-25, W3C, http://www.w3.org/standards/techs/rdf.
+RFC 1319, The MD2 Message-Digest Algorithm, Internet Engineering Task Force, https://datatracker.ietf.org/doc/rfc1319/.
+System Package Data Exchange (SPDX©) v3.0
+1
+RFC 1320, The MD4 Message-Digest Algorithm, Internet Engineering Task Force, https://datatracker.ietf.org/doc/rfc1320/.
+RFC 1321, The MD5 Message-Digest Algorithm, Internet Engineering Task Force, https://datatracker.ietf.org/doc/rfc1321/.
+RFC 1950, ZLIB Compressed Data Format Specification version 3.3, Internet Engineering Task Force, https://datatracker.ietf.org
+/doc/rfc1950/.
+RFC 2046, Multipurpose Internet Mail Extensions (MIME) Part Two: Media Types, Internet Engineering Task Force, https:
+//datatracker.ietf.org/doc/rfc2046/.
+RFC 3174, US Secure Hash Algorithm 1 (SHA1), Internet Engineering Task Force, https://datatracker.ietf.org/doc/rfc3174/.
+RFC 3696, Application Techniques for Checking and Transformation of Names, Internet Engineering Task Force, https://datatrac
+ker.ietf.org/doc/rfc3696/.
+RFC 3874, A 224-bit One-way Hash Function: SHA-224, Internet Engineering Task Force, https://datatracker.ietf.org/doc/rfc38
+74/.
+RFC 3986, Uniform Resource Identifier (URI): Generic Syntax, Internet Engineering Task Force, https://datatracker.ietf.org/doc/r
+fc3986/.
+RFC 5234, Augmented BNF for Syntax Specifications: ABNF, Internet Engineering Task Force, https://datatracker.ietf.org/doc/r
+fc5234/.
+RFC 6234, US Secure Hash Algorithms (SHA and SHA-based HMAC and HKDF), Internet Engineering Task Force, https://datatr
+acker.ietf.org/doc/rfc6234/.
+RFC 7405, Case-Sensitive String Support in ABNF, Internet Engineering Task Force, https://datatracker.ietf.org/doc/rfc7405/.
+RFC 7693, The BLAKE2 Cryptographic Hash and Message Authentication Code (MAC), Internet Engineering Task Force, https:
+//datatracker.ietf.org/doc/rfc7693/.
+RFC 8259, The JavaScript Object Notation (JSON) Data Interchange Format, Internet Engineering Task Force, https://datatracke
+r.ietf.org/doc/rfc8259/.
+RFC 9393, Concise Software Identification Tags, Internet Engineering Task Force, https://datatracker.ietf.org/doc/rfc9393/.
+Semantic Versioning 2.0.0, Tom Preston-Werner and SemVer contributors, https://semver.org.
+SLSA Provenance v0.2, The Linux Foundation, https://slsa.dev/spec/v0.2/provenance.
+SoftWare Heritage persistent IDentifiers (SWHIDs), in Draft International Standard ISO/IEC DIS 18670 Information technology
+— SoftWare Hash IDentifier (SWHID) Specification V1.2https://www.iso.org/standard/89985.html, also available at https:
+//docs.softwareheritage.org/devel/swh-model/persistent-identifiers.html
+SPDX and RDF Ontology, http://spdx.org/rdf/ontology/spdx-3-0-1
+SPDX License List, The Linux Foundation, https://spdx.org/licenses/
+SPDX License Exceptions, The Linux Foundation, https://spdx.org/licenses/exceptions-index.html
+Stakeholder-Specific Vulnerability Categorization Guide, CISA, https://www.cisa.gov/stakeholder-specific-vulnerability-categor
+ization-ssvc.
+The EPSS Model, Forum of Incident Response and Security Teams, Inc (FIRST), https://www.first.org/epss/model.
+Types of Software Bill of Material (SBOM) Documents, CISA, https://www.cisa.gov/sites/default/files/2023-04/sbom-types-doc
+ument-508c.pdf.
+2.2

@@ -1,0 +1,937 @@
+{
+  "$schema": "folio-block-summaries/v1",
+  "entry": "arxiv-2406.01940v2",
+  "summaries": [
+    {
+      "block": "library/arxiv-2406.01940v2/blocks/prose-sec-000",
+      "source": "sections/sec-000-introduction.md",
+      "source_hash": "df40e56941b3ff3f06b50ac25da656a462c5b32c3ccfac15965c47b48c0bebd3",
+      "narrative": [
+        {
+          "text": "Introduces FORML4, an autoformalization dataset for Lean 4 derived from Mathlib 4 theorems that pairs statements with proofs in both natural and formal languages, and proposes Process-Driven Autoformalization (PDA), which uses step-level Lean 4 compiler feedback to train a Process-Supervised Verifier (PSV) and iteratively refine statement autoformalization.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://f3fb3a27-0d91-4050-aa1f-0bb590919aee"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2406.01940v2/blocks/prose-sec-001",
+      "source": "sections/sec-001-related-work.md",
+      "source_hash": "c0436bb089216ef0a44f34f0780137dca615596d288636ef012a4109cb1ed128",
+      "narrative": [
+        {
+          "text": "Reviews prior work on LLM-based autoformalization and outcome- versus process-supervised verifiers (OSV vs. PSV), contrasting expensive human or Monte Carlo Tree Search process annotation with PDA's use of automatic step-level feedback from the Lean 4 compiler.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://f3fb3a27-0d91-4050-aa1f-0bb590919aee"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2406.01940v2/blocks/prose-sec-002",
+      "source": "sections/sec-002-forml4-dataset-construction.md",
+      "source_hash": "444d5834dc830d595fa815393d50816398593c431678adac13d51bb2d46279c6",
+      "narrative": [
+        {
+          "text": "Motivates the FORML4 benchmark by noting that existing Lean 4 autoformalization datasets rely on unchecked zero-shot GPT-4 informalization of theorem statements alone and omit proofs as context for dataset quality and evaluation.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://f3fb3a27-0d91-4050-aa1f-0bb590919aee"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2406.01940v2/blocks/prose-sec-003",
+      "source": "sections/sec-003-informalization.md",
+      "source_hash": "2f922f630d0bbfa37a7e72736be155c2ebbb23ea5166b534e8d5176d934611f2",
+      "narrative": [
+        {
+          "text": "Introduces FORML4's inclusion of formal-informal proof-step pairs alongside statement translation as an auxiliary task to provide reasoning context and enable comprehensive autoformalization assessment through a fine-grained pipeline and quality checks.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://f3fb3a27-0d91-4050-aa1f-0bb590919aee"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2406.01940v2/blocks/prose-sec-004",
+      "source": "sections/sec-004-data-source.md",
+      "source_hash": "5d919be6d98972da78405aa0e34ba951309ef4127e62f4042fbdeb01f2c16121",
+      "narrative": [
+        {
+          "text": "Contains the page number and running header (\"3 / Work in progress\") preceding the Data Source subsection.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://f3fb3a27-0d91-4050-aa1f-0bb590919aee"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2406.01940v2/blocks/prose-sec-005",
+      "source": "sections/sec-005-curation-process.md",
+      "source_hash": "b05c682f4e992eba359ee2e0dd438e1cad83eefd684bb9e1e048fadedfbb9890",
+      "narrative": [
+        {
+          "text": "Details FORML4's data extraction from Mathlib 4 and NuminaMath across training, random test, basic test, and real test splits (Table 1); its two-step decompositional informalization of statements and proofs; its curation pipeline using Gemini-Pro-1.5, self-contained Theorem Environments, and human verification by four Lean 4 experts (0.72 average success rate); and its feature comparison against MMA, Lean Workbook, ProofNet, MiniF2F, and FIMO (Table 2).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://f3fb3a27-0d91-4050-aa1f-0bb590919aee"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2406.01940v2/blocks/prose-sec-006",
+      "source": "sections/sec-006-comparing-forml4-with-existing-autoformalization.md",
+      "source_hash": "be64ef57145170dafab9276205ce62b3df15887715a3428fa7c2c61582445810",
+      "narrative": [
+        {
+          "text": "Summarizes Table 2's comparison between FORML4 and existing autoformalization datasets, highlighting that FORML4 pairs statements with proofs via human-verified LLM informalization and supports automated process-driven training from Lean 4 compiler feedback across diverse mathematical complexities.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://f3fb3a27-0d91-4050-aa1f-0bb590919aee"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2406.01940v2/blocks/prose-sec-007",
+      "source": "sections/sec-007-method-process-driven-autoformalization.md",
+      "source_hash": "d9aa12711d546388058d1ad5673cbe44b303e769a464095697dcb9e0e17efca6",
+      "narrative": [
+        {
+          "text": "Outlines the Process-Driven Autoformalization (PDA) methodology, starting from a baseline LLM fine-tuned on FORML4, introducing a Process-Supervised Verifier (PSV) trained on Lean 4 compiler feedback, and establishing an iterative improvement loop.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://f3fb3a27-0d91-4050-aa1f-0bb590919aee"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2406.01940v2/blocks/prose-sec-008",
+      "source": "sections/sec-008-verification-model.md",
+      "source_hash": "38fb3c4feda2a80ea4c3656b47450f3c5a0443d77ef7f4d78e6af098c05b9e37",
+      "narrative": [
+        {
+          "text": "Formulates the verification models and notation (Table 3), contrasting an Outcome-Supervised Verifier (OSV) trained with uniform final-compilation labels against a Process-Supervised Verifier (PSV) trained with step-level cross-entropy loss using \"first error location\" labels from the Lean 4 compiler.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://f3fb3a27-0d91-4050-aa1f-0bb590919aee"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2406.01940v2/blocks/prose-sec-009",
+      "source": "sections/sec-009-further-enhancement-with-back-propagated-process.md",
+      "source_hash": "60f54d3f3345010239de8c0d2de0e7d5d804d2e558755c89b34f49c2054843bc",
+      "narrative": [
+        {
+          "text": "Describes the three-step iterative refinement cycle between the autoformalizer, the Lean 4 compiler, and the verifier: filtering autoformalizer outputs with the verifier for fine-tuning, compiling outputs from the improved autoformalizer to collect step-level feedback, and re-fine-tuning the verifier on the resulting higher-quality process-labeled data.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://f3fb3a27-0d91-4050-aa1f-0bb590919aee"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2406.01940v2/blocks/prose-sec-010",
+      "source": "sections/sec-010-experiments.md",
+      "source_hash": "77065cda8fe1551871ba934cfef4df0f9e8a5f7fb63909b25bf0ccebbe807e18",
+      "narrative": [
+        {
+          "text": "Contains the subsection numbering (\"5.1\") introducing the experimental evaluation section.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://f3fb3a27-0d91-4050-aa1f-0bb590919aee"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2406.01940v2/blocks/prose-sec-011",
+      "source": "sections/sec-011-autoformalization-enhancement.md",
+      "source_hash": "aa1f3e1569dd34a9b5b5ca7bf2a1c2fe98c7bfcea237ef1141d5f03c3fe88b04",
+      "narrative": [
+        {
+          "text": "Introduces the experimental evaluation of the Process-Driven Autoformalization (PDA) framework.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://f3fb3a27-0d91-4050-aa1f-0bb590919aee"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2406.01940v2/blocks/prose-sec-012",
+      "source": "sections/sec-012-experimental-setup.md",
+      "source_hash": "0002bc6596d480a3559ec4c92abcf3f2b4eb2cc357d4c7150e3216000816da95",
+      "narrative": [
+        {
+          "text": "Presents Table 4 comparing greedy compilation rates of closed-source, open-source, and FORML4-fine-tuned LLMs across the Random, Basic, and Real test sets, and defines the experimental setup: the Mistral-v0.3-7B Baseline Autoformalizer (BA) augmented with compiled GSM8K and MATH outputs, the PSV and OSV verifier models, and the MP1, Precision, and Recall metrics.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://f3fb3a27-0d91-4050-aa1f-0bb590919aee"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2406.01940v2/blocks/prose-sec-013",
+      "source": "sections/sec-013-enhanced-autoformalizer-performance.md",
+      "source_hash": "46583dbe200ae2883da71788e10d131d6fc634d5cdc9c2425c0e3b8c713c477f",
+      "narrative": [
+        {
+          "text": "Analyzes the comparison among the Baseline, Rejective Sampling Fine-tuned (RFT), Verifier-Enhanced (VEA), and combined RFT+VEA autoformalizers (Table 4), showing that FORML4 fine-tuning drastically outperforms off-the-shelf LLMs, RFT and VEA trade compilation time against data quality, and RFT+VEA achieves the best compilation rates across all test splits by pairing compiler validity with verifier semantic alignment.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://f3fb3a27-0d91-4050-aa1f-0bb590919aee"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2406.01940v2/blocks/prose-sec-014",
+      "source": "sections/sec-014-further-enhanced-verifier-performance.md",
+      "source_hash": "c8568cb422a9ead9cb60429a0868b25454ed9fb6a6e4ed063d948b5c00361d69",
+      "narrative": [
+        {
+          "text": "Evaluates verifier refinement on data generated by the RFT+VEA autoformalizer (Table 5) and summarizes human evaluation scores (Table 6), showing that both OSV+ and PSV+ improve over OSV and PSV in MP1, precision, and recall across all three test sets, with PSV+ consistently outperforming OSV+.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://f3fb3a27-0d91-4050-aa1f-0bb590919aee"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2406.01940v2/blocks/prose-sec-015",
+      "source": "sections/sec-015-human-evaluation-on-autoformalizer-performances.md",
+      "source_hash": "ef8d1fda3f2376d78a7345d9da17c6749678c6af8c22dd07cd894da8081dd199",
+      "narrative": [
+        {
+          "text": "Reports a factorial post-hoc human evaluation of 60 syntactically valid autoformalized statements across Proof Validity (statement+proof compilation), PDA Enhancement (Baseline vs. RFT+VEA), and Test Set Categories (Basic, Random, Real), finding statistically significant gains for samples with valid compiled proofs (p = 0.002992) and across dataset splits (p = 0.000002), as well as higher scores for the enhanced model.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://f3fb3a27-0d91-4050-aa1f-0bb590919aee"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2406.01940v2/blocks/prose-sec-016",
+      "source": "sections/sec-016-conclusion.md",
+      "source_hash": "9139df7154e9d04b73a564246a26fc86780d505c0c0ada731081969fa276c850",
+      "narrative": [
+        {
+          "text": "Concludes by summarizing the FORML4 benchmark and the Process-Driven Autoformalization (PDA) pipeline, noting future plans to extend the benchmark and method to Isabelle, HOL Light, and Coq, followed by the paper's bibliography.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://f3fb3a27-0d91-4050-aa1f-0bb590919aee"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2406.01940v2/blocks/prose-sec-017",
+      "source": "sections/sec-017-future-directions.md",
+      "source_hash": "02a47978e7b394cca1fafa015eb374988264495fbec87bf754b622be5eadbfd2",
+      "narrative": [
+        {
+          "text": "Summarizes three experimental takeaways—the synergy of RFT+VEA, the superiority of process-supervised fine-tuning (PSV/PSV+) over outcome supervision, and the promise of iterative compiler-verifier-autoformalizer refinement—and identifies future work on refining process supervision and reducing RFT's compilation time overhead.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://f3fb3a27-0d91-4050-aa1f-0bb590919aee"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2406.01940v2/blocks/prose-sec-018",
+      "source": "sections/sec-018-more-related-works.md",
+      "source_hash": "781bc23f744d5d60aa087e9b8a20d60cd1d8ee0589a2ac85d5a7c3528667bd1f",
+      "narrative": [
+        {
+          "text": "Provides extended related work covering interactive theorem provers and Lean 4, formal mathematics datasets across Coq, Isabelle, and Lean, prompting and verification techniques for LLM mathematical reasoning, and learning from human, internal, or tool-based feedback.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://f3fb3a27-0d91-4050-aa1f-0bb590919aee"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2406.01940v2/blocks/prose-sec-019",
+      "source": "sections/sec-019-detailed-decomposition-strategy.md",
+      "source_hash": "665087fb0549ae6214de4e7e9fb917d2ecdde95bc749e3b6236fed4e4d47626e",
+      "narrative": [
+        {
+          "text": "Explains the three-step decomposition strategy for informalization—translating the formal statement into a natural-language problem, explaining each formal proof step's lemmas or tactics, and writing a standalone natural-language proof free of Lean 4 identifiers—so that the extracted problem and proof do not leak Lean 4 terms into the autoformalization input.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://f3fb3a27-0d91-4050-aa1f-0bb590919aee"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2406.01940v2/blocks/prose-sec-020",
+      "source": "sections/sec-020-prompt-for-informalization.md",
+      "source_hash": "8327dd363c534d362f48073a2398a9113df256a4bad39325526045511e4928c0",
+      "narrative": [
+        {
+          "text": "Provides the full few-shot prompt template used to informalize Lean 4 theorems into # Problem:, # Explanation:, and # Proof: sections, illustrated with three worked examples (eq_zero_iff_even, forall_mem_comm, and asq_pos).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://f3fb3a27-0d91-4050-aa1f-0bb590919aee"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2406.01940v2/blocks/prose-sec-021",
+      "source": "sections/sec-021-human-evaluation-comparative-model-selection.md",
+      "source_hash": "21069347782a3937d1315f93936003d239684329562fc85489eedd4ecc2769d7",
+      "narrative": [
+        {
+          "text": "Contains the subsection numbering (\"E.1\") introducing the human evaluation protocol for comparative informalization model selection.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://f3fb3a27-0d91-4050-aa1f-0bb590919aee"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2406.01940v2/blocks/prose-sec-022",
+      "source": "sections/sec-022-annotation-protocol-for-informalization-model-co.md",
+      "source_hash": "c62d80f942ed48e1dcf65e44f1319c71eb4a92c956520d40b9dd27f6a69eca3e",
+      "narrative": [
+        {
+          "text": "Contains the subsection numbering (\"E.1.1\") introducing the annotation protocol for comparing informalization models.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://f3fb3a27-0d91-4050-aa1f-0bb590919aee"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2406.01940v2/blocks/prose-sec-023",
+      "source": "sections/sec-023-introduction.md",
+      "source_hash": "658e411450d08307a65845db6b088047b1c2bb8cde641a4e0090516ff2086e05",
+      "narrative": [
+        {
+          "text": "States the opening sentence of the annotation protocol for evaluating the informalization quality of two sampled models.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://f3fb3a27-0d91-4050-aa1f-0bb590919aee"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2406.01940v2/blocks/prose-sec-024",
+      "source": "sections/sec-024-task.md",
+      "source_hash": "0ba40b902bb981cba31d3f4faaafd12ba4eda2476973868e12e6ea224f6557f8",
+      "narrative": [
+        {
+          "text": "Describes the informalization task format (Theorem, Problem, Explanation, and Proof) in which models translate Lean 4 statements and proofs into natural language understandable without Lean 4 knowledge.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://f3fb3a27-0d91-4050-aa1f-0bb590919aee"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2406.01940v2/blocks/prose-sec-025",
+      "source": "sections/sec-025-file-structure.md",
+      "source_hash": "cc6b37349848f5adbe40170989911a4f5ee556afeaae01b154f67698cd3fa88a",
+      "narrative": [
+        {
+          "text": "Specifies the JSON schema of the 10-sample model comparison files (nl, formal, gemini_output/gpt4o_output, nl_problem, nl_explanation, nl_proof) and defines the three binary human annotation criteria: Informalization Success, Informal Proof Correctness, and Model Preference.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://f3fb3a27-0d91-4050-aa1f-0bb590919aee"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2406.01940v2/blocks/prose-sec-026",
+      "source": "sections/sec-026-quality-criteria.md",
+      "source_hash": "4adc1822bb36d35bd91ee44c5cca0ba8c9b99700f4b5485be59a8aa49193443e",
+      "narrative": [
+        {
+          "text": "Defines the quality criteria for ideal informalized outputs—semantic equivalence to the Lean 4 theorem and proof, and intuitive natural-language phrasing without Lean 4 function names—and refers annotators to the few-shot prompt examples and JSON comparison tools.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://f3fb3a27-0d91-4050-aa1f-0bb590919aee"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2406.01940v2/blocks/prose-sec-027",
+      "source": "sections/sec-027-annotation-results-for-informalization-model-com.md",
+      "source_hash": "8d5b282fa0e9e079a615169e24f681650580f2f502e152db8a7db76bb4ebdbe3",
+      "narrative": [
+        {
+          "text": "Presents Table 7 comparing Gemini and GPT-4o across Informalization Success (80.0% vs. 72.5%), Informal Proof Correctness (85.0% vs. 62.5%), and Model Preference (60.0% vs. 22.5%), along with inter-rater agreement rates.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://f3fb3a27-0d91-4050-aa1f-0bb590919aee"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2406.01940v2/blocks/prose-sec-028",
+      "source": "sections/sec-028-human-evaluation-pda-dataset-quality.md",
+      "source_hash": "fee20b3eccefa6b58ffd51e5d6ec5ecb305d1f1fdf00c7f1443a05af4ff96545",
+      "narrative": [
+        {
+          "text": "Reports the manual quality verification of 60 FORML4 samples (20 basic test, 40 random test/train) by four independent Lean 4 experts, yielding a 0.72 average statement informalization success rate (0.875 on basic vs. 0.575 on random, p = 0.0099) and a Fleiss' Kappa of 0.3730, and notes challenges from topic incompatibility and implicit constraint specification.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://f3fb3a27-0d91-4050-aa1f-0bb590919aee"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2406.01940v2/blocks/prose-sec-029",
+      "source": "sections/sec-029-case-visualization-in-comparision-with-existing.md",
+      "source_hash": "1d3dff5c3fe5a8958dea87f0b867315bf7ca2bb8e025fef7595166cea0baa8a1",
+      "narrative": [
+        {
+          "text": "Contrasts FORML4/PDA with MMA on a concrete trigonometry example (cos(pi : Angle) = -1, referenced in Table 8), showing that requiring both the formal statement and proof enables the Lean 4 compiler to verify tactic reasoning rather than merely issuing an incomplete-proof warning on a bare statement.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://f3fb3a27-0d91-4050-aa1f-0bb590919aee"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2406.01940v2/blocks/prose-sec-030",
+      "source": "sections/sec-030-human-evaluation-autoformalization-performance-e.md",
+      "source_hash": "d0887c121b023785d03515975f4005586ec6b551bebf7e93f769e5936f6f3307",
+      "narrative": [
+        {
+          "text": "Notes that the four Lean 4 annotators cross-evaluated 60 autoformalized samples, with each sample annotated twice at roughly 5 minutes per sample.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://f3fb3a27-0d91-4050-aa1f-0bb590919aee"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2406.01940v2/blocks/prose-sec-031",
+      "source": "sections/sec-031-experimental-details.md",
+      "source_hash": "405f5b085e012f8f266357b9713a1c82db429ae0bb2110a061df799bcd3617db",
+      "narrative": [
+        {
+          "text": "Contains the subsection numbering (\"I.1\") introducing the experimental training settings appendix.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://f3fb3a27-0d91-4050-aa1f-0bb590919aee"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2406.01940v2/blocks/prose-sec-032",
+      "source": "sections/sec-032-training-settings.md",
+      "source_hash": "bbf8405b939170e2e070024e83c7501b07108ce04729399f484cd7a140bba674",
+      "narrative": [
+        {
+          "text": "Specifies the full-parameter training configuration on 8 NVIDIA A100 (40GB) GPUs with AdamW (Table 9 for autoformalizers: batch size 128, learning rate 5e-6, 2 epochs, max length 2048; Table 10 for verifiers: batch size 512, learning rate 2e-6, 1 epoch) and includes Table 8's side-by-side input, output, and compiler feedback comparison between PDA and MMA.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://f3fb3a27-0d91-4050-aa1f-0bb590919aee"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2406.01940v2/blocks/prose-sec-033",
+      "source": "sections/sec-033-generation-settings.md",
+      "source_hash": "0cc8dd542c90a72c9c41287c3f25d0175b2815f196ea7f6d5b9dbdf6df4b960f",
+      "narrative": [
+        {
+          "text": "Describes the vLLM-based inference settings used across experiments, with temperature 0.0 for greedy decoding and temperature 0.7 with n = 20 samples per instance to compute the unbiased pass@k estimator of Chen et al. (2021).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://f3fb3a27-0d91-4050-aa1f-0bb590919aee"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2406.01940v2/blocks/prose-sec-034",
+      "source": "sections/sec-034-lean-4-compilation.md",
+      "source_hash": "040b178ae2ddab5cec97fda3b84eb89e67340fc646d3fc309abdf8b264897413",
+      "narrative": [
+        {
+          "text": "Details the Lean 4 compilation setup based on a multiprocessing wrapper around the JSON-stream Lean 4 REPL, lists the pinned commit revisions for mathlib, std, Qq, aesop, proofwidgets, Cli, and importGraph (Table 11), and notes that compiling 1,000 examples takes roughly 10 minutes compared to 1–2 minutes for LLM generation.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://f3fb3a27-0d91-4050-aa1f-0bb590919aee"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2406.01940v2/blocks/prose-sec-035",
+      "source": "sections/sec-035-comprehensive-evaluation-of-the-enhanced-autofor.md",
+      "source_hash": "c6e543af00a1ec4abbd5fa2edf4c50e74d7ffd4fbb770f0d23a3bedec1be4a49",
+      "narrative": [
+        {
+          "text": "Outlines the three-step pipeline for generating compiler-supervised training data from FORML4, MATH, and GSM8K with the RFT+VEA autoformalizer to refine the PSV verifier, and reports the RFT+VEA model's Greedy, Pass@1, and Pass@5 compilation rates across the Basic, Random, and Real test sets (Table 12).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://f3fb3a27-0d91-4050-aa1f-0bb590919aee"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2406.01940v2/blocks/prose-sec-036",
+      "source": "sections/sec-036-model-selection-process.md",
+      "source_hash": "5c1fca2025595b8e1cbc6155a5765e50bd4d7365e5eba30c47c452812c3d62e9",
+      "narrative": [
+        {
+          "text": "Summarizes the comparative human evaluation of Gemini-Pro-1.5 and GPT-4 on 10 sampled formal theorems by four annotators across statement informalization success, informalized proof correctness, and model preference, explaining why Gemini-Pro-1.5 (80% success, 80% preference, 0.77 inter-rater agreement) was selected to construct FORML4.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://f3fb3a27-0d91-4050-aa1f-0bb590919aee"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2406.01940v2/blocks/prose-sec-037",
+      "source": "sections/sec-037-detailed-dataset-comparison-analysis.md",
+      "source_hash": "0f12cba4bf68e036a1c526951a248bace2f85a4b6f8c69c8981c1f46aad199ea",
+      "narrative": [
+        {
+          "text": "Provides a dimension-by-dimension analysis of Table 2 comparing FORML4 against MMA, Lean Workbook, ProofNet, MiniF2F, and FIMO across source language, dataset size (>17k entries), inclusion of proofs, Lean 4 usage, construction method (informalization, LLM-based, human-verified), and primary usage (training, benchmarking, and automated process-driven compiler feedback).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://f3fb3a27-0d91-4050-aa1f-0bb590919aee"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2406.01940v2/blocks/prose-sec-038",
+      "source": "sections/sec-038-analysis-for-training-and-test-data-in-forml4.md",
+      "source_hash": "de1fc41a3318b6caf34a301ecb9c3750a127db40560b29b496c8eb43871f4ebd",
+      "narrative": [
+        {
+          "text": "Compares base Mistral-7B against models supervised-fine-tuned on 5k and full (14.51k) FORML4 training samples without GSM8K/MATH rejective-sampling augmentation (Table 13), showing that scaling FORML4 training data improves compilation rates across all splits while the out-of-distribution Real test set remains challenging due to domain shift and the absence of Mathlib lemma dependencies.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://f3fb3a27-0d91-4050-aa1f-0bb590919aee"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2406.01940v2/blocks/prose-sec-039",
+      "source": "sections/sec-039-autoformalization-on-real-world-mathematical-rea.md",
+      "source_hash": "711907da36dd00b26ef4eccf73ba46be714992ee6ab7b80a5e7fea2d62a6f3a2",
+      "narrative": [
+        {
+          "text": "Reports compilation rates of the FORML4-only SFT Mistral models on the MATH and GSM8K training sets (Table 14: 0.65% on MATH and 8.16% on GSM8K for Mistral Full) and explains how 10-sample temperature-0.7 outputs from Mistral (Full) that compiled in Lean 4 were collected to further fine-tune the baseline model used in Section 5.1.2.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://f3fb3a27-0d91-4050-aa1f-0bb590919aee"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2406.01940v2/blocks/prose-sec-040",
+      "source": "sections/sec-040-data-construction-details.md",
+      "source_hash": "044871b274fbd797d338e4a1a61a4fc3c8fc079c7f62a1ae363fbb5a760294ce",
+      "narrative": [
+        {
+          "text": "Contains the subsection numbering (\"O.1\") introducing the data construction and preprocessing details appendix.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://f3fb3a27-0d91-4050-aa1f-0bb590919aee"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2406.01940v2/blocks/prose-sec-041",
+      "source": "sections/sec-041-data-preprocessing.md",
+      "source_hash": "eaa8e7fa3b56e7973baf59fd2c81376f7264f4c0628366740ad76c82f93e73bb",
+      "narrative": [
+        {
+          "text": "Details three preprocessing rules applied before informalization: retaining Mathport #align directives linking Lean 3 and Lean 4 names, filtering out 262 samples whose theorem statements reference file-local custom .mk lemmas, and removing 35 Python-based problems from the Real test set.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://f3fb3a27-0d91-4050-aa1f-0bb590919aee"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2406.01940v2/blocks/prose-sec-042",
+      "source": "sections/sec-042-dataset-split.md",
+      "source_hash": "ace672aa3501f6452d7f40b946e24eca413e7178d4f8a5852fd04ce978ffd123",
+      "narrative": [
+        {
+          "text": "Describes the construction of the Basic Test set—sampled exclusively from ~10,000 theorems in Mathlib Basic.lean files after excluding training and random test items—and the Real Test set—derived from NuminaMath natural-language math questions and answers (Li et al., 2024) without GPT-4 informalization and evaluated under the MiniF2F-Lean4 predefined theorem environment.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://f3fb3a27-0d91-4050-aa1f-0bb590919aee"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2406.01940v2/blocks/prose-sec-043",
+      "source": "sections/sec-043-data-postprocessing.md",
+      "source_hash": "041d49a07cba525cee7ad68aec3890f5f9636ec09fbbd19632cc71313e73ff00",
+      "narrative": [
+        {
+          "text": "Lists the post-filtering criteria applied to FORML4 training and test splits: removing API failures or empty informalizations, excluding examples with natural-language text <= 400 characters or formal theorem+proof <= 200 characters, and manually removing inspected samples with evidently incorrect informalizations.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://f3fb3a27-0d91-4050-aa1f-0bb590919aee"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2406.01940v2/blocks/prose-sec-044",
+      "source": "sections/sec-044-details-of-automated-autoformalization-evaluatio.md",
+      "source_hash": "75495a47432c554e575a9b7571e7eb3fb4a57ffe93519b4fe8daad97b76dc785",
+      "narrative": [
+        {
+          "text": "Contains the subsection numbering (\"P.1\") introducing the automated autoformalization evaluation details appendix.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://f3fb3a27-0d91-4050-aa1f-0bb590919aee"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2406.01940v2/blocks/prose-sec-045",
+      "source": "sections/sec-045-prompt.md",
+      "source_hash": "38a4b12467d5dd6f14f9da8994cede43308aaca37fb20a3ef9179a6ff3f326c2",
+      "narrative": [
+        {
+          "text": "Gives the instruction prompt template used to query LLMs to translate a natural-language # Statement: and # Proof: pair into Lean 4.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://f3fb3a27-0d91-4050-aa1f-0bb590919aee"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2406.01940v2/blocks/prose-sec-046",
+      "source": "sections/sec-046-preprocessing-and-evaluation.md",
+      "source_hash": "2da8419fe7173a2236b42f27d50e55fe399b8a35a1ec5c2d806e5f723777bab0",
+      "narrative": [
+        {
+          "text": "Describes the post-processing extraction of Lean 4 code from raw LLM responses, defines the greedy and unbiased pass@k evaluation metrics (repeated 5 times with 20 samples at temperature 0.7), and presents Table 15 comparing Greedy, Pass@1, and Pass@5 compilation scores of closed-source and open-source LLMs across the Random, Basic, and Real test sets.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://f3fb3a27-0d91-4050-aa1f-0bb590919aee"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2406.01940v2/blocks/prose-sec-047",
+      "source": "sections/sec-047-detailed-analyses-of-existing-llms-on-forml4.md",
+      "source_hash": "18f8b3a8eaf211256e0e6cacd117ae486b54fdaedeb8b813b06d2318d1b2ec21",
+      "narrative": [
+        {
+          "text": "Analyzes the baseline LLM evaluation results in Table 15, highlighting the performance gap between closed-source models (GPT-4/GPT-4o, GPT-3.5) and open-source models (where DeepSeek-Math-Instruct-7B leads on the Random Test while LLEMMA models score near zero), and observing that scaling parameter count from 7B to 34B alone does not yield strong Lean 4 autoformalization performance.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://f3fb3a27-0d91-4050-aa1f-0bb590919aee"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2406.01940v2/blocks/prose-sec-front-matter",
+      "source": "sections/sec-front-matter.md",
+      "source_hash": "f776eee7551a8fc1158ec58e28702a0faa13f2b354fa4f8c80865360e3ba397b",
+      "narrative": [
+        {
+          "text": "Presents the title, authors, affiliations, and abstract for \"Process-Driven Autoformalization in Lean 4,\" summarizing the FORML4 dataset of natural- and formal-language statements and proofs and the Process-Driven Autoformalization (PDA) framework that uses Lean 4 compiler feedback to improve autoformalization accuracy and data utilization.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://f3fb3a27-0d91-4050-aa1f-0bb590919aee"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    }
+  ]
+}

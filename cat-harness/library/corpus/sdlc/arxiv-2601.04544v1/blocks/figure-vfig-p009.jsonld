@@ -1,0 +1,34 @@
+{
+  "@context": [
+    "https://litlfred.github.io/cat-harness/ns/context/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/",
+      "folio-assistant-core": "https://litlfred.github.io/folio-assistant-core/v0/ns/"
+    }
+  ],
+  "@id": "library/arxiv-2601.04544v1/blocks/figure-vfig-p009",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../figures/vfig-p009.png",
+  "pageStart": 9,
+  "pageEnd": 9,
+  "narrative": [
+    {
+      "text": "Figure 4: Training curves across 1750 RL steps comparing SFT-Only and SFT+Slerp initialization. (a) RL Reward shows both approaches converging to ~0.9. (b) RL Entropy shows SFT+Slerp maintaining higher entropy (~0.6 vs ~0.5), indicating enhanced exploration and resistance to entropy collapse.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude",
+        "model": "claude-opus-5"
+      },
+      "drafted_at": "2026-10-09",
+      "lang": "en"
+    }
+  ],
+  "derivedFrom": "library/arxiv-2601.04544v1/sections/sec-010",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/source/arxiv-2601.04544v1",
+  "provenance": "ingested"
+}

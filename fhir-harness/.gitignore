@@ -1,0 +1,24 @@
+# BEGIN index mounts (generated from index.config.json — do not edit)
+# END index mounts
+
+# Install artefacts are never tracked: a mount refuses a tree that pins them
+# (remote-mount fixity), and 32k of them were committed by mistake once.
+node_modules/
+
+# BEGIN built at publish (fhir-harness.json `builtAtPublish`)
+# Owner, 2026-10-14 (B1): computed at the checkout's pins, so no commit of this
+# layer can hold it current.
+/ns/context/v1.jsonld
+# END built at publish
+
+# The QA working copy (fhir-harness.json `qa`, storage `cat/cat-harness/qa-reports`).
+# Derived verdicts live on the qa-reports store branch, keyed by commit; a
+# local run writes them here and nothing commits them (bean folio-assistant-7mwa;
+# as cat-harness#857 and folio-assistant-core#482 did).
+/test/results/
+
+# The FHIR core StructureDefinition bodies (fhir-harness.json `fhir-core-definitions`):
+# the package's own bytes, materialised by `fhir-core.ts materialise` from the
+# pinned, hash-checked core package; each manifest.json names every file and its
+# sha256. 12 MB across the three releases, so not committed.
+/fhir-core/*/StructureDefinition-*.json

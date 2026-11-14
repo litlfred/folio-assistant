@@ -1,0 +1,64 @@
+{
+  "$schema": "folio-library-extraction/v1",
+  "doc_id": "10665-75211",
+  "kinds": {
+    "contents": {
+      "state": "found",
+      "count": 70,
+      "note": "contents from inferred",
+      "tool": "pdf-structure.py",
+      "version": "0b311238188a",
+      "at": "2026-11-14"
+    },
+    "sections": {
+      "state": "found",
+      "count": 97,
+      "tool": "pdf-structure.py",
+      "version": "0b311238188a",
+      "at": "2026-11-14"
+    },
+    "figures": {
+      "state": "partial",
+      "count": 38,
+      "note": "38 drawn figures kept and inspected; 52 captions read off the pages. 2 more (Fig. 4 p. 28, Fig. 3 p. 117) have no render: no drawing on those pages contains a text line, so the arm drew no region (reviewed 2026-11-14 in the re-ingest pilot; the tool recorded partial 38)",
+      "tool": "pdf-images.py+pdf-vector-figures.py",
+      "at": "2026-11-14"
+    },
+    "tables": {
+      "state": "found",
+      "count": 27,
+      "note": "27 tables transcribed by hand earlier and kept (tabular.csvw.json is authored; scripts/iris-cdn/derive-referenced.py restores it over the 206 pdfplumber drafts the re-ingest wrote, which were not kept) (reviewed 2026-11-14 in the re-ingest pilot; the tool recorded found 206)",
+      "tool": "pdf-tables.py",
+      "version": "b3b9e4012c21",
+      "at": "2026-11-14"
+    },
+    "references": {
+      "state": "none",
+      "count": 0,
+      "note": "no reference list in the entry's sections",
+      "tool": "references-extract",
+      "version": "a00c5164027f",
+      "at": "2026-11-14"
+    },
+    "glossary": {
+      "state": "partial",
+      "note": "the source prints a glossary three times, 'Definition of terms used in the Toolkit' (Annex G of Parts 1 and 2, Annex C of Part 3: sec-066, sec-084, sec-095), one term per line with its definition below; glossary-from-source's title test does not match the singular 'Definition', so it recorded 'none' as if there were no such section, and its row reader would not read this layout either (reviewed 2026-11-14 in the re-ingest pilot; the tool recorded none 0)",
+      "tool": "glossary-from-source",
+      "version": "0ed78cc7a54d",
+      "at": "2026-11-14"
+    },
+    "footnotes": {
+      "state": "found",
+      "count": 23,
+      "tool": "pdf-footnotes.py",
+      "at": "2026-11-14",
+      "note": "23 footnotes called from the text; pdf-footnotes.py also keeps 37 foot-of-page lines no mark calls (running footers and table rows), which the tool had added to its count of 60 (reviewed 2026-11-14 in the re-ingest pilot; the tool recorded found 60)"
+    },
+    "summaries": {
+      "state": "found",
+      "count": 97,
+      "tool": "summaries",
+      "at": "2026-11-14"
+    }
+  }
+}

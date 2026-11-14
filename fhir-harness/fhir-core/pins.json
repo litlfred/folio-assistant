@@ -1,0 +1,40 @@
+{
+  "$schema": "folio-fhir-core-pins/v1",
+  "registry": "https://packages.fhir.org",
+  "note": "The stable FHIR releases only: no ballot, snapshot or preview. Each package is the HL7 core package packages.fhir.org serves at the exact version; `shasum` is the sha1 the registry's metadata (https://packages.fhir.org/<name>) records for that version, and `integrity` is the sha512 of the same bytes, computed when the pin was written (2026-11-14). `bun run fhir-harness/scripts/fhir-core.ts index` refuses bytes that differ from either.",
+  "releases": [
+    {
+      "release": "R4",
+      "fhirVersion": "4.0.1",
+      "package": {
+        "name": "hl7.fhir.r4.core",
+        "version": "4.0.1",
+        "tarball": "https://packages.fhir.org/hl7.fhir.r4.core/4.0.1",
+        "shasum": "0e4b8d99f7918587557682c8b47df605424547a5",
+        "integrity": "sha512-mbj/pjYrpclK5G+EbRV9BUzk05iIOpnIYyRfGW7N7dHQkj2gD9lF6713W+RoMtpjkdZewjiD893ZMqMbyHniEA=="
+      }
+    },
+    {
+      "release": "R4B",
+      "fhirVersion": "4.3.0",
+      "package": {
+        "name": "hl7.fhir.r4b.core",
+        "version": "4.3.0",
+        "tarball": "https://packages.fhir.org/hl7.fhir.r4b.core/4.3.0",
+        "shasum": "7795a9c811b1e8e34eb110bb38355433d2c8b88c",
+        "integrity": "sha512-lDrDN2zS/KlNdcJuQ/JgnBknI9GAJAsZdRfD3LdXzCWMcnpvacyn+C9/x1QHeeltGi7sF/+ASJRbeTFbAaFpMw=="
+      }
+    },
+    {
+      "release": "R5",
+      "fhirVersion": "5.0.0",
+      "package": {
+        "name": "hl7.fhir.r5.core",
+        "version": "5.0.0",
+        "tarball": "https://packages.fhir.org/hl7.fhir.r5.core/5.0.0",
+        "shasum": "9cf2c82eea74c336b68dc9f6558d51c5685ecc0e",
+        "integrity": "sha512-LZYFA7ZtmhdiPjY0OEKfHsyka9yND5TfpN17WGjS8yhRfJabkb0N+TiYF2KfPDE7FRhqSdda7y9Gs/Tmj32/ug=="
+      }
+    }
+  ]
+}
