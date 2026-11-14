@@ -69,7 +69,7 @@ jobs:
         with:
           bun-version: 1.4.4
       - name: Build and push to the local registry
-        uses: litlfred/cat-harness-tools/.github/actions/ci-image@54aebe58c20d478d31d06b64dc54963539f6114e # index.lock.json
+        uses: litlfred/cat-harness-tools/.github/actions/ci-image@6cfc8ed0f7826d9e723e206218a16d689673a97f # index.lock.json
         with:
           op: build
           ref: localhost:5000/folio-assistant-ci:test
@@ -77,7 +77,7 @@ jobs:
       # A job without a browser restores the workspace layers only, and the
       # skipped layers must still pass the digest check.
       - name: Restore the workspace layers only
-        uses: litlfred/cat-harness-tools/.github/actions/ci-image@54aebe58c20d478d31d06b64dc54963539f6114e # index.lock.json
+        uses: litlfred/cat-harness-tools/.github/actions/ci-image@6cfc8ed0f7826d9e723e206218a16d689673a97f # index.lock.json
         with:
           op: fetch
           scheme: http
@@ -91,7 +91,7 @@ jobs:
           [ -z "$(ls -A "$RUNNER_TEMP/ws-only/pw" 2>/dev/null)" ] || { echo "a workspace-only restore wrote browsers"; exit 1; }
           git worktree add -q --detach "$RUNNER_TEMP/fresh" HEAD
       - name: Restore into the fresh checkout, as ci-setup does
-        uses: litlfred/cat-harness-tools/.github/actions/ci-image@54aebe58c20d478d31d06b64dc54963539f6114e # index.lock.json
+        uses: litlfred/cat-harness-tools/.github/actions/ci-image@6cfc8ed0f7826d9e723e206218a16d689673a97f # index.lock.json
         with:
           op: fetch
           scheme: http
@@ -128,7 +128,7 @@ jobs:
           bun-version: 1.4.4
       - name: Image key
         id: recipe
-        uses: litlfred/cat-harness-tools/.github/actions/ci-image@54aebe58c20d478d31d06b64dc54963539f6114e # index.lock.json
+        uses: litlfred/cat-harness-tools/.github/actions/ci-image@6cfc8ed0f7826d9e723e206218a16d689673a97f # index.lock.json
         with:
           op: key
       - name: Whether it is already built
@@ -152,7 +152,7 @@ jobs:
           fi
       - name: Build and push
         if: steps.key.outputs.exists != 'true'
-        uses: litlfred/cat-harness-tools/.github/actions/ci-image@54aebe58c20d478d31d06b64dc54963539f6114e # index.lock.json
+        uses: litlfred/cat-harness-tools/.github/actions/ci-image@6cfc8ed0f7826d9e723e206218a16d689673a97f # index.lock.json
         with:
           op: build
           ref: ${{ steps.key.outputs.image }}:${{ steps.key.outputs.key }}
@@ -161,7 +161,7 @@ jobs:
       # Anonymously, as every job pulls it: a package that is not public fails
       # here rather than silently in every job's fallback.
       - name: Restore it the way a job will, and time it
-        uses: litlfred/cat-harness-tools/.github/actions/ci-image@54aebe58c20d478d31d06b64dc54963539f6114e # index.lock.json
+        uses: litlfred/cat-harness-tools/.github/actions/ci-image@6cfc8ed0f7826d9e723e206218a16d689673a97f # index.lock.json
         with:
           op: fetch
           image: ${{ steps.key.outputs.image }}
