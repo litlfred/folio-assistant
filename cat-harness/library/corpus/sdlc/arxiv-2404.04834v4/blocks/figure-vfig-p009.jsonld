@@ -1,0 +1,34 @@
+{
+  "@context": [
+    "https://litlfred.github.io/cat-harness/ns/context/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/",
+      "folio-assistant-core": "https://litlfred.github.io/folio-assistant-core/v0/ns/"
+    }
+  ],
+  "@id": "library/arxiv-2404.04834v4/blocks/figure-vfig-p009",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../figures/vfig-p009.png",
+  "pageStart": 9,
+  "pageEnd": 9,
+  "narrative": [
+    {
+      "text": "Figure 1 compares the Waterfall model (sequential phases: Requirements, Design, Development, Testing, Maintenance) with the Agile model (iterative sprints: Sprint Backlog, Planning, Development, Testing, Review) adapted for LLM-based multi-agent software engineering systems.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "antigravity",
+        "model": "gemini-1.5-pro"
+      },
+      "drafted_at": "2026-10-09",
+      "lang": "en"
+    }
+  ],
+  "derivedFrom": "library/arxiv-2404.04834v4/sections/sec-009",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/source/arxiv-2404.04834v4",
+  "provenance": "ingested"
+}

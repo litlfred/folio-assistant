@@ -1,0 +1,36 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/cat-harness/v0/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "cat-harness": "https://litlfred.github.io/cat-harness/v0/ns/"
+  },
+  "dcterms:description": "Provenance moved out of the narrative of intent.md: who decided, when, and under which work item or proposal. The document keeps the rules and their reasons; this log is rendered in its footer.",
+  "@graph": [
+    {
+      "@id": "docs/wireframes/state-registry/intent.md",
+      "@type": "prov:Entity",
+      "prov:wasInfluencedBy": [
+        {
+          "@id": "docs/wireframes/state-registry/intent.md#provenance-1"
+        }
+      ]
+    },
+    {
+      "@id": "docs/wireframes/state-registry/intent.md#provenance-1",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "owner-decision",
+      "cat-harness:section": "Covers",
+      "prov:value": "`cat-harness/graph-typologies`, `cat-harness/validators`, `cat-harness/qa-checkers`, `cat-harness/block-kinds`, `cat-harness/content-adapters`, `cat-harness/code-lists` (bean `folio-assistant-k7ro`, 2026-10-15); `cat-harness/pipeline-plugins`, `cat-harness/editor-checkers` and `cat-harness/memory` (owner, 2026-10-16).",
+      "cat-harness:refs": [
+        "bean folio-assistant-k7ro",
+        "2026-10-15",
+        "2026-10-16"
+      ],
+      "dcterms:date": [
+        "2026-10-15",
+        "2026-10-16"
+      ]
+    }
+  ]
+}

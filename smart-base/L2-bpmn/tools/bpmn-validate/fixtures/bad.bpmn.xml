@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" id="Definitions_Bad" targetNamespace="urn:test">
+  <bpmn:resource id="DAK.Persona.Nobody" name="Nobody" />
+  <bpmn:process id="Process_Bad" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_Bad">
+      <bpmn:lane id="Lane_Guessed" name="Health worker">
+        <bpmn:flowNodeRef>Task.A</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane.Nobody" name="Nobody" partitionElementRef="DAK.Persona.Nobody" />
+    </bpmn:laneSet>
+    <bpmn:userTask id="Task.A" name="A" />
+    <bpmn:userTask id="Task.A" name="A again" />
+    <bpmn:userTask id="Task.Orphan" name="In no lane" />
+  </bpmn:process>
+  <bpmn:process id="Process_NoLanes" isExecutable="false">
+    <bpmn:task id="Task.Lonely" />
+  </bpmn:process>
+</bpmn:definitions>
