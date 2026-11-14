@@ -1,0 +1,872 @@
+{
+  "$schema": "folio-vector-figures/v1",
+  "doc_id": "nist-sp-800-207",
+  "figures": [
+    {
+      "id": "vfig-p014",
+      "file": "figures/vfig-p014.png",
+      "role": "undetermined",
+      "basis": {
+        "method": "assembly",
+        "by": {
+          "kind": "script",
+          "id": "cat-harness/scripts/pdf-vector-figures.py"
+        },
+        "page": 14
+      },
+      "page": 14,
+      "rotation": 0,
+      "captionLabels": [
+        "1"
+      ],
+      "region": [
+        1.9,
+        196.75,
+        35.7,
+        624.4
+      ],
+      "assembly": {
+        "drawings": 5,
+        "background": 0,
+        "groups": [
+          {
+            "bbox": [
+              1.9,
+              196.75,
+              35.7,
+              624.4
+            ],
+            "drawings": 1,
+            "pageEdge": false,
+            "rendered": true,
+            "labels": [
+              "This publication is available free of charge from: https://doi.org/10.6028/NIST.SP.800-207"
+            ]
+          }
+        ],
+        "boxes": [
+          {
+            "id": "b0",
+            "bbox": [
+              1.9,
+              196.75,
+              35.7,
+              624.4
+            ],
+            "parent": null,
+            "labels": [
+              "This publication is available free of charge from: https://doi.org/10.6028/NIST.SP.800-207"
+            ]
+          }
+        ],
+        "unlabelledClosedShapes": 3,
+        "connectors": [
+          {
+            "from": null,
+            "to": null,
+            "bbox": [
+              40.85,
+              72.3,
+              42.25,
+              720.3
+            ]
+          }
+        ],
+        "between": [],
+        "outside": 34
+      }
+    },
+    {
+      "id": "vfig-p018",
+      "file": "figures/vfig-p018.png",
+      "role": "undetermined",
+      "basis": {
+        "method": "assembly",
+        "by": {
+          "kind": "script",
+          "id": "cat-harness/scripts/pdf-vector-figures.py"
+        },
+        "page": 18
+      },
+      "page": 18,
+      "rotation": 0,
+      "captionLabels": [
+        "2"
+      ],
+      "region": [
+        1.9,
+        73.86,
+        545.94,
+        624.4
+      ],
+      "assembly": {
+        "drawings": 15,
+        "background": 0,
+        "groups": [
+          {
+            "bbox": [
+              1.9,
+              196.75,
+              35.7,
+              624.4
+            ],
+            "drawings": 1,
+            "pageEdge": false,
+            "rendered": true,
+            "labels": [
+              "This publication is available free of charge from: https://doi.org/10.6028/NIST.SP.800-207"
+            ]
+          },
+          {
+            "bbox": [
+              66.06,
+              73.86,
+              545.94,
+              90.06
+            ],
+            "drawings": 8,
+            "pageEdge": false,
+            "rendered": true,
+            "labels": [
+              "3",
+              "Logical Components of Zero Trust Architecture"
+            ]
+          }
+        ],
+        "boxes": [
+          {
+            "id": "b0",
+            "bbox": [
+              1.9,
+              196.75,
+              35.7,
+              624.4
+            ],
+            "parent": null,
+            "labels": [
+              "This publication is available free of charge from: https://doi.org/10.6028/NIST.SP.800-207"
+            ]
+          },
+          {
+            "id": "b1",
+            "bbox": [
+              66.54,
+              73.86,
+              545.46,
+              89.58
+            ],
+            "parent": null,
+            "labels": [
+              "3",
+              "Logical Components of Zero Trust Architecture"
+            ]
+          }
+        ],
+        "unlabelledClosedShapes": 12,
+        "connectors": [
+          {
+            "from": null,
+            "to": null,
+            "bbox": [
+              40.85,
+              72.3,
+              42.25,
+              720.3
+            ]
+          }
+        ],
+        "between": [
+          "There are numerous logical components that make up a ZTA deployment in an enterprise. These",
+          "components may be operated as an on-premises service or through a cloud-based service. The",
+          "conceptual framework model in Figure 2 shows the basic relationship between the components",
+          "and their interactions. Note that this is an ideal model showing logical components and their",
+          "interactions. From Figure 1, the policy decision point (PDP) is broken down into two logical",
+          "components: the policy engine and policy administrator (defined below). The ZTA logical",
+          "components use a separate control plane to communicate, while application data is",
+          "communicated on a data plane (see Section 3.4).",
+          "Figure 2: Core Zero Trust Logical Components",
+          "The component descriptions:",
+          "• Policy engine (PE): This component is responsible for the ultimate decision to grant",
+          "access to a resource for a given subject. The PE uses enterprise policy as well as input",
+          "from external sources (e.g., CDM systems, threat intelligence services described below)",
+          "as input to a trust algorithm (see Section 3.3 for more details) to grant, deny, or revoke",
+          "access to the resource. The PE is paired with the policy administrator component. The",
+          "policy engine makes and logs the decision (as approved, or denied), and the policy",
+          "administrator executes the decision.",
+          "• Policy administrator (PA): This component is responsible for establishing and/or",
+          "shutting down the communication path between a subject and a resource (via commands",
+          "to relevant PEPs). It would generate any session-specific authentication and",
+          "authentication token or credential used by a client to access an enterprise resource. It is"
+        ],
+        "outside": 8
+      }
+    },
+    {
+      "id": "vfig-p023",
+      "file": "figures/vfig-p023.png",
+      "role": "undetermined",
+      "basis": {
+        "method": "assembly",
+        "by": {
+          "kind": "script",
+          "id": "cat-harness/scripts/pdf-vector-figures.py"
+        },
+        "page": 23
+      },
+      "page": 23,
+      "rotation": 0,
+      "captionLabels": [
+        "3"
+      ],
+      "region": [
+        1.9,
+        196.75,
+        35.7,
+        624.4
+      ],
+      "assembly": {
+        "drawings": 2,
+        "background": 0,
+        "groups": [
+          {
+            "bbox": [
+              1.9,
+              196.75,
+              35.7,
+              624.4
+            ],
+            "drawings": 1,
+            "pageEdge": false,
+            "rendered": true,
+            "labels": [
+              "This publication is available free of charge from: https://doi.org/10.6028/NIST.SP.800-207"
+            ]
+          }
+        ],
+        "boxes": [
+          {
+            "id": "b0",
+            "bbox": [
+              1.9,
+              196.75,
+              35.7,
+              624.4
+            ],
+            "parent": null,
+            "labels": [
+              "This publication is available free of charge from: https://doi.org/10.6028/NIST.SP.800-207"
+            ]
+          }
+        ],
+        "unlabelledClosedShapes": 0,
+        "connectors": [
+          {
+            "from": null,
+            "to": null,
+            "bbox": [
+              40.85,
+              72.3,
+              42.25,
+              720.3
+            ]
+          }
+        ],
+        "between": [],
+        "outside": 32
+      }
+    },
+    {
+      "id": "vfig-p024",
+      "file": "figures/vfig-p024.png",
+      "role": "undetermined",
+      "basis": {
+        "method": "assembly",
+        "by": {
+          "kind": "script",
+          "id": "cat-harness/scripts/pdf-vector-figures.py"
+        },
+        "page": 24
+      },
+      "page": 24,
+      "rotation": 0,
+      "captionLabels": [
+        "4"
+      ],
+      "region": [
+        1.9,
+        196.75,
+        35.7,
+        624.4
+      ],
+      "assembly": {
+        "drawings": 2,
+        "background": 0,
+        "groups": [
+          {
+            "bbox": [
+              1.9,
+              196.75,
+              35.7,
+              624.4
+            ],
+            "drawings": 1,
+            "pageEdge": false,
+            "rendered": true,
+            "labels": [
+              "This publication is available free of charge from: https://doi.org/10.6028/NIST.SP.800-207"
+            ]
+          }
+        ],
+        "boxes": [
+          {
+            "id": "b0",
+            "bbox": [
+              1.9,
+              196.75,
+              35.7,
+              624.4
+            ],
+            "parent": null,
+            "labels": [
+              "This publication is available free of charge from: https://doi.org/10.6028/NIST.SP.800-207"
+            ]
+          }
+        ],
+        "unlabelledClosedShapes": 0,
+        "connectors": [
+          {
+            "from": null,
+            "to": null,
+            "bbox": [
+              40.85,
+              72.3,
+              42.25,
+              720.3
+            ]
+          }
+        ],
+        "between": [],
+        "outside": 18
+      }
+    },
+    {
+      "id": "vfig-p025",
+      "file": "figures/vfig-p025.png",
+      "role": "undetermined",
+      "basis": {
+        "method": "assembly",
+        "by": {
+          "kind": "script",
+          "id": "cat-harness/scripts/pdf-vector-figures.py"
+        },
+        "page": 25
+      },
+      "page": 25,
+      "rotation": 0,
+      "captionLabels": [
+        "5"
+      ],
+      "region": [
+        1.9,
+        196.75,
+        35.7,
+        624.4
+      ],
+      "assembly": {
+        "drawings": 2,
+        "background": 0,
+        "groups": [
+          {
+            "bbox": [
+              1.9,
+              196.75,
+              35.7,
+              624.4
+            ],
+            "drawings": 1,
+            "pageEdge": false,
+            "rendered": true,
+            "labels": [
+              "This publication is available free of charge from: https://doi.org/10.6028/NIST.SP.800-207"
+            ]
+          }
+        ],
+        "boxes": [
+          {
+            "id": "b0",
+            "bbox": [
+              1.9,
+              196.75,
+              35.7,
+              624.4
+            ],
+            "parent": null,
+            "labels": [
+              "This publication is available free of charge from: https://doi.org/10.6028/NIST.SP.800-207"
+            ]
+          }
+        ],
+        "unlabelledClosedShapes": 0,
+        "connectors": [
+          {
+            "from": null,
+            "to": null,
+            "bbox": [
+              40.85,
+              72.3,
+              42.25,
+              720.3
+            ]
+          }
+        ],
+        "between": [],
+        "outside": 24
+      }
+    },
+    {
+      "id": "vfig-p026",
+      "file": "figures/vfig-p026.png",
+      "role": "undetermined",
+      "basis": {
+        "method": "assembly",
+        "by": {
+          "kind": "script",
+          "id": "cat-harness/scripts/pdf-vector-figures.py"
+        },
+        "page": 26
+      },
+      "page": 26,
+      "rotation": 0,
+      "captionLabels": [
+        "6"
+      ],
+      "region": [
+        1.9,
+        196.75,
+        35.7,
+        624.4
+      ],
+      "assembly": {
+        "drawings": 2,
+        "background": 0,
+        "groups": [
+          {
+            "bbox": [
+              1.9,
+              196.75,
+              35.7,
+              624.4
+            ],
+            "drawings": 1,
+            "pageEdge": false,
+            "rendered": true,
+            "labels": [
+              "This publication is available free of charge from: https://doi.org/10.6028/NIST.SP.800-207"
+            ]
+          }
+        ],
+        "boxes": [
+          {
+            "id": "b0",
+            "bbox": [
+              1.9,
+              196.75,
+              35.7,
+              624.4
+            ],
+            "parent": null,
+            "labels": [
+              "This publication is available free of charge from: https://doi.org/10.6028/NIST.SP.800-207"
+            ]
+          }
+        ],
+        "unlabelledClosedShapes": 0,
+        "connectors": [
+          {
+            "from": null,
+            "to": null,
+            "bbox": [
+              40.85,
+              72.3,
+              42.25,
+              720.3
+            ]
+          }
+        ],
+        "between": [],
+        "outside": 24
+      }
+    },
+    {
+      "id": "vfig-p027",
+      "file": "figures/vfig-p027.png",
+      "role": "undetermined",
+      "basis": {
+        "method": "assembly",
+        "by": {
+          "kind": "script",
+          "id": "cat-harness/scripts/pdf-vector-figures.py"
+        },
+        "page": 27
+      },
+      "page": 27,
+      "rotation": 0,
+      "captionLabels": [
+        "7"
+      ],
+      "region": [
+        1.9,
+        196.75,
+        35.7,
+        624.4
+      ],
+      "assembly": {
+        "drawings": 2,
+        "background": 0,
+        "groups": [
+          {
+            "bbox": [
+              1.9,
+              196.75,
+              35.7,
+              624.4
+            ],
+            "drawings": 1,
+            "pageEdge": false,
+            "rendered": true,
+            "labels": [
+              "This publication is available free of charge from: https://doi.org/10.6028/NIST.SP.800-207"
+            ]
+          }
+        ],
+        "boxes": [
+          {
+            "id": "b0",
+            "bbox": [
+              1.9,
+              196.75,
+              35.7,
+              624.4
+            ],
+            "parent": null,
+            "labels": [
+              "This publication is available free of charge from: https://doi.org/10.6028/NIST.SP.800-207"
+            ]
+          }
+        ],
+        "unlabelledClosedShapes": 0,
+        "connectors": [
+          {
+            "from": null,
+            "to": null,
+            "bbox": [
+              40.85,
+              72.3,
+              42.25,
+              720.3
+            ]
+          }
+        ],
+        "between": [],
+        "outside": 27
+      }
+    },
+    {
+      "id": "vfig-p033",
+      "file": "figures/vfig-p033.png",
+      "role": "undetermined",
+      "basis": {
+        "method": "assembly",
+        "by": {
+          "kind": "script",
+          "id": "cat-harness/scripts/pdf-vector-figures.py"
+        },
+        "page": 33
+      },
+      "page": 33,
+      "rotation": 0,
+      "captionLabels": [
+        "8",
+        "9"
+      ],
+      "region": [
+        1.9,
+        196.75,
+        35.7,
+        624.4
+      ],
+      "assembly": {
+        "drawings": 2,
+        "background": 0,
+        "groups": [
+          {
+            "bbox": [
+              1.9,
+              196.75,
+              35.7,
+              624.4
+            ],
+            "drawings": 1,
+            "pageEdge": false,
+            "rendered": true,
+            "labels": [
+              "This publication is available free of charge from: https://doi.org/10.6028/NIST.SP.800-207"
+            ]
+          }
+        ],
+        "boxes": [
+          {
+            "id": "b0",
+            "bbox": [
+              1.9,
+              196.75,
+              35.7,
+              624.4
+            ],
+            "parent": null,
+            "labels": [
+              "This publication is available free of charge from: https://doi.org/10.6028/NIST.SP.800-207"
+            ]
+          }
+        ],
+        "unlabelledClosedShapes": 0,
+        "connectors": [
+          {
+            "from": null,
+            "to": null,
+            "bbox": [
+              40.85,
+              72.3,
+              42.25,
+              720.3
+            ]
+          }
+        ],
+        "between": [],
+        "outside": 20
+      }
+    },
+    {
+      "id": "vfig-p034",
+      "file": "figures/vfig-p034.png",
+      "role": "undetermined",
+      "basis": {
+        "method": "assembly",
+        "by": {
+          "kind": "script",
+          "id": "cat-harness/scripts/pdf-vector-figures.py"
+        },
+        "page": 34
+      },
+      "page": 34,
+      "rotation": 0,
+      "captionLabels": [
+        "10"
+      ],
+      "region": [
+        1.9,
+        196.75,
+        35.7,
+        624.4
+      ],
+      "assembly": {
+        "drawings": 2,
+        "background": 0,
+        "groups": [
+          {
+            "bbox": [
+              1.9,
+              196.75,
+              35.7,
+              624.4
+            ],
+            "drawings": 1,
+            "pageEdge": false,
+            "rendered": true,
+            "labels": [
+              "This publication is available free of charge from: https://doi.org/10.6028/NIST.SP.800-207"
+            ]
+          }
+        ],
+        "boxes": [
+          {
+            "id": "b0",
+            "bbox": [
+              1.9,
+              196.75,
+              35.7,
+              624.4
+            ],
+            "parent": null,
+            "labels": [
+              "This publication is available free of charge from: https://doi.org/10.6028/NIST.SP.800-207"
+            ]
+          }
+        ],
+        "unlabelledClosedShapes": 0,
+        "connectors": [
+          {
+            "from": null,
+            "to": null,
+            "bbox": [
+              40.85,
+              72.3,
+              42.25,
+              720.3
+            ]
+          }
+        ],
+        "between": [],
+        "outside": 25
+      }
+    },
+    {
+      "id": "vfig-p035",
+      "file": "figures/vfig-p035.png",
+      "role": "undetermined",
+      "basis": {
+        "method": "assembly",
+        "by": {
+          "kind": "script",
+          "id": "cat-harness/scripts/pdf-vector-figures.py"
+        },
+        "page": 35
+      },
+      "page": 35,
+      "rotation": 0,
+      "captionLabels": [
+        "11"
+      ],
+      "region": [
+        1.9,
+        196.75,
+        35.7,
+        624.4
+      ],
+      "assembly": {
+        "drawings": 2,
+        "background": 0,
+        "groups": [
+          {
+            "bbox": [
+              1.9,
+              196.75,
+              35.7,
+              624.4
+            ],
+            "drawings": 1,
+            "pageEdge": false,
+            "rendered": true,
+            "labels": [
+              "This publication is available free of charge from: https://doi.org/10.6028/NIST.SP.800-207"
+            ]
+          }
+        ],
+        "boxes": [
+          {
+            "id": "b0",
+            "bbox": [
+              1.9,
+              196.75,
+              35.7,
+              624.4
+            ],
+            "parent": null,
+            "labels": [
+              "This publication is available free of charge from: https://doi.org/10.6028/NIST.SP.800-207"
+            ]
+          }
+        ],
+        "unlabelledClosedShapes": 0,
+        "connectors": [
+          {
+            "from": null,
+            "to": null,
+            "bbox": [
+              40.85,
+              72.3,
+              42.25,
+              720.3
+            ]
+          }
+        ],
+        "between": [],
+        "outside": 32
+      }
+    },
+    {
+      "id": "vfig-p046",
+      "file": "figures/vfig-p046.png",
+      "role": "undetermined",
+      "basis": {
+        "method": "assembly",
+        "by": {
+          "kind": "script",
+          "id": "cat-harness/scripts/pdf-vector-figures.py"
+        },
+        "page": 46
+      },
+      "page": 46,
+      "rotation": 0,
+      "captionLabels": [
+        "12"
+      ],
+      "region": [
+        1.9,
+        196.75,
+        35.7,
+        624.4
+      ],
+      "assembly": {
+        "drawings": 2,
+        "background": 0,
+        "groups": [
+          {
+            "bbox": [
+              1.9,
+              196.75,
+              35.7,
+              624.4
+            ],
+            "drawings": 1,
+            "pageEdge": false,
+            "rendered": true,
+            "labels": [
+              "This publication is available free of charge from: https://doi.org/10.6028/NIST.SP.800-207"
+            ]
+          }
+        ],
+        "boxes": [
+          {
+            "id": "b0",
+            "bbox": [
+              1.9,
+              196.75,
+              35.7,
+              624.4
+            ],
+            "parent": null,
+            "labels": [
+              "This publication is available free of charge from: https://doi.org/10.6028/NIST.SP.800-207"
+            ]
+          }
+        ],
+        "unlabelledClosedShapes": 0,
+        "connectors": [
+          {
+            "from": null,
+            "to": null,
+            "bbox": [
+              40.85,
+              72.3,
+              42.25,
+              720.3
+            ]
+          }
+        ],
+        "between": [],
+        "outside": 23
+      }
+    }
+  ]
+}

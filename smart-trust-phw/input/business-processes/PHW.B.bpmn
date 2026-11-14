@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="PHW.B.Definitions" targetNamespace="http://smart.who.int/trust-phw/bpmn">
+  <bpmn:collaboration id="PHW.B.Collaboration">
+    <bpmn:participant id="PHW.B.Participant" name="B. Issue Consent-Backed Verifiable Health Link" processRef="PHW.B" />
+  </bpmn:collaboration>
+  <bpmn:process id="PHW.B" name="B. Issue Consent-Backed Verifiable Health Link" isExecutable="false">
+    <bpmn:documentation>Generates and signs a Verifiable Health Link (`[ITI-YY3]` Generate VHL) backed by a patient privacy consent directive recorded or verified via IHE PCF `[ITI-108]` Access Consent, using PKI signing keys registered with an abstract Trust Anchor via `[ITI-YY1]` Submit PKI Material with DID. Trust-anchor neutral: WHO GDHCN is one possible Trust Anchor among others.</bpmn:documentation>
+    <bpmn:laneSet id="PHW.B.LaneSet">
+      <bpmn:lane id="PHW.Lane.Holder" name="VHL Holder (Patient / Personal Health Wallet)">
+        <bpmn:documentation>Personas: VHL Holder (`https://profiles.ihe.net/ITI/VHL/ActorDefinition/VHLHolder`) requesting a consent-backed Verifiable Health Link.</bpmn:documentation>
+        <bpmn:flowNodeRef>PHW.B.Start</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.B.3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.B.7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.B.End</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="PHW.Lane.VHLSharer" name="VHL Sharer (grouped with PCF Consent Recorder)">
+        <bpmn:documentation>System Actor: IHE VHL Sharer (`https://profiles.ihe.net/ITI/VHL/CapabilityStatement/IHE.VHL.VHLSharer`) grouped with IHE PCF Consent Recorder.</bpmn:documentation>
+        <bpmn:flowNodeRef>PHW.B.1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.B.4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.B.6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.B.5a</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="PHW.Lane.ConsentRegistry" name="PCF Consent Registry">
+        <bpmn:documentation>System Actor: IHE PCF Consent Registry (`https://profiles.ihe.net/ITI/PCF/CapabilityStatement/IHE.PCF.consentRegistry`) serving `[ITI-108]` Access Consent.</bpmn:documentation>
+        <bpmn:flowNodeRef>PHW.B.5</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="PHW.Lane.TrustAnchor" name="Trust Anchor (e.g. GDHCN, national, or regional anchor)">
+        <bpmn:documentation>System Actor: IHE VHL Trust Anchor (`https://profiles.ihe.net/ITI/VHL/CapabilityStatement/IHE.VHL.TrustAnchor`). Trust-anchor neutral: WHO GDHCN is one possible Trust Anchor among others.</bpmn:documentation>
+        <bpmn:flowNodeRef>PHW.B.2</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="PHW.B.Start" name="Start VHL issuance">
+      <bpmn:documentation>VHL Holder initiates generation of a consent-backed Verifiable Health Link.</bpmn:documentation>
+      <bpmn:outgoing>PHW.B.Flow1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="PHW.B.1" name="B1. Submit Sharer PKI signing key [ITI-YY1] Submit PKI Material with DID">
+      <bpmn:documentation>VHL Sharer publishes or refreshes its public key material to the configured Trust Anchor via IHE VHL `[ITI-YY1]` Submit PKI Material with DID.</bpmn:documentation>
+      <bpmn:incoming>PHW.B.Flow1</bpmn:incoming>
+      <bpmn:outgoing>PHW.B.Flow2</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="PHW.B.2" name="B2. Publish key in Trust Anchor trust list [ITI-YY1] (GDHCN or other anchor)">
+      <bpmn:documentation>Trust Anchor (such as WHO GDHCN, a national PKI root, or a regional trust network) registers the VHL Sharer&apos;s signing key via `[ITI-YY1]`.</bpmn:documentation>
+      <bpmn:incoming>PHW.B.Flow2</bpmn:incoming>
+      <bpmn:outgoing>PHW.B.Flow3</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="PHW.B.3" name="B3. Request VHL generation [ITI-YY3] Generate VHL ($generate-vhl)">
+      <bpmn:documentation>VHL Holder invokes `[ITI-YY3]` Generate VHL (`$generate-vhl`) specifying clinical documents, selective disclosure directives, and privacy consent parameters.</bpmn:documentation>
+      <bpmn:incoming>PHW.B.Flow3</bpmn:incoming>
+      <bpmn:outgoing>PHW.B.Flow4</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="PHW.B.4" name="B4. Query or record active Consent [ITI-108] Access Consent: Search / Post">
+      <bpmn:documentation>VHL Sharer (acting as PCF Consent Recorder) queries or records the patient&apos;s active FHIR `Consent` directive via `[ITI-108]` Access Consent.</bpmn:documentation>
+      <bpmn:incoming>PHW.B.Flow4</bpmn:incoming>
+      <bpmn:outgoing>PHW.B.Flow5</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="PHW.B.5" name="B5. Return active PCF Consent (Consent.id + versionId) [ITI-108] Access Consent">
+      <bpmn:documentation>PCF Consent Registry returns the verified `Consent` resource (`IHE.PCF.consentBasic` or `IHE.PCF.consentIntermediate`) via `[ITI-108]`.</bpmn:documentation>
+      <bpmn:incoming>PHW.B.Flow5</bpmn:incoming>
+      <bpmn:outgoing>PHW.B.Flow6</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="PHW.B.6" name="B6. Assemble &amp; sign VHL payload bound to Consent [ITI-YY3] Generate VHL">
+      <bpmn:documentation>VHL Sharer prepares the clinical document manifest, binds the active PCF `Consent` scope, signs the VHL payload with its `[ITI-YY1]` key, and returns the `[ITI-YY3]` response.</bpmn:documentation>
+      <bpmn:incoming>PHW.B.5a.FlowOut</bpmn:incoming>
+      <bpmn:outgoing>PHW.B.Flow7</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="PHW.B.7" name="B7. Store signed VHL in Personal Health Wallet [ITI-YY3] Generate VHL">
+      <bpmn:documentation>VHL Holder receives and stores the signed Verifiable Health Link payload in the Personal Health Wallet.</bpmn:documentation>
+      <bpmn:incoming>PHW.B.Flow7</bpmn:incoming>
+      <bpmn:outgoing>PHW.B.Flow8</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="PHW.B.End" name="Consent-backed VHL issued">
+      <bpmn:documentation>Consent-backed VHL is ready for presentation to any VHL Receiver.</bpmn:documentation>
+      <bpmn:incoming>PHW.B.Flow8</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:callActivity id="PHW.B.5a" name="B5a. Add the consent directives to the shared documents (process M, optional)" calledElement="PHW.M">
+      <bpmn:documentation>Optional (owner, 2026-11-07): before the VHL payload is assembled and signed, process M adds the consent directives the documents are shared under, explicit (the Consent returned at B5) or implied (the trust domain's default policy), as consent entries listed in each document's Advance Directives section. The copy in the document is evidence for the receiver; the Consent Registry copy is the one enforced.</bpmn:documentation>
+      <bpmn:incoming>PHW.B.Flow6</bpmn:incoming>
+      <bpmn:outgoing>PHW.B.5a.FlowOut</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:sequenceFlow id="PHW.B.Flow1" sourceRef="PHW.B.Start" targetRef="PHW.B.1" />
+    <bpmn:sequenceFlow id="PHW.B.Flow2" name="[ITI-YY1]" sourceRef="PHW.B.1" targetRef="PHW.B.2" />
+    <bpmn:sequenceFlow id="PHW.B.Flow3" sourceRef="PHW.B.2" targetRef="PHW.B.3" />
+    <bpmn:sequenceFlow id="PHW.B.Flow4" name="[ITI-YY3]" sourceRef="PHW.B.3" targetRef="PHW.B.4" />
+    <bpmn:sequenceFlow id="PHW.B.Flow5" name="[ITI-108]" sourceRef="PHW.B.4" targetRef="PHW.B.5" />
+    <bpmn:sequenceFlow id="PHW.B.Flow6" name="[ITI-108]" sourceRef="PHW.B.5" targetRef="PHW.B.5a" />
+    <bpmn:sequenceFlow id="PHW.B.5a.FlowOut" sourceRef="PHW.B.5a" targetRef="PHW.B.6" />
+    <bpmn:sequenceFlow id="PHW.B.Flow7" name="[ITI-YY3]" sourceRef="PHW.B.6" targetRef="PHW.B.7" />
+    <bpmn:sequenceFlow id="PHW.B.Flow8" sourceRef="PHW.B.7" targetRef="PHW.B.End" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="PHW.B.Diagram">
+    <bpmndi:BPMNPlane id="PHW.B.Plane" bpmnElement="PHW.B.Collaboration">
+      <bpmndi:BPMNShape id="PHW.B.Participant_di" bpmnElement="PHW.B.Participant" isHorizontal="true"><dc:Bounds x="120" y="80" width="1700" height="856" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.Lane.Holder_di" bpmnElement="PHW.Lane.Holder" isHorizontal="true"><dc:Bounds x="150" y="80" width="1670" height="214" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.Lane.VHLSharer_di" bpmnElement="PHW.Lane.VHLSharer" isHorizontal="true"><dc:Bounds x="150" y="294" width="1670" height="214" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.Lane.ConsentRegistry_di" bpmnElement="PHW.Lane.ConsentRegistry" isHorizontal="true"><dc:Bounds x="150" y="508" width="1670" height="214" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.Lane.TrustAnchor_di" bpmnElement="PHW.Lane.TrustAnchor" isHorizontal="true"><dc:Bounds x="150" y="722" width="1670" height="214" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.B.Start_di" bpmnElement="PHW.B.Start"><dc:Bounds x="262" y="169" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.B.1_di" bpmnElement="PHW.B.1"><dc:Bounds x="410" y="331" width="140" height="140" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.B.2_di" bpmnElement="PHW.B.2"><dc:Bounds x="410" y="759" width="140" height="140" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.B.3_di" bpmnElement="PHW.B.3"><dc:Bounds x="610" y="117" width="140" height="140" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.B.4_di" bpmnElement="PHW.B.4"><dc:Bounds x="810" y="331" width="140" height="140" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.B.5_di" bpmnElement="PHW.B.5"><dc:Bounds x="810" y="545" width="140" height="140" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.B.6_di" bpmnElement="PHW.B.6"><dc:Bounds x="1210" y="331" width="140" height="140" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.B.7_di" bpmnElement="PHW.B.7"><dc:Bounds x="1410" y="117" width="140" height="140" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.B.End_di" bpmnElement="PHW.B.End"><dc:Bounds x="1662" y="169" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.B.5a_di" bpmnElement="PHW.B.5a"><dc:Bounds x="1010" y="331" width="140" height="140" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="PHW.B.5a.FlowOut_di" bpmnElement="PHW.B.5a.FlowOut">
+        <di:waypoint x="1150" y="401" />
+        <di:waypoint x="1210" y="401" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.B.Flow1_di" bpmnElement="PHW.B.Flow1">
+        <di:waypoint x="280" y="205" />
+        <di:waypoint x="280" y="401" />
+        <di:waypoint x="410" y="401" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.B.Flow2_di" bpmnElement="PHW.B.Flow2">
+        <di:waypoint x="480" y="471" />
+        <di:waypoint x="480" y="759" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.B.Flow3_di" bpmnElement="PHW.B.Flow3">
+        <di:waypoint x="550" y="829" />
+        <di:waypoint x="572" y="829" />
+        <di:waypoint x="572" y="187" />
+        <di:waypoint x="610" y="187" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.B.Flow4_di" bpmnElement="PHW.B.Flow4">
+        <di:waypoint x="680" y="257" />
+        <di:waypoint x="680" y="401" />
+        <di:waypoint x="810" y="401" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.B.Flow5_di" bpmnElement="PHW.B.Flow5">
+        <di:waypoint x="880" y="471" />
+        <di:waypoint x="880" y="545" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.B.Flow6_di" bpmnElement="PHW.B.Flow6">
+        <di:waypoint x="950" y="615" />
+        <di:waypoint x="1080" y="615" />
+        <di:waypoint x="1080" y="471" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.B.Flow7_di" bpmnElement="PHW.B.Flow7">
+        <di:waypoint x="1280" y="331" />
+        <di:waypoint x="1280" y="187" />
+        <di:waypoint x="1410" y="187" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.B.Flow8_di" bpmnElement="PHW.B.Flow8">
+        <di:waypoint x="1550" y="187" />
+        <di:waypoint x="1662" y="187" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
