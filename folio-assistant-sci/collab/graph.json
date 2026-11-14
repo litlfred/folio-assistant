@@ -1,0 +1,16 @@
+{
+  "_comment": "The graphs inside folio-assistant-sci's `collab` sub-graph, declared FROM WITHIN (#980) on the pattern of folio-assistant-core's `collab/graph.json`. Each entry is `subgraph: true`, a directory of the LAYER listed by `resolveDirectories` with `within: \"collab\"`. Paths are relative to THIS directory. OPT-IN (`optIn: true` on its entry), and it `requires` `cat-harness.sdlc` (owner, 2026-11-13): off in every layer unless that layer lists `folio-assistant-sci.collab` in its own `enableSubgraphs`.",
+  "name": "collab",
+  "directories": [
+    {
+      "id": "collab-processes",
+      "path": "processes/",
+      "subgraph": true,
+      "dependents": "skip",
+      "description": "The paper process that runs on the work plan and the delivery process, in the concern group `content` as under `processes/`: `authoring-a-paper.bpmn`, with the decision table it evaluates (`content/decisions/lean-build-gate.dmn`).",
+      "graphTypologies": [
+        "processes"
+      ]
+    }
+  ]
+}

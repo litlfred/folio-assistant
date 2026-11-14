@@ -1,0 +1,162 @@
+{
+  "$schema": "folio-index-config/v1",
+  "layers": [
+    {
+      "name": "who-iris",
+      "source": {
+        "local": {
+          "at": "."
+        }
+      },
+      "site": {
+        "build": {
+          "home": "docs/site-home.md",
+          "sourceSteps": [
+            "site:catalogue",
+            "site:home"
+          ],
+          "keep": [
+            "ns"
+          ],
+          "rootIndex": true
+        }
+      }
+    },
+    {
+      "name": "folio-assistant-core",
+      "source": {
+        "remote": {
+          "repository": "litlfred/folio-assistant-core",
+          "ref": "fa62695511640e3990176115259be184f4177e88",
+          "overrides": {
+            "folio-assistant-core": {
+              "whole": true
+            },
+            "cat-harness": {
+              "skip": true
+            },
+            "cat-harness-tools": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-14",
+              "ref": "fa62695511640e3990176115259be184f4177e88",
+              "evidence": "owner litlfred, 2026-11-14 ~05:50Z and 13 Nov ~20:56Z, in Claude Code session https://claude.ai/code/session_01VQDpPffYARDQ8juksAZScf: 'send to you as merge manager to handle merge AND repin'; 'A. Renew 6h + re-pin' (every layer at main); needed so the merge-guard caller can pin tools >= #2118"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "cat-harness",
+      "source": {
+        "remote": {
+          "repository": "litlfred/cat-harness",
+          "ref": "a8f8d570377942fb6a4202a4072df323b874b905",
+          "overrides": {
+            "cat-harness": {
+              "whole": true
+            },
+            "bootstrap": {
+              "skip": true
+            },
+            "bootstrap-tools": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-14",
+              "ref": "a8f8d570377942fb6a4202a4072df323b874b905",
+              "evidence": "owner litlfred, 2026-11-14 ~05:50Z and 13 Nov ~20:56Z, in Claude Code session https://claude.ai/code/session_01VQDpPffYARDQ8juksAZScf: 'send to you as merge manager to handle merge AND repin'; 'A. Renew 6h + re-pin' (every layer at main); needed so the merge-guard caller can pin tools >= #2118"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "cat-harness-tools",
+      "source": {
+        "remote": {
+          "repository": "litlfred/cat-harness-tools",
+          "ref": "a150ca02f1f2dc7c77dd07a4a23238da44be66c5",
+          "overrides": {
+            "cat-harness-tools": {
+              "whole": true
+            },
+            "cat-harness": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-14",
+              "ref": "a150ca02f1f2dc7c77dd07a4a23238da44be66c5",
+              "evidence": "owner litlfred, 2026-11-14 ~05:50Z and 13 Nov ~20:56Z, in Claude Code session https://claude.ai/code/session_01VQDpPffYARDQ8juksAZScf: 'send to you as merge manager to handle merge AND repin'; 'A. Renew 6h + re-pin' (every layer at main); needed so the merge-guard caller can pin tools >= #2118"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "bootstrap",
+      "source": {
+        "remote": {
+          "repository": "litlfred/bootstrap",
+          "ref": "a3176a0dc77f935465cfaf121c6152b12d03472d",
+          "overrides": {
+            "bootstrap": {
+              "whole": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-14",
+              "ref": "a3176a0dc77f935465cfaf121c6152b12d03472d",
+              "evidence": "owner litlfred, 2026-11-14 ~05:50Z and 13 Nov ~20:56Z, in Claude Code session https://claude.ai/code/session_01VQDpPffYARDQ8juksAZScf: 'send to you as merge manager to handle merge AND repin'; 'A. Renew 6h + re-pin' (every layer at main); needed so the merge-guard caller can pin tools >= #2118"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "bootstrap-tools",
+      "source": {
+        "remote": {
+          "repository": "litlfred/bootstrap-tools",
+          "ref": "db808314c98a9b931d08e923d80a8f8dbcdb7d89",
+          "overrides": {
+            "bootstrap-tools": {
+              "whole": true
+            },
+            "bootstrap": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-14",
+              "ref": "db808314c98a9b931d08e923d80a8f8dbcdb7d89",
+              "evidence": "owner litlfred, 2026-11-14 ~05:50Z and 13 Nov ~20:56Z, in Claude Code session https://claude.ai/code/session_01VQDpPffYARDQ8juksAZScf: 'send to you as merge manager to handle merge AND repin'; 'A. Renew 6h + re-pin' (every layer at main); needed so the merge-guard caller can pin tools >= #2118"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "harnesses": [
+    {
+      "name": "who-iris"
+    }
+  ],
+  "site": {
+    "landing": "who-iris"
+  }
+}
