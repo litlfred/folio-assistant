@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-14T17:50:00Z
-updated_at: 2026-11-14T17:50:00Z
+updated_at: 2026-11-14T19:05:00Z
 tags:
     - ci
     - red-main
@@ -28,3 +28,7 @@ Root cause of three of the five: folio-assistant-core ef86a4e5 (2026-11-13) move
 Repro: clone smart-immunizations at the PR head, `.github/mount-from-lock.sh`, `bun install`, `bun run cat <gate>`.
 
 _2026-11-14T17:50:00Z_ — Filed. All PRs draft; reproduced 3, 4, 5 locally and verified each fix on #145's mounts.
+
+_2026-11-14T18:35:00Z_ — Full-tier fixes pushed: tools#2195 root:lint (no require() in tests), tools#2197 check:reference-direction (comments named a content layer).
+
+_2026-11-14T19:05:00Z_ — Merge manager asked about post-merge test reds on core main 745c3541 (core#753) and who-iris main 95068f86. Not core's or who-iris's code: a layer's main-qa judges inside the folio-assistant tree at fa main's lock (44e3a88: tools c55f2f2b, sci 132a0fdf, fhir-harness 9d723f1a). Reproduced locally. Causes and where each is already fixed: docs-route, merge-base, viz-generators, gen-auto-docs LEVEL pages, compose-docs read built pages through the sm8r layer-output overlay on tools main (#2192, a75472987, 3de1c716a); concern groups (sci collab redeclared `content`) fixed by sci#207 (50d1030); standalone-fixture byte-equal is pin skew (tools main fixture equals fhir-harness and sci mains); gen-subgraph-jsonld payloads are built at publish (docs/payload/ gitignored). Re-pin train fa#3124 pins tools dccd8e20, sci 50d1030 and fhir-harness d7fbc294, which carry all of these. No new fix PR needed; check #3124's CI.
