@@ -1,0 +1,76 @@
+{
+  "$schema": "cat-harness-mount-lock/v1",
+  "mounts": [
+    {
+      "harness": "bootstrap",
+      "repository": "litlfred/bootstrap",
+      "ref": "17204fe9ed49e87b165bf0a8b626b6c69329a2a6"
+    },
+    {
+      "harness": "bootstrap-tools",
+      "repository": "litlfred/bootstrap-tools",
+      "ref": "0f88368db7560afac6d3e16fd905cbb974350f82"
+    }
+  ],
+  "instances": [
+    {
+      "instance": "bootstrap",
+      "repository": "litlfred/bootstrap",
+      "sha": "17204fe9ed49e87b165bf0a8b626b6c69329a2a6",
+      "upstreamRoot": "",
+      "path": "bootstrap",
+      "via": "bootstrap",
+      "pinnedBy": "declared",
+      "declaration": {
+        "file": "bootstrap.json",
+        "sha256": "40930013d71340a9acd7a8cf423955d2f9a70e3a25200cbe5641938d49f5fe8c"
+      },
+      "directories": [
+        {
+          "id": "*",
+          "path": "bootstrap",
+          "upstreamPath": ".",
+          "treeDigest": "60fd53d1c25f4eb60134b804971f20afdf46b91c216f48779c10fc98366b1c67",
+          "files": 49
+        }
+      ],
+      "trust": {
+        "basis": "consent",
+        "by": "litlfred",
+        "on": "2026-11-12",
+        "ref": "17204fe9ed49e87b165bf0a8b626b6c69329a2a6",
+        "approver": "declared"
+      }
+    },
+    {
+      "instance": "bootstrap-tools",
+      "repository": "litlfred/bootstrap-tools",
+      "sha": "0f88368db7560afac6d3e16fd905cbb974350f82",
+      "upstreamRoot": "",
+      "path": "bootstrap-tools",
+      "via": "bootstrap-tools",
+      "pinnedBy": "declared",
+      "declaration": {
+        "file": "bootstrap-tools.json",
+        "sha256": "bb9f223b87a13659fa38e53faba86f71168e839d705e9ee801019199d7023a46"
+      },
+      "directories": [
+        {
+          "id": "*",
+          "path": "bootstrap-tools",
+          "upstreamPath": ".",
+          "treeDigest": "f54a88232d4a1c51672fe079e20a1229af9f4d738df11d961e7dde22aff9e24c",
+          "files": 129
+        }
+      ],
+      "trust": {
+        "basis": "consent",
+        "by": "litlfred",
+        "on": "2026-11-13",
+        "ref": "0f88368db7560afac6d3e16fd905cbb974350f82",
+        "approver": "declared"
+      }
+    }
+  ],
+  "unmounted": []
+}
