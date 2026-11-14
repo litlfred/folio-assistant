@@ -2102,6 +2102,37 @@ jobs:
       - name: every test has a Gherkin Scenario
         run: bun run cat check:test-gherkin
 
+      # The same gate over each layer's own tests, by the key each layer
+      # declares for it. The "no check script is unrun" test found them unrun
+      # on the re-pin train (folio-assistant#3124).
+      - name: every core test has a Gherkin Scenario
+        run: bun run cat check:test-gherkin:core
+
+      - name: every fhir-harness test has a Gherkin Scenario
+        run: bun run cat check:test-gherkin:fhir-harness
+
+      - name: every sci test has a Gherkin Scenario
+        run: bun run cat check:test-gherkin:sci
+
+      - name: every smart-base test has a Gherkin Scenario
+        run: bun run cat check:test-gherkin:smart-base
+
+      # fhir-harness's offline check of the FHIR core definitions it holds
+      # (`fhir-core/`, typology `fhir-core-definitions`): pins and manifests
+      # parse, and every materialised body matches its entry.
+      - name: the FHIR core definitions match their pins
+        run: bun run cat fhir-core:check
+
+      # cat-harness-tools' gate that every layer's graph renders to the
+      # JSON-LD it publishes.
+      - name: every layer renders to its published JSON-LD
+        run: bun run cat jsonld:site:check
+
+      # No always-on Tool or workflow names a skill only an opt-in sub-graph
+      # holds.
+      - name: no always-on reference to an opt-in-only skill
+        run: bun run cat check:optin-refs
+
       # The other half of the same claim: the rules are cited, AND the
       # instruction body beside them does not restate them uncited.
       #
