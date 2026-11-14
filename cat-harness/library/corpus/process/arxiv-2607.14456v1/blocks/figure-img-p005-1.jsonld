@@ -1,0 +1,94 @@
+{
+  "@context": [
+    "https://litlfred.github.io/cat-harness/ns/context/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/",
+      "folio-assistant-core": "https://litlfred.github.io/folio-assistant-core/v0/ns/"
+    }
+  ],
+  "@id": "library/arxiv-2607.14456v1/blocks/figure-img-p005-1",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../images/img-p005-1.png",
+  "pageStart": 5,
+  "pageEnd": 5,
+  "narrative": [
+    {
+      "text": "Figure 1, the proposed system architecture. Two inputs enter on the left as document shapes: \"Business Process Modelling Notation (BPMN) XML — Multi-step workflow\" and \"API Specifications — 20+ endpoints\". Five numbered boxes follow, each split into what the LLM does (white) and what it emits (tinted). Step 1, Workflow Breakdown: the LLM agent extracts sequential steps, output \"Structured Steps with conditions\", the box giving as its example \"Step 2 ---> Step 3 / If True ---> Step 5\". Step 2, Create API Service: the LLM generates a Python wrapper class, output \"service.py — Class with methods per endpoint\". Steps 1 and 2 both feed Step 3, Tool/Context: the LLM generates async tools plus context, output \"tools.py — async functions, Tool context class\". Step 4, Agent Prompt: the LLM creates structured instructions, output \"{agent_prompt}.md — Workflow logic map, Tool usage rules\". Step 5, Execution Wrapper: the LLM adapts a FastAPI template, output \"agent.py — Rest API service\". The final box, shaded green, reads \"Final Output: Deployable — Complete agent system, API Service + Tools, Prompt + Wrapper\". The flow is strictly forward; no arrow returns to an earlier step, so the iterative refinement the text describes in step 4 of §3.3 is not drawn here.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude",
+        "model": "claude-opus-5"
+      },
+      "drafted_at": "2026-09-23",
+      "lang": "en"
+    },
+    {
+      "text": "Figure 1, l'architecture du système proposé. Deux entrées arrivent à gauche sous forme de documents : « Business Process Modelling Notation (BPMN) XML — Multi-step workflow » et « API Specifications — 20+ endpoints ». Suivent cinq cadres numérotés, chacun divisé entre ce que fait le LLM (en blanc) et ce qu'il produit (en teinté). Étape 1, Workflow Breakdown : l'agent LLM extrait les étapes séquentielles, sortie « Structured Steps with conditions », le cadre donnant pour exemple « Step 2 ---> Step 3 / If True ---> Step 5 ». Étape 2, Create API Service : le LLM génère une classe d'enveloppe Python, sortie « service.py — Class with methods per endpoint ». Les étapes 1 et 2 alimentent toutes deux l'étape 3, Tool/Context : le LLM génère des outils asynchrones et leur contexte, sortie « tools.py — async functions, Tool context class ». Étape 4, Agent Prompt : le LLM crée des instructions structurées, sortie « {agent_prompt}.md — Workflow logic map, Tool usage rules ». Étape 5, Execution Wrapper : le LLM adapte un modèle FastAPI, sortie « agent.py — Rest API service ». Le dernier cadre, ombré de vert, indique « Final Output: Deployable — Complete agent system, API Service + Tools, Prompt + Wrapper ». Le flux va strictement vers l'avant ; aucune flèche ne revient à une étape antérieure, si bien que l'affinage itératif que le texte décrit à l'étape 4 du §3.3 n'est pas dessiné ici.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+      },
+      "drafted_at": "2026-10-24",
+      "lang": "fr"
+    },
+    {
+      "text": "Figura 1, la arquitectura del sistema propuesto. Dos entradas llegan por la izquierda como documentos: «Business Process Modelling Notation (BPMN) XML — Multi-step workflow» y «API Specifications — 20+ endpoints». Siguen cinco recuadros numerados, cada uno dividido entre lo que hace el LLM (en blanco) y lo que emite (sombreado). Paso 1, Workflow Breakdown: el agente LLM extrae los pasos secuenciales, salida «Structured Steps with conditions», con el ejemplo «Step 2 ---> Step 3 / If True ---> Step 5». Paso 2, Create API Service: el LLM genera una clase envoltorio en Python, salida «service.py — Class with methods per endpoint». Los pasos 1 y 2 alimentan el paso 3, Tool/Context: el LLM genera herramientas asíncronas y su contexto, salida «tools.py — async functions, Tool context class». Paso 4, Agent Prompt: el LLM crea instrucciones estructuradas, salida «{agent_prompt}.md — Workflow logic map, Tool usage rules». Paso 5, Execution Wrapper: el LLM adapta una plantilla FastAPI, salida «agent.py — Rest API service». El recuadro final, sombreado en verde, dice «Final Output: Deployable — Complete agent system, API Service + Tools, Prompt + Wrapper». El flujo avanza estrictamente hacia delante; ninguna flecha vuelve a un paso anterior, de modo que el refinamiento iterativo que el texto describe en el paso 4 del §3.3 no aparece dibujado.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+      },
+      "drafted_at": "2026-10-24",
+      "lang": "es"
+    },
+    {
+      "text": "الشكل 1، معمارية النظام المقترح. يدخل من اليسار مُدخلان على شكل مستندين: «Business Process Modelling Notation (BPMN) XML — Multi-step workflow» و«API Specifications — 20+ endpoints». تليهما خمسة مربعات مرقّمة، كلٌّ منها مقسوم بين ما يفعله نموذج اللغة الكبير (بالأبيض) وما يُخرجه (بلون مظلّل). الخطوة 1، Workflow Breakdown: يستخرج وكيل النموذج الخطوات المتتابعة، والمُخرج «Structured Steps with conditions»، ويعطي المربع مثالًا «Step 2 ---> Step 3 / If True ---> Step 5». الخطوة 2، Create API Service: يولّد النموذج صنف تغليف بلغة Python، والمُخرج «service.py — Class with methods per endpoint». وتغذّي الخطوتان 1 و2 كلتاهما الخطوة 3، Tool/Context: يولّد النموذج أدوات غير متزامنة مع سياقها، والمُخرج «tools.py — async functions, Tool context class». الخطوة 4، Agent Prompt: ينشئ النموذج تعليمات منظّمة، والمُخرج «{agent_prompt}.md — Workflow logic map, Tool usage rules». الخطوة 5، Execution Wrapper: يكيّف النموذج قالب FastAPI، والمُخرج «agent.py — Rest API service». ويقول المربع الأخير المظلّل بالأخضر: «Final Output: Deployable — Complete agent system, API Service + Tools, Prompt + Wrapper». يسير التدفق إلى الأمام فقط؛ ولا يعود أي سهم إلى خطوة سابقة، فلا يظهر هنا التحسين التكراري الذي يصفه النص في الخطوة 4 من §3.3.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+      },
+      "drafted_at": "2026-10-24",
+      "lang": "ar"
+    },
+    {
+      "text": "Рисунок 1, архитектура предлагаемой системы. Слева входят два документа: «Business Process Modelling Notation (BPMN) XML — Multi-step workflow» и «API Specifications — 20+ endpoints». Далее следуют пять пронумерованных блоков, каждый разделён на то, что делает LLM (белым), и то, что он выдаёт (с заливкой). Шаг 1, Workflow Breakdown: агент LLM извлекает последовательные шаги, выход «Structured Steps with conditions», в блоке пример «Step 2 ---> Step 3 / If True ---> Step 5». Шаг 2, Create API Service: LLM генерирует класс-обёртку на Python, выход «service.py — Class with methods per endpoint». Шаги 1 и 2 оба питают шаг 3, Tool/Context: LLM генерирует асинхронные инструменты и контекст, выход «tools.py — async functions, Tool context class». Шаг 4, Agent Prompt: LLM создаёт структурированные инструкции, выход «{agent_prompt}.md — Workflow logic map, Tool usage rules». Шаг 5, Execution Wrapper: LLM адаптирует шаблон FastAPI, выход «agent.py — Rest API service». Последний блок с зелёной заливкой гласит «Final Output: Deployable — Complete agent system, API Service + Tools, Prompt + Wrapper». Поток идёт строго вперёд; ни одна стрелка не возвращается к прежнему шагу, так что итеративное уточнение, описанное в тексте на шаге 4 §3.3, здесь не изображено.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+      },
+      "drafted_at": "2026-10-24",
+      "lang": "ru"
+    },
+    {
+      "text": "图 1，所提出系统的架构。左侧以文档形状输入两项：“Business Process Modelling Notation (BPMN) XML — Multi-step workflow”和“API Specifications — 20+ endpoints”。随后是五个编号方框，每个分为 LLM 所做的事（白色）和它输出的内容（着色）。第 1 步 Workflow Breakdown：LLM 代理提取顺序步骤，输出“Structured Steps with conditions”，方框中的示例为“Step 2 ---> Step 3 / If True ---> Step 5”。第 2 步 Create API Service：LLM 生成 Python 封装类，输出“service.py — Class with methods per endpoint”。第 1、2 步都输入第 3 步 Tool/Context：LLM 生成异步工具及其上下文，输出“tools.py — async functions, Tool context class”。第 4 步 Agent Prompt：LLM 创建结构化指令，输出“{agent_prompt}.md — Workflow logic map, Tool usage rules”。第 5 步 Execution Wrapper：LLM 改写 FastAPI 模板，输出“agent.py — Rest API service”。最后一个绿色底纹方框写着“Final Output: Deployable — Complete agent system, API Service + Tools, Prompt + Wrapper”。流程严格向前；没有箭头返回较早的步骤，因此正文在 §3.3 第 4 步描述的迭代改进并未画出。",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+      },
+      "drafted_at": "2026-10-24",
+      "lang": "zh"
+    }
+  ],
+  "derivedFrom": "library/arxiv-2607.14456v1/sections/page-005",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/source/arxiv-2607.14456v1",
+  "provenance": "ingested"
+}
