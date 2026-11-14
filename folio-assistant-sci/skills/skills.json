@@ -1,0 +1,34 @@
+{
+  "$schema": "skill-topics/v1",
+  "_comment": "The labelling node of this instance's skills/ (#980: nesting is described FROM WITHIN). Two lists, one node: `topics` names subdirectories that hold skill PACKAGES (bean 9umr, read by scripts/skill-topics.ts); `directories` names INSTANCE directories declared inside skills/ (bean cmsl, owner 2026-09-30, round 4), resolved exactly as if <instance>.json declared them, which it did until this change. Paths are relative to this file's directory.",
+  "topics": [],
+  "directories": [
+    {
+      "id": "voices",
+      "path": "voices",
+      "subgraph": true,
+      "description": "The `milnor` voice skill — a mathematics-exposition voice derived from the exemplar paper, as `voice.json` (12 rules, each citing what it was read from) beside `SKILL.md` — and the `address-*` voices, each saying how to write for the scenario role it names. Under `skills/` because a voice is a skill.",
+      "graphTypologies": [
+        "voices"
+      ]
+    },
+    {
+      "id": "lean-skills",
+      "path": "lean",
+      "subgraph": true,
+      "graphTypologies": [
+        "skills"
+      ],
+      "description": "The science layer's Lean tooling skills: `lean-formal-edges`, elaborated formal dependencies between `lean.ref` declarations, and `lean-html-docs`, a folio's doc-gen4 render published with the harness chrome."
+    },
+    {
+      "id": "data-skills",
+      "path": "data",
+      "subgraph": true,
+      "graphTypologies": [
+        "skills"
+      ],
+      "description": "The science layer's reference-data skills: `reference-dataset-ingestion`, which turns a published constants table (CODATA first) into a library dataset whose values are addressable as `{{ <instance>.library.<entry>.<slug> }}` with provenance."
+    }
+  ]
+}

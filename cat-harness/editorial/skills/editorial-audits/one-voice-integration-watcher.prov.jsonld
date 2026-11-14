@@ -1,0 +1,30 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/cat-harness/v0/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "cat-harness": "https://litlfred.github.io/cat-harness/v0/ns/"
+  },
+  "dcterms:description": "Provenance moved out of the narrative of one-voice-integration-watcher.md: who decided, when, and under which work item or proposal. The document keeps the rules and their reasons; this log is rendered in its footer.",
+  "@graph": [
+    {
+      "@id": "editorial/skills/editorial-audits/one-voice-integration-watcher.md",
+      "@type": "prov:Entity",
+      "prov:wasInfluencedBy": [
+        {
+          "@id": "editorial/skills/editorial-audits/one-voice-integration-watcher.md#provenance-1"
+        }
+      ]
+    },
+    {
+      "@id": "editorial/skills/editorial-audits/one-voice-integration-watcher.md#provenance-1",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "owner-decision",
+      "cat-harness:section": "/one-voice-integration-watcher",
+      "prov:value": "**Persistent operation (binding).** Per the repo owner's standing\npreference, this watcher **never stops** in foreground sessions.\nWhen no main commits or PR events arrive in a TICK window, the\nwatcher pulls the next staleness-backlog block (§5 inherited\nfrom the parent, §5d auto-pull policy). The QA reports it writes\nduring these idle windows ARE the knowledge base that informs\nfuture content reviews — the staleness map of which criteria are\nfresh, stale, or never-audited per block.",
+      "cat-harness:refs": [
+        "owner"
+      ]
+    }
+  ]
+}

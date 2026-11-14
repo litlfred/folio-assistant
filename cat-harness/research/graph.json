@@ -1,0 +1,15 @@
+{
+  "_comment": "The graphs inside cat-harness's `research` sub-graph, declared FROM WITHIN (#980) on the pattern of `work-plan/graph.json`. Each entry is `subgraph: true`, a directory of the LAYER listed by `resolveDirectories` with `within: \"research\"`. Paths are relative to THIS directory. OPT-IN (`optIn: true` on its entry): off in every layer unless that layer lists `cat-harness.research` in its own `enableSubgraphs` (owner, 2026-11-10, card Q-SG-1 C, wave 1).",
+  "name": "research",
+  "directories": [
+    {
+      "id": "research-methodologies",
+      "path": "methodologies/",
+      "subgraph": true,
+      "description": "Methodologies derived from the research literature on agentic software engineering, cited only by `sdlc` and the docs. Moved out of `methodologies/` for card Q-SG-1 C, wave 1.",
+      "graphTypologies": [
+        "methodology"
+      ]
+    }
+  ]
+}
