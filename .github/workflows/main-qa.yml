@@ -35,7 +35,7 @@ jobs:
     if: >-
       github.event.workflow_run.event == 'push' &&
       contains(fromJSON('["success","failure","timed_out"]'), github.event.workflow_run.conclusion)
-    uses: litlfred/cat-harness-tools/.github/workflows/layer-main-qa.yml@1f38a5c88e24d073ffaebcc3f4762a8ed137a315 # index.lock.json
+    uses: litlfred/cat-harness-tools/.github/workflows/layer-main-qa.yml@954d87610ade393a3cb4d4905875164df036ae37 # index.lock.json
     with:
       gate-run-id: ${{ format('{0}', github.event.workflow_run.id) }}
       sha: ${{ github.event.workflow_run.head_sha }}
