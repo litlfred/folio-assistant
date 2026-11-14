@@ -10,7 +10,7 @@ tags:
     - github-skills
     - skills
 created_at: 2026-11-13T12:07:20Z
-updated_at: 2026-11-13T22:01:30Z
+updated_at: 2026-11-14T00:26:00Z
 parent: folio-assistant-95e7
 ---
 
@@ -30,5 +30,5 @@ Blocked on bean `folio-assistant-hhkw` (the hand-written files must be gone firs
 ## Progress (2026-11-13)
 
 - `litlfred/cat-harness-tools#2111` (`https://github.com/litlfred/cat-harness-tools/pull/2111`, SHA `34ef79dab619ad4a6c5b92366deb010d0b52de93`): implements `unmarkedFiles(hostDir)` + `--check` gate in `scripts/install-skills.ts` and Criterion 3 (`githubPathFindingsFrom` + `isAllowedGithubInvocation`) in `scripts/check-workflow-paths.ts`, with unit tests and matching `@test:` Gherkin Scenarios (`72 pass, 0 fail`, `15961/15961` linked in `check:test-gherkin`). Marked `ready-to-merge` with `merge-guard: success` (`8/8 PASS`) and handed off to Merge Manager (`https://claude.ai/code/cshk_01VQDpPffYARDQ8juksAZScfEsSBcoJKmS94Kt8kP8nCnb`).
-- `litlfred/smart-base#382` (`https://github.com/litlfred/smart-base/pull/382`, SHA `97269952ab1cb0a1f23b7a9c425f9ee9626eda72`): configures `skillPrefix: "smartbase"`, generates `.github/skills/` and `.claude/skills/`, and adds `.github/workflows/skills-installed.yml`. Marked `ready-to-merge` with `merge-guard: success` (`8/8 PASS`) and handed off to Merge Manager.
-- `litlfred/smart-base#386` (`https://github.com/litlfred/smart-base/pull/386`, SHA `e27e38de2baf9eee4f1f51cfba208bdee8d81881`): updates `input/pagecontent/authoring-skills.md` to link to `https://litlfred.github.io/folio-assistant/smart-base/L2-bpmn/tools/` (replacing the old `.github/skills/bpmn_layout/skills.yaml` reference removed in `#376`). Marked `ready-to-merge` with `merge-guard: success` (`8/8 PASS`) and handed off to Merge Manager.
+- `litlfred/smart-base#382` (`https://github.com/litlfred/smart-base/pull/382`, SHA `014f7034cafc23df67c5fb1f5921b2be5a01eefc` -> merged to `main` at `2931b193422df00532222b7e49a08c8168f863d2` on `2026-11-13T23:58:09Z`): configures `skillPrefix: "smartbase"`, generates `.github/skills/` and `.claude/skills/`, and adds `.github/workflows/skills-installed.yml`.
+- `litlfred/smart-base#386` (`https://github.com/litlfred/smart-base/pull/386`, SHA `86a857b604c8a0325f07fee61e593203be6bdeeb` -> merged to `main` at `572e22701b407b23701588d6c85341cb75585ec8` on `2026-11-13T23:01:46Z`): updates `input/pagecontent/authoring-skills.md` to link to `https://litlfred.github.io/folio-assistant/smart-base/L2-bpmn/tools/` (replacing the old `.github/skills/bpmn_layout/skills.yaml` reference removed in `#376`).
