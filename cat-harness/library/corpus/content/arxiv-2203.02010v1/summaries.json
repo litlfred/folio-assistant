@@ -1,0 +1,139 @@
+{
+  "$schema": "folio-block-summaries/v1",
+  "entry": "arxiv-2203.02010v1",
+  "summaries": [
+    {
+      "block": "library/arxiv-2203.02010v1/blocks/prose-sec-000",
+      "source": "sections/sec-000-2-methods.md",
+      "source_hash": "f260855519e6883ff081546b7b5dc7ceddad35958498a51661bdc49da0672849",
+      "narrative": [
+        {
+          "text": "End of the title, authors (Ziping Liu, Zekun Li, Joyce C. Mhlanga, Barry A. Siegel and Abhinav K. Jha, Washington University) and abstract. Techniques that evaluate quantitative imaging (QI) methods without a gold standard assume measured values are linear in the true value with Gaussian noise that is independent between methods, yet the noise arises from measuring the same value and can be correlated. The authors propose a no-gold-standard evaluation (NGSE) technique that models the noise as multivariate Gaussian with a covariance matrix, estimate the parameters by maximum likelihood without the true values, and rank methods by noise-to-slope ratio (NSR). In numerical experiments it ranked the methods correctly in 83% of 160 trials and identified the most precise method in about 97%. The block is headed \"METHODS\" but holds only this opening.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2203.02010v1/blocks/prose-sec-001",
+      "source": "sections/sec-001-1-introduction.md",
+      "source_hash": "89df6f00b646aedc5a3516047f568d27e21f3417a17a5eeddd66c023cd54b944",
+      "narrative": [
+        {
+          "text": "Introduction. QI examples include metabolic tumour volume from oncological PET, dopamine-transporter uptake from SPECT for Parkinson disease, and regional uptake for radionuclide-therapy dosimetry. Simulations and phantoms provide true values, but evaluation on patient data needs gold standards that are expensive or unreliable. The regression-without-truth (RWT) technique assumes a linear relationship with slope, bias and Gaussian noise, estimates these by maximum likelihood without truth, and ranks methods by precision; it and a later NGSE technique were applied to diffusion-MRI ADC, cardiac cine MRI ejection fraction, SPECT reconstruction and PET segmentation. All of them assume noise independent between methods, which the authors argue is often violated, so they propose a technique that accounts for correlated noise.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2203.02010v1/blocks/prose-sec-002",
+      "source": "sections/sec-002-21-theory.md",
+      "source_hash": "f63919c3e66e6453c929b4aa8bfe0e2e4f26c8f2e508e1b7856b49372cb487a6",
+      "narrative": [
+        {
+          "text": "Section 2.1, theory. P patients are measured by K QI methods; method k's measurement of patient p is u_k a_p + v_k plus noise, with the noise across methods modelled as zero-mean multivariate Gaussian N(0, C), whose diagonal holds each method's noise variance σ_k² and whose off-diagonal entries σ_k,k′ hold covariances (Eq. 1). True values are assumed drawn from a four-parameter beta distribution with parameters Ω, which keeps them in a range and allows varied shapes. Θ, C and Ω are estimated by maximizing the probability of all measurements (Eq. 2), which needs no true values, using a constrained interior-point optimizer. Each method's NSR is σ̂_k/û_k (Eq. 3); lower means more precise.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2203.02010v1/blocks/prose-sec-003",
+      "source": "sections/sec-003-22-evaluating-the-ngse-technique-using-numerical.md",
+      "source_hash": "0c5aec7b5c40b0bd28c06c0cfcd02b9f0c73303b6facc9bf61a65217ac9d4bb3",
+      "narrative": [
+        {
+          "text": "Section 2.2, numerical experiments. Each experiment draws P = 200 true values from a four-parameter beta distribution and generates measurements for K = 3 methods with slopes {1.1, 0.9, 1.05}, biases {0.1, 0.2, 0.3} and noise variances {0.04, 0.09, 0.2025}. Two noise-covariance settings are tested: lower, {σ1,2, σ1,3, σ2,3} = {0.004, 0.008, 0.012}, and higher, {0.015, 0.02, 0.03}. With 4 beta-distribution settings, 2 covariance settings and 20 noise realizations, there are 160 trials, each ranked by estimated NSR.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2203.02010v1/blocks/prose-sec-004",
+      "source": "sections/sec-004-3-results.md",
+      "source_hash": "6230280b47f6abfa4cced48e38d5c29964063bae94d30736009b17f9e2e41295",
+      "narrative": [
+        {
+          "text": "Results, with the text layers of Tables 1 and 2. With lower correlated noise (80 trials) the technique estimated slopes, noise standard deviations and NSR close to the true values (true NSR 0.18, 0.33, 0.43; estimated 0.16 ± 0.08, 0.35 ± 0.09, 0.42 ± 0.07), ranked the methods correctly in 78% of trials, and identified method 1 as most precise in 97%. With higher correlated noise (80 trials), estimates were again close (estimated NSR 0.15 ± 0.08, 0.34 ± 0.08, 0.42 ± 0.07), ranking was correct in 87%, and method 1 was identified in 97% of what the text prints as \"1, 600 trials\", where 80 appears to be meant.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2203.02010v1/blocks/prose-sec-005",
+      "source": "sections/sec-005-4-discussion-and-conclusion.md",
+      "source_hash": "11d3d2ab946cdfbfea2c45b106db2be88f9d70d63abfc6212e19eb2cc31b6ee8",
+      "narrative": [
+        {
+          "text": "Discussion and conclusion. Over all 160 trials the technique ranked the methods correctly in 83% and found the most precise method in 97%, in controlled settings where linearity held by design. The authors want further evaluation on clinical QI methods (reconstruction, post-processing, segmentation, quantification), arguing that common evaluations need ground truth that may be unavailable or not task-relevant: Dice and Hausdorff scores need true segmentations, usually replaced by variable manual ones, and low-dose denoising is scored against normal-dose images that are themselves noisy. Limitations: the linearity assumption, which can be checked partly by testing whether methods' measurements are linear in each other, and the need for many patients, which prior information on the parameters could reduce. The block also holds the acknowledgements (NIBIB R01-EB031051, R56-EB028287, R21-EB024647) and the start of the references.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2203.02010v1/blocks/prose-sec-front-matter",
+      "source": "sections/sec-front-matter.md",
+      "source_hash": "a574ff71fd0ece4359da97c9b29283c5188f81e0f27e1d8ae0aa54f53e2b8d88",
+      "narrative": [
+        {
+          "text": "Front matter: the arXiv identifier (physics.med-ph, 3 March 2022) and a note that the manuscript was accepted to SPIE Medical Imaging 2022, with the citation Liu, Li, Mhlanga, Siegel and Jha, \"No-gold-standard evaluation of quantitative imaging methods in the presence of correlated noise\".",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24"
+        }
+      ]
+    }
+  ]
+}

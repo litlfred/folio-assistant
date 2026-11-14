@@ -1,0 +1,34 @@
+{
+  "@context": [
+    "https://litlfred.github.io/cat-harness/ns/context/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/",
+      "folio-assistant-core": "https://litlfred.github.io/folio-assistant-core/v0/ns/"
+    }
+  ],
+  "@id": "library/arxiv-2507.23348v1/blocks/figure-vfig-p009",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../figures/vfig-p009.png",
+  "pageStart": 9,
+  "pageEnd": 9,
+  "narrative": [
+    {
+      "text": "Figure 4: Case study of SWE-Debate resolving SymPy issue 13974 regarding powers of TensorProduct expressions. Five localization chains are evaluated; Chain 2 correctly identifies physics/quantum/tensorproduct.py. The debate synthesizes a 4-stage modification plan: (1) update tensor_product_simp, (2) update tensor_product_simp_Mul, (3) extend _eval_expand_tensorproduct, and (4) add _eval_power to TensorProduct. The patch diff in sympy/physics/quantum/tensorproduct.py shows adding _eval_power (distributing exponent over args) and handling Pow in tensor_product_simp.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude",
+        "model": "claude-opus-5"
+      },
+      "drafted_at": "2026-10-09",
+      "lang": "en"
+    }
+  ],
+  "derivedFrom": "library/arxiv-2507.23348v1/sections/sec-021",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/source/arxiv-2507.23348v1",
+  "provenance": "ingested"
+}
