@@ -1706,7 +1706,11 @@ jobs:
             # plus each `<hex>.json` sidecar. Copied VERBATIM, never through Jekyll
             # (excluded in _config.yml): a rendered body would not hash to its name.
             mkdir -p "./_site/payload"
-            cp -R ./cat-harness/docs/payload/. "./_site/payload/"
+            # Since sm8r item 4 a mounted cat-harness writes its payload at its layer
+            # output root, build/layers/cat-harness/; the in-mount path stays for a
+            # local harness and the transition.
+            src=./build/layers/cat-harness/docs/payload; [ -d "$src" ] || src=./cat-harness/docs/payload
+            cp -R "$src/." "./_site/payload/"
             # The SQLite slices (bean `q8ar`), one line each, built from the tree
             # being deployed rather than committed, because their sources move
             # on most merges (every session writes `beans/`). The deploy payloads
