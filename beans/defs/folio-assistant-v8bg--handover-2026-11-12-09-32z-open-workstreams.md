@@ -6,7 +6,7 @@ status: in-progress
 type: epic
 priority: high
 created_at: 2026-11-12T09:45:00Z
-updated_at: 2026-11-13T20:49:00Z
+updated_at: 2026-11-15T06:35:00Z
 tags:
     - project-memory
     - handover
@@ -28,3 +28,5 @@ _2026-11-12T18:12:00Z_ — Updated children `folio-assistant-um0y` and `folio-as
 _2026-11-12T19:47:00Z_ — Updated children `folio-assistant-um0y` and `folio-assistant-oiah` with Round 23 merges (`bootstrap-tools#90`, `cat-harness#1276`–`#1281`, `cat-harness-tools#1966` & `#1968`–`#1969`, `folio-assistant-core#770`–`#772`, `smart-trust#206`–`#208`, `smart-immunizations-uganda#27`, `who-iris#239`, `#243`, `#251`, `#254`–`#255`).
 
 _2026-11-13T20:49:00Z_ — Updated `folio-assistant-php1` and `folio-assistant-um0y` with Round 24 merges (`bootstrap-tools#92`–`#94`, `cat-harness#1295`–`#1296`, `#1299`, `#1301`–`#1311`, `cat-harness-tools#2022`–`#2026`, `#2028`, `#2032`, `#2034`, `#2049`, `#2052`, `#2055`, `#2057`–`#2059`, `#2064`–`#2079`, `#2081`–`#2096`, `folio-assistant-core#776`, `#783`–`#785`, `fhir-harness#398`, `#408`–`#409`, `#411`–`#413`, `#416`, `smart-base#357`, `#369`, `#371`, `#374`–`#375`, `smart-trust#213`, `#216`, `#220`, `smart-trust-phw#65`–`#67`, `#69`, `who-iris#241`, `#260`, `smart-immunizations#140`, `smart-immunizations-uganda#29`–`#30`, `#33`, `smart-trust-demo#123`, `#150`, `#160`, `smart-ra#250`, `folio-assistant#3107`, `#3112`–`#3116`, `#3118`, `#3121`), queued `folio-assistant-sci#200` for Merge Manager, and recorded owner standing rule (`2026-11-13T20:44:32Z`): *"dont direct merge, just send to merge manager https://claude.ai/code/cshk_01VQDpPffYARDQ8juksAZScfEsSBcoJKmS94Kt8kP8nCnb"*.
+
+_2026-11-15T06:35:00Z_ — Merge manager handover filed as child folio-assistant-mm15 (window to 18:26Z 11-15, merge order after fa#3124).
