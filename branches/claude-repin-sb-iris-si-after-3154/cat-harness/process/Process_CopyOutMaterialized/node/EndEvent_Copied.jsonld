@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-sb-iris-si-after-3154/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-sb-iris-si-after-3154/cat-harness/process/Process_CopyOutMaterialized/node/EndEvent_Copied.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-sb-iris-si-after-3154/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-sb-iris-si-after-3154",
+    "sha": "6820b3ab1309d94e6cb2ee6b405ca905cde28a1b",
+    "pr": "3156/merge",
+    "run": "43736747079"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-sb-iris-si-after-3154/cat-harness/process/Process_CopyOutMaterialized/node/EndEvent_Copied",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "A working copy, saying what it is a copy of",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-sb-iris-si-after-3154/cat-harness/process/Process_CopyOutMaterialized",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-repin-sb-iris-si-after-3154/cat-harness/role/validation-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-sb-iris-si-after-3154/cat-harness/process/Process_CopyOutMaterialized/lane/Lane_Verify",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-sb-iris-si-after-3154/cat-harness/process/Process_CopyOutMaterialized#flow/Flow_6"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-sb-iris-si-after-3154/cat-harness/directory/library-graph",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyOutMaterialized/node/EndEvent_Copied"
+    }
+  ]
+}

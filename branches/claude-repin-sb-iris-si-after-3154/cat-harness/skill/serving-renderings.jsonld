@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-sb-iris-si-after-3154/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-sb-iris-si-after-3154/cat-harness/skill/serving-renderings.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-sb-iris-si-after-3154/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-sb-iris-si-after-3154",
+    "sha": "6820b3ab1309d94e6cb2ee6b405ca905cde28a1b",
+    "pr": "3156/merge",
+    "run": "43736747079"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-sb-iris-si-after-3154/cat-harness/skill/serving-renderings",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "serving-renderings",
+      "title": "Serving a rendering — endpoints, MIME types, and what each host can enforce",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-sb-iris-si-after-3154/cat-harness/package/ui-core"
+      ],
+      "instructionsPath": "skills/ui/ui-core/serving-renderings.md",
+      "instructionLines": 193,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-sb-iris-si-after-3154/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/serving-renderings"
+    }
+  ]
+}
