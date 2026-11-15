@@ -1,0 +1,53 @@
+{
+  "$schema": "tool-definition/v1",
+  "tool": {
+    "id": "gitlab-mr-resolve-thread",
+    "title": "Resolve a review thread on a merge request (GitLab)",
+    "description": "Mark one discussion on a merge request as resolved.",
+    "install": {
+      "cli": "glab"
+    },
+    "invoke": {
+      "shell": "glab mr note resolve"
+    },
+    "io": {
+      "inputs": [
+        {
+          "name": "number",
+          "schema": {
+            "$type": "ChangeProposalNumber"
+          },
+          "description": "Absent: the merge request of the current branch.",
+          "required": false,
+          "arg": {
+            "positional": 0
+          }
+        },
+        {
+          "name": "thread",
+          "schema": {
+            "$type": "ReviewThreadId"
+          },
+          "description": "The discussion id, or a prefix of 8 or more of it.",
+          "required": true,
+          "arg": {
+            "positional": 1
+          }
+        }
+      ],
+      "outputs": []
+    },
+    "satisfies": [
+      "coordinate"
+    ],
+    "requires": {
+      "network": true
+    },
+    "remedies": [
+      {
+        "host": "gitlab.com",
+        "none": "No declared Tool reaches the GitLab API another way. A self-managed GitLab answers on its own host, which this record cannot name; `glab` reaches it once `glab auth login --hostname` has been run for that host."
+      }
+    ]
+  }
+}
