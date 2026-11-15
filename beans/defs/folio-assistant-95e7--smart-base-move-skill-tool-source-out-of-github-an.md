@@ -10,7 +10,7 @@ tags:
     - subgraphs
     - github-skills
 created_at: 2026-11-13T12:07:20Z
-updated_at: 2026-11-15T17:38:00Z
+updated_at: 2026-11-15T18:22:00Z
 ---
 
 ## Why
@@ -26,7 +26,7 @@ Analysis: session https://claude.ai/code/session_01EucfRnu5trsK3i7GD1yvkP (2026-
 
 ## Steps (one bean each)
 
-- [x] `cat-tools-st4q` — cat-harness-tools: resolve skill I/O contracts by reference, subgraph-aware (blocks `folio-assistant-kjea`) — merged in https://github.com/litlfred/cat-harness-tools/pull/2013 (`9e91ec3743`)
+- [x] `cat-tools-st4q` — cat-harness-tools: resolve skill I/O contracts by reference, subgraph-aware (blocks `folio-assistant-kjea`) — merged in https://github.com/litlfred/cat-harness-tools/pull/2013 (`9e91ec3743`) and closed in https://github.com/litlfred/cat-harness-tools/pull/2329 (`80e543908acb`, `2026-11-15T18:12:14Z`)
 - [x] `folio-assistant-hhkw` — delete the dead parts of smart-base `.github/skills/`; repair or remove the label workflows and `/validate` — merged in https://github.com/litlfred/smart-base/pull/376 (`92f3881` / `3863d0cd46`)
 - [x] `folio-assistant-kjea` — move 21 contracts into `L1`..`L4/schemas/skills/` — merged in https://github.com/litlfred/smart-base/pull/377 (`1947764fa3` -> `e81d890`)
 - [x] `folio-assistant-tgaj` — one swimlane/BPMN validator in `L2-bpmn/tools/` (replaces four) — merged in https://github.com/litlfred/smart-base/pull/386 (`86a857b604` -> `572e22701b`; duplicate `#391` closed)

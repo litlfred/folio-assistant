@@ -8,7 +8,7 @@ priority: high
 tags:
     - ci-speed-ii
 created_at: 2026-11-05T08:25:48Z
-updated_at: 2026-11-15T19:00:00Z
+updated_at: 2026-11-15T18:22:00Z
 parent: folio-assistant-rwmf
 ---
 
@@ -41,12 +41,13 @@ Siblings launched by the analysis session work (a) to (f): "CI speed 1" to "CI s
 | `folio-assistant-mbd8` | (c-sub) | Cut `node-kind-index.ts` → `src/auth/gateway.ts` static import | `completed` | `cat-harness-tools#1494` (`bd30779`), re-pinned in `#2985` |
 | `folio-assistant-vgfp` | (c-sub) | Derived imports closures: resolve computed-import verdicts at fingerprint time | `completed` | `cat-harness-tools#1576` (`de0ec7a`), re-pinned in `#2985` |
 | `folio-assistant-tv20` | (c2) | Feature Staging still builds its own site (`cis4`, closed undone) | `completed` | `folio-assistant#2953` (`bef2b0b1a6da`, merged `2026-11-08T18:29:09Z`) |
+| `folio-assistant-9ml4` | (14) | Cache-first CI: one `cached-step` primitive, derived keys, trust classes, budget, hit-rate report | `completed` | `#2971`, `#2972`, `#2983`, `#2985`, `#2990`, `#3009`, `#3010`, `#3013`, `#3038`, `cat-harness#1050`/`#1052`/`#1057`/`#1088`/`#1122`, `cat-harness-tools#1508`/`#1512`/`#1519`/`#1523`/`#1551`/`#1611`/`#1703`/`#1707`/`#2327` (`1d86c348d885`); determinism audit `42557731048` 6/6 green |
 | `folio-assistant-xaa8` | (g) | Owner decision: move the repo under a free GitHub organization for the real merge queue | `todo` | Owner-deferred decision (not agent work) |
 
-*(Additional completed sibling beans under `k3vv`: `9set` (c1), `ohpz` (d), `fn8q` (e — including `cat-tools-5fmc` & `cat-tools-pp9g` completed in `cat-harness-tools#1725` `277c797958ed`), `711q` (j), `akiq`, `asq1`, `yeg4`; active sibling feature: `9ml4`. Release-gated CI (`cat-harness#1158`) Phases 1–4 also landed in `cat-harness#1159` `1cfec870`, `cat-harness-tools#1721` `6571d3f4`, `cat-harness-tools#1722` `961b4d93`, `cat-harness-tools#1741` `5c4cd89a`, `folio-assistant#3047` `8915622d`, and 8 layer re-pins, cutting median PR runner-min across `cat-harness-tools` `38.0 -> 1.2`, `folio-assistant` CQG `79.1 -> 5.3`, and `folio-assistant-core` `4.6 -> 1.5`.)*
+*(Additional completed sibling beans under `k3vv`: `9set` (c1), `ohpz` (d), `fn8q` (e — including `cat-tools-5fmc` & `cat-tools-pp9g` completed in `cat-harness-tools#1725` `277c797958ed`), `711q` (j), `akiq`, `asq1`, `yeg4`, `9ml4`. Release-gated CI (`cat-harness#1158`) Phases 1–4 also landed in `cat-harness#1159` `1cfec870`, `cat-harness-tools#1721` `6571d3f4`, `cat-harness-tools#1722` `961b4d93`, `cat-harness-tools#1741` `5c4cd89a`, `folio-assistant#3047` `8915622d`, and 8 layer re-pins, cutting median PR runner-min across `cat-harness-tools` `38.0 -> 1.2`, `folio-assistant` CQG `79.1 -> 5.3`, and `folio-assistant-core` `4.6 -> 1.5`.)*
 
 ## Done when
-- [x] (a) to (f) are completed or scrapped with a reason *(all 13 work items completed with `folio-assistant-tv20` `#2953` `bef2b0b1a6da` and `cat-tools-pp9g` `#1725` `277c797958ed`; active sibling feature `folio-assistant-9ml4` continues under `k3vv`)*
+- [x] (a) to (f) are completed or scrapped with a reason *(all 19 agent work items completed, including `folio-assistant-tv20` `#2953` `bef2b0b1a6da`, `cat-tools-pp9g` `#1725` `277c797958ed`, and `folio-assistant-9ml4` `cat-harness-tools#2327` `1d86c348d885`)*
 - [ ] (g) has the owner's answer recorded *(`folio-assistant-xaa8`, owner-deferred item g)*
 
 Evidence from earlier work: `0mf0` measured median PR green → merged before and after merge-main (#1820) and found it slower, 2.2 → 5.7 min (p90 38.8 → 92.6). The gain was merging while red, 32 % → 3 %. Any CI-speed claim here should measure that same median.
@@ -63,3 +64,5 @@ _2026-11-15T19:00:00Z_ — Progress update (`lane-43c1`, subagent `43c12887-2733
 - **Child completion rollup**: 18 of 20 direct children of `folio-assistant-k3vv` in `beans/defs/` are `completed` (`6h4p`, `69lr`, `711q`, `9set`, `akiq`, `asq1`, `ay33`, `fn8q`, `hd58`, `k2sg`, `mbd8`, `ohpz`, `pdsq`, `pqlh`, `tsh9`, `tv20`, `uldr`, `vgfp`, `x35i`, `yeg4`).
 - **`folio-assistant-9ml4` (`Cache-first CI`)**: `determinism-audit.yml` run `42557731048` (`2026-11-09T03:40:56Z` on `main` at `260c7a6e9f7a05ef80b7f1a035974f1b29942f48`) verified **6/6 producers 100% `DETERMINISTIC`** (`qa-working-copy` 12,470 files, `publish-pages` 13,655 files, `smart-pages` 1,452 files, `ig-index` 1,204 files, `kg-export` 4,437 files, `render-bpmn` 326 files), checking off `Done when #1`; [`litlfred/cat-harness-tools#2327`](https://github.com/litlfred/cat-harness-tools/pull/2327) (`aab37e49d68e43de5ee195c2c614c21c0fca97a2`) is open and queued for Merge Manager to retire the legacy `cat-mount-v1-*` Actions cache steps and `caches/lpc-cat-mount.cache.json` (`Done when #4`, part 1).
 - **`folio-assistant-xaa8` (`item g`)**: remains `todo` awaiting the owner's decision on moving the repository under a free GitHub organization for the real merge queue (`Done when #2`).
+
+_2026-11-15T18:22:00Z_ — [`litlfred/cat-harness-tools#2327`](https://github.com/litlfred/cat-harness-tools/pull/2327) merged to `main` at `1d86c348d88577054f09e0a8c2af9ae96cc1f5a2` (`2026-11-15T17:57:33Z`), completing `folio-assistant-9ml4`. 19 of 20 direct children of `folio-assistant-k3vv` in `beans/defs/` are now `completed`; only owner-only `folio-assistant-xaa8` (`item g`, deferred until after the MVP functional freeze per owner card `"xaa8 org"` option 1) remains open.
