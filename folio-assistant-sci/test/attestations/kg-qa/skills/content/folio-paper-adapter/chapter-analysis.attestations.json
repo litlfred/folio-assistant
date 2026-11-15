@@ -1,0 +1,19 @@
+{
+  "$schema": "qa-attestations/v1",
+  "family": "kg-qa",
+  "subject": {
+    "kind": "skill",
+    "id": "chapter-analysis",
+    "path": "skills/content/folio-paper-adapter/chapter-analysis.md"
+  },
+  "pair_attestations": [
+    {
+      "kind": "co-located",
+      "prose": "folio-assistant-sci/skills/content/folio-paper-adapter/chapter-analysis.md",
+      "code": "folio-assistant-sci/skills/content/folio-paper-adapter/chapter-analysis.ts",
+      "prose_hash": "14495e1f6706",
+      "code_hash": "0abb65d3bf72",
+      "by": "baseline"
+    }
+  ]
+}
