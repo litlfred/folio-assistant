@@ -5896,7 +5896,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Read live, never from a stored copy: the open PRs (draft, head, mergeable, owed checks, open owner decisions), the queued and running runs with the age of the oldest, the latest main push run, each PR owner's last push or comment, and every harness repository's open main-red issue with its newest failed runs on main and gh-pages, whether or not the lane holds a PR there (gh api repos/<owner>/<repo>/actions/runs?branch=<default>&event=push: the latest completed push run per workflow, conclusion failure). One sweep runs merge:watch over every repository it holds. Liveness duty: acknowledge each new merge request within holding.heartbeatMinutes, and post a heartbeat with each sweep, so siblings can tell a live merge manager from a stalled one. A repin+merge: request is re-pinned by the merge manager itself, as its own re-pin PR in a re-pin train, before the requested PR lands; only the merge manager merges or re-pins, and a scheduled routine never merges (owner rulings, 2026-11-13)."
+          "@value": "Read live, never from a stored copy: the open PRs (draft, head, mergeable, owed checks, open owner decisions), the queued and running runs with the age of the oldest, the latest main push run, each PR owner's last push or comment, and every harness repository's open main-red issue with its newest failed runs on main and gh-pages, whether or not the lane holds a PR there (gh api repos/<owner>/<repo>/actions/runs?branch=<default>&event=push: the latest completed push run per workflow, conclusion failure). One sweep runs merge:watch over every repository it holds, in dependency order (lowest first); merge:watch leaves out PRs labelled content. Liveness duty: acknowledge each new merge request within holding.heartbeatMinutes, and post a heartbeat with each sweep, so siblings can tell a live merge manager from a stalled one. A repin+merge: request is re-pinned by the merge manager itself, as its own re-pin PR in a re-pin train, before the requested PR lands; only the merge manager merges or re-pins, and a scheduled routine never merges (owner rulings, 2026-11-13)."
         }
       ],
       "skos:notation": "Task_Read",
@@ -7521,7 +7521,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "From the merged templates, with the locale term base: `translations/<locale>/**.po`, a translation-node manifest beside each (`official: false`, `generatedBy: \"agent\"`; no `status.json`), and the FHIR terms as CodeSystem supplements, all in one file for the locale rather than edits inside the resources."
+          "@value": "From the merged templates, with the locale term base: `translations/<locale>/**.po`, a translation-node manifest beside each (`official: false`, `generatedBy: \"agent\"`, or `\"machine\"` where `translation:candidates` filled an empty entry with its first candidate, which stays fuzzy; no `status.json`), and the FHIR terms as CodeSystem supplements, all in one file for the locale rather than edits inside the resources."
         }
       ],
       "skos:notation": "Task_ML_Translate",
@@ -11601,7 +11601,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Translation of .pot → .po, with the locale term base, by one of: 1. Existing PO from the WHO SMART Base IG (Weblate/Crowdin/Launchpad) 2. FHIR/translation-utils po-translate CLI (DeepL/Google, tagged #fuzzy) 3. Agent (LLM) translation 4. Human translator Result: <locale>/block.po with msgid/msgstr pairs."
+          "@value": "Translation of .pot → .po, with the locale term base, by one of: 1. Existing PO from the WHO SMART Base IG (Weblate/Crowdin/Launchpad) 2. Open machine translation as candidates: `translation:candidates` (Tool translation-candidates), OPUS-MT run locally and/or a self-hosted LibreTranslate, no freemium API. Each source's text is a candidate in <catalogue>.candidates.json for the reviewer to choose among; a candidate whose placeholders do not round-trip is not recorded; an empty msgstr gets the first good candidate, tagged #, fuzzy; the node records generatedBy \"machine\", never official. A catalogue marked DO NOT MACHINE-FILL gets candidates only. 3. Agent (LLM) translation 4. Human translator Result: <locale>/block.po with msgid/msgstr pairs. A machine or agent string stays fuzzy and unofficial until a person picks or accepts it (translation review page) or signs it off (Task_Signoff)."
         }
       ],
       "skos:notation": "Task_Translate",
@@ -11851,7 +11851,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Only the empty and fuzzy entries, in every locale, with the terms the term base fixes. A finished string is not touched."
+          "@value": "Only the empty and fuzzy entries, in every locale, with the terms the term base fixes. A finished string is not touched. Candidates for the empty and fuzzy entries may come first from `translation:candidates` (Tool translation-candidates: open engines, OPUS-MT and/or self-hosted LibreTranslate), recorded in <catalogue>.candidates.json; an empty entry also gets the first good candidate, fuzzy, until it is re-translated here or a person picks or accepts one on the review page."
         }
       ],
       "skos:notation": "Task_TR_Translate",

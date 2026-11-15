@@ -363,10 +363,10 @@
   "conformsTo": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.schema.json",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c6c2c6a745be8b5b3c11d7eb00283f87162ca81f",
-  "sourceCommitSha": "c6c2c6a745be8b5b3c11d7eb00283f87162ca81f",
-  "sourceTree": "7ac7366db3fb26551e0a610d1c88737daaa6ce86",
-  "sourceCommitAt": "2026-11-15T14:29:41+01:00",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/7a86a2a7c994a1abd1d7c7969f956a5f5edbf9b9",
+  "sourceCommitSha": "7a86a2a7c994a1abd1d7c7969f956a5f5edbf9b9",
+  "sourceTree": "a80fd4cf959533cf651d3ba06dabac9b47f44b0d",
+  "sourceCommitAt": "2026-11-15T16:58:18+01:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -380,7 +380,7 @@
     "SequenceFlow": 1224,
     "Lane": 206,
     "ProcessNode": 1180,
-    "Tool": 202,
+    "Tool": 203,
     "Schema": 198,
     "ExternalSchema": 30,
     "GraphTypology": 53,
@@ -2903,7 +2903,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/package/library-core"
       ],
       "instructionsPath": "library/skills/library-core/translation-manager.md",
-      "instructionLines": 1019,
+      "instructionLines": 1045,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2967,7 +2967,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/package/library-core"
       ],
       "instructionsPath": "library/skills/library-core/translation-refresh.md",
-      "instructionLines": 241,
+      "instructionLines": 255,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3142,7 +3142,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core"
       ],
       "instructionsPath": "sdlc/skills/sdlc-core/merge-queue.md",
-      "instructionLines": 1031,
+      "instructionLines": 1104,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3158,7 +3158,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core"
       ],
       "instructionsPath": "sdlc/skills/sdlc-core/pr-description.md",
-      "instructionLines": 156,
+      "instructionLines": 157,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3301,7 +3301,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core"
       ],
       "instructionsPath": "sdlc/skills/sdlc-core/merge-manager-watcher.md",
-      "instructionLines": 560,
+      "instructionLines": 694,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3317,7 +3317,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core"
       ],
       "instructionsPath": "sdlc/skills/sdlc-core/prepare-merge.md",
-      "instructionLines": 557,
+      "instructionLines": 623,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4509,12 +4509,13 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/html-rendering-qc",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "html-rendering-qc",
-      "title": "HTML Rendering QC",
+      "title": "HTML rendering QC",
+      "description": "Check that a folio's content blocks render correctly as HTML on its published site, and report each defect with its source file and line. The generic half: what the HTML path is, which patterns break it, and how to look at the result. A content type adds its own rows through a refinement skill.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/cat-harness/package/platform-ui"
       ],
       "instructionsPath": "platform-ui/skills/platform-ui/html-rendering-qc.md",
-      "instructionLines": 86,
+      "instructionLines": 63,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -37569,7 +37570,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Merge manager watch: wake, read the queue live, route",
       "summary": "The loop run by the session that holds the merge-steward lane (actor merge-manager, skill merge-manager-watcher): elected, appointed, or holding it for its own PRs only.",
-      "description": "The loop run by the session that holds the merge-steward lane (actor merge-manager, skill merge-manager-watcher): elected, appointed, or holding it for its own PRs only. Each wake reads the open PRs, the runner queue, main's verdict and the PR owners live, acknowledges merge requests within the heartbeat, and routes to the train, a direct merge, runner relief, a saturation meta-merge, a stalled-agent takeover, or a fixer for a red main in any harness repository (owner, 2026-11-10: \"That should be a part of merge manager (dispatch an agent to fix them)\", \"Add to process\"). Every merge waits for the owner's own OK, given in the merge manager's session as one card per batch (owner ruling, 2026-11-07, card Approvals, B). How a sibling finds or elects the merge manager and sends it a request is Process_MergeRequest.",
+      "description": "The loop run by the session that holds the merge-steward lane (actor merge-manager, skill merge-manager-watcher): elected, appointed, or holding it for its own PRs only. Each wake reads the open PRs, the runner queue, main's verdict and the PR owners live, acknowledges merge requests within the heartbeat, and routes to the train, a direct merge, runner relief, a saturation meta-merge, a stalled-agent takeover, or a fixer for a red main in any harness repository (owner, 2026-11-10: \"That should be a part of merge manager (dispatch an agent to fix them)\", \"Add to process\"). Every merge waits for the owner's own OK, given in the merge manager's session as one card per batch (owner ruling, 2026-11-07, card Approvals, B). How a sibling finds or elects the merge manager and sends it a request is Process_MergeRequest. Across dependent repositories the loop follows merge-manager-watcher §\"Merging across dependent repositories\" (owner, 2026-11-15): lowest dependency first, queued CI re-ordered the same way, batches per repository, a checkable stable point, content PRs (label content) kept out of the queue and the reports, one merge manager, full green for re-pins, reports at a fixed interval, a draft register, no idle agents, one card per owner question, approvals recorded durably, ignored repositories left out, and no state-branch commit from a sparse checkout. A lower repository never waits on a higher one, and a ready PR (merge-queue §\"What 'ready to merge' means\": the generic list, out of draft, no conflicts, CI green against its own dependencies with reds that also fail on main and are not its own excused, description complete, approvals given; then the cat-harness additions, content rule, hand-over label, merge:guard success, issue link, and pins with full tier for re-pins) merges in the same sweep, lowest dependency first.",
       "enforcement": "strict",
       "sourcePath": "sdlc/processes/merge-manager-watch.bpmn",
       "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/sdlc/processes/merge-manager-watch.bpmn",
@@ -41494,7 +41495,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Merge request: find or elect the merge manager",
       "summary": "The sibling's side of merging.",
-      "description": "The sibling's side of merging. A coding agent whose work depends on an unmerged PR stacks on it rather than waiting, and retargets when it lands. With a PR ready to merge it does not know whether a merge manager exists, so it checks: if one is active and live, it sends the six-line merge request; if none is, it elects one with its siblings by the fixed rule (a lone session is elected alone), the winner announcing itself to all and taking the lane. Only the merge manager merges and re-pins (owner rulings, 2026-11-13): no other session merges, and a PR green except for a re-pin is sent as repin+merge. Any agent may stall, the merge manager included: a request not acknowledged within the stall window sends the sibling to stalled-agent triage and a re-election without the stalled session. The merge manager's own loop is Process_MergeManagerWatch. Source: owner rulings, 2026-11-07 and 2026-11-13.",
+      "description": "The sibling's side of merging. A coding agent whose work depends on an unmerged PR stacks on it rather than waiting, and retargets when it lands. With a PR ready to merge it does not know whether a merge manager exists, so it checks: if one is active and live, it sends the six-line merge request; if none is, it elects one with its siblings by the fixed rule (a lone session is elected alone), the winner announcing itself to all and taking the lane. Only the merge manager merges and re-pins (owner rulings, 2026-11-13): no other session merges, and a PR green except for a re-pin is sent as repin+merge. Any agent may stall, the merge manager included: a request not acknowledged within the stall window sends the sibling to stalled-agent triage and a re-election without the stalled session. The merge manager's own loop is Process_MergeManagerWatch. Source: owner rulings, 2026-11-07 and 2026-11-13. Ready to merge is defined in merge-queue §\"What 'ready to merge' means\"; a ready PR merges at once, lowest dependency first, and a lower repository never waits on a higher one (owner, 2026-11-15).",
       "enforcement": "strict",
       "sourcePath": "sdlc/processes/merge-request.bpmn",
       "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/sdlc/processes/merge-request.bpmn",
@@ -52452,6 +52453,117 @@
       ]
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/translation-candidates.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
+      "name": "translation-candidates",
+      "title": "Collect candidate translations from open engines",
+      "description": "Ask one or more open, self-hosted machine translators — OPUS-MT (Helsinki-NLP Marian models, CC-BY 4.0, run locally) and/or a self-hosted LibreTranslate (AGPL, Argos models) — for CANDIDATE translations of each empty or fuzzy string, so no freemium API quota is involved. Candidates are appended to `<locale>/<catalogue>.candidates.json` (`translation-candidates/v1`) for a reviewer to choose among on the translation review page; a candidate whose placeholders or markup do not round-trip is not recorded. Candidates are never a barrier to having a translation: an EMPTY msgstr gets the first good candidate, marked `#, fuzzy`; a non-empty msgstr is never overwritten. The translation node records the source (`generatedBy: \"machine\"`, model, time); `official` is never set, and a candidate is never a verdict. A catalogue that says DO NOT MACHINE-FILL, or whose node is official, gets candidates but no fill.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat translation:candidates"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "instance",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The layer root whose declared `translation-sources` directory is filled. Default: the current directory.",
+            "required": false,
+            "arg": {
+              "flag": "--instance"
+            }
+          },
+          {
+            "name": "engines",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/IdList",
+            "description": "Comma-separated candidate sources, tried in this order for an empty msgstr: `opus-mt` (the local runner `scripts/translation/opus_mt_runner.py`, shared with `translate-pot`, which needs the extended Python tier) and/or `libretranslate` (the URL below). Absent, the command exits 2.",
+            "required": true,
+            "arg": {
+              "flag": "--engine"
+            }
+          },
+          {
+            "name": "url",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Url",
+            "description": "A self-hosted LibreTranslate's base URL (default `http://localhost:5000`). The hosted libretranslate.com / .de services are refused.",
+            "required": false,
+            "arg": {
+              "flag": "--url"
+            }
+          },
+          {
+            "name": "locales",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/IdList",
+            "description": "Comma-separated locales to fill, e.g. `es,fr`. Default: every locale directory except the source locale.",
+            "required": false,
+            "arg": {
+              "flag": "--locale"
+            }
+          },
+          {
+            "name": "init",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag",
+            "description": "Start a `.po` from each template that has none (locale named, `X-Folio-Official: no`, every msgstr empty), then collect candidates for it. Never the default: starting a catalogue is a decision.",
+            "required": false,
+            "arg": {
+              "flag": "--init"
+            }
+          },
+          {
+            "name": "noCreateNode",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag",
+            "description": "Record candidates for a catalogue with no translation node beside it, but fill nothing there, instead of writing a minimal `translation-node/v1` for it.",
+            "required": false,
+            "arg": {
+              "flag": "--no-create-node"
+            }
+          },
+          {
+            "name": "noMask",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag",
+            "description": "Send placeholders to the engine as they are, instead of as numbered stand-ins. The round-trip check runs either way.",
+            "required": false,
+            "arg": {
+              "flag": "--no-mask"
+            }
+          },
+          {
+            "name": "dryRun",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag",
+            "description": "Translate and report, writing nothing.",
+            "required": false,
+            "arg": {
+              "flag": "--dry-run"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "candidates",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "`translations/<locale>/<catalogue>.candidates.json` (`translation-candidates/v1`), appended to: each candidate carries its text and source `{kind: \"open-mt\", id: <model>, version?, at}`. Identical text from the same source is not added twice."
+          },
+          {
+            "name": "catalogues",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The `.po` catalogues whose empty msgstr got the first good candidate, `#, fuzzy`, and their `<name>.json` translation nodes. Exit 0 something was recorded · 3 nothing was · 2 could not determine · 1 an engine failed."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": true
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/translation-refresh",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/translation-candidate-source"
+      ]
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/translation-candidates-agent.jsonld",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "translation-candidates-agent",
@@ -58983,15 +59095,6 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/attestations"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/attestation/folio-assistant-core/kg-qa/dsa/skills/dsa/dsa-checksum",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
-      "title": "kg-qa attestation: skill dsa-checksum",
-      "description": "The kg-qa judgements recorded for skill dsa-checksum (dsa/skills/dsa/dsa-checksum.md), each pinned to the hash it attested.",
-      "sourceKind": "kg-qa",
-      "sourcePath": "test/attestations/folio-assistant-core/kg-qa/dsa/skills/dsa/dsa-checksum.attestations.json",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/attestations"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/attestation/folio-assistant-core/kg-qa/dsa/skills/dsa/dsa-dcat-record",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
       "title": "kg-qa attestation: skill dsa-dcat-record",
@@ -59007,6 +59110,15 @@
       "description": "The kg-qa judgements recorded for skill dsa-odrl-source (dsa/skills/dsa/dsa-odrl-source.md), each pinned to the hash it attested.",
       "sourceKind": "kg-qa",
       "sourcePath": "test/attestations/folio-assistant-core/kg-qa/dsa/skills/dsa/dsa-odrl-source.attestations.json",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/attestations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/attestation/folio-assistant-core/kg-qa/skills/content/folio-document-adapter/dsa-checksum",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/QaAttestation",
+      "title": "kg-qa attestation: skill dsa-checksum",
+      "description": "The kg-qa judgements recorded for skill dsa-checksum (skills/content/folio-document-adapter/dsa-checksum.md), each pinned to the hash it attested.",
+      "sourceKind": "kg-qa",
+      "sourcePath": "test/attestations/folio-assistant-core/kg-qa/skills/content/folio-document-adapter/dsa-checksum.attestations.json",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/attestations"
     },
     {

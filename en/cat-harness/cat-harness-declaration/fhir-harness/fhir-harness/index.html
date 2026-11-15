@@ -255,6 +255,11 @@
   },
   {
     &quot;id&quot;: &quot;fhir-core-definitions&quot;,
+    &quot;coverage&quot;: {
+      &quot;exempt&quot;: {
+        &quot;visualiser&quot;: &quot;No viewer of its own: HL7 publishes a page for every definition this graph lists (https://hl7.org/fhir/R4/patient.html and its kin for R4B and R5), and HL7&#39;s publication is the authority for these definitions (owner, 2026-11-15, fhir-harness#436). A viewer here would repeat HL7&#39;s. The typology is not renderable for the same reason: the schema viewer reads the bodies as classes.&quot;
+      }
+    },
     &quot;path&quot;: &quot;fhir-core/&quot;,
     &quot;title&quot;: &quot;FHIR core definitions&quot;,
     &quot;description&quot;: &quot;The FHIR core specification&#39;s StructureDefinitions for each STABLE release, one graph per release keyed by canonical URL (http://hl7.org/fhir/StructureDefinition/&lt;id&gt;): R4 from `hl7.fhir.r4.core#4.0.1`, R4B from `hl7.fhir.r4b.core#4.3.0`, R5 from `hl7.fhir.r5.core#5.0.0`, each pinned in `pins.json` by its packages.fhir.org URL, sha1 and sha512. `&lt;release&gt;/manifest.json` lists every resource, complex and primitive type and root type (Base in R5; Element, BackboneElement, DomainResource, Resource) with its kind, base and the sha256 of its bytes; constraint profiles, extension definitions and logical models are left out and counted. The bodies are the package&#39;s own files, written beside the manifest by `fhir-core.ts materialise` and not committed (12 MB); `fhir-core.ts check` holds them to the manifests and `resolve` answers which file a canonical is kept in. A release whose package could not be read is `unread` with the reason, never an empty graph (owner, 2026-11-14).&quot;,

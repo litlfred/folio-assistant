@@ -7,12 +7,13 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/html-rendering-qc",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "html-rendering-qc",
-      "title": "HTML Rendering QC",
+      "title": "HTML rendering QC",
+      "description": "Check that a folio's content blocks render correctly as HTML on its published site, and report each defect with its source file and line. The generic half: what the HTML path is, which patterns break it, and how to look at the result. A content type adds its own rows through a refinement skill.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/cat-harness/package/platform-ui"
       ],
       "instructionsPath": "platform-ui/skills/platform-ui/html-rendering-qc.md",
-      "instructionLines": 86,
+      "instructionLines": 63,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,

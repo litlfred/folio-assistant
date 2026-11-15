@@ -1886,6 +1886,14 @@ ca&amp;at-harness
     &quot;reason&quot;: &quot;the bibliography folio-assistant-core renders over every instance in the checkout: one page per layer&#39;s references, catalogue and library directories, so its bytes are a function of the consuming index&#39;s lock. Never committed, but no entry named it, so `check:bibliography` judged a fresh mount (no pages yet) as 582 stale files (dth-hrh#105, run 42366701605)&quot;
   },
   {
+    &quot;path&quot;: &quot;docs/en/fhir-harness/ig-ast/&quot;,
+    &quot;writer&quot;: [
+      &quot;ig-ast:pages&quot;
+    ],
+    &quot;because&quot;: &quot;checkout&quot;,
+    &quot;reason&quot;: &quot;fhir-harness&#39;s IG AST viewer: an index and one page per IG in the checkout carrying an AST, written into this site by fhir-harness/scripts/gen-ig-ast-pages.ts, so its bytes move with the IGs&#39; pins. Undeclared, a publish wrote it into a mounted cat-harness (bean cat-tools-sm8r, item 9)&quot;
+  },
+  {
     &quot;path&quot;: &quot;docs/assets/glossary/&quot;,
     &quot;writer&quot;: [
       &quot;glossary:page&quot;
@@ -1909,6 +1917,14 @@ ca&amp;at-harness
     ],
     &quot;because&quot;: &quot;checkout&quot;,
     &quot;reason&quot;: &quot;this instance&#39;s JSON-LD @context, generated from the prefixes its documents use (published ones included, which docs/subgraph/ and the SKOS exports above are) flattened with the prefix tables of the instances it needs, read at the checkout&#39;s pins (bean folio-assistant-63q4)&quot;
+  },
+  {
+    &quot;path&quot;: &quot;docs/en/smart-base/l1-extraction/&quot;,
+    &quot;writer&quot;: [
+      &quot;smart-base:l1-extraction:pages&quot;
+    ],
+    &quot;because&quot;: &quot;checkout&quot;,
+    &quot;reason&quot;: &quot;smart-base&#39;s L1 extraction viewer: an index and one page per IG in the checkout with an L1 extraction, written into this site by smart-base/scripts/gen-l1-extraction-pages.ts, so its bytes move with those layers&#39; pins. Undeclared, a publish wrote it into a mounted cat-harness (bean cat-tools-sm8r, item 9)&quot;
   },
   {
     &quot;path&quot;: &quot;docs/en/cat-harness/tools/&quot;,

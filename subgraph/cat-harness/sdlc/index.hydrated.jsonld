@@ -5009,7 +5009,7 @@
             "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-dd-1.0"
           ],
           "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/merge-manager-watch.svg",
-          "description": "The loop run by the session that holds the merge-steward lane (actor merge-manager, skill merge-manager-watcher): elected, appointed, or holding it for its own PRs only. Each wake reads the open PRs, the runner queue, main's verdict and the PR owners live, acknowledges merge requests within the heartbeat, and routes to the train, a direct merge, runner relief, a saturation meta-merge, a stalled-agent takeover, or a fixer for a red main in any harness repository (owner, 2026-11-10: \"That should be a part of merge manager (dispatch an agent to fix them)\", \"Add to process\"). Every merge waits for the owner's own OK, given in the merge manager's session as one card per batch (owner ruling, 2026-11-07, card Approvals, B). How a sibling finds or elects the merge manager and sends it a request is Process_MergeRequest.",
+          "description": "The loop run by the session that holds the merge-steward lane (actor merge-manager, skill merge-manager-watcher): elected, appointed, or holding it for its own PRs only. Each wake reads the open PRs, the runner queue, main's verdict and the PR owners live, acknowledges merge requests within the heartbeat, and routes to the train, a direct merge, runner relief, a saturation meta-merge, a stalled-agent takeover, or a fixer for a red main in any harness repository (owner, 2026-11-10: \"That should be a part of merge manager (dispatch an agent to fix them)\", \"Add to process\"). Every merge waits for the owner's own OK, given in the merge manager's session as one card per batch (owner ruling, 2026-11-07, card Approvals, B). How a sibling finds or elects the merge manager and sends it a request is Process_MergeRequest. Across dependent repositories the loop follows merge-manager-watcher §\"Merging across dependent repositories\" (owner, 2026-11-15): lowest dependency first, queued CI re-ordered the same way, batches per repository, a checkable stable point, content PRs (label content) kept out of the queue and the reports, one merge manager, full green for re-pins, reports at a fixed interval, a draft register, no idle agents, one card per owner question, approvals recorded durably, ignored repositories left out, and no state-branch commit from a sparse checkout. A lower repository never waits on a higher one, and a ready PR (merge-queue §\"What 'ready to merge' means\": the generic list, out of draft, no conflicts, CI green against its own dependencies with reds that also fail on main and are not its own excused, description complete, approvals given; then the cat-harness additions, content rule, hand-over label, merge:guard success, issue link, and pins with full tier for re-pins) merges in the same sweep, lowest dependency first.",
           "enforcement": "strict",
           "flowCount": 29,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
@@ -6402,7 +6402,7 @@
             "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-dd-1.0"
           ],
           "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/merge-request.svg",
-          "description": "The sibling's side of merging. A coding agent whose work depends on an unmerged PR stacks on it rather than waiting, and retargets when it lands. With a PR ready to merge it does not know whether a merge manager exists, so it checks: if one is active and live, it sends the six-line merge request; if none is, it elects one with its siblings by the fixed rule (a lone session is elected alone), the winner announcing itself to all and taking the lane. Only the merge manager merges and re-pins (owner rulings, 2026-11-13): no other session merges, and a PR green except for a re-pin is sent as repin+merge. Any agent may stall, the merge manager included: a request not acknowledged within the stall window sends the sibling to stalled-agent triage and a re-election without the stalled session. The merge manager's own loop is Process_MergeManagerWatch. Source: owner rulings, 2026-11-07 and 2026-11-13.",
+          "description": "The sibling's side of merging. A coding agent whose work depends on an unmerged PR stacks on it rather than waiting, and retargets when it lands. With a PR ready to merge it does not know whether a merge manager exists, so it checks: if one is active and live, it sends the six-line merge request; if none is, it elects one with its siblings by the fixed rule (a lone session is elected alone), the winner announcing itself to all and taking the lane. Only the merge manager merges and re-pins (owner rulings, 2026-11-13): no other session merges, and a PR green except for a re-pin is sent as repin+merge. Any agent may stall, the merge manager included: a request not acknowledged within the stall window sends the sibling to stalled-agent triage and a re-election without the stalled session. The merge manager's own loop is Process_MergeManagerWatch. Source: owner rulings, 2026-11-07 and 2026-11-13. Ready to merge is defined in merge-queue §\"What 'ready to merge' means\"; a ready PR merges at once, lowest dependency first, and a lower repository never waits on a higher one (owner, 2026-11-15).",
           "enforcement": "strict",
           "flowCount": 17,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
@@ -14042,13 +14042,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
-              "instructionLines": 560,
+              "instructionLines": 694,
               "instructionsPath": "sdlc/skills/sdlc-core/merge-manager-watcher.md",
               "name": "merge-manager-watcher",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/eb8be98f7e59e2f2ab969225d4dead6274d294c522facef7ea0fe77c0f5b9b1d",
-                "bytes": 32116,
-                "sha256": "eb8be98f7e59e2f2ab969225d4dead6274d294c522facef7ea0fe77c0f5b9b1d"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/48e263aaa06cb9fd2362a39f66dd2f1b1225bbce60501b51854ce4bda8f65854",
+                "bytes": 41148,
+                "sha256": "48e263aaa06cb9fd2362a39f66dd2f1b1225bbce60501b51854ce4bda8f65854"
               },
               "title": "Merge manager watcher — the loop that runs the merge-steward role"
             },
@@ -14061,13 +14061,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
-              "instructionLines": 1031,
+              "instructionLines": 1104,
               "instructionsPath": "sdlc/skills/sdlc-core/merge-queue.md",
               "name": "merge-queue",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7913a018195ba36f0be882ba2f9fbeadb6f780bc08fb5cbf489d2a3ee07e1495",
-                "bytes": 60452,
-                "sha256": "7913a018195ba36f0be882ba2f9fbeadb6f780bc08fb5cbf489d2a3ee07e1495"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ed02f9a480fad2be444a9eed4ea6bb4a7fefb84fb7442f3fdf0a116a93756a3e",
+                "bytes": 64306,
+                "sha256": "ed02f9a480fad2be444a9eed4ea6bb4a7fefb84fb7442f3fdf0a116a93756a3e"
               },
               "title": "Merge queue — what lands next, and as what"
             },
@@ -14194,13 +14194,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
-              "instructionLines": 156,
+              "instructionLines": 157,
               "instructionsPath": "sdlc/skills/sdlc-core/pr-description.md",
               "name": "pr-description",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5673b9e8d603941c1f49db6e1de7e6c42166fdfcfb6f04908c83dfb9fb69031a",
-                "bytes": 8205,
-                "sha256": "5673b9e8d603941c1f49db6e1de7e6c42166fdfcfb6f04908c83dfb9fb69031a"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/352e3d52cc8c1e4be6749c6702810d3d45305efceaedac9e19845d6ab919f08d",
+                "bytes": 8562,
+                "sha256": "352e3d52cc8c1e4be6749c6702810d3d45305efceaedac9e19845d6ab919f08d"
               },
               "title": "pr-description — a PR body a first-time reader can follow"
             },
@@ -14232,13 +14232,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
-              "instructionLines": 557,
+              "instructionLines": 623,
               "instructionsPath": "sdlc/skills/sdlc-core/prepare-merge.md",
               "name": "prepare-merge",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b278bc1df0ebae1f31ead223c705e4800ecd4df287a51ac2da37e4ab95643ea9",
-                "bytes": 31663,
-                "sha256": "b278bc1df0ebae1f31ead223c705e4800ecd4df287a51ac2da37e4ab95643ea9"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3ca17c4df2f0dff4c64b16fa8dada43a2ab97ab898d4b9311e4173fa346273f1",
+                "bytes": 35362,
+                "sha256": "3ca17c4df2f0dff4c64b16fa8dada43a2ab97ab898d4b9311e4173fa346273f1"
               },
               "title": "Prepare-merge — get a feature branch ready to land"
             },

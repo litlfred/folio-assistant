@@ -8983,6 +8983,128 @@
       "path": "tools/translation-candidates-agent/"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/translation-candidates/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/translation-candidates.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Ask one or more open, self-hosted machine translators — OPUS-MT (Helsinki-NLP Marian models, CC-BY 4.0, run locally) and/or a self-hosted LibreTranslate (AGPL, Argos models) — for CANDIDATE translations of each empty or fuzzy string, so no freemium API quota is involved. Candidates are appended to `<locale>/<catalogue>.candidates.json` (`translation-candidates/v1`) for a reviewer to choose among on the translation review page; a candidate whose placeholders or markup do not round-trip is not recorded. Candidates are never a barrier to having a translation: an EMPTY msgstr gets the first good candidate, marked `#, fuzzy`; a non-empty msgstr is never overwritten. The translation node records the source (`generatedBy: \"machine\"`, model, time); `official` is never set, and a candidate is never a verdict. A catalogue that says DO NOT MACHINE-FILL, or whose node is official, gets candidates but no fill.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run cat translation:candidates"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "flag": "--instance"
+                },
+                "description": "The layer root whose declared `translation-sources` directory is filled. Default: the current directory.",
+                "name": "instance",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--engine"
+                },
+                "description": "Comma-separated candidate sources, tried in this order for an empty msgstr: `opus-mt` (the local runner `scripts/translation/opus_mt_runner.py`, shared with `translate-pot`, which needs the extended Python tier) and/or `libretranslate` (the URL below). Absent, the command exits 2.",
+                "name": "engines",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/IdList"
+              },
+              {
+                "arg": {
+                  "flag": "--url"
+                },
+                "description": "A self-hosted LibreTranslate's base URL (default `http://localhost:5000`). The hosted libretranslate.com / .de services are refused.",
+                "name": "url",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Url"
+              },
+              {
+                "arg": {
+                  "flag": "--locale"
+                },
+                "description": "Comma-separated locales to fill, e.g. `es,fr`. Default: every locale directory except the source locale.",
+                "name": "locales",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/IdList"
+              },
+              {
+                "arg": {
+                  "flag": "--init"
+                },
+                "description": "Start a `.po` from each template that has none (locale named, `X-Folio-Official: no`, every msgstr empty), then collect candidates for it. Never the default: starting a catalogue is a decision.",
+                "name": "init",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              },
+              {
+                "arg": {
+                  "flag": "--no-create-node"
+                },
+                "description": "Record candidates for a catalogue with no translation node beside it, but fill nothing there, instead of writing a minimal `translation-node/v1` for it.",
+                "name": "noCreateNode",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              },
+              {
+                "arg": {
+                  "flag": "--no-mask"
+                },
+                "description": "Send placeholders to the engine as they are, instead of as numbered stand-ins. The round-trip check runs either way.",
+                "name": "noMask",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              },
+              {
+                "arg": {
+                  "flag": "--dry-run"
+                },
+                "description": "Translate and report, writing nothing.",
+                "name": "dryRun",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "`translations/<locale>/<catalogue>.candidates.json` (`translation-candidates/v1`), appended to: each candidate carries its text and source `{kind: \"open-mt\", id: <model>, version?, at}`. Identical text from the same source is not added twice.",
+                "name": "candidates",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "description": "The `.po` catalogues whose empty msgstr got the first good candidate, `#, fuzzy`, and their `<name>.json` translation nodes. Exit 0 something was recorded · 3 nothing was · 2 could not determine · 1 an engine failed.",
+                "name": "catalogues",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "translation-candidates",
+          "requirements": {
+            "network": true,
+            "runtime": [
+              "bun"
+            ]
+          },
+          "satisfies": [
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/translation-refresh",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/translation-candidate-source"
+          ],
+          "title": "Collect candidate translations from open engines"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/translation-candidates",
+      "path": "tools/translation-candidates/"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/translation-extract/",
       "@type": "bootstrap:Subgraph",
       "hasMember": [

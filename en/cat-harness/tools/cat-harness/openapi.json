@@ -227,6 +227,9 @@
       "name": "translation-manager"
     },
     {
+      "name": "translation-refresh"
+    },
+    {
       "name": "uml-overview"
     },
     {
@@ -13499,6 +13502,113 @@
         "x-satisfies": [
           "translation-adjudication"
         ]
+      }
+    },
+    "/tools/translation-candidates": {
+      "post": {
+        "operationId": "translation-candidates",
+        "summary": "Collect candidate translations from open engines",
+        "description": "Ask one or more open, self-hosted machine translators — OPUS-MT (Helsinki-NLP Marian models, CC-BY 4.0, run locally) and/or a self-hosted LibreTranslate (AGPL, Argos models) — for CANDIDATE translations of each empty or fuzzy string, so no freemium API quota is involved. Candidates are appended to `<locale>/<catalogue>.candidates.json` (`translation-candidates/v1`) for a reviewer to choose among on the translation review page; a candidate whose placeholders or markup do not round-trip is not recorded. Candidates are never a barrier to having a translation: an EMPTY msgstr gets the first good candidate, marked `#, fuzzy`; a non-empty msgstr is never overwritten. The translation node records the source (`generatedBy: \"machine\"`, model, time); `official` is never set, and a candidate is never a verdict. A catalogue that says DO NOT MACHINE-FILL, or whose node is official, gets candidates but no fill.",
+        "tags": [
+          "translation-refresh",
+          "translation-candidate-source"
+        ],
+        "externalDocs": {
+          "description": "The Tool's page",
+          "url": "translation-candidates/"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "instance": {
+                    "$ref": "#/components/schemas/RepoPath",
+                    "description": "The layer root whose declared `translation-sources` directory is filled. Default: the current directory."
+                  },
+                  "engines": {
+                    "$ref": "#/components/schemas/IdList",
+                    "description": "Comma-separated candidate sources, tried in this order for an empty msgstr: `opus-mt` (the local runner `scripts/translation/opus_mt_runner.py`, shared with `translate-pot`, which needs the extended Python tier) and/or `libretranslate` (the URL below). Absent, the command exits 2."
+                  },
+                  "url": {
+                    "$ref": "#/components/schemas/Url",
+                    "description": "A self-hosted LibreTranslate's base URL (default `http://localhost:5000`). The hosted libretranslate.com / .de services are refused."
+                  },
+                  "locales": {
+                    "$ref": "#/components/schemas/IdList",
+                    "description": "Comma-separated locales to fill, e.g. `es,fr`. Default: every locale directory except the source locale."
+                  },
+                  "init": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Start a `.po` from each template that has none (locale named, `X-Folio-Official: no`, every msgstr empty), then collect candidates for it. Never the default: starting a catalogue is a decision."
+                  },
+                  "noCreateNode": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Record candidates for a catalogue with no translation node beside it, but fill nothing there, instead of writing a minimal `translation-node/v1` for it."
+                  },
+                  "noMask": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Send placeholders to the engine as they are, instead of as numbered stand-ins. The round-trip check runs either way."
+                  },
+                  "dryRun": {
+                    "$ref": "#/components/schemas/Flag",
+                    "description": "Translate and report, writing nothing."
+                  }
+                },
+                "required": [
+                  "engines"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The Tool's declared outputs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "candidates": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "`translations/<locale>/<catalogue>.candidates.json` (`translation-candidates/v1`), appended to: each candidate carries its text and source `{kind: \"open-mt\", id: <model>, version?, at}`. Identical text from the same source is not added twice."
+                    },
+                    "catalogues": {
+                      "$ref": "#/components/schemas/RepoPath",
+                      "description": "The `.po` catalogues whose empty msgstr got the first good candidate, `#, fuzzy`, and their `<name>.json` translation nodes. Exit 0 something was recorded · 3 nothing was · 2 could not determine · 1 an engine failed."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tool-iri": "https://litlfred.github.io/folio-assistant/cat-harness/tools/translation-candidates.jsonld",
+        "x-invoke": {
+          "shell": "bun run cat translation:candidates"
+        },
+        "x-install": {
+          "none": true
+        },
+        "x-requires": {
+          "runtime": [
+            "bun"
+          ],
+          "network": true
+        },
+        "x-satisfies": [
+          "translation-refresh",
+          "translation-candidate-source"
+        ],
+        "x-selection": {
+          "when": "A catalogue has empty or fuzzy entries and machine drafts are wanted for a reviewer to choose among on the translation review page. Every candidate is a draft; a person's adjudication decides.",
+          "limits": "Singular entries only: plural entries are left for a person. Catalogues that say DO NOT MACHINE-FILL, and catalogues whose node is official, are refused. Machine output into a language nobody on the project reads cannot be checked here; it is a draft for review, never a sign-off. The LibreTranslate host is whatever `--url` names (normally one on this machine), so it has no fixed remedy; without one, use `--engine opus-mt`.",
+          "cost": "OPUS-MT: a model download per language pair on first use (hundreds of MB) and CPU time, no per-string fee. LibreTranslate: whatever running your own instance costs."
+        }
       }
     },
     "/tools/translation-candidates-agent": {
