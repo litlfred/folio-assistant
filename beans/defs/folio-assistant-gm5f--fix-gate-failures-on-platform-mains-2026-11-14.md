@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-14T17:50:00Z
-updated_at: 2026-11-14T22:02:14Z
+updated_at: 2026-11-15T06:27:49Z
 tags:
     - ci
     - red-main
@@ -40,3 +40,5 @@ _2026-11-14T22:02:14Z_ — Train fa#3124 (a54daba8, tools pin 5759d528) red, run
 - "no check script is unrun" (7 scripts) and audit:coverage fhir-core-definitions: fa#3127 (gate steps, base = train branch) + fhir-harness#435 (@covers). Verified: each exits 0, gates-workflows.test 19/0, audit 0 NEW.
 - Test-side reds (state-visualizer, compose-docs, viewer-declarations, library/todo pages not built in the mount): tools#2213/#2214, another session's.
 - Issue: tools#2215.
+
+_2026-11-15T06:27:49Z_ — Handover status. Merged: tools#2195, #2197, #2216; cat-harness#1342, #1343; bootstrap-tools#100; fhir-harness#435; smart-base#410. Open: fa#3127 (ready; 7 unrun check scripts as gate steps; red only on train failures; merge manager rebases onto main after fa#3124), tools#2199 + cat-harness#1341 (drafts; owner chose A 2026-11-15 06:26Z: move the site-chrome tests to tools; #2199 also drops the tools#2185 exemption; order #2199 then #1341). cat-harness gen:jsonld:check red on main is pin skew (generator at fa's tools pin c55f2f2b), not stale output: no regeneration, clears with fa#3124. Issue tools#2215 closes with fa#3127. Nothing waits on the owner.
