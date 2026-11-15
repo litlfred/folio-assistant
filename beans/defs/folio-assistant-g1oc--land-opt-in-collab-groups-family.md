@@ -2,11 +2,11 @@
 # folio-assistant-g1oc
 $schema: bean/1.0.0
 title: 'Land the opt-in collab groups family (backlog G1)'
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-11-15T07:40:00Z
-updated_at: 2026-11-15T17:46:00Z
+updated_at: 2026-11-15T21:20:00Z
 parent: folio-assistant-pb15
 tags:
     - handover
@@ -63,3 +63,5 @@ _2026-11-15T12:10:00Z_ — All G1 re-pins merged: dth-phc#44, dth-sc#32, smart-r
 _2026-11-15T13:40:00Z_ — fhir-harness#439 merged. Owner 12:09Z card "A. Revive, close, ask" + 12:12Z "make sure revisions are aligned with current decisions and infra": revived 13 enable drafts (smart-base-clinical#20, aai-programme#64, ihris#47, smart-anc#8, smart-ccc#8, smart-dak-{ccc,pnc,smbp,srv,tb}#8, smart-dak-chud#9, smart-fp#13, smart-tuberculosis#8): default branch merged in (smart-anc and smart-fp default to `master`), every layer re-pinned to main with consent evidence citing the 12:12Z ask (these sites have no standing consent; never cite another site's standing consent), smart-base ids → `collab`, smart-base-clinical `smart-base-kg` → `smart-base-L1` (smart-base#360), canonical site-publish caller, unresolvable L2/L3-collab dropped; marked ready. These repos run no PR-check workflow, so there is no CI gate; handed to the merge manager on local verification. Script: scratchpad g2.sh (+ repin2.py).
 
 _2026-11-15T17:46:00Z_ — All 13 revived drafts merged. First Site publishes: smart-base-clinical, smart-dak-{ccc,pnc,smbp,srv,tb,chud}, smart-tuberculosis green; smart-fp and smart-anc green on master after cat-harness-tools#2320 (canonical caller triggers on `[main, master]`) and smart-fp#14 / smart-anc#9. Eight IGs were refused by fhir-harness's ig-content-qa gate (no injection review); reviews recorded on the owner's direct card taps (16:58Z, 17:10Z), 0 findings; smart-base-clinical needed `trustedScripts: ["cql.js"]`; smart-anc's `.gitignore` needed `!/qa/ig-content-qa.json`. ihris: own pages.yml, canonical caller removed (ihris#49). aai-programme: library JSON-LD regen (#66), then site:qa-validation needed GH_TOKEN in the stage step: cat-harness-tools#2322 + re-pin aai-programme#68, publish green. Open: smart-ccc first publish still building at 17:45Z. Note for owners: smart-ccc StructureMaps carry a garbled target `swrapin_entry_createtatus` (authoring defect).
+
+_2026-11-15T21:20:00Z_ — smart-ccc publish hung 2 h in ig-site:page-render-qa (a page that never returns from evaluate). Owner card 19:14Z: cancelled. fhir-harness#442 bounds the scan (per-page hard limit, 15-min budget, `notReached`); merged, carried to smart-ccc by the merge manager's pin wave (smart-ccc#10). Publish run 43761955611 green in 8 min (page scan 135 pages, 10 unfinished). Every site of the family now publishes green. Done.
