@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-11-15T07:05:00Z
-updated_at: 2026-11-15T07:05:00Z
+updated_at: 2026-11-15T11:15:00Z
 tags:
     - fhir-harness
     - fhir-core
@@ -21,9 +21,12 @@ Owner thread: https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?threa
 - [x] Manifests carry HL7 published JSON per definition (all 646 URLs 200); resolve answers with it
 - [x] Local bodies are a labelled cache (<release>/cache/CACHE.md), gitignored
 - [x] UML class model derived (class-model.json; R4 682, R4B 702, R5 861 classes)
-- [ ] litlfred/fhir-harness#437 green and handed to the merge manager (queues behind folio-assistant#3124 and fhir-harness#426)
+- [x] litlfred/fhir-harness#437 handed to the merge manager with companion litlfred/cat-harness-tools#2294 (fixture copy; the two land together)
+- [ ] #437 and #2294 merged (queue behind folio-assistant#3124 and fhir-harness#426)
 - [ ] folio-assistant re-pins fhir-harness to the merge commit
 
 Facts: R4B/R5 HL7 tarballs are byte-identical to the registry's. R4's differ (registry carries 3 more non-core SDs), but all 209 core SDs are byte-identical, so manifest sha256 values did not change. The earlier CLI session's local R4 build and its uncommitted v2 edits were lost; this redid them from fhir-harness main 5bf5ff9. The Default cloud environment now allows hl7.org (added 2026-11-15).
 
 _2026-11-15T07:05:00Z_ — Filed by thread "Pin fhir-harness to HL7 core packages", session https://claude.ai/code/session_01Qmmkt9JpGSbzaX8cw6AfPM. Draft PR litlfred/fhir-harness#437 (e83ad97) opened.
+
+_2026-11-15T11:15:00Z_ — Full checks on #437 (attempt 2): the only new failure is cat-harness-tools standalone-fixture byte-equality, fixed by cat-harness-tools#2294 (green). gen:jsonld:check is red on main too. Both PRs got `ready:` comments and were handed to the merge manager thread.
