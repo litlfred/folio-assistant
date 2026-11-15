@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: critical
 created_at: 2026-11-12T09:45:00Z
-updated_at: 2026-11-15T11:55:00Z
+updated_at: 2026-11-15T11:58:00Z
 parent: folio-assistant-n6ny
 tags:
     - project-memory
@@ -62,3 +62,12 @@ _2026-11-15T07:37:00Z_ — Two rules added by the merge manager thread (session_
 - STACKED FAST-GREEN MERGES FOR NON-CONTENT PRS (owner 2026-11-15 11:52Z, option C "A and B together" on the coordinator's card "How should we stack PRs to merge faster?"): (A) batch the ready non-content PRs of a repo onto one batch branch with one CI run, and split the batch when it is red; (B) merge a batch, or a single non-content PR, on fast-tier green. The full tier then runs on main, and the merge manager fixes any red on main straight away. Content PRs still need the owner's own card or words.
 
 _2026-11-15T11:55:00Z_ — Rule added by the merge manager thread (session_01Qmmkt6te9q7bF3KBT2Qq11), relayed by the coordinator.
+
+- STABLE POINT (owner 2026-11-15 11:52Z, cmsg_017WNUkNK8kdDziPK58Pv6G9J8Nz4J5k3tcRVLHgwirDCZ: "i want to get everything ready merged in, then red fixed. then get to STABLE POINT"). Work in that order: merge every ready PR, then fix the reds, then check the stable point. The stable point holds when all four of these are true at once:
+  1. Every harness repo's main is green on its latest run of each push workflow: Harness PR checks / main-qa, and Site publish where the repo publishes. The known by-design blind checks don't count.
+  2. The folio-assistant train has landed: index.lock.json pins every layer at that layer's current main, and fa main is green on that pin.
+  3. No ready PR is left unmerged. Ready means non-draft, with a `ready-to-merge` label or a merge-manager queue entry, not content waiting on the owner or committee, and fast-tier green. The PRs held for the owner or committee are listed, not counted.
+  4. Every site is live: each published site's pages are at or after its main's last publish-relevant commit.
+  The merge manager reports when all four hold, with links.
+
+_2026-11-15T11:58:00Z_ — Rule added by the merge manager thread (session_01Qmmkt6te9q7bF3KBT2Qq11), relayed by the coordinator with the owner's message cited.
