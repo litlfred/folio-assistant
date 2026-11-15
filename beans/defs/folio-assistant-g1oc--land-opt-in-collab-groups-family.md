@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-15T07:40:00Z
-updated_at: 2026-11-15T07:55:00Z
+updated_at: 2026-11-15T07:56:00Z
 parent: folio-assistant-pb15
 tags:
     - handover
@@ -45,3 +45,5 @@ _2026-11-15T07:55:00Z_ — Merged (stacked by the merge manager ~07:16Z): tools#
 - Sites have no REPIN_TOKEN, so the standing workflow pushes `repin/standing-*` but cannot open the PR. Standing also moves only green commits, so it is not a full freshness re-pin.
 - Hand re-pin recipe: edit every remote ref in index.config.json to the repository's main (consent.on/ref updated, evidence = standing consent 11-12), then from the site root run `bun <composed tools main>/scripts/remote-mount.ts --no-install --no-health`; commit the config, lock and rewritten workflows.
 - dth-hrh#135 (standing branch, opened by hand) merged 07:40Z. dth-phc#44 now = enable + ids rename + full re-pin, marked ready. dth-sc#32, smart-ra#249 (replaces smart-ra#255) and new `claude/repin-all-mains-2026-11-15` PRs for smart-trust-phw, smart-ips-pilgrimage, smart-immunizations (replaces #149) are being mounted.
+
+_2026-11-15T07:56:00Z_ — Owner card Q-REPIN-TOKEN = B (07:55Z): no REPIN_TOKEN; agents (the merge manager) open a PR from each pushed `repin/standing-*` branch when Actions cannot, labels `needs-repin` + `release`.
