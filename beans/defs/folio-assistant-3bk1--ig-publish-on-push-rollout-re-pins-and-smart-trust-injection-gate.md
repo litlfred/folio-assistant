@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-12T09:55:00Z
-updated_at: 2026-11-14T16:30:00Z
+updated_at: 2026-11-15T06:30:00Z
 parent: folio-assistant-v8bg
 tags:
     - handover-2026-11-12
@@ -29,3 +29,5 @@ _2026-11-14T16:30:00Z_ — All rollout PRs merged (dth-hrh#116 closed). smart-tr
 - smart-base, smart-trust-phw: stale qa/ig-content-qa.json → re-review of only the changed texts, after rebuilding the reviewed bundle bit-for-bit from the review commit + the AST cache commit of that time: smart-base#407 (4 of 7284 changed), smart-trust-phw#79 (3 of 10041; only terminology.hl7.org 6.1.0→7.1.0 links).
 - smart-immunizations: smart-base pin bfea0cc9 lacked the l1-extraction-pages Tool (moved into a subgraph by 234fb073, back in tools/ by e79eb928) → re-pin smart-immunizations#145 (1b520ad).
 Next: confirm each site publishes after its merge; then tell the bibliography (…G6g9EGbG9kGSg8u3W5fieF) and game threads.
+
+_2026-11-15T06:30Z_ — Status for owner roll-call. Sites green: smart-base, smart-trust-phw, smart-trust (02:06Z). Merged: smart-base#407, phw#79, smart-trust#198/#203, who-iris#247. Open, mine: smart-trust#238 (a8db4722, unstable; trustlist.jsonld syntax fix, waiting on the merge manager's owner card, possibly moot now main is green); smart-immunizations#145 (1b520ad7, CONFLICT; next: merge main + re-pin once platform gate fixes tools#2195/#2197/#2199, smart-base#410, cat-harness#1341 land); smart-immunizations-uganda#39 (dad72031, unstable; red only on freshness + platform gates; re-pin right before merge). Not mine: smart-trust#236 (merge manager). Owner-wait: only the #238 card.
