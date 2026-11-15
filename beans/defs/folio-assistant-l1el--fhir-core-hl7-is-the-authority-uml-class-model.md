@@ -6,7 +6,8 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-11-15T07:05:00Z
-updated_at: 2026-11-15T11:15:00Z
+updated_at: 2026-11-15T11:20:00Z
+parent: folio-assistant-v8bg
 tags:
     - fhir-harness
     - fhir-core
@@ -30,3 +31,5 @@ Facts: R4B/R5 HL7 tarballs are byte-identical to the registry's. R4's differ (re
 _2026-11-15T07:05:00Z_ — Filed by thread "Pin fhir-harness to HL7 core packages", session https://claude.ai/code/session_01Qmmkt9JpGSbzaX8cw6AfPM. Draft PR litlfred/fhir-harness#437 (e83ad97) opened.
 
 _2026-11-15T11:15:00Z_ — Full checks on #437 (attempt 2): the only new failure is cat-harness-tools standalone-fixture byte-equality, fixed by cat-harness-tools#2294 (green). gen:jsonld:check is red on main too. Both PRs got `ready:` comments and were handed to the merge manager thread.
+
+_2026-11-15T11:20:00Z_ — Parented under handover epic folio-assistant-v8bg at the merge manager's request (check-bean-parents).
