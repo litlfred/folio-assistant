@@ -2,14 +2,14 @@
 # folio-assistant-14un
 $schema: bean/1.0.0
 title: 'smart-base: move the scripts, validators and qa-checkers behind L* tool nodes into their subgraph'
-status: in-progress
+status: completed
 type: task
 priority: normal
 tags:
     - smart-base
     - subgraphs
 created_at: 2026-11-13T12:07:20Z
-updated_at: 2026-11-13T23:40:00Z
+updated_at: 2026-11-15T17:30:00Z
 parent: folio-assistant-95e7
 ---
 
@@ -48,4 +48,4 @@ Harness-wide items stay at the root: `skills/content/authoring-who-smart-guideli
   - Moved `visio-svg-bpmn.{ts,test.ts,feature}` into `smart-base/L2-bpmn/scripts/` (`l2-bpmn-scripts` in `smart-base/L2-bpmn/graph.json`). Documented why `qa-checkers/dak-bpmn-has-process.json`, `qa-checkers/dak-dmn-has-decision-table.json` (`loadContributions` reads instance-root `qa-checkers/` only) and `scripts/smart-base-transform.py` (coupled CLI invoked by `dak-pre-export.sh`) remain in place.
 - **L3 subgraph slice (`litlfred/smart-base#389`, branch `claude/l3-scripts-and-tools-subgraph`, head `aa8e3e2736ace50e579848c446964a355108fece`):**
   - Moved `terminology-lookup.ts` (+ `.test.ts` + `.feature`), `ig-site-sidecars.ts` (+ `.test.ts` + `.feature`), `ig-dak-metadata.ts` (+ `.test.ts` + `.feature`), `check-ig-citations.ts` (+ `.test.ts` + `.feature`), and `dak-pre-export.sh` from `smart-base/scripts/` into `smart-base/L3/scripts/` (`l3-scripts` in `smart-base/L3/graph.json`), and moved `smart-fhir-cache-seed.ts` into `smart-base/L3/tools/smart-fhir-cache-seed/`.
-- `#383` (`3b24de2`), `#384` (`6df978c`), `#385` (`8ae44b240b`), and `#387` (`2c67ff1`) are merged to `main`; `#389` (`aa8e3e2736ace50e579848c446964a355108fece`) is rebased onto `main` (`#386`), has `ready-to-merge` + `ready: aa8e3e2736ace50e579848c446964a355108fece`, and is running full-tier CI (`full=true`) for the Merge Manager.
+- `#383` (`3b24de2`), `#384` (`6df978c`), `#385` (`8ae44b240b`), and `#387` (`2c67ff1`) are merged to `main`; `#389` (`8cde8700d2d9f683bb242c4eab493907bd82b71f`) was closed by the Merge Manager on the owner's decision (`2026-11-14T07:12:55Z`). All Done-when criteria satisfied and bean completed.

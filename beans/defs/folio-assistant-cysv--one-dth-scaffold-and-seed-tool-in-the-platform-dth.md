@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-31T20:35:18Z
-updated_at: 2026-11-10T16:51:00Z
+updated_at: 2026-11-15T17:30:00Z
 parent: folio-assistant-dthl
 ---
 
@@ -27,4 +27,4 @@ All Stage 1 (`dth init`) and Stage 2 (shared seed tool, glossary validator, and 
 - `litlfred/folio-assistant-core#489` (`3866d023`) & `#497` (`1b6c5fc6`): shared DTH seed tools (`scripts/dth/seed-from-l1.py`, `scripts/dth/pdf-tables.py`, `scripts/dth/add-figures.py`).
 - `litlfred/folio-assistant-core#566` (`7b2d3072`) & `#569` (`03159b3c`): shared DTH `review.html` and `review.pdf` (`dth:review:html`, `dth:review:pdf`) with 30/30 tests passing in `folio-assistant-core/test/dth-tools.test.ts` and `folio-assistant-core/test/dth-review.test.ts`.
 - `litlfred/smart-base#270` (`8f7426f1`) & `litlfred/cat-harness-tools#1705` (`742fa238`): shared `sushi-config.yaml` and `index.config.json` DTH layer wiring.
-- **Per-repo migration status:** 3/5 DTH repos (`litlfred/dth-hrh#72` `efdc6b67`, `litlfred/dth-sc#8` `d2a51703`, `litlfred/dth-phc#7` `547ef610`) have merged their Stage 1 + Stage 2 cutovers onto `main`; `litlfred/dth-pc#8` (`391d0e8f`) and `litlfred/dth-sfp#6` (`b3fa0828`) remain open on their content branches (deferred under the `dth-*` content hold).
+- **Per-repo migration status:** 4/5 DTH repos (`litlfred/dth-hrh#72` `efdc6b67`, `litlfred/dth-sc#8` `d2a51703`, `litlfred/dth-phc#7` `547ef610`, `litlfred/dth-pc#8` `fab9176a`) have merged their Stage 1 + Stage 2 cutovers onto `main`; only `litlfred/dth-sfp#6` (`b3fa0828`) remains open on its content branch (deferred under the `dth-*` content hold).

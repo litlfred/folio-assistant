@@ -2,11 +2,11 @@
 # folio-assistant-gm5f
 $schema: bean/1.0.0
 title: 'Fix gate failures on platform mains (2026-11-14): five new gates on smart-immunizations#145'
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-11-14T17:50:00Z
-updated_at: 2026-11-15T12:12:00Z
+updated_at: 2026-11-15T17:30:00Z
 parent: folio-assistant-v8bg
 tags:
     - ci
@@ -45,3 +45,5 @@ _2026-11-14T22:02:14Z_ — Train fa#3124 (a54daba8, tools pin 5759d528) red, run
 _2026-11-15T06:27:49Z_ — Handover status. Merged: tools#2195, #2197, #2216; cat-harness#1342, #1343; bootstrap-tools#100; fhir-harness#435; smart-base#410. Open: fa#3127 (ready; 7 unrun check scripts as gate steps; red only on train failures; merge manager rebases onto main after fa#3124), tools#2199 + cat-harness#1341 (drafts; owner chose A 2026-11-15 06:26Z: move the site-chrome tests to tools; #2199 also drops the tools#2185 exemption; order #2199 then #1341). cat-harness gen:jsonld:check red on main is pin skew (generator at fa's tools pin c55f2f2b), not stale output: no regeneration, clears with fa#3124. Issue tools#2215 closes with fa#3127. Nothing waits on the owner.
 
 _2026-11-15T07:35Z_ — Train fa#3124: merged tools#2199, #2234, #2273 and cat-harness#1341. Re-pinned the train at cac052f (cat-harness 2ff927a7, tools 23778b48, core c48d9bd1) and at 7298fa7 (tools 8cf561ed). who-iris gen:jsonld:check passes at the train's pins, so it is pin skew and needs no regen. Last fix: tools#2279 (foreign-site-scope and nav-names follow the 11-13 navbar row), issue tools#2233. Known exception: smart-base smartTrustKeepsDraftWatermark. Next: re-pin the train after #2279 merges, then report fa and smart-base green mains to the MVP close-out thread (for fa#2894).
+
+_2026-11-15T17:30Z_ — All PRs for this bean have merged to `main`: `cat-harness-tools#2184` (`4eb3e4b1`), `#2185` (`48a32485`), `#2195` (`f918cb6c`), `#2197` (`699bc3a3`), `#2199` (`0a53c060`), `#2216` (`c03ba4ba`), `#2234` (`fe688302`), `#2273` (`8cf561ed`), `#2279` (`58de3828`); `cat-harness#1341` (`c624d31c`), `#1342` (`78f1f029`), `#1343` (`4c19233c`); `bootstrap-tools#100` (`174a567d`); `fhir-harness#435` (`5bf5ff95`); `smart-base#410` (`f04123f5`); `folio-assistant#3127` (`aa473bdc`, merged `2026-11-15T06:38:32Z`); and the re-pin train `folio-assistant#3124` (`c6c2c6a7`, merged `2026-11-15T13:29:42Z`). Completed.
