@@ -1,0 +1,37 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/cat-harness/v0/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "cat-harness": "https://litlfred.github.io/cat-harness/v0/ns/"
+  },
+  "dcterms:description": "Provenance moved out of the narrative of intent.md: who decided, when, and under which work item or proposal. The document keeps the rules and their reasons; this log is rendered in its footer.",
+  "@graph": [
+    {
+      "@id": "docs/wireframes/processes/intent.md",
+      "@type": "prov:Entity",
+      "prov:wasInfluencedBy": [
+        {
+          "@id": "docs/wireframes/processes/intent.md#provenance-1"
+        },
+        {
+          "@id": "docs/wireframes/processes/intent.md#provenance-2"
+        }
+      ]
+    },
+    {
+      "@id": "docs/wireframes/processes/intent.md#provenance-1",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "history",
+      "cat-harness:section": "Observed on main (re-checked against main 0bcf94bd)",
+      "prov:value": "Re-checked against the index as regenerated in this checkout. Since the first drawing, three processes are new (`methodology-from-source`, `related-work`, `wireframe-design-review`) and the undocumented-steps counts were cleared on every older row. The counts below and in the drawing are updated. The adjudication page changed only in its \"Called by\" line, which already listed \"Wireframe design review\" in the drawing, so that screen is unchanged."
+    },
+    {
+      "@id": "docs/wireframes/processes/intent.md#provenance-2",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "history",
+      "cat-harness:section": "Findings",
+      "prov:value": "Now that 66 of 68 rows read \"—\", the column is almost all dashes."
+    }
+  ]
+}
