@@ -6,7 +6,7 @@ status: todo
 type: feature
 priority: normal
 created_at: 2026-09-29T21:30:50Z
-updated_at: 2026-10-30T12:00:00Z
+updated_at: 2026-11-15T18:02:00Z
 parent: folio-assistant-rwmf
 ---
 
@@ -72,20 +72,6 @@ Answers Q2-Q5 are recorded there. Q1 (spec-kit or CRDM) is open.
 
 _2026-10-30T12:00Z_ — Box 1's "chosen through CRDM" is superseded: the owner chose the spec-kit split on 10-29, and the spec is cat-harness#686 (CRDM draft #500 closed unmerged). The spec waits on the owner for FR-009 and FR-011. (https://claude.ai/code/session_01Qmmkt7iaCtGYwZbW9x7eYe)
 
-
-_2026-10-24T07:55:00Z_ — The owner chose "C. CRDM drafts for both" by card on 2026-10-24 07:45Z. The draft covers amom and oz9e together: `cat-harness/docs/proposals/model-swarm-and-benchmark-2026-10-24.md`, litlfred/cat-harness#500 (draft). It has nine draft requirements and five open owner questions, and nothing is built. Session https://claude.ai/code/session_01AnAGBDDY8TMwCApxe4b3pX.
-
-## 2026-10-24: built on the test process (cloud drain thread)
-
-Owner ask: reuse the infrastructure, with machine QA results as the task bank. `litlfred/cat-harness#500` @ `66bc1a11` maps this bean onto the existing test process (`test-plan/v1`, `folio-test-run/v1`, `test-report/v1`, `test-plan-execution.bpmn`).
-
-Five gaps remain:
-1. `sut` gains `model` and `configuration`.
-2. A run of one plan against N SUTs, with a side-by-side view.
-3. Cost and token fields.
-4. A generator from fixed machine findings to plan cases (overlaps `vm6m`).
-5. A spec-kit `SC-` to plan-case link.
-
-Answers Q2-Q5 are recorded there. Q1 (spec-kit or CRDM) is open.
-
 _2026-11-01T20:50Z_ — Moved under folio-assistant-rwmf: the old epic closes (owner card Q-DQ-1 A). Session https://claude.ai/code/session_01Qmmkt7h4RWc6UwiBW5kbZ2
+
+_2026-11-15T18:02:00Z_ — Audit check: `oz9e` has no children; deduplicated the repeated `2026-10-24` section. Spec issue `litlfred/cat-harness#686` remains OPEN waiting on owner clarification for `FR-009` (`SC-` id form) and `FR-011` (ARG-Designer comparability).

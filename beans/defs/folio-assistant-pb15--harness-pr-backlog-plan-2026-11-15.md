@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-15T07:15:00Z
-updated_at: 2026-11-15T08:52:00Z
+updated_at: 2026-11-15T18:02:00Z
 parent: folio-assistant-v8bg
 tags:
     - handover
@@ -57,3 +57,12 @@ _2026-11-15T07:15:00Z_ — Filed by thread "Plan to clear harness repo PR backlo
 _2026-11-15T07:10:00Z_ — Q-PB-1 = A (owner tap 07:07Z). Closed the 8 G2 re-pins (imm#145, uganda#39, pilgrimage#109, smart-trust#236, phw#78, smart-pcmt#6, core#799, smart-hiv#29). The merge manager re-pins each layer after fa#3124.
 
 _2026-11-15T08:52Z_ — parent set to epic v8bg (an open bean with no parent failed check-bean-parents on fa#3124).
+
+_2026-11-15T18:02:00Z_ — Live audit of all backlog groups and `cat-tools-pfng`:
+- **Merge now (green, non-content)**: **4 of 5 MERGED** (`cat-harness-tools#2130` at `3f6222dd63`, `folio-assistant#3123` at `ae425fb1ae`, `smart-hiv#28` at `57756399cf`, `smart-ips-pilgrimage#112` at `806626a59d`); only `cat-harness-tools#2182` remains OPEN (paired with `fhir-harness#426`).
+- **Bean-note flood (`cat-tools-pfng`)**: **RESOLVED & MERGED** on `cat-harness-tools` via `#2228` (`fb148911f2`), `#2270` (`490c17dc21`, folding 30 claim/done notes into one PR), `#2289` (`a3a30e274f`, `smart-trust`, `smart-trust-phw`, `smart-trust-demo`, `smart-trust-tools`), and `#2230` (`c60f6d0c95`, `smart-base`, `smart-base-clinical`, `smart-ra`), with duplicate note PRs `#2271`, `#2272`, `#2280`–`#2283` closed. For the `cat-tools-pfng` translation candidate PRs across `smart-*` and `dth-*`: `smart-trust#242` (`670a90a4da`) and `smart-trust-demo#164` (`27c7414b0c`) are **MERGED** (`smart-trust-phw#82` also merged at `2f52835b15`); `smart-base#412`, `smart-trust-phw#83`, and `smart-trust-tools#73` are **OPEN** (`smart-ips-pilgrimage` was already 100% translated on `main`, and all remaining 29 repos had no catalogues and are recorded in `beans/notes/cat-tools-pfng--*`).
+- **G1 Opt-in collab groups family**: **11 of 12 MERGED** after root gates `cat-harness-tools#1980` (`4dbb1b394f`) and `cat-harness#1288` (`2e959408e5`) landed: `dth-hrh#126` (`3da602f9c3`), `dth-phc#44` (`bc5cc30aad`), `dth-sc#32` (`de4a0e8cf8`), `smart-immunizations#139` (`2045189ff0`), `smart-trust#212` (`7251cc84e0`), `smart-trust-phw#62` (`0ad5edac49`), `smart-ra#249` (`b19e74b5e8`), `smart-ips-pilgrimage#81` (`5743037fd1`), plus former drafts `aai-programme#64` (`7c652379c5`), `smart-anc#8` (`16351f751d`), `smart-fp#13` (`3769055d19`), and `smart-base-clinical#20` (`566423d5af`). Only `smart-trust-tools#65` remains **OPEN** (`MERGEABLE`).
+- **G2 Re-pins superseded by `fa#3124`**: All 8 G2 PRs closed per Q-PB-1 = A; `folio-assistant#3124` **MERGED** at `c6c2c6a745` (`13:29:42Z`); standing repins `smart-trust#241` (`b0e275d19a`) and `smart-ips-pilgrimage#113` (`e9f47d9923`) **MERGED** (`smart-immunizations#149` and `smart-hiv#31` closed as superseded).
+- **G3 `smart-ra` CS-* change sets (`folio-assistant-g3ra`, now `completed`)**: All 9 placed change-set PRs (`#151` `26f4d9aad6`, `#152` `33d2623889`, `#156` `37add8ee2b`, `#158` `98d367cab4`, `#197` `d16a7ad5a5`, `#199` `9fa1e5695f`, `#203` `9503db9686`, `#218` `4041fd5033`, `#221` `13e9d3f298`) plus `#185` (`b8883738e0`) and `cat-harness-tools#2275` (`103bd471fe`) are **MERGED**; `#189`, `#193`, `#194`, `#196` remain parked as drafts held for committee.
+- **G4 Single code reds (`folio-assistant-g4rf`)**: **4 of 7 MERGED** (`cat-harness-tools#2229` `496c5e95b8`, `cat-harness-tools#2130` `3f6222dd63`, `cat-harness#1329` `d41ff7ce99`, `smart-base#259` `8f73764bea`); only `fhir-harness#426` (paired with `cat-harness-tools#2182`), `smart-base#405`, and `smart-pcmt#5` remain **OPEN**.
+- **Former Drafts & Content awaiting owner or committee**: `dth-hrh#81` (`7984d5795e`), `dth-hrh#82` (`1152db3925`), `dth-hrh#83` (`9ea2aef491`), `dth-phc#47` (`a26afea6e7`), `who-iris#279` (`6ae868df1e`), `who-iris#282` (`da02cdfd01`), `who-iris#288` (`16226eb7dc`), `who-iris#290` (`b6403fad91`), `smart-ra#185` (`b8883738e0`), `smart-ra#236` (`5c8105126a`), `smart-trust-phw#82` (`2f52835b15`), `folio-assistant#3126` (`fad46c20e7`), `folio-assistant#3129` (`5863dd5f85`), `folio-assistant#3130` (`4c14ab8028`), `folio-assistant#3132` (`82b389982a`), `folio-assistant-core#808` (`d0139cbfbc`), and `cat-harness-tools#2243` (`d75228735c`) are all **MERGED**.
